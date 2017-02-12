@@ -37,13 +37,22 @@ div.container(style="padding-bottom: 50px;")
 							label.control-label(for="distanceType") Distance
 							select.form-control(data-ng-model="race.distanceType", name="type", data-ng-options="distance.name for distance in distances", required)
 								option(value="") Sélectionner...
+						
+			div.row
+				hr
+				div.bs-callout.bs-callout-info
+					h4 Informations
+					p Ajouter une description générale à votre manifestation.
+				div.form-group
+					label.col-lg-4.control-label Description
+					div.col-lg-12(text-angular text-angular-name="description" data-ng-model="race.description" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
 			hr
 			div.row
 				div.col-lg-12
 					tabset(vertical="false" type="navType")
 						tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" data-ng-click="onChangeTab(route)")
 							div.bs-callout.bs-callout-info
-								h4 Infomations
+								h4 Informations
 								p Vous pouvez soit dessiner votre parcours directement sur la carte soit importer un fichier au format .gpx
 							input(type="file" ng-model="$files" ng-file-select="onFileSelect($files, route)")
 							div.row

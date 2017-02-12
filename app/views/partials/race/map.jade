@@ -42,3 +42,8 @@ div(data-ng-if="route.isVisible")
 				div
 					span Min: {{Math.floor(route.minElevation)}} m
 	highchart(data-ng-hide="route.type === 'Natation'" config="route.chartConfig")
+
+	div.form-group
+		label.col-lg-4.control-label Ajouter une description à votre parcours
+	div.col-lg-12(text-angular text-angular-name="description" data-ng-model="route.description" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
+

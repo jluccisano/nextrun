@@ -34,7 +34,8 @@ var RouteSchema = new Schema({
   points: [PointSchema],
   elevationPoints: [PointSchema],
   segments: [SegmentSchema],
-  type: String
+  type: String,
+  description: String
 });
 
 var RaceSchema = new Schema({
@@ -45,6 +46,7 @@ var RaceSchema = new Schema({
   },
   date: Date,
   edition: Number,
+  description: String,
   distanceType: {
     name: String,
     i18n: String
