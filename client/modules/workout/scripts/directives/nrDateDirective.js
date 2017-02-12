@@ -38,7 +38,7 @@ angular.module("nextrunApp.workout").controller("WorkoutDateController",
     $scope.update = function() {
 
       if (!angular.equals($scope.tmpWorkout, $scope.workout)) {
-        WorkoutService.update($scope.workout._id, {
+        WorkoutService.saveOrUpdate($scope.workout, {
           fields: {
             "date": $scope.workout.date
           }

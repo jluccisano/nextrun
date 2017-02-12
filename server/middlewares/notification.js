@@ -139,7 +139,7 @@ exports.sendNewRoute = function(route, user) {
 
 exports.sendNewWorkout = function(user, workout) {
 
-    var url = "http://nextrun.fr/workouts/" + workout._id;
+    var url = "http://nextrun.fr/workouts/" + workout._id + "/view";
 
     var templateHtml = "<p>Félicitation " + user.username + " !</p>" +
         "<p>Vous venez de créer la sortie Nextrun \"<b>" + workout.name + "</b>\". Un email a été envoyé à toutes les personnes que vous avez invité</p>" +
@@ -203,7 +203,7 @@ exports.sendNotificationUpdateToParticipant = function(workout, user, participan
 
 exports.sendNotificationToOwner = function(workout, workoutOwner, participant) {
 
-    var url = "http://nextrun.fr/workouts/" + workout._id;
+    var url = "http://nextrun.fr/workouts/" + workout._id + "/view";
 
     var templateHtml = "<p>Bonjour,</p>" +
         "<p>" + participant.pseudo + " a répondu à votre sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +

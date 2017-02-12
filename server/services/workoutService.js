@@ -189,7 +189,7 @@ exports.deleteParticipant = function(workout, participantId, res, cb) {
 		},
 		$pull: {
 			participants: {
-				_id: participantId
+				_id:  mongoose.Types.ObjectId(participantId)
 			}
 		}
 	};
