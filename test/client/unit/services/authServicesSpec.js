@@ -13,7 +13,7 @@ describe('authServices', function() {
 		Auth = $injector.get('Auth');
 	}));
 
-
+/*
 	describe('login', function() {
 		it('should make a request and invoke callback', function() {
 			var invoked = false;
@@ -52,7 +52,7 @@ describe('authServices', function() {
 			});
 		});
 	});
-
+*/
 	describe('logout', function() {
 		it('should make a request and invoke callback', function() {
 			var invoked = false;
