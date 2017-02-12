@@ -27,8 +27,8 @@ angular.module('nextrunApp')
                     success(race);
                 }).error(error);
             },
-            publish: function(id, success, error) {
-                $http.put('/api/races/' + id + '/publish').success(function() {
+            publish: function(id, value, success, error) {
+                $http.put('/api/races/' + id + '/publish/' + value).success(function() {
                     success();
                 }).error(error);
             },

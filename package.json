@@ -25,7 +25,7 @@
     "express": "latest",
     "mongoose": "latest",
     "passport": "latest",
-    "jade": "latest",
+    "jade": "0.35.0",
     "passport-local": "latest",
     "passport-facebook": "latest",
     "view-helpers": "latest",

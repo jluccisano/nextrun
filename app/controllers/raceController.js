@@ -198,6 +198,11 @@ exports.updateLatLng = function(raceId, latlng) {
  */
 exports.publish = function(req, res) {
   var race = req.race;
+  var value = false;
+
+  if(req.params.value) {
+    value = req.params.value
+  }
 
   if (race.user_id.equals(req.user._id)) {
 
@@ -206,7 +211,7 @@ exports.publish = function(req, res) {
     }, {
       $set: {
         last_update: new Date(),
-        published: true,
+        published: value,
         publication_date: new Date()
       }
     }, {

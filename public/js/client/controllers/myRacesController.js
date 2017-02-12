@@ -29,8 +29,8 @@ angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', '
 			$location.path('/races/create');
 		};
 
-		$scope.publish = function(race) {
-			RaceServices.publish(race._id,
+		$scope.publish = function(race, value) {
+			RaceServices.publish(race._id, value,
 				function(response) {
 					Alert.add("success", "Votre manifestation a bien été publié", 3000);
 					$scope.init();

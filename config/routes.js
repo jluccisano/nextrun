@@ -129,7 +129,7 @@ var routes = [
         middleware: [gmaps.geocodeAddress, raceController.update],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/races/:raceId/publish',
+        path: '/api/races/:raceId/publish/:value',
         httpMethod: 'PUT',
         middleware: [raceController.publish],
         accessLevel: accessLevels.user

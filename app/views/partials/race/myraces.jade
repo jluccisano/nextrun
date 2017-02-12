@@ -25,8 +25,10 @@ div.container
 					a(data-ng-href='/races/edit/{{race._id}}') Editer
 				td
 					a(ng-click="openDeleteConfirmation(race)") Supprimer
-				td
-					a(ng-click="publish(race)") Publier
+				td(ng-if="race.published === true")
+					a(ng-click="publish(race, false)") Retirer
+				td(ng-if="race.published === false")
+					a(ng-click="publish(race, true)") Publier
 
 	div.col-lg-8.col-lg-offset-4
 		pagination(boundary-links="true" on-select-page="onSelectPage(page)" total-items="totalItems" page="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")

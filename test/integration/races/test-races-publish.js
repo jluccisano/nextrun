@@ -127,7 +127,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
   describe('Access Denied', function() {
 
     it('should not update because unknown user', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish')
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish/true')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -157,7 +157,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
     it('should not publish because user not Owner', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish')
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish/true')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -194,7 +194,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
     it('should not publish because race id is unknown', function(done) {
-      superagent.put('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/publish')
+      superagent.put('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/publish/true')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -235,7 +235,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
     it('should update success', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish')
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish/true')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -245,7 +245,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
 
-    it('should update the user to the database', function(done) {
+    it('published must equal to true', function(done) {
       Race.findOne({
         _id: currentRace._id
       }).exec(function(err, race) {
@@ -256,6 +256,30 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         done();
       });
     });
+
+    it('test unplublished', function(done) {
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish/false')
+        .send()
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          done();
+        });
+    });
+
+    it('published must equal to false', function(done) {
+      Race.findOne({
+        _id: currentRace._id
+      }).exec(function(err, race) {
+        should.not.exist(err);
+        race.should.be.an.instanceOf(Race);
+        race.published.should.equal(false);
+        currentRace = race;
+        done();
+      });
+    });
+
     after(function(done) {
       superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
