@@ -5,7 +5,7 @@ module.exports = {
     development: {
         logLevel: "info",
         host: "localhost",
-        db: "mongodb://localhost/nextrun",
+        db: "mongodb://192.168.99.100:32773/nextrun",
         root: rootPath,
         tmpFolder: "./.tmp/",
         domain: "localhost",
@@ -55,8 +55,8 @@ module.exports = {
     },
     prod: {
         logLevel: "info",
-        host: "192.95.25.173",
-        db: "mongodb://192.95.25.173:27017/nextrun",
+        host: "localhost",
+        db: "mongodb://mongo:27017/nextrun",
         root: rootPath,
         tmpFolder: "/tmp/",
         domain: "nextrun.fr",

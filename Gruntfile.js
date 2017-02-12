@@ -488,6 +488,17 @@ module.exports = function(grunt) {
       }
     },
 
+    compress: {
+      main: {
+        options: {
+          archive: 'nextrun.zip'
+        },
+        files: [
+          {src: ['dist/*'], dest: 'docker/', filter: 'isFile'}, // includes files in path
+        ]
+      }
+    },
+
 
     /********************************** SCRIPTS PART ***************************************************/
 

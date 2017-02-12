@@ -6,9 +6,10 @@ var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var logger = require("morgan");
 var multer = require("multer");
+var upload = multer({ dest: 'uploads/' })
 var errorHandler = require("errorhandler");
 var session = require("express-session");
-var MongoStore = require("connect-mongo")({
+var MongoStore = require("connect-mongo/es5")({
     session: session
 });
 var cookieParser = require("cookie-parser");
@@ -42,8 +43,6 @@ module.exports = function(app, express, passport) {
         extended: true,
         limit: "50mb"
     }));
-
-    app.use(multer());
 
     // cookieParser should be above session
     app.use(cookieParser("jhfhsdbfhjezbfksbdfknnzehjfbhjbjb"));
