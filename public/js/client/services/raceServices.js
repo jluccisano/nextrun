@@ -7,7 +7,7 @@ angular.module('nextrunApp')
                     success(response);
                 }).error(error);
             },
-            find: function(userId, page, success, error) {
+            find: function(page, success, error) {
                 $http.get('/api/races/find/page/' + page).success(function(races) {
                     success(races);
                 }).error(error);
@@ -32,5 +32,10 @@ angular.module('nextrunApp')
                     success();
                 }).error(error);
             },
+            search: function(department, value, success, error) {
+                $http.get('/api/races/search/' + 'department/' + department).success(function(races) {
+                    success(races);
+                }).error(error);
+            }
         };
     });

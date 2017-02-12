@@ -66,6 +66,11 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       controller: 'EditRaceCtrl',
       access: access.user
     }).
+    when('/races/department/:department', {
+      templateUrl: '/partials/race/search',
+      controller: 'SearchRaceCtrl',
+      access: access.public
+    }).
     when('/credits', {
       templateUrl: '/partials/credits',
       controller: 'CreditCtrl',
@@ -120,20 +125,20 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
   }
 ]);
 
-nextrunApp.run(['$rootScope', '$location', 'Auth','Alert',
-  function($rootScope, $location, Auth,Alert) {
+nextrunApp.run(['$rootScope', '$location', 'Auth', 'Alert',
+  function($rootScope, $location, Auth, Alert) {
     'use strict';
-    $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        $rootScope.error = null;
-        if (!Auth.authorize(next.access)) {
-            if(Auth.isLoggedIn()) {
-              $location.path('/');
-            } else {
-              $location.path('/login');
-            }
-
-            Alert.add("danger", "Vous n'êtes pas autorisé à consulter cette page", 3000);
+    $rootScope.$on("$routeChangeStart", function(event, next, current) {
+      $rootScope.error = null;
+      if (!Auth.authorize(next.access)) {
+        if (Auth.isLoggedIn()) {
+          $location.path('/');
+        } else {
+          $location.path('/login');
         }
+
+        Alert.add("danger", "Vous n'êtes pas autorisé à consulter cette page", 3000);
+      }
     });
 
   }

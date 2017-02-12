@@ -5,7 +5,7 @@ angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', '
 		$scope.maxSize = 5;
 
 		$scope.init = function() {
-			RaceServices.find(Auth.user.id, $scope.currentPage,
+			RaceServices.find($scope.currentPage,
 				function(response) {
 
 					$scope.races = response.races;

@@ -112,294 +112,102 @@ var loadMapFrance = function() {
   fr.departement94 = paper.path("M 282.9375,131.28125 L 282.125,131.9375 L 281.3125,132.0625 L 281.25,132.5 L 281.09375,132.90625 L 281.5,132.90625 L 281.71875,132.71875 L 281.625,132.40625 L 282.875,132.34375 L 283.1875,132.46875 L 283.1875,133.125 L 282.875,133.78125 L 281.0625,133.53125 L 280.78125,133.28125 L 279.9375,133.875 L 279.125,134.09375 L 277.96875,134.03125 L 277.625,135.25 L 277.9375,135.78125 L 277.4375,137.25 L 277.9375,138.1875 L 278.8125,137.75 L 280.90625,138.90625 L 284.53125,138.90625 L 286.6875,139.90625 L 286.65625,139.6875 L 288.1875,135.84375 L 288.1875,134.09375 L 287.21875,133.84375 L 286.96875,133.375 L 286.5625,133.1875 L 285.6875,132.21875 L 284.15625,131.34375 L 282.9375,131.28125 z ").attr(attr);
   fr.departement95 = paper.path("M 255.5625,109.6875 L 254,111.625 L 252.8125,115.9375 L 251.5,118.15625 L 256.25,120.28125 L 259.875,119.625 L 264.375,122.5 L 269.1875,122.71875 L 272.59375,124.78125 L 273.46875,127.65625 L 273.4375,127.71875 L 273.8125,127.65625 L 277.3125,125.78125 L 282.5625,125.4375 L 285.4375,124.125 L 287.28125,122.8125 L 287.875,118.96875 L 286.59375,117.6875 L 282.3125,115.15625 L 278.1875,113 L 276.0625,113.96875 L 273.71875,114.5625 L 272.15625,113.375 L 269.03125,111.4375 L 266.5,113.375 L 262.78125,113.78125 L 257.5,113.375 L 256.3125,111.4375 L 255.5625,109.6875 z ").attr(attr);
 
-  fr.departement01.attr({
-    title: "01 - Ain"
-  });
-  fr.departement02.attr({
-    title: "02 - Aisne"
-  });
-  fr.departement2a.attr({
-    title: "2A - Corse du Sud"
-  });
-  fr.departement2b.attr({
-    title: "2B - Haute-Corse"
-  });
-  fr.departement03.attr({
-    title: "03 - Allier"
-  });
-  fr.departement04.attr({
-    title: "04 - Alpes de Haute-Provence"
-  });
-  fr.departement05.attr({
-    title: "05 - Hautes-Alpes"
-  });
-  fr.departement06.attr({
-    title: "06 - Alpes-Maritimes"
-  });
-  fr.departement07.attr({
-    title: "07 - Ardèche"
-  });
-  fr.departement08.attr({
-    title: "08 - Ardennes"
-  });
-  fr.departement09.attr({
-    title: "09 - Ariège"
-  });
-  fr.departement10.attr({
-    title: "10 - Aube"
-  });
-  fr.departement11.attr({
-    title: "11 - Aude"
-  });
-  fr.departement12.attr({
-    title: "12 - Aveyron"
-  });
-  fr.departement13.attr({
-    title: "13 - Bouches du Rhône"
-  });
-  fr.departement14.attr({
-    title: "14 - Calvados"
-  });
-  fr.departement15.attr({
-    title: "15 - Cantal"
-  });
-  fr.departement16.attr({
-    title: "16 - Charente"
-  });
-  fr.departement17.attr({
-    title: "17 - Charente Maritime"
-  });
-  fr.departement18.attr({
-    title: "18 - Cher"
-  });
-  fr.departement19.attr({
-    title: "19 - Corrèze"
-  });
-  fr.departement21.attr({
-    title: "21 - Côte d\'Or"
-  });
-  fr.departement22.attr({
-    title: "22 - Côtes d\'Armor"
-  });
-  fr.departement23.attr({
-    title: "23 - Creuse"
-  });
-  fr.departement24.attr({
-    title: "24 - Dordogne"
-  });
-  fr.departement25.attr({
-    title: "25 - Doubs"
-  });
-  fr.departement26.attr({
-    title: "26 - Drôme"
-  });
-  fr.departement27.attr({
-    title: "27 - Eure"
-  });
-  fr.departement28.attr({
-    title: "28 - Eure-et-Loir"
-  });
-  fr.departement29.attr({
-    title: "29 - Finistère"
-  });
-  fr.departement30.attr({
-    title: "30 - Gard"
-  });
-  fr.departement31.attr({
-    title: "31 - Haute-Garonne"
-  });
-  fr.departement32.attr({
-    title: "32 - Gers"
-  });
-  fr.departement33.attr({
-    title: "33 - Gironde"
-  });
-  fr.departement34.attr({
-    title: "34 - Hérault"
-  });
-  fr.departement35.attr({
-    title: "35 - Ille-et-Vilaine"
-  });
-  fr.departement36.attr({
-    title: "36 - Indre"
-  });
-  fr.departement37.attr({
-    title: "37 - Indre-et-Loire"
-  });
-  fr.departement38.attr({
-    title: "38 - Isère"
-  });
-  fr.departement39.attr({
-    title: "39 - Jura"
-  });
-  fr.departement40.attr({
-    title: "40 - Landes"
-  });
-  fr.departement41.attr({
-    title: "41 - Loir-et-Cher"
-  });
-  fr.departement42.attr({
-    title: "42 - Loire"
-  });
-  fr.departement43.attr({
-    title: "43 - Haute-Loire"
-  });
-  fr.departement44.attr({
-    title: "44 - Loire-Atlantique"
-  });
-  fr.departement45.attr({
-    title: "45 - Loiret"
-  });
-  fr.departement46.attr({
-    title: "46 - Lot"
-  });
-  fr.departement47.attr({
-    title: "47 - Lot-et-Garonne"
-  });
-  fr.departement48.attr({
-    title: "48 - Lozère"
-  });
-  fr.departement49.attr({
-    title: "49 - Maine-et-Loire"
-  });
-  fr.departement50.attr({
-    title: "50 - Manche"
-  });
-  fr.departement51.attr({
-    title: "51 - Marne"
-  });
-  fr.departement52.attr({
-    title: "52 - Haute-Marne"
-  });
-  fr.departement53.attr({
-    title: "53 - Mayenne"
-  });
-  fr.departement54.attr({
-    title: "54 - Meurthe-et-Moselle"
-  });
-  fr.departement55.attr({
-    title: "55 - Meuse"
-  });
-  fr.departement56.attr({
-    title: "56 - Morbihan"
-  });
-  fr.departement57.attr({
-    title: "57 - Moselle"
-  });
-  fr.departement58.attr({
-    title: "58 - Nièvre"
-  });
-  fr.departement59.attr({
-    title: "59 - Nord"
-  });
-  fr.departement60.attr({
-    title: "60 - Oise"
-  });
-  fr.departement61.attr({
-    title: "61 - Orne"
-  });
-  fr.departement62.attr({
-    title: "62 - Pas-de-Calais"
-  });
-  fr.departement63.attr({
-    title: "63 - Puy-de-Dôme"
-  });
-  fr.departement64.attr({
-    title: "64 - Pyrénées-Atlantiques"
-  });
-  fr.departement65.attr({
-    title: "65 - Hautes-Pyrénées"
-  });
-  fr.departement66.attr({
-    title: "66 - Pyrénées-Orientales"
-  });
-  fr.departement67.attr({
-    title: "67 - Bas-Rhin"
-  });
-  fr.departement68.attr({
-    title: "68 - Haut-Rhin"
-  });
-  fr.departement69.attr({
-    title: "69 - Rhône"
-  });
-  fr.departement70.attr({
-    title: "70 - Haute-Saône"
-  });
-  fr.departement71.attr({
-    title: "71 - Saône-et-Loire"
-  });
-  fr.departement72.attr({
-    title: "72 - Sarthe"
-  });
-  fr.departement73.attr({
-    title: "73 - Savoie"
-  });
-  fr.departement74.attr({
-    title: "74 - Haute-Savoie"
-  });
-  fr.departement75.attr({
-    title: "75 - Paris"
-  });
-  fr.departement76.attr({
-    title: "76 - Seine-Maritime"
-  });
-  fr.departement77.attr({
-    title: "77 - Seine-et-Marne"
-  });
-  fr.departement78.attr({
-    title: "78 - Yvelines"
-  });
-  fr.departement79.attr({
-    title: "79 - Deux-Sèvres"
-  });
-  fr.departement80.attr({
-    title: "80 - Somme"
-  });
-  fr.departement81.attr({
-    title: "81 - Tarn"
-  });
-  fr.departement82.attr({
-    title: "82 - Tarn-et-Garonne"
-  });
-  fr.departement83.attr({
-    title: "83 - Var"
-  });
-  fr.departement84.attr({
-    title: "84 - Vaucluse"
-  });
-  fr.departement85.attr({
-    title: "85 - Vendée"
-  });
-  fr.departement86.attr({
-    title: "86 - Vienne"
-  });
-  fr.departement87.attr({
-    title: "87 - Haute-Vienne"
-  });
-  fr.departement88.attr({
-    title: "88 - Vosges"
-  });
-  fr.departement89.attr({
-    title: "89 - Yonne"
-  });
-  fr.departement90.attr({
-    title: "90 - Territoire-de-Belfort"
-  });
-  fr.departement91.attr({
-    title: "91 - Essonne"
-  });
-  fr.departement92.attr({
-    title: "92 - Hauts-de-Seine"
-  });
-  fr.departement93.attr({
-    title: "93 - Seine-St-Denis"
-  });
-  fr.departement94.attr({
-    title: "94 - Val-de-Marne"
-  });
-  fr.departement95.attr({
-    title: "95 - Val-d\'Oise"
-  });
+  fr.departement01.attr({href:"/races/department/01", title:"01 - Ain"});
+  fr.departement02.attr({href:"/races/department/02", title:"02 - Aisne"});
+  fr.departement2a.attr({href:"/races/department/2A", title:"2A - Corse du Sud"});
+  fr.departement2b.attr({href:"/races/department/2B", title:"2B - Haute-Corse"});
+  fr.departement03.attr({href:"/races/department/03", title:"03 - Allier"});
+  fr.departement04.attr({href:"/races/department/04", title:"04 - Alpes de Haute-Provence"});
+  fr.departement05.attr({href:"/races/department/05", title:"05 - Hautes-Alpes"});
+  fr.departement06.attr({href:"/races/department/06", title:"06 - Alpes-Maritimes"});
+  fr.departement07.attr({href:"/races/department/07", title:"07 - Ardèche"});
+  fr.departement08.attr({href:"/races/department/08", title:"08 - Ardennes"});
+  fr.departement09.attr({href:"/races/department/09", title:"09 - Ariège"});
+  fr.departement10.attr({href:"/races/department/10", title:"10 - Aube"});
+  fr.departement11.attr({href:"/races/department/11", title:"11 - Aude"});
+  fr.departement12.attr({href:"/races/department/12", title:"12 - Aveyron"});
+  fr.departement13.attr({href:"/races/department/13", title:"13 - Bouches du Rhône"});
+  fr.departement14.attr({href:"/races/department/14", title:"14 - Calvados"});
+  fr.departement15.attr({href:"/races/department/15", title:"15 - Cantal"});
+  fr.departement16.attr({href:"/races/department/16", title:"16 - Charente"});
+  fr.departement17.attr({href:"/races/department/17", title:"17 - Charente Maritime"});
+  fr.departement18.attr({href:"/races/department/18", title:"18 - Cher"});
+  fr.departement19.attr({href:"/races/department/19", title:"19 - Corrèze"});
+  fr.departement21.attr({href:"/races/department/21", title:"21 - Côte d\'Or"});
+  fr.departement22.attr({href:"/races/department/22", title:"22 - Côtes d\'Armor"});
+  fr.departement23.attr({href:"/races/department/23", title:"23 - Creuse"});
+  fr.departement24.attr({href:"/races/department/24", title:"24 - Dordogne"});
+  fr.departement25.attr({href:"/races/department/25", title:"25 - Doubs"});
+  fr.departement26.attr({href:"/races/department/26", title:"26 - Drôme"});
+  fr.departement27.attr({href:"/races/department/27", title:"27 - Eure"});
+  fr.departement28.attr({href:"/races/department/28", title:"28 - Eure-et-Loir"});
+  fr.departement29.attr({href:"/races/department/29", title:"29 - Finistère"});
+  fr.departement30.attr({href:"/races/department/30", title:"30 - Gard"});
+  fr.departement31.attr({href:"/races/department/31", title:"31 - Haute-Garonne"});
+  fr.departement32.attr({href:"/races/department/32", title:"32 - Gers"});
+  fr.departement33.attr({href:"/races/department/33", title:"33 - Gironde"});
+  fr.departement34.attr({href:"/races/department/34", title:"34 - Hérault"});
+  fr.departement35.attr({href:"/races/department/35", title:"35 - Ille-et-Vilaine"});
+  fr.departement36.attr({href:"/races/department/36", title:"36 - Indre"});
+  fr.departement37.attr({href:"/races/department/37", title:"37 - Indre-et-Loire"});
+  fr.departement38.attr({href:"/races/department/38", title:"38 - Isère"});
+  fr.departement39.attr({href:"/races/department/39", title:"39 - Jura"});
+  fr.departement40.attr({href:"/races/department/40", title:"40 - Landes"});  
+  fr.departement41.attr({href:"/races/department/41", title:"41 - Loir-et-Cher"});
+  fr.departement42.attr({href:"/races/department/42", title:"42 - Loire"});
+  fr.departement43.attr({href:"/races/department/43", title:"43 - Haute-Loire"});
+  fr.departement44.attr({href:"/races/department/44", title:"44 - Loire-Atlantique"});
+  fr.departement45.attr({href:"/races/department/45", title:"45 - Loiret"});
+  fr.departement46.attr({href:"/races/department/46", title:"46 - Lot"});
+  fr.departement47.attr({href:"/races/department/47", title:"47 - Lot-et-Garonne"});
+  fr.departement48.attr({href:"/races/department/48", title:"48 - Lozère"});
+  fr.departement49.attr({href:"/races/department/49", title:"49 - Maine-et-Loire"});
+  fr.departement50.attr({href:"/races/department/50", title:"50 - Manche"});
+  fr.departement51.attr({href:"/races/department/51", title:"51 - Marne"});
+  fr.departement52.attr({href:"/races/department/52", title:"52 - Haute-Marne"});
+  fr.departement53.attr({href:"/races/department/53", title:"53 - Mayenne"});
+  fr.departement54.attr({href:"/races/department/54", title:"54 - Meurthe-et-Moselle"});
+  fr.departement55.attr({href:"/races/department/55", title:"55 - Meuse"});
+  fr.departement56.attr({href:"/races/department/56", title:"56 - Morbihan"});
+  fr.departement57.attr({href:"/races/department/57", title:"57 - Moselle"});
+  fr.departement58.attr({href:"/races/department/58", title:"58 - Nièvre"});
+  fr.departement59.attr({href:"/races/department/59", title:"59 - Nord"});
+  fr.departement60.attr({href:"/races/department/60", title:"60 - Oise"});
+  fr.departement61.attr({href:"/races/department/61", title:"61 - Orne"});
+  fr.departement62.attr({href:"/races/department/62", title:"62 - Pas-de-Calais"});
+  fr.departement63.attr({href:"/races/department/63", title:"63 - Puy-de-Dôme"});
+  fr.departement64.attr({href:"/races/department/64", title:"64 - Pyrénées-Atlantiques"});
+  fr.departement65.attr({href:"/races/department/65", title:"65 - Hautes-Pyrénées"});
+  fr.departement66.attr({href:"/races/department/66", title:"66 - Pyrénées-Orientales"});
+  fr.departement67.attr({href:"/races/department/67", title:"67 - Bas-Rhin"});
+  fr.departement68.attr({href:"/races/department/68", title:"68 - Haut-Rhin"});
+  fr.departement69.attr({href:"/races/department/69", title:"69 - Rhône"});
+  fr.departement70.attr({href:"/races/department/70", title:"70 - Haute-Saône"});
+  fr.departement71.attr({href:"/races/department/71", title:"71 - Saône-et-Loire"});
+  fr.departement72.attr({href:"/races/department/72", title:"72 - Sarthe"});
+  fr.departement73.attr({href:"/races/department/73", title:"73 - Savoie"});
+  fr.departement74.attr({href:"/races/department/74", title:"74 - Haute-Savoie"});
+  fr.departement75.attr({href:"/races/department/75", title:"75 - Paris"});
+  fr.departement76.attr({href:"/races/department/76", title:"76 - Seine-Maritime"});
+  fr.departement77.attr({href:"/races/department/77", title:"77 - Seine-et-Marne"});
+  fr.departement78.attr({href:"/races/department/78", title:"78 - Yvelines"});
+  fr.departement79.attr({href:"/races/department/79", title:"79 - Deux-Sèvres"});
+  fr.departement80.attr({href:"/races/department/80", title:"80 - Somme"});
+  fr.departement81.attr({href:"/races/department/81", title:"81 - Tarn"});
+  fr.departement82.attr({href:"/races/department/82", title:"82 - Tarn-et-Garonne"});
+  fr.departement83.attr({href:"/races/department/83", title:"83 - Var"});
+  fr.departement84.attr({href:"/races/department/84", title:"84 - Vaucluse"});
+  fr.departement85.attr({href:"/races/department/85", title:"85 - Vendée"});
+  fr.departement86.attr({href:"/races/department/86", title:"86 - Vienne"});
+  fr.departement87.attr({href:"/races/department/87", title:"87 - Haute-Vienne"});
+  fr.departement88.attr({href:"/races/department/88", title:"88 - Vosges"});
+  fr.departement89.attr({href:"/races/department/89", title:"89 - Yonne"});
+  fr.departement90.attr({href:"/races/department/90", title:"90 - Territoire-de-Belfort"});
+  fr.departement91.attr({href:"/races/department/91", title:"91 - Essonne"});
+  fr.departement92.attr({href:"/races/department/92", title:"92 - Hauts-de-Seine"});
+  fr.departement93.attr({href:"/races/department/93", title:"93 - Seine-St-Denis"});
+  fr.departement94.attr({href:"/races/department/94", title:"94 - Val-de-Marne"});
+  fr.departement95.attr({href:"/races/department/95", title:"95 - Val-d\'Oise"});
 
   var tfm = 'S0.5,0.5,0,0';
 

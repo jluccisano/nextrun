@@ -253,3 +253,81 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
   });
 
 };
+
+/**
+ * @method Search races by criteria
+ * @param req
+ * @param res
+ */
+exports.search = function(req, res) {
+
+  var operation = {
+    department: {},
+    type: {},
+    date: {}
+  };
+
+  var from = 0;
+  var to = 0;
+
+  if (req.param('from')) {
+    from = new Date(parseInt(req.param('from'), 10));
+  }
+
+  if (req.param('to')) {
+    to = new Date(parseInt(req.param('to'), 10));
+  }
+
+  if (from && to) {
+    operation.date = {
+      "date": {
+        $gte: from,
+        $lt: to
+      }
+    };
+  } else if (from) {
+    operation.date = {
+      "date": {
+        $gte: from
+      }
+    };
+  } else if (to) {
+    operation.date = {
+      "date": {
+        $lt: to
+      }
+    };
+  }
+
+
+  var types = req.param('type')
+  if (types) {
+    var typesArray = types.split(',');
+    operation.type = {
+      "type": {
+        '$in': typesArray
+      }
+    };
+  }
+  var departments = req.param('department');
+  if (departments) {
+    var departmentsArray = departments.split(',');
+    operation.department = {
+      "department": {
+        '$in': departmentsArray
+      }
+    };
+  }
+
+  Race.search(operation, function(err, races) {
+    if (err) {
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+
+    return res.json(200, {races : races});
+  });
+
+
+};

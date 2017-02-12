@@ -139,6 +139,11 @@ var routes = [
         httpMethod: 'DELETE',
         middleware: [raceController.delete],
         accessLevel: accessLevels.user
+    }, {
+        path: '/api/races/search/(department/:department)?',
+        httpMethod: 'GET',
+        middleware: [raceController.search],
+        accessLevel: accessLevels.public
     },
 
 

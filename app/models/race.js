@@ -267,9 +267,36 @@ RaceSchema.statics = {
     this.remove({
       user_id: user._id
     }).exec(cb);
+  },
+
+  /**
+   * Seach user by complex aggregation
+   *
+   * @param {User} user
+   * @param {Function} cb
+   */
+  search: function(operation, cb) {
+
+    this.aggregate({
+      $match: {
+        $and: [operation.date, operation.date, operation.department, {
+          published: "true"
+        }]
+      }
+    }, {
+      $group: {
+        _id: '$date',
+        races: {
+          $push: {
+            "_id": "$_id",
+            "name": "$name",
+            "type": "$type",
+            "department": "$department"
+          }
+        }
+      }
+    }, cb);
   }
-
-
 }
 
 mongoose.model('Race', RaceSchema);
