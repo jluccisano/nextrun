@@ -1,6 +1,6 @@
 #!/bin/bash
 
-COMPRESS_FILE=/home/jluccisano/backup_nextrun/nextrun-backup-$(date +%Y-%m-%d).tar.gz
+COMPRESS_FILE=/home/jluccisano/nextrun_backups/compressed/nextrun-backup-$(date +%Y-%m-%d).tar.gz
 
 mongodump -h  192.95.25.173:27017 -d nextrun  -o /home/jluccisano/nextrun_backups
 tar -zcvf $COMPRESS_FILE /home/jluccisano/nextrun_backups/nextrun
