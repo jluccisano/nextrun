@@ -45,11 +45,12 @@ angular.module("google-maps")
 
 
                         var map = mapCtrl.getMap();
+                        var bounds = new google.maps.LatLngBounds();
+                        var pathPoints = [];
 
                         for (var p = 0; p < scope.polylines.length; p++) {
 
-                            var bounds = new google.maps.LatLngBounds();
-                            var pathPoints = [];
+
 
                             var path = scope.polylines[p].path;
 
@@ -88,4 +89,4 @@ angular.module("google-maps")
                 }
             };
         }
-    ]);;
+    ]);

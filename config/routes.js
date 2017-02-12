@@ -140,7 +140,7 @@ var routes = [
         middleware: [raceController.delete],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/races/search/(department/:department)?',
+        path: '/api/races/search/(page/:page)?/(size/:size)?/(sort/:sort)?/(types/:types)?/(departments/:departments)?',
         httpMethod: 'GET',
         middleware: [raceController.search, raceController.facets],
         accessLevel: accessLevels.public

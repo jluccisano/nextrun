@@ -69,7 +69,7 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       controller: 'EditRaceCtrl',
       access: access.user
     }).
-    when('/races/department/:department', {
+    when('/races/departments/:departments', {
       templateUrl: '/partials/race/search',
       controller: 'SearchRaceCtrl',
       access: access.public
@@ -90,7 +90,7 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       access: access.public
     }).
     when('/404', {
-      templateUrl: '/errors/404',
+      templateUrl: '/partials/errors/404',
       access: access.public
     });
 

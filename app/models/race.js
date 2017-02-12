@@ -283,11 +283,7 @@ RaceSchema.statics = {
 
     this.aggregate({
       '$match': {
-        '$and': [{
-          'department.code': {
-            '$in': ['11']
-          }
-        }, {
+        '$and': [operation.departments, operation.types, {
           published: true
         }]
       }
@@ -303,6 +299,7 @@ RaceSchema.statics = {
             "name": "$name",
             "type": "$type",
             "date": "$date",
+            "distanceType":"$distanceType",
             "department": "$department"
           }
         }
@@ -316,16 +313,15 @@ RaceSchema.statics = {
         "type": "$races.type",
         "department": "$races.department",
         "date": "$races.date",
+        "distanceType":"$races.distanceType",
         "total": "$total"
       }
     }, {
-      "$skip": 0
+      "$skip": parseInt(operation.page)
     }, {
-      "$limit": 100
+      "$limit": parseInt(operation.size)
     }, {
-      "$sort": {
-        name: 1
-      }
+      "$sort": operation.sort
     }, {
       "$group": {
         "_id": "$total",
@@ -335,6 +331,7 @@ RaceSchema.statics = {
             "name": "$name",
             "type": "$type",
             "date": "$date",
+            "distanceType":"$distanceType",
             "department": "$department"
           }
         },
@@ -361,11 +358,7 @@ RaceSchema.statics = {
   facets: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [{
-          'department.code': {
-            '$in': ['11']
-          }
-        }, {
+        '$and': [operation.departments,operation.types, {
           published: true
         }]
       }

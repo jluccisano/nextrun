@@ -10,11 +10,11 @@ div.container
 	div.row
 			div.col-lg-4
 				div.well
-					h3 Affiner la Recherche
+					h2 Affiner la Recherche
 
-					h2 par Type
+					h3 par Type
 					div.checkbox(ng-repeat="facet in facets")
-						div(ng-switch on="currentTypeSelected.indexOf(facet._id.name) > -1")
+						div(ng-switch="currentTypeSelected.indexOf(facet._id.name) > -1")
 							div(ng-switch-when="false")
 								label {{facet._id.name}} ({{facet.total}})
 								input(type="checkbox" 
@@ -35,19 +35,30 @@ div.container
 								  ng-false-value="false")
 
 			div.col-lg-8
-				div.row
-					div.col-lg-12
-						//h2 {{getDate(event._id)}}
-						hr
-						table.table
-							thead
-								tr
-									th(style="width: 60%")
-									th(style="width: 30%")
-									th(style="width: 10%")
-							tbody
-								tr(data-ng-repeat="race in races")
-									td(style="border:0", align="left") {{race.name}}
-						div.col-lg-8.col-lg-offset-4
-							pagination(boundary-links="true" max-size="maxSize" num-pages="numPages" items-per-page="pageSize"  on-select-page="onSelectPage()" total-items="totalItems" page="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
-							pre Page: {{currentPage}} / {{numPages}}
+				div.col-lg-3
+					pre Page: {{currentPage}} / {{numPages}}
+				div.col-lg-3.col-lg-offset-4
+					select(class="form-control" style="width:150px" ng-model="sort" ng-change="onChangeSort()")
+						option(value="_score") par pertinence
+						option(value="race.date") par date
+				div.col-lg-2
+					select(class="form-control" style="width:80px" ng-model="pageSize" ng-change="onChangePageSize()")
+						option(value="10") 10
+						option(value="20") 20
+						option(value="50") 50
+				table.table.table-hover
+					thead
+						tr
+							th(style="width: 40%;border:0; border-top: none;")
+							th(style="width: 20%;border:0; border-top: none;")
+							th(style="width: 10%;border:0; border-top: none;")
+							th(style="width: 30%;border:0; border-top: none;")
+					tbody
+						tr(data-ng-repeat="race in races")
+							td(align="left")
+								a(data-ng-href='/races/view/{{race._id}}') {{race.name}}
+							td(align="center") {{race.type.i18n}}
+							td(align="center") {{race.distanceType.name}}
+							td(align="center") {{getDate(race.date)}}
+				div.col-lg-6.col-lg-offset-4
+					pagination(boundary-links="true" max-size="maxSize" num-pages="numPages" items-per-page="pageSize"  on-select-page="onSelectPage()" total-items="totalItems" page="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")

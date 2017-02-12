@@ -262,8 +262,8 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
 exports.facets = function(req, res) {
 
   var operation = {
-    department: {},
-    type: {},
+    departments: {},
+    types: {},
     date: {}
   };
 
@@ -289,10 +289,25 @@ exports.facets = function(req, res) {
 exports.search = function(req, res, next) {
 
   var operation = {
-    department: {},
-    type: {},
-    date: {}
+    departments: {},
+    types: {},
+    date: {},
+    page: 0,
+    size: 20,
+    sort: {"date":1}
   };
+
+  if (req.param('page')) {
+    operation.page = req.param('page');
+  }
+
+  if (req.param('size')) {
+    operation.size = req.param('size');
+  }
+
+  if (req.param('sort')) {
+    operation.sort = {"date":1};
+  }
 
   var from = 0;
   var to = 0;
@@ -327,20 +342,20 @@ exports.search = function(req, res, next) {
   }
 
 
-  var types = req.param('type')
+  var types = req.param('types')
   if (types) {
     var typesArray = types.split(',');
-    operation.type = {
-      "type": {
+    operation.types = {
+      "type.name": {
         '$in': typesArray
       }
     };
   }
-  var departments = req.param('department');
+  var departments = req.param('departments');
   if (departments) {
     var departmentsArray = departments.split(',');
     console.log(departmentsArray);
-    operation.department = {
+    operation.departments = {
       "department.code": {
         '$in': departmentsArray
       }
@@ -350,7 +365,8 @@ exports.search = function(req, res, next) {
   console.log(util.inspect(operation, true));
 
   Race.search(operation, function(err, races) {
-    if (err) {
+    if (err) {  
+      console.log(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });

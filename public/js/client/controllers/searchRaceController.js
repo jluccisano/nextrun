@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices',
-	function($scope, $location, $routeParams, RaceServices) {
+angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices','$http',
+	function($scope, $location, $routeParams, RaceServices,$http) {
 		'use strict';
 
 
@@ -9,13 +9,16 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.currentPage = 1;
 		$scope.maxSize = 5;
+		$scope.sort = "_score";
+
+
 
 		$scope.currentTypeSelected = [];
 
-		$scope.department = $routeParams.department;
+		$scope.departments = $routeParams.departments;
 
 		$scope.init = function() {
-			RaceServices.search($scope.department,
+			RaceServices.search($scope.departments,
 				function(response) {
 
 					$scope.races = response.races[0].results;
@@ -25,8 +28,6 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					$scope.totalItems = response.races[0].size;
 
 					$scope.total = response.races[0].total;
-
-					$scope.idx = $scope.currentTypeSelected.indexOf($scope.facets[0]._id.name);
 				},
 				function(error) {
 					_.each(error.message, function(message) {
@@ -65,20 +66,26 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		};
 
+		$scope.onSelectPage = function() {
+			$scope.search();
+		};
+
+
+		$scope.onChangePageSize = function() {
+			$scope.search();
+			$scope.currentPage = 1;
+		};
+
+		$scope.onChangeSort = function() {
+			$scope.search();
+			$scope.currentPage = 1;
+		};
+
 		$scope.onChange = function() {
 			search();
 			$scope.currentPage = 1;
 		}
 
-		$scope.onSelectPage = function() {
-			//search();
-		};
-
-
-		$scope.onChangePageSize = function() {
-			//search();
-			//$scope.currentPage = 1;
-		};
 
 		$scope.toggleSelection = function toggleSelection(term) {
 			var idx = $scope.currentTypeSelected.indexOf(term);
@@ -97,19 +104,18 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		var search = function() {
 
-			var has = "";
+			var url = '/api/races/search' + '/page/' + ($scope.currentPage - 1) + '/size/' + $scope.pageSize + '/sort/' + $scope.sort
+
+			var hasTypes = "";
 
 			angular.forEach($scope.currentTypeSelected, function(item) {
-				has += item + ",";
+				hasTypes += item + ",";
 			});
 
-			has = has.substr(0, has.length - 1);
+			hasTypes = hasTypes.substr(0, hasTypes.length - 1);
 
-			var url;
-			if (has !== "") {
-				url = '/employees/search/' + $scope.currentSearch + '/filters/' + has + '/page/' + $scope.currentPage + '/size/' + $scope.pageSize
-			} else {
-				url = '/employees/search/' + $scope.currentSearch + '/page/' + $scope.currentPage + '/size/' + $scope.pageSize
+			if (hasTypes != "") {
+				url = url + '/types/' + hasTypes;
 			}
 
 
@@ -119,19 +125,13 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			}).
 			then(function(response) {
 
-				/*var hits = response.data.hits;
+				$scope.races = response.races[0].results;
 
-				var facets = response.data.facets;
+				$scope.facets = response.facets;
 
-				$scope.total = hits.total;
+				$scope.totalItems = response.races[0].size;
 
-				$scope.employees = hits.hits;
-
-				$scope.agencies = facets.agencyFacet.terms;
-
-				$scope.totalItems = $scope.total;*/
-
-
+				$scope.total = response.races[0].total;
 
 			});
 
