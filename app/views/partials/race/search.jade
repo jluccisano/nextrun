@@ -31,7 +31,7 @@ div.container
 							a(data-ng-click="toggleTypeSelection(type);onChange()" data-ng-repeat="type in currentTypeSelected") 
 								span.label.label-primary {{type}}
 						div.col-lg-12
-							a(data-ng-click="toggleDepartmentSelection(department);onChange()" ng-repeat="department in currentDepartmentSelected") 
+							a(data-ng-click="toggleDepartmentSelection(department);onChange()" ng-repeat="department in departments") 
 								span.label.label-success {{getDepartment(department)}}
 						div.col-lg-12
 							a(data-ng-click="resetDataRangeFilter();onChange()") 
@@ -59,22 +59,22 @@ div.container
 								  data-ng-false-value="false")
 					h4 par Département
 					div.checkbox(data-ng-repeat="facet in departmentFacets")
-						div(data-ng-switch="currentDepartmentSelected.indexOf(facet._id) > -1")
+						div(data-ng-switch="departments.indexOf(facet._id) > -1")
 							div(data-ng-switch-when="false")
-								label {{getDepartmentByCode(DEPARTMENTS, facet._id)}} ({{facet.total}})
+								label {{getDepartmentByCode(facet._id)}} ({{facet.total}})
 								input(type="checkbox" 
 								  data-ng-change="onChange()",
 								  data-ng-model="facet.selected",
-								  data-ng-checked="currentDepartmentSelected.indexOf(facet._id) > -1"
+								  data-ng-checked="departments.indexOf(facet._id) > -1"
 								  data-ng-click="toggleDepartmentSelection(facet._id)"
 								  vng-true-value="true", 
 								  data-ng-false-value="false")
 							div(data-ng-switch-when="true")
-								label <strong>{{getDepartmentByCode(DEPARTMENTS, facet._id)}}</strong>
+								label <strong>{{getDepartmentByCode(facet._id)}}</strong>
 								input(type="checkbox" 
 								  data-ng-change="onChange()",
 								  data-ng-model="facet.selected",
-								  data-ng-checked="currentDepartmentSelected.indexOf(facet._id) > -1"
+								  data-ng-checked="departments.indexOf(facet._id) > -1"
 								  data-ng-click="toggleDepartmentSelection(facet._id)"
 								  data-ng-true-value="true", 
 								  data-ng-false-value="false")

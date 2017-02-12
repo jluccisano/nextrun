@@ -117,7 +117,7 @@ div.container
 							span <strong>{{race.plan.address.postcode}} - {{race.plan.address.city}}</strong>
 							br
 						div.well(data-ng-if="race.plan.planMoreInformation" data-ng-bind-html="race.plan.planMoreInformation")
-					div.col-lg-4(data-ng-if="isVisible && race.plan.address.latLng.lat != null && race.plan.address.latLng.lng != null")
+					div.col-lg-4(data-ng-if="isVisible && race.plan.address.latlng.lat != null && race.plan.address.latlng.lng != null")
 						gm-map(gm-map-id="'mapPlan'" gm-center="center" gm-zoom="zoom" gm-map-options="options.map" style="width:250px;height:250px" )
 							gm-markers(gm-objects="addressMarkers" gm-id="object.id" gm-position="{lat: object.location.lat, lng: object.location.lng}")
 		tab(heading=t("race.rights"))

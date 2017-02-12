@@ -402,7 +402,7 @@ RaceSchema.statics = {
   departmentFacets: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [operation.fulltext, operation.types, operation.date, {
+        '$and': [operation.fulltext, operation.types, operation.date, operation.departments, {
           published: true
         }]
       }

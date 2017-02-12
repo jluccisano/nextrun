@@ -60,6 +60,7 @@ module.exports = function(grunt) {
           'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
           'tmp/public/js/client/widgets/map-france.js': ['public/js/client/widgets/map-france.js'],
           'tmp/public/js/client/widgets/google-analytics.js': ['public/js/client/widgets/google-analytics.js'],
+          'tmp/public/js/client/constants/regions.js': ['public/js/client/constants/regions.js'],
           'tmp/public/js/client/constants/departments.js': ['public/js/client/constants/departments.js'],
           'tmp/public/js/client/constants/typeOfRaces.js': ['public/js/client/constants/typeOfRaces.js'],
           'tmp/public/js/client/pages/home.js': ['public/js/client/pages/home.js'],
@@ -129,6 +130,7 @@ module.exports = function(grunt) {
           'dist/public/js/libs/textAngular.min.js': ['tmp/public/js/libs/textAngular.js'],
           'dist/public/js/libs/bootstrap-multiselect.min.js': ['tmp/public/js/libs/bootstrap-multiselect.js'],
           'dist/public/js/libs/daterangepicker.min.js': ['tmp/public/js/libs/daterangepicker.js'],
+          'dist/public/js/client/constants/regions.min.js': ['tmp/public/js/client/constants/regions.js'],
           'dist/public/js/libs/ui-bootstrap-tpls-0.7.0.min.js': ['tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js']
         }
       }

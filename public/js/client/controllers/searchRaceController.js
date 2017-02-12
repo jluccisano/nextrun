@@ -17,7 +17,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.currentDepartmentSelected = [];
 
 		$scope.departments = [];
-		$scope.region = undefined;
+		$scope.region = {};
 
 		$scope.listOfDepartments = DEPARTMENTS.enums;
 		$scope.listOfRegions = REGIONS.enums;
@@ -174,7 +174,6 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		}
 
 		$scope.onChangeRegion = function(region) {
-			$scope.departments = region.departments;
 			$scope.search();
 		}
 
@@ -242,10 +241,16 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			return departmentsCodes
 		};
 
+		$scope.getDepartmentByCode = function(departmentCode) {
+			var department = getDepartmentByCode(DEPARTMENTS, departmentCode);
+			return $scope.getDepartment(department);
+		};
+
 
 		$scope.search = function() {
 
 			$scope.currentPage = 1;
+
 
 			var criteria = {
 				fulltext: ($scope.fulltext !== undefined && $scope.fulltext.fullname) ? $scope.fulltext.fullname : "",
@@ -255,7 +260,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					"date": 1
 				},
 				types: $scope.currentTypeSelected,
-				departments: $scope.getDepartmentsCodes($scope.departments),
+				departments: ($scope.departments.length > 0) ? $scope.departments : $scope.region.departments,
 				//dateRange: $scope.dateRange
 			};
 
@@ -268,14 +273,14 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 						$scope.races = response.races[0].results;
 
-						$scope.typeFacets = response.facets[2];
+						$scope.typeFacets = response.facets[1];
 
 						$scope.departmentFacets = response.facets[0];
 
-						$scope.dateFacets = response.facets[1];
+						//$scope.dateFacets = response.facets[1];
 
-						$scope.datarangeConfig.minDate = $scope.dateFacets[0].minDate;
-						$scope.datarangeConfig.maxDate = $scope.dateFacets[0].maxDate;
+						//$scope.datarangeConfig.minDate = $scope.dateFacets[0].minDate;
+						//$scope.datarangeConfig.maxDate = $scope.dateFacets[0].maxDate;
 
 						$scope.totalItems = response.races[0].size;
 
@@ -288,7 +293,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 						$scope.races = [];
 
 						$scope.departmentFacets = [];
-						$scope.dateFacets = [];
+						//$scope.dateFacets = [];
 						$scope.typeFacets = [];
 
 						$scope.totalItems = 0;
@@ -304,7 +309,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					});
 				});
 		};
-		$scope.computeUrlParams();
+		//$scope.computeUrlParams();
 		$scope.search();
 	}
 ]);
