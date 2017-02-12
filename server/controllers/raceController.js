@@ -184,7 +184,7 @@ exports.updateField = function(req, res) {
                     console.log(query);
 
                     Race.update(query , {
-                        $set: fieldsToUpdate
+                        $addToSet: fieldsToUpdate
                     }, {
                         upsert: true
                     }, function(err) {

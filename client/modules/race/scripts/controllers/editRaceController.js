@@ -157,10 +157,10 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				//if (!angular.equals(route.data, $scope.routesViewModel[$index].data)) {
 
 				var fields = {};
-				fields["routes.$"] = route.data;
+				fields["routes"] = route.data;
 
 				var query = {};
-				query = {"routes.type": route.type};
+				query = {"routes.type": route.getType()};
 
 				$scope.update({
 					query: query,
