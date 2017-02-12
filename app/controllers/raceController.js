@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
   errorUtils = require('../utils/errorutils'),
   util = require('util'),
   elasticsearchUtils = require('../utils/elasticsearchUtils'),
-  ElasticSearchClient = require('elasticsearchclient');
+  ElasticSearchClient = require('elasticsearchclient'),
+  fs = require('fs');
 
 var serverOptions = {
   host: 'localhost',
@@ -448,7 +449,7 @@ exports.search = function(req, res) {
   }
 
   //set for all published filter
-  if(published_filter) {
+  if (published_filter) {
     departmentFacetFilter.and.push(published_filter);
     typeFacetFilter.and.push(published_filter);
   }

@@ -139,26 +139,22 @@ var routes = [
         httpMethod: 'DELETE',
         middleware: [raceController.delete],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/races/search',
         httpMethod: 'POST',
         middleware: [raceController.search],
         accessLevel: accessLevels.public
-    },
-    {
+    }, {
         path: '/api/races/autocomplete',
         httpMethod: 'POST',
         middleware: [raceController.autocomplete],
         accessLevel: accessLevels.public
-    },
-    {
+    }, {
         path: '/api/races',
         httpMethod: 'GET',
         middleware: [raceController.findAll],
         accessLevel: accessLevels.public
     },
-
 
     // redirect all others to the index (HTML5 history)
     {
@@ -167,6 +163,8 @@ var routes = [
         middleware: [mainController.index],
         accessLevel: accessLevels.public
     },
+
+
 ];
 
 module.exports = function(app) {

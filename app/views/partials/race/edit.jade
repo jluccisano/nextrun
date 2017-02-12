@@ -38,6 +38,12 @@ div.container(style="padding-bottom: 50px;")
 				div.col-lg-12
 					tabset(vertical="false" type="pills")
 						tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" data-ng-click="onChangeTab(route)")
+							div.bs-callout.bs-callout-info
+								h4 Infomations
+								p Vous pouvez soit dessiner votre parcours directement sur la carte soit importer un fichier au format .gpx
+							input(type="file" ng-file-select="onFileSelect($files, route)")
+							div.progress
+								div.progress-bar(role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;") {{progress}}%
 							include map
 			h2 Organisation
 			hr

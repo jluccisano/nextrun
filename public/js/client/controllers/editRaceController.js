@@ -1,8 +1,7 @@
-angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', '$log', 'RouteFactory', '$window', '$modal',
+angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', '$log', 'RouteFactory', '$window', '$modal', 'fileReader',
 
-	function($scope, $location, RaceServices, Alert, Aut, $routeParams, $log, RouteFactory, window, $modal) {
+	function($scope, $location, RaceServices, Alert, Aut, $routeParams, $log, RouteFactory, window, $modal, fileReader) {
 		'use strict';
-
 		$scope.Math = window.Math;
 
 		/** init google maps service **/
@@ -574,6 +573,39 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 		};
 
+		$scope.getFile = function(route, file) {
+			$scope.progress = 0;
+			fileReader.readAsDataUrl(file, $scope)
+				.then(function(result) {
+
+					route.segments = [];
+					route.elevationPoints = [];
+					route.distance = 0;
+					route.descendant = 0;
+					route.ascendant = 0;
+					route.minElevation = 0;
+					route.maxElevation = 0;
+
+					$scope.progress = 0;
+
+
+					RouteFactory.convertGPXtoRoute(route, result);
+
+					if (route.elevationPoints.length > 0) {
+						route.chartConfig.series[0].data = RouteFactory.rebuildElevationChart(route.elevationPoints);
+					}
+
+					if (route.segments.length > 0) {
+						route.markers = RouteFactory.rebuildMarkers(route.segments, true);
+						route.polylines = RouteFactory.rebuildPolylines(route.segments);
+					}
+
+				});
+		};
+
+		$scope.$on("fileProgress", function(e, progress) {
+			$scope.progress = (progress.loaded / progress.total) * 100;
+		});
 
 
 		$scope.init();
@@ -595,3 +627,19 @@ angular.module('nextrunApp').controller('ChangeTypeConfirmationCtrl', ['$scope',
 		};
 	}
 ]);
+
+angular.module('nextrunApp').directive("ngFileSelect", function() {
+
+	return {
+		link: function($scope, el, $attributes) {
+
+			el.bind("change", function(e) {
+
+				$scope.file = (e.srcElement || e.target).files[0];
+				$scope.getFile($scope.route, $scope.file);
+			})
+
+		}
+
+	}
+});

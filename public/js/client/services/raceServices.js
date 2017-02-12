@@ -44,7 +44,14 @@ angular.module('nextrunApp')
                     $http.get('/api/races/').success(function(races) {
                         success(races);
                     }).error(error);
-                }
+                },
+                upload: function(file, success, error) {
+                    $http.post('/api/races/upload/', {
+                        file: file
+                    }).success(function(content) {
+                        success(content);
+                    }).error(error);
+                },
             };
         }
     ]);

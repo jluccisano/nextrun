@@ -41,7 +41,7 @@ module.exports = function(app, config, passport) {
 	app.use(express.static(config.root + '/public'));
 
 	if (process.env.NODE_ENV !== 'production') {
-		app.use('/bower_components', express.static(config.root + '/bower_components'));
+		app.use('/client_components', express.static(config.root + '/client_components'));
 	}
 
 	// don't use logger for test env
@@ -65,13 +65,13 @@ module.exports = function(app, config, passport) {
 		app.use(express.cookieParser());
 
 		// bodyParser should be above methodOverride
-		app.use(express.bodyParser());
+		app.use(express.bodyParser({limit: '50mb'}));
 		app.use(express.methodOverride());
 
 		//http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
 		//fix bug limit request entity too large
-		app.use(express.json({limit: '15mb'}));
-		app.use(express.urlencoded({limit: '15mb'}));
+		app.use(express.json({limit: '50mb'}));
+		app.use(express.urlencoded({limit: '50mb'}));
 
 		// express/mongo session storage
 		app.use(express.session({

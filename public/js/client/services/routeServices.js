@@ -656,7 +656,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 						raceId: race._id,
 						raceName: race.name,
 						latitude: race.pin.location.lat + (Math.random() - 0.5) / 1500,
-						longitude: race.pin.location.lon +(Math.random() - 0.5) / 1500,
+						longitude: race.pin.location.lon + (Math.random() - 0.5) / 1500,
 						icon: "../../../img/start.png",
 						showWindow: false,
 						title: "hello"
@@ -765,6 +765,84 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 				removePointsToElevationChartBySegmentId(route, lastSegment.segmentId);
 			}
+		},
+		convertGPXtoRoute: function(route, gpx) {
+
+			var x2js = new X2JS();
+			var gpxToJson = x2js.xml_str2json(gpx);
+
+			var trkpts = gpxToJson.gpx.trk.trkseg.trkpt;
+
+
+			var segment1Id = generateUUID();
+			var segment1 = {
+				segmentId: segment1Id,
+				points: [{
+					latlng: {
+						mb: trkpts[0]._lat,
+						nb: trkpts[0]._lon
+					},
+					elevation: trkpts[0].ele,
+					distanceFromStart: 0,
+					grade: 0,
+					segmentId: segment1Id
+				}],
+				distance: 0
+			};
+
+			route.segments.push(segment1);
+
+
+			var segment2 = {
+				segmentId: generateUUID(),
+				points: [],
+				distance: 0
+			};
+
+			_.each(trkpts, function(trkpt) {
+
+				var point = {
+					latlng: {
+						mb: trkpt._lat,
+						nb: trkpt._lon
+					},
+					elevation: parseInt(trkpt.ele),
+					distanceFromStart: 0,
+					grade: 0,
+					segmentId: segment2.segmentId
+				};
+
+				segment2.points.push(point);
+
+			});
+
+			var segmentDistance = calculateDistanceFromStartForEachPointOfSegment(route, segment2);
+			segment2.distance = segmentDistance;
+
+			var samplesPoints = findSamplesPointIntoSegment(route, segment2, 0.1);
+
+			_.each(samplesPoints, function(samplesPoint) {
+
+				var lastPoint = getLastElevationPoint(route.elevationPoints);
+
+				if (lastPoint) {
+					var diffElevation = (parseFloat(samplesPoint.elevation) - parseFloat(lastPoint.elevation));
+					var distanceWithLastPoint = samplesPoint.distanceFromStart - lastPoint.distanceFromStart;
+					var grade = 0;
+					if (distanceWithLastPoint !== 0 && diffElevation !== 0) {
+						grade = ((diffElevation / (distanceWithLastPoint * 1000)) * 100).toFixed(1);
+					}
+					samplesPoint.grade = grade;
+				}
+
+				route.elevationPoints.push(samplesPoint);
+			});
+
+			addPointsToElevationChart(route, samplesPoints);
+
+			calculateElevationDataAlongRoute(route);
+
+			route.segments.push(segment2);
 		}
 
 	}
