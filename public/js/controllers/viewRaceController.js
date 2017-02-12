@@ -13,6 +13,13 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 		$scope.navType = "pills";
 
+		$scope.addHttp = function(url) {
+			if (!url.match(/^[a-zA-Z]+:\/\//)) {
+				url = 'http://' + url;
+			}
+			return url;
+		}
+
 		$scope.onChangeTab = function(route) {
 			route.isVisible = true;
 		};
@@ -178,7 +185,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 									name: "< 5%",
 									data: [],
 									color: '#428bca',
-									enableMouseTracking: true,	
+									enableMouseTracking: true,
 									fillOpacity: 0.8,
 									lineColor: '#303030'
 								}, {
@@ -277,7 +284,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 					$scope.loading = false;
 				},
 				function(error) {
-					
+
 					$scope.loading = false;
 
 					_.each(error.message, function(message) {
