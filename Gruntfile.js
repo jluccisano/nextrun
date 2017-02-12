@@ -86,7 +86,6 @@ module.exports = function(grunt) {
           'tmp/public/js/constants/typeOfRaces.js': ['public/js/constants/typeOfRaces.js'],
           'tmp/public/js/pages/home.js': ['public/js/pages/home.js'],
           'tmp/public/js/templates/angular-bootstrap-tpls-overrides.js': ['public/js/templates/angular-bootstrap-tpls-overrides.js'],
-          'tmp/public/js/directives/gmAutocompleteDirectives.js': ['public/js/directives/gmAutocompleteDirectives.js'],
 
 
           //To be minify
@@ -123,7 +122,6 @@ module.exports = function(grunt) {
           'dist/public/js/widgets/map-france.min.js': ['tmp/public/js/widgets/map-france.js'],
           'dist/public/js/widgets/google-analytics.min.js': ['tmp/public/js/widgets/google-analytics.js'],
           'dist/public/js/pages/home.min.js': ['tmp/public/js/pages/home.js'],
-          'dist/public/js/directives/gmAutocompleteDirectives.min.js': ['tmp/public/js/directives/gmAutocompleteDirectives.js'],
           'dist/public/js/constants/regions.min.js': ['tmp/public/js/constants/regions.js'],
           'dist/public/js/templates/angular-bootstrap-tpls-overrides.min.js': ['tmp/public/js/templates/angular-bootstrap-tpls-overrides.js'],
 
