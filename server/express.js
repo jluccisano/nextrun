@@ -105,10 +105,12 @@ module.exports = function(app, express, passport) {
     if (app.get("env") === "development") {
         app.use("/client/bower_components", express.static(app.config.root + "/client/bower_components"));
         app.use("/client/modules", express.static(app.config.root + "/client/modules"));
+        app.use("/client/i18n", express.static(app.config.root + "/client/i18n"));
         app.use("/styles", express.static(app.config.root + "/.tmp/styles"));
     } else {
         app.use("/client/scripts", express.static(app.config.root + "/client/scripts"));
         app.use("/client/modules", express.static(app.config.root + "/client/modules"));
+        app.use("/client/i18n", express.static(app.config.root + "/client/i18n"));
         app.use("/client/styles", express.static(app.config.root + "/client/styles"));
     }
 

@@ -24,7 +24,6 @@ module.exports = function(config) {
             "client/bower_components/angular-animate/angular-animate.js",
             "client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
             "client/bower_components/moment/moment.js",
-            "client/bower_components/angular-moment/angular-moment.js",
             "client/bower_components/angular-sanitize/angular-sanitize.js",
             "client/bower_components/lodash/dist/lodash.compat.js",
             "client/bower_components/angular-google-maps/dist/angular-google-maps.js",

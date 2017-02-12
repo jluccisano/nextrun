@@ -137,7 +137,7 @@ div.container
 							td(class="rowBasic") {{race.fields.partial1[0].type.i18n}}
 							td(class="rowBasic") {{race.fields.partial1[0].department.code}} - {{race.fields.partial1[0].department.name}}
 							td(class="rowBasic") {{race.fields.partial1[0].distanceType.name}}
-							td(class="rowBasic") {{race.fields.partial1[0].date | amDateFormat:'DD MMMM YYYY'}}
+							td(class="rowBasic") {{race.fields.partial1[0].date | date:'dd MMMM yyyy'}}
 				div.col-lg-4.col-lg-offset-4
 					span.label.label-default(ng-show="races.length === 0" translate) Aucun Résultats
 				div.col-lg-6.col-lg-offset-4

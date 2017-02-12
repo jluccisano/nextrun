@@ -70,7 +70,7 @@ module.exports = function(grunt) {
     nggettext_compile: {
       all: {
         files: {
-          "<%= yeoman.client %>/modules/main/scripts/locales.js": ["locales/*.po"]
+          "<%= yeoman.client %>/modules/main/scripts/locales/locales.js": ["locales/*.po"]
         }
       },
     },

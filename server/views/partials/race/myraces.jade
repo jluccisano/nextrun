@@ -20,7 +20,7 @@ div.container
 					a(ng-href='/races/view/{{race._id}}') {{race.name}}	
 				td {{race.type.i18n}}
 				td {{race.distanceType.name}}
-				td(ng-if="race.last_update != null")  {{race.lastUpdate | amDateFormat:'DD/MM/YYYY HH:mm'}}
+				td(ng-if="race.last_update != null")  {{race.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
 				td
 					a(ng-href='/races/edit/{{race._id}}' translate) Editer
 				td

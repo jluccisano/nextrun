@@ -10,21 +10,21 @@ div.container
 					tr
 						td(class="rowBold") {{'Départ' | translate}}
 							span :
-						td(ng-if="race.timing.startingTime !== null" class="rowBasic") {{race.timing.startingTime| amDateFormat:'HH:mm'}}
+						td(ng-if="race.timing.startingTime !== null" class="rowBasic") {{race.timing.startingTime| date:'HH:mm'}}
 						td(ng-if="race.timing.startingTime === null" class="rowItalic") {{'Non communiqué' | translate}}
 					tr
 						td(class="rowBold") {{'Briefing' | translate}}
 							span :
-						td(ng-if="race.timing.briefingTime !== null" class="rowBasic") {{race.timing.briefingTime | amDateFormat:'HH:mm'}}
+						td(ng-if="race.timing.briefingTime !== null" class="rowBasic") {{race.timing.briefingTime | date:'HH:mm'}}
 						td(ng-if="race.timing.briefingTime === null" class="rowItalic") {{'Non communiqué' | translate}}
 					tr
 						td(class="rowBold") {{'Retrait des dossards' | translate}}
 							span :
-						td(ng-if="race.timing.checkoutBibTime !== null" class="rowBasic") {{race.timing.checkoutBibTime | amDateFormat:'HH:mm'}}
+						td(ng-if="race.timing.checkoutBibTime !== null" class="rowBasic") {{race.timing.checkoutBibTime | date:'HH:mm'}}
 						td(ng-if="race.timing.checkoutBibTime === null" class="rowItalic") {{'Non communiqué' | translate}}
 					tr
 						td(class="rowBold") {{'Récompenses' | translate}}
 							span :
-						td(ng-if="race.timing.rewardsTime !== null" class="rowBasic") {{race.timing.rewardsTime | amDateFormat:'HH:mm'}}
+						td(ng-if="race.timing.rewardsTime !== null" class="rowBasic") {{race.timing.rewardsTime | date:'HH:mm'}}
 						td(ng-if="race.timing.rewardsTime === null" class="rowItalic") {{'Non communiqué' | translate}}
 	div.well(ng-if="race.timing.timingMoreInformation" ng-bind-html="race.timing.timingMoreInformation")

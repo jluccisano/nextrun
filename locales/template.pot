@@ -335,6 +335,9 @@ msgstr ""
 
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+#: .tmp/generated/views/partials/race/templates/editSchedule.html
 #: .tmp/generated/views/partials/race/templates/raceForm.html
 msgid "Date"
 msgstr ""
@@ -493,6 +496,13 @@ msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
 msgid "Fonctionnalités"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+#: .tmp/generated/views/partials/race/templates/editSchedule.html
+msgid "Heure"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/edit.html

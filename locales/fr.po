@@ -1088,8 +1088,3 @@ msgstr ""
 msgid "votre@email.com"
 msgstr ""
 
-#~ msgid "button.cancel"
-#~ msgstr "Annuler"
-#~ msgid "field.actualPassword"
-#~ msgstr "Mot de passe actuel"
-

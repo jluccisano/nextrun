@@ -1,7 +1,7 @@
 div.container
 	h1 {{race.name}}
 		small  ({{race.pin.department.code}})
-	h4.text-right {{race.date | amDateFormat:'DD MMMM YYYY'}}
+	h4.text-right {{race.date | date:'dd MMMM yyyy'}}
 	div.row
 		div(ng-show="loading")
 			span(class="fa fa-spinner fa-spin")

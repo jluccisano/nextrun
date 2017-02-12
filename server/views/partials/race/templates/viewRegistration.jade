@@ -10,13 +10,13 @@ div.container
 					tr
 						td(class="rowBold") {{'Ouverture' | translate}}
 							span :
-						td(ng-if="race.registration.registrationOpeningDate != null" class="rowBasic") {{race.registration.registrationOpeningDate | amDateFormat:'DD MMMM YYYY'}}
+						td(ng-if="race.registration.registrationOpeningDate != null" class="rowBasic") {{race.registration.registrationOpeningDate | date:'dd MMMM yyyy'}}
 						td(ng-if="race.registration.registrationOpeningDate == null" class="rowItalic") {{'Non communiqué' | translate}}
 
 					tr
 						td(class="rowBold") {{'Date limite' | translate}}
 							span :
-						td(ng-if="race.registration.registrationLimitDate != null" class="rowBasic") {{race.registration.registrationLimitDate | amDateFormat:'DD MMMM YYYY'}}
+						td(ng-if="race.registration.registrationLimitDate != null" class="rowBasic") {{race.registration.registrationLimitDate | date:'dd MMMM yyyy'}}
 						td(ng-if="race.registration.registrationLimitDate == null" class="rowItalic") {{'Non communiqué' | translate}}
 
 					tr

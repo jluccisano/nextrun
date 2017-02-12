@@ -87,7 +87,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         //TODO create directive
         $scope.generateRaceDescription = function() {
-            return $scope.race.name + " , date: " + $filter("amDateFormat")($scope.race.date, "DD MMMM YYYY") + " , type: " + $scope.race.type.i18n + " , distance: " + $scope.race.distanceType.name;
+            return $scope.race.name + " , date: " + $filter("date")($scope.race.date, "dd MMMM yyyy") + " , type: " + $scope.race.type.i18n + " , distance: " + $scope.race.distanceType.name;
         };
 
         $scope.openFeedbackModal = function(raceId) {
