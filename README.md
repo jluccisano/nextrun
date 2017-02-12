@@ -42,6 +42,15 @@ grunt build
 
 ### Docker
 
+```bash
+ zip -r docker/nextrun.zip dist
+```
+#### Build
+
+```bash
+ docker build -t jluccisano/nextrun ./docker
+```
+
 #### Run
 
 ```bash
