@@ -178,7 +178,7 @@ angular.module("nextrunApp.home").controller("HomeController",
 
 						$scope.emptyResults = false;
 
-						$scope.map.markers = RouteServices.convertRacesLocationToMarkers(response.races);
+						$scope.map.markers = RouteService.convertRacesLocationToMarkers(response.races);
 
 						_.each($scope.map.markers, function(marker) {
 							marker.closeClick = function() {
