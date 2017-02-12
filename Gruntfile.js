@@ -287,7 +287,7 @@ module.exports = function(grunt) {
           'dist/public/img/start.png': 'public/img/start.png',
           'dist/public/img/segment.png': 'public/img/segment.png',
           'dist/public/img/logo.png': 'public/img/logo.png',
-          'dist/public/img/logo.png': 'public/img/logo_officiel.png'
+          'dist/public/img/logo_officiel.png': 'public/img/logo_officiel.png'
         }
       }
     },

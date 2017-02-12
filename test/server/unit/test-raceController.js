@@ -145,6 +145,84 @@ describe('destroyAllRaceOfUser ()', function() {
 
 });
 
+describe('findByUser()', function() {
+
+	beforeEach(function() {
+		req = {
+			params: {
+				page: 1
+			},
+			user: {
+				_id: 1,
+				username: "user",
+				password: "pass",
+				role: 1
+			}
+		};
+	});
+
+	it('should return a 400 when find by user failed', function(done) {
+
+		var options = {};
+
+		sandbox.stub(Race, 'findByCriteria', function(options, cb) {
+			cb({
+				"errors": [{
+					"message": "error"
+				}]
+			}, null);
+		});
+
+		res.json = function(httpStatus, err) {
+			expect(httpStatus).to.equal(400);
+			expect(err.message).to.be.an('array');
+			expect(err.message[0]).to.equal("error");
+			done();
+		};
+
+		RaceController.findByUser(req, res);
+	});
+
+	it('should return a 400 when database return null failed', function(done) {
+
+		var options = {};
+
+		sandbox.stub(Race, 'findByCriteria', function(options, cb) {
+			cb(null, null);
+		});
+
+		res.json = function(httpStatus, err) {
+			expect(httpStatus).to.equal(400);
+			expect(err.message).to.be.an('array');
+			expect(err.message[0]).to.equal("error.occured");
+			done();
+		};
+
+		RaceController.findByUser(req, res);
+	});
+
+	it('should return a 200 with races when find by user failed', function(done) {
+
+		var options = {};
+		var mockRaces = [];
+		mockRaces.push(race);
+
+		sandbox.stub(Race, 'findByCriteria', function(options, cb) {
+			cb(null, mockRaces);
+		});
+
+		res.json = function(httpStatus, data) {
+			expect(httpStatus).to.equal(200);
+			expect(data.races).to.be.an('array');
+			expect(data.races[0]).to.equal(mockRaces[0]);
+			done();
+		};
+
+		RaceController.findByUser(req, res);
+	});
+
+});
+
 describe('create()', function() {
 
 	beforeEach(function() {

@@ -83,7 +83,7 @@ exports.findByUser = function(req, res) {
     user_id: req.user._id
   };
 
-  if (req.params.page) {
+  if (typeof req.params.page !== 'undefined') {
     page = req.params.page;
   }
 
@@ -99,9 +99,16 @@ exports.findByUser = function(req, res) {
         message: errorUtils.errors(err.errors)
       });
     }
-    return res.json(200, {
-      races: races
-    });
+    if (races) {
+      return res.json(200, {
+        races: races
+      });
+    } else {
+      return res.json(400, {
+        message: ["error.occured"]
+      });
+    }
+
   });
 };
 
