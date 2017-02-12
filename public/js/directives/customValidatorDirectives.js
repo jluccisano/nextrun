@@ -1,4 +1,5 @@
 angular.module('nextrunApp').directive('hasLocation', function() {
+  'use strict';
   return {
     restrict: 'A',
     require: '?ngModel',

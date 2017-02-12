@@ -945,6 +945,50 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				removePointsToElevationChartBySegmentId(route, lastSegment.segmentId);
 			}
 		},
+		convertRouteToGPX: function(route) {
+
+			var content = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>';
+
+			var json = {
+				'gpx': {
+					'_xmlns': "http://www.topografix.com/GPX/1/1",
+					'_creator': "nextrun.fr",
+					'_version': "1.1",
+					'_xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
+					'_xsi:schemaLocation': "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd",
+					'trk': {
+						'name': "toto",
+						'trkseg': {}
+					}
+				}
+
+			};
+
+			var arrayOfTrkpt = [];
+
+			_.each(route.segments, function(segment, i) {
+
+				_.each(segment.points, function(point, i) {
+
+					var trkpt = {
+						'_lat': point.latlng.mb,
+						'_lon': point.latlng.nb
+					}
+
+					arrayOfTrkpt.push(trkpt);
+
+				});
+
+			});
+
+			json.gpx.trk.trkseg.trkpt = arrayOfTrkpt;
+
+			var x2js = new X2JS();
+
+			var gpxToXML = x2js.json2xml_str(json);
+
+			return content + gpxToXML;
+		},
 		convertGPXtoRoute: function($scope, route, gpx) {
 			try {
 

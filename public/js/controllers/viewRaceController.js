@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', 'RouteFactory', '$window', '$modal', 'sharedMetaService',
-	function($rootScope, $scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window, $modal, sharedMetaService) {
+angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', 'RouteFactory', '$window', '$modal', 'sharedMetaService', '$window',
+	function($rootScope, $scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window, $modal, sharedMetaService, $window) {
 		'use strict';
 
 		google.maps.visualRefresh = true;
@@ -322,6 +322,16 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope',
 
 			});
 		};
+
+		$scope.exportGPX = function(route) {
+			
+			var gpx = RouteFactory.convertRouteToGPX(route);
+
+			var blob = new Blob([gpx], {
+				type: 'text/xml'
+			});
+			return blob;
+		}
 
 
 		$scope.init();
