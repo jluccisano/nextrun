@@ -181,7 +181,9 @@ exports.addParticipant = function(workout, participant, res, cb) {
 };
 
 exports.deleteParticipant = function(workout, participantId, res, cb) {
-	var query = {};
+	var query = {
+		_id: workout._id
+	};
 
 	var update = {
 		$set: {

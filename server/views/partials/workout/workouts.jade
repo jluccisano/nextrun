@@ -8,16 +8,17 @@ div(class="container workouts")
 		thead
 			tr
 				th(style="width: 40%" translate) Nom
-				th(style="width: 10%" translate) Parcours
-				th(style="width: 15%" translate) Dernière mise à jour
+				th(style="width: 20%" translate) Dernière mise à jour
+				th(style="width: 20%")
 				th(style="width: 5%")
 				th(style="width: 5%")
 		tbody
 			tr(ng-repeat="workout in workouts")
 				td 
 					a(ui-sref="viewWorkout({id: workout._id})") {{workout.name}}	
-				td {{workout.routeId | translate}}
 				td(ng-if="workout.lastUpdate != null")  {{workout.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
+				td
+					a(ui-sref="newWorkoutWithCurrentRoute({routeId: workout._id})" translate) Créer une sortie
 				td
 					a(ui-sref="editWorkout({id: workout._id})" translate)
 						span(class="glyphicon glyphicon-edit")
