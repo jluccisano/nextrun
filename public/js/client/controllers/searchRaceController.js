@@ -14,10 +14,13 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.emptyResults = true;
 
 		$scope.currentTypeSelected = [];
-		$scope.departments = [];
+		$scope.currentDepartmentSelected = [];
 
+		$scope.departments = [];
+		$scope.region = undefined;
 
 		$scope.listOfDepartments = DEPARTMENTS.enums;
+		$scope.listOfRegions = REGIONS.enums;
 
 		$scope.names = [];
 
@@ -67,8 +70,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.dateRange = {
 			"startDate": moment(),
-			"endDate": moment().add('days', 29)
+			"endDate": moment().add('days', 365)
 		};
+
+		//$scope.dateRange = undefined;
 
 
 		$scope.computeUrlParams = function() {
@@ -107,6 +112,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.getDepartment = function(department) {
 			return department.code + ' - ' + department.name;
+		};
+
+		$scope.getRegion = function(region) {
+			return region.name;
 		};
 
 		$scope.formatDateRange = function(dateRange) {
@@ -161,6 +170,11 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		};
 
 		$scope.onChange = function() {
+			$scope.search();
+		}
+
+		$scope.onChangeRegion = function(region) {
+			$scope.departments = region.departments;
 			$scope.search();
 		}
 
@@ -242,7 +256,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				},
 				types: $scope.currentTypeSelected,
 				departments: $scope.getDepartmentsCodes($scope.departments),
-				dateRange: $scope.dateRange
+				//dateRange: $scope.dateRange
 			};
 
 			RaceServices.search(criteria,

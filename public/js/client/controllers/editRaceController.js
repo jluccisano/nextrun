@@ -294,7 +294,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 
 
-						if (route.segments.length == 0) {
+						if (route.segments.length === 0) {
 							route.center = $scope.race.department.center;
 						}
 
@@ -533,7 +533,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 					}
 				}
 
-				if (route.segments.length == 0) {
+				if (route.segments.length === 0) {
 					route.center = $scope.race.department.center;
 				}
 

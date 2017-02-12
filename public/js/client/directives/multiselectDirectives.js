@@ -12,11 +12,12 @@ angular.module("nextrunApp").directive('multiselectDropdown', [function() {
             includeSelectAllOption: true,
             selectAllText: 'Toute la France',
             selectAllValue: 'Toute la France',
+            buttonContainer: '<div class="input-group btn-group" />',
             buttonText: function(options, select) {
                 if (options.length === 0) {
-                    return 'Aucun élément sélectionner <b class="caret"></b>';
-                } else if (options.length > 3) {
-                    return options.length + ' départements sélectionnés <b class="caret"></b>';
+                    return 'Aucun élément <b class="caret"></b>';
+                } else if (options.length > 2) {
+                    return options.length + ' sélectionnés <b class="caret"></b>';
                 } else {
                     var selected = '';
                     options.each(function() {
