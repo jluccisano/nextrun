@@ -1,0 +1,40 @@
+div(ng-if="route.isVisible()")
+	include map
+
+	div.mapControl(ng-show="route.isEditMode()")
+		div.well
+			form
+				div(class="radio")
+					label
+						input(type="radio" ng-model="route._travelMode" ng-value="'DRIVING'" ) 
+						span(translate) Suivre la route
+				div(class="radio")
+					label
+						input(type="radio"  ng-model="route._travelMode" ng-value="'WALKING'") 
+						span(translate) Suivre le chemin
+				div(class="radio")
+					label
+						input(type="radio" ng-model="route._travelMode" ng-value="'NONE'") 
+						span(translate) Segment direct
+				div.button-group
+					button.btn.btn-primary.btn-xs(ng-click="undo(route)")
+						i.fa.fa-reply
+						span(translate) Retour
+					button.btn.btn-danger.btn-xs(ng-click="delete(route)")
+						i.fa.fa-times
+						span(translate) Effacer
+				div
+					h3 {{route.getDistance() | number:2 }} km
+				div
+					span D+: {{route.getAscendant() | number:0 }} m
+				div
+					span D-: {{route.getDescendant() | number:0 }} m
+				div
+					span Max: {{route.getMaxElevation() | number:0 }} m
+				div
+					span Min: {{route.getMinElevation() | number:0 }} m
+	highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
+
+	div.form-group
+		label.col-lg-4.control-label(translate) Ajouter une description à votre parcours
+	div.col-lg-12(text-angular ng-model="route.data.description")
