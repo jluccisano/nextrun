@@ -139,10 +139,17 @@ var routes = [
         httpMethod: 'DELETE',
         middleware: [raceController.delete],
         accessLevel: accessLevels.user
-    }, {
-        path: '/api/races/search/(page/:page)?/(size/:size)?/(sort/:sort)?/(types/:types)?/(departments/:departments)?',
+    },
+    {
+        path: '/api/races/search',
+        httpMethod: 'POST',
+        middleware: [raceController.extractCriteria, raceController.search, raceController.departmentFacets, raceController.dateFacets, raceController.typeFacets],
+        accessLevel: accessLevels.public
+    },
+    {
+        path: '/api/races/autocomplete/:query_string',
         httpMethod: 'GET',
-        middleware: [raceController.search, raceController.facets],
+        middleware: [raceController.autocomplete],
         accessLevel: accessLevels.public
     },
 

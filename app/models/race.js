@@ -273,6 +273,22 @@ RaceSchema.statics = {
     }).exec(cb);
   },
 
+
+  /**
+   * autocomplete
+   *
+   * @param  query string
+   * @param {Function} cb
+   */
+  autocomplete: function(query_string, cb) {
+
+    var regex = new RegExp(query_string, 'i');
+
+    this.find({
+      name: regex
+    }).limit(8).exec(cb);
+  },
+
   /**
    * Seach user by complex aggregation
    *
@@ -283,7 +299,7 @@ RaceSchema.statics = {
 
     this.aggregate({
       '$match': {
-        '$and': [operation.departments, operation.types, {
+        '$and': [operation.date, operation.departments, operation.types, {
           published: true
         }]
       }
@@ -299,7 +315,7 @@ RaceSchema.statics = {
             "name": "$name",
             "type": "$type",
             "date": "$date",
-            "distanceType":"$distanceType",
+            "distanceType": "$distanceType",
             "department": "$department"
           }
         }
@@ -313,7 +329,7 @@ RaceSchema.statics = {
         "type": "$races.type",
         "department": "$races.department",
         "date": "$races.date",
-        "distanceType":"$races.distanceType",
+        "distanceType": "$races.distanceType",
         "total": "$total"
       }
     }, {
@@ -331,7 +347,7 @@ RaceSchema.statics = {
             "name": "$name",
             "type": "$type",
             "date": "$date",
-            "distanceType":"$distanceType",
+            "distanceType": "$distanceType",
             "department": "$department"
           }
         },
@@ -355,10 +371,10 @@ RaceSchema.statics = {
    * @param {String} type
    * @param {Function} cb
    */
-  facets: function(operation, cb) {
+  typeFacets: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [operation.departments,operation.types, {
+        '$and': [operation.departments, operation.types, operation.date, {
           published: true
         }]
       }
@@ -368,6 +384,51 @@ RaceSchema.statics = {
         total: {
           '$sum': 1
         }
+      }
+    }, cb);
+  },
+
+  /**
+   * Filter by departments
+   *
+   * @param {String} type
+   * @param {Function} cb
+   */
+  departmentFacets: function(operation, cb) {
+    this.aggregate({
+      '$match': {
+        '$and': [operation.departments, operation.types, operation.date, {
+          published: true
+        }]
+      }
+    }, {
+      '$group': {
+        _id: '$department.code',
+        total: {
+          '$sum': 1
+        }
+      }
+    }, cb);
+  },
+
+  /**
+   * Filter by date
+   *
+   * @param {String} type
+   * @param {Function} cb
+   */
+  dateFacets: function(operation, cb) {
+    this.aggregate({
+      '$match': {
+        '$and': [operation.departments, operation.types, operation.date, {
+          published: true
+        }]
+      }
+    }, {
+      '$group': {
+        _id: '$all',
+        minDate: { $min: "$date"},
+        maxDate: { $max: "$date"}
       }
     }, cb);
   }

@@ -254,29 +254,132 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
 
 };
 
-/**
- * @method Get facets
- * @param req
- * @param res
- */
-exports.facets = function(req, res) {
+exports.extractCriteria = function(req, res, next) {
 
   var operation = {
     departments: {},
     types: {},
-    date: {}
+    date: {},
+    page: 0,
+    size: 20,
+    sort: {
+      "date": 1
+    }
   };
 
-  Race.facets(operation, function(err, facets) {
+  console.log(util.inspect(req.body.criteria.dateRange, true));
+
+  var criteria = req.body.criteria;
+
+
+  if (criteria) {
+
+    if (criteria.page) {
+      operation.page = criteria.page;
+    }
+
+    if (criteria.size) {
+      operation.size = criteria.size;
+    }
+
+    if (criteria.sort) {
+      operation.sort = {
+        "date": 1
+      };
+    }
+
+    if (criteria.types.length > 0) {
+      operation.types = {
+        "type.name": {
+          '$in': criteria.types
+        }
+      };
+    }
+    if (criteria.departments.length > 0) {
+      operation.departments = {
+        "department.code": {
+          '$in': criteria.departments
+        }
+      };
+    }
+
+
+    if (criteria.dateRange && criteria.dateRange.startDate && criteria.dateRange.endDate) {
+      operation.date = {
+        "date": {
+          $gte: new Date(criteria.dateRange.startDate),
+          $lt: new Date(criteria.dateRange.endDate)
+        }
+      };
+    }
+  }
+
+  req.operation = operation;
+  req.races = [];
+  req.facets = [];
+
+  return next();
+};
+
+/**
+ * @method Get type facets
+ * @param req
+ * @param res
+ */
+exports.typeFacets = function(req, res) {
+
+  Race.typeFacets(req.operation, function(err, typeFacets) {
     if (err) {
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
     }
+    req.facets.push(typeFacets);
+
+    console.log(util.inspect(req.facets, true));
+
     return res.json(200, {
       races: req.races,
-      facets: facets
+      facets: req.facets
     });
+  });
+
+};
+
+/**
+ * @method Get department facets
+ * @param req
+ * @param res
+ */
+exports.departmentFacets = function(req, res, next) {
+
+  Race.typeFacets(req.operation, function(err, departmentfacets) {
+    if (err) {
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+    req.facets.push(departmentfacets);
+    return next();
+  });
+
+};
+
+/**
+ * @method Get date facets
+ * @param req
+ * @param res
+ */
+exports.dateFacets = function(req, res, next) {
+
+  Race.dateFacets(req.operation, function(err, datefacets) {
+    if (err) {
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+    req.facets.push(datefacets);
+    return next();
   });
 
 };
@@ -288,84 +391,10 @@ exports.facets = function(req, res) {
  */
 exports.search = function(req, res, next) {
 
-  var operation = {
-    departments: {},
-    types: {},
-    date: {},
-    page: 0,
-    size: 20,
-    sort: {"date":1}
-  };
+  console.log(util.inspect(req.operation, true));
 
-  if (req.param('page')) {
-    operation.page = req.param('page');
-  }
-
-  if (req.param('size')) {
-    operation.size = req.param('size');
-  }
-
-  if (req.param('sort')) {
-    operation.sort = {"date":1};
-  }
-
-  var from = 0;
-  var to = 0;
-
-  if (req.param('from')) {
-    from = new Date(parseInt(req.param('from'), 10));
-  }
-
-  if (req.param('to')) {
-    to = new Date(parseInt(req.param('to'), 10));
-  }
-
-  if (from && to) {
-    operation.date = {
-      "date": {
-        $gte: from,
-        $lt: to
-      }
-    };
-  } else if (from) {
-    operation.date = {
-      "date": {
-        $gte: from
-      }
-    };
-  } else if (to) {
-    operation.date = {
-      "date": {
-        $lt: to
-      }
-    };
-  }
-
-
-  var types = req.param('types')
-  if (types) {
-    var typesArray = types.split(',');
-    operation.types = {
-      "type.name": {
-        '$in': typesArray
-      }
-    };
-  }
-  var departments = req.param('departments');
-  if (departments) {
-    var departmentsArray = departments.split(',');
-    console.log(departmentsArray);
-    operation.departments = {
-      "department.code": {
-        '$in': departmentsArray
-      }
-    };
-  }
-
-  console.log(util.inspect(operation, true));
-
-  Race.search(operation, function(err, races) {
-    if (err) {  
+  Race.search(req.operation, function(err, races) {
+    if (err) {
       console.log(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
@@ -375,6 +404,26 @@ exports.search = function(req, res, next) {
     req.races = races;
     return next();
   });
+};
 
+/**
+ * @method Autocomplete
+ * @param req
+ * @param res
+ */
+exports.autocomplete = function(req, res) {
 
+  console.log(util.inspect(req.params.query_string, true));
+
+  Race.autocomplete(req.params.query_string, function(err, races) {
+    if (err) {
+      console.log(err);
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+    console.log(races);
+    req.races = races;
+    return next();
+  });
 };

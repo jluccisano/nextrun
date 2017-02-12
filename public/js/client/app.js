@@ -9,7 +9,8 @@ var nextrunApp = angular.module('nextrunApp', [
   'ui.dateTimeInput',
   'AngularGM',
   'textAngular',
-  'ngSanitize'
+  'ngSanitize',
+  'ngBootstrap',
 ]);
 
 /** Initialize i18n **/

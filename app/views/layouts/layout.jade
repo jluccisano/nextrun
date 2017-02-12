@@ -40,6 +40,10 @@ html(ng-app="nextrunApp")
 		link(rel="stylesheet", href="/css/datetimepicker.css")
 		<!-- endbuild -->
 
+		<!-- build:css /css/daterangepicker-bs3.min.css -->
+		link(rel="stylesheet", href="/css/daterangepicker-bs3.css")
+		<!-- endbuild -->
+
 		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")	
 
 		<!-- build:js /js/libs/jquery-2.0.3.min.js -->
@@ -117,8 +121,9 @@ html(ng-app="nextrunApp")
 		<!-- endbuild -->
 
 		<!-- build:js /js/client/directives.min.js -->
-		script(src="/js/client/directives/authDirectives.js", charset="UTF-8")
 		script(src="/js/client/directives/mapDirectives.js", charset="UTF-8")
+		script(src="/js/client/directives/multiselectDirectives.js", charset="UTF-8")
+
 		<!-- endbuild -->
 
 		<!-- build:js /js/client/controllers.min.js -->
@@ -146,6 +151,14 @@ html(ng-app="nextrunApp")
 
 		<!-- build:js /js/libs/moment-with-langs.min.js -->
 		script(src="/js/libs/moment-with-langs.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js /js/libs/daterangepicker.min.js -->
+		script(src="/js/libs/daterangepicker.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js /js/libs/ng-bs-daterangepicker.min.js -->
+		script(src="/js/libs/ng-bs-daterangepicker.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js /js/libs/datetimepicker.min.js -->
@@ -176,6 +189,10 @@ html(ng-app="nextrunApp")
 
 		<!-- build:js /js/libs/bindonce.min.js -->
 		script(src="/js/libs/bindonce.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js /js/libs/bootstrap-multiselect.min.js -->
+		script(src="/js/libs/bootstrap-multiselect.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		script.

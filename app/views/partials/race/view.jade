@@ -22,7 +22,7 @@ div.container(style="margin-top:50px",style="padding-bottom: 50px;")
 										span  Signaler une erreur
 							tr(data-ng-if="race.organizerWebSite")
 								td(style="border:0", align="left")
-									a(data-ng-href="http://{{race.organizerWebSite}}" target="_blank")
+									a(data-ng-href="{{race.organizerWebSite}}" target="_blank")
 										i.glyphicon.glyphicon-info-sign
 										span  {{race.organizerWebSite}}
 	h2 Parcours
