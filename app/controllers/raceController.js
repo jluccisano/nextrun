@@ -264,7 +264,7 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
 exports.extractCriteria = function(req, res, next) {
 
   var operation = {
-    fulltext: {},
+    fulltext: "*",
     departments: {},
     types: {},
     date: {},
@@ -289,49 +289,56 @@ exports.extractCriteria = function(req, res, next) {
     }
 
     if (criteria.sort) {
-      operation.sort = {
+      /*operation.sort = {
         "date": 1
-      };
+      };*/
     }
 
     if (criteria.types.length > 0) {
-      operation.types = {
+
+      operation.types = criteria.types;
+      /*operation.types = {
         "type.name": {
           '$in': criteria.types
         }
-      };
+      };*/
     }
     if (criteria.departments.length > 0) {
-      operation.departments = {
+
+       operation.departments = criteria.departments;
+
+     /* operation.departments = {
         "department.code": {
           '$in': criteria.departments
         }
-      };
+      };*/
     }
 
     if (criteria.region !== undefined) {
-      operation.region = {
+      /*operation.region = {
         "department.code": {
           '$in': criteria.region.departments
         }
-      };
+      };*/
     }
 
     if (criteria.fulltext) {
-      var regex = new RegExp('\\b' + criteria.fulltext, 'i');
+
+      operation.fulltext = criteria.fulltext;
+     /* var regex = new RegExp('\\b' + criteria.fulltext, 'i');
       operation.fulltext = {
         "name": regex
-      }
+      }*/
     }
 
 
     if (criteria.dateRange && criteria.dateRange.startDate && criteria.dateRange.endDate) {
-      operation.date = {
+      /*operation.date = {
         "date": {
           $gte: new Date(criteria.dateRange.startDate),
           $lt: new Date(criteria.dateRange.endDate)
         }
-      };
+      };*/
     }
   }
 
@@ -351,7 +358,7 @@ exports.search = function(req, res) {
 
   var operation = req.operation;
 
-  var search = "*";
+  //var search = "*";
   var page = 0;
   var pageSize = 20;
   var sort = "_score";
@@ -375,12 +382,12 @@ exports.search = function(req, res) {
 
   query.bool = {};
   query.bool.should = [];
-  query.bool.should.push(buildQueryString("race.name.autocomplete", search));
-  query.bool.should.push(buildQueryString("race.department.name.autocomplete", search));
-  query.bool.should.push(buildQueryString("race.department.region.autocomplete", search));
-  query.bool.should.push(buildQueryString("race.department.code.autocompletee", search));
-  query.bool.should.push(buildQueryString("race.distanceType.i18n.autocomplete", search));
-  query.bool.should.push(buildQueryString("race.type.name.autocomplete", search));
+  query.bool.should.push(buildQueryString("race.name.autocomplete", operation.fulltext));
+  query.bool.should.push(buildQueryString("race.department.name.autocomplete",  operation.fulltext));
+  query.bool.should.push(buildQueryString("race.department.region.autocomplete",  operation.fulltext));
+  query.bool.should.push(buildQueryString("race.department.code.autocompletee",  operation.fulltext));
+  query.bool.should.push(buildQueryString("race.distanceType.i18n.autocomplete",  operation.fulltext));
+  query.bool.should.push(buildQueryString("race.type.name.autocomplete",  operation.fulltext));
 
   criteria.query = query;
 
@@ -392,7 +399,7 @@ exports.search = function(req, res) {
   var typesArray = [];
 
   if (operation.types) {
-    typesArray = operation.types.split(',');
+    typesArray = operation.types;
 
     type_filter = {
       "terms": {
@@ -406,7 +413,7 @@ exports.search = function(req, res) {
   var departmentsArray = [];
 
   if (operation.departments) {
-    departmentsArray = operation.departments.split(',');
+    departmentsArray = operation.departments;
 
     department_filter = {
       "terms": {
@@ -461,7 +468,7 @@ exports.search = function(req, res) {
     facets.typeFacets.facet_filter = typeFacetFilter;
   }
 
-  if (deparmentFacetFilter.and.length > 0) {
+  if (departmentFacetFilter.and.length > 0) {
     facets.departmentFacets.facet_filter = departmentFacetFilter;
   }
 
