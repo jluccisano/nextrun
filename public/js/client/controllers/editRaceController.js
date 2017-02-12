@@ -1,4 +1,4 @@
-nextrunControllers.controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams',
+angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams',
 	function($scope, $location, RaceServices, Alert, Aut, $routeParams) {
 		'use strict';
 				

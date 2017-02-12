@@ -1,4 +1,4 @@
-nextrunControllers.controller('MainCtrl', ['$scope', '$location', '$rootScope', 'Auth', 'Alert',
+angular.module('nextrunApp').controller('MainCtrl', ['$scope', '$location', '$rootScope', 'Auth', 'Alert',
 	function($scope, $location, $rootScope, Auth, Alert) {
 		'use strict';
 		$scope.isLoggedIn = function() {

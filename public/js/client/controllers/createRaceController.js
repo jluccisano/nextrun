@@ -1,4 +1,4 @@
-nextrunControllers.controller('CreateRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth',
+angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth',
 	function($scope, $location, RaceServices, Alert, Auth) {
 		'use strict';
 		$scope.departments = DEPARTMENTS.enums;

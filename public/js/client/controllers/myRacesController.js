@@ -1,4 +1,4 @@
-nextrunControllers.controller('MyRacesCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal',
+angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal',
 	function($scope, $location, RaceServices, Alert, Auth, $modal) {
 		'use strict';
 		$scope.currentPage = 1;
@@ -52,7 +52,7 @@ nextrunControllers.controller('MyRacesCtrl', ['$scope', '$location', 'RaceServic
 	}
 ]);
 
-nextrunControllers.controller('DeleteConfirmationCtrl', ['$scope', '$modalInstance', 'Auth', 'Alert', '$location', 'RaceServices', 'race',
+angular.module('nextrunApp').controller('DeleteConfirmationCtrl', ['$scope', '$modalInstance', 'Auth', 'Alert', '$location', 'RaceServices', 'race',
 	function($scope, $modalInstance, Auth, Alert, $location, RaceServices, race) {
 
 		$scope.race = race;

@@ -1,4 +1,4 @@
-nextrunControllers.controller('SettingsCtrl', ['$scope', '$location', '$http', 'Auth', 'Alert',
+angular.module('nextrunApp').controller('SettingsCtrl', ['$scope', '$location', '$http', 'Auth', 'Alert',
 	function($scope, $location, $http, Auth, Alert) {
 		'use strict';
 		$scope.user = {};

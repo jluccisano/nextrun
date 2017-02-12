@@ -1,4 +1,4 @@
-nextrunControllers.controller('FooterCtrl', ['$scope', '$location',
+angular.module('nextrunApp').controller('FooterCtrl', ['$scope', '$location',
 	function($scope, $location) {
 		'use strict';
 	}

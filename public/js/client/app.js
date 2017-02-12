@@ -2,7 +2,6 @@ var nextrunApp = angular.module('nextrunApp', [
   'ngCookies',
   'ngRoute',
   'ngAnimate',
-  'nextrunControllers',
   'ui.bootstrap',
   'google-maps'
 ]);

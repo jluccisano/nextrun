@@ -1,4 +1,4 @@
-nextrunControllers.controller('SignupCtrl', ['$scope', '$http', '$location', '$rootScope', 'Auth', 'Alert',
+angular.module('nextrunApp').controller('SignupCtrl', ['$scope', '$http', '$location', '$rootScope', 'Auth', 'Alert',
 	function($scope, $http, $location, $rootScope, Auth, Alert) {
 		'use strict';
 		$scope.user = {};

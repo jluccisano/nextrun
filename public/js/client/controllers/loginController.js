@@ -1,4 +1,4 @@
-nextrunControllers.controller('LoginCtrl', ['$scope', '$http', '$location', '$rootScope', 'Auth', 'Alert', '$modal',
+angular.module('nextrunApp').controller('LoginCtrl', ['$scope', '$http', '$location', '$rootScope', 'Auth', 'Alert', '$modal',
 	function($scope, $http, $location, $rootScope, Auth, Alert, $modal) {
 		'use strict';
 		$scope.user = {};
@@ -33,7 +33,7 @@ nextrunControllers.controller('LoginCtrl', ['$scope', '$http', '$location', '$ro
 	}
 ]);
 
-nextrunControllers.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'Auth', 'Alert', '$location',
+angular.module('nextrunApp').controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'Auth', 'Alert', '$location',
 	function($scope, $modalInstance, Auth, Alert, $location) {
 
 		$scope.user = {};

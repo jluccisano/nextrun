@@ -1,4 +1,4 @@
-nextrunControllers.controller('HeaderCtrl', ['$scope', '$location', '$rootScope', 'Auth',
+angular.module('nextrunApp').controller('HeaderCtrl', ['$scope', '$location', '$rootScope', 'Auth',
 	function($scope, $location, $rootScope, Auth) {
 		'use strict';
 		$scope.user = Auth.user;
