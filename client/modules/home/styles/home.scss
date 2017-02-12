@@ -1,10 +1,7 @@
 @import 'carousel.scss';
- .home {
-    /** home page **/
-    #contactType option {
-        color: black;
-    }
-    .empty {
-        color: #999999;
-    }
+@import 'marketing.scss';
+@import 'contacts.scss';
+
+.home {
+
 }
