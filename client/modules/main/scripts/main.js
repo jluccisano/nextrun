@@ -3,7 +3,7 @@
 var nextrunApp = angular.module("nextrunApp", [
   "ngRoute",
   "ui.bootstrap",
-  "pascalprecht.translate",
+  "gettext",
   "nextrunApp.commons",
   "nextrunApp.auth",
   "nextrunApp.race",
@@ -13,14 +13,7 @@ var nextrunApp = angular.module("nextrunApp", [
 nextrunApp.config(
   function(
     $routeProvider,
-    $locationProvider,
-    $translateProvider) {
-
-    $translateProvider.preferredLanguage("fr-FR");
-
-    $translateProvider.useLoader("$translatePartialLoader", {
-      urlTemplate: "locales/{lang}/{part}.json"
-    });
+    $locationProvider) {
 
     var access = routingConfig.accessLevels;
 
@@ -56,12 +49,11 @@ nextrunApp.config(
 nextrunApp.run(function(
   $rootScope,
   $location,
-  $translate,
-  $translatePartialLoader,
   SharedMetaService,
   AuthService,
   AlertService,
-  MetaService) {
+  MetaService,
+  gettextCatalog) {
 
   $rootScope.$on("$routeChangeStart", function(event, next) {
 
@@ -79,9 +71,7 @@ nextrunApp.run(function(
     }
   });
 
-  $rootScope.$on("$translatePartialLoaderStructureChanged", function() {
-    $translatePartialLoader.addPart("common");
-    $translate.refresh();
-  });
+  gettextCatalog.currentLanguage = 'en';
+  gettextCatalog.debug = true;
 
 });

@@ -5,13 +5,8 @@ angular.module("nextrunApp.auth").controller("LoginController",
 		$scope,
 		$location,
 		$modal,
-		$translate,
-		$translatePartialLoader,
-		$filter,
 		AuthService,
 		MetaService) {
-
-		$translatePartialLoader.addPart("auth");
 
 		$scope.user = {};
 
@@ -39,6 +34,6 @@ angular.module("nextrunApp.auth").controller("LoginController",
 			});
 		};
 
-		MetaService.ready($filter("translate")("title.login"), $location.path(), $filter("translate")("message.login.description"));
+		MetaService.ready("title.login", $location.path(), "message.login.description");
 
 	});

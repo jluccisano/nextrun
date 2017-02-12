@@ -3,7 +3,6 @@
 angular.module("nextrunApp").controller("MainController",
 	function(
 		$scope,
-		$translate,
 		AuthService,
 		AlertService,
 		SharedMetaService) {

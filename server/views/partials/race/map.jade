@@ -15,22 +15,22 @@ div(data-ng-if="route.isVisible")
 				div(class="radio")
 					label
 						input(type="radio" data-ng-model="route.travelMode" ng-value="'DRIVING'" ) 
-						span Suivre la route
+						span(translate) Suivre la route
 				div(class="radio")
 					label
 						input(type="radio"  data-ng-model="route.travelMode" ng-value="'WALKING'") 
-						span Suivre le chemin
+						span(translate) Suivre le chemin
 				div(class="radio")
 					label
 						input(type="radio" data-ng-model="route.travelMode" ng-value="'NONE'") 
-						span Segment direct
+						span(translate) Segment direct
 				div.button-group
 					button.btn.btn-primary.btn-xs(data-ng-click="undo(route)")
 						i.fa.fa-reply
-						span Retour
+						span(translate) Retour
 					button.btn.btn-danger.btn-xs(data-ng-click="delete(route)")
 						i.fa.fa-times
-						span Effacer
+						span(translate) Effacer
 				div
 					h3 {{route.distance | number:2 }} km
 				div
@@ -44,5 +44,5 @@ div(data-ng-if="route.isVisible")
 	highchart(data-ng-hide="route.type === 'Natation'" config="route.chartConfig")
 
 	div.form-group
-		label.col-lg-4.control-label Ajouter une description à votre parcours
+		label.col-lg-4.control-label(translate) Ajouter une description à votre parcours
 	div.col-lg-12(text-angular text-angular-name="description" data-ng-model="route.description" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")

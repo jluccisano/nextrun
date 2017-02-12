@@ -5,24 +5,26 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 		$scope,
 		$location,
 		$modal,
-		$translate,
-		$translatePartialLoader,
-		$filter,
 		RaceService,
 		AlertService,
 		MetaService) {
 
-		$translatePartialLoader.addPart("auth");
-
 		$scope.currentPage = 1;
 		$scope.maxSize = 5;
+		$scope.totalItems = 0;
+		$scope.races = [];
 
 		$scope.init = function() {
 			RaceService.find($scope.currentPage).then(
 				function(response) {
-					$scope.races = response.races;
-					$scope.totalItems = $scope.races.length;
-					MetaService.ready($filter("translate")("title.myRaces"), $location.path, $filter("translate")("message.myRaces.description"));
+					if (response.races && response.races.length > 0) {
+						$scope.races = response.races;
+						$scope.totalItems = $scope.races.length;
+					} else {
+						$scope.totalItems = 0;
+						$scope.races = [];
+					}
+					MetaService.ready("title.myRaces", $location.path, "message.myRaces.description");
 				});
 		};
 
@@ -33,7 +35,7 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 		$scope.publish = function(race, value) {
 			RaceService.publish(race._id, value).then(
 				function() {
-					AlertService.add("success", $filter("translate")("message.publish.successfully"), 3000);
+					AlertService.add("success", "message.publish.successfully", 3000);
 					$scope.init();
 				});
 		};
@@ -51,6 +53,10 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 			$scope.modalInstance.result.then(function() {
 				$scope.init();
 			});
+		};
+
+		$scope.pageChanged = function() {
+			$scope.init();
 		};
 
 		$scope.init();

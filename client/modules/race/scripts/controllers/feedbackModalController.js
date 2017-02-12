@@ -4,14 +4,9 @@ angular.module("nextrunApp.race").controller("FeedbackModalController",
 	function(
 		$scope,
 		$modalInstance,
-		$filter,
-		$translate,
-		$translatePartialLoader,
 		AlertService,
 		ContactService,
 		raceId) {
-
-		$translatePartialLoader.addPart("race");
 
 		$scope.feedback = {};
 
@@ -31,7 +26,7 @@ angular.module("nextrunApp.race").controller("FeedbackModalController",
 			ContactService.sendFeedback({
 				feedback: feedback
 			}).then(function() {
-				AlertService.add("success", $filter("translate")("message.sendFeedback.successfully"), 3000);
+				AlertService.add("success", "message.sendFeedback.successfully", 3000);
 				$modalInstance.close();
 			});
 		};

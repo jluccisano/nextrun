@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Nextrun\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.6.4\n"
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "button.cancel"
+msgstr "Annuler"
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "button.save"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "field.actualPassword"
+msgstr "Mot de passe actuel"
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.briefingTime"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.checkoutBibTime"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+msgid "field.confirmPassword"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.createIssue"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/forgotpassword.html
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+msgid "field.email"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+msgid "field.fullname"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.memberFFPrice"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.miscellaneous"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "field.newPassword"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.notCommunicated"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.notMemberFFPrice"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.numberOfPlacesAvailable"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.numberOfProvisions"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/auth/signup.html
+msgid "field.password"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.plan"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.pricing"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "field.race.date"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "field.race.distance"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "field.race.location"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "field.race.location.placeholder"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "field.race.name"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "field.race.type"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.registration"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.registrationAddress"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.registrationLimitDate"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.registrationOnPlace"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.registrationOpeningDate"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.registrationWebSite"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.rewardsTime"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.rights"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.startingTime"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.therace"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "field.timing"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "important"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "loading.pending"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "message.addRaceDescription.information"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "message.deleteAccount.confirmation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "message.drawRoute.information"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "message.information"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "message.selectOne"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "metric.ascendant"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "metric.descendant"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "metric.distance"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "metric.kilometer"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "metric.maxElevation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "metric.meter"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "metric.minElevation"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+msgid "par critères"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "saving.pending"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "title.editRace"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/forgotpassword.html
+msgid "title.forgotPassword"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/login.html
+msgid "title.login"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "title.organisation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "title.presentation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "title.routes"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/signup.html
+msgid "title.signup"
+msgstr ""
+

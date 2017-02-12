@@ -1,17 +1,14 @@
 "use strict";
 
 angular.module("nextrunApp.race").controller("RaceHomeController",
-	function(
-		$scope,
-		$location,
-		$translate,
-		$translatePartialLoader,
-		$filter,
-		MetaService) {
+    function(
+        $scope,
+        $location,
+        MetaService) {
 
-		$scope.createNewRace = function() {
-			$location.path("/races/create");
-		};
+        $scope.createNewRace = function() {
+            $location.path("/races/create");
+        };
 
-		MetaService.ready($filter("translate")("title.addRace"), $location.path(), $filter("translate")("message.addRace.description"));
-	});
+        MetaService.ready("title.addRace", $location.path(), "message.addRace.description");
+    });

@@ -7,7 +7,7 @@ div.custom-bs-background
 				div.col-lg-7.col-lg-offset-2
 					div.input-group.input-group-lg(style="margin-top:20px")
 						
-						input.form-control.twitter-typeahead(type="text" placeholder="Recherche directe" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in suggest($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
+						input.form-control.twitter-typeahead(type="text" placeholder="{{'Recherche directe' | translate}}" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in suggest($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
 
 						span.input-group-addon
 							span.glyphicon.glyphicon-search
@@ -15,7 +15,7 @@ div.custom-bs-background
 					div.col-lg-3.col-lg-offset-2
 						hr
 					div.col-lg-1.text-center(style="margin-top:10px")
-						p par critères
+						p(translate) Par critères
 					div.col-lg-3
 						hr
 			div.row
@@ -24,14 +24,14 @@ div.custom-bs-background
 						div.row
 							div.col-lg-6
 								div.form-group(data-ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$pristine  && !form1.location.$error.validLocation}")
-									input.form-control(name="location" id="location" placeholder="Tapez une ville" ng-model="criteria.autocomplete.location.pin.name" nr-has-location gmaps-autocomplete options="autocomplete.options" details="criteria.autocomplete.location.pin")
-									span.help-block(data-ng-show="form1.location.$dirty && form1.location.$error.validLocation")  Veuillez saisir une ville correcte
+									input.form-control(name="location" id="location" placeholder="{{'Tapez une ville' | translate}}" ng-model="criteria.autocomplete.location.pin.name" nr-has-location gmaps-autocomplete options="autocomplete.options" details="criteria.autocomplete.location.pin")
+									span.help-block(data-ng-show="form1.location.$dirty && form1.location.$error.validLocation" translate)  Veuillez saisir une ville correcte
 								div.row
 									div.col-lg-6
 										div.form-group
 											div.checkbox
 												label
-													em Elargir aux alentours
+													em(translate) Elargir aux alentours
 													input(type="checkbox" ng-model="criteria.searchAround")
 									div.col-lg-4
 										div.form-group
@@ -42,11 +42,11 @@ div.custom-bs-background
 												option(value="100") 100km
 							div.col-lg-2
 								div.form-group
-									select(class="multiselect" data-placeholder="Sélectionner..." ng-model="criteria.types" data-ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
+									select(class="multiselect" data-placeholder="{{'Sélectionner...' | translate}}" ng-model="criteria.types" data-ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
 						div.row
 							div.col-lg-2.col-lg-offset-8(style="margin-top:-40px")
 								div.form-group
-									button.btn.btn-primary(type="submit" ng-click="submitSearchWithCriteria()" ng-disabled="form1.$invalid") Rechercher	
+									button.btn.btn-primary(type="submit" ng-click="submitSearchWithCriteria()" ng-disabled="form1.$invalid" translate) Rechercher	
 						
 								
 			div.row(style="margin-top:10px")
@@ -58,22 +58,22 @@ div.custom-bs-background
 				div.row
 					div.col-lg-4
 						div.text-center
-							h2 Pourquoi ?
+							h2 {{'Pourquoi ?' | translate}}
 						p
-							| - Difficile de trouver une manifestation.
+							| - {{'Difficile de trouver une manifestation.' | translate}}
 						p 
 							| - Rarement le <strong style="color:#428bca">détail du parcours</strong> et 
 							| son <strong style="color:#428bca">dénivelé</strong>.
 						p
-							| - Peu de retour d'expériences.
+							| - {{'Peu de retour d'expériences.' | translate }}
 						p
-							| - Difficultés à obtenir les <strong style="color:#428bca">résultats</strong>.
+							| - {{'Difficultés à obtenir les' | translate }} <strong style="color:#428bca">{{'résultats' | translate}}</strong>.
 						p
-							| - Ne pas être au courant d'une course près de chez soi.
+							| - {{'Ne pas être au courant d'une course près de chez soi.' | translate}}
 
 					div.col-lg-4
 						div.text-center
-							h2 Athlètes
+							h2 {{'Athlètes' | translate}}
 						p
 							| - Trouver l'épreuve qui correspond 
 							| à votre objectif.

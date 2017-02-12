@@ -4,17 +4,12 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 	function(
 		$scope, 
 		$location, 
-		$modal, 
-		$translate, 
-		$translatePartialLoader, 
-		$filter,
+		$modal,
 		RaceService, 
 		AlertService, 
 		AuthService,  
 		RaceTypeEnum,
 		MetaService) {
-
-		$translatePartialLoader.addPart("race");
 
 		$scope.race = {};
 		$scope.user = {};
@@ -61,7 +56,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			if ($scope.isLoggedIn()) {
 				RaceService.create(data).then(
 					function(res) {
-						AlertService.add("success", $filter("translate")("message.create.successfully"), 3000);
+						AlertService.add("success", "message.create.successfully", 3000);
 						$scope.openRedirectionModal(res.raceId);
 					});
 			} else {
@@ -111,6 +106,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			});
 		};
 
-		MetaService.ready($filter("translate")("title.create.newRace"), $location.path, $filter("translate")("message.create.description"));
+		MetaService.ready("title.create.newRace", $location.path, "message.create.description");
 
 	});

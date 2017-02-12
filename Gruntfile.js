@@ -21,7 +21,8 @@ module.exports = function(grunt) {
       client: require("./bower.json").appPath || "client",
       server: "server",
       dist: "dist",
-      config: "config"
+      config: "config",
+      test: "test"
     },
 
     // Empties folders to start fresh
@@ -40,51 +41,36 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      karma: {
-        files: ["client/js/**/*.js", "test/client/unit/**/*Spec.js"],
-        tasks: ["karma:unit:run"]
-      },
-      protractor: {
-        files: ["client/js/**/*.js", "test/client/e2e/*Scenario.js"],
-        tasks: ["protractor"]
+      js: {
+        files: ["<%= yeoman.client %>/**/*", "<%= yeoman.server %>/**/*", ".tmp/styles/{,*/}*.css"],
+        tasks: ["newer:jshint:all", "express:development"]
       },
       compass: {
         files: ["<%= yeoman.client %>/modules/**/styles/{,*/}*.{scss,sass}"],
         tasks: ["compass:server", "autoprefixer"]
       },
-      livereload: {
-        options: {
-          livereload: "<%= express.options.livereload %>"
-        },
-        files: [
-          "<%= yeoman.server %>/{,*/}*.jade",
-          ".tmp/styles/{,*/}*.css",
-          "<%= yeoman.client %>/modules/**/*.{png,jpg,jpeg,gif,webp,svg}"
-        ]
+      testClient: {
+        files: ["<%= yeoman.test %>/client/spec/**/*Spec.js"],
+        tasks: ["newer:jshint:test", "karma:unit"]
       },
-      js: {
-        files: ["<%= yeoman.client %>/modules/**/*.js"],
-        tasks: ["newer:jshint:all"],
-        options: {
-          livereload: "<%= express.options.livereload %>"
+      testServer: {
+        files: ["<%= yeoman.test %>/server/unit/**/test-*.js"],
+        tasks: ["newer:jshint:test", "mochaTest"]
+      }
+    },
+
+    nggettext_extract: {
+      pot: {
+        files: {
+          'locales/template.pot': ['.tmp/generated/views/**/*.html']
         }
       },
-      jsTestClient: {
-        files: ["test/client/**/*Spec.js"],
-        tasks: ["newer:jshint:test", "karma"]
-      },
-      jsTestServer: {
-        files: ["test/server/**/test-*.js"],
-        tasks: ["newer:jshint:test", "mochaTest"]
-      },
-      gruntfile: {
-        files: ["Gruntfile.js"]
-      },
-      express: {
-        files: ["public/js/**/*.js", "test/client/e2e/**/*Scenario.js"],
-        tasks: ["express:development"],
-        options: {
-          spawn: false
+    },
+
+    nggettext_compile: {
+      all: {
+        files: {
+          '<%= yeoman.client %>/modules/main/scripts/locales.js': ['locales/*.po']
         }
       },
     },
@@ -156,7 +142,7 @@ module.exports = function(grunt) {
         files: [{
           cwd: "<%= yeoman.server %>/views",
           src: "**/*.jade",
-          dest: "<%= yeoman.dist %>/server/views/",
+          dest: ".tmp/generated/views/",
           expand: true,
           ext: ".html"
         }]
@@ -312,9 +298,9 @@ module.exports = function(grunt) {
 
     express: {
       options: {
-        port: 4000,
-        background: false,
-        debug: true,
+        port: 3000,
+        background: true,
+        debug: false,
       },
       development: {
         options: {
@@ -520,10 +506,17 @@ module.exports = function(grunt) {
     });
   });
 
+  grunt.registerTask("gettext", [
+    "jade:compile",
+    "nggettext_extract",
+    "nggettext_compile"
+  ]);
+
   grunt.registerTask("build", [
     "clean:dist",
     "bowerInstall",
     "copy:server",
+    "gettext",
     "useminPrepare",
     "concurrent:dist",
     "autoprefixer",
@@ -554,10 +547,9 @@ module.exports = function(grunt) {
       "bowerInstall",
       "concurrent:server",
       "autoprefixer",
-      "express:development"
+      "express:development",
+      "watch"
     ]);
 
   });
-
-
 };

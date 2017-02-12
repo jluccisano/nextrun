@@ -1,13 +1,13 @@
 div.container
-	h3 Contacts
+	h3(translate) Contacts
 	hr
 	div.row
 		div.col-lg-4.col-lg-offset-4
 			form(role="form" name="form" style="margin-top:50px")
 				div.form-group
-					label.control-label Email
-					input.form-control(name="email" placeholder="Email" data-ng-model="email" required)
+					label.control-label(translate) Email
+					input.form-control(name="email" placeholder="{{'Email' | translate}}" data-ng-model="email" required)
 				div.form-group
-					label.control-label Message
-					textarea.form-control(name="message" data-ng-model="message" rows="3" placeholder="votre message" required)
-				button.btn.btn-primary(data-ng-click="submit()") Envoyer
+					label.control-label(translate) Message
+					textarea.form-control(name="message" data-ng-model="message" rows="3" placeholder="{{'votre message' | translate}}" required)
+				button.btn.btn-primary(data-ng-click="submit()" translate) Envoyer

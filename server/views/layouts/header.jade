@@ -14,20 +14,20 @@ header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner" d
 
 				ul.nav.navbar-nav
 					li
-						a(href="/races/search") Rechercher
+						a(href="/races/search" translate) Rechercher
 				ul.nav.navbar-nav.navbar-right
 					li.dropdown(data-ng-show="isLoggedIn()")
 						a.dropdown-toggle(data-toggle="dropdown") {{user.username}}
 							b.caret
 						ul.dropdown-menu
 							li
-								a(href="/myraces") Mes manifestations
+								a(href="/myraces" translate) Mes manifestations
 							li
-								a(href="/users/settings") Paramètres
+								a(href="/users/settings" translate) Paramètres
 							li
-								a(data-ng-click="logout()") Se déconnecter
+								a(data-ng-click="logout()" translate) Se déconnecter
 					li(data-ng-hide="isLoggedIn()")
 						form(class="navbar-form navbar-left")
 							button(type="submit", class="btn btn-primary", data-ng-click="login()") 
 								span.glyphicon.glyphicon-user 
-								span  Se connecter
+								span(translate) Se connecter

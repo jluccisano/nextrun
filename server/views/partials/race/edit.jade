@@ -10,11 +10,11 @@ div.container(style="padding-bottom: 50px;")
 					form.form-horizontal(role="form" name="form1" style="margin-top:50px" novalidate)
 						
 						div.form-group(ng-class="{'has-error': !form1.name.$pristine && form1.name.$invalid, 'has-success': !form1.name.$invalid}")
-							label.control-label(for="name") {{'field.race.name' | translate}}
+							label.control-label(for="name") {{'Nom' | translate}}
 							input.form-control(name="name" placeholder="ex: Triathlon de Paris" ng-model="race.name" required)
 						
 						div.form-group(ng-class="{'has-error':!form1.datetime.$pristine && form1.datetime.$invalid, 'has-success': !form1.datetime.$invalid}")
-							label.control-label(for="date") {{'field.race.date' | translate}}
+							label.control-label(for="date") {{'Date' | translate}}
 							div(class="dropdown")
 								a(class="dropdown-toggle my-toggle-select" role="button" data-toggle="dropdown" data-target="#" href="#")
 									div(class="input-group")
@@ -25,11 +25,11 @@ div.container(style="padding-bottom: 50px;")
 									datetimepicker(name="datetime" ng-model="race.date" datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'day' }" required)
 								
 						div.form-group(ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$error.validLocation && form1.location.$valid}")
-							label.control-label(for="location") {{'field.race.location' | translate}}
-							input.form-control(name="location" placeholder="{{'field.race.location.placeholder' | translate}}" ng-model="race.pin.name" nr-has-location  gmaps-autocomplete options="options" details="race.pin" required)
+							label.control-label(for="location") {{'Lieu' | translate}}
+							input.form-control(name="location" placeholder="{{'ex: Paris' | translate}}" ng-model="race.pin.name" nr-has-location  gmaps-autocomplete options="options" details="race.pin" required)
 									
 						div.form-group(ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid}")
-							label.control-label(for="type") {{'field.race.type' | translate}}
+							label.control-label(for="type") {{'Type' | translate}}
 							select.form-control(ng-model="race.type" name="type" ng-options="type.value as getType(type.value) for type in types" ng-change="openChangeTypeConfirmation()" required)
 								option(value="") {{'message.selectOne' | translate}}
 
@@ -41,10 +41,10 @@ div.container(style="padding-bottom: 50px;")
 			div.row
 				hr
 				div.bs-callout.bs-callout-info
-					h4 {{'message.information' | translate}}
+					h4 {{'Information' | translate}}
 					p {{'message.addRaceDescription.information' | translate}}
 				div.form-group
-					label.col-lg-4.control-label Description
+					label.col-lg-4.control-label(translate) Description
 					div.col-lg-12(text-angular text-angular-name="description" ng-model="race.description" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
 			hr
 			div.row
@@ -52,13 +52,13 @@ div.container(style="padding-bottom: 50px;")
 					tabset(vertical="false" type="navType")
 						tab(ng-repeat="route in race.routes" heading="{{route.type}}" ng-click="route.isVisible=true")
 							div.bs-callout.bs-callout-info
-								h4 {{'message.information' | translate}}
+								h4 {{'Information' | translate}}
 								p  {{'message.drawRoute.information' | translate}}
 							input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
 							div.row
 								div.col-lg-4(ng-show="pending")
 									span(class="fa fa-spinner fa-spin")
-									span  {{'loading.pending' | translate}}
+									span  {{'Chargement en cours' | translate}}
 
 							hr
 							
@@ -69,8 +69,8 @@ div.container(style="padding-bottom: 50px;")
 			hr
 			div.row
 				div.col-lg-offset-4.col-lg-8
-					button.btn.btn-primary(ng-click="submit(race)" ng-disabled="form1.$invalid") {{'button.save' | translate}}
-					button.btn.btn-default(ng-click="cancel()") {{'button.cancel' | translate}}
+					button.btn.btn-primary(ng-click="submit(race)" ng-disabled="form1.$invalid") {{'Sauvegarder' | translate}}
+					button.btn.btn-default(ng-click="cancel()") {{'Annuler' | translate}}
 					div(ng-show="saving")
 						span(class="fa fa-spinner fa-spin")
-						span  {{'saving.pending' | translate}}
+						span  {{'Sauvegarde en cours' | translate}}

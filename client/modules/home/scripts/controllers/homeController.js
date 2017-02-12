@@ -1,208 +1,205 @@
 "use strict";
 
 angular.module("nextrunApp.home").controller("HomeController",
-	function(
-		$scope,
-		$location,
-		$translate,
-		$translatePartialLoader,
-		$filter,
-		ContactService,
-		AlertService,
-		SharedCriteriaService,
-		RaceService,
-		RouteService,
-		RegionEnum,
-		RaceTypeEnum,
-		MetaService) {
+    function(
+        $scope,
+        $location,
+        ContactService,
+        AlertService,
+        SharedCriteriaService,
+        RaceService,
+        RouteService,
+        RegionEnum,
+        RaceTypeEnum,
+        MetaService) {
 
-		var initCriteria = function() {
-			$scope.criteria = {
-				sort: "_score",
-				size: 20,
-				from: 0,
-				fulltext: "",
-				departments: [],
-				region: RegionEnum.REGIONS.ALL.value,
-				types: [],
-				dateRanges: [{
-					startDate: moment(),
-					endDate: moment().add("days", 179)
-				}],
-				location: {},
-				searchAround: true,
-				distance: "15"
-			};
-		};
+        var initCriteria = function() {
+            $scope.criteria = {
+                sort: "_score",
+                size: 20,
+                from: 0,
+                fulltext: "",
+                departments: [],
+                region: RegionEnum.REGIONS.ALL.value,
+                types: [],
+                dateRanges: [{
+                    startDate: moment(),
+                    endDate: moment().add(179, "days")
+                }],
+                location: {},
+                searchAround: true,
+                distance: "15"
+            };
+        };
 
-		var initContact = function() {
-			$scope.contact = {};
-		};
+        var initContact = function() {
+            $scope.contact = {};
+        };
 
-		var initAutocomplete = function() {
-			$scope.autocomplete = {
-				options: {
-					country: "fr",
-					types: "(cities)"
-				}
-			};
-		};
+        var initAutocomplete = function() {
+            $scope.autocomplete = {
+                options: {
+                    country: "fr",
+                    types: "(cities)"
+                }
+            };
+        };
 
-		initCriteria();
-		initAutocomplete();
-		initContact();
+        initCriteria();
+        initAutocomplete();
+        initContact();
 
-		$scope.listOfTypes = RaceTypeEnum.values;
+        $scope.listOfTypes = RaceTypeEnum.values;
 
-		$scope.types = [{
-			name: "Athlète"
-		}, {
-			name: "Organisateur"
-		}, {
-			name: "Autre"
-		}];
+        $scope.types = [{
+            name: "Athlète"
+        }, {
+            name: "Organisateur"
+        }, {
+            name: "Autre"
+        }];
 
-		$scope.map = {
-			isVisible: false,
-			editMode: true,
-			segments: [],
-			zoom: 6,
-			fit: true,
-			markers: [],
-			polylines: [],
-			center: {
-				latitude: 46.52863469527167,
-				longitude: 2.43896484375,
-			},
-			options: {
-				mapTypeId: google.maps.MapTypeId.ROADMAP,
-				mapTypeControlOptions: {
-					mapTypeIds: [google.maps.MapTypeId.ROADMAP,
-						google.maps.MapTypeId.HYBRID,
-						google.maps.MapTypeId.SATELLITE
-					]
-				},
-				disableDoubleClickZoom: true,
-				scrollwheel: true,
-				draggableCursor: "crosshair",
-				streetViewControl: false,
-				zoomControl: true
-			},
-			clusterOptions: {
-				gridSize: 60,
-				ignoreHidden: true,
-				minimumClusterSize: 2
-			},
-			doClusterMarkers: true
-		};
+        $scope.map = {
+            isVisible: false,
+            editMode: true,
+            segments: [],
+            zoom: 6,
+            fit: true,
+            markers: [],
+            polylines: [],
+            center: {
+                latitude: 46.52863469527167,
+                longitude: 2.43896484375,
+            },
+            options: {
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControlOptions: {
+                    mapTypeIds: [google.maps.MapTypeId.ROADMAP,
+                        google.maps.MapTypeId.HYBRID,
+                        google.maps.MapTypeId.SATELLITE
+                    ]
+                },
+                disableDoubleClickZoom: true,
+                scrollwheel: true,
+                draggableCursor: "crosshair",
+                streetViewControl: false,
+                zoomControl: true
+            },
+            clusterOptions: {
+                gridSize: 60,
+                ignoreHidden: true,
+                minimumClusterSize: 2
+            },
+            doClusterMarkers: true
+        };
 
 
-		$scope.submit = function(contact) {
-			ContactService.addContact(contact).then(
-				function() {
-					AlertService.add("success", $filter("translate")("message.addContact.successfully"), 3000);
-				});
-		};
+        $scope.submit = function(contact) {
+            ContactService.addContact(contact).then(
+                function() {
+                    AlertService.add("success", "message.addContact.successfully", 3000);
+                });
+        };
 
-		$scope.goToNewRace = function() {
-			$location.path("/races/home");
-		};
+        $scope.goToNewRace = function() {
+            $location.path("/races/home");
+        };
 
-		$scope.getRegion = function(region) {
-			return region.name;
-		};
+        $scope.getRegion = function(region) {
+            return region.name;
+        };
 
-		$scope.getType = function(type) {
-			return type.i18n;
-		};
+        $scope.getType = function(type) {
+            return type.i18n;
+        };
 
-		$scope.submitSearchWithCriteria = function() {
-			$location.path("/races/search");
-			setTimeout(function() {
-				SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria);
-			}, 1000);
-		};
+        $scope.submitSearchWithCriteria = function() {
+            $location.path("/races/search");
+            setTimeout(function() {
+                SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria);
+            }, 1000);
+        };
 
-		$scope.suggest = function(queryString) {
+        $scope.suggest = function(queryString) {
 
-			var criteria = {
-				fulltext: (queryString !== undefined) ? queryString : "",
-				region: undefined
-			};
+            var criteria = {
+                fulltext: (queryString !== undefined) ? queryString : "",
+                region: undefined
+            };
 
-			return RaceService.suggest(criteria).then(function(response) {
+            return RaceService.suggest(criteria).then(function(response) {
 
-				$scope.names = [];
+                $scope.names = [];
 
-				var races = response.hits.hits;
-				//push the current query at first
+                var races = response.hits.hits;
+                //push the current query at first
 
-				var queryFullText = {
-					fullname: queryString,
-					id: undefined
-				};
+                var queryFullText = {
+                    fullname: queryString,
+                    id: undefined
+                };
 
-				$scope.names.push(queryFullText);
+                $scope.names.push(queryFullText);
 
-				for (var i = 0; i < races.length; i++) {
+                for (var i = 0; i < races.length; i++) {
 
-					var name = {
-						fullname: races[i].fields.partial1[0].name,
-						id: races[i].fields.partial1[0]._id
-					};
+                    var name = {
+                        fullname: races[i].fields.partial1[0].name,
+                        id: races[i].fields.partial1[0]._id
+                    };
 
-					$scope.names.push(name);
-				}
+                    $scope.names.push(name);
+                }
 
-				return $scope.names;
-			});
-		};
+                return $scope.names;
+            });
+        };
 
-		$scope.onSelect = function($item) {
-			if ($scope.names.length > 0 && $item !== $scope.names[0]) {
-				$location.path("/races/view/" + $item.id);
-			} else {
-				$location.path("/races/search");
-				setTimeout(function() {
-					SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria);
-				}, 1000);
-			}
-		};
+        $scope.onSelect = function($item) {
+            if ($scope.names.length > 0 && $item !== $scope.names[0]) {
+                $location.path("/races/view/" + $item.id);
+            } else {
+                $location.path("/races/search");
+                setTimeout(function() {
+                    SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria);
+                }, 1000);
+            }
+        };
 
-		$scope.getRaces = function() {
-			
-			RaceService.findAll().then(
-				function(response) {
+        $scope.getRaces = function() {
 
-					if (response.races && response.races.length > 0) {
+            RaceService.findAll().then(
+                function(response) {
 
-						$scope.emptyResults = false;
+                    if (response.races && response.races.length > 0) {
 
-						$scope.map.markers = RouteService.convertRacesLocationToMarkers(response.races);
+                        $scope.emptyResults = false;
 
-						_.each($scope.map.markers, function(marker) {
-							marker.closeClick = function() {
-								marker.showWindow = false;
-								$scope.$apply();
-							};
-							marker.onClicked = function() {
-								$scope.onMarkerClicked(marker);
-							};
-						});
+                        $scope.map.markers = RouteService.convertRacesLocationToMarkers(response.races);
 
-						MetaService.ready($filter("translate")("title.home"), $location.path(), $filter("translate")("message.home.description"));
+                        _.each($scope.map.markers, function(marker) {
+                            marker.closeClick = function() {
+                                marker.showWindow = false;
+                                $scope.$apply();
+                            };
+                            marker.onClicked = function() {
+                                $scope.onMarkerClicked(marker);
+                            };
+                        });
 
-					} else {
-						$scope.emptyResults = true;
-					}
-				});
-		};
+                        MetaService.ready("title.home", $location.path(), "message.home.description");
 
-		$scope.onMarkerClicked = function(marker) {
-			marker.showWindow = true;
-			$scope.$apply();
-		};
+                    } else {
+                        $scope.emptyResults = true;
+                    }
+                });
+        };
 
-		$scope.getRaces();
+        $scope.onMarkerClicked = function(marker) {
+            marker.showWindow = true;
+            $scope.$apply();
+        };
 
-	});
+        $scope.getRaces();
+
+    });

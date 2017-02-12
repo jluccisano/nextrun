@@ -6,9 +6,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$location,
 		$routeParams,
 		$modal,
-		$translate,
-		$translatePartialLoader,
-		$filter,
 		RaceService,
 		AlertService,
 		AuthService,
@@ -19,8 +16,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		TextAngularConfig,
 		MetaService,
 		GpxService) {
-
-		$translatePartialLoader.addPart("race");
 
 		/** init google maps service **/
 		google.maps.visualRefresh = true;
@@ -89,7 +84,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 					$scope.loading = false;
 
-					MetaService.ready($filter("translate")("title.editRace"), $location.path, $filter("translate")("message.editRace.description"));
+					MetaService.ready("title.editRace", $location.path, "message.editRace.description");
 
 				}).then(function() {
 					$scope.loading = false;
@@ -122,7 +117,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			RaceService.update($scope.raceId, data).then(
 				function() {
-					AlertService.add("success", $filter("translate")("message.update.successfully"), 3000);
+					AlertService.add("success", "message.update.successfully", 3000);
 					$scope.saving = false;
 					$location.path("/myraces");
 				});

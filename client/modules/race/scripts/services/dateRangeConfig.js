@@ -12,10 +12,10 @@ angular.module("nextrunApp.race").value("DateRangeConfig", {
 	timePickerIncrement: 1,
 	timePicker12Hour: true,
 	ranges: {
-		"Les 7 Prochains jours": [moment(), moment().add("days", 6)],
-		"Les 30 Prochains jours": [moment(), moment().add("days", 29)],
-		"Les 3 mois à venir": [moment(), moment().add("days", 89)],
-		"Les 6 mois à venir": [moment(), moment().add("days", 179)]
+		"Les 7 Prochains jours": [moment(), moment().add(6,"days")],
+		"Les 30 Prochains jours": [moment(), moment().add(29, "days")],
+		"Les 3 mois à venir": [moment(), moment().add(89, "days")],
+		"Les 6 mois à venir": [moment(), moment().add(179, "days")]
 	},
 	opens: "left",
 	buttonClasses: ["btn btn-default"],

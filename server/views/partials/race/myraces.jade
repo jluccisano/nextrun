@@ -1,36 +1,36 @@
 div.container
 	span(us-spinner spinner-key="loader1")
-	h1 Mes Manifestations
+	h1(translate) Mes Manifestations
 	div.col-lg-2.col-lg-offset-10
 		button.btn.btn-primary(ng-click="addNewRace()") 
 			span.glyphicon.glyphicon-plus 
-			span  Ajouter
+			span(translate)  Ajouter
 	table.table.table-hover
 		thead
 			tr
-				th(style="width: 40%") Nom
-				th(style="width: 10%") Type
-				th(style="width: 15%") Distance type
-				th(style="width: 15%") Dernière mise à jour
+				th(style="width: 40%" translate) Nom
+				th(style="width: 10%" translate) Type
+				th(style="width: 15%" translate) Type de distance
+				th(style="width: 15%" translate) Dernière mise à jour
 				th(style="width: 10%")
 				th(style="width: 10%")
 
 		tbody
 			tr(ng-repeat="race in races")
 				td 
-					a(data-ng-href='/races/view/{{race._id}}') {{race.name}}
-				td {{race.type.i18n}}
-				td {{race.distanceType.name}}
+					a(data-ng-href='/races/view/{{race._id}}' translate) Nom
+				td(translate) Type
+				td(translate) Type de distance
 				td(ng-if="race.last_update != null")  {{race.last_update | amDateFormat:'DD/MM/YYYY HH:mm'}}
 				td
-					a(data-ng-href='/races/edit/{{race._id}}') Editer
+					a(data-ng-href='/races/edit/{{race._id}}' translate) Editer
 				td
-					a(ng-click="openDeleteConfirmation(race)") Supprimer
+					a(ng-click="openDeleteConfirmation(race)" translate) Supprimer
 				td(ng-if="race.published === true")
-					a(ng-click="publish(race, false)") Retirer
+					a(ng-click="publish(race, false)" translate) Retirer
 				td(ng-if="race.published === false")
-					a(ng-click="publish(race, true)") Publier
+					a(ng-click="publish(race, true)" translate) Publier
 
 	div.col-lg-8.col-lg-offset-4
-		pagination(boundary-links="true" on-select-page="onSelectPage(page)" total-items="totalItems" page="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
+		pagination(boundary-links="true" ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
 				

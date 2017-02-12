@@ -9,7 +9,6 @@ var raceModule = angular.module("nextrunApp.race",
   "ui.bootstrap",
   "ui.bootstrap.datetimepicker",
   "ui.dateTimeInput",
-  "pascalprecht.translate",
   "angularMoment",
   "nextrunApp.commons",
   "nextrunApp.route"

@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
-	function($q, Alert, $translate, $filter, $location) {
+	function($q, AlertService, $location) {
 		var interceptor = {
 			"responseError": function(response) {
 
@@ -11,7 +11,7 @@ angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
 
 				if (response.data && response.data.message) {
 					_.each(response.data.message, function(message) {
-						Alert.add("danger", $filter("translate")(message), 3000);
+						AlertService.add("danger", message, 3000);
 					});
 				}
 

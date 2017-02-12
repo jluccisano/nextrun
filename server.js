@@ -46,7 +46,7 @@ fs.readdirSync(routes_path).forEach(function(file) {
 
 
 // all environments
-app.set("port", env.PORT || 3000);
+app.set("port", process.env.PORT || 3000);
 
 
 // assume "not found" in the error msgs

@@ -1,6 +1,6 @@
 div.modal-header
 	button.close(type="button",data-dismiss="modal",aria-hidden="true", ng-click="cancel()") &times;
-	h4.modal-title Signaler une erreur
+	h4.modal-title(translate) Signaler une erreur
 div.modal-body
 	div.row
 		div.col-lg-10
@@ -9,15 +9,15 @@ div.modal-body
 					label.control-label(for="type")
 					select.form-control(data-ng-model="feedback.type", name="type", data-ng-options="type.name for type in types", required)
 				div.form-group(ng-class="{'has-error': !form.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.$pristine}")
-					label.control-label(for="email") Email
-					input.form-control(type="email", data-ng-model="feedback.email", name="email", id="email", placeholder="Email", required)
-					span.help-block(ng-show="form.email.$dirty && form.email.$error.required") Veuillez saisir votre email
-					span.help-block(ng-show="form.email.$error.email") Email invalide
+					label.control-label(for="email" translate) Email
+					input.form-control(type="email", data-ng-model="feedback.email", name="email", id="email", placeholder="{{'Email' | translate}}", required)
+					span.help-block(ng-show="form.email.$dirty && form.email.$error.required" translate) Veuillez saisir votre email
+					span.help-block(ng-show="form.email.$error.email" translate) Email invalide
 				div.form-group
 					label.control-label Message
-					textarea.form-control(name="message" data-ng-model="feedback.message" rows="3" placeholder="votre message" required)
+					textarea.form-control(name="message" data-ng-model="feedback.message" rows="3" placeholder="{{'votre message' | translate}}" required)
 
-				button.btn.btn-default(type="button", ng-click="cancel()") Annuler
-				button.btn.btn-primary(type="submit", ng-click="submit(feedback)") Envoyer
+				button.btn.btn-default(type="button", ng-click="cancel()" translate) Annuler
+				button.btn.btn-primary(type="submit", ng-click="submit(feedback)" translate) Envoyer
 
 div.modal-footer
