@@ -33,8 +33,8 @@ module.exports = {
     racesidx: "racesidx_test_v1"
   },
   prod: {
-    host: '127.0.0.1',
-    db: 'mongodb://127.0.0.1:nextrun_adm:malili011004/nextrun',
+    host: '192.95.25.173',
+    db: 'mongodb://192.95.25.173:27017/nextrun',
     root: rootPath,
     facebook: {
       clientID: "195803770591615",
