@@ -24,7 +24,7 @@ exports.index = function(req, res) {
   }));
 
   var ua = req.headers['user-agent'];
-  if ((typeof(ua) !== "undefined" && ua.match(/bot/i)) || typeof(req.query._escaped_fragment_) !== "undefined") {
+  if ((typeof(ua) !== "undefined" && ua.match(/bot/i)) || typeof(req.query._escaped_fragment_) !== "undefined" || typeof(req.query.fb_locale) !== "undefined") {
 
     generateSnapshot(req, res);
 
@@ -66,7 +66,7 @@ var generateSnapshot = function(req, res) {
         console.log("error during create new phantom page: " + err);
       }
 
-      page.open("http://localhost:3000" + req.path, function(err, status) {
+      page.open("http://127.0.0.1:3000" + req.path, function(err, status) {
 
         page.onConsoleMessage = function(msg) {
           console.log(msg);
