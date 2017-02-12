@@ -2,7 +2,7 @@ div(ng-form="resultsForm" novalidate)
 	div(class="form-group")
 		label(for="resultTitle" class="control-label" translate) Titre
 		div(class="form-group" ng-class="{'has-error': resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine, 'has-success': !resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine}")
-			input(type="text" id="resultTitle" class="form-control" name="resultTitle" placeholder="{{'Titre' | translate}}" ng-model="result.title" ng-required="true")
+			input(type="text" id="resultTitle" class="form-control" name="resultTitle" placeholder="{{'Titre' | translate}}" ng-model="result.name" ng-required="true")
 	div(class="form-group")
 		label(for="resultFile" class="control-label" translate) Fichier
 		div(class="form-group" ng-class="{'has-error': resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine, 'has-success': !resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine}")
@@ -18,9 +18,9 @@ table(class="table table-hover")
 			th(translate) Fichier
 			th
 	tbody
-		tr(ng-repeat="result in results")
-			td {{result.title}}
-			td {{result.filename}}
+		tr(ng-repeat="result in race.results")
+			td {{result.year}}
+			td {{result.name}}
 			td
 				div(class="form-group")
 					button(type="button" class="btn btn-default btn-lg" ng-click="deleteResult(result)")

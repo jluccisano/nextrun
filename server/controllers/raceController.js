@@ -201,6 +201,14 @@ exports.deleteRightsFile = function(req, res, next) {
 };
 
 
+exports.loadResult = function(req, res, next, resultId) {
+	raceService.findResult(resultId, res, function(result) {
+		req.result = result;
+		next();
+	});
+};
+
+
 exports.addResult = function(req, res) {
 	var race = req.race;
 	var result = req.body;
@@ -228,9 +236,28 @@ exports.addResult = function(req, res) {
 		console.log(err);
 	});
 
-	raceService.addResult(race, path, filename, res, function(race) {
+	raceService.addResult(race, path, filename, res, function() {
 		res.status(200).json({
 			id: race._id
 		});
+	});
+};
+
+exports.getResult = function(req, res) {
+
+};
+
+exports.deleteResultFile = function(req, res) {
+	var result = req.result;
+	raceService.deleteResultFile(result , res, function() {
+		next();
+	});
+};
+
+exports.deleteResult = function(req, res) {
+	var race = req.race;
+	var result = req.result;
+	raceService.deleteResult(race, result, res, function() {
+		res.sendStatus(200);
 	});
 };

@@ -54,6 +54,9 @@ angular.module("nextrunApp.commons").factory("RaceService",
             addResult: function(id, result) {
                 return HttpUtils.post("/api/races/" + id + "/results/new", result);
             },
+            deleteResult: function(id, resultId) {
+                return HttpUtils.delete("/api/races/" + id + "/results/" + resultId + "/delete");
+            },
             download: function(id) {
                 return HttpUtils.post("/api/races/" + id + "/download/");
             }

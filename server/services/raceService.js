@@ -482,12 +482,18 @@ exports.addResult = function(race, path, originalName, res, cb) {
 			_id: race._id
 		};
 
+		var result = {
+			name: originalName,
+			year: 2012,
+			fileId: file._id
+		};
+
 		var update = {
 			$set: {
 				lastUpdate: new Date()
 			},
 			$addToSet: {
-				results: file._id
+				results: result
 			}
 		};
 
@@ -507,6 +513,71 @@ exports.addResult = function(race, path, originalName, res, cb) {
 
 
 
-exports.getResult = function() {
+exports.getResult = function(fileId, res, cb) {
+	gridfsService.getFile(fileId, res, function(bufs) {
+		var fbuf = Buffer.concat(bufs);
+		var base64 = (fbuf.toString("base64"));
+		if (base64) {
+			cb("data:image/png;base64," + base64);
+		} else {
+			cb();
+		}
 
+	});
+};
+
+exports.deleteResultFile = function(result, res, cb) {
+	if (result.fileId) {
+		gridfsService.deleteFile(result.fileId, res, function() {
+			cb();
+		});
+	} else {
+		cb();
+	}
+};
+
+exports.deleteResult = function(race, result, res, cb) {
+	var query = {
+		_id: race._id
+	};
+
+	var update = {
+		$set: {
+			lastUpdate: new Date()
+		},
+		$pull: {
+			results: result._id
+		}
+	};
+
+	var options = {
+		multi: true
+	};
+
+	Race.update(query, update, function(error) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else {
+			cb();
+		}
+	}, options);
+};
+
+exports.findResult = function(id, res, cb) {
+
+	var criteria = {
+		"results._id": id
+	};
+
+	var projection = {
+		"results.$": 1
+	};
+
+	Race.findOneByCriteria(criteria, projection, function(error, result) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else {
+			cb(result);
+		}
+	});
 };

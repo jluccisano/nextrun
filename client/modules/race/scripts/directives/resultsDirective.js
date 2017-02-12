@@ -30,14 +30,17 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
   });
 
   $scope.addResult = function(result) {
-      RaceService.addResult(result).then(function() {
+      RaceService.addResult($scope.race._id, result).then(function() {
         $scope.init();
         notificationService.success(gettextCatalog.getString("Votre résultat a bien été ajouté"));
       });
   };
 
-  $scope.deleteResult = function() {
-
+  $scope.deleteResult = function(result) {
+    RaceService.deleteResult($scope.race._id, result._id).then(function() {
+        $scope.init();
+        notificationService.success(gettextCatalog.getString("Votre résultat a bien été supprimé"));
+      });
   };
 
   $scope.cancel = function() {

@@ -12,8 +12,8 @@ module.exports = {
 		}).exec(cb);
 	},
 
-	findOneByCriteria: function(criteria, cb) {
-		this.findOne(criteria).exec(cb);
+	findOneByCriteria: function(criteria, projection, cb) {
+		this.findOne(criteria, projection).exec(cb);
 	},
 
 	findByCriteria: function(criteria, cb, projection, limit, skip) {

@@ -93,8 +93,8 @@ var routes = [{
     accessLevel: accessLevels.user
 },{
     path: "/:id/results/:resultId/delete",
-    httpMethod: "GET",
-    middleware: [raceController.deleteResult],
+    httpMethod: "DELETE",
+    middleware: [raceController.deleteResultFile, raceController.deleteResult],
     accessLevel: accessLevels.user
 }];
 
@@ -104,5 +104,6 @@ module.exports = function(app, express) {
     var router = express.Router();
     router.param("id", raceController.loadRace);
     router.param("routeId", routeController.loadRoute);
+    router.param("resultId", raceController.loadResult);
     routerService.register(app, router, routes, "/api/races");
 };
