@@ -36,11 +36,6 @@ angular.module('nextrunApp')
                 $http.post('/api/races/search/', { "criteria" : criteria }).success(function(races) {
                     success(races);
                 }).error(error);
-            },
-            autocomplete: function(query_string, success, error) {
-                $http.post('/api/races/autocomplete/'+ query_string).success(function(races) {
-                    success(races);
-                }).error(error);
             }
         };
     }]);

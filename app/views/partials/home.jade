@@ -4,20 +4,11 @@ div.custom-bs-background
 	div.container
 		div.container.custom-marketing
 			div.row
-				div.text-center
-					h3 Restez informé, nous lançons le service bientôt.
-				div.col-lg-12.center
-					form.form-inline(role="form", name="form", novalidate)
-						div.form-group(data-ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
-							input.form-control(type="email", name="email", id="email", placeholder="votre@email.com", data-ng-model="contact.email", required)
-						div.form-group(data-ng-class="{'has-error': !form.type.$pristine && form.type.$invalid, 'has-success': !form.type.$invalid && !form.type.$pristine}")
-							select.form-control(data-ng-model="contact.type", name="type", data-ng-options="type.name for type in types", required, data-ng-init="type.name='Athlète'")
-						div.form-group
-							button.btn.btn-primary(ng-click="submit(contact)", ng-disabled="form.$invalid") Envoyer
-						div
-							label.error(data-ng-show="form.email.$dirty && form.email.$error.required") <strong>Veuillez saisir votre email</strong>
-							label.error(data-ng-show="form.email.$error.email") <strong>Email invalide</strong>
-							label.error(data-ng-show="form.type.$dirty && form.type.$error.required") <strong>Veuillez faire un choix</strong>
+				div.col-lg-6.col-lg-offset-3
+					div.input-group.input-group-lg(style="margin-top:20px")
+						input.form-control(type="text" placeholder="Rechercher" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in autocomplete($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
+						span.input-group-addon
+							span.glyphicon.glyphicon-search
 			div.container.marketing
 				div.row
 					div.col-lg-4
@@ -67,3 +58,18 @@ div.custom-bs-background
 						p
 							| - Publier les <strong style="color:#428bca">résultats</strong>.
 						button.btn.btn-primary.btn-lg(data-ng-click="goToNewRace()") Commencer maintenant !
+				div.row
+					div.text-center
+						h3 Restez informé.
+					div.col-lg-12.center
+						form.form-inline(role="form", name="form", novalidate)
+							div.form-group(data-ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
+								input.form-control(type="email", name="email", id="email", placeholder="votre@email.com", data-ng-model="contact.email", required)
+							div.form-group(data-ng-class="{'has-error': !form.type.$pristine && form.type.$invalid, 'has-success': !form.type.$invalid && !form.type.$pristine}")
+								select.form-control(data-ng-model="contact.type", name="type", data-ng-options="type.name for type in types", required, data-ng-init="type.name='Athlète'")
+							div.form-group
+								button.btn.btn-primary(ng-click="submit(contact)", ng-disabled="form.$invalid") Envoyer
+							div
+								label.error(data-ng-show="form.email.$dirty && form.email.$error.required") <strong>Veuillez saisir votre email</strong>
+								label.error(data-ng-show="form.email.$error.email") <strong>Email invalide</strong>
+								label.error(data-ng-show="form.type.$dirty && form.type.$error.required") <strong>Veuillez faire un choix</strong>

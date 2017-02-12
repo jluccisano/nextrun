@@ -282,10 +282,12 @@ RaceSchema.statics = {
    */
   autocomplete: function(query_string, cb) {
 
-    var regex = new RegExp(query_string, 'i');
+    var regex = new RegExp('\\b' + query_string, 'i');
 
     this.find({
       name: regex
+    }, {
+      name: 1
     }).limit(8).exec(cb);
   },
 
@@ -296,10 +298,9 @@ RaceSchema.statics = {
    * @param {Function} cb
    */
   search: function(operation, cb) {
-
     this.aggregate({
       '$match': {
-        '$and': [operation.date, operation.departments, operation.types, {
+        '$and': [operation.fulltext, operation.date, operation.departments, operation.types, {
           published: true
         }]
       }
@@ -374,7 +375,7 @@ RaceSchema.statics = {
   typeFacets: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [operation.departments, operation.types, operation.date, {
+        '$and': [operation.fulltext, operation.departments, operation.date, {
           published: true
         }]
       }
@@ -397,7 +398,7 @@ RaceSchema.statics = {
   departmentFacets: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [operation.departments, operation.types, operation.date, {
+        '$and': [operation.fulltext, operation.types, operation.date, {
           published: true
         }]
       }
@@ -420,15 +421,19 @@ RaceSchema.statics = {
   dateFacets: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [operation.departments, operation.types, operation.date, {
+        '$and': [operation.fulltext, operation.departments, operation.types, {
           published: true
         }]
       }
     }, {
       '$group': {
         _id: '$all',
-        minDate: { $min: "$date"},
-        maxDate: { $max: "$date"}
+        minDate: {
+          $min: "$date"
+        },
+        maxDate: {
+          $max: "$date"
+        }
       }
     }, cb);
   }

@@ -1,9 +1,10 @@
-angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices','$http',
-	function($scope, $location, $routeParams, RaceServices,$http) {
+angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'sharedService', '$rootScope',
+	function($scope, $location, $routeParams, RaceServices, $http, sharedService, $rootScope) {
 		'use strict';
 
 
-		$scope.selected = undefined;
+
+		$scope.fulltext = undefined;
 		$scope.total = 0;
 		$scope.pageSize = 20;
 
@@ -14,14 +15,30 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.currentTypeSelected = [];
 		$scope.departments = [];
-		$scope.dateRange = {};
+		$scope.dateRange = {
+			"startDate": moment(),
+			"endDate": moment().add('days', 29)
+		};
+
+		$scope.listOfDepartments = DEPARTMENTS.enums;
+
+		$scope.names = [];
+
+		$scope.departmentFacets = [];
+		$scope.dateFacets = [];
+		$scope.typeFacets = [];
+
+		$scope.$on('handleBroadcast', function(fulltext) {
+			$scope.fulltext = sharedService.fulltext;
+			$scope.search();
+		});
 
 		$scope.datarangeConfig = {
-			//startDate: fromDate,
-			//endDate: toDate,
 			minDate: '01/01/2012',
 			maxDate: '31/12/2015',
-			dateLimit: { days: 60 },
+			dateLimit: {
+				days: 365
+			},
 			showDropdowns: true,
 			showWeekNumbers: true,
 			timePicker: false,
@@ -29,11 +46,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			timePicker12Hour: true,
 			ranges: {
 				"Aujourd'hui": [moment(), moment()],
-				"Hier": [moment().subtract('days', 1), moment().subtract('days', 1)],
-				"Les 7 Derniers jours": [moment().subtract('days', 6), moment()],
-				"Les 30 Derniers jours": [moment().subtract('days', 29), moment()],
+				"Les 7 Prochains jours": [moment().add('days', 6), moment()],
+				"Les 30 Prochains jours": [moment().add('days', 29), moment()],
 				"Ce mois-ci": [moment().startOf('month'), moment().endOf('month')],
-				"Le dernier mois": [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+				"Le mois prochain": [moment().add('month', 1).startOf('month'), moment().add('month', 1).endOf('month')]
 			},
 			opens: 'left',
 			buttonClasses: ['btn btn-default'],
@@ -46,25 +62,36 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				fromLabel: 'de',
 				toLabel: 'à',
 				customRangeLabel: 'Personnalisé',
-				daysOfWeek: ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa','Di'],
+				daysOfWeek: ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'],
 				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
 				firstDay: 0
 			},
 		};
 
+
+
 		$scope.computeUrlParams = function() {
 
-			var departmentsArray = $routeParams.departments.split(',');
+			var departmentsParams = $routeParams.departments;
 
-			_.each(departmentsArray, function(departmentCode) {
-				$scope.departments.push(getDepartmentByCode(DEPARTMENTS,departmentCode));
-			});
+			if (departmentsParams) {
+
+				var departmentsArray = $routeParams.departments.split(',');
+
+				_.each(departmentsArray, function(departmentCode) {
+					$scope.departments.push(getDepartmentByCode(DEPARTMENTS, departmentCode));
+				});
+
+				$scope.search();
+			}
 
 		}
 
-
-		$scope.listOfDepartments = DEPARTMENTS.enums;
-
+		$scope.deleteFilters = function() {
+			$scope.currentTypeSelected = [];
+			$scope.departments = [];
+			$scope.dateRange = {};
+		}
 
 
 		$scope.getDate = function(dateString) {
@@ -78,27 +105,42 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			return department.code + ' - ' + department.name;
 		};
 
-		$scope.autocomplete = function(query) {
+		$scope.formatDateRange = function(dateRange) {
+			return "du " + moment(new Date(dateRange.startDate)).format("DD-MM-YYYY") + ' au ' + moment(new Date(dateRange.endDate)).format("DD-MM-YYYY");
+		};
+
+
+
+		$scope.autocomplete = function(query_string) {
 			return $http({
 				method: 'GET',
-				url: '/employees/_autocomplete/' + query
+				url: '/api/races/autocomplete/' + query_string
 			}).
 			then(function(response) {
 
-				var names = [];
+				$scope.names = [];
 
-				var hits = response.data.hits.hits;
+				var races = response.data.races;
 				//push the current query at first
-				names.push(query);
+
+				var query_fulltext = {
+					fullname: query_string,
+					id: undefined
+				}
+				$scope.names.push(query_fulltext);
 
 
-				for (var i = 0; i < hits.length; i++) {
-					names.push(hits[i]._source.firstname + " " + hits[i]._source.lastname);
+				for (var i = 0; i < races.length; i++) {
+
+					var name = {
+						fullname: races[i].name,
+						id: races[i]._id
+					}
+					$scope.names.push(name);
 				}
 
-				return names;
+				return $scope.names;
 			});
-
 		};
 
 		$scope.onSelectPage = function() {
@@ -121,8 +163,45 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			$scope.currentPage = 1;
 		}
 
+		$scope.onSelect = function($item) {
 
-		$scope.toggleSelection = function(term) {
+
+
+			if ($scope.names.length > 0 && $item !== $scope.names[0]) {
+
+				$location.path("/races/view/" + $item.id)
+
+			} else {
+
+				//Reinit 
+				$scope.deleteFilters();
+				$scope.search();
+			}
+
+
+
+		};
+
+		$scope.resetDataRangeFilter = function() {
+			$scope.dateRange = {};
+		};
+
+		$scope.toggleDepartmentSelection = function(term) {
+			var idx = $scope.departments.indexOf(term);
+
+			// is currently selected
+			if (idx > -1) {
+				$scope.departments.splice(idx, 1);
+			}
+
+			// is newly selected
+			else {
+				$scope.departments.push(term);
+			}
+		};
+
+
+		$scope.toggleTypeSelection = function(term) {
 			var idx = $scope.currentTypeSelected.indexOf(term);
 
 			// is currently selected
@@ -148,9 +227,12 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.search = function() {
 
 			var criteria = {
-				page: ($scope.currentPage - 1) ,
+				fulltext: ($scope.fulltext !== undefined && $scope.fulltext.fullname) ? $scope.fulltext.fullname : "",
+				page: ($scope.currentPage - 1),
 				size: $scope.pageSize,
-				sort: {"date":1},
+				sort: {
+					"date": 1
+				},
 				types: $scope.currentTypeSelected,
 				departments: $scope.getDepartmentsCodes($scope.departments),
 				dateRange: $scope.dateRange
@@ -159,13 +241,20 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			RaceServices.search(criteria,
 				function(response) {
 
-					if(response.races.length > 0) {
+					if (response.races.length > 0) {
 
 						$scope.emptyResults = false;
 
 						$scope.races = response.races[0].results;
 
-						$scope.typeFacets = response.facets[0];
+						$scope.typeFacets = response.facets[2];
+
+						$scope.departmentFacets = response.facets[0];
+
+						$scope.dateFacets = response.facets[1];
+
+						$scope.datarangeConfig.minDate = $scope.dateFacets[0].minDate;
+						$scope.datarangeConfig.maxDate = $scope.dateFacets[0].maxDate;
 
 						$scope.totalItems = response.races[0].size;
 
@@ -177,7 +266,9 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 						$scope.races = [];
 
-						$scope.facets = [];
+						$scope.departmentFacets = [];
+						$scope.dateFacets = [];
+						$scope.typeFacets = [];
 
 						$scope.totalItems = 0;
 
@@ -193,6 +284,5 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				});
 		};
 		$scope.computeUrlParams();
-		//$scope.search();
 	}
 ]);

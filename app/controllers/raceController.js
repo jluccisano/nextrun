@@ -257,6 +257,7 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
 exports.extractCriteria = function(req, res, next) {
 
   var operation = {
+    fulltext: {},
     departments: {},
     types: {},
     date: {},
@@ -301,6 +302,13 @@ exports.extractCriteria = function(req, res, next) {
           '$in': criteria.departments
         }
       };
+    }
+
+    if(criteria.fulltext) {
+      var regex = new RegExp('\\b' + criteria.fulltext , 'i');
+      operation.fulltext =  {
+        "name": regex
+      }
     }
 
 
@@ -353,13 +361,13 @@ exports.typeFacets = function(req, res) {
  */
 exports.departmentFacets = function(req, res, next) {
 
-  Race.typeFacets(req.operation, function(err, departmentfacets) {
+  Race.departmentFacets(req.operation, function(err, departmentFacets) {
     if (err) {
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
     }
-    req.facets.push(departmentfacets);
+    req.facets.push(departmentFacets);
     return next();
   });
 
@@ -424,6 +432,8 @@ exports.autocomplete = function(req, res) {
     }
     console.log(races);
     req.races = races;
-    return next();
+     return res.json(200, {
+      races: req.races
+    });
   });
 };
