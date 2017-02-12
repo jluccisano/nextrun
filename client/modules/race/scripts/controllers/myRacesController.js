@@ -26,7 +26,7 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 						$scope.races = [];
 					}
 				}).finally(function() {
-				MetaService.ready(gettextCatalog.getString("Mes manifestations"), $location.path, gettextCatalog.getString("Mes manifestations"));
+				MetaService.ready("Mes manifestations", $location.path,"Mes manifestations");
 			});
 		};
 

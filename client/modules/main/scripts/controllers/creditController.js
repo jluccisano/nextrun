@@ -3,8 +3,7 @@
 angular.module("nextrunApp").controller("CreditController",
     function(
         $location,
-        MetaService,
-        gettextCatalog) {
+        MetaService) {
 
-        MetaService.ready(gettextCatalog.getString("Remerciements"), $location.path(), gettextCatalog.getString("Remerciements"));
+        MetaService.ready("Remerciements", $location.path(),"Remerciements");
     });

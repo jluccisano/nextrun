@@ -50,13 +50,13 @@ db.races.find({
 });
 
 
-db.races.ensureIndex( { "place.loc" : "2dsphere" } );
+db.races.ensureIndex( { "place.geo" : "2dsphere" } );
 
 db.races.getIndexes();
 
-db.races.find({$and: [{ "place.loc": { $near: { $geometry: { type: "Point", coordinates: [ 48.856614, 2.352221900000018 ] }, $maxDistance: 60000 } }}]});
+db.races.find({$and: [{ "place.geo": { $near: { $geometry: { type: "Point", coordinates: [ 43.554954, 1.500864 ] }, $maxDistance: 60000 } }}]});
 
-db.races.find( { "place.loc" :{ $geoWithin :{ $centerSphere :[ [ 47.322047, 5.09 ] , 60 ] } } } )
+db.races.find( { "place.geo" :{ $geoWithin :{ $centerSphere :[ [ 47.322047, 5.09 ] , 60 ] } } } )
 
 
 

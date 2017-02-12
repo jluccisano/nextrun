@@ -1,1 +1,1 @@
-db.races.ensureIndex({ "place.loc" : "2dsphere" });
+db.races.ensureIndex({ "place.geo" : "2dsphere" });

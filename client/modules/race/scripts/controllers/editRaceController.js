@@ -54,7 +54,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			}).
 			finally(function() {
-				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
+				MetaService.ready("Editer une manifestation", $location.path,"Editer une manifestation");
 			});
 		};
 

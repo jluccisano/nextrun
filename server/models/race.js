@@ -112,7 +112,7 @@ var RaceSchema = new Schema({
             latitude: Number,
             longitude: Number
         },
-        loc: {
+        geo: {
             type: {
                 type: "String",
                 required: true,
@@ -228,7 +228,7 @@ RaceSchema.statics = {
 
             if (criteria.location.location.latitude && criteria.location.location.longitude) {
                 location = {
-                    "place.loc": {
+                    "place.geo": {
                         $near: {
                             $geometry: {
                                 type: "Point",

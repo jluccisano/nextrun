@@ -3,8 +3,7 @@
 angular.module("nextrunApp").controller("ContactController",
     function(
         $location,
-        MetaService,
-        gettextCatalog) {
+        MetaService) {
 
-        MetaService.ready(gettextCatalog.getString("Contacts"), $location.path(), gettextCatalog.getString("Contacts"));
+        MetaService.ready("Contacts", $location.path(),"Contacts");
     });

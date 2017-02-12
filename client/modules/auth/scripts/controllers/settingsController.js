@@ -70,6 +70,6 @@ angular.module("nextrunApp.auth").controller("SettingsController",
 
         $scope.init();
 
-        MetaService.ready(gettextCatalog.getString("Paramètres"), $location.path(), gettextCatalog.getString("Paramètres"));
+        MetaService.ready("Paramètres", $location.path(), "Paramètres");
 
     });

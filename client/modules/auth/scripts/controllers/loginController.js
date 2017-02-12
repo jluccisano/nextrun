@@ -6,8 +6,7 @@ angular.module("nextrunApp.auth").controller("LoginController",
 		$location,
 		$modal,
 		AuthService,
-		MetaService,
-		gettextCatalog) {
+		MetaService) {
 
 		$scope.user = {};
 
@@ -35,6 +34,6 @@ angular.module("nextrunApp.auth").controller("LoginController",
 			});
 		};
 
-		MetaService.ready(gettextCatalog.getString("Se connecter"), $location.path(), gettextCatalog.getString("Se connecter"));
+		MetaService.ready("Se connecter", $location.path(), "Se connecter");
 
 	});

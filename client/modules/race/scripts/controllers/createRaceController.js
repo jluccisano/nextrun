@@ -122,6 +122,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			$scope.opened = true;
 		};
 
-		MetaService.ready(gettextCatalog.getString("Ajouter une manifestation"), $location.path, gettextCatalog.getString("Ajouter une manifestation"));
+		MetaService.ready("Ajouter une manifestation", $location.path,"Ajouter une manifestation");
 
 	});

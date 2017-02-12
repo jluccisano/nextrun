@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("SharedMetaService",
-    function($rootScope) {
+    function($rootScope, gettextCatalog) {
 
         var sharedMetaService = {};
 
@@ -10,9 +10,9 @@ angular.module("nextrunApp.commons").factory("SharedMetaService",
         sharedMetaService.description = "";
 
         sharedMetaService.prepForMetaBroadcast = function(title, url, description) {
-            this.pageTitle = title;
+            this.pageTitle = gettextCatalog.getString(title);
             this.url += url;
-            this.description = description;
+            this.description = gettextCatalog.getString(description);
             this.broadcastMeta();
         };
 

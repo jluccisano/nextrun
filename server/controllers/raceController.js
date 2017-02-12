@@ -98,7 +98,8 @@ exports.create = function(req, res) {
             if (race.place.location.latitude && race.place.location.longitude) {
                 console.log(race.place.location);
                 race.place.geo = {
-                    type: [race.place.location.latitude, race.place.location.longitude]
+                    type: "Point",
+                    coordinates: [race.place.location.latitude, race.place.location.longitude]
                 };  
             }
 
@@ -220,7 +221,8 @@ exports.update = function(req, res) {
             if (fieldsToUpdate.place.location.latitude && fieldsToUpdate.place.location.longitude) {
                 console.log(fieldsToUpdate.place.location);
                 fieldsToUpdate.place.geo = {
-                    type: [race.place.location.latitude, race.place.location.longitude]
+                    type: "Point",
+                    coordinates: [race.place.location.latitude, race.place.location.longitude]
                 };  
             }
         }

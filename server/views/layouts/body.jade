@@ -4,10 +4,11 @@ div(class="wrapper")
 
 	div(id="fb-root")
 
-	include ./messages
-
 	div(ng-cloak class="view-container")
-		div(ng-view class="view-frame")
+
+		nr-login(ng-if="mode === 'login'" ng-controller="LoginController")
+
+		div(ng-if="mode === 'app'" ng-view class="view-frame")
 
 footer(role="contentinfo")
 	include ./footer

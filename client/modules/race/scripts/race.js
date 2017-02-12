@@ -22,8 +22,7 @@ var raceModule = angular.module("nextrunApp.race", [
   "nextrunApp.commons",
   "nextrunApp.route",
   "ezfb",
-  "jlareau.pnotify",
-  "checklist-model",
+  "jlareau.pnotify"
 ]);
 
 

@@ -11,5 +11,5 @@ angular.module("nextrunApp.race").controller("RaceHomeController",
             $location.path("/races/create");
         };
 
-        MetaService.ready(gettextCatalog.getString("Ajouter une manifesation"), $location.path(), gettextCatalog.getString("Ajouter une manifesation"));
+        MetaService.ready("Ajouter une manifesation", $location.path(),"Ajouter une manifesation");
     });

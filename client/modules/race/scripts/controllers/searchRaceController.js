@@ -132,7 +132,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
             }).
             finally(function() {
-                MetaService.ready(gettextCatalog.getString("Manifestations"), $location.path(), gettextCatalog.getString("Manifestations"));
+                MetaService.ready("Manifestations", $location.path(), "Manifestations");
             });
 
         };

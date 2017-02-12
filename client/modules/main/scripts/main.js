@@ -78,11 +78,18 @@ nextrunApp.run(function(
       if (AuthService.isLoggedIn()) {
         $location.path("/");
       } else {
-        $location.path("/login");
+        //$location.path("/login");
+
+        $rootScope.mode = "login";
       }
+
+      
 
       notificationService.info(gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"));
     }
+
+    $rootScope.mode = "app";
+    
   });
 
   gettextCatalog.currentLanguage = "en";
