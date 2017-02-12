@@ -10,6 +10,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $filter,
         RaceService,
         RouteService,
+        GpxService,
         MetaService) {
 
         google.maps.visualRefresh = true;
@@ -54,6 +55,16 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                     }
                 }
             });
+        };
+
+        $scope.exportGPX = function(route) {
+
+            var gpx = GpxService.convertRouteToGPX(route, "export");
+
+            var blob = new Blob([gpx], {
+                type: "text/xml"
+            });
+            return blob;
         };
 
         $scope.init();

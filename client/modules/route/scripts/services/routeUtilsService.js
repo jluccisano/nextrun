@@ -1,9 +1,17 @@
 "use strict";
 
-angular.module("nextrunApp.route").factory("RouteUtilsService", function() {
+angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsApiService) {
 
 	return {
-		
+
+		convertPointsToPath: function(points) {
+			var path = [];
+
+			_.each(points, function(point){
+				path.push(GmapsApiService.LatLng(point.getLatitude(), point.getLongitude());
+			});
+			return path;
+		},
 		convertPathToPoints: function(path, isFirstPoint) {
 
 			var startIndex = 1;

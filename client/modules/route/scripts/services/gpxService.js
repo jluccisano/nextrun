@@ -70,6 +70,49 @@ angular.module("nextrunApp.route").factory("GpxService",
 				return segmentsDataModel;
 			},
 
+			convertRouteToGPX: function(route, name) {
+
+				var gpxToXML;
+
+				var content = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>";
+
+				var json = {
+					"gpx": {
+						"_xmlns": "http://www.topografix.com/GPX/1/1",
+						"_creator": "nextrun.fr",
+						"_version": "1.1",
+						"_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+						"_xsi:schemaLocation": "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd",
+						"trk": {
+							"name": name,
+							"trkseg": {}
+						}
+					}
+				};
+
+				var arrayOfTrkpt = [];
+
+				_.each(route.getSegments(), function(segment) {
+
+					_.each(segment.getPoints(), function(point) {
+
+						var trkpt = {
+							"_lat": point.getLatitude(),
+							"_lon": point.getLongitude()
+						};
+
+						arrayOfTrkpt.push(trkpt);
+
+					});
+
+				});
+
+				json.gpx.trk.trkseg.trkpt = arrayOfTrkpt;
+
+				gpxToXML = x2js.json2xml_str(json);
+
+				return content + gpxToXML;
+			},
 
 			convertGPXtoRoute: function($scope, routeType, gpx) {
 				var routeViewModel = {};
@@ -98,7 +141,14 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 					_.each(segmentsDataModel, function(segmentDataModel) {
 
+						//segmentDataModel.distance = RouteUtilsService.calculateDistanceOfSegment(segmentDataModel);
+
 						var segmentViewModel = routeViewModel.addSegment(segmentDataModel);
+
+						var segmentPath = RouteUtilsService.convertPointsToPath(segmentViewModel.getPoints());
+
+						routeViewModel.addMarkerToRoute(segmentPath);
+						routeViewModel.addPolyline(segmentPath, false, false, false, true, "red", 5);
 
 						RouteService.getElevation(segmentViewModel).then(function(data) {
 							routeViewModel.addElevationPoints(data.samplingPoints, data.elevations);
