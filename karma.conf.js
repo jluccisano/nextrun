@@ -4,27 +4,18 @@
 module.exports = function(config) {
   config.set({
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    basePath: './',
 
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
-      'https://maps.googleapis.com/maps/api/js?sensor=false',
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-route/angular-route.js',
-      'app/bower_components/angular-sanitize/angular-sanitize.js',
-      'app/bower_components/angular-animate/angular-animate.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/bower_components/angular-google-maps/dist/angular-google-maps.js',
-      'app/scripts/module.js',      
-      'app/scripts/controllers/*.js',
-      'app/scripts/services/*.js',
-      'app/scripts/directives/*.js',      
-      'app/scripts/app.js',      
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'public/js/libs/angular/angular-*.js',
+      'public/js/libs/angular/angular-*.js',
+      'test/lib/angular/angular-mocks.js',
+      'public/js/*.js',
+      'test/client/unit/*.js'
     ],
 
     // list of files / patterns to exclude
@@ -35,11 +26,11 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:
@@ -50,7 +41,19 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'/*, 'Chrome', 'IE'*/],
+    browsers: ['PhantomJS', 'Chrome', /*'IE'*/ ],
+
+    plugins: [
+      'karma-junit-reporter',
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-jasmine'
+    ],
+
+    junitReporter: {
+      outputFile: 'test_out/unit.xml',
+      suite: 'unit'
+    },
 
 
     // Continuous Integration mode
@@ -58,4 +61,3 @@ module.exports = function(config) {
     singleRun: true
   });
 };
-  

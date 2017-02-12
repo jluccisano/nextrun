@@ -67,7 +67,7 @@ describe('buildGeoDistanceFilter', function() {
       };
 
       var filter = elasticsearchUtils.buildTermsFilter("race.department.code", region.departments);
-      assert.equal(region.departments, filter.terms.field);
+      assert.equal(region.departments, filter.terms["race.department.code"]);
     });
   });
 

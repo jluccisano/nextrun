@@ -5,11 +5,9 @@
  * @return {Array}
  * @api public
  */
-
 exports.errors = function(errors) {
-  var keys = Object.keys(errors)
+  var keys = Object.keys(errors);
   var errs = []
-
   // if there is no validation error, just display a generic error
   if (!keys) {
     console.log(errors);
@@ -17,8 +15,7 @@ exports.errors = function(errors) {
   }
 
   keys.forEach(function(key) {
-    errs.push(errors[key].message)
+    errs.push(errors[key].message);
   })
-
   return errs
 }
