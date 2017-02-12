@@ -3,8 +3,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     clean: {
       force: true,
-      build:["dist","tmp"],
-      tmp:['tmp']
+      build: ["dist", "tmp"],
+      tmp: ['tmp']
     },
     mochaTest: {
       test: {
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
           reporter: 'spec',
           require: 'coverage/blanket'
         },
-        src: ['test/test-*.js']
+        src: ['test/**/test-*.js']
       },
       'html-cov': {
         options: {
@@ -20,23 +20,23 @@ module.exports = function(grunt) {
           quiet: true,
           captureFile: 'coverage.html'
         },
-        src: ['test/test-*.js']
+        src: ['test/**/test-*.js']
       },
       'travis-cov': {
         options: {
           reporter: 'travis-cov'
         },
-        src: ['test/test-*.js']
+        src: ['test/**/test-*.js']
       }
     },
     usemin: {
-        jade: 'dist/app/views/**/*.jade',
-        options: {
-            assetsDirs: ['public'],
-            patterns: {
-                jade: require('usemin-patterns').jade
-            }
+      jade: 'dist/app/views/**/*.jade',
+      options: {
+        assetsDirs: ['public'],
+        patterns: {
+          jade: require('usemin-patterns').jade
         }
+      }
     },
     concat: {
       options: {
@@ -44,39 +44,36 @@ module.exports = function(grunt) {
       },
       basic_and_extras: {
         files: {
-        'tmp/public/js/client/app.js': ['public/js/client/app.js'],
-        'tmp/public/js/client/app.js': ['public/js/client/routingConfig.js'],
-        'tmp/public/js/client/controllers.js': 
-            [
-              'public/js/client/controllers.js',
-              'public/js/client/controllers/*.js'
-            ],
-        'tmp/public/js/client/directives.js': 
-            [
-              'public/js/client/directives/*.js',
-            ],
-        'tmp/public/js/client/services.js': 
-            [
-              'public/js/client/services/*.js',
-            ],
-        'tmp/public/js/client/animations.js': ['public/js/client/animations.js'],
-        'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
-        'tmp/public/js/client/widgets/map-france.js': ['public/js/client/widgets/map-france.js'],
-        'tmp/public/js/client/widgets/google-analytics.js': ['public/js/client/widgets/google-analytics.js'],
-        'tmp/public/js/client/pages/home.js': ['public/js/client/pages/home.js'],
-        'tmp/public/js/libs/bootstrap.js': ['public/js/libs/bootstrap.js'],
-        'tmp/public/js/libs/jquery-2.0.3.js': ['public/js/libs/jquery-2.0.3.js'],
-        'tmp/public/js/libs/jquery.validate.js': ['public/js/libs/jquery.validate.js'],
-        'tmp/public/js/libs/i18next-1.7.1.js': ['public/js/libs/i18next-1.7.1.js'],
-        'tmp/public/js/libs/angular.js': ['public/js/libs/angular.js'],
-        'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
-        'tmp/public/js/libs/angular-animate.js': ['public/js/libs/angular-animate.js'],
-        'tmp/public/js/libs/angular-resource.js': ['public/js/libs/angular-resource.js'],
-        'tmp/public/js/libs/raphael.js': ['public/js/libs/raphael.js'],
-        'tmp/public/js/libs/underscore.js': ['public/js/libs/underscore.js'],
-        'tmp/public/js/libs/ui-boostrap-tpls-0.7.0.js': ['public/js/libs/ui-boostrap-tpls-0.7.0.js']
+          'tmp/public/js/client/app.js': ['public/js/client/app.js'],
+          'tmp/public/js/client/app.js': ['public/js/client/routingConfig.js'],
+          'tmp/public/js/client/controllers.js': [
+            'public/js/client/controllers.js',
+            'public/js/client/controllers/*.js'
+          ],
+          'tmp/public/js/client/directives.js': [
+            'public/js/client/directives/*.js',
+          ],
+          'tmp/public/js/client/services.js': [
+            'public/js/client/services/*.js',
+          ],
+          'tmp/public/js/client/animations.js': ['public/js/client/animations.js'],
+          'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
+          'tmp/public/js/client/widgets/map-france.js': ['public/js/client/widgets/map-france.js'],
+          'tmp/public/js/client/widgets/google-analytics.js': ['public/js/client/widgets/google-analytics.js'],
+          'tmp/public/js/client/pages/home.js': ['public/js/client/pages/home.js'],
+          'tmp/public/js/libs/bootstrap.js': ['public/js/libs/bootstrap.js'],
+          'tmp/public/js/libs/jquery-2.0.3.js': ['public/js/libs/jquery-2.0.3.js'],
+          'tmp/public/js/libs/jquery.validate.js': ['public/js/libs/jquery.validate.js'],
+          'tmp/public/js/libs/i18next-1.7.1.js': ['public/js/libs/i18next-1.7.1.js'],
+          'tmp/public/js/libs/angular.js': ['public/js/libs/angular.js'],
+          'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
+          'tmp/public/js/libs/angular-animate.js': ['public/js/libs/angular-animate.js'],
+          'tmp/public/js/libs/angular-resource.js': ['public/js/libs/angular-resource.js'],
+          'tmp/public/js/libs/raphael.js': ['public/js/libs/raphael.js'],
+          'tmp/public/js/libs/underscore.js': ['public/js/libs/underscore.js'],
+          'tmp/public/js/libs/ui-boostrap-tpls-0.7.0.js': ['public/js/libs/ui-boostrap-tpls-0.7.0.js']
+        },
       },
-    },
     },
     uglify: {
       options: {
@@ -121,29 +118,38 @@ module.exports = function(grunt) {
       main: {
         files: [
           // includes files within path
-          {expand: true, src: ['server.js','package.json'], dest: 'dist/', filter: 'isFile'},
+          {
+            expand: true,
+            src: ['server.js', 'package.json'],
+            dest: 'dist/',
+            filter: 'isFile'
+          },
 
           // includes files within path and its sub-directories
-          {expand: true, src: ['app/**', 'config/**'], dest: 'dist/'},
+          {
+            expand: true,
+            src: ['app/**', 'config/**'],
+            dest: 'dist/'
+          },
         ]
       }
     },
-    jsdoc : {
-        dist : {
-            src: ['app/**/*.js', 'config/**/*.js'], 
-            options: {
-                destination: 'dist/doc'
-            }
+    jsdoc: {
+      dist: {
+        src: ['app/**/*.js', 'config/**/*.js'],
+        options: {
+          destination: 'dist/doc'
         }
+      }
     },
     jshint: {
-       options: {
-        laxcomma : true,
+      options: {
+        laxcomma: true,
         curly: true,
         eqeqeq: true,
         eqnull: true,
         browser: true,
-        laxbreak : true,
+        laxbreak: true,
         validthis: true,
         debug: true,
         devel: true,
@@ -153,9 +159,9 @@ module.exports = function(grunt) {
         globals: {
           jQuery: true
         },
-       reporter:'checkstyle' ,
-       reporterOutput: 'jshint.xml',
-       ignores: [ 'public/js/libs/**/*.js', 'public/js/client/widgets/*.js']
+        reporter: 'checkstyle',
+        reporterOutput: 'jshint.xml',
+        ignores: ['public/js/libs/**/*.js', 'public/js/client/widgets/*.js']
       },
       gruntfile: {
         src: 'Gruntfile.js'
@@ -198,11 +204,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
 
-  
+
   grunt.registerTask('test', ['mochaTest']);
 
-  grunt.registerTask('checkcode', ['jshint:src' , 'jshint:gruntfile', 'jshint:test']);
+  grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 
-  grunt.registerTask('default', ['clean:build','jshint:src','mochaTest','concat','uglify','cssmin','imagemin','copy','usemin','jsdoc','clean:tmp']);
+  grunt.registerTask('default', ['clean:build', 'jshint:src', 'mochaTest', 'concat', 'uglify', 'cssmin', 'imagemin', 'copy', 'usemin', 'jsdoc', 'clean:tmp']);
 
 };

@@ -4,14 +4,16 @@ block body
 
 	body(data-ng-controller='MainCtrl')
 
-		div(id="fb-root")
+		div(id="wrap")
 
-		include ./layouts/header
+			div(id="fb-root")
 
-		include ./layouts/messages
-		
-		div.ng-cloak(data-ng-cloak class="view-container")
-			div(data-ng-view class="view-frame ng-cloak")
+			include ./layouts/header
 
-		div.ng-cloak(data-ng-cloak data-ng-controller="FooterCtrl" data-ng-show="hideFooter")
+			include ./layouts/messages
+			
+			div.ng-cloak(data-ng-cloak, class="view-container")
+				div(data-ng-view, class="view-frame ng-cloak")
+
+		div.ng-cloak(id="footer" , data-ng-cloak data-ng-controller="FooterCtrl")
 			include ./layouts/footer

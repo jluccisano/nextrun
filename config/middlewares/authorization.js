@@ -1,42 +1,80 @@
-var _ = require('underscore')
-,userRoles = require('../../public/js/client/routingConfig').userRoles
-,accessLevels = require('../../public/js/client/routingConfig').accessLevels;
+var _ = require('underscore'),
+    userRoles = require('../../public/js/client/routingConfig').userRoles,
+    util = require('util'),
+    accessLevels = require('../../public/js/client/routingConfig').accessLevels;
 
 
-exports.ensureAuthorized = function (req, res, next) {
-    
+exports.ensureAuthorized = function(req, res, next) {
+
+    console.log("auth:" + util.inspect(req.user.username));
+
     var routes = [
 
-        { path: "/users/signup" , accessLevel: accessLevels.public},
-        { path: "/users/session" , accessLevel: accessLevels.public},
-        { path: "/users/forgotpassword" , accessLevel: accessLevels.public},
-        { path: "/users/logout" , accessLevel: accessLevels.public},
-        { path: "/users/check/email" , accessLevel: accessLevels.public},
-        { path: "/users/:userId" , accessLevel: accessLevels.public},
-        { path: "/users/:userId/update/profile" , accessLevel: accessLevels.public},
-        { path: "/users/:userId/update/password" , accessLevel: accessLevels.public},
-        { path: "/contacts" , accessLevel: accessLevels.public},
-        { path: "/users/settings" , accessLevel: accessLevels.user},
-        { path: "/partials/user/*" , accessLevel: accessLevels.user},
-        { path: "/partials/race/*" , accessLevel: accessLevels.public},
-        { path: "/users" , accessLevel: accessLevels.public},
-        { path: "/races" , accessLevel: accessLevels.public},
-        { path: "/races/:raceId" , accessLevel: accessLevels.public},
-        { path: "/users/:userId/races/(page/:page)?" , accessLevel: accessLevels.public}
+        {
+            path: "/users/signup",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/session",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/forgotpassword",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/logout",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/check/email",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/:userId",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/:userId/update/profile",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/:userId/update/password",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/contacts",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/settings",
+            accessLevel: accessLevels.user
+        }, {
+            path: "/partials/user/*",
+            accessLevel: accessLevels.user
+        }, {
+            path: "/partials/race/*",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/races",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/races/:raceId",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/users/:userId/races/(page/:page)?",
+            accessLevel: accessLevels.public
+        }
 
     ]
 
     var role;
-    if(!req.user) {
+    if (!req.user) {
         role = userRoles.public;
     } else {
         role = req.user.role;
-    }         
-    var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.public;
+    }
+    var accessLevel = _.findWhere(routes, {
+        path: req.route.path
+    }).accessLevel || accessLevels.public;
 
-    if(!(accessLevel.bitMask & role.bitMask)) {
+    if (!(accessLevel.bitMask & role.bitMask)) {
         return res.send(403);
-    } 
+    }
     return next();
-    
+
 };

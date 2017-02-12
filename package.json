@@ -60,6 +60,7 @@
     "grunt-contrib-imagemin": "latest",
     "async": "latest",
     "travis-cov": "latest",
-    "superagent": "latest"
+    "superagent": "latest",
+    "passport-stub": "latest"
   }
 }

@@ -1,6 +1,6 @@
-nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Auth', 'Alert',
+nextrunControllers.controller('SettingsCtrl', ['$scope', '$location', '$http', 'Auth', 'Alert',
 	function($scope, $location, $http, Auth, Alert) {
-
+		'use strict';
 		$scope.user = {};
 		$scope.master = {};
 
@@ -9,46 +9,45 @@ nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Au
 				$scope.master = angular.copy(response.user);
 				$scope.reset();
 			},
-			function(error) {	
-			}
+			function(error) {}
 		);
 
-		$scope.updateProfile = function () {
+		$scope.updateProfile = function() {
 
 			Auth.updateProfile($scope.user._id, {
-				user: $scope.user
-			},
-			function(response) {
-				Alert.add("success", "Les changements ont bien été pris en compte", 3000);
-				$scope.master = angular.copy(response.user);
-				$scope.reset();
-			},
-			function(error) {
-				_.each(error.message, function(message){
-					Alert.add("danger", message, 3000);
+					user: $scope.user
+				},
+				function(response) {
+					Alert.add("success", "Les changements ont bien été pris en compte", 3000);
+					$scope.master = angular.copy(response.user);
+					$scope.reset();
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
 				});
-			});
 		};
 
-		$scope.updatePassword = function () {
+		$scope.updatePassword = function() {
 
 			Auth.updatePassword($scope.user._id, {
-				actual: $scope.actualPassword,
-				new: $scope.newPassword
-			},
-			function(response) {
-				Alert.add("success", "Les changements ont bien été pris en compte", 3000);
-				$scope.master = angular.copy(response.user);
-				$scope.reset();
-            },
-			function(error) {
-				_.each(error.message, function(message){
-					Alert.add("danger", message, 3000);
+					actual: $scope.actualPassword,
+					new: $scope.newPassword
+				},
+				function(response) {
+					Alert.add("success", "Les changements ont bien été pris en compte", 3000);
+					$scope.master = angular.copy(response.user);
+					$scope.reset();
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
 				});
-			});
 		};
 
-		$scope.deleteAccount = function () {
+		$scope.deleteAccount = function() {
 
 			Auth.deleteAccount($scope.user._id,
 				function(response) {
@@ -56,11 +55,11 @@ nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Au
 					$location.path("/");
 				},
 				function(error) {
-					_.each(error.message, function(message){
+					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
-					});					
-			});
-		};		
+					});
+				});
+		};
 
 		$scope.isUnchanged = function(user) {
 			return angular.equals(user, $scope.master);

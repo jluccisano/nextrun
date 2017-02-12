@@ -1,17 +1,19 @@
-loadMapFrance = function() {
-		
-	//Create map
+'use strict';
+
+var loadMapFrance = function() {
+
+  //Create map
 
   var paper = new Raphael(document.getElementById('map_france'), 500, 545);
 
- // Les styles visuels pour toutes les regions
+  // Les styles visuels pour toutes les regions
   var attr = {
     fill: "#f5f5f5",
     stroke: "#d5d5d5",
     "stroke-width": 1,
     "stroke-linejoin": "round"
   };
-  
+
   var fr = {};
   fr.departement01 = paper.path("M 383.28125,262.59375 L 381.125,262.8125 L 379.75,265.34375 L 376.0625,279.78125 L 375.53125,280.96875 L 375.15625,285.53125 L 374.09375,287 L 374.09375,293.59375 L 373.46875,295.09375 L 377.28125,297.40625 L 378.78125,297.625 L 381.125,299.75 L 381.53125,303.15625 L 384.09375,302.3125 L 388.0625,303.46875 L 388.125,302.71875 L 390.03125,302.71875 L 392.78125,305.28125 L 395.34375,304 L 396.625,300.1875 L 397.90625,298.6875 L 399.59375,298.90625 L 401.28125,300.40625 L 402.15625,303.15625 L 410,312.71875 L 412.34375,311.03125 L 412.75,307.40625 L 415.3125,306.96875 L 415.3125,300.59375 L 416.59375,299.53125 L 417,293.8125 L 417.5,294.21875 L 417.4375,292.125 L 416.375,290.1875 L 416.8125,284.6875 L 418.71875,285.75 L 419.78125,283.8125 L 421.6875,283.1875 L 423.65625,281.625 L 421.53125,281.625 L 421.53125,277.90625 L 423.875,276.53125 L 427.375,276.15625 L 427.59375,274.1875 L 426.40625,273.40625 L 429.34375,269.6875 L 428.9375,268.53125 L 425.59375,266.75 L 417.46875,275.6875 L 411.8125,275.6875 L 411.8125,273.34375 L 408.6875,271.78125 L 404.96875,275.875 L 402.03125,276.28125 L 402.03125,273.53125 L 399.5,272.375 L 395.59375,266.90625 L 392.0625,265.53125 L 390.90625,263 L 388.9375,262.59375 L 387,263.96875 L 385.4375,264.375 L 383.28125,262.59375 z ").attr(attr);
   fr.departement02 = paper.path("M 328.40625,62.21875 L 325.28125,64.375 L 323.71875,63 L 322.34375,63 L 319.21875,65.15625 L 316.875,63.78125 L 314.53125,65.15625 L 313.75,65.34375 L 313.15625,64.15625 L 311,64.15625 L 309.4375,65.15625 L 309.375,65.15625 L 309.84375,67.90625 L 307.28125,70.6875 L 307.28125,73.25 L 305.5,75.25 L 305.90625,77.625 L 306.875,81.59375 L 308.0625,88.34375 L 307.6875,94.28125 L 306.875,96.0625 L 309.25,97.84375 L 307.46875,98.65625 L 306.28125,103.40625 L 302.90625,104.1875 L 301.71875,106.1875 L 304.09375,106.59375 L 304.5,109.34375 L 302.71875,109.75 L 302.90625,112.71875 L 303.5,112.53125 L 304.5,110.9375 L 306.875,112.53125 L 308.28125,114.125 L 307.875,116.78125 L 309.65625,118.0625 L 310.25,122.375 L 315.5,127.4375 L 317.25,128.03125 L 318.25,130.375 L 321.53125,131.0625 L 321.9375,130.5625 L 322.9375,128.4375 L 325.875,127.0625 L 327.4375,122.96875 L 329.1875,121.78125 L 328.1875,120.40625 L 325.65625,120.40625 L 325.28125,119.0625 L 327.03125,118.28125 L 327.8125,117.09375 L 326.0625,115.9375 L 326.625,114.15625 L 331.125,113.78125 L 330.34375,112.03125 L 327.625,110.25 L 327.625,105 L 331.3125,102.25 L 335.4375,102.25 L 335.03125,100.3125 L 337.375,99.3125 L 340.6875,101.46875 L 342.0625,101.09375 L 341.875,94.4375 L 342.46875,92.09375 L 343.25,89.375 L 340.6875,88 L 341.28125,86.4375 L 345,85.65625 L 345,83.125 L 347.9375,81.5625 L 348.71875,79.21875 L 347.75,77.65625 L 347.9375,74.71875 L 349.6875,73.15625 L 347.9375,69.84375 L 348.46875,66.375 L 344.5,66.375 L 343.4375,67.09375 L 339.71875,66.125 L 338.9375,63.59375 L 337.78125,63.59375 L 335.625,65.53125 L 335.25,63.78125 L 330.9375,63.375 L 329.75,62.40625 L 328.40625,62.21875 z ").attr(attr);
@@ -110,128 +112,329 @@ loadMapFrance = function() {
   fr.departement94 = paper.path("M 282.9375,131.28125 L 282.125,131.9375 L 281.3125,132.0625 L 281.25,132.5 L 281.09375,132.90625 L 281.5,132.90625 L 281.71875,132.71875 L 281.625,132.40625 L 282.875,132.34375 L 283.1875,132.46875 L 283.1875,133.125 L 282.875,133.78125 L 281.0625,133.53125 L 280.78125,133.28125 L 279.9375,133.875 L 279.125,134.09375 L 277.96875,134.03125 L 277.625,135.25 L 277.9375,135.78125 L 277.4375,137.25 L 277.9375,138.1875 L 278.8125,137.75 L 280.90625,138.90625 L 284.53125,138.90625 L 286.6875,139.90625 L 286.65625,139.6875 L 288.1875,135.84375 L 288.1875,134.09375 L 287.21875,133.84375 L 286.96875,133.375 L 286.5625,133.1875 L 285.6875,132.21875 L 284.15625,131.34375 L 282.9375,131.28125 z ").attr(attr);
   fr.departement95 = paper.path("M 255.5625,109.6875 L 254,111.625 L 252.8125,115.9375 L 251.5,118.15625 L 256.25,120.28125 L 259.875,119.625 L 264.375,122.5 L 269.1875,122.71875 L 272.59375,124.78125 L 273.46875,127.65625 L 273.4375,127.71875 L 273.8125,127.65625 L 277.3125,125.78125 L 282.5625,125.4375 L 285.4375,124.125 L 287.28125,122.8125 L 287.875,118.96875 L 286.59375,117.6875 L 282.3125,115.15625 L 278.1875,113 L 276.0625,113.96875 L 273.71875,114.5625 L 272.15625,113.375 L 269.03125,111.4375 L 266.5,113.375 L 262.78125,113.78125 L 257.5,113.375 L 256.3125,111.4375 L 255.5625,109.6875 z ").attr(attr);
 
-  fr.departement01.attr( { title:"01 - Ain"});
-  fr.departement02.attr( { title:"02 - Aisne"});
-  fr.departement2a.attr( { title:"2A - Corse du Sud"});
-  fr.departement2b.attr( { title:"2B - Haute-Corse"});
-  fr.departement03.attr( { title:"03 - Allier"});
-  fr.departement04.attr( { title:"04 - Alpes de Haute-Provence"});
-  fr.departement05.attr({ title:"05 - Hautes-Alpes"});
-  fr.departement06.attr({ title:"06 - Alpes-Maritimes"});
-  fr.departement07.attr({ title:"07 - Ardèche"});
-  fr.departement08.attr({ title:"08 - Ardennes"});
-  fr.departement09.attr({ title:"09 - Ariège"});
-  fr.departement10.attr({ title:"10 - Aube"});
-  fr.departement11.attr({ title:"11 - Aude"});
-  fr.departement12.attr({ title:"12 - Aveyron"});
-  fr.departement13.attr({ title:"13 - Bouches du Rhône"});
-  fr.departement14.attr({ title:"14 - Calvados"});
-  fr.departement15.attr({ title:"15 - Cantal"});
-  fr.departement16.attr({ title:"16 - Charente"});
-  fr.departement17.attr({ title:"17 - Charente Maritime"});
-  fr.departement18.attr({ title:"18 - Cher"});
-  fr.departement19.attr({ title:"19 - Corrèze"});
-  fr.departement21.attr({ title:"21 - Côte d\'Or"});
-  fr.departement22.attr({ title:"22 - Côtes d\'Armor"});
-  fr.departement23.attr({ title:"23 - Creuse"});
-  fr.departement24.attr({ title:"24 - Dordogne"});
-  fr.departement25.attr({ title:"25 - Doubs"});
-  fr.departement26.attr({ title:"26 - Drôme"});
-  fr.departement27.attr({ title:"27 - Eure"});
-  fr.departement28.attr({ title:"28 - Eure-et-Loir"});
-  fr.departement29.attr({ title:"29 - Finistère"});
-  fr.departement30.attr({ title:"30 - Gard"});
-  fr.departement31.attr({ title:"31 - Haute-Garonne"});
-  fr.departement32.attr({ title:"32 - Gers"});
-  fr.departement33.attr({ title:"33 - Gironde"});
-  fr.departement34.attr({ title:"34 - Hérault"});
-  fr.departement35.attr({ title:"35 - Ille-et-Vilaine"});
-  fr.departement36.attr({ title:"36 - Indre"});
-  fr.departement37.attr({ title:"37 - Indre-et-Loire"});
-  fr.departement38.attr({ title:"38 - Isère"});
-  fr.departement39.attr({ title:"39 - Jura"});
-  fr.departement40.attr({ title:"40 - Landes"});	
-  fr.departement41.attr({ title:"41 - Loir-et-Cher"});
-  fr.departement42.attr({ title:"42 - Loire"});
-  fr.departement43.attr({ title:"43 - Haute-Loire"});
-  fr.departement44.attr({ title:"44 - Loire-Atlantique"});
-  fr.departement45.attr({ title:"45 - Loiret"});
-  fr.departement46.attr({ title:"46 - Lot"});
-  fr.departement47.attr({ title:"47 - Lot-et-Garonne"});
-  fr.departement48.attr({ title:"48 - Lozère"});
-  fr.departement49.attr({ title:"49 - Maine-et-Loire"});
-  fr.departement50.attr({ title:"50 - Manche"});
-  fr.departement51.attr({ title:"51 - Marne"});
-  fr.departement52.attr({ title:"52 - Haute-Marne"});
-  fr.departement53.attr({ title:"53 - Mayenne"});
-  fr.departement54.attr({ title:"54 - Meurthe-et-Moselle"});
-  fr.departement55.attr({ title:"55 - Meuse"});
-  fr.departement56.attr({ title:"56 - Morbihan"});
-  fr.departement57.attr({ title:"57 - Moselle"});
-  fr.departement58.attr({ title:"58 - Nièvre"});
-  fr.departement59.attr({ title:"59 - Nord"});
-  fr.departement60.attr({ title:"60 - Oise"});
-  fr.departement61.attr({ title:"61 - Orne"});
-  fr.departement62.attr({ title:"62 - Pas-de-Calais"});
-  fr.departement63.attr({ title:"63 - Puy-de-Dôme"});
-  fr.departement64.attr({ title:"64 - Pyrénées-Atlantiques"});
-  fr.departement65.attr({ title:"65 - Hautes-Pyrénées"});
-  fr.departement66.attr({ title:"66 - Pyrénées-Orientales"});
-  fr.departement67.attr({ title:"67 - Bas-Rhin"});
-  fr.departement68.attr({ title:"68 - Haut-Rhin"});
-  fr.departement69.attr({ title:"69 - Rhône"});
-  fr.departement70.attr({ title:"70 - Haute-Saône"});
-  fr.departement71.attr({ title:"71 - Saône-et-Loire"});
-  fr.departement72.attr({ title:"72 - Sarthe"});
-  fr.departement73.attr({ title:"73 - Savoie"});
-  fr.departement74.attr({ title:"74 - Haute-Savoie"});
-  fr.departement75.attr({ title:"75 - Paris"});
-  fr.departement76.attr({ title:"76 - Seine-Maritime"});
-  fr.departement77.attr({ title:"77 - Seine-et-Marne"});
-  fr.departement78.attr({ title:"78 - Yvelines"});
-  fr.departement79.attr({ title:"79 - Deux-Sèvres"});
-  fr.departement80.attr({ title:"80 - Somme"});
-  fr.departement81.attr({ title:"81 - Tarn"});
-  fr.departement82.attr({ title:"82 - Tarn-et-Garonne"});
-  fr.departement83.attr({ title:"83 - Var"});
-  fr.departement84.attr({ title:"84 - Vaucluse"});
-  fr.departement85.attr({ title:"85 - Vendée"});
-  fr.departement86.attr({ title:"86 - Vienne"});
-  fr.departement87.attr({ title:"87 - Haute-Vienne"});
-  fr.departement88.attr({ title:"88 - Vosges"});
-  fr.departement89.attr({ title:"89 - Yonne"});
-  fr.departement90.attr({ title:"90 - Territoire-de-Belfort"});
-  fr.departement91.attr({ title:"91 - Essonne"});
-  fr.departement92.attr({ title:"92 - Hauts-de-Seine"});
-  fr.departement93.attr({ title:"93 - Seine-St-Denis"});
-  fr.departement94.attr({ title:"94 - Val-de-Marne"});
-  fr.departement95.attr({ title:"95 - Val-d\'Oise"});
+  fr.departement01.attr({
+    title: "01 - Ain"
+  });
+  fr.departement02.attr({
+    title: "02 - Aisne"
+  });
+  fr.departement2a.attr({
+    title: "2A - Corse du Sud"
+  });
+  fr.departement2b.attr({
+    title: "2B - Haute-Corse"
+  });
+  fr.departement03.attr({
+    title: "03 - Allier"
+  });
+  fr.departement04.attr({
+    title: "04 - Alpes de Haute-Provence"
+  });
+  fr.departement05.attr({
+    title: "05 - Hautes-Alpes"
+  });
+  fr.departement06.attr({
+    title: "06 - Alpes-Maritimes"
+  });
+  fr.departement07.attr({
+    title: "07 - Ardèche"
+  });
+  fr.departement08.attr({
+    title: "08 - Ardennes"
+  });
+  fr.departement09.attr({
+    title: "09 - Ariège"
+  });
+  fr.departement10.attr({
+    title: "10 - Aube"
+  });
+  fr.departement11.attr({
+    title: "11 - Aude"
+  });
+  fr.departement12.attr({
+    title: "12 - Aveyron"
+  });
+  fr.departement13.attr({
+    title: "13 - Bouches du Rhône"
+  });
+  fr.departement14.attr({
+    title: "14 - Calvados"
+  });
+  fr.departement15.attr({
+    title: "15 - Cantal"
+  });
+  fr.departement16.attr({
+    title: "16 - Charente"
+  });
+  fr.departement17.attr({
+    title: "17 - Charente Maritime"
+  });
+  fr.departement18.attr({
+    title: "18 - Cher"
+  });
+  fr.departement19.attr({
+    title: "19 - Corrèze"
+  });
+  fr.departement21.attr({
+    title: "21 - Côte d\'Or"
+  });
+  fr.departement22.attr({
+    title: "22 - Côtes d\'Armor"
+  });
+  fr.departement23.attr({
+    title: "23 - Creuse"
+  });
+  fr.departement24.attr({
+    title: "24 - Dordogne"
+  });
+  fr.departement25.attr({
+    title: "25 - Doubs"
+  });
+  fr.departement26.attr({
+    title: "26 - Drôme"
+  });
+  fr.departement27.attr({
+    title: "27 - Eure"
+  });
+  fr.departement28.attr({
+    title: "28 - Eure-et-Loir"
+  });
+  fr.departement29.attr({
+    title: "29 - Finistère"
+  });
+  fr.departement30.attr({
+    title: "30 - Gard"
+  });
+  fr.departement31.attr({
+    title: "31 - Haute-Garonne"
+  });
+  fr.departement32.attr({
+    title: "32 - Gers"
+  });
+  fr.departement33.attr({
+    title: "33 - Gironde"
+  });
+  fr.departement34.attr({
+    title: "34 - Hérault"
+  });
+  fr.departement35.attr({
+    title: "35 - Ille-et-Vilaine"
+  });
+  fr.departement36.attr({
+    title: "36 - Indre"
+  });
+  fr.departement37.attr({
+    title: "37 - Indre-et-Loire"
+  });
+  fr.departement38.attr({
+    title: "38 - Isère"
+  });
+  fr.departement39.attr({
+    title: "39 - Jura"
+  });
+  fr.departement40.attr({
+    title: "40 - Landes"
+  });
+  fr.departement41.attr({
+    title: "41 - Loir-et-Cher"
+  });
+  fr.departement42.attr({
+    title: "42 - Loire"
+  });
+  fr.departement43.attr({
+    title: "43 - Haute-Loire"
+  });
+  fr.departement44.attr({
+    title: "44 - Loire-Atlantique"
+  });
+  fr.departement45.attr({
+    title: "45 - Loiret"
+  });
+  fr.departement46.attr({
+    title: "46 - Lot"
+  });
+  fr.departement47.attr({
+    title: "47 - Lot-et-Garonne"
+  });
+  fr.departement48.attr({
+    title: "48 - Lozère"
+  });
+  fr.departement49.attr({
+    title: "49 - Maine-et-Loire"
+  });
+  fr.departement50.attr({
+    title: "50 - Manche"
+  });
+  fr.departement51.attr({
+    title: "51 - Marne"
+  });
+  fr.departement52.attr({
+    title: "52 - Haute-Marne"
+  });
+  fr.departement53.attr({
+    title: "53 - Mayenne"
+  });
+  fr.departement54.attr({
+    title: "54 - Meurthe-et-Moselle"
+  });
+  fr.departement55.attr({
+    title: "55 - Meuse"
+  });
+  fr.departement56.attr({
+    title: "56 - Morbihan"
+  });
+  fr.departement57.attr({
+    title: "57 - Moselle"
+  });
+  fr.departement58.attr({
+    title: "58 - Nièvre"
+  });
+  fr.departement59.attr({
+    title: "59 - Nord"
+  });
+  fr.departement60.attr({
+    title: "60 - Oise"
+  });
+  fr.departement61.attr({
+    title: "61 - Orne"
+  });
+  fr.departement62.attr({
+    title: "62 - Pas-de-Calais"
+  });
+  fr.departement63.attr({
+    title: "63 - Puy-de-Dôme"
+  });
+  fr.departement64.attr({
+    title: "64 - Pyrénées-Atlantiques"
+  });
+  fr.departement65.attr({
+    title: "65 - Hautes-Pyrénées"
+  });
+  fr.departement66.attr({
+    title: "66 - Pyrénées-Orientales"
+  });
+  fr.departement67.attr({
+    title: "67 - Bas-Rhin"
+  });
+  fr.departement68.attr({
+    title: "68 - Haut-Rhin"
+  });
+  fr.departement69.attr({
+    title: "69 - Rhône"
+  });
+  fr.departement70.attr({
+    title: "70 - Haute-Saône"
+  });
+  fr.departement71.attr({
+    title: "71 - Saône-et-Loire"
+  });
+  fr.departement72.attr({
+    title: "72 - Sarthe"
+  });
+  fr.departement73.attr({
+    title: "73 - Savoie"
+  });
+  fr.departement74.attr({
+    title: "74 - Haute-Savoie"
+  });
+  fr.departement75.attr({
+    title: "75 - Paris"
+  });
+  fr.departement76.attr({
+    title: "76 - Seine-Maritime"
+  });
+  fr.departement77.attr({
+    title: "77 - Seine-et-Marne"
+  });
+  fr.departement78.attr({
+    title: "78 - Yvelines"
+  });
+  fr.departement79.attr({
+    title: "79 - Deux-Sèvres"
+  });
+  fr.departement80.attr({
+    title: "80 - Somme"
+  });
+  fr.departement81.attr({
+    title: "81 - Tarn"
+  });
+  fr.departement82.attr({
+    title: "82 - Tarn-et-Garonne"
+  });
+  fr.departement83.attr({
+    title: "83 - Var"
+  });
+  fr.departement84.attr({
+    title: "84 - Vaucluse"
+  });
+  fr.departement85.attr({
+    title: "85 - Vendée"
+  });
+  fr.departement86.attr({
+    title: "86 - Vienne"
+  });
+  fr.departement87.attr({
+    title: "87 - Haute-Vienne"
+  });
+  fr.departement88.attr({
+    title: "88 - Vosges"
+  });
+  fr.departement89.attr({
+    title: "89 - Yonne"
+  });
+  fr.departement90.attr({
+    title: "90 - Territoire-de-Belfort"
+  });
+  fr.departement91.attr({
+    title: "91 - Essonne"
+  });
+  fr.departement92.attr({
+    title: "92 - Hauts-de-Seine"
+  });
+  fr.departement93.attr({
+    title: "93 - Seine-St-Denis"
+  });
+  fr.departement94.attr({
+    title: "94 - Val-de-Marne"
+  });
+  fr.departement95.attr({
+    title: "95 - Val-d\'Oise"
+  });
 
   var tfm = 'S0.5,0.5,0,0';
 
-  paper.forEach(function(obj){
-   obj.transform(tfm);
+  paper.forEach(function(obj) {
+    obj.transform(tfm);
   });
 
 
   var current = null;
   for (var state in fr) {
     fr[state].color = "#3276b1";
-      (function (st, state) {
-          st[0].style.cursor = "pointer";
-          st[0].onmouseover = function() {
-              current && fr[current].animate({fill: "#f5f5f5", stroke: "#d5d5d5"}, 300);
-              st.animate({fill: st.color, stroke: "#d5d5d5"}, 300);
-              //st.toFront();
-              paper.safari();
-              //document.getElementById(state).style.display = "block";
-              //current = state;
-          };
-          st[0].onmouseout = function () {
-              st.animate({fill: "#f5f5f5", stroke: "#d5d5d5"}, 300);
-              //st.toFront();
-              paper.safari();
-          };
-      })(fr[state], state);
+    (function(st, state) {
+      st[0].style.cursor = "pointer";
+      st[0].onmouseover = function() {
+        current && fr[current].animate({
+          fill: "#f5f5f5",
+          stroke: "#d5d5d5"
+        }, 300);
+        st.animate({
+          fill: st.color,
+          stroke: "#d5d5d5"
+        }, 300);
+        //st.toFront();
+        paper.safari();
+        //document.getElementById(state).style.display = "block";
+        //current = state;
+      };
+      st[0].onmouseout = function() {
+        st.animate({
+          fill: "#f5f5f5",
+          stroke: "#d5d5d5"
+        }, 300);
+        //st.toFront();
+        paper.safari();
+      };
+    })(fr[state], state);
   }
 };

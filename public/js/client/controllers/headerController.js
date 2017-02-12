@@ -1,6 +1,6 @@
-nextrunControllers.controller('HeaderCtrl', ['$scope','$location', '$rootScope','Auth',
+nextrunControllers.controller('HeaderCtrl', ['$scope', '$location', '$rootScope', 'Auth',
 	function($scope, $location, $rootScope, Auth) {
-
+		'use strict';
 		$scope.user = Auth.user;
 		$scope.userRoles = Auth.userRoles;
 		$scope.accessLevels = Auth.accessLevels;

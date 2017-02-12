@@ -6,8 +6,8 @@
  * @api public
  */
 
-exports.errors = function (errors) {
-
+exports.errors = function(errors) {
+  console.log(errors);
   var keys = Object.keys(errors)
   var errs = []
 
@@ -17,7 +17,7 @@ exports.errors = function (errors) {
     return ['Oops! There was an error']
   }
 
-  keys.forEach(function (key) {
+  keys.forEach(function(key) {
     errs.push(errors[key].message)
   })
 

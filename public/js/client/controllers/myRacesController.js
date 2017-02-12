@@ -1,6 +1,6 @@
-nextrunControllers.controller('MyRacesCtrl', ['$scope','$location', 'RaceServices', 'Alert', 'Auth', '$modal',
+nextrunControllers.controller('MyRacesCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal',
 	function($scope, $location, RaceServices, Alert, Auth, $modal) {
-
+		'use strict';
 		$scope.currentPage = 1;
 		$scope.maxSize = 5;
 
@@ -11,13 +11,13 @@ nextrunControllers.controller('MyRacesCtrl', ['$scope','$location', 'RaceService
 				$scope.races = response.races;
 
 				$scope.totalItems = $scope.races.length;
-				
+
 			},
 			function(error) {
-				_.each(error.message, function(message){
+				_.each(error.message, function(message) {
 					Alert.add("danger", message, 3000);
 				});
-		});
+			});
 
 		$scope.getDate = function(dateString) {
 			return moment(new Date(dateString)).format("DD/MM/YYYY HH:MM");
@@ -33,39 +33,39 @@ nextrunControllers.controller('MyRacesCtrl', ['$scope','$location', 'RaceService
 				templateUrl: 'partials/deleteconfirmation',
 				controller: 'DeleteConfirmationCtrl',
 				resolve: {
-					race: function () {
+					race: function() {
 						return race;
-					}			
+					}
 				}
 			});
-		};		
+		};
 	}
 ]);
 
-nextrunControllers.controller('DeleteConfirmationCtrl', ['$scope','$modalInstance', 'Auth', 'Alert','$location', 'RaceServices', 'race',
+nextrunControllers.controller('DeleteConfirmationCtrl', ['$scope', '$modalInstance', 'Auth', 'Alert', '$location', 'RaceServices', 'race',
 	function($scope, $modalInstance, Auth, Alert, $location, RaceServices, race) {
 
 		$scope.race = race;
 
-		$scope.submit = function () {
+		$scope.submit = function() {
 
 		};
 
 		$scope.deleteRace = function() {
-			
+
 			RaceServices.delete($scope.race._id,
 				function(response) {
 
 				},
 				function(error) {
-					_.each(error.message, function(message){
+					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
 					});
-			});
+				});
 		};
 
 
-		$scope.cancel = function () {
+		$scope.cancel = function() {
 			$modalInstance.dismiss('cancel');
 		};
 	}

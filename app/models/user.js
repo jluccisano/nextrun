@@ -2,26 +2,48 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose')
-  , Schema = mongoose.Schema
-  , crypto = require('crypto')
-  , _ = require('underscore')
-  , authTypes = ['facebook'];
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
+  crypto = require('crypto'),
+  _ = require('underscore'),
+  authTypes = ['facebook'];
 
 /**
  * User Schema
  */
 
 var UserSchema = new Schema({
-  username: { type: String, default: '' },
-  email: { type: String, default: '' },
-  provider: { type: String, default: '' },
-  hashed_password: { type: String, default: '' },
-  salt: { type: String, default: '' },
-  authToken: { type: String, default: '' },
+  username: {
+    type: String,
+    default: ''
+  },
+  email: {
+    type: String,
+    default: ''
+  },
+  provider: {
+    type: String,
+    default: ''
+  },
+  hashed_password: {
+    type: String,
+    default: ''
+  },
+  salt: {
+    type: String,
+    default: ''
+  },
+  authToken: {
+    type: String,
+    default: ''
+  },
   role: {
-          bitMask: {type: Number},
-          title: {type: String},
+    bitMask: {
+      type: Number
+    },
+    title: {
+      type: String
+    },
   },
   last_update: Date,
   facebook: {}
@@ -39,18 +61,20 @@ UserSchema
     this._password = password;
     this.salt = this.makeSalt();
     this.hashed_password = this.encryptPassword(password, this.salt);
-  }) .get(function() { return this._password; });
+  }).get(function() {
+    return this._password;
+  });
 
 /**
  * Validations
  */
 
-var validatePresenceOf = function (value) {
+var validatePresenceOf = function(value) {
   return value && value.length;
 };
 
 // the below 4 validations only apply if you are signing up traditionally
-UserSchema.path('email').validate(function (email) {
+UserSchema.path('email').validate(function(email) {
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
@@ -58,17 +82,19 @@ UserSchema.path('email').validate(function (email) {
   return email.length;
 }, 'error.emailCannotBeBlank');
 
-UserSchema.path('email').validate(function (email, fn) {
+UserSchema.path('email').validate(function(email, fn) {
   var User = mongoose.model('User');
-  
+
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) {
-     fn(true);
+    fn(true);
   }
 
   // Check only when it is a new user or when email field is modified
   if (this.isNew || this.isModified('email')) {
-    User.find({ email: email }).exec(function (err, users) {
+    User.find({
+      email: email
+    }).exec(function(err, users) {
       fn(!err && users.length === 0);
     });
   } else {
@@ -76,11 +102,11 @@ UserSchema.path('email').validate(function (email, fn) {
   }
 }, 'error.emailAlreadyExists');
 
-UserSchema.path('hashed_password').validate(function (hashed_password) {
+UserSchema.path('hashed_password').validate(function(hashed_password) {
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
-  } 
+  }
   return hashed_password.length;
 }, 'error.passwordCannotBeBlank');
 
@@ -92,7 +118,7 @@ UserSchema.path('hashed_password').validate(function (hashed_password) {
 UserSchema.pre('save', function(next) {
   if (!this.isNew) {
     return next();
-  } 
+  }
 
   if (!validatePresenceOf(this.password) && authTypes.indexOf(this.provider) === -1) {
     next(new Error('error.invalidPassword'));
@@ -114,8 +140,10 @@ UserSchema.statics = {
    * @param {Function} cb
    */
 
-  load: function (id, cb) {
-    this.findOne({ _id : id }).exec(cb);
+  load: function(id, cb) {
+    this.findOne({
+      _id: id
+    }).exec(cb);
   },
 
   /**
@@ -124,8 +152,10 @@ UserSchema.statics = {
    * @param {ObjectId} id
    * @param {Function} cb
    */
-  destroy: function (id, cb) {
-    this.remove({ _id : id }).exec(cb);
+  destroy: function(id, cb) {
+    this.remove({
+      _id: id
+    }).exec(cb);
   }
 };
 
@@ -145,8 +175,8 @@ UserSchema.methods = {
    * @api public
    */
 
-  authenticate: function (plainText) {
-    return this.encryptPassword(plainText,this.salt) === this.hashed_password;
+  authenticate: function(plainText) {
+    return this.encryptPassword(plainText, this.salt) === this.hashed_password;
   },
 
   /**
@@ -156,7 +186,7 @@ UserSchema.methods = {
    * @api public
    */
 
-  makeSalt: function () {
+  makeSalt: function() {
     return Math.round((new Date().valueOf() * Math.random())) + '';
   },
 
@@ -168,7 +198,7 @@ UserSchema.methods = {
    * @api public
    */
 
-  encryptPassword: function (password, salt) {
+  encryptPassword: function(password, salt) {
     if (!password) {
       return '';
     }

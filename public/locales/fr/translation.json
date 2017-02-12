@@ -6,10 +6,10 @@
     "invalidEmail": "Adresse email inconnue."
   },
   "validator": {
-  	"required": "Ce champ est obligatoire.",
-  	"usernameMinLength": "Votre nom doit contenir au moins 4 caractères.",
-  	"email": "Veuillez saisir une adresse email valide.",
-  	"passwordMinLength": "Le mot de passe doit contenir au moins 4 caractères.",
-  	"confirmPassword": "Le mot de passe est différent."
+    "required": "Ce champ est obligatoire.",
+    "usernameMinLength": "Votre nom doit contenir au moins 4 caractères.",
+    "email": "Veuillez saisir une adresse email valide.",
+    "passwordMinLength": "Le mot de passe doit contenir au moins 4 caractères.",
+    "confirmPassword": "Le mot de passe est différent."
   }
 }

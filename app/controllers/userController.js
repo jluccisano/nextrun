@@ -1,27 +1,31 @@
 /**
- * @module User Controller 
+ * @module User Controller
  * @author jluccisano
  */
 
-var mongoose = require('mongoose')
-, User = mongoose.model('User')
-, errorUtils = require('../utils/errorutils')
-, util = require('util')
-, userRoles = require('../../public/js/client/routingConfig').userRoles
-, email = require('../../config/middlewares/notification');
+var mongoose = require('mongoose'),
+  User = mongoose.model('User'),
+  errorUtils = require('../utils/errorutils'),
+  util = require('util'),
+  userRoles = require('../../public/js/client/routingConfig').userRoles,
+  email = require('../../config/middlewares/notification');
 
 
 /**
  * Load By Id
  */
-exports.load = function(req, res, next, id){  
-  User.load(id, function (err, user) {
+exports.load = function(req, res, next, id) {
+  User.load(id, function(err, user) {
     if (err) {
-      return res.json(400,  {message: ["error.unknownId"]}); 
-    } 
+      return res.json(400, {
+        message: ["error.unknownId"]
+      });
+    }
     if (!user) {
-      return res.json(400,  {message: ["error.unknownId"]});
-    }  
+      return res.json(400, {
+        message: ["error.unknownId"]
+      });
+    }
     req.user = user;
     next();
   });
@@ -33,24 +37,32 @@ exports.load = function(req, res, next, id){
  * @param res
  * @returns success if OK
  */
-exports.signup = function (req, res) {
-	var user = new User(req.body.user);
-	user.provider = 'local';
-	user.role = userRoles.user;
-	user.last_update = new Date();
+exports.signup = function(req, res) {
+  var user = new User(req.body.user);
+  user.provider = 'local';
+  user.role = userRoles.user;
+  user.last_update = new Date();
 
-	user.save(function (err) {
-		if (err) {
-      return res.json(400,  {message: errorUtils.errors(err.errors)  } );
-		}
-		
-		req.logIn(user, function(err) {
-			if (err) {
-        return res.json(400,   {message: errorUtils.errors(err.errors)  } );
-			} 
-      return res.json(200, { role: user.role, username: user.username, email: user.email });
-		});
-	});
+  user.save(function(err) {
+    if (err) {
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+
+    req.logIn(user, function(err) {
+      if (err) {
+        return res.json(400, {
+          message: errorUtils.errors(err.errors)
+        });
+      }
+      return res.json(200, {
+        role: user.role,
+        username: user.username,
+        email: user.email
+      });
+    });
+  });
 };
 
 /**
@@ -59,7 +71,7 @@ exports.signup = function (req, res) {
  * @param res
  * @returns redirect to /
  */
-exports.logout = function (req, res) {
+exports.logout = function(req, res) {
   req.logout();
   res.send(200);
 };
@@ -71,54 +83,73 @@ exports.logout = function (req, res) {
  * @param res
  * @returns success or error
  */
-exports.login = function (passport, req, res) {
-    passport.authenticate('local', function(err, user, message) {
-        if (err) { 
-            return res.json(400,  message );
-        }
-        if (!user) { 
-            return res.json(400,  message );
-        }
+exports.login = function(passport, req, res) {
+  passport.authenticate('local', function(err, user, message) {
+    if (err) {
+      return res.json(400, message);
+    }
+    if (!user) {
+      return res.json(400, message);
+    }
 
-        req.logIn(user, function(err) {
-          if (err) { 
-              return res.json(400,  message );
-          }
-          return res.json(200, { "role": user.role, "username": user.username });
-        });
-    })(req, res);
+    req.logIn(user, function(err) {
+      if (err) {
+        return res.json(400, message);
+      }
+      return res.json(200, {
+        "role": user.role,
+        "username": user.username
+      });
+    });
+  })(req, res);
 };
 
 /**
-* @method reinitialize password and send an email
-* @param req
-* @param res
-* @returns success or error
-*/
-exports.forgotPassword = function (req, res) {
+ * @method reinitialize password and send an email
+ * @param req
+ * @param res
+ * @returns success or error
+ */
+exports.forgotPassword = function(req, res) {
 
-    User.findOne({ email: req.body.user.email }, function (err, user) {
-        if (!err && user) { 
-          
-          //le user existe alors change mot de passe et regenerate new one
-          var newPassword = user.generatePassword(6);
-          var salt = user.makeSalt();
-          var hashed_password = user.encryptPassword( newPassword, salt);
+  User.findOne({
+    email: req.body.user.email
+  }, function(err, user) {
+    if (!err && user) {
 
-          User.update({ _id: user._id }, {$set: { hashed_password: hashed_password, salt: salt, last_update: new Date() } }, {upsert: true},  function(err){
-              
-              if (!err) {
-                email.sendEmailPasswordReinitialized(user.email, newPassword);
-                return res.json(200);
-              } else {
-                return res.json(400, {message: errorUtils.errors(err.errors)  });
-              }
+      //le user existe alors change mot de passe et regenerate new one
+      var newPassword = user.generatePassword(6);
+      var salt = user.makeSalt();
+      var hashed_password = user.encryptPassword(newPassword, salt);
+
+      User.update({
+        _id: user._id
+      }, {
+        $set: {
+          hashed_password: hashed_password,
+          salt: salt,
+          last_update: new Date()
+        }
+      }, {
+        upsert: true
+      }, function(err) {
+
+        if (!err) {
+          email.sendEmailPasswordReinitialized(user.email, newPassword);
+          return res.json(200);
+        } else {
+          return res.json(400, {
+            message: errorUtils.errors(err.errors)
           });
+        }
+      });
 
-        } else {          
-          return res.json(400, {message: ["error.invalidEmail"]});
-        } 
-    });
+    } else {
+      return res.json(400, {
+        message: ["error.invalidEmail"]
+      });
+    }
+  });
 };
 
 /**
@@ -126,8 +157,14 @@ exports.forgotPassword = function (req, res) {
  * @param req
  * @param res
  */
-exports.settings = function (req, res) {
-   return res.json(200,{user:  { _id: req.user._id, username: req.user.username, email: req.user.email } });
+exports.settings = function(req, res) {
+  return res.json(200, {
+    user: {
+      _id: req.user._id,
+      username: req.user.username,
+      email: req.user.email
+    }
+  });
 };
 
 /**
@@ -136,16 +173,22 @@ exports.settings = function (req, res) {
  * @param res
  * @param next
  */
-exports.checkIfEmailAlreadyExists = function (req, res) {
-    User.findOne({ email: req.body.user.email }, function (err, user) {
-        if (err) { 
-          return res.json(400,  {message: errorUtils.errors(err.errors)}); 
-        }
-        if (!user) {
-          return res.json(200);
-        }
-        return res.json(400, {message: ["error.emailAlreadyExists"]}); 
-     });
+exports.checkIfEmailAlreadyExists = function(req, res) {
+  User.findOne({
+    email: req.body.user.email
+  }, function(err, user) {
+    if (err) {
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+    if (!user) {
+      return res.json(200);
+    }
+    return res.json(400, {
+      message: ["error.emailAlreadyExists"]
+    });
+  });
 }
 
 /**
@@ -154,21 +197,29 @@ exports.checkIfEmailAlreadyExists = function (req, res) {
  * @param res
  * @param next
  */
-exports.checkUser = function (req, res, next) {
-    if(req.user && req.user.email) {
-      User.findOne({ email: req.body.user.email }, function (err, user) {
-        if (err) { 
-          return res.json(400,  {message: errorUtils.errors(err.errors)}); 
-        }
-        if (user) {
-          req.user = user;
-          return next();
-        }
-        return res.json(400, {message: ["error.unknownUser"]}); 
-     });
-    } else {
-      return res.json(400, {message: ["error.invalidUser"]}); 
-    }
+exports.checkUser = function(req, res, next) {
+  if (req.user && req.user.email) {
+    User.findOne({
+      email: req.body.user.email
+    }, function(err, user) {
+      if (err) {
+        return res.json(400, {
+          message: errorUtils.errors(err.errors)
+        });
+      }
+      if (user) {
+        req.user = user;
+        return next();
+      }
+      return res.json(400, {
+        message: ["error.unknownUser"]
+      });
+    });
+  } else {
+    return res.json(400, {
+      message: ["error.invalidUser"]
+    });
+  }
 }
 
 /**
@@ -176,19 +227,26 @@ exports.checkUser = function (req, res, next) {
  * @param req
  * @param res
  */
-exports.updateProfile = function (req, res) {
+exports.updateProfile = function(req, res) {
 
-    var user = req.user;
-    user.email = req.body.user.email;
-    user.username = req.body.user.username;
+  var user = req.user;
+  user.email = req.body.user.email;
+  user.username = req.body.user.username;
 
-    user.save(function (err) {
-      if (err) {
-        return res.json(400,  {message: errorUtils.errors(err.errors)  } );
+  user.save(function(err) {
+    if (err) {
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+    return res.json(200, {
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email
       }
-        return res.json(200,{user:  { _id: user._id, username: user.username, email: user.email } });
-      }
-    );
+    });
+  });
 };
 
 /**
@@ -196,41 +254,45 @@ exports.updateProfile = function (req, res) {
  * @param req
  * @param res
  */
-exports.updatePassword = function (req, res) {
+exports.updatePassword = function(req, res) {
 
-     var user = req.user;
+  var user = req.user;
 
-     var actualPassword = req.body.actual;
+  var actualPassword = req.body.actual;
 
-     if (user.authenticate(actualPassword)) {
+  if (user.authenticate(actualPassword)) {
 
-        var newPassword = req.body.new;
+    var newPassword = req.body.new;
 
-        //encrypt new password
-        var salt = user.makeSalt();
-        var hashed_newPassword = user.encryptPassword( newPassword, salt);
+    //encrypt new password
+    var salt = user.makeSalt();
+    var hashed_newPassword = user.encryptPassword(newPassword, salt);
 
+    User.update({
+      _id: user._id
+    }, {
+      $set: {
+        hashed_password: hashed_newPassword,
+        salt: salt,
+        last_update: new Date()
+      }
+    }, {
+      upsert: true
+    }, function(err) {
+      if (!err) {
+        return res.json(200);
 
-        /*user.update(function (err) {
-          if (err) {
-            return res.json(400,  {message: errorUtils.errors(err.errors)  } );
-          }
-            return res.json(200, { "role": user.role, "username": user.username });
-          });
-        });*/
-
-
-        User.update({ _id: user._id }, {$set: {hashed_password: hashed_newPassword, salt: salt, last_update: new Date()} }, {upsert: true},  function(err){
-          if (!err) {
-            return res.json(200);
-
-          } else {
-            return res.json(400, { message: ["error.occured"] });
-          }
+      } else {
+        return res.json(400, {
+          message: ["error.occured"]
         });
-     } else {
-        return res.json(400,{ message: ['error.invalidPassword'] });
-     }
+      }
+    });
+  } else {
+    return res.json(400, {
+      message: ['error.invalidPassword']
+    });
+  }
 };
 
 
@@ -239,13 +301,15 @@ exports.updatePassword = function (req, res) {
  * @param req
  * @param res
  */
-exports.deleteAccount = function(req,res) {
-   User.destroy(req.user._id, function(err){
-    if(!err) {
-         req.logout();
-         return res.json(200);
+exports.deleteAccount = function(req, res) {
+  User.destroy(req.user._id, function(err) {
+    if (!err) {
+      req.logout();
+      return res.json(200);
     } else {
-        return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
     }
   });
 };

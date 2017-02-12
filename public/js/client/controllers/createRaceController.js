@@ -1,6 +1,6 @@
-nextrunControllers.controller('CreateRaceCtrl', ['$scope','$location', 'RaceServices', 'Alert', 'Auth',
+nextrunControllers.controller('CreateRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth',
 	function($scope, $location, RaceServices, Alert, Auth) {
-
+		'use strict';
 		$scope.departments = DEPARTMENTS.enums;
 		$scope.types = TYPE_OF_RACES.enums;
 
@@ -14,17 +14,20 @@ nextrunControllers.controller('CreateRaceCtrl', ['$scope','$location', 'RaceServ
 
 		$scope.submit = function(race) {
 
-			data = { race: race, user: Auth.user };
+			data = {
+				race: race,
+				user: Auth.user
+			};
 
 			RaceServices.create(data,
 				function(res) {
 					Alert.add("success", "Votre nouvelle manifestation a bien été créé", 3000);
 				},
 				function(error) {
-					_.each(error.message, function(message){
+					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
 					});
-			});
+				});
 		};
 	}
 ]);

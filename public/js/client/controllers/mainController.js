@@ -1,6 +1,6 @@
-nextrunControllers.controller('MainCtrl', ['$scope','$location', '$rootScope','Auth','Alert',
+nextrunControllers.controller('MainCtrl', ['$scope', '$location', '$rootScope', 'Auth', 'Alert',
 	function($scope, $location, $rootScope, Auth, Alert) {
-
+		'use strict';
 		$scope.isLoggedIn = function() {
 			return Auth.isLoggedIn();
 		};
@@ -8,6 +8,6 @@ nextrunControllers.controller('MainCtrl', ['$scope','$location', '$rootScope','A
 		$rootScope.closeAlert = function() {
 			Alert.closeAlert();
 		};
-		
+
 	}
 ]);
