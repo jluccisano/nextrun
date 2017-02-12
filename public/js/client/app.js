@@ -41,6 +41,11 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
           controller: 'SettingsCtrl',
           access: access.user
         }).
+      when('/races/create', {
+          templateUrl: 'partials/race/create',
+          controller: 'CreateRaceCtrl',
+          access: access.user
+        }).
       when('/404', {
           templateUrl: 'errors/404',
           access: access.public

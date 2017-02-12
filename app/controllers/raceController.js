@@ -17,7 +17,7 @@ exports.load = function(req, res, next, id){
     if (err) {
       return res.json(400,  {message: "error.unknownId"}); 
     } 
-    if (!user) {
+    if (!race) {
       return res.json(400,  {message: "error.unknownId"});
     }  
     req.race = race;
@@ -48,12 +48,38 @@ exports.create = function (req, res) {
 };
 
 /**
+ * @method update race
+ * @param req
+ * @param res
+ * @returns success if OK
+ */
+exports.update = function (req, res) {
+
+  var race = req.race;
+
+  if(req.user._id.equals(req.race.user_id)) {
+
+       var raceToUpdate =  req.body.race;
+       raceToUpdate.last_update = new Date();
+       
+       Race.update({ _id: race._id }, {$set: raceToUpdate}, {upsert: true},  function(err){
+          if (!err) {
+			return res.json(200);
+          } else {
+			return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+          }
+        });
+  } else {
+      return res.json(400,  {message: "error.userNotOwner"}); 
+  }  
+};
+
+/**
  * @method delete race
  * @param req
  * @param res
  */
 exports.delete = function(req,res) {
-
    if(req.user._id.equals(req.race.user_id)) {
 
    	   Race.destroy(req.race._id, function(err){
@@ -63,6 +89,8 @@ exports.delete = function(req,res) {
 	        return res.json(400,  {message: errorUtils.errors(err.errors)}); 
 	    }
 	  });
+   } else {
+   		return res.json(400,  {message: "error.userNotOwner"}); 
    }
 
 };

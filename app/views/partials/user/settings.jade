@@ -15,24 +15,18 @@ div.container(data-ng-controller="SettingsCtrl")
 					div.page-header
 						h1(id="changeProfileTab") Changement de profil
 					form(role="form",  style="margin-top:50px", name="form1", novalidate)
-						//div.form-group(ng-class="{'has-error': !form.username.$pristine && form.username.$invalid, 'has-success': !form.username.$pristine && !form.username.$invalid}")
-						div.form-group
+						div.form-group(ng-class="{'has-error': !form1.username.$pristine && form1.username.$invalid, 'has-success': !form1.username.$pristine && !form1.username.$invalid}")
 							label.control-label(for="username") Nom complet
-							//input.form-control(type="text", name="username", id="username", placeholder="ex: Nicolas Dupont", data-ng-model="user.username",  ng-minlength="4", ng-maxlength="30", required)
-							input.form-control(type="text", name="username", id="username", placeholder="ex: Nicolas Dupont", data-ng-model="user.username")
-
-							//span.help-block(ng-show="form.username.$dirty && form.username.$error.required") Please choose a username
-							//span.help-block(ng-show="form.username.$dirty && form.username.$error.invalidChars") Username may not contain any non-url-safe characters
-							//span.help-block(data-ng-show="form.username.$dirty && form.username.$error.minlength") Votre nom doit contenir entre 4 et 30 caractères
-							//span.help-block(data-ng-show="form.username.$dirty && form.username.$error.maxlength") Votre nom doit contenir entre 4 et 30 caractères
+							input.form-control(type="text", name="username", id="username", placeholder="ex: Nicolas Dupont", data-ng-model="user.username", ng-minlength="4", ng-maxlength="30", required)
+							span.help-block(ng-show="form1.username.$dirty && form1.username.$error.required") Please choose a username
+							span.help-block(ng-show="form1.username.$dirty && form1.username.$error.invalidChars") Username may not contain any non-url-safe characters
+							span.help-block(data-ng-show="form1.username.$dirty && form1.username.$error.minlength") Votre nom doit contenir entre 4 et 30 caractères
+							span.help-block(data-ng-show="form1.username.$dirty && form1.username.$error.maxlength") Votre nom doit contenir entre 4 et 30 caractères
 						div.form-group(ng-class="{'has-error': !form1.email.$pristine && form1.email.$invalid, 'has-success': !form1.email.$invalid && !form1.email.$pristine}")
-						//div.form-group
 							label.control-label(for="email") Email
-							//input.form-control(type="email", name="email", id="email", placeholder="Email" ,data-ng-model="user.email", required)
 							input.form-control(type="email", name="email", id="email", placeholder="Email" ,data-ng-model="user.email", required)
 							span.help-block(data-ng-show="form1.email.$dirty && form1.email.$error.required") Veuillez saisir votre email
 							span.help-block(ng-show="form1.email.$error.email") Email invalide
-						//div.alert.alert-danger.fade.hide(id="invalidEmail")
 						hr
 						div.form-group.text-right
 							button.btn.btn-primary(id="submitProfileSettings", type="submit",  ng-click="updateProfile()", ng-disabled="form1.$invalid || isUnchanged(user)") Enregistrer

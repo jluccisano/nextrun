@@ -45,16 +45,19 @@ module.exports = function(grunt) {
       basic_and_extras: {
         files: {
         'tmp/public/js/client/app.js': ['public/js/client/app.js'],
+        'tmp/public/js/client/app.js': ['public/js/client/routingConfig.js'],
         'tmp/public/js/client/controllers.js': 
             [
               'public/js/client/controllers.js',
-              'public/js/client/controllers/mainController.js',
-              'public/js/client/controllers/footerController.js',
-              'public/js/client/controllers/homeController.js',
-              'public/js/client/controllers/loginController.js',
-              'public/js/client/controllers/signupController.js',
-              'public/js/client/controllers/myRacesController.js',
-              'public/js/client/controllers/settingsController.js'
+              'public/js/client/controllers/*.js'
+            ],
+        'tmp/public/js/client/directives.js': 
+            [
+              'public/js/client/directives/*.js',
+            ],
+        'tmp/public/js/client/services.js': 
+            [
+              'public/js/client/services/*.js',
             ],
         'tmp/public/js/client/animations.js': ['public/js/client/animations.js'],
         'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
@@ -69,7 +72,9 @@ module.exports = function(grunt) {
         'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
         'tmp/public/js/libs/angular-animate.js': ['public/js/libs/angular-animate.js'],
         'tmp/public/js/libs/angular-resource.js': ['public/js/libs/angular-resource.js'],
-        'tmp/public/js/libs/raphael.js': ['public/js/libs/raphael.js']
+        'tmp/public/js/libs/raphael.js': ['public/js/libs/raphael.js'],
+        'tmp/public/js/libs/underscore.js': ['public/js/libs/underscore.js'],
+        'tmp/public/js/libs/ui-boostrap-tpls-0.7.0.js': ['public/js/libs/ui-boostrap-tpls-0.7.0.js']
       },
     },
     },
@@ -80,7 +85,10 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/public/js/client/app.min.js': ['tmp/public/js/client/app.js'],
+          'dist/public/js/client/routingConfig.min.js': ['tmp/public/js/client/routingConfig.js'],
           'dist/public/js/client/controllers.min.js': ['tmp/public/js/client/controllers.js'],
+          'dist/public/js/client/directives.min.js': ['tmp/public/js/client/directives.js'],
+          'dist/public/js/client/services.min.js': ['tmp/public/js/client/services.js'],
           'dist/public/js/client/animations.min.js': ['tmp/public/js/client/animations.js'],
           'dist/public/js/client/widgets/socialbuttons.min.js': ['tmp/public/js/client/widgets/socialbuttons.js'],
           'dist/public/js/client/widgets/map-france.min.js': ['tmp/public/js/client/widgets/map-france.js'],
@@ -95,6 +103,8 @@ module.exports = function(grunt) {
           'dist/public/js/libs/angular-animate.min.js': ['tmp/public/js/libs/angular-animate.js'],
           'dist/public/js/libs/angular-resource.min.js': ['tmp/public/js/libs/angular-resource.js'],
           'dist/public/js/libs/raphael.min.js': ['tmp/public/js/libs/raphael.js'],
+          'dist/public/js/libs/underscore.min.js': ['tmp/public/js/libs/underscore.js'],
+          'dist/public/js/libs/ui-boostrap-tpls-0.7.0.min.js': ['tmp/public/js/libs/ui-boostrap-tpls-0.7.0.js']
         }
       }
     },
