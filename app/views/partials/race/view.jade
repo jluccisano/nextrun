@@ -1,11 +1,11 @@
 div.container(style="margin-top:50px")
 	h1 {{race.name}}
-		small  ({{race.department}})
+		small  ({{race.department.code}})
 	h4.text-right  {{getDate(race.date)}}
 	hr
 	div.row.text-center
 		div.col-md-4
-			h3 {{race.type}}
+			h3 {{race.type.name}}
 			span.small type
 		div.col-md-4
 			h3 {{race.distanceType.name}}

@@ -533,6 +533,53 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			return route;
 
 		},
+		drawPolylines: function(segments) {
+
+			var polylines = [];
+			var pathArray = [];
+
+			_.each(segments, function(segment, index) {
+
+				var lastPointOfLastSegment;
+
+				if (index > 0) {
+
+					var lastSegment = segments[index - 1];
+
+					if (typeof lastSegment.points[lastSegment.points.length - 1] !== 'undefined') {
+						lastPointOfLastSegment = lastSegment.points[lastSegment.points.length - 1];
+					}
+
+					pathArray.push({
+						latitude: lastPointOfLastSegment.latlng.mb,
+						longitude: lastPointOfLastSegment.latlng.nb
+					});
+
+				}
+
+				_.each(segment.points, function(point) {
+					pathArray.push({
+						latitude: point.latlng.mb,
+						longitude: point.latlng.nb
+					});
+				});
+			});
+
+			var polyLine = {
+				path: pathArray,
+				stroke: {
+					color: "red",
+					weight: 5
+				},
+				editable: false,
+				draggable: false,
+				geodesic: false,
+				visible: true
+			}
+
+			polylines.push(polyLine);
+			return polylines;
+		},
 		rebuildPolylines: function(segments) {
 
 			var polylines = [];
@@ -657,26 +704,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			route.polylines.length = 0;
 
 			route.chartConfig.series[0].data = [];
-		},
-		setBounds: function(route) {
-
-			var firstPoint = route.segments[0].points[0];
-
-			var lastPointOfLastSegment = getLastPointOfLastSegment(route);
-
-			var bounds = {
-              northeast: {
-                latitude: firstPoint.latlng.mb,
-                longitude: firstPoint.latlng.nb
-              },
-              southwest: {
-                latitude: lastPointOfLastSegment.latlng.mb,
-                longitude: lastPointOfLastSegment.latlng.nb
-              }
-            };
-
-            return bounds;
-
 		},
 		undo: function(route) {
 

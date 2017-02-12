@@ -3,8 +3,8 @@ angular.module('nextrunApp')
         'use strict';
         return {
             create: function(data, success, error) {
-                $http.post('/api/races/create', data).success(function() {
-                    success();
+                $http.post('/api/races/create', data).success(function(response) {
+                    success(response);
                 }).error(error);
             },
             find: function(userId, page, success, error) {

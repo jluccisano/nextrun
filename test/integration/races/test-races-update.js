@@ -81,7 +81,10 @@ describe('Update Race: UPDATE /api/races', function() {
   before(function(done) {
     Race.create({
       name: 'Duathlon de Castelnaudary',
-      type: 'duathlon',
+      type: {
+        name: 'duathlon',
+        i18n: 'Duathlon'
+      },
       department: {
         code: '11',
         name: 'Aude',
@@ -89,7 +92,10 @@ describe('Update Race: UPDATE /api/races', function() {
       },
       date: currentDate,
       edition: '1',
-      distanceType: {name:'S',i18n:''},
+      distanceType: {
+        name: 'S',
+        i18n: ''
+      },
       user_id: user1._id,
       last_update: new Date(),
       created_date: new Date()
@@ -105,7 +111,7 @@ describe('Update Race: UPDATE /api/races', function() {
       should.not.exist(err);
       race.should.be.an.instanceOf(Race);
       race.name.should.equal('Duathlon de Castelnaudary');
-      race.type.should.equal('duathlon');
+      race.type.name.should.equal('duathlon');
       race.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
       //race.date.getTime().should.equal(new Date(currentDate).getTime());
@@ -211,7 +217,6 @@ describe('Update Race: UPDATE /api/races', function() {
 
 
 
-
   describe('Valid parameters', function() {
 
     before(function(done) {
@@ -234,7 +239,10 @@ describe('Update Race: UPDATE /api/races', function() {
         .send({
           race: {
             name: 'Triathlon de Castelnaudary',
-            type: 'triathlon',
+            type: {
+              name: 'triathlon',
+              i18n: 'Triathlon'
+            },
             department: {
               code: '31',
               name: 'Haute-Garonne',
@@ -242,7 +250,10 @@ describe('Update Race: UPDATE /api/races', function() {
             },
             date: currentDate,
             edition: '2',
-            distanceType: {name:'M',i18n:''}
+            distanceType: {
+              name: 'M',
+              i18n: ''
+            }
           }
         })
         .set('Accept', 'application/json')
@@ -260,7 +271,7 @@ describe('Update Race: UPDATE /api/races', function() {
         should.not.exist(err);
         race.should.be.an.instanceOf(Race);
         race.name.should.equal('Triathlon de Castelnaudary');
-        race.type.should.equal('triathlon');
+        race.type.name.should.equal('triathlon');
         race.department.name.should.equal('Haute-Garonne');
         race.date.should.be.an.instanceOf(Date);
         //race.date.getTime().should.equal(new Date(currentDate).getTime());

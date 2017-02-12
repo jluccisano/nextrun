@@ -81,7 +81,10 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
 
     Race.create({
       name: 'Duathlon de Castelnaudary',
-      type: 'duathlon',
+      type: {
+        name: 'duathlon',
+        i18n: 'Duathlon'
+      },
       department: {
         code: '11',
         name: 'Aude',
@@ -89,7 +92,10 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
       },
       date: currentDate,
       edition: '1',
-      distanceType: {name:'S',i18n:''},
+      distanceType: {
+        name: 'S',
+        i18n: ''
+      },
       user_id: user1._id,
       last_update: new Date(),
       created_date: new Date()
@@ -105,7 +111,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
       should.not.exist(err);
       race.should.be.an.instanceOf(Race);
       race.name.should.equal('Duathlon de Castelnaudary');
-      race.type.should.equal('duathlon');
+      race.type.name.should.equal('duathlon');
       race.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
       //race.date.getTime().should.equal(new Date(currentDate).getTime());

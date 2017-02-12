@@ -1,6 +1,6 @@
-angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', '$log', 'RouteFactory', '$window',
+angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', '$log', 'RouteFactory', '$window', '$modal',
 
-	function($scope, $location, RaceServices, Alert, Aut, $routeParams, $log, RouteFactory, window) {
+	function($scope, $location, RaceServices, Alert, Aut, $routeParams, $log, RouteFactory, window, $modal) {
 		'use strict';
 
 		$scope.Math = window.Math;
@@ -12,6 +12,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 		$scope.types = TYPE_OF_RACES.enums;
 		$scope.distances = [];
 		$scope.cursorMarker = {};
+		$scope.currentRaceType = {};
 
 		$scope.raceId = $routeParams.raceId;
 
@@ -23,6 +24,15 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 			return department.code + ' - ' + department.name;
 		};
 
+		$scope.getType = function(type) {
+			return type.name;
+		};
+
+		$scope.getDistanceType = function(distanceType) {
+			return distanceType.name;
+		};
+
+
 
 		$scope.init = function() {
 			RaceServices.retrieve($scope.raceId,
@@ -30,7 +40,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 					$scope.race = response.race;
 
-					var raceType = getRaceTypeByName(TYPE_OF_RACES, $scope.race.type);
+					var raceType = getRaceTypeByName(TYPE_OF_RACES, $scope.race.type.name);
 
 					_.each(raceType.routes, function(routeType, index) {
 
@@ -52,8 +62,8 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							elevationPoints: (currentRoute && currentRoute.elevationPoints.length > 0) ? currentRoute.elevationPoints : [],
 							type: routeType.i18n,
 							stayOnTheRoad: true,
-							travelMode: google.maps.TravelMode.DRIVING,
-							zoom: 13,
+							travelMode: google.maps.TravelMode.WALKING,
+							zoom: 10,
 							fit: true,
 							markers: [],
 							polylines: [],
@@ -85,6 +95,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 								loading: false,
 								options: {
 									chart: {
+										height: 300,
 										type: 'area'
 									},
 									plotOptions: {
@@ -195,6 +206,17 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 						$scope.race.routes[0].isVisible = true;
 
 					});
+
+					$scope.race.type = raceType;
+					$scope.currentRaceType = raceType;
+					$scope.distances = $scope.race.type.distances;
+					$scope.race.department = getDepartmentByCode(DEPARTMENTS, $scope.race.department.code);
+
+					_.each($scope.race.type.distances, function(distanceType) {
+						if ($scope.race.distanceType.name === distanceType.name) {
+							$scope.race.distanceType = distanceType;
+						}
+					});
 				},
 				function(error) {
 					_.each(error.message, function(message) {
@@ -212,11 +234,16 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 		};
 
 		$scope.onChange = function() {
-			$scope.distances = $scope.race.type.value.distances;
+			$scope.openChangeTypeConfirmation();
+
 		};
 
 		$scope.isLoggedIn = function() {
 			return Auth.isLoggedIn();
+		};
+
+		$scope.cancel = function() {
+			$location.path('/myraces');
 		};
 
 		$scope.submit = function(race) {
@@ -237,9 +264,199 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 				});
 		};
 
+		$scope.openChangeTypeConfirmation = function() {
+
+			var modalInstance = $modal.open({
+				templateUrl: 'partials/changetypeconfirmation',
+				controller: 'ChangeTypeConfirmationCtrl',
+				resolve: {}
+			});
+
+			modalInstance.result.then(function() {
+				$scope.race.routes = [];
+				
+				$scope.changeType();
+
+				$scope.currentRaceType = $scope.race.type;
+				$scope.distances = $scope.race.type.distances;
+
+			}, function() {
+
+				$scope.race.type = $scope.currentRaceType;
+
+			});
+		};
+
+		$scope.changeType = function() {
+
+			var raceType = getRaceTypeByName(TYPE_OF_RACES, $scope.race.type.name);
+
+			_.each(raceType.routes, function(routeType, index) {
+
+				var route = {
+					isVisible: false,
+					editMode: true,
+					segments: [],
+					distance: 0,
+					descendant: 0,
+					ascendant: 0,
+					minElevation: 0,
+					maxElevation: 0,
+					elevationPoints: [],
+					type: routeType.i18n,
+					stayOnTheRoad: true,
+					travelMode: google.maps.TravelMode.WALKING,
+					zoom: 10,
+					fit: true,
+					markers: [],
+					polylines: [],
+					center: {
+						latitude: 46.52863469527167,
+						longitude: 2.43896484375,
+					},
+					options: {
+						mapTypeId: google.maps.MapTypeId.ROADMAP,
+						mapTypeControlOptions: {
+							mapTypeIds: [google.maps.MapTypeId.ROADMAP,
+								google.maps.MapTypeId.HYBRID,
+								google.maps.MapTypeId.SATELLITE
+							]
+						},
+						disableDoubleClickZoom: true,
+						scrollwheel: true,
+						draggableCursor: "crosshair",
+						streetViewControl: false,
+						zoomControl: true
+					},
+					events: {},
+					chart: {
+						series: [{
+							data: []
+						}]
+					},
+					chartConfig: {
+						loading: false,
+						options: {
+							chart: {
+								height: 300,
+								type: 'area'
+							},
+							plotOptions: {
+								series: {
+									marker: {
+										enabled: false
+									},
+									point: {
+										events: {
+											mouseOver: function() {
+
+												var icon = new google.maps.MarkerImage("../../../img/segment.png",
+													new google.maps.Size(32, 32),
+													new google.maps.Point(0, 0),
+													new google.maps.Point(8, 8),
+													new google.maps.Size(16, 16)
+												);
+
+												var cursorMarker = {
+													latitude: this.latlng.mb,
+													longitude: this.latlng.nb,
+													icon: icon,
+													title: "hello"
+												}
+
+												$scope.cursorMarker = cursorMarker;
+												$scope.$apply();
+
+											},
+											mouseOut: function() {
+												$scope.cursorMarker = {};
+												$scope.$apply();
+											}
+
+										}
+									},
+									events: {
+										mouseOut: function() {
+											$scope.cursorMarker = {};
+											$scope.$apply();
+										}
+									}
+								},
+								column: {
+									colorByPoint: true
+								}
+							},
+							tooltip: {
+								shared: true,
+								useHTML: true,
+								headerFormat: '<table>',
+								pointFormat: '<tr>' +
+									'<td>Distance: </td>' +
+									'<td style="text-align: right"><b>{point.x} Km</b></td>' +
+									'</tr>' +
+									'<tr>' +
+									'<td>Altitude: </td>' +
+									'<td style="text-align: right"><b>{point.y} m</b></td>' +
+									'</tr>' +
+									'<tr>' +
+									'<td>Pente: </td>' +
+									'<td style="text-align: right"><b>{point.grade} %</b></td>' +
+									'</tr>',
+								footerFormat: '</table>',
+								valueDecimals: 0
+							}
+						},
+						series: [{
+							name: "Altitude (m)",
+							data: []
+						}],
+						xAxis: {
+							title: {
+								text: 'Distance (km)',
+								align: 'middle'
+							}
+						},
+						yAxis: {
+							title: {
+								text: 'Altitude (m)',
+								align: 'middle'
+							}
+						},
+						title: {
+							text: ''
+						}
+					}
+				};
+
+				route.events = {
+					click: function(mapModel, eventName, originalEventArgs) {
+						RouteFactory.onClickMap($scope, route, originalEventArgs[0].latLng, google.maps.TravelMode.DRIVING);
+					}
+				}
+
+				$scope.race.routes[index] = route;
+				$scope.race.routes[0].isVisible = true;
+			});
+
+		};
+
 
 
 		$scope.init();
 
+	}
+]);
+
+angular.module('nextrunApp').controller('ChangeTypeConfirmationCtrl', ['$scope', '$modalInstance', 'Auth', 'Alert', '$location',
+	function($scope, $modalInstance, Auth, Alert, $location) {
+
+		$scope.continue = function() {
+			$modalInstance.close();
+		};
+
+
+		$scope.cancel = function() {
+			$modalInstance.dismiss('cancel');
+		};
 	}
 ]);

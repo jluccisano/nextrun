@@ -23,7 +23,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 					$scope.race = response.race;
 
-					var raceType = getRaceTypeByName(TYPE_OF_RACES, $scope.race.type);
+					var raceType = getRaceTypeByName(TYPE_OF_RACES, $scope.race.type.name);
 
 					_.each(raceType.routes, function(routeType, index) {
 
@@ -78,6 +78,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 								loading: false,
 								options: {
 									chart: {
+										height: 300,
 										type: 'area'
 									},
 									plotOptions: {
@@ -109,13 +110,18 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 													},
 													mouseOut: function() {
+														$scope.cursorMarker = {};
+														$scope.$apply();
 
 													}
 
 												}
 											},
 											events: {
-												mouseOut: function() {}
+												mouseOut: function() {
+													$scope.cursorMarker = {};
+													$scope.$apply();
+												}
 											}
 										},
 										column: {
@@ -170,13 +176,8 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 						if (route.segments.length > 0) {
 							route.markers = RouteFactory.rebuildMarkers(route.segments, false);
-							route.polylines = RouteFactory.rebuildPolylines(route.segments);
-							route.bounds = RouteFactory.setBounds(route);
+							route.polylines = RouteFactory.drawPolylines(route.segments);
 						}
-
-
-
-
 
 						$scope.race.routes[index] = route;
 						$scope.race.routes[0].isVisible = true;

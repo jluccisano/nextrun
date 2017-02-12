@@ -1,11 +1,11 @@
 div(data-ng-if="route.isVisible")
-	google-map(center="route.center" fit="true" options="route.options" zoom="route.zoom"  draggable="true" mark-click="true" style="height: 400px" events="route.events")
+	google-map(center="route.center" options="route.options" zoom="route.zoom"  draggable="true" mark-click="true" style="height: 600px" events="route.events")
 		markers
 			marker(ng-repeat="marker in route.markers" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
 		
 			marker(coords="cursorMarker" icon="cursorMarker.icon")
 				
-		polyline(ng-repeat="p in route.polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable")
+		polyline(ng-repeat="p in route.polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="true" editable="p.editable" draggable="p.draggable")
 		
 	div(data-ng-show="route.editMode" style="padding: 5px; z-index: 0; position: absolute; top: 100px; right: 20px;")
 		div.well

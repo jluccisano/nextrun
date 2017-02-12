@@ -84,15 +84,21 @@ describe('Delete race: DELETE /api/races', function() {
 
     Race.create({
       name: 'Duathlon de Castelnaudary',
-      type: 'duathlon',
+      type: {
+        name: 'duathlon',
+        i18n: 'Duathlon'
+      },
       department: {
-              code: '11',
-              name: 'Aude',
-              region: 'Languedoc-Roussillon'
-            },
+        code: '11',
+        name: 'Aude',
+        region: 'Languedoc-Roussillon'
+      },
       date: currentDate,
       edition: '1',
-      distanceType: {name:'S',i18n:''},
+      distanceType: {
+        name: 'S',
+        i18n: ''
+      },
       user_id: user1._id,
       last_update: new Date(),
       created_date: new Date()
@@ -110,7 +116,7 @@ describe('Delete race: DELETE /api/races', function() {
       should.not.exist(err);
       race.should.be.an.instanceOf(Race);
       race.name.should.equal('Duathlon de Castelnaudary');
-      race.type.should.equal('duathlon');
+      race.type.name.should.equal('duathlon');
       race.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
       //race.date.getTime().should.equal(new Date(currentDate).getTime());
@@ -179,46 +185,46 @@ describe('Delete race: DELETE /api/races', function() {
     });
   });
 
-    describe('invvalid parameters', function() {
+  describe('invvalid parameters', function() {
 
-      before(function(done) {
-        superagent.post('http://localhost:3000/api/users/session')
-          .send({
-            email: 'foobar1@example.com',
-            password: '123'
-          })
-          .set('Accept', 'application/json')
-          .end(function(err, res) {
-            should.not.exist(err);
-            res.should.have.status(200);
-            res.body.username.should.equal("foobar1");
-            res.body.role.title.should.equal("user");
-            done();
-          });
-      });
-
-      it('should not delete because race id is unknown', function(done) {
-        superagent.del('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/delete')
-          .send()
-          .set('Accept', 'application/json')
-          .end(function(err, res) {
-            should.not.exist(err);
-            res.should.have.status(400);
-            res.body.message[0].should.equal("error.unknownId");
-            done();
-          });
-      });
-
-      after(function(done) {
-        superagent.post('http://localhost:3000/api/users/logout')
-          .end(function(err, res) {
-            should.not.exist(err);
-            res.should.have.status(200);
-            done();
-          });
-      });
-
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar1@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar1");
+          res.body.role.title.should.equal("user");
+          done();
+        });
     });
+
+    it('should not delete because race id is unknown', function(done) {
+      superagent.del('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/delete')
+        .send()
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(400);
+          res.body.message[0].should.equal("error.unknownId");
+          done();
+        });
+    });
+
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          done();
+        });
+    });
+
+  });
 
   describe('valid parameters', function() {
 

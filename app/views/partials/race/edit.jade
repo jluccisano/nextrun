@@ -26,7 +26,7 @@ div.container
 
 						div.form-group(data-ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid && !form1.type.$pristine}")
 							label.control-label(for="type") Type
-							select.form-control(data-ng-model="race.type", name="type", data-ng-options="type.value.name for type in types", required, data-ng-change="onChange()")
+							select.form-control(data-ng-model="race.type", name="type", data-ng-options="type.value as getType(type.value) for type in types", required, data-ng-change="onChange()")
 								option(value="") Sélectionner...
 
 						div.form-group(data-ng-class="{'has-error': !form1.distanceType.$pristine && form1.distanceType.$invalid, 'has-success': !form1.distanceType.$invalid && !form1.distanceType.$pristine}")
@@ -45,4 +45,6 @@ div.container
 			hr
 			div.row
 				div.col-lg-offset-4.col-lg-8
-					button.btn.btn-primary(data-ng-click="submit(race)", data-ng-disabled="form1.$invalid") Continuer
+					button.btn.btn-primary(data-ng-click="submit(race)", data-ng-disabled="form1.$invalid") Sauvegarder
+					button.btn.btn-default(data-ng-click="cancel()") Retour
+

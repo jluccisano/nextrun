@@ -39,7 +39,10 @@ var RouteSchema = new Schema({
 
 var RaceSchema = new Schema({
   name: String,
-  type: String,
+  type: {
+    name: String,
+    i18n: String
+  },
   department: {
     code: String,
     name: String,

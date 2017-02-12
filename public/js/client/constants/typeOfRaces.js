@@ -325,7 +325,7 @@ var TYPE_OF_RACES = new Enum({
 });
 
 var getRaceTypeByName = function(TYPE_OF_RACES, name) {
-	switch (name.toString()) {
+	switch (name.toString().toUpperCase()) {
 		case 'TRIATHLON':
 			if (true) {
 				return TYPE_OF_RACES.TRIATHLON.value;

@@ -82,7 +82,10 @@ describe('Create race: POST /api/races', function() {
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
-            type: 'duathlon',
+            type: {
+              name: 'duathlon',
+              i18n: 'Duathlon'
+            },
             department: {
               code: '11',
               name: 'Aude',
@@ -90,7 +93,10 @@ describe('Create race: POST /api/races', function() {
             },
             date: currentDate,
             edition: '1',
-            distanceType: {name:'S',i18n:''}
+            distanceType: {
+              name: 'S',
+              i18n: ''
+            }
           }
         })
         .set('Accept', 'application/json')
@@ -108,7 +114,7 @@ describe('Create race: POST /api/races', function() {
         should.not.exist(err);
         race.should.be.an.instanceOf(Race);
         race.name.should.equal('Duathlon de Castelnaudary');
-        race.type.should.equal('duathlon');
+        race.type.name.should.equal('duathlon');
         race.department.name.should.equal('Aude');
         race.date.should.be.an.instanceOf(Date);
         //race.date.getTime().should.equal(new Date(currentDate).getTime());
@@ -125,7 +131,10 @@ describe('Create race: POST /api/races', function() {
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
-            type: 'duathlon',
+            type: {
+              name: 'duathlon',
+              i18n: 'Duathlon'
+            },
             department: {
               code: '11',
               name: 'Aude',
@@ -133,7 +142,10 @@ describe('Create race: POST /api/races', function() {
             },
             date: currentDate,
             edition: '1',
-            distanceType: {name:'M',i18n:''}
+            distanceType: {
+              name: 'M',
+              i18n: ''
+            }
           }
         })
         .set('Accept', 'application/json')
@@ -161,7 +173,10 @@ describe('Create race: POST /api/races', function() {
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
-            type: 'duathlon',
+            type: {
+              name: 'duathlon',
+              i18n: 'Duathlon'
+            },
             department: {
               code: '11',
               name: 'Aude',
@@ -169,7 +184,10 @@ describe('Create race: POST /api/races', function() {
             },
             date: currentDate,
             edition: '1',
-            distanceType: {name:'S',i18n:''}
+            distanceType: {
+              name: 'S',
+              i18n: ''
+            }
           }
         })
         .set('Accept', 'application/json')
@@ -206,7 +224,10 @@ describe('Create race: POST /api/races', function() {
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
-            type: 'duathlon',
+            type: {
+              name: 'duathlon',
+              i18n: 'Duathlon'
+            },
             department: {
               code: '11',
               name: 'Aude',
@@ -214,7 +235,10 @@ describe('Create race: POST /api/races', function() {
             },
             date: currentDate,
             edition: '1',
-            distanceType: {name:'S', i18n:''}
+            distanceType: {
+              name: 'S',
+              i18n: ''
+            }
           }
         })
         .set('Accept', 'application/json')

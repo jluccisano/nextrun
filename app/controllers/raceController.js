@@ -41,14 +41,13 @@ exports.create = function(req, res) {
   race.created_date = new Date();
   race.user_id = req.user._id;
 
-  race.save(function(err) {
+  race.save(function(err,race) {
     if (err) {
-      console.log(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
     } else {
-      return res.json(200);
+      return res.json(200,{raceId: race._id});
     }
 
   });

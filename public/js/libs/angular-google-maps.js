@@ -5231,7 +5231,7 @@ angular.module("google-maps")
                     var map = mapCtrl.getMap();
 
 
-
+                    var pathPoints = convertPathPoints(scope.path);
 
                     function buildOpts (pathPoints){
 
@@ -5263,7 +5263,7 @@ angular.module("google-maps")
                         return opts;
                     }
 
-                    var polyline = new google.maps.Polyline(buildOpts(convertPathPoints(scope.path)));
+                    var polyline = new google.maps.Polyline(buildOpts(pathPoints));
 
                     if (isTrue(attrs.fit)) {
                         extendMapBounds(map, pathPoints);
