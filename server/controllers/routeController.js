@@ -45,19 +45,24 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
     var route = req.routeData;
-    var data = req.body.query;
 
-    var fieldsToUpdate = data.fields;
+    var dataToUpdate = req.body.route;
 
-    var query = {};
-    if (!underscore.isUndefined(data.query)) {
-        query = data.query;
+    if(dataToUpdate._id) {
+        delete dataToUpdate._id;
     }
 
-    query._id = route._id;
+    dataToUpdate.lastUpdate = new Date();
 
-    Route.update(query, {
-        $set: fieldsToUpdate
+    //var query = {};
+    //if (!underscore.isUndefined(data.query)) {
+     //   query = data.query;
+   // }
+
+    //query._id = route._id;
+
+    Route.update(route._id, {
+        $set: dataToUpdate
     }, {
         upsert: true
     }, function(error) {
@@ -79,9 +84,7 @@ exports.find = function(req, res) {
     var route = req.routeData;
 
     if (!underscore.isUndefined(route)) {
-        return res.status(200).json({
-            data: route
-        });
+        return res.status(200).json(route);
     } else {
         return res.status(400).json({
             message: ["error.unknownRoute"]

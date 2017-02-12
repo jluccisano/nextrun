@@ -22,6 +22,8 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 						segments: [],
 						elevationPoints: []
 					};
+				} else {
+					routeDataModel = route;
 				}
 
 				var routeViewModel = new routeBuilder.Route(routeDataModel, angular.copy(chartConfig), angular.copy(gmapsConfig));

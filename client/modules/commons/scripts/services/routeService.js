@@ -19,8 +19,8 @@ angular.module("nextrunApp.commons").factory("RouteService",
                 return HttpUtils.get("/api/routes/" + id);
             },
             saveOrUpdate: function(data) {
-                if(data._id) {
-                    return HttpUtils.put("/api/routes/" + data._id + "/update", data);
+                if(data.route._id) {
+                    return HttpUtils.put("/api/routes/" + data.route._id + "/update", data);
                 } else {
                     return HttpUtils.post("/api/routes/new", data);
                 }
