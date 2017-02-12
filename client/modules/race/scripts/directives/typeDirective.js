@@ -21,7 +21,7 @@ angular.module("nextrunApp.race").controller("TypeController",
     $scope.tmpRace = {};
 
     $scope.$watch("race", function(newValue) {
-      if(newValue) {
+      if (newValue) {
         angular.copy(newValue, $scope.tmpRace);
       }
     });
@@ -37,31 +37,37 @@ angular.module("nextrunApp.race").controller("TypeController",
     };
 
     $scope.update = function() {
-
-      $scope.modalInstance = $modal.open({
-        templateUrl: "partials/race/changeTypeConfirmationModal",
-        controller: "ChangeTypeConfirmationModalController"
-      });
-
       if (!angular.equals($scope.tmpRace, $scope.race)) {
-
-        $scope.modalInstance.result.then(function() {
-            RaceService.update($scope.race._id, {
-              fields: {
-                "type": $scope.race.type,
-                "distanceType": $scope.race.distanceType
-              }
-            }).then(
-              function() {
-                $scope.edit = false;
-                $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
-                $scope.selection = $scope.routesViewModel[0].getType() + 0;
-                notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));
-              });
+        notificationService.notify({
+          title: gettextCatalog.getString("Confirmation Requise"),
+          text: gettextCatalog.getString("Etes-vous sûr de vouloir changer de type de manifestation, les parcours en cours seront réinitialisés ?"),
+          hide: false,
+          confirm: {
+            confirm: true
           },
-          function() {
-            angular.copy($scope.tmpRace, $scope.race);
-          });
+          buttons: {
+            closer: false,
+            sticker: false
+          },
+          history: {
+            history: false
+          }
+        }).get().on('pnotify.confirm', function() {
+          RaceService.update($scope.race._id, {
+            fields: {
+              "type": $scope.race.type,
+              "distanceType": $scope.race.distanceType
+            }
+          }).then(
+            function() {
+              $scope.edit = false;
+              $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
+              $scope.selection = $scope.routesViewModel[0].getType() + 0;
+              notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));
+            });
+        }).on('pnotify.cancel', function() {
+          angular.copy($scope.tmpRace, $scope.race);
+        });
       }
     };
 

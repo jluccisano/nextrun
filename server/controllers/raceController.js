@@ -562,8 +562,15 @@ exports.search = function(req, res) {
 
         operation.partialFields = partialFields;
 
+        console.log("1");
 
+        console.log(elasticSearchClient);
         elasticSearchClient.search(config.racesidx, "race", operation, function(err, data) {
+
+            console.log(err);
+
+            console.log(data);
+            
             if (err) {
                 logger.error(err);
                 return res.status(400).json({

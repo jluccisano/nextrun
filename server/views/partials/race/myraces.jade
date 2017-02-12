@@ -1,6 +1,6 @@
 div(class="container")
 	h1(translate) Mes Manifestations
-	div(class="col-lg-2 col-lg-offset-10")
+	div(class="pull-right")
 		button(class="btn btn-primary" ng-click="addNewRace()") 
 			span(class="glyphicon glyphicon-plus") 
 			span(translate)  Ajouter
@@ -11,8 +11,8 @@ div(class="container")
 				th(style="width: 10%" translate) Type
 				th(style="width: 15%" translate) Type de distance
 				th(style="width: 15%" translate) Dernière mise à jour
-				th(style="width: 10%")
-				th(style="width: 10%")
+				th(style="width: 5%")
+				th(style="width: 5%")
 				th(style="width: 10%" translate) Publier
 		tbody
 			tr(ng-repeat="race in races")
@@ -22,9 +22,11 @@ div(class="container")
 				td {{race.distanceType | translate}}
 				td(ng-if="race.lastUpdate != null")  {{race.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
 				td
-					a(ng-href='/races/edit/{{race._id}}' translate) Editer
+					a(ng-href='/races/edit/{{race._id}}' translate)
+						span(class="glyphicon glyphicon-edit")
 				td
-					a(ng-click="openDeleteConfirmation(race)" translate) Supprimer
+					a(ng-click="openDeleteConfirmation(race)")
+						span(class="glyphicon glyphicon-trash")
 				td
 					input(bs-switch type="checkbox" ng-model="race.published" ng-change="publish(race, race.published)" switch-on-color="success" switch-off-color="default" switch-on-text="On" switch-off-text="Off")
 	div(class="col-lg-8 col-lg-offset-4")
