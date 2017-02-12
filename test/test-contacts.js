@@ -16,7 +16,7 @@ var cookies, count;
 /**
  * Contacts tests
  */
-/*
+
 describe('Contacts', function () {
   describe('POST /contacts', function () {
 
@@ -35,7 +35,8 @@ describe('Contacts', function () {
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
-           res.should.have.status(200);
+           res.should.have.status(400);
+           res.body.message[0].should.equal("error.emailCannotBeBlank");
            done();
         });
       });
@@ -47,7 +48,8 @@ describe('Contacts', function () {
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
-           res.should.have.status(200);
+           res.should.have.status(400);
+           res.body.message[0].should.equal("error.emailCannotBeBlank");
            done();
         });
       });
@@ -101,7 +103,8 @@ describe('Contacts', function () {
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
-           res.should.have.status(200);
+           res.should.have.status(400);
+           res.body.message[0].should.equal("error.emailAlreadyExists");
            done();
         });
       });
@@ -124,4 +127,3 @@ describe('Contacts', function () {
   });
 
 });
-*/

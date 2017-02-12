@@ -24,7 +24,7 @@ ContactSchema.path('email').validate(function (email, fn) {
     });
   }
   return true;
-}, "error.emailAlreadyExits");
+}, "error.emailAlreadyExists");
 
 /**
  * Pre-save

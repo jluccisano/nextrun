@@ -159,34 +159,13 @@ exports.updateProfile = function (req, res) {
     user.email = req.body.user.email;
     user.username = req.body.user.username;
 
-
-
-
-    //var newUserName = req.body.user.username;
-    //var newEmail = req.body.user.email;
-
-    //if(req.user.email != req.body.user.email) {
-
-        //TODO
-
-    //} 
-
     user.save(function (err) {
       if (err) {
-        console.log(err);
         return res.json(400,  {message: errorUtils.errors(err.errors)  } );
       }
         return res.json(200,{user:  { _id: user._id, username: user.username, email: user.email } });
       }
     );
-    //});
-    /*user.update({ _id: req.user._id }, {$set: {username: newUserName, email: newEmail, last_update: new Date()} }, {upsert: true},  function(err){
-        if (!err) {
-          return res.json(200,{user:  { _id: user._id, username: user.username, email: user.email } });
-        } else {
-          return res.json(400, { message: "error.occured" });
-        }
-      });*/
 };
 
 /**

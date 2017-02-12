@@ -51,7 +51,6 @@ var validatePresenceOf = function (value) {
 
 // the below 4 validations only apply if you are signing up traditionally
 UserSchema.path('email').validate(function (email) {
-  console.log("validate email");
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
@@ -60,7 +59,6 @@ UserSchema.path('email').validate(function (email) {
 }, 'error.emailCannotBeBlank');
 
 UserSchema.path('email').validate(function (email, fn) {
-  console.log("validate email");
   var User = mongoose.model('User');
   
   // if you are authenticating by any of the oauth strategies, don't validate

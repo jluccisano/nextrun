@@ -296,13 +296,15 @@ describe('Users', function () {
       var currentUser;
 
       before(function (done) {
-        User.create({ username: "foobar", email:"foobar@example.com", password:"foobar", role: userRoles.user} , function(err,user){
+        var userArray = [{ username: "foobar", email:"foobar@example.com", password:"foobar", role: userRoles.user},
+                         { username: "foobar2", email:"foobar2@example.com", password:"foobar2", role: userRoles.user}];
+        User.create(userArray , function(err,user){
           currentUser = user;
           done();        
         });
       });
 
-      it('should save the user to the database', function (done) {
+      it('should save the user 1 to the database', function (done) {
         User.findOne({ email: 'foobar@example.com' }).exec(function (err, user) {
           should.not.exist(err);
           user.should.be.an.instanceOf(User);
@@ -311,14 +313,23 @@ describe('Users', function () {
         });
       });
 
+      it('should save the user 2 to the database', function (done) {
+        User.findOne({ email: 'foobar2@example.com' }).exec(function (err, user) {
+          should.not.exist(err);
+          user.should.be.an.instanceOf(User);
+          user.email.should.equal('foobar2@example.com');
+          done();
+        });
+      });
+
       it('should response email Already Exists', function (done) {
        superagent.put('http://localhost:3000/users/'+currentUser._id+'/update/profile')
-        .send({user: { email: 'foobar@example.com', username: 'hello' }})
+        .send({user: { email: 'foobar2@example.com', username: 'hello' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.emailAlreadyExists");
+           res.body.message[0].should.equal("error.emailAlreadyExists");
            done();
         });
       });
@@ -337,7 +348,19 @@ describe('Users', function () {
       });
 
       it('should response user not found', function (done) {
-       superagent.put('http://localhost:3000/users/'+currentUser._id+'/update/profile')
+       superagent.put('http://localhost:3000/users/1234/update/profile')
+        .send({user: { email: 'foobar@example.com', username: 'hello' }})
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(400);
+           res.body.message.should.equal("error.unknownId");
+           done();
+        });
+      });
+
+      it('should response user not found', function (done) {
+       superagent.put('http://localhost:3000/users/523726537a11c4aa8d789bbb/update/profile')
         .send({user: { email: 'foobar@example.com', username: 'hello' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
@@ -478,7 +501,7 @@ describe('Users', function () {
            done();
         });
       });
-      
+
     });
 
     after(function(done){

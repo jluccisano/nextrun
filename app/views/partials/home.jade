@@ -7,22 +7,17 @@ div.custom-bs-background
 				div.text-center
 					h3 Restez informé, nous lançons le service bientôt.
 				div.col-lg-12.center
-					form.form-inline(role="form", name="form")
-						div.form-group(ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
-							label.control-label(for="email") Email
-							input.form-control(type="email", name="email", id="email", placeholder="Email", data-ng-model="email", required)
-							span.help-block(ng-show="form.email.$dirty && form.email.$error.required") Veuillez saisir votre email
-							span.help-block(ng-show="form.email.$error.email") Email invalide
-							span.help-block(ng-show="form.email.$dirty && form.email.$error.isTaken") Cette adresse email est déjà prise
+					form.form-inline(role="form", name="form", novalidate)
+						div.form-group(data-ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
+							input.form-control(type="email", name="email", id="email", placeholder="votre@email.com", data-ng-model="contact.email", required)
+						div.form-group(data-ng-class="{'has-error': !form.type.$pristine && form.type.$invalid, 'has-success': !form.type.$invalid && !form.type.$pristine}")
+							select.form-control(data-ng-model="contact.type", name="type", data-ng-options="type.name for type in types", required, data-ng-init="type.name='Athlète'")
 						div.form-group
-							label.sr-only(for="contactType") type
-							select.form-control(ng-model="type" name="type" ng-options="type.name for type in types", required)
-								option(value="default") Vous êtes ?
-							span.help-block(ng-show="form.type.$dirty && form.type.$error.required") Veuillez faire un choix
-						div.form-group
-							button.btn.btn-primary(ng-click="submit") Envoyer
-				div.col-lg-4.col-lg-offset-4(id="nameError",style="display:none")
-				
+							button.btn.btn-primary(ng-click="submit(contact)", ng-disabled="form.$invalid") Envoyer
+						div
+							label.error(data-ng-show="form.email.$dirty && form.email.$error.required") <strong>Veuillez saisir votre email</strong>
+							label.error(data-ng-show="form.email.$error.email") <strong>Email invalide</strong>
+							label.error(data-ng-show="form.type.$dirty && form.type.$error.required") <strong>Veuillez faire un choix</strong>
 			div.container.marketing
 				div.row
 					div.col-lg-4

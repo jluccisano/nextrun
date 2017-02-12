@@ -4,8 +4,7 @@ div.container(data-ng-controller='LoginCtrl', style="margin-top:50px")
 			div.panel.panel-default
 				div.panel-heading <strong>Se connecter</strong>
 				div.panel-body
-					form(id="loginForm", role="form", name="form", novalidate)
-						input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}" ,data-ng-model="user._csrf")
+					form(role="form", name="form", novalidate)
 						div.form-group(data-ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
 							label.control-label(for="email") Email
 							input.form-control(type="email", name="email", id="email", placeholder="Email",data-ng-model="user.email")

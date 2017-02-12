@@ -65,6 +65,10 @@ nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Au
 
   		$scope.reset = function() {
     		$scope.user = angular.copy($scope.master);
+    		$scope.actualPassword = undefined;
+    		$scope.newPassword = undefined;
+    		$scope.confirmNewPassword = undefined;
+    		$scope.form.$setPristine();
     	};
 	}
 ]);
