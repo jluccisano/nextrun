@@ -52,7 +52,7 @@ angular.module("nextrunApp.home").controller("HomeController",
         initAutocomplete();
         initContact();
 
-        $scope.listOfTypes = RaceTypeEnum.values;
+        $scope.listOfTypes = RaceTypeEnum.getValues();
 
         $scope.map = {
             isVisible: false,

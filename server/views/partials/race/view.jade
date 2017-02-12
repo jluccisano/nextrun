@@ -1,6 +1,6 @@
 div(class="container")
 	h1 {{race.name}}
-		small({{race.pin.department.code}})
+		small ({{race.pin.department.code}})
 	h4(class="text-right") {{race.date | date:'dd MMMM yyyy'}}
 	div(class="row")
 		div(ng-show="loading")
@@ -41,7 +41,7 @@ div(class="container")
 	div(class="row")
 		div(class="col-lg-12")
 			tabset
-				tab(ng-repeat="route in routesViewModel" heading="{{route.getType()}}" ng-click="onChangeTab(route)")
+				tab(ng-repeat="route in routesViewModel" heading="{{route.getType()}}" ng-click="route.setVisible(true)")
 					div(ng-if="route.description")
 						h4 <strong>{{'Présentation' | translate}}</strong>
 						div(class="well" ng-bind-html="route.description")

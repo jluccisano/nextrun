@@ -22,11 +22,6 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $scope.routesViewModel = [];
 
         //TODO create directive
-        $scope.onChangeTab = function(route) {
-            route.isVisible = true;
-        };
-
-        //TODO create directive
         $scope.onChangeOrganisationTab = function() {
             $scope.isVisible = true;
         };

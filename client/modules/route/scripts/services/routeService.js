@@ -147,9 +147,11 @@ angular.module("nextrunApp.route").factory("RouteService",
 				route.data.elevationPoints = [];
 				route.data.segments = [];
 				route.segments = [];
+				route.elevationPoints = [];
 
-				route.markers.length = 0;
-				route.polylines.length = 0;
+				route._markers.length = 0;
+				route._polylines.length = 0;
+				route._climbs = [];
 
 				route._chartConfig.series[0].data = [];
 				route._chartConfig.series[1].data = [];
@@ -161,28 +163,28 @@ angular.module("nextrunApp.route").factory("RouteService",
 			deleteLastSegment: function(route) {
 				try {
 
-					if (route.segments.length > 0) {
+					if (route.getSegments().length > 0) {
 
-						var lastSegment = route.getLastSegment(route.segments);
+						var lastSegment = route.getLastSegment();
 
 						route.removeLastSegment();
 
 						route.removeLastMarker();
 
 						//set the new end marker
-						if (route.markers.length > 1) {
-							var marker = route.getLastMarker(route.markers);
+						if (route.getMarkers().length > 1) {
+							var marker = route.getLastMarker();
 							marker.icon = "client/modules/route/images/end.png";
 						}
 
-						route.elevationPoints = _.difference(route.elevationPoints, _.where(route.elevationPoints, {
-							"segmentId": lastSegment.segmentId
+						route.data.elevationPoints = _.difference(route.data.elevationPoints, _.where(route.data.elevationPoints, {
+							"segmentId": lastSegment.getId()
 						}));
 
 
 						route.clearSegment();
 
-						route.removePointsToElevationChartBySegmentId(lastSegment.segmentId);
+						route.removePointsToElevationChartBySegmentId(lastSegment.getId());
 					}
 
 				} catch (ex) {

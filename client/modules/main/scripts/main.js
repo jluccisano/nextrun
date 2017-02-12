@@ -4,7 +4,7 @@ var nextrunApp = angular.module("nextrunApp", [
   "ngRoute",
   "gettext",
   "ui.bootstrap.dropdown",
-  "mgcrea.ngStrap.navbar",
+  "ui.bootstrap.alert",
   "nextrunApp.commons",
   "nextrunApp.auth",
   "nextrunApp.race",

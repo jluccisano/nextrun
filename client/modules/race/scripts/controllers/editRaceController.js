@@ -32,7 +32,9 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		$scope.routesViewModel = [];
 
-		$scope.cursorMarker = {};
+		$scope.cursorMarker = {
+			id: 1
+		};
 		$scope.currentRaceType = {};
 
 		$scope.options = {
@@ -63,7 +65,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		};
 
 		$scope.delete = function(route) {
-			RouteService.deleteRoute(route);
+			RouteService.resetRoute(route);
 		};
 
 		$scope.undo = function(route) {
@@ -119,15 +121,15 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		$scope.changeType = function() {
 
-			var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type.name);
+			//var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type.name);
 
-			_.each(raceType.routes, function(routeType, index) {
+			//_.each(raceType.routes, function(routeType, index) {
 
 				//var route = RouteHelperService.generateRoute($scope, undefined, routeType);
 
-				$scope.race.routes[index] = route;
-				$scope.race.routes[0].isVisible = true;
-			});
+				//$scope.race.routes[index] = route;
+				//$scope.race.routes[0].isVisible = true;
+			//});
 
 		};
 

@@ -7,7 +7,6 @@ angular.module("nextrunApp.commons").factory("AlertService",
 
         var alertService = {};
 
-        // create an array of alerts available globally
         $rootScope.alerts = [];
 
         alertService.add = function(type, msg, timeout) {

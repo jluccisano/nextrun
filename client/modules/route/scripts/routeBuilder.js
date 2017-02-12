@@ -158,19 +158,21 @@ var routeBuilder = {};
 				});
 			});
 
-			var polyline = {
-				path: pathArray,
-				stroke: {
-					color: "red",
-					weight: 5
-				},
-				editable: false,
-				draggable: false,
-				geodesic: false,
-				visible: true
-			};
+			if (pathArray.length > 0) {
+				var polyline = {
+					path: pathArray,
+					stroke: {
+						color: "red",
+						weight: 5
+					},
+					editable: false,
+					draggable: false,
+					geodesic: false,
+					visible: true
+				};
 
-			polylinesDataModel.push(polyline);
+				polylinesDataModel.push(polyline);
+			}
 
 			return polylinesDataModel;
 		};
@@ -203,6 +205,7 @@ var routeBuilder = {};
 
 				if (icon) {
 					marker = {
+						id: routeBuilder.generateUUID(),
 						latitude: lastPointOfSegment.getLatitude(),
 						longitude: lastPointOfSegment.getLongitude(),
 						icon: icon,
@@ -349,7 +352,7 @@ var routeBuilder = {};
 
 				this.data.elevationPoints.push(samplingPoints[k]);
 
-				//this.elevationPoints.push(samplingPoints[k]);
+				this.elevationPoints.push(samplingPoints[k]);
 			}
 
 			this._calculateElevationDataAlongRoute();
@@ -408,9 +411,9 @@ var routeBuilder = {};
 
 		this.addSegment = function(segmentDataModel) {
 
-			this.data.segments.push(segmentDataModel);
-
 			var newSegment = new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegmentDataModel());
+
+			this.data.segments.push(segmentDataModel);
 
 			this.segments.push(newSegment);
 
@@ -470,7 +473,7 @@ var routeBuilder = {};
 			this.segments.push(new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegmentDataModel()));
 		};
 
-		
+
 
 		this._createMarker = function(latLng, icon, title) {
 
@@ -546,11 +549,11 @@ var routeBuilder = {};
 			}
 		};
 
-		this._getLastMarker = function() {
+		this.getLastMarker = function() {
 			return this._markers[this._markers.length - 1];
 		};
 
-		this._removeLastMarker = function() {
+		this.removeLastMarker = function() {
 			this.getMarkers().splice(this.getMarkers().length - 1, 1);
 		};
 
@@ -572,26 +575,26 @@ var routeBuilder = {};
 			}));
 		};
 
-		this._removeLastSegment = function() {
+		this.removeLastSegment = function() {
 
 			this.data.segments.splice(this.data.segments.length - 1, 1);
 
 			this.segments.splice(this.segments.length - 1, 1);
 
-			if (this.polylines.length > 0) {
-				this.polylines.splice(this.polylines.length - 1, 1);
+			if (this._polylines.length > 0) {
+				this._polylines.splice(this._polylines.length - 1, 1);
 			}
 		};
 
-		this._clearSegment = function() {
+		this.clearSegment = function() {
 
-			var lastPointOfLastSegment = this.getLastPointOfLastSegment(this.segments);
+			var lastPointOfLastSegment = this.getLastPointOfLastSegment();
 
 			if (lastPointOfLastSegment) {
 
-				this.data.distance = lastPointOfLastSegment.distanceFromStart;
+				this.data.distance = lastPointOfLastSegment.getDistanceFromStart();
 
-				//ElevationServices.calculateElevationDataAlongRoute(route);
+				this._calculateElevationDataAlongRoute();
 
 			} else {
 				this.data.ascendant = 0;
@@ -602,7 +605,7 @@ var routeBuilder = {};
 			}
 		};
 
-		this._getLastSegment = function() {
+		this.getLastSegment = function() {
 			var lastSegment;
 
 			if (this.segments.length > 0) {
@@ -840,7 +843,7 @@ var routeBuilder = {};
 
 			if (lastPointOfLastSegment) {
 
-				cumulatedDistance = this.getLastPointOfLastSegment().distanceFromStart;
+				cumulatedDistance = lastPointOfLastSegment.distanceFromStart;
 
 				for (var k = 0, lk = pointsDataModel.length; k < lk; k++) {
 
@@ -878,7 +881,7 @@ var routeBuilder = {};
 			if (lastPoint) {
 				for (var k = 0, lk = this.data.points.length; k < lk; k++) {
 
-					distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(cursor, this.points[k]));
+					distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(cursor, this.points[k].data));
 
 					if (k === (this.points.length - 1) || distanceBetween2Points >= samples) {
 						samplingPointsViewModel.push(this.data.points[k]);

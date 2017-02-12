@@ -21,8 +21,13 @@ body {
       /* Pad bottom by footer height */
       padding: 0 0 60px;
 
+        .alert {
+          padding-top: 120px;
+        }
+
         .view-container {
-            padding-top: 60px;
+          padding-top: 120px;
+           padding-bottom: 60px;
         }
     }
 }

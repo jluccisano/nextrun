@@ -1,4 +1,17 @@
 div(ng-if="route.isVisible()")
+	nav(class="navbar navbar-default" role="navigation")
+		div(class="container")
+			div(class="collapse navbar-collapse")
+				form(class="navbar-form navbar-left" role="search")
+					div(class="input-group")
+						input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}")
+						span(class="input-group-btn")
+							button(class="btn btn-default" type="button")
+								span(class="glyphicon glyphicon-search")
+				ul(class="nav navbar-nav")
+					li
+						span(class="glyphicon glyphicon-search")
+						span(class="glyphicon-class") Annuler
 	include map
 
 	div.mapControl(ng-show="route.isEditMode()")
