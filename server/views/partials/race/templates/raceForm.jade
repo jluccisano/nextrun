@@ -24,9 +24,9 @@ div.row
 			div.form-group(ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid}")
 				label.control-label(for="type") {{'Type' | translate}}
 				select.form-control(ng-model="race.type" name="type" ng-options="type.value as getType(type.value) for type in types" ng-change="openChangeTypeConfirmation()" required)
-					option(value="") {{'message.selectOne' | translate}}
+					option(value="") {{'Sélectionner...' | translate}}
 
 			div.form-group(ng-class="{'has-error': !form1.distanceType.$pristine && form1.distanceType.$invalid, 'has-success': !form1.distanceType.$invalid}")
-				label.control-label(for="distanceType") {{'field.race.distance' | translate}}
+				label.control-label(for="distanceType") {{'Distance' | translate}}
 				select.form-control(ng-model="race.distanceType" name="type" ng-options="distance.name for distance in distances" required)
-					option(value="") {{'message.selectOne' | translate}}
+					option(value="") {{'Sélectionner...' | translate}}

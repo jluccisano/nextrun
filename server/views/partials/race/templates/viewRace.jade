@@ -4,12 +4,12 @@ div.container
 			table.table.table-condensed.table-hover
 				thead
 					tr
-						th(style="width: 50%;border:0; border-top: none;")
-						th(style="width: 50%;border:0; border-top: none;")
+						th(style="width: 50%;" class="rowBasic")
+						th(style="width: 50%;" class="rowBasic")
 				tbody
 					tr
-						td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.numberOfProvisions' | translate}}
+						td(class="rowBold") {{'Nom de ravitaillements' | translate}}
 							span :
-						td(ng-if="race.therace.numberOfProvisions != null" align="left" style="border:0; border-top: none;") {{race.therace.numberOfProvisions}}
-						td(ng-if="race.therace.numberOfProvisions == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+						td(ng-if="race.therace.numberOfProvisions != null" class="rowBasic") {{race.therace.numberOfProvisions}}
+						td(ng-if="race.therace.numberOfProvisions == null" class="rowItalic") {{'Non communiqué' | translate}}
 	div.well(ng-if="race.therace.theRaceMoreInformation" ng-bind-html="race.therace.theRaceMoreInformation")

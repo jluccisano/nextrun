@@ -2,14 +2,14 @@ div.row
 	div.text-center
 		h3 Restez informé.
 	div.col-lg-12.center
-		form.form-inline(role="form", name="form", novalidate)
+		form.form-inline(role="form" name="form" novalidate)
 			div.form-group(ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
-				input.form-control(type="email", name="email", id="email", placeholder="votre@email.com", ng-model="contact.email", required)
+				input.form-control(type="email" name="email" placeholder="{{ 'votre@email.com' | translate}}" ng-model="contact.email" required)
 			div.form-group(ng-class="{'has-error': !form.type.$pristine && form.type.$invalid, 'has-success': !form.type.$invalid && !form.type.$pristine}")
-				select.form-control(ng-model="contact.type", name="type", ng-options="type.name for type in types", required, ng-init="type.name='Athlète'")
+				select.form-control(ng-model="contact.type" name="type" ng-options="type.name for type in types" ng-init="type.name='Athlète'" required)
 			div.form-group
-				button.btn.btn-primary(ng-click="submit(contact)", ng-disabled="form.$invalid") Envoyer
+				button.btn.btn-primary(ng-click="submit(contact)" ng-disabled="form.$invalid" translate) Envoyer
 			div
-				label.error(ng-show="form.email.$dirty && form.email.$error.required") <strong>Veuillez saisir votre email</strong>
-				label.error(ng-show="form.email.$error.email") <strong>Email invalide</strong>
-				label.error(ng-show="form.type.$dirty && form.type.$error.required") <strong>Veuillez faire un choix</strong>
+				label.error(ng-show="form.email.$dirty && form.email.$error.required" translate) <strong>Veuillez saisir votre email</strong>
+				label.error(ng-show="form.email.$error.email" translate) <strong>Email invalide</strong>
+				label.error(ng-show="form.type.$dirty && form.type.$error.required" translate) <strong>Veuillez faire un choix</strong>

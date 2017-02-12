@@ -1,9 +1,9 @@
 div.container(style="padding-bottom: 50px;")
-	h3 {{'title.editRace' | translate}}
+	h3 {{'Editer la manifestation' | translate}}
 	div.row
 		div.col-lg-offset-8.col-lg-4(ng-show="loading")
 			span(class="fa fa-spinner fa-spin")
-			span  {{'loading.pending' | translate}}
+			span  {{'Chargement...' | translate}}
 		div.col-lg-12
 			include ./templates/raceForm
 						
@@ -11,7 +11,7 @@ div.container(style="padding-bottom: 50px;")
 				hr
 				div.bs-callout.bs-callout-info
 					h4 {{'Information' | translate}}
-					p {{'message.addRaceDescription.information' | translate}}
+					p {{'Ajouter la description de votre manifestation' | translate}}
 				div.form-group
 					label.col-lg-4.control-label(translate) Description
 					div.col-lg-12(text-angular text-angular-name="description" ng-model="race.description" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
@@ -22,7 +22,7 @@ div.container(style="padding-bottom: 50px;")
 						tab(ng-repeat="route in race.routes" heading="{{route.type}}" ng-click="route.isVisible=true")
 							div.bs-callout.bs-callout-info
 								h4 {{'Information' | translate}}
-								p  {{'message.drawRoute.information' | translate}}
+								p  {{'Ajouter des informations concernant le parcours' | translate}}
 							input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
 							div.row
 								div.col-lg-4(ng-show="pending")
@@ -30,7 +30,7 @@ div.container(style="padding-bottom: 50px;")
 									span  {{'Chargement en cours' | translate}}
 							hr
 							include map
-			h2 {{'title.organisation' | translate}}
+			h2 {{'Organisation' | translate}}
 			hr
 			include templates/editOrganisation
 			hr

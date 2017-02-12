@@ -4,19 +4,19 @@ div.container
 			table.table.table-hover.table-condensed
 				thead
 					tr
-						th(style="width: 40%;border:0; border-top: none;")
-						th(style="width: 20%;border:0; border-top: none;")
+						th(style="width: 40%;" class="rowBasic")
+						th(style="width: 20%;" class="rowBasic")
 				tbody
 					tr
-						td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.memberFFPrice' | translate}}
+						td(class="rowBold") {{'Licencié' | translate}}
 							span :
-						td(ng-if="race.pricing.memberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.memberFFPrice}}
+						td(ng-if="race.pricing.memberFFPrice != null" class="rowBasic") {{race.pricing.memberFFPrice}}
 							i.fa.fa-eur
-						td(ng-if="race.pricing.memberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+						td(ng-if="race.pricing.memberFFPrice == null" class="rowItalic") {{'Non communiqué' | translate}}
 					tr
-						td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.notMemberFFPrice' | translate}}
+						td(class="rowBold") {{'Non licencié' | translate}}
 							span :
-						td(ng-if="race.pricing.notMemberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.notMemberFFPrice}}
+						td(ng-if="race.pricing.notMemberFFPrice != null" class="rowBasic") {{race.pricing.notMemberFFPrice}}
 							i.fa.fa-eur
-						td(ng-if="race.pricing.notMemberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+						td(ng-if="race.pricing.notMemberFFPrice == null" class="rowItalic") {{'Non communiqué' | translate}}
 div.well(ng-if="race.registration.registrationMoreInformation" ng-bind-html="race.registration.registrationMoreInformation")

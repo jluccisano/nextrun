@@ -1,8 +1,8 @@
-div.container(style="padding-bottom: 50px;")
+div.container
 	div.container.bs-docs-container
 		div.row
 			div.col-lg-4
-				div.bs-sidebar.hidden-print.affix(role="complementary" style data-toggle="affix" data-spy="affix" data-offset-top="255" data-offset-bottom="200")
+				div.bs-sidebar.hidden-print.affix(role="complementary" data-toggle="affix" data-spy="affix" data-offset-top="255" data-offset-bottom="200")
 					ul.nav.bs-sidenav
 						li.active
 							a(href="#/users/settings/#changeProfileTab" target="_self" translate) Modifier mon profil
@@ -14,7 +14,7 @@ div.container(style="padding-bottom: 50px;")
 				div.bs-docs-section.active
 					div.page-header
 						h1(id="changeProfileTab" translate) Modifier mon profil
-					form(role="form" style="margin-top:50px" name="form1" ng-submit="updateProfile()" novalidate)
+					form(role="form" name="form1" ng-submit="updateProfile()" novalidate)
 
 						div.form-group(ng-class="{'has-error': !form1.username.$pristine && form1.username.$invalid, 'has-success': !form1.username.$pristine && !form1.username.$invalid}")
 							label.control-label(for="username" translate) Nom complet
@@ -32,7 +32,7 @@ div.container(style="padding-bottom: 50px;")
 				div.bs-docs-section
 					div.page-header
 						h1(id="changePasswordTab" translate)  Changer mon mot de passe
-					form(role="form" name="form" style="margin-top:50px" ng-submit="updatePassword()")
+					form(role="form" name="form" ng-submit="updatePassword()")
 						
 						div.form-group(ng-class="{'has-error': !form.actualPassword.$pristine && form.actualPassword.$invalid, 'has-success': !form.actualPassword.$invalid && !form.actualPassword.$pristine}")
 							label.control-label(type="password" for="actualPassword" translate) Mot de passe actuel
@@ -56,7 +56,7 @@ div.container(style="padding-bottom: 50px;")
 				div.bs-docs-section
 					div.page-header
 						h1(id="deleteAccountTab" translate) Supprimer mon compte
-					form(role="form" name="form3" style="margin-top:50px" ng-submit="deleteAccount()")
+					form(role="form" name="form3" ng-submit="deleteAccount()")
 						div.bs-callout.bs-callout-danger
 							h4 {{'Attention !' | translate}}:
 							p {{'Si vous souhaitez supprimer votre compte, tous les parcours que vous avez créé seront supprimés' | translate}}

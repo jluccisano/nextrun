@@ -2,15 +2,15 @@ div.container
 	tabset(vertical="false" type="navType")
 		tab(heading="{{'Horaires' | translate}}")
 			include ./viewSchedule
-		tab(heading="{{'field.pricing' | translate}}")
+		tab(heading="{{'Tarifs' | translate}}")
 			include ./viewPricing
-		tab(heading="{{'field.registration' | translate}}")
+		tab(heading="{{'Inscription' | translate}}")
 			include ./viewRegistration
-		tab(ng-click="onChangeOrganisationTab()" heading="{{'field.plan' | translate}}")
+		tab(heading="{{'Plan' | translate}}" ng-click="onChangeOrganisationTab()")
 			include ./viewPlan
-		tab(heading="{{'field.rights' | translate}}")
+		tab(heading="{{'Droits' | translate}}")
 			include ./viewRights
-		tab(heading="{{'field.therace' | translate}}")
+		tab(heading="{{'La course' | translate}}")
 			include ./viewRace
-		tab(heading="{{'field.miscellaneous' | translate}}")
+		tab(heading="{{'Divers' | translate}}")
 			include ./viewMiscellaneous

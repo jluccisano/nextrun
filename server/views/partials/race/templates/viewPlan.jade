@@ -1,5 +1,5 @@
 div.container
-	div(ng-if="race.plan.address.city == null" align="left" style="border:0; border-top: none;font-style:italic") {{'Nom communiqué' | translate}}
+	div(ng-if="race.plan.address.city == null" align="left" style="border:0; border-top: none;font-style:italic") {{'Non communiqué' | translate}}
 	div.row(style="margin-top:20px")
 		div.col-lg-4(ng-if="race.plan != null && race.plan.address != null && race.plan.address.city != null")
 			address

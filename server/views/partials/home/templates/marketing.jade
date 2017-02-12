@@ -1,48 +1,48 @@
 div.row
 	div.col-lg-4
 		div.text-center
-			h2 {{'Pourquoi ?' | translate}}
-		p
-			| - {{'Difficile de trouver une manifestation.' | translate}}
-		p 
+			h2(translate) Pourquoi ?
+		p(translate)
+			| - Difficile de trouver une manifestation.
+		p(translate)
 			| - Rarement le <strong style="color:#428bca">détail du parcours</strong> et 
 			| son <strong style="color:#428bca">dénivelé</strong>.
-		p
-			| - {{'Peu de retour d'expériences.' | translate }}
-		p
-			| - {{'Difficultés à obtenir les' | translate }} <strong style="color:#428bca">{{'résultats' | translate}}</strong>.
-		p
-			| - {{'Ne pas être au courant d'une course près de chez soi.' | translate}}
+		p(translate)
+			| - Peu de retour d'expériences.
+		p(translate)
+			| - Difficultés à obtenir les <strong style="color:#428bca">résultats</strong>.
+		p(translate)
+			| - Ne pas être au courant d'une course près de chez soi.
 
 	div.col-lg-4
 		div.text-center
-			h2 {{'Athlètes' | translate}}
-		p
-			| - Trouver l'épreuve qui correspond 
+			h2(translate) Athlètes
+		p(translate)
+			| - Trouver l'épreuve qui correspond
 			| à votre objectif.
-		p
-			| - Analyser le détail du parcours: 
+		p(translate)
+			| - Analyser le détail du parcours:
 			| distance, <strong style="color:#428bca">dénivelé</strong>, difficultés.
-		p
-			| - Exporter le fichier <strong style="color:#428bca">GPX</strong> et aller faire 
+		p(translate)
+			| - Exporter le fichier <strong style="color:#428bca">GPX</strong> et aller faire
 			| une reconnaissance du parcours.
-		p
-			| - Donner votre avis sur les épreuves
+		p(translate)
+			| - 'Donner votre avis sur les épreuves
 			| et partager votre expérience.
-		p
+		p(translate)
 			| - Retrouver toutes les informations sur 
 			| l'épreuve: organisation, plan, règlements...
-		p
+		p(translate)
 			| - Inscription en ligne.
 	div.col-lg-4
 		div.text-center
-			h2 Organisateurs
-		p
+			h2(translate) Organisateurs
+		p(translate)
 			| - Promouvoir votre manifestation en quelques clics.
-		p
+		p(translate)
 			| - Tracer vos parcours avec <strong style="color:#428bca">Google Maps</strong> ou importer un fichier .gpx.
-		p
-			| - Détailler toutes les informations utiles : prix , nombre de places, horaires...
-		p
+		p(translate)
+			| - Détailler toutes les informations utiles: prix , nombre de places, horaires...
+		p(translate)
 			| - Publier les <strong style="color:#428bca">résultats</strong>.
-		button.btn.btn-primary.btn-lg(ng-click="goToNewRace()") Commencer maintenant !
+		button.btn.btn-primary.btn-lg(ng-click="goToNewRace()" translate) Commencer maintenant !
