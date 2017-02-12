@@ -22,7 +22,7 @@ div.container
 				td {{race.distanceType}}
 				td(ng-if="race.last_update != null")  {{getDate(race.last_update)}}
 				td
-					a.btn.btn-link(ng-href='/races/{{race._id}}') Editer
+					a.btn.btn-link(ng-href='/races/edit/{{race._id}}') Editer
 				td
 					//a.btn.btn-link(ng-href='/races/delete/{{race._id}}') Supprimer
 					a(ng-click="openDeleteConfirmation(race)") Supprimer

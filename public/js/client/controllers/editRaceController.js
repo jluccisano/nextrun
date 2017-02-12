@@ -1,6 +1,7 @@
 nextrunControllers.controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams',
 	function($scope, $location, RaceServices, Alert, Aut, $routeParams) {
 		'use strict';
+				
 		$scope.departments = DEPARTMENTS.enums;
 		$scope.types = TYPE_OF_RACES.enums;
 

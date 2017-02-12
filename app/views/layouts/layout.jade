@@ -31,8 +31,13 @@ html(ng-app="nextrunApp")
 		link(rel="stylesheet", href="/css/datepicker.css")
 		<!-- endbuild -->
 
+		<!-- build:css css/googlemaps.min.css -->
+		link(rel="stylesheet", href="/css/googlemaps.css")
+		<!-- endbuild -->
 
-		
+
+		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")	
+
 		<!-- build:js js/libs/jquery-2.0.3.min.js -->
 		script(src="/js/libs/jquery-2.0.3.js", charset="UTF-8")
 		<!-- endbuild -->
@@ -91,6 +96,7 @@ html(ng-app="nextrunApp")
 		script(src="/js/client/services/alertServices.js", charset="UTF-8")
 		script(src="/js/client/services/contactServices.js", charset="UTF-8")
 		script(src="/js/client/services/raceServices.js", charset="UTF-8")
+		script(src="/js/client/services/routeServices.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js js/client/directives.min.js -->
@@ -109,6 +115,7 @@ html(ng-app="nextrunApp")
 		script(src="/js/client/controllers/headerController.js", charset="UTF-8")
 		script(src="/js/client/controllers/createRaceController.js", charset="UTF-8")
 		script(src="/js/client/controllers/editRaceController.js", charset="UTF-8")
+		script(src="/js/client/controllers/mapController.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js js/libs/bootstrap.min.js -->

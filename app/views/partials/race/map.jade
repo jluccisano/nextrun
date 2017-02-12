@@ -1,0 +1,7 @@
+div.container
+	h3 Edition d'une manifestation
+		div.row
+			div.col-lg-12
+				google-map(id="mymap" center="center"  zoom="zoom"  draggable="true" mark-click="true" style="height: 400px" events="events")
+					markers
+						marker(ng-repeat="marker in markers" coords="marker")

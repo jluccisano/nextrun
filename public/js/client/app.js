@@ -49,10 +49,15 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       controller: 'CreateRaceCtrl',
       access: access.user
     }).
-    when('/races/:raceId', {
+    when('/races/edit/:raceId', {
       templateUrl: '/partials/race/edit',
       controller: 'EditRaceCtrl',
       access: access.user
+    }).
+    when('/edit/map', {
+      templateUrl: '/partials/race/map',
+      controller: 'MapCtrl',
+      access: access.public
     }).
     when('/404', {
       templateUrl: '/errors/404',
