@@ -306,10 +306,12 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/contact.html
+#: client/modules/home/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Autre"
 msgstr ""
 
+#: client/modules/home/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Bug"
 msgstr ""
@@ -448,6 +450,7 @@ msgstr ""
 msgid "Donner son avis et partager son expérience"
 msgstr ""
 
+#: client/modules/home/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Dupliquer"
 msgstr ""
@@ -488,8 +491,11 @@ msgstr ""
 #: .tmp/generated/views/partials/auth/settings.html
 #: .tmp/generated/views/partials/auth/signup.html
 #: .tmp/generated/views/partials/auth/users.html
+#: .tmp/generated/views/partials/home/contact.html
 #: .tmp/generated/views/partials/home/contacts.html
+#: .tmp/generated/views/partials/home/templates/feedback.html
 #: .tmp/generated/views/partials/main/contacts.html
+#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 msgid "Email"
 msgstr ""
@@ -498,6 +504,9 @@ msgstr ""
 #: .tmp/generated/views/partials/auth/login.html
 #: .tmp/generated/views/partials/auth/settings.html
 #: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/home/contact.html
+#: .tmp/generated/views/partials/home/templates/feedback.html
+#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 msgid "Email invalide"
 msgstr ""
@@ -525,11 +534,16 @@ msgstr ""
 
 #: .tmp/generated/views/partials/auth/forgotpasswordModal.html
 #: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/home/contact.html
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/contact.html
 #: .tmp/generated/views/partials/main/contacts.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 msgid "Envoyer"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/contact.html
+msgid "Envoyer un message"
 msgstr ""
 
 #: client/modules/race/scripts/directives/typeDirective.js
@@ -608,6 +622,7 @@ msgstr ""
 msgid "Importer un fichier GPX"
 msgstr ""
 
+#: client/modules/home/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Information erronée"
 msgstr ""
@@ -947,6 +962,9 @@ msgstr ""
 msgid "S'incrire"
 msgstr ""
 
+#: .tmp/generated/views/index.html
+#: .tmp/generated/views/layouts/body.html
+#: .tmp/generated/views/layouts/header.html
 #: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/race/templates/viewRegistration.html
 msgid "S'inscrire"
@@ -994,7 +1012,10 @@ msgstr ""
 msgid "Supprimer une manifestation"
 msgstr ""
 
+#: .tmp/generated/views/partials/home/contact.html
+#: .tmp/generated/views/partials/home/templates/feedback.html
 #: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 #: .tmp/generated/views/partials/race/templates/type.html
 #: .tmp/generated/views/partials/route/mapEditor.html
@@ -1028,13 +1049,16 @@ msgstr ""
 msgid "Trouver et préparer votre course"
 msgstr ""
 
+#: .tmp/generated/views/partials/home/contact.html
 #: .tmp/generated/views/partials/home/contacts.html
 #: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/feedback.html
 #: .tmp/generated/views/partials/home/templates/search.html
 #: .tmp/generated/views/partials/race/allraces.html
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/races.html
 #: .tmp/generated/views/partials/race/search.html
+#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 #: .tmp/generated/views/partials/race/templates/search.html
 #: .tmp/generated/views/partials/race/templates/type.html
@@ -1113,6 +1137,7 @@ msgstr ""
 msgid "Votre manifestation a bien été retiré"
 msgstr ""
 
+#: client/modules/home/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Votre message nous a bien été transmis"
 msgstr ""
@@ -1149,6 +1174,10 @@ msgstr ""
 msgid "Votre résultat a bien été ajouté"
 msgstr ""
 
+#: client/modules/race/scripts/directives/resultsDirective.js
+msgid "Votre résultat a bien été supprimé"
+msgstr ""
+
 #: client/modules/auth/scripts/controllers/usersController.js
 msgid "Votre utilisateur a bien été publiée"
 msgstr ""
@@ -1175,7 +1204,10 @@ msgstr ""
 msgid "type"
 msgstr ""
 
+#: .tmp/generated/views/partials/home/contact.html
+#: .tmp/generated/views/partials/home/templates/feedback.html
 #: .tmp/generated/views/partials/main/contacts.html
+#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 msgid "votre message"
 msgstr ""

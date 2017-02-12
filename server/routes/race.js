@@ -86,12 +86,12 @@ var routes = [{
     httpMethod: "POST",
     middleware: [raceController.addResult],
     accessLevel: accessLevels.user
-}, {
+}, /*{
     path: "/:id/results/:resultId",
     httpMethod: "GET",
     middleware: [raceController.getResult],
     accessLevel: accessLevels.user
-},{
+},*/{
     path: "/:id/results/:resultId/delete",
     httpMethod: "DELETE",
     middleware: [raceController.deleteResultFile, raceController.deleteResult],

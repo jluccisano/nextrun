@@ -35,6 +35,8 @@ nav(class="navbar navbar-default navbar-fixed-top" role="navigation" ng-Controll
 						li
 							a(ng-click="logout()" translate) Se déconnecter
 				li(ng-hide="isLoggedIn()")
+					a(ui-sref="signup" translate) S'inscrire
+				li(ng-hide="isLoggedIn()")
 					form(class="navbar-form navbar-right")
 						button(type="submit" class="btn btn-primary" ng-click="login()")
 							i(class="fa fa-user" translate) &nbsp; Se connecter

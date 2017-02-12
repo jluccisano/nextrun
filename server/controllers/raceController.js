@@ -243,11 +243,8 @@ exports.addResult = function(req, res) {
 	});
 };
 
-exports.getResult = function(req, res) {
 
-};
-
-exports.deleteResultFile = function(req, res) {
+exports.deleteResultFile = function(req, res, next) {
 	var result = req.result;
 	raceService.deleteResultFile(result , res, function() {
 		next();

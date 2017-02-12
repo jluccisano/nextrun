@@ -2,20 +2,7 @@ div(class="modal-header")
 	button(class="close" type="button" data-dismiss="modal" aria-hidden="true" ng-click="cancel()") &times;
 	h4(class="modal-title" translate) Signaler une erreur
 div(class="modal-body")
-	form(role="form" name="feedbackForm" novalidate)
-		div(class="form-group" ng-class="{'has-error': !feedbackForm.type.$pristine && feedbackForm.type.$invalid, 'has-success': !feedbackForm.type.$invalid && !feedbackForm.type.$pristine}")
-			label(class="control-label" for="type" translate) Type
-			select(class="form-control" id="type" ng-model="feedback.type" name="type" ng-options="type.name for type in types" ng-required="true")
-				option(value="") {{'Sélectionner...' | translate}}
-				
-		div(class="form-group" ng-class="{'has-error': !feedbackForm.email.$pristine && feedbackForm.email.$invalid, 'has-success': !feedbackForm.email.$invalid && !feedbackForm.email.$pristine}")
-			label(class="control-label" for="email" translate) Email
-			input(class="form-control" id="email" type="email"  ng-model="feedback.email" name="email" placeholder="{{'Email' | translate}}" ng-required="true")
-			span(class="help-block" ng-show="feedbackForm.email.$error.email" translate) Email invalide
-		
-		div(class="form-group")
-			label(class="control-label") Message
-			textarea(class="form-control" name="description" ng-model="feedback.message" rows="3" placeholder="{{'votre message' | translate}}" ng-required="true")
+	include ../../home/templates/feedback
 div(class="modal-footer")
 	button(class="btn btn-default" type="button" ng-click="cancel()" translate) Annuler
 	button(class="btn btn-primary" type="button" ng-click="submit(feedback)" ng-disabled="feedbackForm.$invalid" translate) Envoyer

@@ -71,11 +71,17 @@ exports.sendEmailPasswordReinitialized = function(email, newPassword) {
  **/
 exports.sendEmailNewFeedback = function(feedback) {
 
+    var message = "Nouveau feedback par: " + feedback.email + " , type: " + feedback.type.name + " , message: " + feedback.message;
+
+    if(feedback.raceId) {
+        message = message + " , race id: " + feedback.raceId;
+    }
+
     var mailOptions = {
         from: feedback.email,
         to: "contact.nextrun@gmail.com",
         subject: "Nouveau feedback",
-        text: "Nouveau feedback par: " + feedback.email + " , type: " + feedback.type.name + " , message: " + feedback.message + " , race id: " + feedback.raceId,
+        text: message
     };
 
     this.sendMail(mailOptions);

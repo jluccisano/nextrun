@@ -31,13 +31,22 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.search();
         });
 
-       
-
         $scope.dateRanges = angular.copy(dateRanges.getValues());
 
         $scope.criteria = {
             published: true,
+            place: {
+                country: "FR",
+                location: {
+                    latitude: 46.227638,
+                    longitude: 2.213749000000007
+                },
+                name: "France",
+                place_type: "country"
+            }
         };
+
+        $scope.place = "France";
 
         $scope.radius = [{
             value: 30,
@@ -64,7 +73,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.distanceSelection = {};
         };
 
-       $scope.onChangeDistance = function() {
+        $scope.onChangeDistance = function() {
             $scope.criteria.distances = [];
             angular.forEach($scope.distanceSelection, function(value, distance) {
                 if ($scope.distanceSelection[distance] === true) {
@@ -81,7 +90,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         };
 
         $scope.submit = function() {
-            $scope.criteria.dateRange = {}; 
+            $scope.criteria.dateRange = {};
             $scope.criteria.distances = [];
             $scope.search();
         };
@@ -89,7 +98,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         $scope.search = function() {
             RaceService.search($scope.criteria).then(function(response) {
                 if (response.data.items.length > 0) {
-                    $scope.isFiltered = true;                    
+                    $scope.isFiltered = true;
                     $scope.emptyResults = false;
                     $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
                     angular.forEach($scope.map.markers, function(marker) {
@@ -119,5 +128,5 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.$apply();
         };
 
-        //$scope.search();
+        $scope.search();
     });
