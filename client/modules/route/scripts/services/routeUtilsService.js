@@ -7,9 +7,9 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsAp
 		convertPointsToPath: function(points) {
 			var path = [];
 
-			_.each(points, function(point){
-				path.push(GmapsApiService.LatLng(point.getLatitude(), point.getLongitude());
-			});
+			for (var k = 0; k < points.length; k++) {
+				path.push(GmapsApiService.LatLng(points[k].lat, points[k].lng));
+			}
 			return path;
 		},
 		convertPathToPoints: function(path, isFirstPoint) {

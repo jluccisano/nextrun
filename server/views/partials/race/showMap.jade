@@ -1,6 +1,6 @@
 div(ng-if="route.isVisible()")
 	include map
 
-	ng-download(id="content" get-data="exportGPX(route)")
+	nr-download(id="content" get-data="exportGPX(route)")
 
 	highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")

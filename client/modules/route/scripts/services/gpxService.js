@@ -145,7 +145,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 						var segmentViewModel = routeViewModel.addSegment(segmentDataModel);
 
-						var segmentPath = RouteUtilsService.convertPointsToPath(segmentViewModel.getPoints());
+						var segmentPath = RouteUtilsService.convertPointsToPath(segmentViewModel.data.points);
 
 						routeViewModel.addMarkerToRoute(segmentPath);
 						routeViewModel.addPolyline(segmentPath, false, false, false, true, "red", 5);
