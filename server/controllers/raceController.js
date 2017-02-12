@@ -7,19 +7,11 @@ var mongoose = require("mongoose"),
     Race = mongoose.model("Race"),
     errorUtils = require("../utils/errorUtils"),
     util = require("util"),
-    elasticsearchUtils = require("../utils/elasticsearchUtils"),
-    ElasticSearchClient = require("elasticsearchclient"),
     env = process.env.NODE_ENV || "development",
     config = require("../../config/config")[env],
     underscore = require("underscore"),
     logger = require("../logger");
 
-var serverOptions = {
-    host: "localhost",
-    port: 9200
-};
-
-var elasticSearchClient = new ElasticSearchClient(serverOptions);
 
 exports.checkAuthorization = function(req, res, next) {
 
@@ -127,7 +119,6 @@ exports.create = function(req, res) {
             message: ["error.bodyParamRequired"]
         });
     }
-
 };
 
 /**

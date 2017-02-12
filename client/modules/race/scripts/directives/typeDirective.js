@@ -13,7 +13,7 @@ angular.module("nextrunApp.race").directive("nrType", function() {
 });
 
 angular.module("nextrunApp.race").controller("TypeController",
-  function($scope, $modal, RaceService, gettextCatalog, notificationService, RaceTypeEnum, RouteHelperService, RouteService) {
+  function($scope, $modal, RaceService, gettextCatalog, notificationService, RaceTypeEnum, RouteHelperService, RouteBuilderService) {
 
     $scope.edit = false;
     $scope.gettextCatalog = gettextCatalog;
@@ -62,7 +62,7 @@ angular.module("nextrunApp.race").controller("TypeController",
             function() {
               $scope.edit = false;
               $scope.race.routes = [];
-              $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
+              $scope.routesViewModel = RouteBuilderService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
               $scope.selection = $scope.routesViewModel[0].getType() + 0;
               notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));
             });

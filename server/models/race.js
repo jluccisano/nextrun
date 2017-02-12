@@ -5,33 +5,6 @@
 var mongoose = require("mongoose"),
     Schema = mongoose.Schema;
 
-var PointSchema = new Schema({
-    segmentId: String,
-    lat: Number,
-    lng: Number,
-    elevation: Number,
-    distanceFromStart: Number,
-    grade: Number
-});
-
-var SegmentSchema = new Schema({
-    segmentId: Number,
-    points: [PointSchema],
-    distance: Number
-});
-
-var RouteSchema = new Schema({
-    ascendant: Number,
-    descendant: Number,
-    minElevation: Number,
-    maxElevation: Number,
-    distance: Number,
-    elevationPoints: [PointSchema],
-    segments: [SegmentSchema],
-    type: String,
-    description: String
-});
-
 var OptionSchema = new Schema({
     name: String,
     price: Number,
@@ -56,7 +29,7 @@ var RaceSchema = new Schema({
     edition: Number,
     description: String,
     distanceType: String,
-    routes: [RouteSchema],
+    routes: [Schema.Types.ObjectId],
     published: {
         type: Boolean,
         default: false

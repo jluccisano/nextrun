@@ -30,27 +30,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 
 		$scope.types = RaceTypeEnum.getValues();
 
-		$scope.accountExists = true;
-
-		$scope.initRouteDataModel = function() {
-			var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type);
-
-			$scope.race.routes = [];
-
-			_.each(raceType.routes, function(routeType) {
-
-				$scope.race.routes.push({
-					type: routeType,
-					segments: [],
-					elevationPoints: []
-				});
-
-			});
-		};
-
 		$scope.submit = function() {
-			$scope.initRouteDataModel();
-
 			var data = {
 				race: $scope.race
 			};
@@ -65,7 +45,28 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		};
 
 		$scope.openRedirectionModal = function(raceId) {
-			$scope.modalInstance = $modal.open({
+			notificationService.notify({
+				title: gettextCatalog.getString("Confirmation requise"),
+				text: gettextCatalog.getString("Souhaitez-vous éditer votre manifestation maintenant?"),
+				hide: false,
+				confirm: {
+					confirm: true
+				},
+				buttons: {
+					closer: false,
+					sticker: false
+				},
+				history: {
+					history: false
+				}
+			}).get().on('pnotify.confirm', function() {
+				$state.go("edit", {id: raceId});
+			}).on('pnotify.cancel', function() {
+				$state.go("myraces");
+			});
+
+			
+			/*$scope.modalInstance = $modal.open({
 				templateUrl: "partials/race/redirectionModal",
 				controller: "RedirectionModalController",
 				resolve: {
@@ -73,16 +74,8 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 						return raceId;
 					}
 				}
-			});
-		};
-
-		$scope.openForgotPasswordModal = function() {
-			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/auth/forgotpasswordModal",
-				controller: "ForgotPasswordModalController"
-			});
+			});*/
 		};
 
 		MetaService.ready("Ajouter une manifestation");
-
 	});

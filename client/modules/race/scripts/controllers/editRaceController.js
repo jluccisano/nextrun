@@ -10,7 +10,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		notificationService,
 		AuthService,
 		RaceTypeEnum,
-		RouteService,
+		RouteBuilderService,
 		MetaService,
 		gettextCatalog,
 		GmapsApiService,
@@ -46,7 +46,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.init = function() {
 			RaceService.retrieve($scope.raceId).then(function(response) {
 				$scope.race = response.data.race;
-				$scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
+				$scope.routesViewModel = RouteBuilderService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
 
 				if (!$scope.selection) {
 					$scope.selection = $scope.routesViewModel[0].getType() + 0;

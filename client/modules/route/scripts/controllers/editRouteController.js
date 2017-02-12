@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("nextrunApp.race").controller("EditRouteController",
+angular.module("nextrunApp.route").controller("EditRouteController",
     function(
         $scope,
         $modalInstance,
@@ -14,7 +14,8 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         race,
         RouteUtilsService,
         RouteHelperService,
-        notificationService) {
+        notificationService,
+        routeId) {
 
         $scope.location = {
             details: {},
@@ -43,17 +44,6 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         $scope.routeViewModel = {};
 
         $scope.init = function() {
-            if ($stateParams.id) {
-                RouteService.retrieve($stateParams.id).then(function(response) {
-                    $scope.route = response.data.route;
-                }).
-                finally(function() {
-                    MetaService.ready("Editer une parcours");
-                });
-            } else {
-                //create new route
-            }
-
             $scope.route = routeDataModel;
 
             angular.copy(routeDataModel, $scope.tmpRoute);
@@ -65,7 +55,6 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             $timeout(function() {
                 $scope.routeViewModel.setVisible(true);
             });
-
         };
 
         $scope.onClickMap = function(routeViewModel, destinationLatlng) {
@@ -80,7 +69,7 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             RouteBuilderService.deleteLastSegment(routeViewModel);
         };
 
-        $scope.getFile = function(routeViewModel, file) {
+        /*$scope.getFile = function(routeViewModel, file) {
             FileReaderService.readAsDataUrl(file, $scope).then(function(result) {
                 try {
                     routeViewModel = GpxService.convertGPXtoRoute($scope, routeViewModel.getType(), result);
@@ -90,7 +79,7 @@ angular.module("nextrunApp.race").controller("EditRouteController",
 
                 }
             });
-        };
+        };*/
 
         $scope.centerToLocation = function(routeViewModel, details) {
             if (details && details.location) {
@@ -102,30 +91,8 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             }
         };
 
-        $scope.saveOrUpdate = function(data) {
-            RouteService.saveOrUpdate(data).then(
-                function() {
-                    $scope.init();
-                    notificationService.success(gettextCatalog.getString("Votre parcours a bien été mise à jour"));
-                });
-        };
-
         $scope.submit = function() {
             $modalInstance.close($scope.routeViewModel.data);
-
-            var fields = {};
-            fields["routes.$"] = routeDataModel;
-
-            var query = {};
-            query = {
-                "routes._id": routeDataModel._id
-            };
-
-            $scope.update({
-                query: query,
-                fields: fields
-            });
-
         };
 
         $scope.cancel = function() {

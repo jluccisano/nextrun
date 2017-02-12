@@ -6,6 +6,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $modal,
         $filter,
         RaceService,
+        RouteBuilderService,
         RouteService,
         GpxService,
         MetaService,
@@ -39,7 +40,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
                 $scope.race = response.data.race;
 
-                $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
+                $scope.routesViewModel = RouteBuilderService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
 
                 $scope.selection = $scope.routesViewModel[0].getType() + 0;
 
