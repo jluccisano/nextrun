@@ -23,6 +23,10 @@ div.container
 											ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
 												datetimepicker(data-ng-model="race.date"  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'day' }")
 											
+									div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$invalid, 'has-success': !form.location.$invalid && !form.location.$pristine}")
+										label.control-label(for="location") Lieu
+										input.form-control(name="location", id="location", placeholder="ex: Castelnaudary",data-ng-model="race.location.name", required, googleplace)
+
 									div.form-group(data-ng-class="{'has-error': !form.department.$pristine && form.department.$invalid, 'has-success': !form.department.$invalid && !form.department.$pristine}")
 										label.control-label(for="department") Département
 										select.form-control(data-ng-model="race.department", name="department" data-ng-options="department.value as getDepartment(department.value) for department in departments" required)

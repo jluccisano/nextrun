@@ -189,6 +189,11 @@ var RaceSchema = new Schema({
       type: String,
       default: null
     }
+  },
+  location: {
+    name: String,
+    lat: Number,
+    lng: Number
   }
 });
 
