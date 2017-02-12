@@ -339,13 +339,15 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 						if (route.segments.length === 0) {
 
-							if ('undefined' !== typeof $scope.race.pin.location) {
-								route.center = {
-									latitude: $scope.race.pin.location.lat,
-									longitude: $scope.race.pin.location.lon
+							if (!_.isUndefined($scope.race.pin)) {
+								if (!_.isUndefined($scope.race.pin.location)) {
+									route.center = {
+										latitude: $scope.race.pin.location.lat,
+										longitude: $scope.race.pin.location.lon
+									}
+								} else {
+									route.center = $scope.race.pin.department.center;
 								}
-							} else {
-								route.center = $scope.race.pin.department.center;
 							}
 
 						}

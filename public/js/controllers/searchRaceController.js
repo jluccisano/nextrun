@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'mySharedService', '$rootScope', 'Alert',
-	function($scope, $location, $routeParams, RaceServices, $http, sharedService, $rootScope, Alert) {
+angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'mySharedService', '$rootScope', 'Alert', 'sharedMetaService',
+	function($scope, $location, $routeParams, RaceServices, $http, sharedService, $rootScope, Alert, sharedMetaService) {
 		'use strict';
 
 
@@ -9,6 +9,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.searchAround = undefined;
 		$scope.distance = undefined;
 		$scope.location = undefined;
+
+		$scope.isModeGeolocation = false;
 
 		$scope.race = {};
 
@@ -212,8 +214,14 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 			if ($scope.names.length > 0 && $item !== $scope.names[0]) {
 
-				$location.path("/races/view/" + $item.id)
+				$location.path("/races/view/" + $item.id + '/');
 
+
+			} else {
+
+				//Reinit 
+				$scope.deleteFilters();
+				$scope.search();
 			}
 		};
 
@@ -415,13 +423,13 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		}
 
-        $scope.search();
-
 		setTimeout(function() {
 			sharedMetaService.prepForMetaBroadcast('Rechercher', $location.path(), "Rechercher des manifestations &agrave; travers un puissant moteur de recherche");
 		}, 1000);
 
 		$scope.ready();
+
+		$scope.search();
 
 
 	}

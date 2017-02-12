@@ -161,6 +161,8 @@ nextrunApp.run(['$rootScope', '$location', 'Auth', 'Alert',
 
       $rootScope.error = null;
 
+     
+
       if (!Auth.authorize(next.access)) {
         if (Auth.isLoggedIn()) {
           $location.path('/');
