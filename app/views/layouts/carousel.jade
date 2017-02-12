@@ -5,7 +5,7 @@ script(src="/js/client/widgets/map-france.js", charset="UTF-8")
 script(src="/js/client/pages/home.js", charset="UTF-8")
 <!-- endbuild -->
 div.container
-	div.carousel.slide(id="carousel" style="width: 100%; height:300px; margin: 0 auto;margin-top:0px")
+	div.carousel.slide(id="carousel")
 		ol.carousel-indicators.custom-carousel-indicators
 			li.active(data-target="#carousel",data-slide-to="0")
 			li(data-target="#carousel",data-slide-to="1")
@@ -24,11 +24,11 @@ div.container
 						h2 Trouver et préparer votre course
 						p Analyser le détail du parcours (dénivelé, altitude, distance...)
 					div.col-lg-6
-						img(src="/img/show_screenshot.png", style="width: 500px; height:320px;")
+						img(id="reponsive-img", src="/img/show_screenshot.png", style="width: 100%; height:auto;display: inline-block;")
 			div.item
 				div.row
 					div.col-lg-5.col-lg-offset-1
 						h2 Promouvoir votre manifestation
 						p Détailler l'ensemble de votre manifestion (parcours, organisation, nombre de places...)
 					div.col-lg-6
-						img(src="/img/edit_screenshot.png", style="width: 500px; height:320px;")
+						img(id="reponsive-img", src="/img/edit_screenshot.png", style="width: 100%; height:auto;display: inline-block;")

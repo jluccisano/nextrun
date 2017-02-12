@@ -207,7 +207,7 @@ loadMapFrance = function() {
   fr.departement94.attr({ title:"94 - Val-de-Marne"});
   fr.departement95.attr({ title:"95 - Val-d\'Oise"});
 
-  var tfm = 'S0.6,0.6,0,0';
+  var tfm = 'S0.5,0.5,0,0';
 
   paper.forEach(function(obj){
    obj.transform(tfm);

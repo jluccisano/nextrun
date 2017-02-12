@@ -192,3 +192,61 @@ a {
 .footer span {
   color: white;
 }
+
+
+@media(max-width:767px){
+.carousel {
+    height: 600px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top:0px;
+  }
+  #reponsive-img img{
+    width: 100%;
+    display: inline-block;
+    height:auto;
+  }
+}
+@media(min-width:768px){
+  .carousel {
+    height: 500px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top:0px;
+  }
+  
+  #reponsive-img img{
+    width: 100%;
+    display: inline-block;
+    height:auto;
+  }
+}
+@media(min-width:992px){
+  .carousel {
+    height: auto;
+    width: 100%;
+    margin: 0 auto;
+    margin-top:0px;
+  }
+
+  #reponsive-img img{
+    width: 100%;
+    display: inline-block;
+    height:auto;
+  }
+}
+@media(min-width:1200px){
+  .carousel {
+    height: 320px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top:0px;
+  }
+
+  #reponsive-img img{
+    width: 100%;
+    display: inline-block;
+    height:auto;
+  }
+}
+
