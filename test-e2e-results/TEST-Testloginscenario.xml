@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="Test login scenario" errors="0" tests="2" failures="0" time="10.323" timestamp="2014-04-30T10:13:25">
+  <testcase classname="Test login scenario" name="should keep invalid logins on this page" time="3.271"></testcase>
+  <testcase classname="Test login scenario" name="ensures user can log in" time="7.05"></testcase>
+</testsuite>
+</testsuites>

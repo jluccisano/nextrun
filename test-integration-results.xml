@@ -1,0 +1,212 @@
+<testsuites name="Mocha Tests">
+<testsuite name="Create Contact: POST /api/contacts Invalid parameters" tests="3" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:05 GMT" time="0.832">
+<testcase classname="Create Contact: POST /api/contacts Invalid parameters" name="no email - should respond with errors" time="0.818"/>
+<testcase classname="Create Contact: POST /api/contacts Invalid parameters" name="email blank - should respond with errors" time="0.009"/>
+<testcase classname="Create Contact: POST /api/contacts Invalid parameters" name="check if contact has not been saved to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Create Contact: POST /api/contacts Valid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:06 GMT" time="0.024">
+<testcase classname="Create Contact: POST /api/contacts Valid parameters" name="add new contact success" time="0.021"/>
+<testcase classname="Create Contact: POST /api/contacts Valid parameters" name="check if contact has been saved to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Create Contact: POST /api/contacts Contact already exists" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:06 GMT" time="0.013">
+<testcase classname="Create Contact: POST /api/contacts Contact already exists" name="Contact already exists" time="0.008"/>
+<testcase classname="Create Contact: POST /api/contacts Contact already exists" name="check if contact has not been saved to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Create Contact: POST /api/contacts/feedback Invalid parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:06 GMT" time="0.007">
+<testcase classname="Create Contact: POST /api/contacts/feedback Invalid parameters" name="no email - should respond with errors" time="0.006"/>
+</testsuite>
+<testsuite name="Create Contact: POST /api/contacts/feedback Valid parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:06 GMT" time="0.024">
+<testcase classname="Create Contact: POST /api/contacts/feedback Valid parameters" name="add new feedback success" time="0.009"/>
+</testsuite>
+<testsuite name="Search races with autocomplete: POST /api/races/autocomplete" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:06 GMT" time="0.009">
+<testcase classname="Search races with autocomplete: POST /api/races/autocomplete" name="should save the user 1 to the database" time="0.002"/>
+<testcase classname="Search races with autocomplete: POST /api/races/autocomplete" name="should save the race to the database" time="0.004"/>
+</testsuite>
+<testsuite name="Search races with autocomplete: POST /api/races/autocomplete invalid parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:06 GMT" time="0.009">
+<testcase classname="Search races with autocomplete: POST /api/races/autocomplete invalid parameters" name="should return error when no criteria is sent" time="0.005"/>
+</testsuite>
+<testsuite name="Search races with autocomplete: POST /api/races/autocomplete valid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:06 GMT" time="5.118">
+<testcase classname="Search races with autocomplete: POST /api/races/autocomplete valid parameters" name="all region - should return one race" time="0.037"/>
+<testcase classname="Search races with autocomplete: POST /api/races/autocomplete valid parameters" name="with specific region - should return one race" time="0.055"/>
+</testsuite>
+<testsuite name="Create race: POST /api/races" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.015">
+<testcase classname="Create race: POST /api/races" name="should save the user 1 to the database" time="0.004"/>
+</testsuite>
+<testsuite name="Create race: POST /api/races Valid parameters" tests="3" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.04">
+<testcase classname="Create race: POST /api/races Valid parameters" name="should response success" time="0.012"/>
+<testcase classname="Create race: POST /api/races Valid parameters" name="should save the race to the database" time="0.004"/>
+<testcase classname="Create race: POST /api/races Valid parameters" name="create new race with distance type different should response success" time="0.011"/>
+</testsuite>
+<testsuite name="Create race: POST /api/races Access Denied" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.015">
+<testcase classname="Create race: POST /api/races Access Denied" name="should not create because access denied" time="0.006"/>
+</testsuite>
+<testsuite name="Create race: POST /api/races Invalid parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.042">
+<testcase classname="Create race: POST /api/races Invalid parameters" name="should response raceAlreadyExists" time="0.013"/>
+</testsuite>
+<testsuite name="Delete race: DELETE /api/races" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.004">
+<testcase classname="Delete race: DELETE /api/races" name="should save the user 1 to the database" time="0.001"/>
+<testcase classname="Delete race: DELETE /api/races" name="should save the race to the database" time="0.002"/>
+</testsuite>
+<testsuite name="Delete race: DELETE /api/races Access denied" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.014">
+<testcase classname="Delete race: DELETE /api/races Access denied" name="should not delete because access denied" time="0.006"/>
+</testsuite>
+<testsuite name="Delete race: DELETE /api/races invvalid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.167">
+<testcase classname="Delete race: DELETE /api/races invvalid parameters" name="should not delete because user not Owner" time="0.008"/>
+<testcase classname="Delete race: DELETE /api/races invvalid parameters" name="should not delete because race id is unknown" time="0.005"/>
+</testsuite>
+<testsuite name="Delete race: DELETE /api/races valid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.044">
+<testcase classname="Delete race: DELETE /api/races valid parameters" name="should delete success" time="0.017"/>
+<testcase classname="Delete race: DELETE /api/races valid parameters" name="should not retrieve race to the database" time="0.002"/>
+</testsuite>
+<testsuite name="Publish Race: UPDATE /api/races/raceId/publish" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.023">
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish" name="should save the user 1 to the database" time="0.001"/>
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish" name="should save the race to the database" time="0.018"/>
+</testsuite>
+<testsuite name="Publish Race: UPDATE /api/races/raceId/publish Access Denied" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.025">
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish Access Denied" name="should not update because unknown user" time="0.01"/>
+</testsuite>
+<testsuite name="Publish Race: UPDATE /api/races/raceId/publish invalid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:11 GMT" time="0.051">
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish invalid parameters" name="should not publish because user not Owner" time="0.01"/>
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish invalid parameters" name="should not publish because race id is unknown" time="0.008"/>
+</testsuite>
+<testsuite name="Publish Race: UPDATE /api/races/raceId/publish Valid parameters" tests="4" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:12 GMT" time="0.103">
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish Valid parameters" name="should update success" time="0.017"/>
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish Valid parameters" name="published must equal to true" time="0.003"/>
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish Valid parameters" name="test unplublished" time="0.014"/>
+<testcase classname="Publish Race: UPDATE /api/races/raceId/publish Valid parameters" name="published must equal to false" time="0.003"/>
+</testsuite>
+<testsuite name="Retrieve races: GET /api/users/:userId/races/(page/:page)?" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:12 GMT" time="0.005">
+<testcase classname="Retrieve races: GET /api/users/:userId/races/(page/:page)?" name="should save the user 1 to the database" time="0.001"/>
+<testcase classname="Retrieve races: GET /api/users/:userId/races/(page/:page)?" name="should save the race to the database" time="0.003"/>
+</testsuite>
+<testsuite name="Retrieve races: GET /api/users/:userId/races/(page/:page)? Access denied" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:12 GMT" time="0.017">
+<testcase classname="Retrieve races: GET /api/users/:userId/races/(page/:page)? Access denied" name="should not retrieve because access denied" time="0.009"/>
+</testsuite>
+<testsuite name="Retrieve races: GET /api/users/:userId/races/(page/:page)? invalid parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:12 GMT" time="0.029">
+<testcase classname="Retrieve races: GET /api/users/:userId/races/(page/:page)? invalid parameters" name="should not retrieve any race for this user" time="0.009"/>
+</testsuite>
+<testsuite name="Retrieve races: GET /api/users/:userId/races/(page/:page)? valid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:12 GMT" time="0.043">
+<testcase classname="Retrieve races: GET /api/users/:userId/races/(page/:page)? valid parameters" name="should return one race" time="0.013"/>
+<testcase classname="Retrieve races: GET /api/users/:userId/races/(page/:page)? valid parameters" name="test with page parameter should return one race" time="0.009"/>
+</testsuite>
+<testsuite name="Search races: POST /api/races/search" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:12 GMT" time="0.005">
+<testcase classname="Search races: POST /api/races/search" name="should save the user 1 to the database" time="0.001"/>
+<testcase classname="Search races: POST /api/races/search" name="should save the race to the database" time="0.002"/>
+</testsuite>
+<testsuite name="Search races: POST /api/races/search invalid parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:12 GMT" time="0.006">
+<testcase classname="Search races: POST /api/races/search invalid parameters" name="should return error when no criteria is sent" time="0.004"/>
+</testsuite>
+<testsuite name="Search races: POST /api/races/search valid parameters" tests="4" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:12 GMT" time="10.276">
+<testcase classname="Search races: POST /api/races/search valid parameters" name="should return one race" time="0.053"/>
+<testcase classname="Search races: POST /api/races/search valid parameters" name="should return one race" time="0.074"/>
+<testcase classname="Search races: POST /api/races/search valid parameters" name="search with geolocation - should return one race" time="0.045"/>
+<testcase classname="Search races: POST /api/races/search valid parameters" name="search with region - should return one race" time="0.069"/>
+</testsuite>
+<testsuite name="Update Race: UPDATE /api/races" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:22 GMT" time="0.008">
+<testcase classname="Update Race: UPDATE /api/races" name="should save the user 1 to the database" time="0.001"/>
+<testcase classname="Update Race: UPDATE /api/races" name="should save the race to the database" time="0.004"/>
+</testsuite>
+<testsuite name="Update Race: UPDATE /api/races Access Denied" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:22 GMT" time="0.018">
+<testcase classname="Update Race: UPDATE /api/races Access Denied" name="should not update because unknown user" time="0.007"/>
+</testsuite>
+<testsuite name="Update Race: UPDATE /api/races invalid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:22 GMT" time="0.051">
+<testcase classname="Update Race: UPDATE /api/races invalid parameters" name="should not update because user not Owner" time="0.018"/>
+<testcase classname="Update Race: UPDATE /api/races invalid parameters" name="should not update because race id is unknown" time="0.006"/>
+</testsuite>
+<testsuite name="Update Race: UPDATE /api/races Valid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:22 GMT" time="0.041">
+<testcase classname="Update Race: UPDATE /api/races Valid parameters" name="should update success" time="0.018"/>
+<testcase classname="Update Race: UPDATE /api/races Valid parameters" name="should update the user to the database" time="0.008"/>
+</testsuite>
+<testsuite name="Test partials view: GET /partials/*" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:22 GMT" time="0.01">
+<testcase classname="Test partials view: GET /partials/*" name="should save the user 1 to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Test partials view: GET /partials/* test set cookie" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:22 GMT" time="1.135">
+<testcase classname="Test partials view: GET /partials/* test set cookie" name="get index" time="1.126"/>
+</testsuite>
+<testsuite name="Test partials view: GET /partials/* Valid parameters" tests="3" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:23 GMT" time="0.435">
+<testcase classname="Test partials view: GET /partials/* Valid parameters" name="get view" time="0.102"/>
+<testcase classname="Test partials view: GET /partials/* Valid parameters" name="get view with sub type " time="0.164"/>
+<testcase classname="Test partials view: GET /partials/* Valid parameters" name="get index" time="0.16"/>
+</testsuite>
+<testsuite name="Authenticate user: POST /api/users/session" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.003">
+<testcase classname="Authenticate user: POST /api/users/session" name="should save the user 1 to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Authenticate user: POST /api/users/session Authenticate failed" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.011">
+<testcase classname="Authenticate user: POST /api/users/session Authenticate failed" name="should response invalidEmailOrPassword" time="0.006"/>
+<testcase classname="Authenticate user: POST /api/users/session Authenticate failed" name="should response Missing Credentials" time="0.003"/>
+</testsuite>
+<testsuite name="Authenticate user: POST /api/users/session Authenticate success" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.009">
+<testcase classname="Authenticate user: POST /api/users/session Authenticate success" name="should response success" time="0.004"/>
+</testsuite>
+<testsuite name="Check user: POST /api/users/check/email" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.002">
+<testcase classname="Check user: POST /api/users/check/email" name="check if user has been saved to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Check user: POST /api/users/check/email Email Already Exists" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.007">
+<testcase classname="Check user: POST /api/users/check/email Email Already Exists" name="should response email Already Exists" time="0.006"/>
+</testsuite>
+<testsuite name="Check user: POST /api/users/check/email Email Valid" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.008">
+<testcase classname="Check user: POST /api/users/check/email Email Valid" name="should response success" time="0.005"/>
+</testsuite>
+<testsuite name="Create User: POST /api/users Invalid parameters" tests="3" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.013">
+<testcase classname="Create User: POST /api/users Invalid parameters" name="no email - should respond with errors" time="0.005"/>
+<testcase classname="Create User: POST /api/users Invalid parameters" name="no body - should respond with errors" time="0.003"/>
+<testcase classname="Create User: POST /api/users Invalid parameters" name="check if no user has been saved to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Create User: POST /api/users Valid parameters" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.017">
+<testcase classname="Create User: POST /api/users Valid parameters" name="should response success" time="0.008"/>
+<testcase classname="Create User: POST /api/users Valid parameters" name="check if a user has been saved to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Delete User: DELETE /api/users" tests="2" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.004">
+<testcase classname="Delete User: DELETE /api/users" name="should save the user 1 to the database" time="0.001"/>
+<testcase classname="Delete User: DELETE /api/users" name="should save the race to the database" time="0.003"/>
+</testsuite>
+<testsuite name="Delete User: DELETE /api/users Delete user failed" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.017">
+<testcase classname="Delete User: DELETE /api/users Delete user failed" name="should response access denied" time="0.006"/>
+</testsuite>
+<testsuite name="Delete User: DELETE /api/users Delete user success" tests="3" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.016">
+<testcase classname="Delete User: DELETE /api/users Delete user success" name="should response delete account success" time="0.006"/>
+<testcase classname="Delete User: DELETE /api/users Delete user success" name="check if user not exits" time="0.001"/>
+<testcase classname="Delete User: DELETE /api/users Delete user success" name="check if no race exists for this user_id" time="0.001"/>
+</testsuite>
+<testsuite name="Forgot Password: POST /api/users/forgotpassword" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.002">
+<testcase classname="Forgot Password: POST /api/users/forgotpassword" name="check if user has been saved to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Forgot Password: POST /api/users/forgotpassword Invalid Parameters" tests="3" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.017">
+<testcase classname="Forgot Password: POST /api/users/forgotpassword Invalid Parameters" name="should failed cause email unknown" time="0.005"/>
+<testcase classname="Forgot Password: POST /api/users/forgotpassword Invalid Parameters" name="should failed cause email cannot be blank" time="0.004"/>
+<testcase classname="Forgot Password: POST /api/users/forgotpassword Invalid Parameters" name="should failed cause email is required" time="0.004"/>
+</testsuite>
+<testsuite name="Forgot Password: POST /api/users/forgotpassword Valid Parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.011">
+<testcase classname="Forgot Password: POST /api/users/forgotpassword Valid Parameters" name="should response success" time="0.007"/>
+</testsuite>
+<testsuite name="Log Out User: GET /api/users/logout" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.002">
+<testcase classname="Log Out User: GET /api/users/logout" name="should save the user 1 to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Log Out User: GET /api/users/logout log out failed user not authenticated" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.049">
+<testcase classname="Log Out User: GET /api/users/logout log out failed user not authenticated" name="should logout failed" time="0.004"/>
+</testsuite>
+<testsuite name="Log Out User: GET /api/users/logout log out success" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.009">
+<testcase classname="Log Out User: GET /api/users/logout log out success" name="should logout successfully" time="0.004"/>
+</testsuite>
+<testsuite name="Update User: PUT /api/users/update PUT /api/users/update/profile" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.002">
+<testcase classname="Update User: PUT /api/users/update PUT /api/users/update/profile" name="should save the user 1 to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Update User: PUT /api/users/update PUT /api/users/update/profile Invalid Parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.012">
+<testcase classname="Update User: PUT /api/users/update PUT /api/users/update/profile Invalid Parameters" name="should response access denied" time="0.003"/>
+</testsuite>
+<testsuite name="Update User: PUT /api/users/update PUT /api/users/update/profile Valid Parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.021">
+<testcase classname="Update User: PUT /api/users/update PUT /api/users/update/profile Valid Parameters" name="should response success" time="0.009"/>
+</testsuite>
+<testsuite name="Update User: PUT /api/users/update PUT /api/users/update/password" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.004">
+<testcase classname="Update User: PUT /api/users/update PUT /api/users/update/password" name="should save the user 1 to the database" time="0.001"/>
+</testsuite>
+<testsuite name="Update User: PUT /api/users/update PUT /api/users/update/password Access denied" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.013">
+<testcase classname="Update User: PUT /api/users/update PUT /api/users/update/password Access denied" name="should response access denied" time="0.004"/>
+</testsuite>
+<testsuite name="Update User: PUT /api/users/update PUT /api/users/update/password Invalid Parameters" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.022">
+<testcase classname="Update User: PUT /api/users/update PUT /api/users/update/password Invalid Parameters" name="should response invalid password" time="0.007"/>
+</testsuite>
+<testsuite name="Update User: PUT /api/users/update PUT /api/users/update/password Update user password" tests="1" failures="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:24 GMT" time="0.02">
+<testcase classname="Update User: PUT /api/users/update PUT /api/users/update/password Update user password" name="should response update password success" time="0.006"/>
+</testsuite>
+</testsuites>

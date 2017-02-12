@@ -11,6 +11,7 @@ test-results.xml
 coverage/
 karma.log
 config/config.js
+.idea
 
 
 # Packages #

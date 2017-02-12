@@ -24,6 +24,8 @@ i18n.init({
 
 module.exports = function(app, config, passport) {
 
+	app.use(require('prerender-node').set('prerenderToken', 'dzNULbJdLvZWcUyB8Su5'));
+
 	app.use(i18n.handle);
 
 	app.set('showStackError', true);

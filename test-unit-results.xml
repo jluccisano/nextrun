@@ -1,0 +1,108 @@
+<testsuite name="Mocha Tests" tests="106" failures="0" errors="0" skipped="0" timestamp="Wed, 30 Apr 2014 14:01:02 GMT" time="0.468">
+<testcase classname="ContactController create()" name="should return a 400 when no body" time="0.004"/>
+<testcase classname="ContactController create()" name="should return a 400 when database crash" time="0.013"/>
+<testcase classname="ContactController create()" name="should return a 200 when contact was created successfully" time="0.005"/>
+<testcase classname="ContactController feedback()" name="should return a 400 when feedback is undefined" time="0.001"/>
+<testcase classname="ContactController feedback()" name="should return a 200 when feedback was send successfully" time="0.001"/>
+<testcase classname="buildGeoDistanceFilter() valid parameters" name="should return 40km" time="0"/>
+<testcase classname="buildGeoDistanceFilter() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="buildGeoDistanceFilter() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="buildGeoDistanceFilter() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="buildGeoDistanceFilter() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="buildTermsFilter() valid parameters" name="should return an array of terms" time="0"/>
+<testcase classname="buildTermsFilter() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="buildTermFilter() valid parameters" name="should return a term" time="0"/>
+<testcase classname="buildTermFilter() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="buildQueryString() valid parameters" name="should return a term" time="0.001"/>
+<testcase classname="buildQueryString() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="buildDateRangeFilter() valid parameters" name="should return a term" time="0"/>
+<testcase classname="buildDateRangeFilter() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="buildDateRangeFacetFilter() valid parameters" name="should return a term" time="0.001"/>
+<testcase classname="buildDateRangeFacetFilter() invalid parameters" name="should return undefined" time="0"/>
+<testcase classname="ErrorUtils errors()" name="invalid parameters" time="0"/>
+<testcase classname="ErrorUtils errors()" name="valid parameters" time="0.001"/>
+<testcase classname="Gmaps geocodeAddress() valid parameters" name="should do nothing when req body is undefined" time="0.003"/>
+<testcase classname="Gmaps geocodeAddress() valid parameters" name="should do nothing when address has not changed" time="0.001"/>
+<testcase classname="Gmaps geocodeAddress() valid parameters" name="should do nothing is google throw error " time="0.004"/>
+<testcase classname="Gmaps geocodeAddress() valid parameters" name="should do nothing when updateLatLng throw an exception " time="0.001"/>
+<testcase classname="Gmaps geocodeAddress() valid parameters" name="should updateLatLng successfully " time="0.002"/>
+<testcase classname="MainController generateSnapshot()" name="should return a 404 when create phantom instance failed" time="0.08"/>
+<testcase classname="Notification sendEmailNewContact()" name="should not send email when framework failed" time="0.004"/>
+<testcase classname="Notification sendEmailNewContact()" name="should send email" time="0.002"/>
+<testcase classname="Notification sendEmailPasswordReinitialized()" name="should not send email when framework failed" time="0.002"/>
+<testcase classname="Notification sendEmailPasswordReinitialized()" name="should send email" time="0.001"/>
+<testcase classname="Notification sendEmailNewFeedback()" name="should not send email when framework failed" time="0.002"/>
+<testcase classname="Notification sendEmailNewFeedback()" name="should send email" time="0.002"/>
+<testcase classname="RaceController load()" name="should return a 400 when load race failed" time="0.002"/>
+<testcase classname="RaceController load()" name="should return a 400 when load return undefined race failed" time="0.001"/>
+<testcase classname="RaceController load()" name="should return req with a race return by database" time="0.001"/>
+<testcase classname="RaceController destroyAllRaceOfUser ()" name="should return a 400 when destroyAllRaceOfUser failed" time="0.001"/>
+<testcase classname="RaceController destroyAllRaceOfUser ()" name="should return a 400 when unknownUser" time="0.001"/>
+<testcase classname="RaceController destroyAllRaceOfUser ()" name="should return no error with a race return by database" time="0.003"/>
+<testcase classname="RaceController findByUser()" name="should return a 400 when find by user failed" time="0.001"/>
+<testcase classname="RaceController findByUser()" name="should return a 400 when database return null failed" time="0.001"/>
+<testcase classname="RaceController findByUser()" name="should return a 200 with races when find by user failed" time="0.001"/>
+<testcase classname="RaceController create()" name="should return a 400 when bodyParamRequired" time="0.001"/>
+<testcase classname="RaceController create()" name="should return a 400 when userNotConnected" time="0.002"/>
+<testcase classname="RaceController create()" name="should return a 400 when create race failed" time="0.009"/>
+<testcase classname="RaceController create()" name="should return a 200 when user was created successfully" time="0.008"/>
+<testcase classname="RaceController find()" name="should return 400 unknownRace" time="0"/>
+<testcase classname="RaceController find()" name="should return 200" time="0"/>
+<testcase classname="RaceController update()" name="should return error 400 when body param is not set" time="0.001"/>
+<testcase classname="RaceController update()" name="should return error 400 when unknownRace" time="0"/>
+<testcase classname="RaceController update()" name="should return error 400 when userNotConnected" time="0.002"/>
+<testcase classname="RaceController update()" name="should return error 400 when userNotOwner" time="0.001"/>
+<testcase classname="RaceController update()" name="should return error 400 when database crash" time="0.001"/>
+<testcase classname="RaceController update()" name="should return 200" time="0"/>
+<testcase classname="RaceController delete()" name="should return error 400 when database crash" time="0.001"/>
+<testcase classname="RaceController delete()" name="should return 400 userNotOwner" time="0.001"/>
+<testcase classname="RaceController delete()" name="should return 400 unknownRace" time="0"/>
+<testcase classname="RaceController delete()" name="should return 400 userNotConnected" time="0"/>
+<testcase classname="RaceController delete()" name="should return 200" time="0"/>
+<testcase classname="RaceController updateLatLng()" name="should return 400 raceId is not defined" time="0.002"/>
+<testcase classname="RaceController updateLatLng()" name="should return 400 latlng is not defined" time="0.001"/>
+<testcase classname="RaceController updateLatLng()" name="should return 400 when the database crash" time="0"/>
+<testcase classname="RaceController updateLatLng()" name="should return 200" time="0.001"/>
+<testcase classname="RaceController publish()" name="should return error with 400 status" time="0.001"/>
+<testcase classname="RaceController publish()" name="should return 400 userNotOwner" time="0.001"/>
+<testcase classname="RaceController publish()" name="should return 400 unknownRace" time="0.001"/>
+<testcase classname="RaceController publish()" name="should return 400 userNotConnected" time="0.001"/>
+<testcase classname="RaceController publish()" name="should return 200" time="0.001"/>
+<testcase classname="RaceController search()" name="should return error 400 when no criteria" time="0.001"/>
+<testcase classname="RaceController search()" name="should return error 400 when elasticsearch crash" time="0.013"/>
+<testcase classname="RaceController search()" name="should return error 400 when elasticsearch crash" time="0.025"/>
+<testcase classname="RaceController search()" name="should return error 200 when criteria is empty" time="0.009"/>
+<testcase classname="RaceController search()" name="should return error 200 when criteria is mode search by fulltext" time="0.028"/>
+<testcase classname="RaceController search()" name="should return error 200 when criteria is mode search by geolocation" time="0.017"/>
+<testcase classname="RaceController autocomplete()" name="should return error 400 when elasticsearch crash" time="0.012"/>
+<testcase classname="RaceController autocomplete()" name="should return error 400 when elasticsearch crash" time="0.013"/>
+<testcase classname="RaceController autocomplete()" name="should return error 400 when no criteria" time="0.001"/>
+<testcase classname="RaceController autocomplete()" name="should return error 200" time="0.011"/>
+<testcase classname="RaceController findAll()" name="should return error 400 when database crash" time="0.001"/>
+<testcase classname="RaceController findAll()" name="should return error 400 when database return races undefined" time="0.001"/>
+<testcase classname="RaceController findAll()" name="should return 200" time="0.001"/>
+<testcase classname="UserController logout()" name="should return OK" time="0"/>
+<testcase classname="UserController signup()" name="should return a 400 when bodyParamRequired" time="0.001"/>
+<testcase classname="UserController signup()" name="should return a 400 when database crash" time="0.006"/>
+<testcase classname="UserController signup()" name="should return a 400 when req.logIn failed" time="0.004"/>
+<testcase classname="UserController signup()" name="should return 200 when user is created successfully" time="0.003"/>
+<testcase classname="UserController forgotpassword()" name="should return error 400 when body param is not set" time="0"/>
+<testcase classname="UserController forgotpassword()" name="should return error 400 and invalid email" time="0.001"/>
+<testcase classname="UserController forgotpassword()" name="should return error 400 database crash" time="0.002"/>
+<testcase classname="UserController forgotpassword()" name="should return 200" time="0.002"/>
+<testcase classname="UserController settings()" name="should return error 400 when userNotConnected" time="0.001"/>
+<testcase classname="UserController settings()" name="should return error 200" time="0.001"/>
+<testcase classname="UserController checkIfEmailAlreadyExists()" name="should return error 400 when bodyParamRequired" time="0"/>
+<testcase classname="UserController checkIfEmailAlreadyExists()" name="should return error 400 when database crash" time="0.001"/>
+<testcase classname="UserController checkIfEmailAlreadyExists()" name="should return error 400 when emailAlreadyExists" time="0.001"/>
+<testcase classname="UserController checkIfEmailAlreadyExists()" name="should return 200" time="0"/>
+<testcase classname="UserController updatePassword()" name="should return error 400 when user is not connected" time="0.001"/>
+<testcase classname="UserController updatePassword()" name="should return error 400 when bodyParamRequired" time="0"/>
+<testcase classname="UserController updatePassword()" name="should return error 400 when invalidPassword" time="0.001"/>
+<testcase classname="UserController updatePassword()" name="should return error 400 when invalidPassword" time="0.001"/>
+<testcase classname="UserController updatePassword()" name="should return error 200" time="0.001"/>
+<testcase classname="UserController deleteAccount()" name="should return a 400 when user delete fails" time="0.001"/>
+<testcase classname="UserController deleteAccount()" name="should return a 200 with a username and role in the response body" time="0.001"/>
+<testcase classname="UserController updateProfile()" name="should return a 400 when user update fails" time="0.003"/>
+<testcase classname="UserController updateProfile()" name="should return a 200 with a username and email in the response body" time="0.002"/>
+</testsuite>
