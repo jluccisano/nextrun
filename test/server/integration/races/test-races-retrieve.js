@@ -1,18 +1,16 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  request = require('superagent'),
-  app = require('../../../../server'),
-  context = describe,
-  userRoles = require('../../../../public/js/routingConfig').userRoles,
-  Race = mongoose.model('Race'),
-  User = mongoose.model('User'),
+var mongoose = require("mongoose"),
+  should = require("should"),
+  request = require("superagent"),
+  app = require("../../../../server"),
+  Race = mongoose.model("Race"),
+  User = mongoose.model("User"),
   superagent = request.agent(app);
 
 /**
@@ -20,35 +18,35 @@ var mongoose = require('mongoose'),
  *
  * Non valide
  * Aucun  utilisateur connecté
- * l'utilisateur connecté n'est pas propriétaire de la manifestation
+ * l"utilisateur connecté n"est pas propriétaire de la manifestation
  *
  * Valide
  * Le user connecté est propriétaire de la manifestation
  */
 
 var user1 = {
-  username: 'foobar1',
+  username: "foobar1",
   email: "foobar1@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '123726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "123726537a11c4aa8d789bbc",
+  password: "123"
 };
 
 var user2 = {
-  username: 'foobar2',
+  username: "foobar2",
   email: "foobar2@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '223726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "223726537a11c4aa8d789bbc",
+  password: "123"
 };
 
-describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function() {
+describe("Retrieve races: GET /api/users/:userId/races/(page/:page)?", function() {
 
   before(function(done) {
     User.remove({}, function() {
@@ -79,13 +77,13 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
   });
 
-  it('should save the user 1 to the database', function(done) {
+  it("should save the user 1 to the database", function(done) {
     User.findOne({
-      email: 'foobar1@example.com'
+      email: "foobar1@example.com"
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar1@example.com');
+      user.email.should.equal("foobar1@example.com");
       done();
     });
   });
@@ -93,49 +91,49 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
   before(function(done) {
 
     Race.create({
-      name: 'Duathlon de Castelnaudary',
+      name: "Duathlon de Castelnaudary",
       type: {
-        name: 'duathlon',
-        i18n: 'Duathlon'
+        name: "duathlon",
+        i18n: "Duathlon"
       },
       pin: {
         location: {
           lat: 45.34,
           lon: 1.7
         },
-        name: 'Castelnaudary',
+        name: "Castelnaudary",
         department: {
-          code: '11',
-          name: 'Aude',
-          region: 'Languedoc-Roussillon'
+          code: "11",
+          name: "Aude",
+          region: "Languedoc-Roussillon"
         }
       },
       date: currentDate,
-      edition: '1',
+      edition: "1",
       distanceType: {
-        name: 'S',
-        i18n: ''
+        name: "S",
+        i18n: ""
       },
       user_id: user1._id,
       last_update: new Date(),
       created_date: new Date()
-    }, function(err, race) {
+    }, function() {
       done();
     });
   });
 
-  it('should save the race to the database', function(done) {
+  it("should save the race to the database", function(done) {
     Race.findOne({
-      name: 'Duathlon de Castelnaudary'
+      name: "Duathlon de Castelnaudary"
     }).exec(function(err, race) {
       should.not.exist(err);
       race.should.be.an.instanceOf(Race);
-      race.name.should.equal('Duathlon de Castelnaudary');
-      race.type.name.should.equal('duathlon');
-      race.pin.department.name.should.equal('Aude');
+      race.name.should.equal("Duathlon de Castelnaudary");
+      race.type.name.should.equal("duathlon");
+      race.pin.department.name.should.equal("Aude");
       race.date.should.be.an.instanceOf(Date);
       race.edition.should.equal(1);
-      race.distanceType.name.should.equal('S');
+      race.distanceType.name.should.equal("S");
       race.user_id.should.eql(user1._id);
       race.published.should.equal(false);
       currentRace = race;
@@ -143,11 +141,11 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
   });
 
-  describe('Access denied', function() {
-    it('should not retrieve because access denied', function(done) {
-      superagent.get('http://localhost:'+process.env.PORT+'/api/races/find')
+  describe("Access denied", function() {
+    it("should not retrieve because access denied", function(done) {
+      superagent.get("http://localhost:"+process.env.PORT+"/api/races/find")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(403);
@@ -157,15 +155,15 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
   });
 
-  describe('invalid parameters', function() {
+  describe("invalid parameters", function() {
 
     before(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar2@example.com',
-          password: '123'
+          email: "foobar2@example.com",
+          password: "123"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -175,11 +173,11 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
         });
     });
 
-    it('should not retrieve any race for this user', function(done) {
+    it("should not retrieve any race for this user", function(done) {
 
-      superagent.get('http://localhost:'+process.env.PORT+'/api/races/find')
+      superagent.get("http://localhost:"+process.env.PORT+"/api/races/find")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -189,7 +187,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
 
     after(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -201,15 +199,15 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
 
   });
 
-  describe('valid parameters', function() {
+  describe("valid parameters", function() {
 
     before(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar1@example.com',
-          password: '123'
+          email: "foobar1@example.com",
+          password: "123"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -219,10 +217,10 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
         });
     });
 
-    it('should return one race', function(done) {
-      superagent.get('http://localhost:'+process.env.PORT+'/api/races/find')
+    it("should return one race", function(done) {
+      superagent.get("http://localhost:"+process.env.PORT+"/api/races/find")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -232,10 +230,10 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
         });
     });
 
-    it('test with page parameter should return one race', function(done) {
-      superagent.get('http://localhost:'+process.env.PORT+'/api/races/find/page/1')
+    it("test with page parameter should return one race", function(done) {
+      superagent.get("http://localhost:"+process.env.PORT+"/api/races/find/page/1")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -246,7 +244,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
 
     after(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

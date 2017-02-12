@@ -17,7 +17,6 @@ angular.module("nextrunApp.commons").factory("MetaService",
                     $rootScope.$apply();
                 }
             },
-
             loading: function() {
                 $rootScope.status = "loading";
                 if (!$rootScope.$$phase) {

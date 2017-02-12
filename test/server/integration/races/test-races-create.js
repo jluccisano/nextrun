@@ -1,18 +1,16 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  request = require('superagent'),
-  app = require('../../../../server'),
-  context = describe,
-  userRoles = require('../../../../public/js/routingConfig').userRoles,
-  Race = mongoose.model('Race'),
-  User = mongoose.model('User'),
+var mongoose = require("mongoose"),
+  should = require("should"),
+  request = require("superagent"),
+  app = require("../../../../server"),
+  Race = mongoose.model("Race"),
+  User = mongoose.model("User"),
   superagent = request.agent(app);
 
 /**
@@ -26,17 +24,17 @@ var mongoose = require('mongoose'),
  */
 
 var user1 = {
-  username: 'foobar1',
+  username: "foobar1",
   email: "foobar1@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '123726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "123726537a11c4aa8d789bbc",
+  password: "123"
 };
 
-describe('Create race: POST /api/races', function() {
+describe("Create race: POST /api/races", function() {
 
   before(function(done) {
     User.remove({}, function() {
@@ -59,27 +57,27 @@ describe('Create race: POST /api/races', function() {
     });
   });
 
-  it('should save the user 1 to the database', function(done) {
+  it("should save the user 1 to the database", function(done) {
     User.findOne({
-      email: 'foobar1@example.com'
+      email: "foobar1@example.com"
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar1@example.com');
+      user.email.should.equal("foobar1@example.com");
       done();
     });
   });
 
 
-  describe('Valid parameters', function() {
+  describe("Valid parameters", function() {
 
     before(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar1@example.com',
-          password: '123'
+          email: "foobar1@example.com",
+          password: "123"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -89,37 +87,37 @@ describe('Create race: POST /api/races', function() {
         });
     });
 
-    it('should response success', function(done) {
+    it("should response success", function(done) {
 
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/create')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/create")
         .send({
           race: {
-            name: 'Duathlon de Castelnaudary',
+            name: "Duathlon de Castelnaudary",
             type: {
-              name: 'duathlon',
-              i18n: 'Duathlon'
+              name: "duathlon",
+              i18n: "Duathlon"
             },
             pin: {
               location: {
                 lat: 45.34,
                 lon: 1.7
               },
-              name: 'Castelnaudary',
+              name: "Castelnaudary",
               department: {
-                code: '11',
-                name: 'Aude',
-                region: 'Languedoc-Roussillon'
+                code: "11",
+                name: "Aude",
+                region: "Languedoc-Roussillon"
               }
             },
             date: currentDate,
-            edition: '1',
+            edition: "1",
             distanceType: {
-              name: 'S',
-              i18n: ''
+              name: "S",
+              i18n: ""
             }
           }
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -127,54 +125,54 @@ describe('Create race: POST /api/races', function() {
         });
     });
 
-    it('should save the race to the database', function(done) {
+    it("should save the race to the database", function(done) {
       Race.findOne({
-        name: 'Duathlon de Castelnaudary'
+        name: "Duathlon de Castelnaudary"
       }).exec(function(err, race) {
         should.not.exist(err);
         race.should.be.an.instanceOf(Race);
-        race.name.should.equal('Duathlon de Castelnaudary');
-        race.type.name.should.equal('duathlon');
-        race.pin.department.name.should.equal('Aude');
+        race.name.should.equal("Duathlon de Castelnaudary");
+        race.type.name.should.equal("duathlon");
+        race.pin.department.name.should.equal("Aude");
         race.date.should.be.an.instanceOf(Date);
         race.edition.should.equal(1);
-        race.distanceType.name.should.equal('S');
+        race.distanceType.name.should.equal("S");
         race.user_id.should.eql(user1._id);
         race.published.should.equal(false);
         done();
       });
     });
 
-    it('create new race with distance type different should response success', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/create')
+    it("create new race with distance type different should response success", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/create")
         .send({
           race: {
-            name: 'Duathlon de Castelnaudary',
+            name: "Duathlon de Castelnaudary",
             type: {
-              name: 'duathlon',
-              i18n: 'Duathlon'
+              name: "duathlon",
+              i18n: "Duathlon"
             },
             pin: {
               location: {
                 lat: 45.34,
                 lon: 1.7
               },
-              name: 'Castelnaudary',
+              name: "Castelnaudary",
               department: {
-                code: '11',
-                name: 'Aude',
-                region: 'Languedoc-Roussillon'
+                code: "11",
+                name: "Aude",
+                region: "Languedoc-Roussillon"
               }
             },
             date: currentDate,
-            edition: '1',
+            edition: "1",
             distanceType: {
-              name: 'M',
-              i18n: ''
+              name: "M",
+              i18n: ""
             }
           }
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -183,7 +181,7 @@ describe('Create race: POST /api/races', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -193,37 +191,37 @@ describe('Create race: POST /api/races', function() {
 
   });
 
-  describe('Access Denied', function() {
-    it('should not create because access denied', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/create')
+  describe("Access Denied", function() {
+    it("should not create because access denied", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/create")
         .send({
           race: {
-            name: 'Duathlon de Castelnaudary',
+            name: "Duathlon de Castelnaudary",
             type: {
-              name: 'duathlon',
-              i18n: 'Duathlon'
+              name: "duathlon",
+              i18n: "Duathlon"
             },
             pin: {
               location: {
                 lat: 45.34,
                 lon: 1.7
               },
-              name: 'Castelnaudary',
+              name: "Castelnaudary",
               department: {
-                code: '11',
-                name: 'Aude',
-                region: 'Languedoc-Roussillon'
+                code: "11",
+                name: "Aude",
+                region: "Languedoc-Roussillon"
               }
             },
             date: currentDate,
-            edition: '1',
+            edition: "1",
             distanceType: {
-              name: 'S',
-              i18n: ''
+              name: "S",
+              i18n: ""
             }
           }
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(403);
@@ -233,15 +231,15 @@ describe('Create race: POST /api/races', function() {
     });
   });
 
-  describe('Invalid parameters', function() {
+  describe("Invalid parameters", function() {
 
     before(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar1@example.com',
-          password: '123'
+          email: "foobar1@example.com",
+          password: "123"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -251,37 +249,37 @@ describe('Create race: POST /api/races', function() {
         });
     });
 
-    it('should response raceAlreadyExists', function(done) {
+    it("should response raceAlreadyExists", function(done) {
 
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/create')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/create")
         .send({
           race: {
-            name: 'Duathlon de Castelnaudary',
+            name: "Duathlon de Castelnaudary",
             type: {
-              name: 'duathlon',
-              i18n: 'Duathlon'
+              name: "duathlon",
+              i18n: "Duathlon"
             },
             pin: {
               location: {
                 lat: 45.34,
                 lon: 1.7
               },
-              name: 'Castelnaudary',
+              name: "Castelnaudary",
               department: {
-                code: '11',
-                name: 'Aude',
-                region: 'Languedoc-Roussillon'
+                code: "11",
+                name: "Aude",
+                region: "Languedoc-Roussillon"
               }
             },
             date: currentDate,
-            edition: '1',
+            edition: "1",
             distanceType: {
-              name: 'S',
-              i18n: ''
+              name: "S",
+              i18n: ""
             }
           }
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
@@ -291,7 +289,7 @@ describe('Create race: POST /api/races', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

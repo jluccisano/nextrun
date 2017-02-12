@@ -1,45 +1,25 @@
-var mockModule = angular.module('mockModule', []);
+"use strict";
 
-mockModule.factory('MockFactory', [
-	'mockRace',
-	'mockRoute',
-	'mockContact',
-	'mockModalServices',
-	'mockRouteServices',
-	'mockRouteHelperServices',
-	'mockRaceServices',
-	'mockFileReaderServices',
-	'mockContactServices',
-	'mockAuthServices',
-	'mockSharedMetaService',
-	'mockUser',
-	'mockCriteria',
-	'mockSuggestResponse',
-	'mockGoogleMapsAPIServices',
-	'mockGpxServices',
-	'mockPath',
-	'mockLegs',
-	'mockPoint',
-	'mockSegment',
-	'mockSegments',
-	'mockMarkers',
+var mockModule = angular.module("mockModule", []);
+
+mockModule.factory("MockFactory",
 	function(
 		mockRace,
 		mockRoute,
 		mockContact,
-		mockModalServices,
-		mockRouteServices,
-		mockRouteHelperServices,
-		mockRaceServices,
-		mockFileReaderServices,
-		mockContactServices,
-		mockAuthServices,
+		mockModalService,
+		mockRouteService,
+		mockRouteHelperService,
+		mockRaceService,
+		mockFileReaderService,
+		mockContactService,
+		mockAuthService,
 		mockSharedMetaService,
 		mockUser,
 		mockCriteria,
 		mockSuggestResponse,
-		mockGoogleMapsAPIServices,
-		mockGpxServices,
+		mockGoogleMapsAPIService,
+		mockGpxService,
 		mockPath,
 		mockLegs,
 		mockPoint,
@@ -47,38 +27,36 @@ mockModule.factory('MockFactory', [
 		mockSegments,
 		mockMarkers) {
 
-		'use strict';
-
 		return {
 			getMockRace: function() {
 				return mockRace;
 			},
 			getMockModalServices: function() {
-				return mockModalServices;
+				return mockModalService;
 			},
 			getMockRoute: function() {
 				return mockRoute;
 			},
-			getMockRouteServices: function() {
-				return mockRouteServices;
+			getMockRouteService: function() {
+				return mockRouteService;
 			},
 			getMockRouteHelperServices: function() {
-				return mockRouteHelperServices;
+				return mockRouteHelperService;
 			},
-			getMockRaceServices: function() {
-				return mockRaceServices;
+			getMockRaceService: function() {
+				return mockRaceService;
 			},
 			getMockFileReaderServices: function() {
-				return mockFileReaderServices;
+				return mockFileReaderService;
 			},
-			getMockContactServices: function() {
-				return mockContactServices;
+			getMockContactService: function() {
+				return mockContactService;
 			},
 			getMockContact: function() {
 				return mockContact;
 			},
-			getMockAuthServices: function() {
-				return mockAuthServices;
+			getMockAuthService: function() {
+				return mockAuthService;
 			},
 			getMockSharedMetaService: function() {
 				return mockSharedMetaService;
@@ -93,10 +71,10 @@ mockModule.factory('MockFactory', [
 				return mockSuggestResponse;
 			},
 			getMockGoogleMapsAPIServices: function() {
-				return mockGoogleMapsAPIServices;
+				return mockGoogleMapsAPIService;
 			},
 			getMockGpxServices: function() {
-				return mockGpxServices;
+				return mockGpxService;
 			},
 			getMockPath: function() {
 				return mockPath;
@@ -117,6 +95,5 @@ mockModule.factory('MockFactory', [
 				return mockMarkers;
 			},
 
-		}
-	}
-]);
+		};
+	});

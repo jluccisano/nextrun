@@ -1,3 +1,7 @@
+"use strict";
+
+var path = require('path');
+
 module.exports = function(grunt) {
 
   var config = require('./config/config');
@@ -203,7 +207,7 @@ module.exports = function(grunt) {
       html: ['<%= yeoman.dist %>/server/views/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>']
+        assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/client/images']
       }
     },
 
@@ -267,7 +271,7 @@ module.exports = function(grunt) {
       server: {
         files: [{
           expand: true,
-          src: ['server/**/!{*.jade}', 'config/**', 'locales/**'],
+          src: ['server/**/!{*.jade}', 'config/**', 'locales/**', 'server.js'],
           dest: '<%= yeoman.dist %>'
         }]
       },
@@ -279,7 +283,8 @@ module.exports = function(grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             '*.{ico,png,txt}',
-            'sitemap.xml'
+            'sitemap.xml',
+            'modules/**/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
           ]
         }, {
           expand: true,
@@ -287,6 +292,19 @@ module.exports = function(grunt) {
           dest: '<%= yeoman.dist %>/client/images',
           src: ['generated/*']
         }]
+      }
+    },
+
+    rev: {
+      dist: {
+        files: {
+          src: [
+            '<%= yeoman.dist %>/client/scripts/{,*/}*.js',
+            '<%= yeoman.dist %>/client/styles/{,*/}*.css',
+            '<%= yeoman.dist %>/client/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.dist %>/client/styles/fonts/*'
+          ]
+        }
       }
     },
 
@@ -311,8 +329,8 @@ module.exports = function(grunt) {
 
     /*************************** SERVERS *******************************************************/
 
-    express: {
-      options: {       
+    /*express: {
+      options: {
         background: false,
         debug: true
       },
@@ -330,77 +348,35 @@ module.exports = function(grunt) {
           node_env: 'test'
         }
       }
-    },
+    },*/
 
-    /********************************** TEST PART ***************************************************/
-
-    mochaTest: {
-      unit: {
-        options: {
-          reporter: 'xunit-file',
-          require: 'blanket',
-          quiet: false
-        },
-        src: ['test/server/unit/**/test-*.js']
+    express: {
+      options: {
+        hostname: "0.0.0.0",
+        port: "3000",
+        server: "server.js",
+        debug: true
       },
-      integration: {
+      livereload: {
         options: {
-          timeout: 5000,
-          reporter: 'mocha-jenkins-reporter',
-          quiet: false,
-          require: 'blanket'
-        },
-        src: ['test/server/integration/**/test-*.js']
+          bases: [path.resolve("client"), path.resolve('client/modules'), path.resolve('client/bower_components'), path.resolve(path.normalize(__dirname + "/..") + '/.tmp/')],
+          livereload: true, // if you just specify `true`, default port `35729` will be used
+          serverreload: true
+        }
       },
-      'integration-coverage': {
+      test: {
         options: {
-          reporter: 'html-cov',
-          // use the quiet flag to suppress the mocha console output
-          quiet: true,
-          // specify a destination file to capture the mocha
-          // output (the quiet option does not suppress this)
-          captureFile: 'integration-coverage.html'
-        },
-        src: ['test/server/integration/**/test-*.js']
+          bases: ["<%= yeoman.dist %>", ".tmp"]
+        }
       },
-      'unit-coverage': {
+      dist: {
         options: {
-          reporter: 'html-cov',
-          // use the quiet flag to suppress the mocha console output
-          quiet: true,
-          // specify a destination file to capture the mocha
-          // output (the quiet option does not suppress this)
-          captureFile: 'unit-coverage.html'
-        },
-        src: ['test/server/unit/**/test-*.js']
-      },
-      'html-cov': {
-        options: {
-          reporter: 'html-cov',
-          quiet: true,
-          captureFile: 'coverage.html'
-        },
-        src: ['test/server/unit/**/test-*.js'] //'test/server/integration/**/test-*.js'
-      },
-      'unit-travis-cov': {
-        options: {
-          reporter: 'travis-cov'
-        },
-        src: ['test/server/unit/**/test-*.js']
-      },
-      'integration-travis-cov': {
-        options: {
-          reporter: 'travis-cov'
-        },
-        src: ['test/server/integration/**/test-*.js']
-      },
-      'travis-cov': {
-        options: {
-          reporter: 'travis-cov'
-        },
-        src: ['test/server/unit/**/test-*.js'] //'test/server/integration/**/test-*.js'
+          bases: ["<%= yeoman.dist %>"]
+        }
       }
     },
+
+    /********************************** checkcode ***************************************************/
 
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
@@ -426,27 +402,61 @@ module.exports = function(grunt) {
       }
     },
 
+    /********************************** TEST PART ***************************************************/
 
-    karma: {
+    mochaTest: {
       unit: {
-        configFile: 'test/client/spec/karma.conf.js',
-        background: false,
-        singleRun: true,
-        autoWatch: false,
-        logLevel: 'DEBUG'
+        options: {
+          reporter: 'spec',
+          require: 'blanket',
+          quiet: false
+        },
+        src: ['test/server/unit/**/test-*.js']
       },
-      e2e: {
-        configFile: 'karma-e2e.conf.js',
-        singleRun: true
+      integration: {
+        options: {
+          timeout: 5000,
+          reporter: 'spec',
+          quiet: false,
+          require: 'blanket'
+        },
+        src: ['test/server/integration/**/test-races-search.js']
       },
+      'integration-coverage': {
+        options: {
+          reporter: 'html-cov',
+          // use the quiet flag to suppress the mocha console output
+          quiet: true,
+          // specify a destination file to capture the mocha
+          // output (the quiet option does not suppress this)
+          captureFile: 'test/server/integration/coverage/integration-coverage.html'
+        },
+        src: ['test/server/integration/**/test-*.js']
+      },
+      'unit-coverage': {
+        options: {
+          reporter: 'html-cov',
+          // use the quiet flag to suppress the mocha console output
+          quiet: true,
+          // specify a destination file to capture the mocha
+          // output (the quiet option does not suppress this)
+          captureFile: 'test/server/unit/coverage/unit-coverage.html'
+        },
+        src: ['test/server/unit/**/test-*.js']
+      },
+      'unit-travis-cov': {
+        options: {
+          reporter: 'travis-cov'
+        },
+        src: ['test/server/unit/**/test-*.js']
+      },
+      'integration-travis-cov': {
+        options: {
+          reporter: 'travis-cov'
+        },
+        src: ['test/server/integration/**/test-*.js']
+      }
     },
-    travis: {
-      configFile: 'test/client/spec/karma.conf.js',
-      singleRun: true,
-      browsers: ['Chrome']
-    },
-
-
 
     protractor: {
       options: {
@@ -464,6 +474,17 @@ module.exports = function(grunt) {
         }
       }
     },
+
+    karma: {
+      unit: {
+        configFile: 'test/client/spec/karma.conf.js',
+        singleRun: true
+      }
+    },
+
+
+    /********************************** SCRIPTS PART ***************************************************/
+
     shell: {
       options: {
         stdout: true
@@ -502,10 +523,14 @@ module.exports = function(grunt) {
       test: {
         'uri': 'mongodb://localhost:27017/nextrun_test'
       },
-    }
+    },
+
+
   });
 
 
+
+  /********************************** TASKS PART ***************************************************/
 
   grunt.registerTask('test-client', ['jshint:src', 'test-client:unit']); //'test-client:e2e'
   grunt.registerTask('test-client:unit', ['karma:unit']);
@@ -513,7 +538,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test-server', ['jshint:src', 'test-server:unit', 'mochaTest:html-cov', 'mochaTest:travis-cov']); //'test-server:integration'
   grunt.registerTask('test-server:unit', ['mochaTest:unit', 'mochaTest:unit-coverage', 'mochaTest:unit-travis-cov']);
-  grunt.registerTask('test-server:integration', ['shell:elasticsearch_install_test_idx', 'mochaTest:integration', 'mochaTest:integration-coverage', 'mochaTest:integration-travis-cov']);
+  grunt.registerTask('test-server:integration', ['shell:elasticsearch_install_test_idx', 'mochaTest:integration']); //'mochaTest:integration-coverage', 'mochaTest:integration-travis-cov'
 
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
@@ -551,6 +576,7 @@ module.exports = function(grunt) {
     'cdnify',
     'cssmin',
     'uglify',
+    'rev',
     'usemin',
     'htmlmin',
     'jsdoc'
@@ -564,7 +590,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('serve', function(target) {
     if (target === 'dist') {
-      return grunt.task.run(['build']);
+      return grunt.task.run(['newbuild', 'express:dist', 'express-keepalive']);
     }
 
     grunt.task.run([
@@ -572,7 +598,8 @@ module.exports = function(grunt) {
       'bowerInstall',
       'concurrent:server',
       'autoprefixer',
-      'express:development',
+      'express:livereload',
+      //'express:development'
     ]);
 
   });

@@ -1,44 +1,45 @@
-'use strict';
+"use strict";
 
-describe('MainController', function() {
+describe("MainController", function() {
 
-	var $scope, $controller, mockAuthServices, mockAlert, mockSharedMetaService;
+	var $scope, $controller, mockAuthService, mockAlertService, mockSharedMetaService;
 
-	beforeEach(module('nextrunApp.main', 'mockModule'));
+	beforeEach(module("nextrunApp.main", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _AuthServices_, _Alert_,_MockFactory_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _AuthService_, _AlertService_,_MockFactory_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
-		mockAuthServices = _AuthServices_;
-		mockAlert = _Alert_;
+		mockAuthService = _AuthService_;
+		mockAlertService = _AlertService_;
 
 
-		$controller('MainController', {
+		$controller("MainController", {
 			$scope: $scope,
-			SharedMetaService: _MockFactory_.getMockSharedMetaService()
+			SharedMetaService: _MockFactory_.getMockSharedMetaService(),
+			AuthService: mockAuthService
 		});
 	}));
 
-	describe('isLoggedIn()', function() {
-		it('isLoggedIn with success', function() {
-			spyOn(mockAuthServices, "isLoggedIn").and.returnValue(true);
+	describe("isLoggedIn()", function() {
+		it("isLoggedIn with success", function() {
+			spyOn(mockAuthService, "isLoggedIn").and.returnValue(true);
 			$scope.isLoggedIn();
-			expect(mockAuthServices.isLoggedIn()).toEqual(true);
-			expect(mockAuthServices.isLoggedIn).toHaveBeenCalled();
+			expect(mockAuthService.isLoggedIn()).toEqual(true);
+			expect(mockAuthService.isLoggedIn).toHaveBeenCalled();
 		});
 	});
 
-	describe('closemockAlert()', function() {
-		it('closemockAlert with success', function() {
-			spyOn(mockAlert, "closeAlert");
+	describe("closemockAlert()", function() {
+		it("closemockAlert with success", function() {
+			spyOn(mockAlertService, "closeAlert");
 			$scope.closeAlert();
-			expect(mockAlert.closeAlert).toHaveBeenCalled();
+			expect(mockAlertService.closeAlert).toHaveBeenCalled();
 		});
 	});
 
-	describe('handleBroadcastMeta', function() {
-		it('handleBroadcastMeta is called with success', function() {
-			$scope.$broadcast('handleBroadcastMeta');
+	describe("handleBroadcastMeta", function() {
+		it("handleBroadcastMeta is called with success", function() {
+			$scope.$broadcast("handleBroadcastMeta");
 			expect($scope.pageTitle).toEqual("home");
 			expect($scope.ogTitle).toEqual("home");
 			expect($scope.ogUrl).toEqual("/home");

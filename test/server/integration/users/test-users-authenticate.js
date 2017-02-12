@@ -1,35 +1,33 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  app = require('../../../../server'),
-  context = describe,
-  superagent = require('superagent'),
-  userRoles = require('../../../../public/js/routingConfig').userRoles,
-  User = mongoose.model('User');
+var mongoose = require("mongoose"),
+  should = require("should"),
+  app = require("../../../../server"),
+  superagent = require("superagent"),
+  User = mongoose.model("User");
 
 /**
  * Autheniticate User tests
  */
 
 var user1 = {
-  username: 'foobar1',
+  username: "foobar1",
   email: "foobar1@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '123726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "123726537a11c4aa8d789bbc",
+  password: "123"
 };
 
 
-describe('Authenticate user: POST /api/users/session', function() {
+describe("Authenticate user: POST /api/users/session", function() {
   
   before(function(done) {
     User.remove({}, function() {
@@ -46,27 +44,27 @@ describe('Authenticate user: POST /api/users/session', function() {
   });
 
 
-  it('should save the user 1 to the database', function(done) {
+  it("should save the user 1 to the database", function(done) {
     User.findOne({
-      email: 'foobar1@example.com'
+      email: "foobar1@example.com"
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar1@example.com');
+      user.email.should.equal("foobar1@example.com");
       done();
     });
   });
 
 
-  describe('Authenticate failed', function() {
+  describe("Authenticate failed", function() {
 
-    it('should response invalidEmailOrPassword', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+    it("should response invalidEmailOrPassword", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar@example.com',
-          password: 'badpassword'
+          email: "foobar@example.com",
+          password: "badpassword"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
@@ -75,10 +73,10 @@ describe('Authenticate user: POST /api/users/session', function() {
         });
     });
 
-    it('should response Missing Credentials', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+    it("should response Missing Credentials", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
@@ -88,15 +86,15 @@ describe('Authenticate user: POST /api/users/session', function() {
     });
   });
 
-  describe('Authenticate success', function() {
+  describe("Authenticate success", function() {
 
-    it('should response success', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+    it("should response success", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar1@example.com',
-          password: '123'
+          email: "foobar1@example.com",
+          password: "123"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -112,7 +110,4 @@ describe('Authenticate user: POST /api/users/session', function() {
       done();
     });
   });
-
-
-
 });

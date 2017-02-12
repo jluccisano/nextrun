@@ -20,8 +20,8 @@ angular.module("nextrunApp").controller("MainController",
 			return AuthService.isLoggedIn();
 		};
 
-		$scope.closeAlertService = function() {
-			AlertService.closeAlertService();
+		$scope.closeAlert = function() {
+			AlertService.closeAlert();
 		};
 
 	});

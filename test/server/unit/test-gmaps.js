@@ -1,21 +1,17 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-	should = require('should'),
-	chai = require('chai'),
+var chai = require("chai"),
 	expect = chai.expect,
-	sinon = require('sinon'),
+	sinon = require("sinon"),
 	sinonChai = require("sinon-chai"),
-	app = require('../../../server'),
-	RaceController = require('../../../app/controllers/raceController'),
-	Race = mongoose.model('Race'),
-	Schema = mongoose.Schema,
-	gm = require('googlemaps'),
-	gmaps = require('../../../config/middlewares/gmaps');
+	app = require("../../../server"),
+	RaceController = require("../../../server/controllers/raceController"),
+	gm = require("googlemaps"),
+	gmaps = require("../../../config/middlewares/gmaps");
 
 chai.use(sinonChai);
 
@@ -28,9 +24,9 @@ afterEach(function() {
 	sandbox.restore();
 });
 
-describe('Gmaps', function() {
+describe("Gmaps", function() {
 
-	describe('geocodeAddress()', function() {
+	describe("geocodeAddress()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -39,8 +35,8 @@ describe('Gmaps', function() {
 						plan: {
 							address: {
 								address1: "3 rue d'Occitanie",
-								address2: '',
-								postcode: '31290',
+								address2: "",
+								postcode: "31290",
 								city: "Montgaillard-Lauragais"
 							}
 						}
@@ -50,8 +46,8 @@ describe('Gmaps', function() {
 					plan: {
 						address: {
 							address1: "3 rue d'Occitanie",
-							address2: '',
-							postcode: '31290',
+							address2: "",
+							postcode: "31290",
 							city: "Montgaillard-Lauragais"
 						}
 					}
@@ -59,20 +55,20 @@ describe('Gmaps', function() {
 			};
 		});
 
-		describe('valid parameters', function() {
+		describe("valid parameters", function() {
 
 
 
-			it('should do nothing when req body is undefined', function(done) {
+			it("should do nothing when req body is undefined", function(done) {
 
 				req.body.race = undefined;
 
-				sandbox.stub(gm, 'geocode', function(undefined, cb) {
+				sandbox.stub(gm, "geocode", function(undefined, cb) {
 					cb(null, null);
 
 				});
 
-				updateLatLngStub = sandbox.stub(RaceController, 'updateLatLng');
+				var updateLatLngStub = sandbox.stub(RaceController, "updateLatLng");
 
 				gmaps.geocodeAddress(req, res, next);
 
@@ -81,14 +77,14 @@ describe('Gmaps', function() {
 				done();
 			});
 
-			it('should do nothing when address has not changed', function(done) {
+			it("should do nothing when address has not changed", function(done) {
 
-				sandbox.stub(gm, 'geocode', function(undefined, cb) {
+				sandbox.stub(gm, "geocode", function(undefined, cb) {
 					cb(null, null);
 
 				});
 
-				updateLatLngStub = sandbox.stub(RaceController, 'updateLatLng');
+				var updateLatLngStub = sandbox.stub(RaceController, "updateLatLng");
 
 				gmaps.geocodeAddress(req, res, next);
 
@@ -97,11 +93,11 @@ describe('Gmaps', function() {
 				done();
 			});
 
-			it('should do nothing is google throw error ', function(done) {
+			it("should do nothing is google throw error ", function(done) {
 
 				req.body.race.plan.address.city = "Villefranche-de-Lauragais";
 
-				sandbox.stub(gm, 'geocode', function(undefined, cb) {
+				sandbox.stub(gm, "geocode", function(undefined, cb) {
 					cb({
 						"errors": [{
 							"message": "error"
@@ -110,7 +106,7 @@ describe('Gmaps', function() {
 
 				});
 
-				updateLatLngStub = sandbox.stub(RaceController, 'updateLatLng');
+				var updateLatLngStub = sandbox.stub(RaceController, "updateLatLng");
 				updateLatLngStub.returns(true);
 
 
@@ -121,11 +117,11 @@ describe('Gmaps', function() {
 				done();
 			});
 
-			it('should do nothing when updateLatLng throw an exception ', function(done) {
+			it("should do nothing when updateLatLng throw an exception ", function(done) {
 
 				req.body.race.plan.address.city = "Villefranche-de-Lauragais";
 
-				sandbox.stub(gm, 'geocode', function(undefined, cb) {
+				sandbox.stub(gm, "geocode", function(undefined, cb) {
 					cb(null, {
 						results: [{
 							geometry: {
@@ -139,7 +135,7 @@ describe('Gmaps', function() {
 
 				});
 
-				updateLatLngStub = sandbox.stub(RaceController, 'updateLatLng');
+				var updateLatLngStub = sandbox.stub(RaceController, "updateLatLng");
 				updateLatLngStub.throws();
 
 
@@ -151,11 +147,11 @@ describe('Gmaps', function() {
 			});
 
 
-			it('should updateLatLng successfully ', function(done) {
+			it("should updateLatLng successfully ", function(done) {
 
 				req.body.race.plan.address.city = "Villefranche-de-Lauragais";
 
-				sandbox.stub(gm, 'geocode', function(undefined, cb) {
+				sandbox.stub(gm, "geocode", function(undefined, cb) {
 					cb(null, {
 						results: [{
 							geometry: {
@@ -169,7 +165,7 @@ describe('Gmaps', function() {
 
 				});
 
-				updateLatLngStub = sandbox.stub(RaceController, 'updateLatLng');
+				var updateLatLngStub = sandbox.stub(RaceController, "updateLatLng");
 				updateLatLngStub.returns(true);
 
 

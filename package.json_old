@@ -49,6 +49,7 @@
     "jasmine-reporters": "~0.4.1",
     "xunit-file": "0.0.5",
     "mocha-jenkins-reporter": "~0.1.0",
+    
     "grunt-contrib-compass": "~0.7.2",
     "grunt-concurrent": "~0.5.0",
     "grunt-svgmin": "~0.2.0",

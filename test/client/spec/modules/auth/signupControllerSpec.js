@@ -1,42 +1,42 @@
-'use strict';
+"use strict";
 
-describe('SignupController', function() {
+describe("SignupController", function() {
 
-	var $scope, $controller, $location, $q, mockAuthServices, mockAlert, metaBuilder;
+	var $scope, $controller, $location, $q, mockAuthService, mockAlertService, mockMetaService;
 
-	beforeEach(module('nextrunApp.auth', 'mockModule'));
+	beforeEach(module("nextrunApp.auth", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _Alert_, _$location_, _MockFactory_, _metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _AlertService_, _$location_, _MockFactory_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
-		mockAlert = _Alert_;
+		mockAlertService = _AlertService_;
 		$location = _$location_;
-		metaBuilder = _metaBuilder_;
+		mockMetaService = _MetaService_;
 
-		mockAuthServices = _MockFactory_.getMockAuthServices();
+		mockAuthService = _MockFactory_.getMockAuthService();
 
-		spyOn(metaBuilder, "ready");
+		spyOn(mockMetaService, "ready");
 
-		$controller('SignupController', {
+		$controller("SignupController", {
 			$scope: $scope,
-			AuthServices: mockAuthServices,
-			Alert: mockAlert
+			AuthService: mockAuthService,
+			AlertService: mockAlertService
 		});
 	}));
 
-	describe('submit()', function() {
-		it('submit with success', function() {
-			mockAuthServices.setPromiseResponse(true);
-			spyOn(mockAuthServices, "register").and.callThrough();
-			spyOn(mockAlert, "add");
+	describe("submit()", function() {
+		it("submit with success", function() {
+			mockAuthService.setPromiseResponse(true);
+			spyOn(mockAuthService, "register").and.callThrough();
+			spyOn(mockAlertService, "add");
 			spyOn($location, "path");
 			$scope.submit();
 			$scope.$apply();
-			expect(mockAuthServices.register).toHaveBeenCalled();
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.signup.successfully", 3000);
-			expect($location.path).toHaveBeenCalledWith('/');
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(mockAuthService.register).toHaveBeenCalled();
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.signup.successfully", 3000);
+			expect($location.path).toHaveBeenCalledWith("/");
+			expect(mockMetaService.ready).toHaveBeenCalled();
 		});
 
 	});

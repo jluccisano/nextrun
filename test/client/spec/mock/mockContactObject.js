@@ -1,4 +1,6 @@
-angular.module('mockModule').value('mockContact', {
+"use strict";
+
+angular.module("mockModule").value("mockContact", {
 	email: "foo@bar.com",
 	type: "athlete"
 });

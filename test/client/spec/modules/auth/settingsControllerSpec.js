@@ -1,34 +1,34 @@
-'use strict';
+"use strict";
 
-describe('SettingsController', function() {
+describe("SettingsController", function() {
 
-	var $scope, $controller, $location, $q, mockAuthServices, mockAlert, mockUser, metaBuilder;
+	var $scope, $controller, $location, $q, mockAuthService, mockAlertService, mockUser, mockMetaService;
 
-	beforeEach(module('nextrunApp.auth', 'mockModule'));
+	beforeEach(module("nextrunApp.auth", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _Alert_, _MockFactory_, _metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _AlertService_, _MockFactory_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
-		metaBuilder = _metaBuilder_;
-		mockAlert = _Alert_;
-		mockAuthServices = _MockFactory_.getMockAuthServices();
+		mockMetaService = _MetaService_;
+		mockAlertService = _AlertService_;
+		mockAuthService = _MockFactory_.getMockAuthService();
 		mockUser = _MockFactory_.getMockUser();
 	}));
 
-	describe('init()', function() {
-		it('get user profile with success', function() {
-			mockAuthServices.setPromiseResponse(true);
+	describe("init()", function() {
+		it("get user profile with success", function() {
+			mockAuthService.setPromiseResponse(true);
 
-			$controller('SettingsController', {
+			$controller("SettingsController", {
 				$scope: $scope,
-				AuthServices: mockAuthServices,
-				Alert: mockAlert
+				AuthService: mockAuthService,
+				AlertService: mockAlertService
 			});
 
-			spyOn(mockAuthServices, "getUserProfile").and.callThrough();
-			spyOn(mockAlert, "add");
+			spyOn(mockAuthService, "getUserProfile").and.callThrough();
+			spyOn(mockAlertService, "add");
 			spyOn($scope, "reset");
 
 			$scope.init();
@@ -39,82 +39,82 @@ describe('SettingsController', function() {
 	});
 
 
-	describe('updateProfile()', function() {
-		it('update profile with success', function() {
-			mockAuthServices.setPromiseResponse(true);
+	describe("updateProfile()", function() {
+		it("update profile with success", function() {
+			mockAuthService.setPromiseResponse(true);
 
-			$controller('SettingsController', {
+			$controller("SettingsController", {
 				$scope: $scope,
-				AuthServices: mockAuthServices,
-				Alert: mockAlert
+				AuthService: mockAuthService,
+				AlertService: mockAlertService
 			});
 
 			spyOn($scope, "reset");
-			spyOn(mockAlert, "add");
-			spyOn(mockAuthServices, "updateProfile").and.callThrough();
+			spyOn(mockAlertService, "add");
+			spyOn(mockAuthService, "updateProfile").and.callThrough();
 
 			$scope.updateProfile();
 			$scope.$apply();
 
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.update.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.update.successfully", 3000);
 			expect($scope.reset).toHaveBeenCalled();
 		});
 	});
 
-	describe('updatePassword()', function() {
-		it('update password with success', function() {
-			mockAuthServices.setPromiseResponse(true);
+	describe("updatePassword()", function() {
+		it("update password with success", function() {
+			mockAuthService.setPromiseResponse(true);
 
-			$controller('SettingsController', {
+			$controller("SettingsController", {
 				$scope: $scope,
-				AuthServices: mockAuthServices,
-				Alert: mockAlert
+				AuthService: mockAuthService,
+				AlertService: mockAlertService
 			});
 
 			spyOn($scope, "reset");
-			spyOn(mockAlert, "add");
-			spyOn(mockAuthServices, "updatePassword").and.callThrough();
+			spyOn(mockAlertService, "add");
+			spyOn(mockAuthService, "updatePassword").and.callThrough();
 
 			$scope.updatePassword();
 			$scope.$apply();
 
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.update.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.update.successfully", 3000);
 			expect($scope.reset).toHaveBeenCalled();
 		});
 	});
 
-	describe('deleteAccount()', function() {
-		it('delete account with success', function() {
-			mockAuthServices.setPromiseResponse(true);
+	describe("deleteAccount()", function() {
+		it("delete account with success", function() {
+			mockAuthService.setPromiseResponse(true);
 
-			$controller('SettingsController', {
+			$controller("SettingsController", {
 				$scope: $scope,
-				AuthServices: mockAuthServices,
-				Alert: mockAlert
+				AuthService: mockAuthService,
+				AlertService: mockAlertService
 			});
 
-			spyOn(mockAlert, "add");
+			spyOn(mockAlertService, "add");
 			spyOn($location, "path");
-			spyOn(mockAuthServices, "deleteAccount").and.callThrough();
+			spyOn(mockAuthService, "deleteAccount").and.callThrough();
 
 			$scope.deleteAccount();
 			$scope.$apply();
 
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.account.deleted.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.account.deleted.successfully", 3000);
 			expect($location.path).toHaveBeenCalledWith("/");
 		});
 	});
 
-	describe('isUnchanged()', function() {
-		it('isUnchanged with success', function() {
+	describe("isUnchanged()", function() {
+		it("isUnchanged with success", function() {
 			$scope.master = mockUser;
 
-			mockAuthServices.setPromiseResponse(true);
+			mockAuthService.setPromiseResponse(true);
 
-			$controller('SettingsController', {
+			$controller("SettingsController", {
 				$scope: $scope,
-				AuthServices: mockAuthServices,
-				Alert: mockAlert
+				AuthService: mockAuthService,
+				AlertService: mockAlertService
 			});
 
 			spyOn(angular, "equals").and.returnValue(true);
@@ -125,17 +125,17 @@ describe('SettingsController', function() {
 		});
 	});
 
-	describe('ready()', function() {
-		it('loading with success', function() {
-			spyOn(metaBuilder, "ready");
+	describe("ready()", function() {
+		it("loading with success", function() {
+			spyOn(mockMetaService, "ready");
 
-			$controller('SettingsController', {
+			$controller("SettingsController", {
 				$scope: $scope,
-				AuthServices: mockAuthServices,
-				Alert: mockAlert
+				AuthService: mockAuthService,
+				AlertService: mockAlertService
 			});
 
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(mockMetaService.ready).toHaveBeenCalled();
 		});
 
 	});

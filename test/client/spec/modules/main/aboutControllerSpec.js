@@ -1,28 +1,29 @@
-'use strict';
+"use strict";
 
-describe('AboutController', function() {
+describe("AboutController", function() {
 
-	var $scope, $controller, metaBuilder;
+	var $scope, $controller, mockMetaService;
 
-	beforeEach(module('nextrunApp.main'));
+	beforeEach(module("nextrunApp.main"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
-		metaBuilder = _metaBuilder_;
+		mockMetaService = _MetaService_;
 	}));
 
-	describe('ready()', function() {
+	describe("ready()", function() {
 
-		it('loading with success', function() {
+		it("loading with success", function() {
 
-			spyOn(metaBuilder, "ready");
+			spyOn(mockMetaService, "ready");
 
-			$controller('AboutController', {
+			$controller("AboutController", {
 				$scope: $scope,
+				MetaService: mockMetaService
 			});
 
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(mockMetaService.ready).toHaveBeenCalled();
 		});
 
 	});

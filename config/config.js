@@ -21,7 +21,7 @@ module.exports = {
   test: {
     logLevel: "info",
     host: "localhost",
-    db: "mongodb://localhost/nextrun_test",
+    db: "mongodb://localhost:27017/nextrun_test",
     root: rootPath,
     facebook: {
       clientID: "APP_ID",

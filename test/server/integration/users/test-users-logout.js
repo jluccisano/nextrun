@@ -1,17 +1,15 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  app = require('../../../../server'),
-  context = describe,
-  request = require('superagent'),
-  userRoles = require('../../../../public/js/routingConfig').userRoles,
-  User = mongoose.model('User'),
+var mongoose = require("mongoose"),
+  should = require("should"),
+  app = require("../../../../server"),
+  request = require("superagent"),
+  User = mongoose.model("User"),
   superagent = request.agent(app);
 
 /**
@@ -19,17 +17,17 @@ var mongoose = require('mongoose'),
  */
 
 var user1 = {
-  username: 'foobar1',
+  username: "foobar1",
   email: "foobar1@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '123726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "123726537a11c4aa8d789bbc",
+  password: "123"
 };
 
-describe('Log Out User: GET /api/users/logout', function() {
+describe("Log Out User: GET /api/users/logout", function() {
 
   before(function(done) {
     User.remove({}, function() {
@@ -46,22 +44,22 @@ describe('Log Out User: GET /api/users/logout', function() {
   });
 
 
-  it('should save the user 1 to the database', function(done) {
+  it("should save the user 1 to the database", function(done) {
     User.findOne({
-      email: 'foobar1@example.com'
+      email: "foobar1@example.com"
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar1@example.com');
+      user.email.should.equal("foobar1@example.com");
       done();
     });
   });
 
 
-  describe('log out failed user not authenticated', function() {
+  describe("log out failed user not authenticated", function() {
 
-    it('should logout failed', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+    it("should logout failed", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(403);
@@ -71,15 +69,15 @@ describe('Log Out User: GET /api/users/logout', function() {
     });
   });
 
-  describe('log out success', function() {
+  describe("log out success", function() {
 
     before(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar1@example.com',
-          password: '123'
+          email: "foobar1@example.com",
+          password: "123"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -89,8 +87,8 @@ describe('Log Out User: GET /api/users/logout', function() {
         });
     });
 
-    it('should logout successfully', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+    it("should logout successfully", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

@@ -1,18 +1,16 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  app = require('../../../../server'),
-  context = describe,
-  request = require('superagent'),
-  userRoles = require('../../../../public/js/routingConfig').userRoles,
-  User = mongoose.model('User'),
-  Race = mongoose.model('Race'),
+var mongoose = require("mongoose"),
+  should = require("should"),
+  app = require("../../../../server"),
+  request = require("superagent"),
+  User = mongoose.model("User"),
+  Race = mongoose.model("Race"),
   superagent = request.agent(app);
 
 /**
@@ -20,17 +18,17 @@ var mongoose = require('mongoose'),
  */
 
 var user1 = {
-  username: 'foobar1',
+  username: "foobar1",
   email: "foobar1@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '123726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "123726537a11c4aa8d789bbc",
+  password: "123"
 };
 
-describe('Delete User: DELETE /api/users', function() {
+describe("Delete User: DELETE /api/users", function() {
 
   before(function(done) {
     User.remove({}, function() {
@@ -55,62 +53,62 @@ describe('Delete User: DELETE /api/users', function() {
   });
 
 
-  it('should save the user 1 to the database', function(done) {
+  it("should save the user 1 to the database", function(done) {
     User.findOne({
-      email: 'foobar1@example.com'
+      email: "foobar1@example.com"
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar1@example.com');
+      user.email.should.equal("foobar1@example.com");
       done();
     });
   });
 
   before(function(done) {
     Race.create({
-      name: 'Duathlon de Castelnaudary',
+      name: "Duathlon de Castelnaudary",
       type: {
-        name: 'duathlon',
-        i18n: 'Duathlon'
+        name: "duathlon",
+        i18n: "Duathlon"
       },
       pin: {
         location: {
           lat: 45.34,
           lon: 1.7
         },
-        name: 'Castelnaudary',
+        name: "Castelnaudary",
         department: {
-          code: '11',
-          name: 'Aude',
-          region: 'Languedoc-Roussillon'
+          code: "11",
+          name: "Aude",
+          region: "Languedoc-Roussillon"
         }
       },
       date: currentDate,
-      edition: '1',
+      edition: "1",
       distanceType: {
-        name: 'S',
-        i18n: ''
+        name: "S",
+        i18n: ""
       },
       user_id: user1._id,
       last_update: new Date(),
       created_date: new Date()
-    }, function(err, race) {
+    }, function() {
       done();
     });
   });
 
-  it('should save the race to the database', function(done) {
+  it("should save the race to the database", function(done) {
     Race.findOne({
-      name: 'Duathlon de Castelnaudary'
+      name: "Duathlon de Castelnaudary"
     }).exec(function(err, race) {
       should.not.exist(err);
       race.should.be.an.instanceOf(Race);
-      race.name.should.equal('Duathlon de Castelnaudary');
-      race.type.name.should.equal('duathlon');
-      race.pin.department.name.should.equal('Aude');
+      race.name.should.equal("Duathlon de Castelnaudary");
+      race.type.name.should.equal("duathlon");
+      race.pin.department.name.should.equal("Aude");
       race.date.should.be.an.instanceOf(Date);
       race.edition.should.equal(1);
-      race.distanceType.name.should.equal('S');
+      race.distanceType.name.should.equal("S");
       race.user_id.should.eql(user1._id);
       race.published.should.equal(false);
       currentRace = race;
@@ -118,12 +116,12 @@ describe('Delete User: DELETE /api/users', function() {
     });
   });
 
-  describe('Delete user failed', function() {
+  describe("Delete user failed", function() {
 
-    it('should response access denied', function(done) {
-      superagent.del('http://localhost:'+process.env.PORT+'/api/users/delete')
+    it("should response access denied", function(done) {
+      superagent.del("http://localhost:"+process.env.PORT+"/api/users/delete")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(403);
@@ -134,16 +132,16 @@ describe('Delete User: DELETE /api/users', function() {
 
   });
 
-  describe('Delete user success', function() {
+  describe("Delete user success", function() {
 
 
     before(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar1@example.com',
-          password: '123'
+          email: "foobar1@example.com",
+          password: "123"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -153,10 +151,10 @@ describe('Delete User: DELETE /api/users', function() {
         });
     });
 
-    it('should response delete account success', function(done) {
-      superagent.del('http://localhost:'+process.env.PORT+'/api/users/delete')
+    it("should response delete account success", function(done) {
+      superagent.del("http://localhost:"+process.env.PORT+"/api/users/delete")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -164,22 +162,22 @@ describe('Delete User: DELETE /api/users', function() {
         });
     });
 
-    it('check if user not exits', function(done) {
+    it("check if user not exits", function(done) {
       User.findOne({
-        email: 'foobar1@example.com'
+        email: "foobar1@example.com"
       }).exec(function(err, user) {
         should.not.exist(err);
-        (user == null).should.be.true;
+        (user === null).should.be.true;
         done();
       });
     });
 
-    it('check if no race exists for this user_id', function(done) {
+    it("check if no race exists for this user_id", function(done) {
       Race.findOne({
         user_id: user1._id
       }).exec(function(err, race) {
         should.not.exist(err);
-        (race == null).should.be.true;
+        (race === null).should.be.true;
         done();
       });
     });

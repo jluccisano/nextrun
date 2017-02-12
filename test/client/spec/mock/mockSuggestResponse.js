@@ -1,4 +1,6 @@
-angular.module('mockModule').value('mockSuggestResponse', {
+"use strict";
+
+angular.module("mockModule").value("mockSuggestResponse", {
 	hits: {
 		total: 1,
 		hits: [{

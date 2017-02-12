@@ -9,7 +9,8 @@ var express = require("express"),
 	flash = require("connect-flash"),
 	pkg = require("../package.json"),
 	winston = require("winston"),
-	expressWinston = require("express-winston");
+	expressWinston = require("express-winston"),
+	logger = require("./logger");
 
 i18n.init({
 	resGetPath: "locales/__lng__/__ns__.json",
@@ -43,11 +44,12 @@ module.exports = function(app, config, passport) {
 	}));
 
 
-	app.use(express.favicon());
-	app.use(express.static(config.root + "/client"));
 
-	if (process.env.NODE_ENV !== "production") {
-		app.use("/client/bower_components", express.static(config.root + "/client/bower_components"));
+	app.use(express.favicon());
+	app.use(express.static(config.root + "/dist"));
+
+	if (process.env.NODE_ENV !== "prod") {
+	    app.use("/client/bower_components", express.static(config.root + "/client/bower_components"));
 		app.use("/styles", express.static(config.root + "/.tmp/styles"));
 	}
 
@@ -152,7 +154,7 @@ module.exports = function(app, config, passport) {
 
 			// log it
 			// send emails if you want
-			console.error(err.stack);
+			logger.error(err.stack);
 
 			// error page
 			res.status(500).render("partials/errors/500", {
@@ -176,5 +178,4 @@ module.exports = function(app, config, passport) {
 	app.configure("development", function() {
 		app.locals.pretty = true;
 	});
-
 };

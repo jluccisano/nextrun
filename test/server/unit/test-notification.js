@@ -1,17 +1,15 @@
-process.env.NODE_ENV = 'test';
-process.env.PORT= 4000;
+process.env.NODE_ENV = "test";
+process.env.PORT = 4000;
 
 /**
  * Module dependencies.
  */
-var should = require('should'),
-	chai = require('chai'),
+var chai = require("chai"),
 	expect = chai.expect,
-	sinon = require('sinon'),
+	sinon = require("sinon"),
 	sinonChai = require("sinon-chai"),
-	email = require('../../../config/middlewares/notification'),
-	nodemailer = require("nodemailer"),
-	Transport = nodemailer.Transport;
+	email = require("../../../config/middlewares/notification"),
+	nodemailer = require("nodemailer");
 
 chai.use(sinonChai);
 
@@ -22,18 +20,18 @@ afterEach(function() {
 	sandbox.restore();
 });
 
-describe('Notification', function() {
+describe("Notification", function() {
 
-	describe('sendEmailNewContact()', function() {
+	describe("sendEmailNewContact()", function() {
 
 		beforeEach(function() {
 			contact = {
-				email: 'foobar@example.com',
-				type: 'athlete'
-			}
+				email: "foobar@example.com",
+				type: "athlete"
+			};
 		});
 
-		it('should not send email when framework failed', function(done) {
+		it("should not send email when framework failed", function(done) {
 
 			var transportMock = nodemailer.createTransport("SMTP", {
 				service: "Mailgun",
@@ -43,9 +41,9 @@ describe('Notification', function() {
 				}
 			});
 
-			sandbox.stub(nodemailer, 'createTransport').returns(transportMock);
+			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
-			nodeMailerStub = sandbox.stub(transportMock, 'sendMail', function(undefined, cb) {
+			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -61,7 +59,7 @@ describe('Notification', function() {
 			done();
 		});
 
-		it('should send email', function(done) {
+		it("should send email", function(done) {
 
 			var transportMock = nodemailer.createTransport("SMTP", {
 				service: "Mailgun",
@@ -71,9 +69,9 @@ describe('Notification', function() {
 				}
 			});
 
-			sandbox.stub(nodemailer, 'createTransport').returns(transportMock);
+			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
-			nodeMailerStub = sandbox.stub(transportMock, 'sendMail', function(undefined, cb) {
+			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
 				cb(null, null);
 
 			});
@@ -86,16 +84,16 @@ describe('Notification', function() {
 		});
 	});
 
-	describe('sendEmailPasswordReinitialized()', function() {
+	describe("sendEmailPasswordReinitialized()", function() {
 
 		beforeEach(function() {
 			contact = {
-				email: 'foobar@example.com',
-				type: 'athlete'
-			}
+				email: "foobar@example.com",
+				type: "athlete"
+			};
 		});
 
-		it('should not send email when framework failed', function(done) {
+		it("should not send email when framework failed", function(done) {
 
 			var transportMock = nodemailer.createTransport("SMTP", {
 				service: "Mailgun",
@@ -105,9 +103,9 @@ describe('Notification', function() {
 				}
 			});
 
-			sandbox.stub(nodemailer, 'createTransport').returns(transportMock);
+			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
-			nodeMailerStub = sandbox.stub(transportMock, 'sendMail', function(undefined, cb) {
+			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -123,7 +121,7 @@ describe('Notification', function() {
 			done();
 		});
 
-		it('should send email', function(done) {
+		it("should send email", function(done) {
 
 			var transportMock = nodemailer.createTransport("SMTP", {
 				service: "Mailgun",
@@ -133,9 +131,9 @@ describe('Notification', function() {
 				}
 			});
 
-			sandbox.stub(nodemailer, 'createTransport').returns(transportMock);
+			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
-			nodeMailerStub = sandbox.stub(transportMock, 'sendMail', function(undefined, cb) {
+			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
 				cb(null, null);
 
 			});
@@ -148,16 +146,16 @@ describe('Notification', function() {
 		});
 	});
 
-	describe('sendEmailNewFeedback()', function() {
+	describe("sendEmailNewFeedback()", function() {
 
 		beforeEach(function() {
 			contact = {
-				email: 'foobar@example.com',
-				type: 'athlete'
-			}
+				email: "foobar@example.com",
+				type: "athlete"
+			};
 		});
 
-		it('should not send email when framework failed', function(done) {
+		it("should not send email when framework failed", function(done) {
 
 			var transportMock = nodemailer.createTransport("SMTP", {
 				service: "Mailgun",
@@ -167,9 +165,9 @@ describe('Notification', function() {
 				}
 			});
 
-			sandbox.stub(nodemailer, 'createTransport').returns(transportMock);
+			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
-			nodeMailerStub = sandbox.stub(transportMock, 'sendMail', function(undefined, cb) {
+			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -185,7 +183,7 @@ describe('Notification', function() {
 			done();
 		});
 
-		it('should send email', function(done) {
+		it("should send email", function(done) {
 
 			var transportMock = nodemailer.createTransport("SMTP", {
 				service: "Mailgun",
@@ -195,9 +193,9 @@ describe('Notification', function() {
 				}
 			});
 
-			sandbox.stub(nodemailer, 'createTransport').returns(transportMock);
+			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
-			nodeMailerStub = sandbox.stub(transportMock, 'sendMail', function(undefined, cb) {
+			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
 				cb(null, null);
 
 			});

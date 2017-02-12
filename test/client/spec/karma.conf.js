@@ -5,45 +5,78 @@ module.exports = function(config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '../../../',
+        basePath: "../../../",
 
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ["jasmine"],
 
 
         // list of files / patterns to load in the browser
         files: [
             "http://maps.googleapis.com/maps/api/js?sensor=false&language=en",
-            'public/bower_components/jquery/dist/jquery.js',
-            'public/bower_components/angular/angular.js',
-            'public/bower_components/angular-mocks/angular-mocks.js',
-            'public/bower_components/i18next/i18next.js',
-            'public/bower_components/underscore/underscore.js',
-            'public/bower_components/angular-cookies/angular-cookies.js',
-            'public/bower_components/angular-route/angular-route.js',
-            'public/bower_components/angular-animate/angular-animate.js',
-            'public/bower_components/angular-sanitize/angular-sanitize.js',
-            'public/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-            'public/bower_components/raphael/raphael.js',
-            'public/bower_components/angular-google-maps/dist/angular-google-maps.js',
-            'public/bower_components/highcharts-ng/dist/highcharts-ng.js',
-            'public/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
-            'public/bower_components/angular-date-time-input/src/dateTimeInput.js',
-            'public/bower_components/angular-gm-googlemaps/src/module.js',
-            'public/bower_components/AngularGM/angular-gm.js',
-            'public/lib/enum-0.2.5.js',
-            'public/lib/textAngular.js',
 
-            'public/js/**/*.js',
+            "client/bower_components/jquery/dist/jquery.js",
+            "client/bower_components/angular/angular.js",
+            'client/bower_components/angular-mocks/angular-mocks.js',
+            "client/bower_components/i18next/i18next.js",
+            "client/bower_components/angular-cookies/angular-cookies.js",
+            "client/bower_components/angular-route/angular-route.js",
+            "client/bower_components/angular-animate/angular-animate.js",
+            "client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+            "client/bower_components/underscore/underscore.js",
+            "client/bower_components/angular-google-maps/dist/angular-google-maps.js",
+            "client/bower_components/moment/moment.js",
+            "client/bower_components/bootstrap/dist/js/bootstrap.js",
+            "client/bower_components/highcharts-ng/dist/highcharts-ng.js",
+            "client/bower_components/highcharts.com/js/highcharts.src.js",
+            "client/bower_components/highcharts.com/js/highcharts-more.src.js",
+            "client/bower_components/highcharts.com/js/modules/exporting.src.js",
+            "client/bower_components/bootstrap-daterangepicker/daterangepicker.js",
+            "client/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js",
+            "client/bower_components/angular-sanitize/angular-sanitize.js",
+            "client/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js",
+            "client/bower_components/angular-date-time-input/src/dateTimeInput.js",
+            "client/bower_components/x2js/xml2json.min.js",
+            "client/bower_components/AngularGM/angular-gm.js",
+            "client/bower_components/angular-translate/angular-translate.js",
+            "client/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js",
+            "client/bower_components/angular-moment/angular-moment.js",
 
-            'test/client/spec/**/*Spec.js'
+            "client/lib/enum-0.2.5.js",
+            "client/lib/textAngular.js",
+
+            "client/routingConfig.js",
+
+            "client/modules/commons/scripts/commons.js",
+            "client/modules/commons/scripts/**/*.js",
+
+            "client/modules/main/scripts/main.js",
+            "client/modules/main/scripts/**/*.js",
+
+            "client/modules/auth/scripts/auth.js",
+            "client/modules/auth/scripts/**/*.js",
+
+            "client/modules/home/scripts/home.js",
+            "client/modules/home/scripts/**/*.js",
+
+            "client/modules/race/scripts/race.js",
+            "client/modules/race/scripts/**/*.js",
+
+            "client/modules/route/scripts/route.js",
+            "client/modules/route/scripts/**/*.js",
+
+            "test/client/spec/mock/mockModule.js",
+            "test/client/spec/mock/mock*.js",
+
+            "test/client/spec/modules/auth/*Spec.js",
+            "test/client/spec/modules/home/*Spec.js",
         ],
 
 
         // list of files to exclude
-        exclude: ['public/js/pages/home.js'],
+        exclude: [],
 
 
         // preprocess matching files before serving them to the browser
@@ -52,32 +85,32 @@ module.exports = function(config) {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
-            '**/public/js/**/*.js': ['coverage']
+            "client/modules/**/*.js": ["coverage"]
         },
 
 
         // test results reporter to use
-        // possible values: 'dots', 'progress'
+        // possible values: "dots", "progress"
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['coverage', 'progress', 'junit', 'spec'],
+        reporters: ["coverage", "progress", "junit", "spec"],
 
         coverageReporter: {
-            type: 'html',
-            dir: './test/client/spec/coverage/'
+            type: "html",
+            dir: "./test/client/spec/coverage/"
         },
 
         junitReporter: {
-            outputFile: './test/client/spec/test-reports-junit.xml',
-            suite: 'unit'
+            outputFile: "./test/client/spec/test-reports-junit.xml",
+            suite: "unit"
         },
 
         plugins: [
-            'karma-junit-reporter',
-            'karma-chrome-launcher',
-            'karma-jasmine',
-            'karma-coverage',
-            'karma-phantomjs-launcher',
-            'karma-spec-reporter',
+            "karma-junit-reporter",
+            "karma-phantomjs-launcher",
+            "karma-chrome-launcher",
+            "karma-jasmine",
+            "karma-coverage",
+            "karma-spec-reporter",
         ],
 
         // web server port
@@ -94,7 +127,7 @@ module.exports = function(config) {
 
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
+        autoWatch: false,
 
 
         // start these browsers
@@ -107,7 +140,7 @@ module.exports = function(config) {
         // - Safari (only Mac)
         // - PhantomJS
         // - IE (only Windows)
-        browsers: ['PhantomJS'],
+        browsers: ["PhantomJS"],
 
 
         // Continuous Integration mode

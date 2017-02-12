@@ -1,35 +1,33 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  request = require('superagent'),
-  app = require('../../../../server'),
-  context = describe,
-  userRoles = require('../../../../public/js/routingConfig').userRoles,
-  Race = mongoose.model('Race'),
-  User = mongoose.model('User'),
-  moment = require('moment'),
+var mongoose = require("mongoose"),
+  should = require("should"),
+  request = require("superagent"),
+  app = require("../../../../server"),
+  Race = mongoose.model("Race"),
+  User = mongoose.model("User"),
+  moment = require("moment"),
   superagent = request.agent(app);
 
 
 var user1 = {
-  username: 'foobar1',
+  username: "foobar1",
   email: "foobar1@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '123726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "123726537a11c4aa8d789bbc",
+  password: "123"
 };
 
 
-describe('Search races: POST /api/races/search', function() {
+describe("Search races: POST /api/races/search", function() {
 
   before(function(done) {
     User.remove({}, function() {
@@ -53,13 +51,13 @@ describe('Search races: POST /api/races/search', function() {
     });
   });
 
-  it('should save the user 1 to the database', function(done) {
+  it("should save the user 1 to the database", function(done) {
     User.findOne({
-      email: 'foobar1@example.com'
+      email: "foobar1@example.com"
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar1@example.com');
+      user.email.should.equal("foobar1@example.com");
       done();
     });
   });
@@ -67,28 +65,28 @@ describe('Search races: POST /api/races/search', function() {
   before(function(done) {
 
     Race.create({
-      name: 'Duathlon de Castelnaudary',
+      name: "Duathlon de Castelnaudary",
       type: {
-        name: 'duathlon',
-        i18n: 'Duathlon'
+        name: "duathlon",
+        i18n: "Duathlon"
       },
       pin: {
         location: {
           lat: 43.317551,
           lon: 1.954540
         },
-        name: 'Castelnaudary',
+        name: "Castelnaudary",
         department: {
-          code: '11',
-          name: 'Aude',
-          region: 'Languedoc-Roussillon'
+          code: "11",
+          name: "Aude",
+          region: "Languedoc-Roussillon"
         }
       },
       date: currentDate,
-      edition: '1',
+      edition: "1",
       distanceType: {
-        name: 'S',
-        i18n: ''
+        name: "S",
+        i18n: ""
       },
       user_id: user1._id,
       last_update: new Date(),
@@ -99,18 +97,18 @@ describe('Search races: POST /api/races/search', function() {
     });
   });
 
-  it('should save the race to the database', function(done) {
+  it("should save the race to the database", function(done) {
     Race.findOne({
-      name: 'Duathlon de Castelnaudary'
+      name: "Duathlon de Castelnaudary"
     }).exec(function(err, race) {
       should.not.exist(err);
       race.should.be.an.instanceOf(Race);
-      race.name.should.equal('Duathlon de Castelnaudary');
-      race.type.name.should.equal('duathlon');
-      race.pin.department.name.should.equal('Aude');
+      race.name.should.equal("Duathlon de Castelnaudary");
+      race.type.name.should.equal("duathlon");
+      race.pin.department.name.should.equal("Aude");
       race.date.should.be.an.instanceOf(Date);
       race.edition.should.equal(1);
-      race.distanceType.name.should.equal('S');
+      race.distanceType.name.should.equal("S");
       race.user_id.should.eql(user1._id);
       race.published.should.equal(true);
       currentRace = race;
@@ -118,13 +116,13 @@ describe('Search races: POST /api/races/search', function() {
     });
   });
 
-  describe('invalid parameters', function() {
+  describe("invalid parameters", function() {
 
-    it('should return error when no criteria is sent', function(done) {
+    it("should return error when no criteria is sent", function(done) {
 
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/search")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
@@ -135,7 +133,7 @@ describe('Search races: POST /api/races/search', function() {
 
   });
 
-  describe('valid parameters', function() {
+  describe("valid parameters", function() {
 
     beforeEach(function(done) {
       setTimeout(function() {
@@ -144,9 +142,9 @@ describe('Search races: POST /api/races/search', function() {
       }, 2500);
     });
 
-    it('should return one race', function(done) {
+    it("should return one race", function(done) {
 
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/search")
         .send({
           criteria: {
             fulltext: "dua",
@@ -155,7 +153,7 @@ describe('Search races: POST /api/races/search', function() {
             dateRange: {}
           }
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -165,24 +163,24 @@ describe('Search races: POST /api/races/search', function() {
         });
     });
 
-    it('should return one race', function(done) {
+    it("should return one race", function(done) {
 
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/search")
         .send({
           criteria: {
             fulltext: "dua",
-            types: ['duathlon'],
+            types: ["duathlon"],
             from: 0,
             size: 100,
-            sort: '_score',
-            departments: ['11'],
+            sort: "_score",
+            departments: ["11"],
             dateRange: {
-              startDate: moment().subtract('days', 29),
-              endDate: moment().add('days', 29)
+              startDate: moment().subtract("days", 29),
+              endDate: moment().add("days", 29)
             }
           }
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -192,9 +190,9 @@ describe('Search races: POST /api/races/search', function() {
         });
     });
 
-    it('search with geolocation - should return one race', function(done) {
+    it("search with geolocation - should return one race", function(done) {
 
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/search")
         .send({
           criteria: {
             distance: 100,
@@ -205,7 +203,7 @@ describe('Search races: POST /api/races/search', function() {
             }
           }
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -215,24 +213,24 @@ describe('Search races: POST /api/races/search', function() {
         });
     });
 
-    it('search with region - should return one race', function(done) {
+    it("search with region - should return one race", function(done) {
 
-      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/races/search")
         .send({
           criteria: {
             fulltext: "dua",
-            types: ['duathlon'],
+            types: ["duathlon"],
             region: {
-              name: 'Languedoc-Roussillon',
-              departments: ['11', '30', '34', '48', '66']
+              name: "Languedoc-Roussillon",
+              departments: ["11", "30", "34", "48", "66"]
             },
             dateRange: {
-              startDate: moment().subtract('days', 29),
-              endDate: moment().add('days', 29)
+              startDate: moment().subtract("days", 29),
+              endDate: moment().add("days", 29)
             }
           }
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

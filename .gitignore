@@ -16,7 +16,7 @@ config/config.js
 test-*.xml
 test-e2e-results/
 coverage/
-coverage.html
+*-coverage.html
 karma.log
 
 # Packages #

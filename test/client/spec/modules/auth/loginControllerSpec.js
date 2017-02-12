@@ -1,85 +1,85 @@
-'use strict';
+"use strict";
 
-describe('LoginController', function() {
+describe("LoginController", function() {
 
-	var $scope, $controller, $location, $q, $modal, mockAuthServices, mockModal, mockUser, mockAlert, metaBuilder;
+	var $scope, $controller, $location, $q, $modal, mockAuthService, mockModal, mockUser, mockMetaService;
 
-	beforeEach(module('nextrunApp.auth', 'mockModule'));
+	beforeEach(module("nextrunApp.auth", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$modal_, _MockFactory_, _metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$modal_, _MockFactory_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
 		$modal = _$modal_;
-		metaBuilder = _metaBuilder_;
+		mockMetaService = _MetaService_;
 
-		mockAuthServices = _MockFactory_.getMockAuthServices();
+		mockAuthService = _MockFactory_.getMockAuthService();
 		mockUser = _MockFactory_.getMockUser();
 		mockModal = _MockFactory_.getMockModalServices();
 	}));
 
-	describe('submit()', function() {
+	describe("submit()", function() {
 
-		it('login with success', function() {
+		it("login with success", function() {
 
-			spyOn(mockAuthServices, "login").and.callThrough();
+			spyOn(mockAuthService, "login").and.callThrough();
 
-			$controller('LoginController', {
+			$controller("LoginController", {
 				$scope: $scope,
-				AuthServices: mockAuthServices
+				AuthService: mockAuthService
 			});
 
-			mockAuthServices.setPromiseResponse(true);
+			mockAuthService.setPromiseResponse(true);
 			spyOn($location, "path");
 			$scope.submit();
 			$scope.$apply();
-			expect(mockAuthServices.login).toHaveBeenCalled();
-			expect($location.path).toHaveBeenCalledWith('/myraces');
+			expect(mockAuthService.login).toHaveBeenCalled();
+			expect($location.path).toHaveBeenCalledWith("/myraces");
 		});
 
 	});
 
-	describe('signup()', function() {
+	describe("signup()", function() {
 
-		it('signup with success', function() {
+		it("signup with success", function() {
 
-			$controller('LoginController', {
+			$controller("LoginController", {
 				$scope: $scope
 			});
 
 			spyOn($location, "path");
 			$scope.signup();
-			expect($location.path).toHaveBeenCalledWith('/signup');
+			expect($location.path).toHaveBeenCalledWith("/signup");
 		});
 
 	});
 
-	describe('ready()', function() {
-		it('loading with success', function() {
-			spyOn(metaBuilder, "ready");
+	describe("ready()", function() {
+		it("loading with success", function() {
+			spyOn(mockMetaService, "ready");
 
-			$controller('LoginController', {
+			$controller("LoginController", {
 				$scope: $scope
 			});
 
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(mockMetaService.ready).toHaveBeenCalled();
 		});
 
 	});
 
-	describe('open modal()', function() {
-		it('should return to /login when the modal close is called', function() {
-			spyOn($modal, 'open').and.returnValue(mockModal);
-			spyOn($location, 'path');
+	describe("open modal()", function() {
+		it("should return to /login when the modal close is called", function() {
+			spyOn($modal, "open").and.returnValue(mockModal);
+			spyOn($location, "path");
 
-			$controller('LoginController', {
+			$controller("LoginController", {
 				$scope: $scope
 			});
 
 			$scope.open();
 			$scope.modalInstance.close();
-			expect($location.path).toHaveBeenCalledWith('/login');
+			expect($location.path).toHaveBeenCalledWith("/login");
 		});
 	});
 });

@@ -1,17 +1,15 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  app = require('../../../../server'),
-  context = describe,
-  request = require('superagent'),
-  userRoles = require('../../../../public/js/routingConfig').userRoles
-  User = mongoose.model('User'),
+var mongoose = require("mongoose"),
+  should = require("should"),
+  app = require("../../../../server"),
+  request = require("superagent"),
+  User = mongoose.model("User"),
   superagent = request.agent(app);
 
 /**
@@ -19,30 +17,17 @@ var mongoose = require('mongoose'),
  */
 
 var user1 = {
-  username: 'foobar1',
+  username: "foobar1",
   email: "foobar1@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '123726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "123726537a11c4aa8d789bbc",
+  password: "123"
 };
 
-
-
-var user2 = {
-  username: 'foobar2',
-  email: "foobar2@example.com",
-  role: {
-    bitMask: 2,
-    title: 'user'
-  },
-  _id: '223726537a11c4aa8d789bbc',
-  password: '123'
-};
-
-describe('Update User: PUT /api/users/update', function() {
+describe("Update User: PUT /api/users/update", function() {
 
   before(function(done) {
     User.remove({}, function() {
@@ -51,7 +36,7 @@ describe('Update User: PUT /api/users/update', function() {
   });
 
 
-  describe('PUT /api/users/update/profile', function() {
+  describe("PUT /api/users/update/profile", function() {
 
     before(function(done) {
       User.create(user1, function(err, user) {
@@ -60,23 +45,23 @@ describe('Update User: PUT /api/users/update', function() {
       });
     });
 
-    it('should save the user 1 to the database', function(done) {
+    it("should save the user 1 to the database", function(done) {
       User.findOne({
-        email: 'foobar1@example.com'
+        email: "foobar1@example.com"
       }).exec(function(err, user) {
         should.not.exist(err);
         user.should.be.an.instanceOf(User);
-        user.email.should.equal('foobar1@example.com');
+        user.email.should.equal("foobar1@example.com");
         done();
       });
     });
 
-    describe('Invalid Parameters', function() {
+    describe("Invalid Parameters", function() {
 
-      it('should response access denied', function(done) {
-        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/profile')
+      it("should response access denied", function(done) {
+        superagent.put("http://localhost:"+process.env.PORT+"/api/users/update/profile")
           .send()
-          .set('Accept', 'application/json')
+          .set("Accept", "application/json")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(403);
@@ -86,15 +71,15 @@ describe('Update User: PUT /api/users/update', function() {
       });
     });
 
-    describe('Valid Parameters', function() {
+    describe("Valid Parameters", function() {
 
       before(function(done) {
-        superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+        superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
           .send({
-            email: 'foobar1@example.com',
-            password: '123'
+            email: "foobar1@example.com",
+            password: "123"
           })
-          .set('Accept', 'application/json')
+          .set("Accept", "application/json")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -105,15 +90,15 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
 
-      it('should response success', function(done) {
-        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/profile')
+      it("should response success", function(done) {
+        superagent.put("http://localhost:"+process.env.PORT+"/api/users/update/profile")
           .send({
             user: {
-              email: 'hello@example.com',
-              username: 'hello'
+              email: "hello@example.com",
+              username: "hello"
             }
           })
-          .set('Accept', 'application/json')
+          .set("Accept", "application/json")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -124,7 +109,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
       after(function(done) {
-        superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+        superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -142,7 +127,7 @@ describe('Update User: PUT /api/users/update', function() {
   });
 
 
-  describe('PUT /api/users/update/password', function() {
+  describe("PUT /api/users/update/password", function() {
 
     before(function(done) {
       User.create(user1, function(err, user) {
@@ -151,23 +136,23 @@ describe('Update User: PUT /api/users/update', function() {
       });
     });
 
-    it('should save the user 1 to the database', function(done) {
+    it("should save the user 1 to the database", function(done) {
       User.findOne({
-        email: 'foobar1@example.com'
+        email: "foobar1@example.com"
       }).exec(function(err, user) {
         should.not.exist(err);
         user.should.be.an.instanceOf(User);
-        user.email.should.equal('foobar1@example.com');
+        user.email.should.equal("foobar1@example.com");
         done();
       });
     });
 
-    describe('Access denied', function() {
+    describe("Access denied", function() {
 
-      it('should response access denied', function(done) {
-        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/password')
+      it("should response access denied", function(done) {
+        superagent.put("http://localhost:"+process.env.PORT+"/api/users/update/password")
           .send()
-          .set('Accept', 'application/json')
+          .set("Accept", "application/json")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(403);
@@ -177,15 +162,15 @@ describe('Update User: PUT /api/users/update', function() {
       });
     });
 
-    describe('Invalid Parameters', function() {
+    describe("Invalid Parameters", function() {
 
       before(function(done) {
-        superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+        superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
           .send({
-            email: 'foobar1@example.com',
-            password: '123'
+            email: "foobar1@example.com",
+            password: "123"
           })
-          .set('Accept', 'application/json')
+          .set("Accept", "application/json")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -195,13 +180,13 @@ describe('Update User: PUT /api/users/update', function() {
           });
       });
 
-      it('should response invalid password', function(done) {
-        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/password/')
+      it("should response invalid password", function(done) {
+        superagent.put("http://localhost:"+process.env.PORT+"/api/users/update/password/")
           .send({
             actual: "foobar3",
             new: "foobar2"
           })
-          .set('Accept', 'application/json')
+          .set("Accept", "application/json")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(400);
@@ -211,7 +196,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
       after(function(done) {
-        superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+        superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -220,15 +205,15 @@ describe('Update User: PUT /api/users/update', function() {
       });
     });
 
-    describe('Update user password', function() {
+    describe("Update user password", function() {
 
       before(function(done) {
-        superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+        superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
           .send({
-            email: 'foobar1@example.com',
-            password: '123'
+            email: "foobar1@example.com",
+            password: "123"
           })
-          .set('Accept', 'application/json')
+          .set("Accept", "application/json")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -238,13 +223,13 @@ describe('Update User: PUT /api/users/update', function() {
           });
       });
 
-      it('should response update password success', function(done) {
-        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/password')
+      it("should response update password success", function(done) {
+        superagent.put("http://localhost:"+process.env.PORT+"/api/users/update/password")
           .send({
             actual: "123",
             new: "foobar"
           })
-          .set('Accept', 'application/json')
+          .set("Accept", "application/json")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -253,7 +238,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
       after(function(done) {
-        superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+        superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);

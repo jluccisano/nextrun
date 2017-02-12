@@ -412,7 +412,7 @@ exports.search = function(req, res) {
     criteria = req.body.criteria;
 
     if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
-      console.log(util.inspect(criteria, true, 7, true));
+      logger.info(util.inspect(criteria, true, 7, true));
     }
 
     var operation = {
@@ -654,7 +654,7 @@ exports.search = function(req, res) {
 
       if (data) {
         if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
-          console.log(JSON.parse(data));
+          logger.info(JSON.parse(data));
         }
         return res.json(200, JSON.parse(data));
       } else {
@@ -769,7 +769,7 @@ exports.autocomplete = function(req, res) {
 
       if (data) {
         if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
-          console.log(JSON.parse(data));
+          logger.info(JSON.parse(data))
         }
         return res.json(200, JSON.parse(data));
       } else {

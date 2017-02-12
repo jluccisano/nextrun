@@ -1,19 +1,19 @@
-process.env.NODE_ENV = 'test';
-process.env.PORT= 4000;
+process.env.NODE_ENV = "test";
+process.env.PORT = 4000;
 /**
  * Module dependencies.
  */
 
-var elasticsearchUtils = require('../../../app/utils/elasticsearchUtils'),
-  chai = require('chai'),
+var elasticsearchUtils = require("../../../server/utils/elasticsearchUtils"),
+  chai = require("chai"),
   assert = chai.assert,
   expect = chai.expect;
 
-describe('buildGeoDistanceFilter()', function() {
+describe("buildGeoDistanceFilter()", function() {
 
-  describe('valid parameters', function() {
+  describe("valid parameters", function() {
 
-    it('should return 40km', function(done) {
+    it("should return 40km", function(done) {
       var location = {
         lat: 43.1,
         lon: 1.5
@@ -26,21 +26,21 @@ describe('buildGeoDistanceFilter()', function() {
 
   });
 
-  describe('invalid parameters', function() {
+  describe("invalid parameters", function() {
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
       var filter = elasticsearchUtils.buildGeoDistanceFilter(undefined, 40);
-      assert.isUndefined(filter, 'no filter defined');
+      assert.isUndefined(filter, "no filter defined");
       done();
     });
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
       var filter = elasticsearchUtils.buildGeoDistanceFilter(undefined, undefined);
-      assert.isUndefined(filter, 'no filter defined');
+      assert.isUndefined(filter, "no filter defined");
       done();
     });
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
 
       var location = {
         lat: 43.1,
@@ -48,11 +48,11 @@ describe('buildGeoDistanceFilter()', function() {
       };
 
       var filter = elasticsearchUtils.buildGeoDistanceFilter(location, undefined);
-      assert.isUndefined(filter, 'no filter defined');
+      assert.isUndefined(filter, "no filter defined");
       done();
     });
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
 
       var location = {
         lat: "toto",
@@ -60,7 +60,7 @@ describe('buildGeoDistanceFilter()', function() {
       };
 
       var filter = elasticsearchUtils.buildGeoDistanceFilter(location, "40");
-      assert.isUndefined(filter, 'no filter defined');
+      assert.isUndefined(filter, "no filter defined");
       done();
     });
   });
@@ -68,14 +68,14 @@ describe('buildGeoDistanceFilter()', function() {
 });
 
 
-describe('buildTermsFilter()', function() {
+describe("buildTermsFilter()", function() {
 
-  describe('valid parameters', function() {
+  describe("valid parameters", function() {
 
-    it('should return an array of terms', function(done) {
+    it("should return an array of terms", function(done) {
       var region = {
         name: "Bourgogne",
-        departments: ['21', '58', '71', '89']
+        departments: ["21", "58", "71", "89"]
       };
 
       var filter = elasticsearchUtils.buildTermsFilter("race.department.code", region.departments);
@@ -85,9 +85,9 @@ describe('buildTermsFilter()', function() {
     });
   });
 
-  describe('invalid parameters', function(done) {
+  describe("invalid parameters", function() {
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
       var filter = elasticsearchUtils.buildTermsFilter("race.department.code", undefined);
       expect(filter).to.equal(undefined);
       done();
@@ -96,11 +96,11 @@ describe('buildTermsFilter()', function() {
 
 });
 
-describe('buildTermFilter()', function() {
+describe("buildTermFilter()", function() {
 
-  describe('valid parameters', function() {
+  describe("valid parameters", function() {
 
-    it('should return a term', function(done) {
+    it("should return a term", function(done) {
       var filter = elasticsearchUtils.buildTermFilter("race.published", true);
       expect(true).to.equal(filter.term["race.published"]);
 
@@ -108,9 +108,9 @@ describe('buildTermFilter()', function() {
     });
   });
 
-  describe('invalid parameters', function(done) {
+  describe("invalid parameters", function() {
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
       var filter = elasticsearchUtils.buildTermFilter(undefined, undefined);
       expect(filter).to.equal(undefined);
       done();
@@ -119,20 +119,20 @@ describe('buildTermFilter()', function() {
 
 });
 
-describe('buildQueryString()', function() {
+describe("buildQueryString()", function() {
 
-  describe('valid parameters', function() {
+  describe("valid parameters", function() {
 
-    it('should return a term', function(done) {
+    it("should return a term", function(done) {
       var filter = elasticsearchUtils.buildQueryString("race.name.autocomplete", "duathlon");
       expect("duathlon").to.equal(filter.query_string.query);
       done();
     });
   });
 
-  describe('invalid parameters', function(done) {
+  describe("invalid parameters", function() {
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
       var filter = elasticsearchUtils.buildQueryString(undefined, undefined);
       expect(filter).to.equal(undefined);
       done();
@@ -141,11 +141,11 @@ describe('buildQueryString()', function() {
 
 });
 
-describe('buildDateRangeFilter()', function() {
+describe("buildDateRangeFilter()", function() {
 
-  describe('valid parameters', function() {
+  describe("valid parameters", function() {
 
-    it('should return a term', function(done) {
+    it("should return a term", function(done) {
 
       var startDate = new Date();
       var endDate = new Date();
@@ -157,9 +157,9 @@ describe('buildDateRangeFilter()', function() {
     });
   });
 
-  describe('invalid parameters', function(done) {
+  describe("invalid parameters", function() {
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
       var filter = elasticsearchUtils.buildDateRangeFilter(undefined, undefined, undefined);
       expect(filter).to.equal(undefined);
       done();
@@ -168,11 +168,11 @@ describe('buildDateRangeFilter()', function() {
 
 });
 
-describe('buildDateRangeFacetFilter()', function() {
+describe("buildDateRangeFacetFilter()", function() {
 
-  describe('valid parameters', function() {
+  describe("valid parameters", function() {
 
-    it('should return a term', function(done) {
+    it("should return a term", function(done) {
 
       var startDate = new Date();
       var endDate = new Date();
@@ -184,9 +184,9 @@ describe('buildDateRangeFacetFilter()', function() {
     });
   });
 
-  describe('invalid parameters', function(done) {
+  describe("invalid parameters", function() {
 
-    it('should return undefined', function(done) {
+    it("should return undefined", function(done) {
       var filter = elasticsearchUtils.buildDateRangeFacetFilter(undefined, undefined, undefined);
       expect(filter).to.equal(undefined);
       done();

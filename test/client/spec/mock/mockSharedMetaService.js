@@ -1,4 +1,6 @@
-angular.module('mockModule').value('mockSharedMetaService', {
+"use strict";
+
+angular.module("mockModule").value("mockSharedMetaService", {
 	pageTitle: "home",
 	url: "/home",
 	description: "welcome home"

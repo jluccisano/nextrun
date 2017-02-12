@@ -24,14 +24,6 @@ exports.index = function(req, res) {
     "role": role
   }));
 
-  /*var ua = req.headers["user-agent"];
-  if ((typeof(ua) !== "undefined" && ua.match(/bot/i)) || typeof(req.query._escaped_fragment_) !== "undefined" || typeof(req.query.fb_locale) !== "undefined") {
-
-    generateSnapshot(req, res);
-
-  } else {
-
-  }*/
   res.render("index", {
     title: "Accueil"
   });
@@ -49,75 +41,4 @@ exports.partials = function(req, res) {
   }
 
   res.render(partial);
-};
-
-var generateSnapshot = function(req, res) {
-
-  logger.info("new crawler request");
-
-  phantom.create(function(err, ph) {
-
-    if (err) {
-      logger.error("error during create new phantom instance: " + err);
-      return res.send(404, "cannot generate snapshot");
-    }
-
-    ph.createPage(function(err, page) {
-
-      if (err) {
-        logger.error("error during create new phantom page: " + err);
-        return res.send(404, "cannot generate snapshot");
-      }
-
-      page.open("http://127.0.0.1:3000" + req.path, function(err, status) {
-
-        page.onConsoleMessage = function(msg) {
-          logger.info(msg);
-        };
-
-
-        if (status === "success") {
-
-          var delay, checkerCounter = 0,
-            checker = (function() {
-
-              checkerCounter++;
-
-              page.evaluate(function() {
-                var body = document.getElementsByTagName("body")[0];
-                if (body.getAttribute("data-status") === "ready") {
-                  return document.documentElement.outerHTML;
-                }
-              }, function(err, html) {
-
-                if (html || checkerCounter >= 50) {
-                  if (html) {
-                    res.send(200, html);
-                  } else {
-                    res.send(404, "cannot generate snapshot");
-                  }
-
-                  clearTimeout(delay);
-                  ph.exit();
-                }
-              });
-
-              if (checkerCounter >= 50) {
-                clearTimeout(delay);
-                ph.exit();
-                res.send(404, "cannot generate snapshot");
-              }
-
-
-            });
-          delay = setInterval(checker, 100);
-        } else {
-          ph.exit();
-          res.send(404, "cannot generate snapshot");
-        }
-      });
-    });
-  }, {
-    phantomPath: require("phantomjs").path
-  });
 };

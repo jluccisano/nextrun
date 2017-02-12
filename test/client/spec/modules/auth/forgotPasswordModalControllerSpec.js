@@ -1,58 +1,58 @@
-'use strict';
+"use strict";
 
-describe('ForgotPasswordModalController', function() {
+describe("ForgotPasswordModalController", function() {
 
-	var $scope, $controller, $q, mockAuthServices, mockModal , mockAlert;
+	var $scope, $controller, $q, mockAuthService, mockModal , mockAlertService;
 
-	beforeEach(module('nextrunApp.auth', 'mockModule'));
+	beforeEach(module("nextrunApp.auth", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _Alert_,_MockFactory_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _AlertService_,_MockFactory_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
-		mockAlert = _Alert_;
+		mockAlertService = _AlertService_;
 		mockModal = _MockFactory_.getMockModalServices();
-		mockAuthServices = _MockFactory_.getMockAuthServices();
+		mockAuthService = _MockFactory_.getMockAuthService();
+		
+		spyOn(mockAuthService, "forgotPassword").and.callThrough();
 
-		spyOn(mockAuthServices, "forgotPassword").and.callThrough();
-
-		$controller('ForgotPasswordModalController', {
+		$controller("ForgotPasswordModalController", {
 			$scope: $scope,
 			$modalInstance: mockModal,
-			AuthServices: mockAuthServices,
-			Alert: mockAlert,
+			AuthService: mockAuthService,
+			AlertService: mockAlertService,
 		});
 	}));
 
-	describe('submit()', function() {
+	describe("submit()", function() {
 
-		it('submit with success', function() {
-			mockAuthServices.setPromiseResponse(true);
+		it("submit with success", function() {
+			mockAuthService.setPromiseResponse(true);
 			spyOn(mockModal, "close");
-			spyOn(mockAlert, "add");
+			spyOn(mockAlertService, "add");
 			$scope.submit();
 			$scope.$apply();
-			expect(mockAuthServices.forgotPassword).toHaveBeenCalled();
+			expect(mockAuthService.forgotPassword).toHaveBeenCalled();
 			expect(mockModal.close).toHaveBeenCalledWith();
-			expect(mockAlert.add).toHaveBeenCalledWith("success", 'message.email.send.successfully', 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.email.send.successfully", 3000);
 		});
 
-		it('submit with error', function() {
-			mockAuthServices.setPromiseResponse(false);
+		it("submit with error", function() {
+			mockAuthService.setPromiseResponse(false);
 			spyOn(mockModal, "close");
 			$scope.submit();
 			$scope.$apply();
-			expect(mockAuthServices.forgotPassword).toHaveBeenCalled();
+			expect(mockAuthService.forgotPassword).toHaveBeenCalled();
 			expect(mockModal.close).toHaveBeenCalledWith();
 		});
 	});
 
-	describe('cancel()', function() {
+	describe("cancel()", function() {
 
-		it('cancel with success', function() {
+		it("cancel with success", function() {
 			spyOn(mockModal, "dismiss");
 			$scope.cancel();
-			expect(mockModal.dismiss).toHaveBeenCalledWith('cancel');
+			expect(mockModal.dismiss).toHaveBeenCalledWith("cancel");
 		});
 	});
 });

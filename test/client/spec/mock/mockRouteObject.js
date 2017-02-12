@@ -1,4 +1,6 @@
-angular.module('mockModule').value('mockRoute', {
+"use strict";
+
+angular.module("mockModule").value("mockRoute", {
 	isVisible: false,
 	editMode: true,
 	segments: [{

@@ -10,7 +10,7 @@ var customColors = {
   debug: "green",
   info: "green",
   warn: "yellow",
-  crit: "red",
+  error: "red",
   fatal: "red"
 };
 
@@ -21,7 +21,7 @@ var logger = new(winston.Logger)({
     debug: 1,
     info: 2,
     warn: 3,
-    crit: 4,
+    error: 4,
     fatal: 5
   },
   transports: [

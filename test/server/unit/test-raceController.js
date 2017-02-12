@@ -1,30 +1,30 @@
 /**
-	describe('function()', function() {
+	describe("function()", function() {
 
-		it('should return OK', function(done) {
+		it("should return OK", function(done) {
 
 		});
 
-		it('should return NOK', function(done) {
+		it("should return NOK", function(done) {
 
 		});
 	});
 **/
 
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
-var mongoose = require('mongoose'),
-	should = require('should'),
-	chai = require('chai'),
+var mongoose = require("mongoose"),
+	should = require("should"),
+	chai = require("chai"),
 	expect = chai.expect,
-	sinon = require('sinon'),
+	sinon = require("sinon"),
 	sinonChai = require("sinon-chai"),
-	app = require('../../../server'),
-	RaceController = require('../../../app/controllers/raceController'),
-	Race = mongoose.model('Race'),
+	app = require("../../../server"),
+	RaceController = require("../../../server/controllers/raceController"),
+	Race = mongoose.model("Race"),
 	Schema = mongoose.Schema,
-	ElasticSearchClient = require('elasticsearchclient');
+	ElasticSearchClient = require("elasticsearchclient");
 
 chai.use(sinonChai);
 
@@ -36,23 +36,23 @@ var req = {},
 
 var race = {
 	_id: mongoose.Types.ObjectId("88a7082cad21354c23000001"),
-	name: 'Duathlon de Castelnaudary',
+	name: "Duathlon de Castelnaudary",
 	type: {
-		name: 'duathlon',
-		i18n: 'Duathlon'
+		name: "duathlon",
+		i18n: "Duathlon"
 	},
 	department: {
-		code: '11',
-		name: 'Aude',
-		region: 'Languedoc-Roussillon'
+		code: "11",
+		name: "Aude",
+		region: "Languedoc-Roussillon"
 	},
 	date: new Date(),
-	edition: '1',
+	edition: "1",
 	distanceType: {
-		name: 'S',
-		i18n: ''
+		name: "S",
+		i18n: ""
 	},
-	user_id: mongoose.Types.ObjectId("52a7082cad21354c23000001"),
+	userId: mongoose.Types.ObjectId("52a7082cad21354c23000001"),
 	last_update: new Date()
 }
 
@@ -60,9 +60,9 @@ afterEach(function() {
 	sandbox.restore();
 });
 
-describe('RaceController', function() {
+describe("RaceController", function() {
 
-	describe('load()', function() {
+	describe("load()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -70,9 +70,9 @@ describe('RaceController', function() {
 			};
 		});
 
-		it('should return a 400 when load race failed', function(done) {
+		it("should return a 400 when load race failed", function(done) {
 
-			sandbox.stub(Race, 'load', function(id, cb) {
+			sandbox.stub(Race, "load", function(id, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -82,7 +82,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.unknownId");
 				done();
 			};
@@ -90,15 +90,15 @@ describe('RaceController', function() {
 			RaceController.load(req, res, next, 1);
 		});
 
-		it('should return a 400 when load return undefined race failed', function(done) {
+		it("should return a 400 when load return undefined race failed", function(done) {
 
-			sandbox.stub(Race, 'load', function(id, cb) {
+			sandbox.stub(Race, "load", function(id, cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.unknownId");
 				done();
 			};
@@ -106,9 +106,9 @@ describe('RaceController', function() {
 			RaceController.load(req, res, next, 1);
 		});
 
-		it('should return req with a race return by database', function(done) {
+		it("should return req with a race return by database", function(done) {
 
-			sandbox.stub(Race, 'load', function(id, cb) {
+			sandbox.stub(Race, "load", function(id, cb) {
 				cb(null, race);
 			});
 
@@ -123,7 +123,7 @@ describe('RaceController', function() {
 	});
 
 
-	describe('destroyAllRaceOfUser ()', function() {
+	describe("destroyAllRaceOfUser ()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -137,9 +137,9 @@ describe('RaceController', function() {
 			};
 		});
 
-		it('should return a 400 when destroyAllRaceOfUser failed', function(done) {
+		it("should return a 400 when destroyAllRaceOfUser failed", function(done) {
 
-			sandbox.stub(Race, 'destroyAllRaceOfUser', function(user, cb) {
+			sandbox.stub(Race, "destroyAllRaceOfUser", function(user, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -149,7 +149,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error");
 				done();
 			};
@@ -157,11 +157,11 @@ describe('RaceController', function() {
 			RaceController.destroyAllRaceOfUser(req, res, next);
 		});
 
-		it('should return a 400 when unknownUser', function(done) {
+		it("should return a 400 when unknownUser", function(done) {
 
 			req.user = undefined;
 
-			sandbox.stub(Race, 'destroyAllRaceOfUser', function(user, cb) {
+			sandbox.stub(Race, "destroyAllRaceOfUser", function(user, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -171,7 +171,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.unknownUser");
 				done();
 			};
@@ -179,9 +179,9 @@ describe('RaceController', function() {
 			RaceController.destroyAllRaceOfUser(req, res, next);
 		});
 
-		it('should return no error with a race return by database', function(done) {
+		it("should return no error with a race return by database", function(done) {
 
-			sandbox.stub(Race, 'destroyAllRaceOfUser', function(user, cb) {
+			sandbox.stub(Race, "destroyAllRaceOfUser", function(user, cb) {
 				cb(null);
 			});
 
@@ -193,7 +193,7 @@ describe('RaceController', function() {
 
 	});
 
-	describe('findByUser()', function() {
+	describe("findByUser()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -209,11 +209,11 @@ describe('RaceController', function() {
 			};
 		});
 
-		it('should return a 400 when find by user failed', function(done) {
+		it("should return a 400 when find by user failed", function(done) {
 
 			var options = {};
 
-			sandbox.stub(Race, 'findByCriteria', function(options, cb) {
+			sandbox.stub(Race, "findByCriteria", function(options, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -223,7 +223,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error");
 				done();
 			};
@@ -231,17 +231,17 @@ describe('RaceController', function() {
 			RaceController.findByUser(req, res);
 		});
 
-		it('should return a 400 when database return null failed', function(done) {
+		it("should return a 400 when database return null failed", function(done) {
 
 			var options = {};
 
-			sandbox.stub(Race, 'findByCriteria', function(options, cb) {
+			sandbox.stub(Race, "findByCriteria", function(options, cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.occured");
 				done();
 			};
@@ -249,19 +249,19 @@ describe('RaceController', function() {
 			RaceController.findByUser(req, res);
 		});
 
-		it('should return a 200 with races when find by user failed', function(done) {
+		it("should return a 200 with races when find by user failed", function(done) {
 
 			var options = {};
 			var mockRaces = [];
 			mockRaces.push(race);
 
-			sandbox.stub(Race, 'findByCriteria', function(options, cb) {
+			sandbox.stub(Race, "findByCriteria", function(options, cb) {
 				cb(null, mockRaces);
 			});
 
 			res.json = function(httpStatus, data) {
 				expect(httpStatus).to.equal(200);
-				expect(data.races).to.be.an('array');
+				expect(data.races).to.be.an("array");
 				expect(data.races[0]).to.equal(mockRaces[0]);
 				done();
 			};
@@ -271,7 +271,7 @@ describe('RaceController', function() {
 
 	});
 
-	describe('create()', function() {
+	describe("create()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -287,51 +287,51 @@ describe('RaceController', function() {
 			};
 		});
 
-		it('should return a 400 when bodyParamRequired', function(done) {
+		it("should return a 400 when bodyParamRequired", function(done) {
 
 			req.body = undefined;
 
-			var userValidateStub = sandbox.stub(Schema.prototype, 'path').returns();
+			var userValidateStub = sandbox.stub(Schema.prototype, "path").returns();
 
-			sandbox.stub(Race.prototype, 'save', function(cb) {
+			sandbox.stub(Race.prototype, "save", function(cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
-				expect(err.message[0]).to.equal('error.bodyParamRequired');
+				expect(err.message).to.be.an("array");
+				expect(err.message[0]).to.equal("error.bodyParamRequired");
 				done();
 			};
 
 			RaceController.create(req, res);
 		});
 
-		it('should return a 400 when userNotConnected', function(done) {
+		it("should return a 400 when userNotConnected", function(done) {
 
 			req.user = undefined;
 
-			var userValidateStub = sandbox.stub(Schema.prototype, 'path').returns();
+			var userValidateStub = sandbox.stub(Schema.prototype, "path").returns();
 
-			sandbox.stub(Race.prototype, 'save', function(cb) {
+			sandbox.stub(Race.prototype, "save", function(cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
-				expect(err.message[0]).to.equal('error.userNotConnected');
+				expect(err.message).to.be.an("array");
+				expect(err.message[0]).to.equal("error.userNotConnected");
 				done();
 			};
 
 			RaceController.create(req, res);
 		});
 
-		it('should return a 400 when create race failed', function(done) {
+		it("should return a 400 when create race failed", function(done) {
 
-			var userValidateStub = sandbox.stub(Schema.prototype, 'path').returns();
+			var userValidateStub = sandbox.stub(Schema.prototype, "path").returns();
 
-			sandbox.stub(Race.prototype, 'save', function(cb) {
+			sandbox.stub(Race.prototype, "save", function(cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -341,19 +341,19 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
-				expect(err.message[0]).to.equal('error');
+				expect(err.message).to.be.an("array");
+				expect(err.message[0]).to.equal("error");
 				done();
 			};
 
 			RaceController.create(req, res);
 		});
 
-		it('should return a 200 when user was created successfully', function(done) {
+		it("should return a 200 when user was created successfully", function(done) {
 
-			var userValidateStub = sandbox.stub(Schema.prototype, 'path').returns();
+			var userValidateStub = sandbox.stub(Schema.prototype, "path").returns();
 
-			sandbox.stub(Race.prototype, 'save', function(cb) {
+			sandbox.stub(Race.prototype, "save", function(cb) {
 				cb(null, race);
 			});
 
@@ -369,16 +369,16 @@ describe('RaceController', function() {
 	});
 
 
-	describe('find()', function() {
+	describe("find()", function() {
 
-		it('should return 400 unknownRace', function(done) {
+		it("should return 400 unknownRace", function(done) {
 
 			//set race to undefined
 			req.race = undefined;
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.unknownRace");
 				done();
 			};
@@ -386,7 +386,7 @@ describe('RaceController', function() {
 			RaceController.find(req, res);
 		});
 
-		it('should return 200', function(done) {
+		it("should return 200", function(done) {
 
 			req.race = race;
 
@@ -400,7 +400,7 @@ describe('RaceController', function() {
 	});
 
 
-	describe('update()', function() {
+	describe("update()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -412,23 +412,23 @@ describe('RaceController', function() {
 				},
 				body: {
 					race: {
-						name: 'Triathlon de Castelnaudary',
+						name: "Triathlon de Castelnaudary",
 						type: {
-							name: 'duathlon',
-							i18n: 'Duathlon'
+							name: "duathlon",
+							i18n: "Duathlon"
 						},
 						department: {
-							code: '11',
-							name: 'Aude',
-							region: 'Languedoc-Roussillon'
+							code: "11",
+							name: "Aude",
+							region: "Languedoc-Roussillon"
 						},
 						date: new Date(),
-						edition: '1',
+						edition: "1",
 						distanceType: {
-							name: 'S',
-							i18n: ''
+							name: "S",
+							i18n: ""
 						},
-						user_id: mongoose.Types.ObjectId("52a7082cad21354c23000001"),
+						userId: mongoose.Types.ObjectId("52a7082cad21354c23000001"),
 						last_update: new Date()
 					}
 				},
@@ -437,11 +437,11 @@ describe('RaceController', function() {
 		});
 
 
-		it('should return error 400 when body param is not set', function(done) {
+		it("should return error 400 when body param is not set", function(done) {
 
 			req.body.race = undefined;
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -451,7 +451,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.bodyParamRequired");
 				done();
 			};
@@ -460,12 +460,12 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 400 when unknownRace', function(done) {
+		it("should return error 400 when unknownRace", function(done) {
 
 			//set user to undefined
 			req.race = undefined;
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -475,7 +475,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.unknownRace");
 				done();
 			};
@@ -484,12 +484,12 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 400 when userNotConnected', function(done) {
+		it("should return error 400 when userNotConnected", function(done) {
 
 			//set user to undefined
 			req.user = undefined;
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -499,7 +499,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.userNotConnected");
 				done();
 			};
@@ -508,12 +508,12 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 400 when userNotOwner', function(done) {
+		it("should return error 400 when userNotOwner", function(done) {
 
 			//set different user id
 			req.user._id = mongoose.Types.ObjectId("52a7082cad21354c23000002");
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -523,7 +523,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.userNotOwner");
 				done();
 			};
@@ -533,9 +533,9 @@ describe('RaceController', function() {
 		});
 
 
-		it('should return error 400 when database crash', function(done) {
+		it("should return error 400 when database crash", function(done) {
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -545,7 +545,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error");
 				done();
 			};
@@ -554,11 +554,11 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return 200', function(done) {
+		it("should return 200", function(done) {
 
 			req.body.race._id = mongoose.Types.ObjectId("52a7082cad21354c23000002");
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb(null);
 			});
 
@@ -575,7 +575,7 @@ describe('RaceController', function() {
 	});
 
 
-	describe('delete()', function() {
+	describe("delete()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -589,9 +589,9 @@ describe('RaceController', function() {
 			};
 		});
 
-		it('should return error 400 when database crash', function(done) {
+		it("should return error 400 when database crash", function(done) {
 
-			sandbox.stub(Race, 'destroy', function(id, cb) {
+			sandbox.stub(Race, "destroy", function(id, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -601,7 +601,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error");
 				done();
 			};
@@ -610,18 +610,18 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return 400 userNotOwner', function(done) {
+		it("should return 400 userNotOwner", function(done) {
 
 			//set different user id
 			req.user._id = mongoose.Types.ObjectId("52a7082cad21354c23000002");
 
-			sandbox.stub(Race, 'destroy', function(id, cb) {
+			sandbox.stub(Race, "destroy", function(id, cb) {
 				cb(null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.userNotOwner");
 				done();
 			};
@@ -629,18 +629,18 @@ describe('RaceController', function() {
 			RaceController.delete(req, res);
 		});
 
-		it('should return 400 unknownRace', function(done) {
+		it("should return 400 unknownRace", function(done) {
 
 			//set race to undefined
 			req.race = undefined;
 
-			sandbox.stub(Race, 'destroy', function(id, cb) {
+			sandbox.stub(Race, "destroy", function(id, cb) {
 				cb(null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.unknownRace");
 				done();
 			};
@@ -648,18 +648,18 @@ describe('RaceController', function() {
 			RaceController.delete(req, res);
 		});
 
-		it('should return 400 userNotConnected', function(done) {
+		it("should return 400 userNotConnected", function(done) {
 
 			//set user to undefined
 			req.user = undefined;
 
-			sandbox.stub(Race, 'destroy', function(id, cb) {
+			sandbox.stub(Race, "destroy", function(id, cb) {
 				cb(null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.userNotConnected");
 				done();
 			};
@@ -667,9 +667,9 @@ describe('RaceController', function() {
 			RaceController.delete(req, res);
 		});
 
-		it('should return 200', function(done) {
+		it("should return 200", function(done) {
 
-			sandbox.stub(Race, 'destroy', function(id, cb) {
+			sandbox.stub(Race, "destroy", function(id, cb) {
 				cb(null);
 			});
 
@@ -682,7 +682,7 @@ describe('RaceController', function() {
 		});
 	});
 
-	describe('updateLatLng()', function() {
+	describe("updateLatLng()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -696,8 +696,8 @@ describe('RaceController', function() {
 			};
 		});
 
-		it('should return 400 raceId is not defined', function(done) {
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+		it("should return 400 raceId is not defined", function(done) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb(null);
 			});
 
@@ -706,8 +706,8 @@ describe('RaceController', function() {
 			done();
 		});
 
-		it('should return 400 latlng is not defined', function(done) {
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+		it("should return 400 latlng is not defined", function(done) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb(null);
 			});
 
@@ -716,8 +716,8 @@ describe('RaceController', function() {
 			done();
 		});
 
-		it('should return 400 when the database crash', function(done) {
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+		it("should return 400 when the database crash", function(done) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -728,8 +728,8 @@ describe('RaceController', function() {
 			done();
 		});
 
-		it('should return 200', function(done) {
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+		it("should return 200", function(done) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb(null);
 			});
 
@@ -742,7 +742,7 @@ describe('RaceController', function() {
 
 	});
 
-	describe('publish()', function() {
+	describe("publish()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -759,9 +759,9 @@ describe('RaceController', function() {
 			};
 		});
 
-		it('should return error with 400 status', function(done) {
+		it("should return error with 400 status", function(done) {
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -771,7 +771,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error");
 				done();
 			};
@@ -780,18 +780,18 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return 400 userNotOwner', function(done) {
+		it("should return 400 userNotOwner", function(done) {
 
 			//set different user id
 			req.user._id = mongoose.Types.ObjectId("52a7082cad21354c23000002");
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb(null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.userNotOwner");
 				done();
 			};
@@ -799,18 +799,18 @@ describe('RaceController', function() {
 			RaceController.publish(req, res);
 		});
 
-		it('should return 400 unknownRace', function(done) {
+		it("should return 400 unknownRace", function(done) {
 
 			//set race to undefined
 			req.race = undefined;
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb(null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.unknownRace");
 				done();
 			};
@@ -818,18 +818,18 @@ describe('RaceController', function() {
 			RaceController.publish(req, res);
 		});
 
-		it('should return 400 userNotConnected', function(done) {
+		it("should return 400 userNotConnected", function(done) {
 
 			//set user to undefined
 			req.user = undefined;
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb(null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.userNotConnected");
 				done();
 			};
@@ -837,9 +837,9 @@ describe('RaceController', function() {
 			RaceController.publish(req, res);
 		});
 
-		it('should return 200', function(done) {
+		it("should return 200", function(done) {
 
-			sandbox.stub(Race, 'update', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
 				cb(null);
 			});
 
@@ -853,7 +853,7 @@ describe('RaceController', function() {
 	});
 
 
-	describe('search()', function() {
+	describe("search()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -872,17 +872,17 @@ describe('RaceController', function() {
 			};
 		});
 
-		it('should return error 400 when no criteria', function(done) {
+		it("should return error 400 when no criteria", function(done) {
 
 			req.body.criteria = undefined;
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.noCriteria");
 				done();
 			};
@@ -891,15 +891,15 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 400 when elasticsearch crash', function(done) {
+		it("should return error 400 when elasticsearch crash", function(done) {
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.noData");
 				done();
 			};
@@ -908,10 +908,10 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 400 when elasticsearch crash', function(done) {
+		it("should return error 400 when elasticsearch crash", function(done) {
 
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -921,7 +921,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error");
 				done();
 			};
@@ -930,12 +930,12 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 200 when criteria is empty', function(done) {
+		it("should return error 200 when criteria is empty", function(done) {
 
-			var mockData = 'true';
+			var mockData = "true";
 			req.body.criteria = {};
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb(null, mockData);
 			});
 
@@ -949,9 +949,9 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 200 when criteria is mode search by fulltext', function(done) {
+		it("should return error 200 when criteria is mode search by fulltext", function(done) {
 
-			var mockData = 'true';
+			var mockData = "true";
 
 			req = {
 				body: {
@@ -960,8 +960,8 @@ describe('RaceController', function() {
 						departments: ["11"],
 						types: ["duathlon"],
 						region: {
-							name: 'Ain',
-							departments: ['67', '68']
+							name: "Ain",
+							departments: ["67", "68"]
 						},
 						from: 0,
 						size: 20,
@@ -970,7 +970,7 @@ describe('RaceController', function() {
 				}
 			};
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb(null, mockData);
 			});
 
@@ -984,9 +984,9 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 200 when criteria is mode search by geolocation', function(done) {
+		it("should return error 200 when criteria is mode search by geolocation", function(done) {
 
-			var mockData = 'true';
+			var mockData = "true";
 
 			req = {
 				body: {
@@ -1004,7 +1004,7 @@ describe('RaceController', function() {
 				}
 			};
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb(null, mockData);
 			});
 
@@ -1019,7 +1019,7 @@ describe('RaceController', function() {
 		});
 	});
 
-	describe('autocomplete()', function() {
+	describe("autocomplete()", function() {
 
 		beforeEach(function() {
 			req = {
@@ -1027,18 +1027,18 @@ describe('RaceController', function() {
 					criteria: {
 						fulltext: "dua",
 						region: {
-							name: 'Ain',
-							departments: ['67', '68']
+							name: "Ain",
+							departments: ["67", "68"]
 						}
 					}
 				}
 			};
 		});
 
-		it('should return error 400 when elasticsearch crash', function(done) {
+		it("should return error 400 when elasticsearch crash", function(done) {
 
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -1048,7 +1048,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error");
 				done();
 			};
@@ -1057,15 +1057,15 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 400 when elasticsearch crash', function(done) {
+		it("should return error 400 when elasticsearch crash", function(done) {
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.noData");
 				done();
 			};
@@ -1074,17 +1074,17 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 400 when no criteria', function(done) {
+		it("should return error 400 when no criteria", function(done) {
 
 			req.body.criteria = undefined;
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.noCriteria");
 				done();
 			};
@@ -1093,11 +1093,11 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 200', function(done) {
+		it("should return error 200", function(done) {
 
-			var mockData = 'true';
+			var mockData = "true";
 
-			sandbox.stub(ElasticSearchClient.prototype, 'search', function(undefined, undefined, undefined, cb) {
+			sandbox.stub(ElasticSearchClient.prototype, "search", function(undefined, undefined, undefined, cb) {
 				cb(null, mockData);
 			});
 
@@ -1112,11 +1112,11 @@ describe('RaceController', function() {
 		});
 	});
 
-	describe('findAll()', function() {
+	describe("findAll()", function() {
 
-		it('should return error 400 when database crash', function(done) {
+		it("should return error 400 when database crash", function(done) {
 
-			sandbox.stub(Race, 'findAll', function(cb) {
+			sandbox.stub(Race, "findAll", function(cb) {
 				cb({
 					"errors": [{
 						"message": "error"
@@ -1126,7 +1126,7 @@ describe('RaceController', function() {
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error");
 				done();
 			};
@@ -1135,15 +1135,15 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return error 400 when database return races undefined', function(done) {
+		it("should return error 400 when database return races undefined", function(done) {
 
-			sandbox.stub(Race, 'findAll', function(cb) {
+			sandbox.stub(Race, "findAll", function(cb) {
 				cb(null, null);
 			});
 
 			res.json = function(httpStatus, err) {
 				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an('array');
+				expect(err.message).to.be.an("array");
 				expect(err.message[0]).to.equal("error.occured");
 				done();
 			};
@@ -1152,18 +1152,18 @@ describe('RaceController', function() {
 
 		});
 
-		it('should return 200', function(done) {
+		it("should return 200", function(done) {
 
 			var mockRaces = [];
 			mockRaces.push(race);
 
-			sandbox.stub(Race, 'findAll', function(cb) {
+			sandbox.stub(Race, "findAll", function(cb) {
 				cb(null, mockRaces);
 			});
 
 			res.json = function(httpStatus, data) {
 				expect(httpStatus).to.equal(200);
-				expect(data.races).to.be.an('array');
+				expect(data.races).to.be.an("array");
 				expect(data.races[0]).to.equal(mockRaces[0]);
 				done();
 			};

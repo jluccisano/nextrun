@@ -1,23 +1,22 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  superagent = require('superagent'),
-  app = require('../../../../server'),
-  context = describe,
-  Contact = mongoose.model('Contact');
+var mongoose = require("mongoose"),
+  should = require("should"),
+  superagent = require("superagent"),
+  app = require("../../../../server"),
+  Contact = mongoose.model("Contact");
 
 
 /**
  * Create contact tests
  */
 
-describe('Create Contact: POST /api/contacts', function() {
+describe("Create Contact: POST /api/contacts", function() {
 
   before(function(done) {
     Contact.remove({}, function() {
@@ -34,14 +33,14 @@ describe('Create Contact: POST /api/contacts', function() {
     });
   });
 
-  describe('Invalid parameters', function() {
+  describe("Invalid parameters", function() {
 
-    it('no email - should respond with errors', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/contacts')
+    it("no email - should respond with errors", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/contacts")
         .send({
-          type: 'athlete'
+          type: "athlete"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
@@ -50,13 +49,13 @@ describe('Create Contact: POST /api/contacts', function() {
         });
     });
 
-    it('email blank - should respond with errors', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/contacts')
+    it("email blank - should respond with errors", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/contacts")
         .send({
-          email: '',
-          type: 'athlete'
+          email: "",
+          type: "athlete"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
@@ -65,7 +64,7 @@ describe('Create Contact: POST /api/contacts', function() {
         });
     });
 
-    it('check if contact has not been saved to the database', function(done) {
+    it("check if contact has not been saved to the database", function(done) {
       Contact.count(function(err, cnt) {
         count = cnt;
         done();
@@ -74,17 +73,15 @@ describe('Create Contact: POST /api/contacts', function() {
 
   });
 
+  describe("Valid parameters", function() {
 
-
-  describe('Valid parameters', function() {
-
-    it('add new contact success', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/contacts')
+    it("add new contact success", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/contacts")
         .send({
-          email: 'foobar@example.com',
-          type: 'athlete'
+          email: "foobar@example.com",
+          type: "athlete"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -92,7 +89,7 @@ describe('Create Contact: POST /api/contacts', function() {
         });
     });
 
-    it('check if contact has been saved to the database', function(done) {
+    it("check if contact has been saved to the database", function(done) {
       Contact.count(function(err, cnt) {
         cnt.should.equal(count + 1);
         done();
@@ -100,15 +97,15 @@ describe('Create Contact: POST /api/contacts', function() {
     });
   });
 
-  describe('Contact already exists', function() {
+  describe("Contact already exists", function() {
 
-    it('Contact already exists', function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/contacts')
+    it("Contact already exists", function(done) {
+      superagent.post("http://localhost:"+process.env.PORT+"/api/contacts")
         .send({
-          email: 'foobar@example.com',
-          type: 'athlete'
+          email: "foobar@example.com",
+          type: "athlete"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
@@ -117,7 +114,7 @@ describe('Create Contact: POST /api/contacts', function() {
         });
     });
 
-    it('check if contact has not been saved to the database', function(done) {
+    it("check if contact has not been saved to the database", function(done) {
       Contact.count(function(err, cnt) {
         count = cnt;
         done();
@@ -130,7 +127,4 @@ describe('Create Contact: POST /api/contacts', function() {
       done();
     });
   });
-
-
-
 });

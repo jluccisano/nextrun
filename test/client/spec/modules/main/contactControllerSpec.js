@@ -1,28 +1,28 @@
-'use strict';
+"use strict";
 
-describe('ContactController', function() {
+describe("ContactController", function() {
 
-	var $scope, $controller, metaBuilder;
+	var $scope, $controller, MetaService;
 
-	beforeEach(module('nextrunApp.main'));
+	beforeEach(module("nextrunApp.main"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_,_metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_,_MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
-		metaBuilder = _metaBuilder_;
+		MetaService = _MetaService_;
 	}));
 
-	describe('ready()', function() {
+	describe("ready()", function() {
 
-		it('loading with success', function() {
+		it("loading with success", function() {
 
-			spyOn(metaBuilder, "ready");
+			spyOn(MetaService, "ready");
 
-			$controller('ContactController', {
+			$controller("ContactController", {
 				$scope: $scope,
 			});
 
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(MetaService.ready).toHaveBeenCalled();
 		});
 
 	});

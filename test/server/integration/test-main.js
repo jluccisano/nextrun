@@ -1,34 +1,32 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = "test";
 process.env.PORT= 4000;
 
 /**
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  should = require('should'),
-  request = require('superagent'),
-  app = require('../../../server'),
-  context = describe,
+var mongoose = require("mongoose"),
+  should = require("should"),
+  request = require("superagent"),
+  app = require("../../../server"),
   superagent = request.agent(app),
-  userRoles = require('../../../public/js/routingConfig').userRoles,
-  User = mongoose.model('User');
+  User = mongoose.model("User");
 
 /**
  * Create contact tests
  */
 var user1 = {
-  username: 'foobar1',
+  username: "foobar1",
   email: "foobar1@example.com",
   role: {
     bitMask: 2,
-    title: 'user'
+    title: "user"
   },
-  _id: '123726537a11c4aa8d789bbc',
-  password: '123'
+  _id: "123726537a11c4aa8d789bbc",
+  password: "123"
 };
 
-describe('Test partials view: GET /partials/*', function() {
+describe("Test partials view: GET /partials/*", function() {
 
   before(function(done) {
     User.remove({}, function() {
@@ -44,26 +42,26 @@ describe('Test partials view: GET /partials/*', function() {
     });
   });
 
-  it('should save the user 1 to the database', function(done) {
+  it("should save the user 1 to the database", function(done) {
     User.findOne({
-      email: 'foobar1@example.com'
+      email: "foobar1@example.com"
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar1@example.com');
+      user.email.should.equal("foobar1@example.com");
       done();
     });
   });
 
-  describe('test set cookie', function() {
+  describe("test set cookie", function() {
 
     before(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/session")
         .send({
-          email: 'foobar1@example.com',
-          password: '123'
+          email: "foobar1@example.com",
+          password: "123"
         })
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -73,10 +71,10 @@ describe('Test partials view: GET /partials/*', function() {
         });
     });
 
-    it('get index', function(done) {
-      superagent.get('http://localhost:'+process.env.PORT+'/')
+    it("get index", function(done) {
+      superagent.get("http://localhost:"+process.env.PORT+"/")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -85,7 +83,7 @@ describe('Test partials view: GET /partials/*', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
+      superagent.post("http://localhost:"+process.env.PORT+"/api/users/logout")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -95,12 +93,12 @@ describe('Test partials view: GET /partials/*', function() {
 
   });
 
-  describe('Valid parameters', function() {
+  describe("Valid parameters", function() {
 
-    it('get view', function(done) {
-      superagent.get('http://localhost:'+process.env.PORT+'/partials/home')
+    it("get view", function(done) {
+      superagent.get("http://localhost:"+process.env.PORT+"/partials/home")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -108,10 +106,10 @@ describe('Test partials view: GET /partials/*', function() {
         });
     });
 
-    it('get view with sub type ', function(done) {
-      superagent.get('http://localhost:'+process.env.PORT+'/partials/race/create')
+    it("get view with sub type ", function(done) {
+      superagent.get("http://localhost:"+process.env.PORT+"/partials/race/create")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -119,10 +117,10 @@ describe('Test partials view: GET /partials/*', function() {
         });
     });
 
-    it('get index', function(done) {
-      superagent.get('http://localhost:'+process.env.PORT+'/')
+    it("get index", function(done) {
+      superagent.get("http://localhost:"+process.env.PORT+"/")
         .send()
-        .set('Accept', 'application/json')
+        .set("Accept", "application/json")
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

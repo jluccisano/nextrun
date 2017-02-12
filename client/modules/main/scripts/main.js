@@ -4,10 +4,10 @@ var nextrunApp = angular.module("nextrunApp", [
   "ngRoute",
   "ui.bootstrap",
   "pascalprecht.translate",
+  "nextrunApp.commons",
   "nextrunApp.auth",
   "nextrunApp.race",
-  "nextrunApp.home",
-  "nextrunApp.commons"
+  "nextrunApp.home"
 ]);
 
 nextrunApp.config(

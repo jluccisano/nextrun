@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-describe('HeaderController', function() {
+describe("HeaderController", function() {
 
-	var $scope, $controller, $location, $q, mockAuthServices;
+	var $scope, $controller, $location, $q, mockAuthService;
 
-	beforeEach(module('nextrunApp.main', 'mockModule'));
+	beforeEach(module("nextrunApp.main", "mockModule"));
 
 	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _MockFactory_) {
 		$scope = _$rootScope_.$new();
@@ -12,34 +12,34 @@ describe('HeaderController', function() {
 		$q = _$q_;
 		$location = _$location_;
 
-		mockAuthServices =  _MockFactory_.getMockAuthServices();
+		mockAuthService =  _MockFactory_.getMockAuthServices();
 
-		$controller('HeaderController', {
+		$controller("HeaderController", {
 			$scope: $scope,
-			AuthServices: mockAuthServices
+			AuthService: mockAuthService
 		});
 	}));
 
-	describe('logout()', function() {
+	describe("logout()", function() {
 
-		it('logout with success', function() {
-			mockAuthServices.setPromiseResponse(true);
-			spyOn(mockAuthServices, "logout").and.callThrough();
+		it("logout with success", function() {
+			mockAuthService.setPromiseResponse(true);
+			spyOn(mockAuthService, "logout").and.callThrough();
 			spyOn($location, "path");
 			$scope.logout();
 			$scope.$apply();
-			expect(mockAuthServices.logout).toHaveBeenCalled();
-			expect($location.path).toHaveBeenCalledWith('/login');
+			expect(mockAuthService.logout).toHaveBeenCalled();
+			expect($location.path).toHaveBeenCalledWith("/login");
 		});
 
 	});
 
-	describe('login()', function() {
+	describe("login()", function() {
 
-		it('go to login with success', function() {
+		it("go to login with success", function() {
 			spyOn($location, "path");
 			$scope.login();
-			expect($location.path).toHaveBeenCalledWith('/login');
+			expect($location.path).toHaveBeenCalledWith("/login");
 		});
 	});
 });
