@@ -6,13 +6,53 @@
 @import '../../race/styles/race.scss';
 
 @import 'animations.scss';
-/*@import 'docs.scss';*/
-@import 'sticky-footer.scss';
 @import 'footer.scss';
-@import 'header.scss';
 @import 'marketing.scss';
 @import 'contacts.scss';
+@import 'header.scss';
 
+
+html {
+
+}
+
+
+//body {
+  //height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+//}
+
+/* Wrapper for page content to push down footer 
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;*/
+  /* Negative indent footer by its height 
+  margin: 0 auto -60px;*/
+  /* Pad bottom by footer height 
+  padding: 0 0 60px;
+}*/
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method.
+
+#wrap > .container {
+  padding: 60px 15px 0;
+}
+.container .credit {
+  margin: 20px 0;
+}*/
+
+/*
+code {
+  font-size: 80%;
+}
+
+*/
+
+/*
 .custom-bs-background {
   text-shadow: 0 -1px 0 rgba(0,0,0,.15);
   background-color: #545454;
@@ -49,45 +89,17 @@
 
 
 
-.custom-marketing h3 {
-  color: white;
-}
-
-.custom-marketing p {
-  color: white;
-}
-
-.custom-marketing h2 {
-  color: white;
-}
-
-.custom-marketing label {
-  color: black;
-}
-
-.custom-marketing em {
-  color: white;
-}
 
 
-/** home page **/
-#contactType option { color: black; }
-.empty { color: #999999; }
 
-
-/** Drop down **/
-.navbar-inverse .navbar-nav > .open > a,
-.navbar-inverse .navbar-nav > .open > a:hover,
-.navbar-inverse .navbar-nav > .open > a:focus {
-  color: #ffffff;
-  background-color: #3276b1;
-}
 
 .modal {
     display: block;
 }
+*/
 
-/** Rich text editor **/
+
+/** Rich text editor 
 .ta-editor {
   min-height: 300px;
   height: auto;
@@ -98,5 +110,5 @@
 
 .disabled {
     color: grey;
-}
+}**/
 

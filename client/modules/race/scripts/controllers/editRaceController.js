@@ -124,7 +124,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			_.each($scope.routesViewModel, function(route) {
 				$scope.race.routes.push(route.data);
-			})
+			});
 
 			var data = {
 				race: $scope.race

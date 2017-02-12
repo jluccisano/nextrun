@@ -1,11 +1,17 @@
 doctype html
-html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-controller='MainController')
+html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainController')
 
     <!-- build:js(client) client/scripts/widgets/google-analytics.min.js -->
     script(src="/widgets/google-analytics.js")
     <!-- endbuild -->
 
     head
+
+        title {{pageTitle}}
+
+        base(href="/")
+    
+        include layouts/meta
 
         link(rel="icon" type="image/png" href="client//modules/main/images/logo_officiel.png")
 
@@ -22,6 +28,9 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
         <!-- build:css({.tmp,client}) client/styles/main.min.css -->
         link(rel="stylesheet" href="/styles/main.css")
         <!-- endbuild -->
+
+    body(data-status="{{status}}")
+        include layouts/body
 
         script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.17")
 
@@ -146,44 +155,3 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
 
         script.
             moment.locale('fr');
-
-    block head
-        base(href="/")
-    block meta
-        meta(http-equiv="X-UA-Compatible" content="IE=edge")
-        meta(charset="UTF-8")
-        meta(name="viewport" content="width=device-width")
-
-        meta(name='description' content="{{ogDescription}}")
-        meta(name='keywords' content="{{'manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, &eacute;preuve, ironman, longue distance, course &agrave; pied, parcours, d&eacute;nivel&eacute;, cross, marathon, duathlon, ski de fond, aquathlon' | translate}}")
-
-        meta(property="og:title" content="{{ogTitle}}")
-        meta(property="og:type" content="website")
-        meta(property="og:image" content="http://www.nextrun.fr/img/logo_officiel.png")
-        meta(property="og:url" content="{{ogUrl}}")
-        meta(property="og:description" content="{{ogDescription}}")
-        meta(name="fragment" content="!")
-        meta(name="google-site-verification" content="XyiSoYfguJ-59aia60gM2hXqUantvQTg8eZ_dfKvqzg")
-        meta(property="fb:app_id" content="195803770591615")
-        meta(property="fb:admins" content="1320496159")
-
-    block title
-        title {{pageTitle}}
-
-    block body
-
-        body(data-status="{{status}}")
-
-            div(id="wrap")
-
-                div(id="fb-root")
-
-                include ./layouts/header
-
-                include ./layouts/messages
-
-                div.ng-cloak(ng-cloak class="view-container")
-                    div(id="main" ng-view class="view-frame ng-cloak")
-
-            div.footer.ng-cloak(id="footer" ng-cloak ng-controller="FooterController")
-                include ./layouts/footer

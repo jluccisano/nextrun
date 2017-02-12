@@ -1,22 +1,24 @@
-div.custom-bs-background
-	div.container
-		div.text-center
-			ul.bs-social-buttons
-				li
-					div(class="g-follow" data-annotation="bubble" data-height="20" data-href="//plus.google.com/116945696608244544621" data-rel="author")
-				li
-					div.fb-like(fbLike data-href="http://www.nextrun.fr" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
-				li
-					a(href="https://twitter.com/_nextrun" class="twitter-follow-button" data-show-count="true" data-lang="fr" translate) Follow @_nextrun
-		hr
-		div.row
-			div.col-lg-10
-				p 
-					a(rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/")
-						img(alt="Licence Creative Commons" src="http://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png")
-					| &nbsp;&copy &nbsp; 2013 NEXTRUN  &nbsp; &nbsp; &nbsp; &nbsp;
-					
-					a(ng-href="/about" translate) A propos &nbsp; &nbsp;
-					a(ng-href="/contacts" translate) Contacts &nbsp; &nbsp;
-					a(ng-href="/credits" translate) Remerciements
+div(class="container" ng-cloak ng-controller="FooterController")
+	div(class="nr-docs-social")
+		ul(class="nr-docs-social-buttons")
+			li
+				div(class="g-follow" data-annotation="bubble" data-height="20" data-href="//plus.google.com/116945696608244544621" data-rel="author")
+			li
+				div(class="fb-like" fbLike data-href="http://www.nextrun.fr" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
+			li
+				a(href="https://twitter.com/_nextrun" class="twitter-follow-button" data-show-count="true" data-lang="fr" translate) Follow @_nextrun
+	ul(class="nr-docs-footer-links muted")
+		li
+			a(rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/")
+				img(alt="Licence Creative Commons" src="http://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png")
+		li &copy 2014 NEXTRUN
+		li .
+		li 
+			a(ng-href="/about" translate) A propos
+		li .
+		li
+			a(ng-href="/contacts" translate) Contacts
+		li .
+		li
+			a(ng-href="/credits" translate) Remerciements
 
