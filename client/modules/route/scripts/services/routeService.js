@@ -6,12 +6,15 @@ angular.module("nextrunApp.route").factory("RouteService",
 		$log,
 		GmapsApiService,
 		RouteUtilsService,
-		RouteHelperService,
-		RaceTypeEnum) {
+		RaceTypeEnum,
+		SegmentService, 
+		ElevationService,
+		MarkerService,
+		PolylineService) {
 
 
-
-		var getAllLatlngFromPoints = function(points) {
+		//TO BE REMOVED
+		/*var getAllLatlngFromPoints = function(points) {
 			var samplesLatlng = [];
 
 			_.each(points, function(point) {
@@ -19,11 +22,11 @@ angular.module("nextrunApp.route").factory("RouteService",
 			});
 
 			return samplesLatlng;
-		};
+		};*/
 
 		return {
-
-			getElevation: function(segment) {
+			//TO BE REMOVED
+			/*getElevation: function(segment) {
 
 				var defer = $q.defer();
 
@@ -47,8 +50,9 @@ angular.module("nextrunApp.route").factory("RouteService",
 				});
 				return defer.promise;
 
-			},
+			},*/
 
+			//KEEP
 			createRoutesViewModel: function(race, chartConfig, gmapsConfig) {
 
 				var routesViewModel = [];
@@ -85,14 +89,11 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 			},
 
-
 			createNewSegment: function(route, destinationLatlng, modeManu) {
 
 				var lastLatlngOfLastSegment;
 
 				var isFirstPoint = false;
-
-				var _this = this;
 
 				if (route.segments.length > 0) {
 					var lastPointOfLastSegment = route.getLastPointOfLastSegment();
@@ -114,19 +115,19 @@ angular.module("nextrunApp.route").factory("RouteService",
 						unitSystem: google.maps.UnitSystem.METRIC
 					};
 
-					this.getDirection(route, directionsRequest, isFirstPoint).then(function(result) {
+					SegmentService.getDirection(route, directionsRequest, isFirstPoint).then(function(result) {
 
 						//add pôlylines to map 
 						//call draw polylines
 
 						//draw segment
-						route.addMarkerToRoute(result.path);
+						MarkerService.addMarkerToRoute(route, result.path);
 
 						if (!isFirstPoint) {
 							route.addPolyline(result.path, false, false, false, true, "red", 5);
 						}
 
-						return _this.getElevation(result.segment);
+						return ElevationService.getElevation(result.segment);
 
 					}).then(function(data) {
 
@@ -138,7 +139,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 					});
 				} else {
 
-					var segmentDataModel = route.createSimpleSegmentDataModel(lastLatlngOfLastSegment, destinationLatlng);
+					var segmentDataModel = SegmentService.createSimpleSegmentDataModel(lastLatlngOfLastSegment, destinationLatlng);
 
 					var segment = route.addSegment(segmentDataModel);
 
@@ -146,44 +147,26 @@ angular.module("nextrunApp.route").factory("RouteService",
 					path.push(lastLatlngOfLastSegment);
 					path.push(destinationLatlng);
 
-					route.addMarkerToRoute(path);
+					MarkerService.addMarkerToRoute(route, path);
 
 					if (!isFirstPoint) {
-						route.addPolyline(path, false, false, false, true, "red", 5);
+						PolylineService.createPolyline(path, false, false, false, true, "red", 5);
 					}
 
-					this.getElevation(segment).then(function(data) {
+					ElevationService.getElevation(segment).then(function(data) {
 
 						route.addElevationPoints(data.samplingPoints, data.elevations);
 
 					});
-
-
-
 				}
 			},
+
+			//KEEP
 			resetRoute: function(routeViewModel) {
-				routeViewModel.data.ascendant = 0;
-				routeViewModel.data.descendant = 0;
-				routeViewModel.data.minElevation = 0;
-				routeViewModel.data.maxElevation = 0;
-				routeViewModel.data.distance = 0.0;
-				routeViewModel.data.elevationPoints = [];
-				routeViewModel.data.segments = [];
-				routeViewModel.segments = [];
-				routeViewModel.elevationPoints = [];
-
-				routeViewModel._markers.length = 0;
-				routeViewModel._polylines.length = 0;
-				routeViewModel._climbs = [];
-
-				routeViewModel._chartConfig.series[0].data = [];
-				routeViewModel._chartConfig.series[1].data = [];
-				routeViewModel._chartConfig.series[2].data = [];
-				routeViewModel._chartConfig.series[3].data = [];
-				routeViewModel._chartConfig.series[4].data = [];
+				routeViewModel.reset();
 			},
 
+			//KEEP
 			deleteLastSegment: function(routeViewModel) {
 				try {
 
@@ -216,7 +199,8 @@ angular.module("nextrunApp.route").factory("RouteService",
 				}
 			},
 
-			getDirection: function(route, directionsRequest, isFirstPoint) {
+			//TO BE REMOVED
+			/*getDirection: function(route, directionsRequest, isFirstPoint) {
 
 				var defer = $q.defer();
 
@@ -226,14 +210,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 						var path = result.routes[0].overview_path;
 						var legs = result.routes[0].legs;
 
-						var points = RouteUtilsService.convertPathToPoints(path, isFirstPoint);
-						var distance = RouteUtilsService.calculateDistanceFromLegs(legs);
-
-						var segmentDataModel = {
-							id: routeBuilder.generateUUID(),
-							distance: distance,
-							points: points
-						};
+						var segmentDataModel = SegmentService.createSegmentDataModel(path, legs);
 
 						var segment = route.addSegment(segmentDataModel);
 
@@ -248,188 +225,9 @@ angular.module("nextrunApp.route").factory("RouteService",
 					}
 				});
 				return defer.promise;
-			},
-
-
-
-			/********************************/
-
-
-			/*onClickMap: function(route, destinationLatlng) {
-
-				var lastLatlngOfLastSegment;
-
-				var isFirstPoint = false;
-
-				if (route.segments.length > 0) {
-					lastLatlngOfLastSegment = route.getLastPointOfLastSegment(route.segments).latlng;
-				} else {
-					lastLatlngOfLastSegment = {
-						mb: destinationLatlng.lat(),
-						nb: destinationLatlng.lng()
-					};
-					isFirstPoint = true;
-				}
-
-				if (route.travelMode !== "NONE") {
-
-					var directionsRequest = {
-						origin: new google.maps.LatLng(lastLatlngOfLastSegment.mb, lastLatlngOfLastSegment.nb),
-						destination: destinationLatlng,
-						travelMode: route.travelMode,
-						provideRouteAlternatives: false,
-						avoidHighways: true,
-						avoidTolls: true,
-						unitSystem: google.maps.UnitSystem.METRIC
-
-					};
-
-					directionService.route(directionsRequest, function(result, status) {
-
-						if (status === google.maps.DirectionsStatus.OK && directionsRequest.unitSystem === google.maps.UnitSystem.METRIC) {
-
-							var route = result.routes[0];
-							var lastPointOfLastSegment;
-
-							this.addSegment(route.overview_path, route.legs, isFirstPoint);
-
-
-							//lastPointOfLastSegment = SegmentService.getLastPointOfLastSegment(route.segments);
-
-							//newSegment.points = SegmentService.calculateDistanceFromStartForEachPointOfSegment(newSegment.points, lastPointOfLastSegment);
-
-							//var samplesPoints = SegmentService.findSamplesPointIntoSegment(route, newSegment, 0.1);
-
-							//route.segments.push(newSegment);
-
-							//var newLastPointOfLastSegment = SegmentService.getLastPointOfLastSegment(route.segments);
-
-							//route.distance = updateDistance(newLastPointOfLastSegment);
-
-							//samplesPoints = getElevationFromSamplesPoints($scope, route, segment, result.routes[0].overview_path, samplesPoints);
-
-						}
-					});
-
-				} else {
-
-					lastLatlngOfLastSegment = new google.maps.LatLng(lastLatlngOfLastSegment.mb, lastLatlngOfLastSegment.nb);
-
-					var routeSamples = [];
-					routeSamples.push(lastLatlngOfLastSegment);
-					routeSamples.push(destinationLatlng);
-
-					//var newSegment = createSimpleSegment(lastLatlngOfLastSegment, destinationLatlng);
-
-					//newSegment.points = SegmentService.calculateDistanceFromStartForEachPointOfSegment(route, segment);
-
-					//var samplesPoints = SegmentService.findSamplesPointIntoSegment(route, segment, 0.1);
-
-					//route.segments.push(segment);
-
-					//samplesPoints = getElevationFromSamplesPoints($scope, route, segment, routeSamples, samplesPoints);
-				}
-
-				return route;
-
-			},
-			/*drawPolylines: function(segments) {
-
-				var polylines = [];
-				var pathArray = [];
-
-				_.each(segments, function(segment, index) {
-
-					var lastPointOfLastSegment;
-
-					if (index > 0) {
-
-						var lastSegment = segments[index - 1];
-
-						if (typeof lastSegment.points[lastSegment.points.length - 1] !== "undefined") {
-							lastPointOfLastSegment = lastSegment.points[lastSegment.points.length - 1];
-						}
-
-						pathArray.push({
-							latitude: lastPointOfLastSegment.latlng.mb,
-							longitude: lastPointOfLastSegment.latlng.nb
-						});
-
-					}
-
-					_.each(segment.points, function(point) {
-						pathArray.push({
-							latitude: point.latlng.mb,
-							longitude: point.latlng.nb
-						});
-					});
-				});
-
-				var polyLine = {
-					id: RouteUtilsService.generateUUID(),
-					path: pathArray,
-					stroke: {
-						color: "red",
-						weight: 5
-					},
-					editable: false,
-					draggable: false,
-					geodesic: false,
-					visible: true
-				};
-
-				polylines.push(polyLine);
-				return polylines;
 			},*/
-			/*rebuildPolylines: function(segments) {
 
-				var polylines = [];
-
-				_.each(segments, function(segment, index) {
-
-					var pathArray = [];
-
-					var lastPointOfLastSegment;
-
-					if (index > 0) {
-
-						var lastSegment = segments[index - 1];
-
-						if (typeof lastSegment.points[lastSegment.points.length - 1] !== "undefined") {
-							lastPointOfLastSegment = lastSegment.points[lastSegment.points.length - 1];
-						}
-
-						pathArray.push({
-							latitude: lastPointOfLastSegment.latlng.mb,
-							longitude: lastPointOfLastSegment.latlng.nb
-						});
-
-					}
-
-					_.each(segment.points, function(point) {
-						pathArray.push({
-							latitude: point.latlng.mb,
-							longitude: point.latlng.nb
-						});
-					});
-
-					var polyLine = {
-						id: RouteUtilsService.generateUUID(),
-						path: pathArray,
-						stroke: {
-							color: "red",
-							weight: 5
-						},
-						editable: false,
-						draggable: false,
-						geodesic: false,
-						visible: true
-					};
-
-					polylines.push(polyLine);
-				});
-				return polylines;
-			},*/
+			//MAYBE MOVED TO UTILS
 			convertRacesLocationToMarkers: function(races) {
 
 				var markers = [];
@@ -456,89 +254,6 @@ angular.module("nextrunApp.route").factory("RouteService",
 					}
 				});
 				return markers;
-			},
-			/*rebuildMarkers: function(segments, showSegment) {
-
-				var markers = [];
-
-				_.each(segments, function(segment, index) {
-
-					var lastPointOfSegment;
-					var icon;
-					var marker;
-
-					if (typeof segment.points[segment.points.length - 1] !== "undefined") {
-						lastPointOfSegment = segment.points[segment.points.length - 1];
-					}
-
-					if (index === 0) {
-						icon = "client/modules/route/images/start.png";
-					} else if (index === (segments.length - 1)) {
-						icon = "client/modules/route/images/end.png";
-					} else if (showSegment) {
-						icon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
-							new google.maps.Size(32, 32),
-							new google.maps.Point(0, 0),
-							new google.maps.Point(8, 8),
-							new google.maps.Size(16, 16)
-						);
-					}
-
-					if (icon) {
-						marker = {
-							latitude: lastPointOfSegment.latlng.mb,
-							longitude: lastPointOfSegment.latlng.nb,
-							icon: icon,
-							title: "hello"
-						};
-					}
-
-					if (marker) {
-						markers.push(marker);
-					}
-				});
-				return markers;
-			},*/
-			/*rebuildElevationChart: function(route) {
-
-				var datas = [];
-				var climbs = {
-					climbsInf7: [],
-					climbsInf10: [],
-					climbsInf15: [],
-					climbsSup15: []
-				};
-
-				var elevationPoints = _.sortBy(route.elevationPoints, function(elevationPoint) {
-					return parseFloat(elevationPoint.distanceFromStart.toFixed(2));
-				});
-
-				_.each(elevationPoints, function(elevationPoint, index) {
-
-					var data = {
-						x: parseFloat(elevationPoint.distanceFromStart.toFixed(2)),
-						y: elevationPoint.elevation,
-						grade: elevationPoint.grade,
-						color: "blue",
-						fillColor: "blue",
-						segmentId: elevationPoint.segmentId,
-						latlng: elevationPoint.latlng
-
-					};
-					datas.push(data);
-
-					climbs = ElevationService.addClimbsToElevationChart(route, elevationPoints, index, climbs);
-
-				});
-				route.chartConfig.series[0].data = datas;
-				route.chartConfig.series[1].data = climbs.climbsInf7;
-				route.chartConfig.series[2].data = climbs.climbsInf10;
-				route.chartConfig.series[3].data = climbs.climbsInf15;
-				route.chartConfig.series[4].data = climbs.climbsSup15;
-			},*/
-			/*undo: function(route) {
-
-				
-			}*/
+			}
 		};
 	});

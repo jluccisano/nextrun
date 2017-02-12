@@ -3,49 +3,6 @@
 angular.module("nextrunApp.route").factory("RouteHelperService",
     function() {
 
-        /*var googleMapsConfig = {
-            mapTypeId: google.maps.MapTypeId.TERRAIN,
-            mapTypeControlOptions: {
-                mapTypeIds: [google.maps.MapTypeId.ROADMAP,
-                    google.maps.MapTypeId.HYBRID,
-                    google.maps.MapTypeId.SATELLITE,
-                    google.maps.MapTypeId.TERRAIN
-                ],
-                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-            },
-            disableDoubleClickZoom: true,
-            scrollwheel: true,
-            draggableCursor: "crosshair",
-            streetViewControl: false,
-            zoomControl: true
-        };*/
-
-        /*var setCenter = function(scope, currentRoute) {
-
-            //default France center
-            var center = {
-                latitude: 46.52863469527167,
-                longitude: 2.43896484375,
-            };
-
-            if (currentRoute.segments.length === 0) {
-
-                if (!_.isUndefined(scope.race.pin)) {
-                    if (!_.isUndefined(scope.race.pin.location)) {
-                        center = {
-                            latitude: scope.race.pin.location.lat,
-                            longitude: scope.race.pin.location.lon
-                        };
-                    } else {
-                        //set the department of location
-                        center = scope.race.pin.department.center;
-                    }
-                }
-
-            }
-            return center;
-        };*/
-
         return {
             getChartConfig: function($scope, height) {
                 return {
@@ -193,49 +150,5 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
                     zoomControl: true
                 };
             }
-
-            /* generateRoute: function(scope, currentRoute, routeType) {
-
-                var route = {
-                    isVisible: false,
-                    editMode: true,
-                    segments: (currentRoute && !_.isUndefined(currentRoute.segments) && currentRoute.segments.length > 0) ? currentRoute.segments : [],
-                    description: (currentRoute && !_.isUndefined(currentRoute.description)) ? currentRoute.description : "",
-                    distance: (currentRoute && !_.isUndefined(currentRoute.distance)) ? currentRoute.distance : 0,
-                    descendant: (currentRoute && !_.isUndefined(currentRoute.descendant)) ? currentRoute.descendant : 0,
-                    ascendant: (currentRoute && !_.isUndefined(currentRoute.ascendant)) ? currentRoute.ascendant : 0,
-                    minElevation: (currentRoute && !_.isUndefined(currentRoute.minElevation)) ? currentRoute.minElevation : 0,
-                    maxElevation: (currentRoute && !_.isUndefined(currentRoute.maxElevation)) ? currentRoute.maxElevation : 0,
-                    elevationPoints: (currentRoute && !_.isUndefined(currentRoute.elevationPoints) && currentRoute.elevationPoints.length > 0) ? currentRoute.elevationPoints : [],
-                    type: (routeType && !_.isUndefined(routeType.i18n)) ? routeType.i18n : "",
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    zoom: 13,
-                    fit: true,
-                    markers: [],
-                    polylines: [],
-                    center: setCenter(scope, currentRoute),
-                    options: googleMapsConfig,
-                    events: {},
-                    chartConfig: chartConfig(scope)
-                };
-
-                route.events = {
-                    click: function(mapModel, eventName, originalEventArgs) {
-                        
-                        //RouteService.onClickMap(scope, route, originalEventArgs[0].latLng);
-                    }
-                };
-
-                if (route.elevationPoints.length > 0) {
-                    RouteService.rebuildElevationChart(route);
-                }
-
-                if (route.segments.length > 0) {
-                    route.markers = RouteService.rebuildMarkers(route.segments, true);
-                    route.polylines = RouteService.rebuildPolylines(route.segments);
-                }
-
-                return route;
-            }*/
         };
     });

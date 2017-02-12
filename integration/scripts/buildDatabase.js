@@ -1,0 +1,1 @@
+db.races.ensureIndex({ "place.loc" : "2dsphere" });

@@ -1,14 +1,12 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("PolylineService",
-	function() {
+	function(RouteUtilsService) {
 
 		return {
-
-			/*createPolyline: function(path, editable, draggable, geodesic, visible, color, weight) {
+			createPolyline: function(route, path, editable, draggable, geodesic, visible, color, weight) {
 
 				var pathArray = [];
-				var polyLine;
 
 				_.each(path, function(point) {
 
@@ -23,7 +21,7 @@ angular.module("nextrunApp.route").factory("PolylineService",
 				});
 
 				if (pathArray.length > 1) {
-					polyLine = {
+					var polyline = {
 						id: RouteUtilsService.generateUUID(),
 						path: pathArray,
 						stroke: {
@@ -35,12 +33,12 @@ angular.module("nextrunApp.route").factory("PolylineService",
 						geodesic: (geodesic) ? geodesic : false,
 						visible: (visible) ? visible : true
 					};
+
+					route.addPolyline(polyline);
+
 				} else {
 					throw new Error("polyline must contain at least two point");
 				}
-
-
-				return polyLine;
-			}*/
+			}
 		};
 	});

@@ -70,6 +70,122 @@ var routeBuilder = {};
 			return lastPointOfLastSegment;
 		};
 
+		this._createSegmentsViewModel = function(segmentsDataModel) {
+			var segmentsViewModel = [];
+
+			var _this = this;
+
+
+			_.each(segmentsDataModel, function(segmentDataModel) {
+				segmentsViewModel.push(new routeBuilder.Segment(segmentDataModel, _this.getLastPointOfLastSegmentDataModel()));
+			});
+
+			return segmentsViewModel;
+		};
+
+		this.addSegment = function(segmentDataModel) {
+
+			var newSegment = new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegmentDataModel());
+
+			this.data.segments.push(segmentDataModel);
+
+			this.segments.push(newSegment);
+
+			this._updateDistance();
+
+			return newSegment;
+		};
+
+		//TO BE REMOVED
+		/*this.createSimpleSegmentDataModel = function(startLatlng, destinationLatlng) {
+
+			if (!startLatlng) {
+				throw new Error("start Latlng is undefined");
+			}
+
+			if (!destinationLatlng) {
+				throw new Error("destination Latlng is undefined");
+			}
+
+			if (!(startLatlng instanceof google.maps.LatLng)) {
+				throw new Error("start Latlng is not instance of google.maps.Latlng");
+			}
+
+			if (!(destinationLatlng instanceof google.maps.LatLng)) {
+				throw new Error("destination Latlng is not instance of google.maps.Latlng");
+			}
+
+			var segmentDataModel = {
+				segmentId: routeBuilder.generateUUID(),
+				points: [],
+				distance: 0
+			};
+
+			var segmentPoints = [];
+			segmentPoints.push({
+				lat: destinationLatlng.lat(),
+				lng: destinationLatlng.lng(),
+				elevation: 0,
+				distanceFromStart: 0,
+				grade: 0,
+				segmentId: segmentDataModel.segmentId
+			});
+
+			try {
+				segmentDataModel.distance = parseFloat(routeBuilder.calculateDistanceBetween2Points(startLatlng, destinationLatlng));
+			} catch (ex) {
+				console.log(ex.message);
+			}
+
+			segmentDataModel.points = segmentPoints;
+
+			return segmentDataModel;
+		};*/
+
+		//KEEP
+		this.removeLastSegment = function() {
+
+			this.data.segments.splice(this.data.segments.length - 1, 1);
+
+			this.segments.splice(this.segments.length - 1, 1);
+
+			if (this._polylines.length > 0) {
+				this._polylines.splice(this._polylines.length - 1, 1);
+			}
+		};
+
+		//KEEP
+		this.clearSegment = function() {
+
+			var lastPointOfLastSegment = this.getLastPointOfLastSegment();
+
+			if (lastPointOfLastSegment) {
+
+				this.data.distance = lastPointOfLastSegment.getDistanceFromStart();
+
+				this._calculateElevationDataAlongRoute();
+
+			} else {
+				this.data.ascendant = 0;
+				this.data.descendant = 0;
+				this.data.minElevation = 0;
+				this.data.maxElevation = 0;
+				this.data.distance = 0.0;
+			}
+		};
+
+		//KEEP
+		this.getLastSegment = function() {
+			var lastSegment;
+
+			if (this.segments.length > 0) {
+				lastSegment = this.segments[this.segments.length - 1];
+			}
+			return lastSegment;
+		};
+
+
+
 		this._calculateElevationDataAlongRoute = function() {
 
 			this.data.ascendant = 0;
@@ -103,19 +219,6 @@ var routeBuilder = {};
 			}
 		};
 
-		this._createSegmentsViewModel = function(segmentsDataModel) {
-			var segmentsViewModel = [];
-
-			var _this = this;
-
-
-			_.each(segmentsDataModel, function(segmentDataModel) {
-				segmentsViewModel.push(new routeBuilder.Segment(segmentDataModel, _this.getLastPointOfLastSegmentDataModel()));
-			});
-
-			return segmentsViewModel;
-		};
-
 		this._createElevationPointsViewModel = function(elevationPointsDataModel) {
 
 			var elevationPointsViewModel = [];
@@ -126,6 +229,62 @@ var routeBuilder = {};
 
 			return elevationPointsViewModel;
 		};
+
+		this._createElevationsDataModel = function(elevationPointsDataModel) {
+
+			var elevationsDataModel = [];
+
+			_.each(elevationPointsDataModel, function(elevationPoint) {
+
+				var data = {
+					x: parseFloat(elevationPoint.distanceFromStart.toFixed(2)),
+					y: elevationPoint.elevation,
+					grade: elevationPoint.grade,
+					color: "blue",
+					fillColor: "blue",
+					segmentId: elevationPoint.segmentId,
+					lat: elevationPoint.lat,
+					lng: elevationPoint.lng
+
+				};
+				elevationsDataModel.push(data);
+			});
+
+			return elevationsDataModel;
+		};
+
+		this.getLastElevationPoint = function() {
+			return this.elevationPoints[this.elevationPoints.length - 1];
+		};
+
+		this.addElevationPoints = function(samplingPoints, result) {
+			for (var k = 0; k < result.length; k++) {
+
+				samplingPoints[k].elevation = result[k].elevation;
+
+				var lastPoint = this.getLastElevationPoint();
+
+				if (lastPoint) {
+					var diffElevation = (parseFloat(samplingPoints[k].elevation) - parseFloat(lastPoint.elevation));
+					var distanceWithLastPoint = samplingPoints[k].distanceFromStart - lastPoint.distanceFromStart;
+					var grade = 0;
+					if (distanceWithLastPoint !== 0 && diffElevation !== 0) {
+						grade = Math.floor((diffElevation / (distanceWithLastPoint * 1000)) * 100);
+					}
+					samplingPoints[k].grade = grade;
+				}
+
+				this.data.elevationPoints.push(samplingPoints[k]);
+
+				this.elevationPoints.push(samplingPoints[k]);
+			}
+
+			this._calculateElevationDataAlongRoute();
+
+			this._addPointsToElevationChart(samplingPoints);
+		};
+
+
 
 		this._createPolylinesDataModel = function(segmentsViewModel) {
 			var polylinesDataModel = [];
@@ -177,6 +336,50 @@ var routeBuilder = {};
 			return polylinesDataModel;
 		};
 
+		//NEW
+		this.addPolyline = function(polylineDataModel) {
+			this._polylines.push(polylineDataModel);
+		}
+
+		//TO BE REMOVED
+		/*this.addPolyline = function(path, editable, draggable, geodesic, visible, color, weight) {
+
+			var pathArray = [];
+
+			_.each(path, function(point) {
+
+				if (!(point instanceof google.maps.LatLng)) {
+					throw new Error("point is not instance of google.maps.Latlng");
+				}
+
+				pathArray.push({
+					latitude: point.lat(),
+					longitude: point.lng()
+				});
+			});
+
+			if (pathArray.length > 1) {
+				var polyline = {
+					id: routeBuilder.generateUUID(),
+					path: pathArray,
+					stroke: {
+						color: (color) ? color : "red",
+						weight: (weight) ? weight : 5
+					},
+					editable: (editable) ? editable : false,
+					draggable: (draggable) ? draggable : false,
+					geodesic: (geodesic) ? geodesic : false,
+					visible: (visible) ? visible : true
+				};
+				this._polylines.push(polyline);
+
+			} else {
+				throw new Error("polyline must contain at least two point");
+			}
+		};*/
+
+
+
 		this._createMarkersDataModel = function(segmentsViewModel, showSegment) {
 			var markersDataModel = [];
 
@@ -221,30 +424,81 @@ var routeBuilder = {};
 			return markersDataModel;
 		};
 
-		this._createElevationsDataModel = function(elevationPointsDataModel) {
+		//TO BE REMOVED
+		/*this._createMarker = function(latLng, icon, title) {
 
-			var elevationsDataModel = [];
+			if (!(latLng instanceof google.maps.LatLng)) {
+				throw new Error("latLng is not instance of google.maps.Latlng");
+			}
 
-			_.each(elevationPointsDataModel, function(elevationPoint) {
+			var marker = {
+				id: routeBuilder.generateUUID(),
+				latitude: latLng.lat(),
+				longitude: latLng.lng(),
+				icon: icon,
+				title: title
+			};
 
-				var data = {
-					x: parseFloat(elevationPoint.distanceFromStart.toFixed(2)),
-					y: elevationPoint.elevation,
-					grade: elevationPoint.grade,
-					color: "blue",
-					fillColor: "blue",
-					segmentId: elevationPoint.segmentId,
-					lat: elevationPoint.lat,
-					lng: elevationPoint.lng
+			return marker;
+		};*/
 
-				};
-				elevationsDataModel.push(data);
-			});
-
-			return elevationsDataModel;
+		//KEEP
+		this.getLastMarker = function() {
+			return this._markers[this._markers.length - 1];
 		};
 
-		this._addClimbToSerie = function(previousElevationPoint, nextElevationPoint, serie) {
+		//KEEP
+		this.removeLastMarker = function() {
+			this.getMarkers().splice(this.getMarkers().length - 1, 1);
+		};
+
+		//TO BE REMOVED
+		/*this.addMarkerToRoute = function(path) {
+			try {
+
+				var marker = {};
+
+				var lastLatLng = this._getLastLatLngOfPath(path);
+
+				if (this.segments.length === 1) {
+
+					marker = this._createMarker(lastLatLng, "client/modules/route/images/start.png", "first point");
+
+				} else {
+
+					if (this.segments.length > 2) {
+						//replace last marker by segment point
+						var segmentIcon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
+							new google.maps.Size(32, 32),
+							new google.maps.Point(0, 0),
+							new google.maps.Point(8, 8),
+							new google.maps.Size(16, 16)
+						);
+
+						var lastMarker = this.getLastMarker();
+						lastMarker.icon = segmentIcon;
+
+					}
+
+					//create the new last marker
+					marker = this._createMarker(lastLatLng, "client/modules/route/images/end.png", "end point");
+				}
+
+				this._markers.push(marker);
+
+			} catch (ex) {
+				console.log("an error occured during add marker to route", ex.message);
+			}
+		};*/
+
+		//NEW
+		this.addMarker = function() {
+			this._markers.push(marker);
+		}
+
+
+		//TO BE REMOVED
+		/*this._addClimbToSerie = function(previousElevationPoint, nextElevationPoint, serie) {
 
 			var previousData;
 
@@ -272,9 +526,10 @@ var routeBuilder = {};
 				lng: nextElevationPoint.lng
 
 			});
-		};
+		};*/
 
-		this._createClimbsDataModel = function(elevationPointsDataModel) {
+		//TO BE REMOVED
+		/*this._createClimbsDataModel = function(elevationPointsDataModel) {
 
 			var climbsDataModel = {
 				climbsInf7: [],
@@ -327,37 +582,30 @@ var routeBuilder = {};
 			}
 
 			return climbsDataModel;
-		};
+		};*/
 
-		this.getLastElevationPoint = function() {
-			return this.elevationPoints[this.elevationPoints.length - 1];
-		};
+		this.removePointsToElevationChartBySegmentId = function(segmentId) {
+			_.each(this.getChartConfig().series, function(serie) {
+				serie.data = _.difference(serie.data, _.where(serie.data, {
+					"segmentId": segmentId
+				}));
+			});
 
-		this.addElevationPoints = function(samplingPoints, result) {
-			for (var k = 0; k < result.length; k++) {
-
-				samplingPoints[k].elevation = result[k].elevation;
-
-				var lastPoint = this.getLastElevationPoint();
-
-				if (lastPoint) {
-					var diffElevation = (parseFloat(samplingPoints[k].elevation) - parseFloat(lastPoint.elevation));
-					var distanceWithLastPoint = samplingPoints[k].distanceFromStart - lastPoint.distanceFromStart;
-					var grade = 0;
-					if (distanceWithLastPoint !== 0 && diffElevation !== 0) {
-						grade = Math.floor((diffElevation / (distanceWithLastPoint * 1000)) * 100);
-					}
-					samplingPoints[k].grade = grade;
-				}
-
-				this.data.elevationPoints.push(samplingPoints[k]);
-
-				this.elevationPoints.push(samplingPoints[k]);
-			}
-
-			this._calculateElevationDataAlongRoute();
-
-			this._addPointsToElevationChart(samplingPoints);
+			/*this.getChartConfig().series[0].data = _.difference(this.getChartConfig().series[0].data, _.where(this.getChartConfig().series[0].data, {
+				"segmentId": segmentId
+			}));
+			this.getChartConfig().series[1].data = _.difference(this.getChartConfig().series[1].data, _.where(this.getChartConfig().series[1].data, {
+				"segmentId": segmentId
+			}));
+			this.getChartConfig().series[2].data = _.difference(this.getChartConfig().series[2].data, _.where(this.getChartConfig().series[2].data, {
+				"segmentId": segmentId
+			}));
+			this.getChartConfig().series[3].data = _.difference(this.getChartConfig().series[3].data, _.where(this.getChartConfig().series[3].data, {
+				"segmentId": segmentId
+			}));
+			this.getChartConfig().series[4].data = _.difference(this.getChartConfig().series[4].data, _.where(this.getChartConfig().series[4].data, {
+				"segmentId": segmentId
+			}));*/
 		};
 
 		this._addPointsToElevationChart = function(elevationPointsDataModel) {
@@ -400,6 +648,8 @@ var routeBuilder = {};
 			this._chartConfig.series[4].data = this._chartConfig.series[4].data.concat(climbs.climbsSup15);
 		};
 
+
+		//KEEP
 		this.addClickListener = function(callback) {
 			var _this = this;
 			this._events = {
@@ -409,86 +659,12 @@ var routeBuilder = {};
 			};
 		};
 
-		this.addSegment = function(segmentDataModel) {
-
-			var newSegment = new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegmentDataModel());
-
-			this.data.segments.push(segmentDataModel);
-
-			this.segments.push(newSegment);
-
-			this._updateDistance();
-
-			return newSegment;
-		};
-
 		this._updateDistance = function() {
 			this.setDistance(this.getLastPointOfLastSegmentDataModel().distanceFromStart);
 		};
 
-		this.createSimpleSegmentDataModel = function(startLatlng, destinationLatlng) {
-
-			if (!startLatlng) {
-				throw new Error("start Latlng is undefined");
-			}
-
-			if (!destinationLatlng) {
-				throw new Error("destination Latlng is undefined");
-			}
-
-			if (!(startLatlng instanceof google.maps.LatLng)) {
-				throw new Error("start Latlng is not instance of google.maps.Latlng");
-			}
-
-			if (!(destinationLatlng instanceof google.maps.LatLng)) {
-				throw new Error("destination Latlng is not instance of google.maps.Latlng");
-			}
-
-			var segmentDataModel = {
-				segmentId: routeBuilder.generateUUID(),
-				points: [],
-				distance: 0
-			};
-
-			var segmentPoints = [];
-			segmentPoints.push({
-				lat: destinationLatlng.lat(),
-				lng: destinationLatlng.lng(),
-				elevation: 0,
-				distanceFromStart: 0,
-				grade: 0,
-				segmentId: segmentDataModel.segmentId
-			});
-
-			try {
-				segmentDataModel.distance = parseFloat(routeBuilder.calculateDistanceBetween2Points(startLatlng, destinationLatlng));
-			} catch (ex) {
-				console.log(ex.message);
-			}
-
-			segmentDataModel.points = segmentPoints;
-
-			return segmentDataModel;
-		};
-
-		this._createMarker = function(latLng, icon, title) {
-
-			if (!(latLng instanceof google.maps.LatLng)) {
-				throw new Error("latLng is not instance of google.maps.Latlng");
-			}
-
-			var marker = {
-				id: routeBuilder.generateUUID(),
-				latitude: latLng.lat(),
-				longitude: latLng.lng(),
-				icon: icon,
-				title: title
-			};
-
-			return marker;
-		};
-
-		this._getLastLatLngOfPath = function(path) {
+		//TO BE REMOVED
+		/*this._getLastLatLngOfPath = function(path) {
 
 			var lastLatLng;
 
@@ -504,150 +680,7 @@ var routeBuilder = {};
 			}
 
 			return lastLatLng;
-		};
-
-		this.getLastMarker = function() {
-			return this._markers[this._markers.length - 1];
-		};
-
-		this.addMarkerToRoute = function(path) {
-
-			try {
-
-				var marker = {};
-
-				var lastLatLng = this._getLastLatLngOfPath(path);
-
-				if (this.segments.length === 1) {
-
-					marker = this._createMarker(lastLatLng, "client/modules/route/images/start.png", "first point");
-
-				} else {
-
-					if (this.segments.length > 2) {
-						//replace last marker by segment point
-						var segmentIcon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
-							new google.maps.Size(32, 32),
-							new google.maps.Point(0, 0),
-							new google.maps.Point(8, 8),
-							new google.maps.Size(16, 16)
-						);
-
-						var lastMarker = this.getLastMarker();
-						lastMarker.icon = segmentIcon;
-
-					}
-
-					//create the new last marker
-					marker = this._createMarker(lastLatLng, "client/modules/route/images/end.png", "end point");
-				}
-
-				this._markers.push(marker);
-
-			} catch (ex) {
-				console.log("an error occured during add marker to route", ex.message);
-			}
-		};
-
-		
-
-		this.removeLastMarker = function() {
-			this.getMarkers().splice(this.getMarkers().length - 1, 1);
-		};
-
-		this.removePointsToElevationChartBySegmentId = function(segmentId) {
-			this.getChartConfig().series[0].data = _.difference(this.getChartConfig().series[0].data, _.where(this.getChartConfig().series[0].data, {
-				"segmentId": segmentId
-			}));
-			this.getChartConfig().series[1].data = _.difference(this.getChartConfig().series[1].data, _.where(this.getChartConfig().series[1].data, {
-				"segmentId": segmentId
-			}));
-			this.getChartConfig().series[2].data = _.difference(this.getChartConfig().series[2].data, _.where(this.getChartConfig().series[2].data, {
-				"segmentId": segmentId
-			}));
-			this.getChartConfig().series[3].data = _.difference(this.getChartConfig().series[3].data, _.where(this.getChartConfig().series[3].data, {
-				"segmentId": segmentId
-			}));
-			this.getChartConfig().series[4].data = _.difference(this.getChartConfig().series[4].data, _.where(this.getChartConfig().series[4].data, {
-				"segmentId": segmentId
-			}));
-		};
-
-		this.removeLastSegment = function() {
-
-			this.data.segments.splice(this.data.segments.length - 1, 1);
-
-			this.segments.splice(this.segments.length - 1, 1);
-
-			if (this._polylines.length > 0) {
-				this._polylines.splice(this._polylines.length - 1, 1);
-			}
-		};
-
-		this.clearSegment = function() {
-
-			var lastPointOfLastSegment = this.getLastPointOfLastSegment();
-
-			if (lastPointOfLastSegment) {
-
-				this.data.distance = lastPointOfLastSegment.getDistanceFromStart();
-
-				this._calculateElevationDataAlongRoute();
-
-			} else {
-				this.data.ascendant = 0;
-				this.data.descendant = 0;
-				this.data.minElevation = 0;
-				this.data.maxElevation = 0;
-				this.data.distance = 0.0;
-			}
-		};
-
-		this.getLastSegment = function() {
-			var lastSegment;
-
-			if (this.segments.length > 0) {
-				lastSegment = this.segments[this.segments.length - 1];
-			}
-			return lastSegment;
-		};
-
-		this.addPolyline = function(path, editable, draggable, geodesic, visible, color, weight) {
-
-			var pathArray = [];
-
-			_.each(path, function(point) {
-
-				if (!(point instanceof google.maps.LatLng)) {
-					throw new Error("point is not instance of google.maps.Latlng");
-				}
-
-				pathArray.push({
-					latitude: point.lat(),
-					longitude: point.lng()
-				});
-			});
-
-			if (pathArray.length > 1) {
-				var polyline = {
-					id: routeBuilder.generateUUID(),
-					path: pathArray,
-					stroke: {
-						color: (color) ? color : "red",
-						weight: (weight) ? weight : 5
-					},
-					editable: (editable) ? editable : false,
-					draggable: (draggable) ? draggable : false,
-					geodesic: (geodesic) ? geodesic : false,
-					visible: (visible) ? visible : true
-				};
-				this._polylines.push(polyline);
-
-			} else {
-				throw new Error("polyline must contain at least two point");
-			}
-		};
-
+		};*/
 
 		this._visible = false;
 		this._zoom = 13;
@@ -812,6 +845,29 @@ var routeBuilder = {};
 			return this.segments;
 		};
 
+		//KEEP
+		this.reset = function() {
+			this.data.ascendant = 0;
+			this.data.descendant = 0;
+			this.data.minElevation = 0;
+			this.data.maxElevation = 0;
+			this.data.distance = 0.0;
+			this.data.elevationPoints = [];
+			this.data.segments = [];
+			this.segments = [];
+			this.elevationPoints = [];
+
+			this._markers.length = 0;
+			this._polylines.length = 0;
+			this._climbs = [];
+
+			this._chartConfig.series[0].data = [];
+			this._chartConfig.series[1].data = [];
+			this._chartConfig.series[2].data = [];
+			this._chartConfig.series[3].data = [];
+			this._chartConfig.series[4].data = [];
+		};
+
 
 	};
 
@@ -950,11 +1006,11 @@ var routeBuilder = {};
 
 	};
 
-
+	//TO BE REMOVED
 	routeBuilder.rad = function(x) {
 		return (x * Math.PI) / 180;
 	};
-
+	//TO BE REMOVED
 	routeBuilder.calculateDistanceBetween2Points = function(p1, p2) {
 
 		if ((!p1 || (p1.lat >= 180 || p1.lat <= -180)) || (!p2 || (p2.lat >= 180 || p2.lat <= -180))) {
@@ -977,6 +1033,7 @@ var routeBuilder = {};
 		return d.toFixed(3);
 	};
 
+	//KEEP
 	routeBuilder.generateUUID = function() {
 		var d = new Date().getTime();
 		var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
