@@ -11,7 +11,7 @@ angular.module("nextrunApp.race").controller("EditScheduleModalController", func
 		$scope.schedule = angular.copy(schedule);
 		angular.copy($scope.schedule, $scope.tmpSchedule);
 
-		if ($scope.schedule.events || $scope.schedule.events.length === 0) {
+		if (!$scope.schedule.events || $scope.schedule.events.length === 0) {
 			var startEvent = {
 				name: "Départ",
 				date: undefined,

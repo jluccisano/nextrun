@@ -19,6 +19,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		RouteUtilsService,
 		RouteHelperService) {
 
+		$scope.selection;
+
 		$scope.editMode = true;
 		$scope.active = "general";
 		$scope.status = {
@@ -32,7 +34,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		//google.maps.visualRefresh = true;
 
 		$scope.navType = "pills";
-		$scope.types = RaceTypeEnum.getValues();
 		$scope.routesViewModel = [];
 		$scope.choices = ["oui", "non"];
 		$scope.cursorMarker = {
@@ -47,7 +48,11 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			RaceService.retrieve($scope.raceId).then(function(response) {
 				$scope.race = response.data.race;
 				$scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
-				$scope.selection = $scope.routesViewModel[0].getType() + 0;
+				
+				if(!$scope.selection) {
+					$scope.selection = $scope.routesViewModel[0].getType() + 0;
+				}
+				
 			}).
 			finally(function() {
 				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
@@ -62,7 +67,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			$location.path("/myraces");
 		};
 
-		$scope.submit = function() {
+		/*$scope.submit = function() {
 
 			$scope.race.routes = [];
 
@@ -79,50 +84,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
 					$location.path("/myraces");
 				});
-		};
+		};*/
 
-		$scope.openChangeTypeConfirmation = function() {
-
-			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/race/changeTypeConfirmationModal",
-				controller: "ChangeTypeConfirmationController"
-			});
-
-			$scope.modalInstance.result.then(function() {
-				$scope.race.routes = [];
-				$scope.changeType();
-				$scope.currentRaceType = $scope.race.type;
-				$scope.distances = $scope.race.type.distances;
-			}, function() {
-				$scope.race.type = $scope.currentRaceType;
-			});
-		};
-
-		$scope.changeType = function() {
-
-			//var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type.name);
-
-			//_.each(raceType.routes, function(routeType, index) {
-
-			//var route = RouteHelperService.generateRoute($scope, undefined, routeType);
-
-			//$scope.race.routes[index] = route;
-			//$scope.race.routes[0].isVisible = true;
-			//});
-
-		};
-
-		$scope.computeLocation = function(address) {
-			GmapsApiService.getLocation(address).then(function(result) {
-				if (result.success) {
-					$scope.race.plan.location = result.location;
-				}
-			}, function(error) {
-				if (error.message) {
-					AlertService.add("danger", error.message, 3000);
-				}
-			});
-		};
 
 		$scope.editRichTextEditor = function(model, field) {
 			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal(model);
@@ -154,21 +117,23 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			});
 
 			$scope.modalInstance.result.then(function(routeDataModel) {
-				if (!angular.equals(routeDataModel, $scope.routesViewModel[$index].data)) {
+				/*if (!angular.equals(routeDataModel, $scope.routesViewModel[$index].data)) {*/
 
-					var fields = {};
-					fields["routes.$"] = routeDataModel;
+				var fields = {};
+				fields["routes.$"] = routeDataModel;
 
-					var query = {};
-					query = {
-						"routes._id": routeDataModel._id
-					};
+				var query = {};
+				query = {
+					"routes._id": routeDataModel._id
+				};
 
-					$scope.update({
-						query: query,
-						fields: fields
-					});
-				}
+				$scope.update({
+					query: query,
+					fields: fields
+				});
+
+				$scope.selection = $scope.setSelection(routeViewModel, $index);
+				/*}*/
 			});
 		};
 
@@ -200,6 +165,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 							"registration": data
 						}
 					});
+					$scope.selection = "registration";
 				}
 			});
 		};
@@ -224,6 +190,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 							"schedule": data
 						}
 					});
+					$scope.selection = "schedule";
+					$scope.active = "schedule";
 				}
 			});
 		};

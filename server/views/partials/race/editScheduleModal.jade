@@ -30,7 +30,7 @@ div(class="modal-body")
 									input(type="text" name="name" placeholder="{{'Nom' | translate }}" class="form-control" ng-model="event.name" ng-required="true")
 							td
 								div(class="form-group" ng-class="{'has-error': !eventsForm.date.$pristine && eventsForm.date.$invalid, 'has-success': !eventsForm.date.$pristine && !eventsForm.date.$invalid}")
-									input(type="text" name="date" class="form-control" size="5" ng-model="event.date" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-datetime ng-required="true")
+									input(type="text" name="date" class="form-control"  size="8" ng-model="event.date" data-time-format="HH:mm" data-length="1" data-minute-step="1" data-arrow-behavior="picker" placeholder="{{ 'Heure' | translate }}" bs-timepicker ng-required="true")
 
 							td
 								div(class="form-group" ng-class="{'has-error': !eventsForm.description.$pristine && eventsForm.description.$invalid, 'has-success': !eventsForm.description.$pristine && !eventsForm.description.$invalid}")

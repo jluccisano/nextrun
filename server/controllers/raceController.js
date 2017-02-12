@@ -256,7 +256,6 @@ exports.delete = function(req, res) {
  */
 exports.publish = function(req, res) {
     var race = req.race;
-    var userConnected = req.user;
     var value = false;
 
 

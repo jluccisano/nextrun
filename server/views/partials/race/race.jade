@@ -7,7 +7,7 @@ div(class="container view-race")
             h4(class="list-group-item-heading" translate) Général
           a(ng-click="status.open = true" nr-scroll-to="routes" class="list-group-item")
             h4(class="list-group-item-heading" translate) Parcours
-            a(ng-class="{'active': active === (routeViewModel.getType() + $index)}" bs-scrollspy ng-click="status.open = false;setSelection(routeViewModel, $index);route.setVisible(true)" ng-repeat="routeViewModel in routesViewModel" nr-scroll-to="route{{$index}}" class="list-group-item") {{routeViewModel.getType()}}
+            a(ng-class="{'active': active === (routeViewModel.getType() + $index)}" bs-scrollspy ng-click="status.open = false;setSelection(routeViewModel, $index);routeViewModel.setVisible(true)" ng-repeat="routeViewModel in routesViewModel" nr-scroll-to="route{{$index}}" class="list-group-item") {{routeViewModel.getType()}}
           a(class="list-group-item")
             h4(class="list-group-item-heading" translate) Organisation
             a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="status.open = false;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Inscription
@@ -25,12 +25,14 @@ div(class="container view-race")
         div(id="general")
         accordion
           accordion-group(is-open="status.open")
-            accordion-heading {{race.name}}
-              i(ng-if="editMode" class="fa fa-pencil-square-o")
+            accordion-heading(ng-if="!editMode"  ) {{race.name}}
               div(class="pull-right")
                 div.fb-like( data-href="http://www.nextrun.fr/races/view/{{race._id}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
                 i(class="glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}")
-            h5(class="text-left") {{race.date | date:'dd MMMM yyyy'}}
+            accordion-heading(ng-if="editMode") {{ race.name || 'Non communiqué' }}
+              div(class="pull-right")
+                i(class="glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}")
+            nr-date(edit-mode="editMode" race="race")
             div(class="row")
               div(class="col-md-6")
                 div(class="row")
@@ -43,22 +45,9 @@ div(class="container view-race")
                     span 
                     span Départ: {{race.schedule.events[0].date | date:'HH:mm'}}
               div(class="col-lg-6")
-                div(class="row text-center")
-                  div(class="col-md-6")
-                    h4 {{race.type}}
-                    span(class"small" translate) type
-                  div(class="col-md-6")
-                    h4 {{race.distanceType}}
-                    span(class"small" translate) distance
+                nr-type(edit-mode="editMode" race="race")
                 hr
-                div(class="row")
-                  div(class="col-lg-8 col-lg-offset-4")
-                    i(class="fa fa-map-marker fa-3")
-                    span 
-                    span {{ race.pin.name || 'Non communiqué' }} ({{ race.pin.department.code || '' }})
-                div(class="row")
-                  div(ng-if="race.plan.location" class="col-lg-8 col-lg-offset-4 address-map-container")
-                    google-map(center="race.plan.location" zoom="17")
+                nr-address(edit-mode="editMode" race="race")
 
       div(class="bs-docs-section")
         div(ng-repeat="routeViewModel in routesViewModel" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()")

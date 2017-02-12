@@ -95,6 +95,24 @@ var RaceSchema = new Schema({
             default: ""
         }
     },
+    rights: String,
+    misc: String,
+    place: {
+        department: {
+            code: String,
+            name: String,
+            region: String,
+            center: {
+                latitude: Number,
+                longitude: Number
+            }
+        },
+        name: String,
+        location: {
+            latitude: Number,
+            longitude: Number
+        }
+    },
     plan: {
         address: {
             type: String,
@@ -123,24 +141,6 @@ var RaceSchema = new Schema({
         moreInformation: {
             type: String,
             default: ""
-        }
-    },
-    rights: String,
-    misc: String,
-    pin: {
-        department: {
-            code: String,
-            name: String,
-            region: String,
-            center: {
-                latitude: Number,
-                longitude: Number
-            }
-        },
-        name: String,
-        location: {
-            lat: Number,
-            lon: Number
         }
     }
 });

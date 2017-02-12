@@ -77,8 +77,8 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         $scope.centerToLocation = function(routeViewModel, details) {
             if (details && details.location) {
                 var center = {
-                    latitude: details.location.lat,
-                    longitude: details.location.lon
+                    latitude: details.location.latitude,
+                    longitude: details.location.longitude
                 };
                 routeViewModel.setCenter(center);
             }

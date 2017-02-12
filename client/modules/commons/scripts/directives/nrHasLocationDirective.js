@@ -3,6 +3,7 @@
 angular.module("nextrunApp.commons").directive("nrHasLocation", function() {
   return {
     restrict: "A",
+    prioriy: "1",
     require: "?ngModel",
     link: function(scope, element, attrs, ctrl) {
       function validate(viewValue) {

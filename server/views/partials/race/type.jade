@@ -1,0 +1,28 @@
+form(role="form" name="typeForm" novalidate)
+  div(class="row")
+    div(class="col-md-2 col-md-offset-10")
+      a(ng-if="editMode && !edit" ng-click="toggleEdit()" class="btn btn-default btn-sm")
+        i(class="fa fa-pencil-square-o")
+  div(class="row text-center")
+    div(class="col-md-6")
+      div(ng-if="!editMode || !edit")
+        h4 {{race.type}}
+        span(class"small" translate) type
+      div(ng-if="editMode && edit" class="form-group" ng-class="{'has-error': !typeForm.type.$pristine && typeForm.type.$invalid, 'has-success': !typeForm.type.$invalid && !typeForm.type.$pristine}")
+        label(class="control-label") {{'Type' | translate}}
+        select(class="form-control" class="form-control" name="type" ng-model="race.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in types" ng-required="true")
+          option(value="") {{'Sélectionner...' | translate}}
+    div(class="col-md-6")
+      div(ng-if="!editMode || !edit")
+        h4 {{race.distanceType}}
+        span(class"small" translate) distance
+      div(ng-if="editMode && edit" class="form-group" ng-class="{'has-error': !typeForm.distanceType.$pristine && typeForm.distanceType.$invalid, 'has-success': !typeForm.distanceType.$invalid && !typeForm.distanceType.$pristine}")
+        label(class="control-label") {{'Distance' | translate}}
+        select(class="form-control" name="distanceType" ng-model="race.distanceType" ng-options="distance.name as distance.label for distance in types | distanceTypeFilter:race.type" ng-required="true")
+          option(value="") {{'Sélectionner...' | translate}}
+  div(class="row")
+    div(class="col-md-3 col-md-offset-9")
+      button(ng-if="editMode && edit" ng-click="update()" ng-disabled="typeForm.$invalid" class="btn btn-primary btn-sm")
+        i(class="fa fa-check")
+      button(ng-if="editMode && edit" ng-click="cancel()" class="btn btn-default btn-sm")
+        i(class="fa fa-remove")

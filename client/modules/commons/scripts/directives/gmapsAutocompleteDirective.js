@@ -91,18 +91,18 @@ angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
 
         scope.getDetails = function(result) {
 
-          var pin = {};
+          var place = {};
           var country;
           var departmentCode;
 
           if ("undefined" !== typeof result.name) {
-            pin.name = result.name;
+            place.name = result.name;
           }
 
           if ("undefined" !== typeof result.geometry) {
-            pin.location = {
-              lat: result.geometry.location.lat(),
-              lon: result.geometry.location.lng()
+            place.location = {
+              latitude: result.geometry.location.lat(),
+              longitude: result.geometry.location.lng()
             };
           }
 
@@ -126,12 +126,12 @@ angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
 
               if ("undefined" !== typeof departmentCode) {
 
-                pin.department = DepartmentEnum.getDepartmentByCode(departmentCode);
+                place.department = DepartmentEnum.getDepartmentByCode(departmentCode);
               }
             }
 
           }
-          return pin;
+          return place;
         };
 
 
