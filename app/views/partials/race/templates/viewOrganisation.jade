@@ -2,103 +2,145 @@ div.container
 	tabset(vertical="false" type="pills")
 		tab(heading=t("race.timing"))
 			div.container
-				dl.dl-horizontal
-					dt=t("race.startingTime")
-					dd {{getHour(race.timing.startingTime)}}
-					dt=t("race.briefingTime")
-					dd {{getHour(race.timing.briefingTime)}}
-					dt=t("race.checkoutBibTime")
-					dd {{getHour(race.timing.checkoutBibTime)}}
-					dt=t("race.rewardsTime")
-					dd {{getHour(race.timing.rewardsTime)}}
-				div.well(data-ng-bind-html="race.timing.timingMoreInformation")
+				div.row
+					div.col-lg-4
+						table.table.table-hover.table-condensed
+							thead
+								tr
+									th(style="width: 40%;border:0; border-top: none;")
+									th(style="width: 20%;border:0; border-top: none;")
+							tbody
+								tr
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.startingTime")
+										span :
+									td(data-ng-if="race.timing.startingTime != null" align="left" style="border:0; border-top: none;") {{getHour(race.timing.startingTime)}}
+									td(data-ng-if="race.timing.startingTime == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+								tr
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.briefingTime")
+										span :
+									td(data-ng-if="race.timing.briefingTime != null" align="left" style="border:0; border-top: none;") {{getHour(race.timing.briefingTime)}}
+									td(data-ng-if="race.timing.briefingTime == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+								tr
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.checkoutBibTime")
+										span :
+									td(data-ng-if="race.timing.checkoutBibTime != null" align="left" style="border:0; border-top: none;") {{getHour(race.timing.checkoutBibTime)}}
+									td(data-ng-if="race.timing.checkoutBibTime == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+								tr
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.rewardsTime")
+										span :
+									td(data-ng-if="race.timing.rewardsTime != null" align="left" style="border:0; border-top: none;") {{getHour(race.timing.rewardsTime)}}
+									td(data-ng-if="race.timing.rewardsTime == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+				div.well(data-ng-if="race.timing.timingMoreInformation" data-ng-bind-html="race.timing.timingMoreInformation")
 		tab(heading=t("race.pricing"))
-			div.container
-				dl.dl-horizontal
-					dt=t("race.memberFFPrice")
-					dd {{race.pricing.memberFFPrice}}
-						i.fa.fa-eur
-					dt=t("race.notMemberFFPrice")
-					dd {{race.pricing.notMemberFFPrice}}
-						i.fa.fa-eur
-				dl(data-ng-if="race.pricing.pricingMoreInformation")
-					dt=t("race.moreInformation")
-					dd {{race.pricing.pricingMoreInformation}}
-		tab(heading=t("race.registration"))
 			div.container
 				div.row
 					div.col-lg-4
-						table.table.table-hover
+						table.table.table-hover.table-condensed
+							thead
+								tr
+									th(style="width: 40%;border:0; border-top: none;")
+									th(style="width: 20%;border:0; border-top: none;")
+							tbody
+								tr
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.memberFFPrice")
+										span :
+									td(data-ng-if="race.pricing.memberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.memberFFPrice}}
+										i.fa.fa-eur
+									td(data-ng-if="race.pricing.memberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+								tr
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.notMemberFFPrice")
+										span :
+									td(data-ng-if="race.pricing.notMemberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.notMemberFFPrice}}
+										i.fa.fa-eur
+									td(data-ng-if="race.pricing.notMemberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+			div.well(data-ng-if="race.registration.registrationMoreInformation" data-ng-bind-html="race.registration.registrationMoreInformation")
+		tab(heading=t("race.registration"))
+			div.container
+				div.row
+					div.col-lg-5
+						table.table.table-hover.table-condensed
 							thead
 								tr
 									th(style="width: 50%;border:0; border-top: none;")
-									th(style="width: 50%;border:0; border-top: none;")
+									th(style="width: 20%;border:0; border-top: none;")
 							tbody
 								tr
-									td(align="left" style="border:0; border-top: none;")<strong>=t("race.registrationOpeningDate")</strong>
-									td(align="left" style="border:0; border-top: none;") {{getDate(race.registration.registrationOpeningDate)}}
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.registrationOpeningDate")
+										span :
+									td(data-ng-if="race.registration.registrationOpeningDate != null" align="left" style="border:0; border-top: none;") {{getDate(race.registration.registrationOpeningDate)}}
+									td(data-ng-if="race.registration.registrationOpeningDate == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+
 								tr
-									td(align="left" style="border:0; border-top: none;")=t("race.registrationLimitDate")
-									td(align="left" style="border:0; border-top: none;") {{getDate(race.registration.registrationLimitDate)}}
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.registrationLimitDate")
+										span :
+									td(data-ng-if="race.registration.registrationLimitDate != null" align="left" style="border:0; border-top: none;") {{getDate(race.registration.registrationLimitDate)}}
+									td(data-ng-if="race.registration.registrationLimitDate == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+
 								tr
-									td(align="left" style="border:0; border-top: none;")=t("race.registrationWebSite")
-									td(align="left" style="border:0; border-top: none;") {{race.registration.registrationWebSite}}
+									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.registrationWebSite")
+										span :
+									td(data-ng-if="race.registration.registrationWebSite != null" align="left" style="border:0; border-top: none;") 
+										a(data-ng-href="http://{{race.registration.registrationWebSite}}" target="_blank")
+											span  {{race.registration.registrationWebSite}}
+									td(data-ng-if="race.registration.registrationWebSite == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+
 								tr
-									td(align="left" style="border:0; border-top: none;")=t("race.registrationAddress")
-									td(align="left" style="border:0; border-top: none;") {{race.registration.registrationAddress}}
+									td(align="left" style="border:0; border-top: none;font-weight:bold")=t("race.registrationAddress")
+										span :
+									td(data-ng-if="race.registration.registrationAddress != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationAddress}}
+									td(data-ng-if="race.registration.registrationAddress == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+
 								tr
-									td(align="left" style="border:0; border-top: none;")=t("race.registrationOnPlace")
-									td(align="left" style="border:0; border-top: none;") {{race.registration.registrationOnPlace}}
+									td(align="left" style="border:0; border-top: none;font-weight:bold")=t("race.registrationOnPlace")
+										span :
+									td(data-ng-if="race.registration.registrationOnPlace != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationOnPlace}}
+									td(data-ng-if="race.registration.registrationOnPlace == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+
 								tr
-									td(align="left" style="border:0; border-top: none;")=t("race.numberOfPlacesAvailable")
-									td(align="left" style="border:0; border-top: none;") {{race.registration.numberOfPlacesAvailable}}
-				div.well(data-ng-bind-html="race.registration.registrationMoreInformation")
+									td(align="left" style="border:0; border-top: none;font-weight:bold")=t("race.numberOfPlacesAvailable")
+										span :
+									td(data-ng-if="race.registration.numberOfPlacesAvailable != null" align="left" style="border:0; border-top: none;") {{race.registration.numberOfPlacesAvailable}}
+									td(data-ng-if="race.registration.numberOfPlacesAvailable == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+
+				div.well(data-ng-if="race.registration.registrationMoreInformation" data-ng-bind-html="race.registration.registrationMoreInformation")
 
 		tab(data-ng-click="onChangeOrganisationTab()" heading=t("race.plan"))
 			div.container
+				div(data-ng-if="race.plan.address.city == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
 				div.row(style="margin-top:20px")
-					div.col-lg-4(data-ng-if="race.plan != null && race.plan.address")
-						address 
+					div.col-lg-4(data-ng-if="race.plan != null && race.plan.address != null && race.plan.address.city != null")
+						address
 							span {{race.plan.address.address1}}
 							br
 							span(data-ng-if="race.plan.address.address2 != ''") {{race.plan.address.address2}}
 							br(data-ng-if="race.plan.address.address2 != ''")
 							span <strong>{{race.plan.address.postcode}} - {{race.plan.address.city}}</strong>
 							br
-						dl(data-ng-if="race.plan.planMoreInformation")
-							dt=t("race.moreInformation")
-							dd {{race.plan.planMoreInformation}}
-					div.col-lg-4(data-ng-if="isVisible")
+						div.well(data-ng-if="race.plan.planMoreInformation" data-ng-bind-html="race.plan.planMoreInformation")
+					div.col-lg-4(data-ng-if="isVisible && race.plan.address.latLng.lat != null && race.plan.address.latLng.lng != null")
 						gm-map(gm-map-id="'mapPlan'" gm-center="center" gm-zoom="zoom" gm-map-options="options.map" style="width:250px;height:250px" )
 							gm-markers(gm-objects="addressMarkers" gm-id="object.id" gm-position="{lat: object.location.lat, lng: object.location.lng}")
 		tab(heading=t("race.rights"))
 			div.container
-			div.well(data-ng-bind-html="race.rights.rightsMoreInformation")
+				div.well(data-ng-if="race.rights.rightsMoreInformation != null" data-ng-bind-html="race.rights.rightsMoreInformation")
+				div(data-ng-if="race.rights.rightsMoreInformation == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
 		tab(heading=t("race.therace"))
 			div.container
 				div.row
 					div.col-lg-4
-						table.table
+						table.table.table-condensed.table-hover
 							thead
 								tr
 									th(style="width: 50%;border:0; border-top: none;")
 									th(style="width: 50%;border:0; border-top: none;")
 							tbody
 								tr
-									td(align="left" style="border:0; border-top: none;")=t("race.numberOfProvisions")
-									td(align="left" style="border:0; border-top: none;") {{race.therace.numberOfProvisions}}
-				div.well(data-ng-bind-html="race.therace.theRaceMoreInformation")
+									td(align="left" style="border:0; border-top: none;font-weight:bold")=t("race.numberOfProvisions")
+										span :
+									td(data-ng-if="race.therace.numberOfProvisions != null" align="left" style="border:0; border-top: none;") {{race.therace.numberOfProvisions}}
+									td(data-ng-if="race.therace.numberOfProvisions == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+				div.well(data-ng-if="race.therace.theRaceMoreInformation" data-ng-bind-html="race.therace.theRaceMoreInformation")
 		tab(heading=t("race.miscellaneous"))
 			div.container
-				div.row
-					div.col-lg-4
-						table.table
-							thead
-								tr
-									th(style="width: 50%;border:0; border-top: none;" )
-									th(style="width: 50%;border:0; border-top: none;")
-							tbody
-								tr
-									td(align="left" style="border:0; border-top: none;")=t("race.organizerWebSite")
-									td(align="left" style="border:0; border-top: none;") {{race.organizerWebSite}}
-				div.well(data-ng-bind-html="race.miscellaneous.miscellaneousMoreInformation")
+				div.well(data-ng-if="race.miscellaneous.miscellaneousMoreInformation != null" data-ng-bind-html="race.miscellaneous.miscellaneousMoreInformation")
+				div(data-ng-if="race.miscellaneous.miscellaneousMoreInformation == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")

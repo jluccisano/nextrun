@@ -34,13 +34,14 @@
     "theRaceMoreInformation": "Insérer vos compléments d'information, ex: ",
     "numberOfPlacesAvailable": "Nombre de places disponibles",
     "registrationMoreInformation": "Insérer vos compléments d'information, ex: ",
-    "registrationWebSite": "Insérer le lien pour s'incrire en ligne",
-    "registrationAddress": "Insérer l'adresse complète",
+    "registrationWebSite": "Lien pour s'incrire en ligne",
+    "registrationAddress": "Adresse complète",
     "memberFFPrice":"Licencié",
     "notMemberFFPrice":"Non Licencié",
     "pricingMoreInformation":"Insérer vos compléments d'information, ex: ",
     "planMoreInformation":"Insérer comment accéder à votre manifestation, ex: ",
-    "places":"places"
+    "places":"places",
+    "notCommunicated":"Non communiqué"
   },
 
   "error": {

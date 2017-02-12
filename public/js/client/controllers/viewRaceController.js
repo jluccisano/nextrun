@@ -21,7 +21,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 			if (dateString) {
 				return moment(new Date(dateString)).format("DD MMMM YYYY");
 			}
-			return '-';
+			return null;
 		};
 
 
@@ -29,7 +29,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 			if (dateString) {
 				return moment(new Date(dateString)).format("HH:mm");
 			}
-			return '-';
+			return null;
 		};
 
 		$scope.init = function() {
