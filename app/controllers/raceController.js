@@ -347,6 +347,19 @@ exports.extractCriteria = function(req, res, next) {
         "to": new Date(criteria.dateRange.endDate)
       };
     }
+
+    if(criteria.location) {
+
+       if(criteria.searchAround === true) {
+
+          
+      
+      }
+
+    }
+
+
+
   }
 
   req.operation = operation;
@@ -638,8 +651,6 @@ exports.autocomplete = function(req, res) {
     });
   }
 
-  console.log("JSON.parse(data)");
-
   elasticSearchClient.search('racesidx_v1', 'race', query)
     .on('data', function(data) {
       console.log(JSON.parse(data));
@@ -665,20 +676,8 @@ buildQueryString = function(field, query) {
   result.queryString.default_field = field;
   result.queryString.query = query;
 
-  console.log(util.inspect(operation));
-  Race.autocomplete(operation, function(err, races) {
-    if (err) {
-      console.log(err);
-      return res.json(400, {
-        message: errorUtils.errors(err)
-      });
-    }
-    req.races = races;
-    return res.json(200, {
-      races: req.races
-    });
-  });
-};
+  return result;
+}
 
 /**
  * @method Find all races

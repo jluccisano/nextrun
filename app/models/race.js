@@ -261,6 +261,19 @@ RaceSchema.statics = {
   },
 
   /**
+   * find all
+   *
+   * @param {Function} cb
+   */
+  findAll: function(cb) {
+
+    this.find({}, {
+      name: 1,
+      pin: 1
+    }).exec(cb);
+  },
+
+  /**
    * Remove race by id
    *
    * @param {ObjectId} id

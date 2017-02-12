@@ -121,7 +121,10 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 		$scope.autocomplete = function(query_string) {
 
-			$scope.fulltext = (query_string !== undefined) ? query_string : "";
+			var criteria = {
+				fulltext: (query_string !== undefined) ? query_string : "",
+				region: undefined
+			};
 
 			return $http({
 				headers: {
@@ -130,7 +133,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				method: 'POST',
 				url: '/api/races/autocomplete',
 				data: {
-					criteria: $scope.fulltext
+					criteria: criteria
 				}
 			}).
 			then(function(response) {

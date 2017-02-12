@@ -5,6 +5,11 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 
 		$scope.fulltext = undefined;
+
+		$scope.searchAround = undefined;
+		$scope.distance = undefined;
+		$scope.location = undefined;
+
 		$scope.total = 0;
 		$scope.pageSize = 20;
 
@@ -36,6 +41,9 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.$on('handleCriteriaBroadcast', function() {
 			$scope.currentTypeSelected = sharedService.criteria.types;
+			$scope.searchAround = sharedService.criteria.searchAround;
+			$scope.distance = sharedService.criteria.distance;
+			$scope.location = sharedService.criteria.location;
 			$scope.search();
 		});
 
@@ -97,7 +105,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			return '-';
 		};
 
-		
+
 
 		$scope.getRegion = function(region) {
 			return region.name;
@@ -117,10 +125,14 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			};
 
 			return $http({
-				headers: {'Content-Type': 'application/json'},
+				headers: {
+					'Content-Type': 'application/json'
+				},
 				method: 'POST',
 				url: '/api/races/autocomplete',
-				data: {criteria:criteria}
+				data: {
+					criteria: criteria
+				}
 			}).
 			then(function(response) {
 
@@ -272,7 +284,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				types: $scope.currentTypeSelected,
 				departments: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.departments : [],
 				region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined,
-				dateRange: $scope.dateRange
+				dateRange: $scope.dateRange,
+				searchAround: $scope.searchAround,
+				distance: $scope.distance,
+				location: $scope.location
 			};
 
 			RaceServices.search(criteria,
@@ -291,7 +306,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 						$scope.total = response.hits.total;
 						$scope.totalItems = $scope.total;
 
-						
+
 
 					} else {
 
