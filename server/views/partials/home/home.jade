@@ -42,7 +42,9 @@ div.custom-bs-background
 												option(value="100") 100km
 							div.col-lg-2
 								div.form-group
-									select(class="multiselect" data-placeholder="{{'Sélectionner...' | translate}}" ng-model="criteria.types" ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
+									ui-select(ng-model="criteria.types")
+										ui-select-match(placeholder="{{'Sélectionner...' | translate}}") {{$item}}
+											ui-select-choices(repeat="type in listOfTypes | filter:$select.search"){{type.name}}
 						div.row
 							div.col-lg-2.col-lg-offset-8(style="margin-top:-40px")
 								div.form-group

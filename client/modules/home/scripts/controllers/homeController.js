@@ -106,14 +106,6 @@ angular.module("nextrunApp.home").controller("HomeController",
             $location.path("/races/home");
         };
 
-        $scope.getRegion = function(region) {
-            return region.name;
-        };
-
-        $scope.getType = function(type) {
-            return type.i18n;
-        };
-
         $scope.submitSearchWithCriteria = function() {
             $location.path("/races/search");
             setTimeout(function() {

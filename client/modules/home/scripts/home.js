@@ -3,6 +3,7 @@
 var homeModule = angular.module("nextrunApp.home", [
     "ngRoute",
     "ui.bootstrap",
+    "ui.select",
     "gettext",
     "nextrunApp.commons",
     "nextrunApp.route"
@@ -11,7 +12,8 @@ var homeModule = angular.module("nextrunApp.home", [
 homeModule.config(
     function(
         $routeProvider,
-        $locationProvider) {
+        $locationProvider,
+        uiSelectConfig) {
 
         var access = routingConfig.accessLevels;
 
@@ -31,4 +33,6 @@ homeModule.config(
         });
 
         $locationProvider.html5Mode(true);
+
+        uiSelectConfig.theme = "bootstrap";
     });

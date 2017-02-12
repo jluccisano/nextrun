@@ -30,7 +30,6 @@ module.exports = function(config) {
             "client/bower_components/angular-gettext/dist/angular-gettext.js",
             "client/bower_components/AngularGM/angular-gm.js",
             "client/bower_components/bootstrap/dist/js/bootstrap.js",
-            "client/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js",
             "client/bower_components/highcharts-release/highcharts.js",
             "client/bower_components/highcharts-release/highcharts-more.js",
             "client/bower_components/highcharts-release/modules/exporting.js",
