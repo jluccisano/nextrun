@@ -4,7 +4,7 @@ angular.module("nextrunApp.auth").controller("LoginController",
 	function(
 		$rootScope,
 		$scope,
-		$location,
+		$state,
 		$modal,
 		AuthService,
 		MetaService) {
@@ -12,7 +12,7 @@ angular.module("nextrunApp.auth").controller("LoginController",
 		$scope.user = {};
 
 		$scope.signup = function() {
-			$location.path("/signup");
+			$state.go("signup");
 		};
 
 		$scope.submit = function() {
@@ -20,8 +20,7 @@ angular.module("nextrunApp.auth").controller("LoginController",
 				email: $scope.user.email,
 				password: $scope.user.password
 			}).then(function() {
-				//$location.path("/myraces");
-				$rootScope.mode = "app";
+				$state.go("myraces");
 			});
 		};
 
@@ -32,10 +31,10 @@ angular.module("nextrunApp.auth").controller("LoginController",
 			});
 
 			$scope.modalInstance.result.then(function() {
-				$location.path("/login");
+				$state.go("login");
 			});
 		};
 
-		MetaService.ready("Se connecter", $location.path(), "Se connecter");
+		MetaService.ready("Se connecter");
 
 	});

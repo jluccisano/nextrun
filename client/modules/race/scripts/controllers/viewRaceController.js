@@ -3,8 +3,8 @@
 angular.module("nextrunApp.race").controller("ViewRaceController",
     function(
         $scope,
-        $location,
-        $routeParams,
+        //$location,
+        $stateParams,
         $modal,
         $filter,
         RaceService,
@@ -21,7 +21,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.active = "general";
 
-        $scope.raceId = $routeParams.raceId;
+        $scope.raceId = $stateParams.raceId;
         $scope.cursorMarker = {};
         $scope.navType = "pills";
 
@@ -45,7 +45,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                 $scope.selection = $scope.routesViewModel[0].getType() + 0;
 
             }).finally(function() {
-                MetaService.ready($scope.race.name, $location.path(), $scope.generateRaceDescription());
+                MetaService.ready($scope.race.name, $scope.generateRaceDescription());
             });
 
 

@@ -4,18 +4,18 @@ angular.module("nextrunApp.race").controller("RedirectionModalController",
 	function(
 		$scope,
 		$modalInstance,
-		$location,
+		$state,
 		raceId) {
 
 		$scope.raceId = raceId;
 
 		$scope.goToEdit = function() {
-			$location.path("/races/edit/" + $scope.raceId);
+			$state.go("edit", {id: $scope.raceId});
 			$modalInstance.close();
 		};
 
 		$scope.goToMyRaces = function() {
-			$location.path("/myraces");
+			$state.go("myraces");
 			$modalInstance.close();
 		};
 

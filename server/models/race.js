@@ -234,7 +234,7 @@ RaceSchema.statics = {
                                 type: "Point",
                                 coordinates: [criteria.location.location.latitude, criteria.location.location.longitude]
                             },
-                            $maxDistance: criteria.radius * 1000
+                            $maxDistance: radius * 1000
                         }
                     }
                 };
@@ -253,7 +253,7 @@ RaceSchema.statics = {
         }
 
         if (criteria.type) {
-            var type = {
+            type = {
                 "type": criteria.type
             };
             andArray.push(type);

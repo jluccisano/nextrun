@@ -3,7 +3,7 @@
 angular.module("nextrunApp").controller("HeaderController",
 	function(
 		$scope,
-		$location,
+		$state,
 		AuthService,
 		RaceService) {
 
@@ -19,17 +19,17 @@ angular.module("nextrunApp").controller("HeaderController",
 		};
 
 		$scope.onSelect = function($item) {
-			$location.path("/races/view/" + $item._id);
+			$state.go("view", { id: $item._id });
 			$scope.selectedItem = "";
 		};
 
 		$scope.logout = function() {
 			AuthService.logout().then(function() {
-				$location.path("/login");
+				$state.go("login");
 			});
 		};
 
 		$scope.login = function() {
-			$location.path("/login");
+			$state.go("login");
 		};
 	});

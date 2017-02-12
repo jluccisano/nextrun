@@ -4,6 +4,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
     function(
         $scope,
         $location,
+        $state,
         $anchorScroll,
         AuthService,
         notificationService,
@@ -45,7 +46,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
         $scope.deleteAccount = function() {
             AuthService.deleteAccount().then(function() {
                 notificationService.success(gettextCatalog.getString("Votre compte a bien été supprimé"));
-                $location.path("/");
+                $state.go("home");
             });
         };
 
@@ -70,6 +71,6 @@ angular.module("nextrunApp.auth").controller("SettingsController",
 
         $scope.init();
 
-        MetaService.ready("Paramètres", $location.path(), "Paramètres");
+        MetaService.ready("Paramètres");
 
     });

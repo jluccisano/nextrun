@@ -3,13 +3,12 @@
 angular.module("nextrunApp.race").controller("RaceHomeController",
     function(
         $scope,
-        $location,
-        MetaService,
-        gettextCatalog) {
+        $state,
+        MetaService) {
 
         $scope.createNewRace = function() {
-            $location.path("/races/create");
+            $state.go("create");
         };
 
-        MetaService.ready("Ajouter une manifesation", $location.path(),"Ajouter une manifesation");
+        MetaService.ready("Ajouter une manifesation");
     });

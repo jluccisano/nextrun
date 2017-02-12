@@ -292,7 +292,7 @@ var routeBuilder = {};
 		//NEW
 		this.addPolyline = function(polylineDataModel) {
 			this._polylines.push(polylineDataModel);
-		}
+		};
 
 		this._createMarkersDataModel = function(segmentsViewModel, showSegment) {
 			var markersDataModel = [];
@@ -351,7 +351,7 @@ var routeBuilder = {};
 		//NEW
 		this.addMarker = function(marker) {
 			this._markers.push(marker);
-		}
+		};
 
 
 		this._addClimbToSerie = function(previousElevationPoint, nextElevationPoint, serie) {

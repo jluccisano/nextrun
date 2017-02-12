@@ -17,12 +17,12 @@ div(class="container")
 		tbody
 			tr(ng-repeat="race in races")
 				td 
-					a(ng-href='/races/view/{{race._id}}') {{race.name}}	
+					a(ui-sref="view({id: race._id})") {{race.name}}	
 				td {{race.type | translate}}
 				td {{race.distanceType | translate}}
 				td(ng-if="race.lastUpdate != null")  {{race.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
 				td
-					a(ng-href='/races/edit/{{race._id}}' translate)
+					a(ui-sref="edit({id: race._id})" translate)
 						span(class="glyphicon glyphicon-edit")
 				td
 					a(ng-click="openDeleteConfirmation(race)")

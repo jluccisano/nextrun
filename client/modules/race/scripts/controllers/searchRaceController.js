@@ -3,7 +3,7 @@
 angular.module("nextrunApp.race").controller("SearchRaceController",
     function(
         $scope,
-        $location,
+        //$location,
         RaceService,
         SharedCriteriaService,
         DepartmentEnum,
@@ -132,7 +132,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
             }).
             finally(function() {
-                MetaService.ready("Manifestations", $location.path(), "Manifestations");
+                MetaService.ready("Manifestations");
             });
 
         };

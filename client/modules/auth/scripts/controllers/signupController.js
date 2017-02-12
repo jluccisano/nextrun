@@ -3,10 +3,11 @@
 angular.module("nextrunApp.auth").controller("SignupController",
 	function(
 		$scope,
-		$location,
+		$state,
 		AuthService,
 		notificationService,
-		MetaService) {
+		MetaService,
+		gettextCatalog) {
 
 		$scope.user = {};
 
@@ -15,10 +16,10 @@ angular.module("nextrunApp.auth").controller("SignupController",
 				user: $scope.user
 			}).then(function() {
 				notificationService.success(gettextCatalog.getString("Votre compte a bien été créé"));
-				$location.path("/");
+				$state.go("home");
 			});
 		};
 
-		MetaService.ready("S'inscrire", $location.path(),"S'inscrire");
+		MetaService.ready("S'inscrire");
 
 	});

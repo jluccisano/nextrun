@@ -6,9 +6,7 @@ div(class="wrapper")
 
 	div(ng-cloak class="view-container")
 
-		nr-login(ng-if="mode === 'login'" ng-controller="LoginController")
-
-		div(ng-if="mode === 'app'" ng-view class="view-frame")
+		div(ui-view class="view-frame")
 
 footer(role="contentinfo")
 	include ./footer

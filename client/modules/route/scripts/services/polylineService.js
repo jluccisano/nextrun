@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("PolylineService",
-	function(RouteUtilsService) {
+	function() {
 
 		return {
 			createPolyline: function(route, path, editable, draggable, geodesic, visible, color, weight) {

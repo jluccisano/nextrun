@@ -1,7 +1,7 @@
 "use strict";
 
 var raceModule = angular.module("nextrunApp.race", [
-  "ngRoute",
+  "ui.router",
   "ngSanitize",
   "google-maps",
   "highcharts-ng",
@@ -28,59 +28,63 @@ var raceModule = angular.module("nextrunApp.race", [
 
 raceModule.config(
   function(
-    $routeProvider,
+    $stateProvider,
     $locationProvider,
     ezfbProvider) {
 
     var access = routingConfig.accessLevels;
 
-    $routeProvider.
-    when("/myraces", {
-      templateUrl: "/partials/race/myraces",
-      controller: "MyRacesController",
-      access: access.user
-    }).
-    when("/races/create", {
-      templateUrl: "/partials/race/create",
-      controller: "CreateRaceController",
-      access: access.public
-    }).
-    when("/races/home", {
+    $stateProvider.state("races", {
+      url: "/races/home",
       templateUrl: "/partials/race/home",
       controller: "RaceHomeController",
-      access: access.public
-    }).
-    when("/races/view/:raceId", {
+      data: {
+        access: access.public
+      }
+    }).state("myraces", {
+      url: "/races/myraces",
+      templateUrl: "/partials/race/myraces",
+      controller: "MyRacesController",
+      data: {
+        access: access.user
+      }
+    }).state("create", {
+      url: "/races/create",
+      templateUrl: "/partials/race/create",
+      controller: "CreateController",
+      data: {
+        access: access.public
+      }
+    }).state("view", {
+      url: "/races/view/:raceId",
       templateUrl: "/partials/race/race",
       controller: "ViewRaceController",
-      access: access.public
-    }).
-    when("/races/edit/:raceId", {
+      data: {
+        access: access.public
+      }
+    }).state("edit", {
+      url: "/races/edit/:raceId",
       templateUrl: "/partials/race/race",
       controller: "EditRaceController",
-      access: access.user
-    }).
-    when("/races/search", {
+      data: {
+        access: access.user
+      }
+    }).state("search", {
+      url: "/races/search",
       templateUrl: "/partials/race/search",
       controller: "SearchRaceController",
-      access: access.public
-    }).
-    when("/404", {
-      templateUrl: "/partials/errors/404",
-      access: access.public
+      data: {
+        access: access.public
+      }
     });
-
-    $routeProvider.otherwise({
-      redirectTo: "/404"
-    });
-
+    
     $locationProvider.html5Mode(true);
 
 
     ezfbProvider.setInitParams({
-      appId: '195803770591615'
+      appId: "195803770591615"
     });
 
-    ezfbProvider.setLocale('fr_FR');
+    ezfbProvider.setLocale("fr_FR");
 
   });

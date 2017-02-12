@@ -5,5 +5,5 @@ angular.module("nextrunApp").controller("ContactController",
         $location,
         MetaService) {
 
-        MetaService.ready("Contacts", $location.path(),"Contacts");
+        MetaService.ready("Contacts");
     });

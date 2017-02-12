@@ -4,7 +4,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 	function(
 		$rootScope,
 		$scope,
-		$location,
+		//$location,
 		$modal,
 		RaceService,
 		notificationService,
@@ -69,8 +69,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 						notificationService.success(gettextCatalog.getString("La manifestation a bien été créée"));
 						$scope.openRedirectionModal(response.data.raceId);
 					});
-			} else {
-				$rootScope.mode = "login";
 			}
 		};
 
@@ -117,6 +115,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			$scope.opened = true;
 		};
 
-		MetaService.ready("Ajouter une manifestation", $location.path,"Ajouter une manifestation");
+		MetaService.ready("Ajouter une manifestation");
 
 	});

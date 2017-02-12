@@ -1,7 +1,7 @@
 "use strict";
 
 var homeModule = angular.module("nextrunApp.home", [
-    "ngRoute",
+    "ui.router",
     "ui.bootstrap.tpls",
     "ui.bootstrap.transition",
     "ui.bootstrap.carousel",
@@ -14,24 +14,18 @@ var homeModule = angular.module("nextrunApp.home", [
 
 homeModule.config(
     function(
-        $routeProvider,
+        $stateProvider,
         $locationProvider) {
 
         var access = routingConfig.accessLevels;
 
-        $routeProvider.
-        when("/", {
+        $stateProvider.state("home", {
+            url: "/",
             templateUrl: "/partials/home/home",
             controller: "HomeController",
-            access: access.public
-        }).
-        when("/404", {
-            templateUrl: "/partials/errors/404",
-            access: access.public
-        });
-
-        $routeProvider.otherwise({
-            redirectTo: "/404"
+            data: {
+                access: access.public
+            }
         });
 
         $locationProvider.html5Mode(true);

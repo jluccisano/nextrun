@@ -19,7 +19,6 @@ module.exports = function(config) {
 
             "client/bower_components/jquery/dist/jquery.js",
             "client/bower_components/angular/angular.js",
-            "client/bower_components/angular-route/angular-route.js",
             "client/bower_components/angular-cookies/angular-cookies.js",
             "client/bower_components/angular-animate/angular-animate.js",
             "client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
@@ -50,6 +49,7 @@ module.exports = function(config) {
             "client/bower_components/pnotify/pnotify.history.js",
             "client/bower_components/pnotify/pnotify.nonblock.js",
             "client/bower_components/angular-pnotify/src/angular-pnotify.js",
+            "client/bower_components/angular-ui-router/release/angular-ui-router.js",
 
             "client/bower_components/angular-mocks/angular-mocks.js",
 

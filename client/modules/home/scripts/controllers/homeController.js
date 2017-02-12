@@ -3,7 +3,7 @@
 angular.module("nextrunApp.home").controller("HomeController",
     function(
         $scope,
-        $location,
+        $state,
         ContactService,
         notificationService,
         SharedCriteriaService,
@@ -42,15 +42,15 @@ angular.module("nextrunApp.home").controller("HomeController",
         };
 
         $scope.goToNewRace = function() {
-            $location.path("/races/home");
+            $state.go("races");
         };
 
         $scope.submitSearchWithCriteria = function() {
-            $location.path("/races/search");
+            $state.go("search");
             setTimeout(function() {
                 SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria);
             }, 1000);
         };
 
-        MetaService.ready(gettextCatalog.getString("Accueil"), $location.path(), gettextCatalog.getString("Accueil"));
+        MetaService.ready("Accueil");
     });

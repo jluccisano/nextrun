@@ -1,7 +1,7 @@
 "use strict";
 
 var authModule = angular.module("nextrunApp.auth", [
-    "ngRoute",
+    "ui.router",
     "ngCookies",
     "gettext",
     "ui.bootstrap.modal",
@@ -10,34 +10,37 @@ var authModule = angular.module("nextrunApp.auth", [
     "mgcrea.ngStrap.affix",
     "nextrunApp.commons",
     "jlareau.pnotify",
+    "aa.formExtensions"
 ]);
 
 authModule.config(
     function(
-        $routeProvider,
+        $stateProvider,
         $locationProvider) {
 
         var access = routingConfig.accessLevels;
 
-        $routeProvider.
-        when("/login", {
+        $stateProvider.state("login", {
+            url: "/login",
             templateUrl: "/partials/auth/login",
             controller: "LoginController",
-            access: access.public
-        }).
-        when("/signup", {
+            data: {
+                access: access.public
+            }
+        }).state("signup", {
+            url: "/signup",
             templateUrl: "/partials/auth/signup",
             controller: "SignupController",
-            access: access.public
-        }).
-        when("/users/settings", {
+            data: {
+                access: access.public
+            }
+        }).state("settings", {
+            url: "/users/settings",
             templateUrl: "/partials/auth/settings",
             controller: "SettingsController",
-            access: access.user
-        });
-
-        $routeProvider.otherwise({
-            redirectTo: "/404"
+            data: {
+                access: access.user
+            }
         });
 
         $locationProvider.html5Mode(true);

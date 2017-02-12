@@ -1,7 +1,7 @@
 "use strict";
 
 var nextrunApp = angular.module("nextrunApp", [
-  "ngRoute",
+  "ui.router",
   "gettext",
   "angular-loading-bar",
   "ui.bootstrap.dropdown",
@@ -12,87 +12,85 @@ var nextrunApp = angular.module("nextrunApp", [
   "nextrunApp.home",
   "ezfb",
   "jlareau.pnotify",
+  "services.config"
 ]);
 
 nextrunApp.config(
   function(
-    $routeProvider,
+    $stateProvider,
     $locationProvider,
+    $logProvider,
+    $urlRouterProvider,
     $httpProvider,
+    configuration,
     ezfbProvider) {
 
     var access = routingConfig.accessLevels;
 
-    $routeProvider.
-    when("/credits", {
+    $stateProvider.state("credits", {
+      url: "/credits",
       templateUrl: "/partials/main/credits",
       controller: "CreditController",
-      access: access.public
-    }).
-    when("/about", {
+      data: {
+        access: access.public
+      }
+    }).state("about", {
+      url: "/about",
       templateUrl: "/partials/main/about",
       controller: "AboutController",
-      access: access.public
-    }).
-    when("/contacts", {
+      data: {
+        access: access.public
+      }
+    }).state("contacts", {
+      url: "/contacts",
       templateUrl: "/partials/main/contacts",
-      controller: "ContactController",
-      access: access.public
-    }).
-    when("/404", {
-      templateUrl: "/partials/errors/404",
-      access: access.public
-    });
-
-    $routeProvider.otherwise({
-      redirectTo: "/404"
+      controller: "ContactsController",
+      data: {
+        access: access.public
+      }
     });
 
     $locationProvider.html5Mode(true);
 
+    $urlRouterProvider.otherwise('/');
+
+    if (configuration.debugEnabled === "false") {
+        $logProvider.debugEnabled(false);
+    }
+
     $httpProvider.interceptors.push("ErrorHandlerInterceptor");
 
     ezfbProvider.setInitParams({
-      appId: '195803770591615'
+      appId: "195803770591615"
     });
 
-    ezfbProvider.setLocale('fr_FR');
+    ezfbProvider.setLocale("fr_FR");
   });
 
 nextrunApp.run(function(
   $rootScope,
-  $location,
+  $state,
   $anchorScroll,
-  $routeParams,
   SharedMetaService,
   AuthService,
   notificationService,
   MetaService,
   gettextCatalog) {
 
-  $rootScope.$on("$routeChangeStart", function(event, next) {
+
+  $rootScope.$on("$stateChangeStart", function(event, toState) {
 
     MetaService.loading();
 
-    if (!AuthService.authorize(next.access)) {
+    if (!AuthService.authorize(toState.data.access)) {
       if (AuthService.isLoggedIn()) {
-        $location.path("/");
+        $state.go("home");
       } else {
-        //$location.path("/login");
-
-        $rootScope.mode = "login";
+        $state.go("login");
       }
 
-      
-
       notificationService.info(gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"));
-    } else {
-
-        $rootScope.mode = "app";
     }
-
-    
-    
   });
 
   gettextCatalog.currentLanguage = "en";

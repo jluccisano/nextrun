@@ -424,6 +424,48 @@ module.exports = function(grunt) {
       }
     },
 
+    replace: {
+      development: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./config/environments/development.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/clientConfig.js'],
+          dest: '<%= yeoman.client %>/modules/main/scripts/services/'
+        }]
+      },
+      production: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./config/environments/production.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/clientConfig.js'],
+          dest: '<%= yeoman.client %>/modules/main/scripts/services/'
+        }]
+      },
+      test: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./config/environments/test.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/clientConfig.js'],
+          dest: '<%= yeoman.client %>/modules/main/scripts/services/'
+        }]
+      }
+    },
+
 
     /********************************** SCRIPTS PART ***************************************************/
 
@@ -517,6 +559,7 @@ module.exports = function(grunt) {
     "gettext",
     "useminPrepare",
     "concurrent:dist",
+    "replace:production",
     "autoprefixer",
     "concat",
     "copy:dist",
@@ -544,6 +587,7 @@ module.exports = function(grunt) {
       "clean:server",
       "bowerInstall",
       "concurrent:server",
+      "replace:development",
       "autoprefixer",
       "express:development",
       "watch"

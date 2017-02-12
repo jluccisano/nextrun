@@ -3,7 +3,7 @@
 angular.module("nextrunApp.race").controller("MyRacesController",
 	function(
 		$scope,
-		$location,
+		$state,
 		$modal,
 		RaceService,
 		notificationService,
@@ -26,12 +26,12 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 						$scope.races = [];
 					}
 				}).finally(function() {
-				MetaService.ready("Mes manifestations", $location.path,"Mes manifestations");
+				MetaService.ready("Mes manifestations");
 			});
 		};
 
 		$scope.addNewRace = function() {
-			$location.path("/races/create");
+			$state.go("create");
 		};
 
 		$scope.publish = function(race, value) {

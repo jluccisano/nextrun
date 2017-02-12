@@ -3,8 +3,8 @@
 angular.module("nextrunApp.race").controller("EditRaceController",
 	function(
 		$scope,
-		$location,
-		$routeParams,
+		$state,
+		$stateParams,
 		$modal,
 		$filter,
 		RaceService,
@@ -41,7 +41,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		$scope.currentRaceType = {};
 
-		$scope.raceId = $routeParams.raceId;
+		$scope.raceId = $stateParams.raceId;
 
 		$scope.init = function() {
 			RaceService.retrieve($scope.raceId).then(function(response) {
@@ -54,7 +54,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			}).
 			finally(function() {
-				MetaService.ready("Editer une manifestation", $location.path,"Editer une manifestation");
+				MetaService.ready("Editer une manifestation");
 			});
 		};
 
@@ -63,7 +63,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		};
 
 		$scope.cancel = function() {
-			$location.path("/myraces");
+			$state.go("myraces");
 		};
 
 		$scope.editRichTextEditor = function(model, field) {

@@ -5,5 +5,5 @@ angular.module("nextrunApp").controller("CreditController",
         $location,
         MetaService) {
 
-        MetaService.ready("Remerciements", $location.path(),"Remerciements");
+        MetaService.ready("Remerciements");
     });

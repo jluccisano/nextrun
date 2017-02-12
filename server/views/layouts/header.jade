@@ -1,9 +1,9 @@
 nav(class="navbar navbar-default navbar-fixed-top" role="navigation" ng-Controller="HeaderController")
 	div(class="container")
 		div(class="navbar-header")
-			a(class="navbar-brand" ng-href="/")
+			a(class="navbar-brand" ui-sref="home")
 				img(class="img-responsive" src="client/modules/main/images/logo_officiel.png" width="25" height="25" alt="Brand")
-			a(class="navbar-brand" ng-href="/") NEXTRUN
+			a(class="navbar-brand" ui-sref="home") NEXTRUN
 		div(class="collapse navbar-collapse")
 			form(class="navbar-form navbar-left" role="search")
 				div(class="form-group input-group ng-cloak")
@@ -11,17 +11,17 @@ nav(class="navbar navbar-default navbar-fixed-top" role="navigation" ng-Controll
 					span(class="input-group-addon")
 						span(class="glyphicon glyphicon-search")
 			ul(class="nav navbar-nav")
-				li
-					a(ng-href="/races/search" translate) Manifestations
+				li 
+					a(ui-sref="search" translate) Manifestations
 			ul(class="nav navbar-nav navbar-right")
 				li(class="dropdown" ng-show="isLoggedIn()")
-					a(href="#" class="dropdown-toggle" ng-cloak) {{user.username}}
+					a(class="dropdown-toggle" ng-cloak) {{user.username}}
 						span(class="caret")
 					ul(class="dropdown-menu" role="menu")
 						li
-							a(ng-href="/myraces" translate) Mes Manifestations
+							a(ui-sref="myraces" translate) Mes Manifestations
 						li
-							a(ng-href="/users/settings" translate) Paramètres
+							a(ui-sref="settings" translate) Paramètres
 						li
 							a(ng-click="logout()" translate) Se déconnecter
 				li(ng-hide="isLoggedIn()")
