@@ -30,7 +30,7 @@ module.exports = function (app, config, passport) {
 	// should be placed before express.static
 	app.use(express.compress({
 		filter: function (req, res) {
-		return /json|text|javascript|css/.test(res.getHeader('Content-Type'));
+		return '/json|text|javascript|css/'.test(res.getHeader('Content-Type'));
 	},
 	level: 9
 	}));
@@ -54,7 +54,7 @@ module.exports = function (app, config, passport) {
 	app.use(function (req, res, next) {
 		res.locals.pkg = pkg;
 		next();
-    });
+	});
 	
 	// cookieParser should be above session
 	app.use(express.cookieParser());
@@ -79,16 +79,13 @@ module.exports = function (app, config, passport) {
 	// connect flash for flash messages - should be declared after sessions
 	app.use(flash());
 
-	 // should be declared after session and flash
+	// should be declared after session and flash
 	app.use(helpers(pkg.name));
 
 
 	var csrfValue = function(req) {
-	  var token = (req.body && req.body._csrf)
-	    || (req.query && req.query._csrf)
-	    || (req.headers['x-csrf-token'])
-	    || (req.headers['x-xsrf-token']);
-	  return token;
+		var token = (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
+		return token;
 	};
 
 	//app.use(express.csrf());
@@ -114,8 +111,7 @@ module.exports = function (app, config, passport) {
 	// properties, use instanceof etc.
 	app.use(function(err, req, res, next){
 		// treat as 404
-		if (err.message && (~err.message.indexOf('not found')
-			|| (~err.message.indexOf('Cast to ObjectId failed')))) {
+		if (err.message && (~err.message.indexOf('not found') || (~err.message.indexOf('Cast to ObjectId failed')))) {
 			return next();
 		}
 

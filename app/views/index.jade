@@ -1,3 +1,50 @@
 extends ./layouts/layout
 
-block content
+block body
+
+
+
+	<!-- build:css css/bootstrap.min.css -->
+	link(rel="stylesheet", href="/css/bootstrap.css")
+	<!-- endbuild -->
+
+	<!-- build:css css/docs.min.css -->
+	link(rel="stylesheet", href="/css/docs.css")
+	<!-- endbuild -->
+
+	<!-- build:css css/style.min.css -->
+	link(rel="stylesheet", href="/css/style.css")
+	<!-- endbuild -->
+
+
+
+
+	<!-- build:js js/libs/jquery-2.0.3.min.js -->
+	script(src="/js/libs/jquery-2.0.3.js", charset="UTF-8")
+	<!-- endbuild -->
+
+	<!-- build:js js/libs/bootstrap.min.js -->
+	script(src="/js/libs/bootstrap.js", charset="UTF-8")
+	<!-- endbuild -->
+
+	<!-- build:js js/libs/angular.min.js -->
+	script(src="/js/libs/angular.js", charset="UTF-8")
+	<!-- endbuild -->
+
+	<!-- build:js js/libs/angular-route.min.js -->
+	script(src="/js/libs/angular-route.js", charset="UTF-8")
+	<!-- endbuild -->
+
+	<!-- build:js js/client/app.min.js -->
+	script(src="/js/client/app.js", charset="UTF-8")
+	<!-- endbuild -->
+
+	<!-- build:js js/client/controllers.min.js -->
+	script(src="/js/client/controllers.js", charset="UTF-8")
+	<!-- endbuild -->
+
+	include ./layouts/header
+
+	div.container(ng-view)
+
+	include ./layouts/footer

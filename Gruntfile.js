@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         'tmp/public/js/libs/bootstrap.js': ['public/js/libs/bootstrap.js'],
         'tmp/public/js/libs/jquery-2.0.3.js': ['public/js/libs/jquery-2.0.3.js'],
         'tmp/public/js/libs/angular.js': ['public/js/libs/angular.js'],
-        'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
+        'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js']
       },
     },
     },
@@ -78,8 +78,45 @@ module.exports = function(grunt) {
           {expand: true, src: ['server.js','package.json'], dest: 'dist/', filter: 'isFile'},
 
           // includes files within path and its sub-directories
-          {expand: true, src: ['app/**'], dest: 'dist/'},
+          {expand: true, src: ['app/**', 'config/**'], dest: 'dist/'},
         ]
+      }
+    },
+    jsdoc : {
+        dist : {
+            src: ['app/**/*.js', 'config/**/*.js'], 
+            options: {
+                destination: 'dist/doc'
+            }
+        }
+    },
+    jshint: {
+       options: {
+        laxcomma : true,
+        curly: true,
+        eqeqeq: true,
+        eqnull: true,
+        browser: true,
+        globals: {
+          jQuery: true
+        },
+       reporter:'checkstyle' ,
+       reporterOutput: 'jshint.xml',
+       ignores: [ 'public/js/libs/**/*.js']
+      },
+      gruntfile: {
+        src: 'Gruntfile.js'
+      },
+      src: {
+        src: ['app/**/*.js', 'config/**/*.js', 'public/**/*.js']
+      },
+      test: {
+        src: ['test/test-*.js']
+      },
+      ignore_warning: {
+        options: {
+          '-W092': true,
+        },
       }
     }
   });
@@ -93,10 +130,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-usemin');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('usemin-patterns');
+  grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   
   grunt.registerTask('test', ['mochaTest']);
 
-  grunt.registerTask('default', ['clean:build','mochaTest','concat','uglify','cssmin','copy','usemin','clean:tmp']);
+  grunt.registerTask('checkcode', ['jshint:src' , 'jshint:gruntfile', 'jshint:test']);
+
+  grunt.registerTask('default', ['clean:build','jshint:src','mochaTest','concat','uglify','cssmin','copy','usemin','jsdoc','clean:tmp']);
 
 };

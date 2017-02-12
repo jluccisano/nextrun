@@ -5,6 +5,8 @@ dist/
 tmp/
 coverage.html
 config/config.js
+*.yml
+jshint.xml
 
 
 # Packages #

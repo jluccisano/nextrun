@@ -2,11 +2,16 @@
  * Module dependencies.
  */
 
-
+var mainController = require('../app/controllers/mainController');
 
 module.exports = function (app, passport) {
 
-app.get('/', routes.index);
-app.get('/partials/:name', routes.partials);
+/** ROUTES **/
+
+app.get('/', mainController.index);
+app.get('/partials/:name', mainController.partials);
+
+
+/** JSON API **/
 
 };

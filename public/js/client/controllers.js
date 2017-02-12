@@ -1,7 +1,7 @@
 var nextrunControllers = angular.module('nextrunControllers', []);
 
 
-nextrunControllers.controller('IndexCtrl', ['$scope','$http',
+nextrunControllers.controller('HomeCtrl', ['$scope','$http',
  function($scope, $http) {
 
 }]);
