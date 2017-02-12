@@ -68,6 +68,11 @@ module.exports = function(app, config, passport) {
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
 
+		//http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
+		//fix bug limit request entity too large
+		app.use(express.json({limit: '5mb'}));
+		app.use(express.urlencoded({limit: '5mb'}));
+
 		// express/mongo session storage
 		app.use(express.session({
 			secret: 'noobjs',
@@ -127,14 +132,14 @@ module.exports = function(app, config, passport) {
 			console.error(err.stack);
 
 			// error page
-			res.status(500).render('errors/500', {
+			res.status(500).render('partials/errors/500', {
 				error: err.stack
 			});
 		});
 
 		// assume 404 since no middleware responded
 		app.use(function(req, res, next) {
-			res.status(404).render('errors/404', {
+			res.status(404).render('partials/errors/404', {
 				url: req.originalUrl,
 				error: 'Not found'
 			});

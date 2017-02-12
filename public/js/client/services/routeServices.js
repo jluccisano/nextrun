@@ -526,6 +526,8 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 			} else {
 
+				lastLatlngOfLastSegment = new google.maps.LatLng(lastLatlngOfLastSegment.mb, lastLatlngOfLastSegment.nb);
+
 				var routeSamples = [];
 				routeSamples.push(lastLatlngOfLastSegment);
 				routeSamples.push(destinationLatlng);
