@@ -68,6 +68,10 @@ var RaceSchema = new Schema({
       type: Date,
       default: null
     },
+    rewardsTime: {
+      type: Date,
+      default: null
+    },
     timingMoreInformation: {
       type: String,
       default: null
@@ -106,7 +110,15 @@ var RaceSchema = new Schema({
       default: null
     },
     registrationOnPlace: {
-      type: Boolean,
+      type: String,
+      default: null
+    },
+    registrationWebSite: {
+      type: String,
+      default: null
+    },
+    registrationAddress: {
+      type: String,
       default: null
     },
     numberOfPlacesAvailable: {
@@ -145,16 +157,16 @@ var RaceSchema = new Schema({
           type: Number,
           default: null
         }
-      }
+      },
+      planMoreInformation: {
+        type: String,
+        default: null
+      },
     }
   },
   therace: {
     numberOfProvisions: {
       type: Number,
-      default: null
-    },
-    rewards: {
-      type: String,
       default: null
     },
     theRaceMoreInformation: {
@@ -164,14 +176,6 @@ var RaceSchema = new Schema({
   },
   rights: {
     rightsMoreInformation: {
-      type: String,
-      default: null
-    },
-    minAge: {
-      type: String,
-      default: null
-    },
-    medicalCertificate: {
       type: String,
       default: null
     }

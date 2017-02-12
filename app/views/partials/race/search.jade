@@ -4,13 +4,17 @@ div.container
 			div.col-lg-4
 				div.well
 			div.col-lg-8
-				table.table
-					thead
-						tr
-							th(style="width: 60%")
-							th(style="width: 30%")
-							th(style="width: 10%")
-					tbody
-						tr(data-ng-repeat="race in races")
-							td {{race.name}}
-				div.col-lg-8.col-lg-offset-4
+				div.row
+					div.col-lg-12(data-ng-repeat="event in events")
+						h2 {{getDate(event._id)}}
+						hr
+						table.table
+							thead
+								tr
+									th(style="width: 60%")
+									th(style="width: 30%")
+									th(style="width: 10%")
+							tbody
+								tr(data-ng-repeat="race in event.races")
+									td(style="border:0", align="left") {{race.name}}
+						div.col-lg-8.col-lg-offset-4

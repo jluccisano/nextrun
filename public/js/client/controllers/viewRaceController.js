@@ -8,43 +8,13 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 		$scope.raceId = $routeParams.raceId;
 		$scope.cursorMarker = {};
-		$scope.addressMarker = {};
-
-		$scope.plan = {
-			isVisible: false,
-			editMode: false,
-			travelMode: google.maps.TravelMode.DRIVING,
-			zoom: 13,
-			fit: true,
-			markers: [],
-			polylines: [],
-			center: {
-				latitude: 46.52863469527167,
-				longitude: 2.43896484375,
-			},
-			options: {
-				mapTypeId: google.maps.MapTypeId.ROADMAP,
-				mapTypeControlOptions: {
-					mapTypeIds: [google.maps.MapTypeId.ROADMAP,
-						google.maps.MapTypeId.HYBRID,
-						google.maps.MapTypeId.SATELLITE
-					]
-				},
-				disableDoubleClickZoom: true,
-				scrollwheel: true,
-				draggableCursor: "crosshair",
-				streetViewControl: false,
-				zoomControl: true
-			},
-			events: {},
-		};
-
+		
 		$scope.onChangeTab = function(route) {
 			route.isVisible = true;
 		};
 
-		$scope.onChangeOrganisationTab = function(plan) {
-			plan.isVisible = true;
+		$scope.onChangeOrganisationTab = function() {
+			$scope.isVisible = true;
 		};
 
 		$scope.getDate = function(dateString) {
@@ -231,18 +201,24 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 					$scope.race.routes[0].isVisible = true;
 
-
-					$scope.addressMarker = {
-						latitude: $scope.race.plan.address.latlng.lat,
-						longitude: $scope.race.plan.address.latlng.lng,
-						icon: "../../../img/start.png",
-						title: "hello"
+					$scope.isVisible = false;
+					
+					$scope.options = {
+						map: {
+							center: new google.maps.LatLng($scope.race.plan.address.latlng.lat, $scope.race.plan.address.latlng.lng),
+							zoom: 6,
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+						}
 					};
 
-					$scope.plan.center = {
-						latitude: $scope.race.plan.address.latlng.lat,
-						longitude: $scope.race.plan.address.latlng.lng,
-					};
+					$scope.addressMarkers = [{
+						id: 0,
+						location: {
+							lat: $scope.race.plan.address.latlng.lat,
+							lng: $scope.race.plan.address.latlng.lng
+						}
+
+					}];
 				},
 				function(error) {
 					_.each(error.message, function(message) {
@@ -250,7 +226,6 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 					});
 				});
 		};
-
 
 		$scope.openFeedbackModal = function(raceId) {
 

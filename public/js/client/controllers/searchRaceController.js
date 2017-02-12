@@ -11,15 +11,22 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			RaceServices.search($scope.department,
 				function(response) {
 
-					$scope.races = response.races;
+					$scope.events = response.races;
 
-					$scope.totalItems = $scope.races.length;
+					//$scope.totalItems = $scope.races.length;
 				},
 				function(error) {
 					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
 					});
 				});
+		};
+
+		$scope.getDate = function(dateString) {
+			if (dateString) {
+				return moment(new Date(dateString)).format("DD MMMM YYYY");
+			}
+			return '-';
 		};
 
 		$scope.init();

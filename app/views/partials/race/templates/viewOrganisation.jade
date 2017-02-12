@@ -12,6 +12,8 @@ div.container
 					dd {{getHour(race.timing.briefingTime)}}
 					dt=t("race.checkoutBibTime")
 					dd {{getHour(race.timing.checkoutBibTime)}}
+					dt=t("race.rewardsTime")
+					dd {{getHour(race.timing.rewardsTime)}}
 				dl(data-ng-if="race.timing.timingMoreInformation")
 					dt=t("race.moreInformation")
 					dd {{race.timing.timingMoreInformation}}
@@ -24,9 +26,9 @@ div.container
 					dt=t("race.notMemberFFPrice")
 					dd {{race.pricing.notMemberFFPrice}}
 						i.fa.fa-eur
-				dl(data-ng-if="race.timing.pricingMoreInformation")
+				dl(data-ng-if="race.pricing.pricingMoreInformation")
 					dt=t("race.moreInformation")
-					dd {{race.timing.pricingMoreInformation}}
+					dd {{race.pricing.pricingMoreInformation}}
 		tab(heading=t("race.registration"))
 			div.container
 				dl.dl-horizontal
@@ -35,13 +37,13 @@ div.container
 					dt=t("race.registrationLimitDate")
 					dd {{getDate(race.registration.registrationLimitDate)}}
 					dt=t("race.registrationOnPlace")
-					dd
+					dd {{race.registration.registrationOnPlace}}
 					dt=t("race.numberOfPlacesAvailable")
 					dd {{race.registration.numberOfPlacesAvailable}}
-				dl(data-ng-if="race.timing.registrationMoreInformation")
+				dl(data-ng-if="race.registration.registrationMoreInformation")
 					dt=t("race.moreInformation")
 					dd {{race.registration.registrationMoreInformation}}
-		tab(data-ng-click="onChangeOrganisationTab(plan)" heading=t("race.plan"))
+		tab(data-ng-click="onChangeOrganisationTab()" heading=t("race.plan"))
 			div.container
 				div.row(style="margin-top:20px")
 					div.col-lg-4(data-ng-if="race.plan != null && race.plan.address")
@@ -49,25 +51,18 @@ div.container
 							span {{race.plan.address.address1}}
 							br
 							span(data-ng-if="race.plan.address.address2 != ''") {{race.plan.address.address2}}
-							br
+							br(data-ng-if="race.plan.address.address2 != ''")
 							span <strong>{{race.plan.address.postcode}} - {{race.plan.address.city}}</strong>
 							br
-					div.col-lg-4(data-ng-if="plan.isVisible")
-						gm-map(gm-map-id="'simpleMap'"  style="width:250px;height:250px" class="map")
-
-						//google-map(center="plan.center" refresh="true" options="plan.options" zoom="plan.zoom" draggable="true" mark-click="false" style="height:50px")
-						//	markers
-						//		marker(coords="addressMarker" icon="addressMarker.icon")
+						dl(data-ng-if="race.plan.planMoreInformation")
+							dt=t("race.moreInformation")
+							dd {{race.plan.planMoreInformation}}
+					div.col-lg-4(data-ng-if="isVisible")
+						gm-map(gm-map-id="'mapPlan'" gm-center="center" gm-zoom="zoom" gm-map-options="options.map" style="width:250px;height:250px" )
+							gm-markers(gm-objects="addressMarkers" gm-id="object.id" gm-position="{lat: object.location.lat, lng: object.location.lng}")
 		tab(heading=t("race.rights"))
 			div.container
-				dl.dl-horizontal
-					dt=t("race.medicalCertificate")
-					dd {{race.rights.medicalCertificate}}
-					dt=t("race.minAge")
-					dd {{race.rights.minAge}}
-				dl(data-ng-if="race.timing.rightsMoreInformation")
-					dt=t("race.moreInformation")
-					dd {{race.rights.rightsMoreInformation}}
+				p(data-ng-if="race.rights.rightsMoreInformation") {{race.rights.rightsMoreInformation}}
 		tab(heading=t("race.therace"))
 			div.container
 				dl.dl-horizontal
