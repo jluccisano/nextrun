@@ -206,6 +206,8 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 							};
 						});
 
+						$scope.ready();
+
 					} else {
 
 						$scope.emptyResults = true;

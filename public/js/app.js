@@ -137,8 +137,22 @@ nextrunApp.run(['$rootScope', '$location', 'Auth', 'Alert',
   function($rootScope, $location, Auth, Alert) {
     'use strict';
 
+
+    $rootScope.ready = function() {
+      $rootScope.status = 'ready';
+      if (!$rootScope.$$phase) $rootScope.$apply();
+    };
+    $rootScope.loading = function() {
+      $rootScope.status = 'loading';
+      if (!$rootScope.$$phase) $rootScope.$apply();
+    };
+
+
     $rootScope.$on("$routeChangeStart", function(event, next, current) {
-      
+
+      //loading state
+      $rootScope.loading();
+
       $rootScope.error = null;
 
       if (!Auth.authorize(next.access)) {

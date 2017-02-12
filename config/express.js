@@ -7,8 +7,7 @@ var express = require('express'),
 	helpers = require('view-helpers'),
 	i18n = require('i18next'),
 	flash = require('connect-flash'),
-	pkg = require('../package.json'),
-	robot = require('./middlewares/robot');
+	pkg = require('../package.json');
 
 i18n.init({
 	resGetPath: 'locales/__lng__/__ns__.json',
@@ -113,7 +112,7 @@ module.exports = function(app, config, passport) {
 			});
 		}
 
-		app.use(robot);
+		
 
 		// routes should be at the last
 		app.use(app.router);

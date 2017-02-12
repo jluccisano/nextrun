@@ -20,18 +20,7 @@ var routes = [
 
     // Views
 
-    /** workaround: rediction 1and1 **/
     {
-        path: '/defaultsite',
-        httpMethod: 'GET',
-        middleware: [
-
-            function(req, res) {
-                res.redirect('/');
-            }
-        ],
-        accessLevel: accessLevels.public
-    }, {
         path: '/',
         httpMethod: 'GET',
         middleware: [mainController.index],

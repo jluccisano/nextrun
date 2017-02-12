@@ -343,6 +343,12 @@ module.exports = function(grunt) {
           script: 'server.js',
           node_env: 'test'
         }
+      },
+      prod: {
+        options: {
+          script: 'server.js',
+          node_env: 'prod'
+        }
       }
     },
     protractor: {
@@ -410,7 +416,6 @@ module.exports = function(grunt) {
   grunt.registerTask('install', ['update', 'shell:selenium_install', 'copy:move_css']);
 
   grunt.registerTask('update', ['shell:npm_install', 'shell:bower_install']);
-
 
   grunt.registerTask('build', ['clean:build', 'checkcode', 'test-server', 'test-client', 'minify', 'copy:main', 'usemin', 'jsdoc', 'clean:tmp']);
 

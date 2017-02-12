@@ -282,6 +282,8 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 					}];
 
 					$scope.loading = false;
+
+					$scope.ready();
 				},
 				function(error) {
 
