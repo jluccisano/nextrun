@@ -31,7 +31,7 @@ div.container(style="margin-top:50px",style="padding-bottom: 50px;")
 		div.col-lg-12
 			tabset(vertical="false" type="pills")
 				tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" data-ng-click="onChangeTab(route)")
-					include map
+					include showMap
 					div.row.text-center
 						div.col-lg-4
 							h3 {{route.distance.toFixed(2)}}

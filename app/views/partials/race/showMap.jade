@@ -1,0 +1,10 @@
+div(data-ng-if="route.isVisible")
+	google-map(center="route.center" options="route.options" zoom="route.zoom" refresh="true"  draggable="true" mark-click="true" style="height: 600px" events="route.events")
+		
+		markers(models="route.markers" coords="'self'" icon="'icon'" click="onMarkerClicked(marker)")
+			marker(ng-repeat="marker in route.markers" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
+		
+			marker(coords="cursorMarker" icon="cursorMarker.icon")
+				
+		polylinecustom(polylines="route.polylines")
+	highchart(config="route.chartConfig")
