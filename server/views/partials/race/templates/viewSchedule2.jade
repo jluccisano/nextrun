@@ -1,0 +1,17 @@
+div(class="row")
+	div(class="col-lg-8")
+		div
+			span(class="title" e-translate) Départ: 
+			a(href="#" editable-bstime="race.timing.startingTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.startingTime | date:"HH:mm") || 'empty' }}
+
+		div
+			span(class="title" e-translate) Briefing: 
+			a(href="#" editable-bstime="race.timing.briefingTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.briefingTime | date:"HH:mm") || 'empty' }}
+
+		div
+			span(class="title" e-translate) Retrait des dossards: 
+			a(href="#" editable-bstime="race.timing.checkoutBibTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.checkoutBibTime | date:"HH:mm") || 'empty' }}
+
+		div
+			span(class="title" e-translate) Récompenses: 
+			a(href="#" editable-bstime="race.timing.rewardsTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.rewardsTime | date:"HH:mm") || 'empty' }}

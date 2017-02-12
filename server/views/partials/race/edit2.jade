@@ -1,0 +1,75 @@
+div(class="container")
+	h1
+		a(href="#" editable-text="race.name" e-required) {{ race.name || 'empty' }}
+		
+	div(class="row")
+		div(class="col-md-4")
+			h4(class="text-left")
+				a(href="#" e-required e-placeholder="{{'ex: Paris' | translate}}" ng-model="race.pin.name"  e-details="race.pin" e-nr-has-location  e-options="options" e-gmaps-autocomplete e-name="location" editable-text="race.pin.name") {{ race.pin.name || 'empty' }} ({{ race.pin.department.code || 'empty' }})
+		div(class="col-md-4 col-md-offset-4")
+			h4(class="text-right")
+				a(href="#" e-required editable-bsdate="race.date" e-datepicker-popup="dd-MMMM-yyyy") {{ (race.date | date:"dd MMMM yyyy") || 'empty' }}
+	hr
+	div(class="row text-center")
+		div(class="col-md-4")
+			h3
+				a(href="#" e-required editable-select="race.type" e-ng-options="type.name as gettextCatalog.getString(type.name) for type in types") {{ race.type }}
+			span(class"small" translate) type
+		div(class="col-md-4")
+			h3
+				a(href="#" e-required editable-select="race.distanceType" e-ng-options="distance.name as distance.label for distance in types | distanceTypeFilter:race.type") {{ race.distanceType }}
+			span(class"small" translate) distance
+		div(class="col-md-4")
+			div(class="row")
+				div(class="col-md-8 col-md-offset-4")
+					div(class="list-group")
+						a(href="" class="list-group-item" ng-click="openFeedbackModal(race._id)")
+							i.glyphicon.glyphicon-thumbs-down
+							span  {{'Signaler une erreur' | translate}}
+						a(href="#" class="list-group-item" editable-text="race.organizerWebSite" e-nr-add-http e-target="_blank")
+							i.glyphicon.glyphicon-info-sign
+							span(class="list-group-item-text") {{race.organizerWebSite || 'empty'}}
+						a(href="" class="list-group-item")
+							div(class="fb-like" data-href="http://www.nextrun.fr/races/view/{{race._id}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
+
+	div(ng-if="race.description")
+		h2 {{'Présentation' | translate}}
+		hr
+		div.well(ng-bind-html="race.description")
+	h2 {{'Parcours' | translate}}
+	hr
+	div(class="row")
+		div(class="col-lg-12")
+			tabset
+				tab(ng-repeat="route in routesViewModel" heading="{{route.getType()}}" ng-click="route.setVisible(true)")
+					div(ng-if="route.description")
+						h4 <strong>{{'Présentation' | translate}}</strong>
+						div(class="well" ng-bind-html="route.description")
+					button(type="button" class="btn btn-default" ng-click="editRoute(route)" translate) Modifier
+					include showMap
+					div(class="row text-center")
+						div(class="col-lg-4")
+							h3 {{ route.getDistance() | number: 2}}
+								small km
+							span.small {{ 'Distance' | translate}}
+						div(class="col-lg-4")
+							h3 {{route.getAscendant() | number: 0 }}
+								small m
+							span.small {{ 'D+' | translate}}
+						div(class="col-lg-4")
+							h3 {{route.getDescendant() | number: 0 }}
+								small m
+							span.small {{ 'D-' | translate}}
+						div(class="col-lg-4")
+							h3 {{route.getMaxElevation() | number: 0 }}
+								small m
+							span.small {{ 'Max' | translate}}
+						div(class="col-lg-4")
+							h3 {{route.getMinElevation() | number: 0 }}
+								small m
+							span.small {{ 'Min' | translate}}
+	h2 {{'Organisation' | translate}}
+	hr
+	div.row
+		div.col-lg-12
+			include templates/viewOrganisation
