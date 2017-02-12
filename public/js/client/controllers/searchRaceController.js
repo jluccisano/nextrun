@@ -106,7 +106,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			has = has.substr(0, has.length - 1);
 
 			var url;
-			if (has != "") {
+			if (has !== "") {
 				url = '/employees/search/' + $scope.currentSearch + '/filters/' + has + '/page/' + $scope.currentPage + '/size/' + $scope.pageSize
 			} else {
 				url = '/employees/search/' + $scope.currentSearch + '/page/' + $scope.currentPage + '/size/' + $scope.pageSize
