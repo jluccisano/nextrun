@@ -14,9 +14,9 @@ div.container
 					dd {{getHour(race.timing.checkoutBibTime)}}
 					dt=t("race.rewardsTime")
 					dd {{getHour(race.timing.rewardsTime)}}
-				dl(data-ng-if="race.timing.timingMoreInformation")
-					dt=t("race.moreInformation")
-					dd {{race.timing.timingMoreInformation}}
+				//dl(data-ng-if="race.timing.timingMoreInformation")
+				//	dt=t("race.moreInformation")
+				div.well(data-ng-bind-html="race.timing.timingMoreInformation")
 		tab(heading=t("race.pricing"))
 			div.container
 				dl.dl-horizontal

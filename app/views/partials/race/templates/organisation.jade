@@ -53,8 +53,10 @@ div.container
 										datetimepicker(data-ng-model="race.timing.rewardsTime"  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'hour' }")
 						div.form-group
 							label.col-lg-4.control-label=t("race.moreInformation")
-							div.col-lg-6
-								textarea.form-control(name="timingMoreInformation" rows="10" data-ng-model="race.timing.timingMoreInformation" placeholder=t("race.timingMoreInformation"))
+						div.col-lg-12(text-angular text-angular-name="demo1" data-ng-model="race.timing.timingMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
+							//p(data-ng-bind="textAngularOpts.textAngularEditors.demo1.html")
+							//div.col-lg-12
+							//	textarea.form-control(name="timingMoreInformation" rows="10" data-ng-model="race.timing.timingMoreInformation" placeholder=t("race.timingMoreInformation"))
 		tab(heading=t("race.pricing"))
 			div.row
 				div.col-lg-8

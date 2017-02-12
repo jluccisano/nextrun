@@ -7,7 +7,9 @@ var nextrunApp = angular.module('nextrunApp', [
   'highcharts-ng',
   'ui.bootstrap.datetimepicker',
   'ui.dateTimeInput',
-  'AngularGM'
+  'AngularGM',
+  'textAngular',
+  'ngSanitize'
 ]);
 
 /** Initialize i18n **/

@@ -254,3 +254,13 @@ a {
 .modal {
     display: block;
 }
+
+/** Rich text editor **/
+.ta-editor {
+  min-height: 300px;
+  height: auto;
+  overflow: auto;
+  font-family: inherit;
+  font-size: 100%;
+}
+
