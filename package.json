@@ -58,6 +58,7 @@
     "grunt-jsdoc": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-imagemin": "latest",
-    "async": "latest"
+    "async": "latest",
+    "travis-cov":"latest"
   }
 }
