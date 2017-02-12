@@ -112,6 +112,7 @@ exports.update = function (req, res) {
  * @param res
  */
 exports.delete = function(req,res) {
+   console.log(req.user);
    if(req.user._id.equals(req.race.user_id)) {
 
       Race.destroy(req.race._id, function(err){

@@ -155,8 +155,7 @@ exports.checkIfEmailAlreadyExists = function (req, res) {
  * @param next
  */
 exports.checkUser = function (req, res, next) {
-
-    if(req.body.user && req.body.user.email) {
+    if(req.user && req.user.email) {
       User.findOne({ email: req.body.user.email }, function (err, user) {
         if (err) { 
           return res.json(400,  {message: errorUtils.errors(err.errors)}); 

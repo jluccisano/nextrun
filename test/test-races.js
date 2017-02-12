@@ -271,13 +271,7 @@ var count;
 
         it('should not delete because unknown user', function (done) {
          superagent.del('http://localhost:3000/races/'+currentRace._id)
-          .send({
-                 user: {
-                    email: "foobar3@example.com",
-                    username: "foobar3",
-                    role: userRoles.user
-                 }
-          })
+          .send()
           .set('Accept', 'application/json')
           .end(function(err,res){
              should.not.exist(err);
@@ -289,13 +283,7 @@ var count;
 
         it('should not delete because user not allowed', function (done) {
          superagent.del('http://localhost:3000/races/'+currentRace._id)
-          .send({
-                 user: {
-                    email: "foobar2@example.com",
-                    username: "foobar2",
-                    role: userRoles.user
-                 }
-          })
+          .send()
           .set('Accept', 'application/json')
           .end(function(err,res){
              should.not.exist(err);
@@ -307,13 +295,7 @@ var count;
 
         it('should not delete because race id is unknown', function (done) {
          superagent.del('http://localhost:3000/races/523726537a11c4aa8d789bbb')
-          .send({
-                 user: {
-                    email: "foobar@example.com",
-                    username: "foobar",
-                    role: userRoles.user
-                 }
-          })
+          .send()
           .set('Accept', 'application/json')
           .end(function(err,res){
              should.not.exist(err);
@@ -325,13 +307,7 @@ var count;
 
         it('should delete success', function (done) {
          superagent.del('http://localhost:3000/races/'+currentRace._id)
-          .send({
-                 user: {
-                    email: "foobar1@example.com",
-                    username: "foobar1",
-                    role: userRoles.user
-                 }
-          })
+          .send()
           .set('Accept', 'application/json')
           .end(function(err,res){
              should.not.exist(err);

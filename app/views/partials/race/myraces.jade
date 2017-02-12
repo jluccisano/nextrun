@@ -25,7 +25,7 @@ div.container(data-ng-controller='MyRacesCtrl')
 					a.btn.btn-link(ng-href='/races/edit/{{race._id}}') Editer
 				td
 					//a.btn.btn-link(ng-href='/races/delete/{{race._id}}') Supprimer
-					a(data-toggle="modal" data-id="{{race._id}}" title="Supprimer cette manifestation" ng-click="open()") Supprimer
+					a(ng-click="openDeleteConfirmation(race)") Supprimer
 				td
 					a(data-toggle="modal" data-id="{{race._id}}" title="Publier cette manifestation" href="#publishModal") Publier
 

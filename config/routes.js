@@ -58,7 +58,7 @@ app.param(':userId', userController.load);
 
 app.post('/races',  auth.ensureAuthorized, userController.checkUser, raceController.create);
 
-app.del('/races/:raceId',  auth.ensureAuthorized, userController.checkUser, raceController.delete);
+app.del('/races/:raceId',  auth.ensureAuthorized, raceController.delete);
 
 app.put('/races/:raceId',  auth.ensureAuthorized, userController.checkUser, raceController.update);
 
