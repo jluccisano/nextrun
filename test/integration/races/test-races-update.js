@@ -82,7 +82,11 @@ describe('Update Race: UPDATE /api/races', function() {
     Race.create({
       name: 'Duathlon de Castelnaudary',
       type: 'duathlon',
-      department: '11 - Aude',
+      department: {
+        code: '11',
+        name: 'Aude',
+        region: 'Languedoc-Roussillon'
+      },
       date: currentDate,
       edition: '1',
       distanceType: {name:'S',i18n:''},
@@ -102,7 +106,7 @@ describe('Update Race: UPDATE /api/races', function() {
       race.should.be.an.instanceOf(Race);
       race.name.should.equal('Duathlon de Castelnaudary');
       race.type.should.equal('duathlon');
-      race.department.should.equal('11 - Aude');
+      race.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
       //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
@@ -231,7 +235,11 @@ describe('Update Race: UPDATE /api/races', function() {
           race: {
             name: 'Triathlon de Castelnaudary',
             type: 'triathlon',
-            department: '31 - Haute-Garonne',
+            department: {
+              code: '31',
+              name: 'Haute-Garonne',
+              region: 'Midi-Pyrénées'
+            },
             date: currentDate,
             edition: '2',
             distanceType: {name:'M',i18n:''}
@@ -253,7 +261,7 @@ describe('Update Race: UPDATE /api/races', function() {
         race.should.be.an.instanceOf(Race);
         race.name.should.equal('Triathlon de Castelnaudary');
         race.type.should.equal('triathlon');
-        race.department.should.equal('31 - Haute-Garonne');
+        race.department.name.should.equal('Haute-Garonne');
         race.date.should.be.an.instanceOf(Date);
         //race.date.getTime().should.equal(new Date(currentDate).getTime());
         race.edition.should.equal(2);

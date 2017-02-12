@@ -62,7 +62,7 @@ var DEPARTMENTS = new Enum({
 	AUDE: {
 		code: '11',
 		name: 'Aude',
-		region: 'Languedoc'
+		region: 'Languedoc-Roussillon'
 	},
 	AVEYRON: {
 		code: '12',

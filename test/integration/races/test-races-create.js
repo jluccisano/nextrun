@@ -83,7 +83,11 @@ describe('Create race: POST /api/races', function() {
           race: {
             name: 'Duathlon de Castelnaudary',
             type: 'duathlon',
-            department: '11 - Aude',
+            department: {
+              code: '11',
+              name: 'Aude',
+              region: 'Languedoc-Roussillon'
+            },
             date: currentDate,
             edition: '1',
             distanceType: {name:'S',i18n:''}
@@ -105,7 +109,7 @@ describe('Create race: POST /api/races', function() {
         race.should.be.an.instanceOf(Race);
         race.name.should.equal('Duathlon de Castelnaudary');
         race.type.should.equal('duathlon');
-        race.department.should.equal('11 - Aude');
+        race.department.name.should.equal('Aude');
         race.date.should.be.an.instanceOf(Date);
         //race.date.getTime().should.equal(new Date(currentDate).getTime());
         race.edition.should.equal(1);
@@ -122,7 +126,11 @@ describe('Create race: POST /api/races', function() {
           race: {
             name: 'Duathlon de Castelnaudary',
             type: 'duathlon',
-            department: '11 - Aude',
+            department: {
+              code: '11',
+              name: 'Aude',
+              region: 'Languedoc-Roussillon'
+            },
             date: currentDate,
             edition: '1',
             distanceType: {name:'M',i18n:''}
@@ -154,7 +162,11 @@ describe('Create race: POST /api/races', function() {
           race: {
             name: 'Duathlon de Castelnaudary',
             type: 'duathlon',
-            department: '11 - Aude',
+            department: {
+              code: '11',
+              name: 'Aude',
+              region: 'Languedoc-Roussillon'
+            },
             date: currentDate,
             edition: '1',
             distanceType: {name:'S',i18n:''}
@@ -195,7 +207,11 @@ describe('Create race: POST /api/races', function() {
           race: {
             name: 'Duathlon de Castelnaudary',
             type: 'duathlon',
-            department: '11 - Aude',
+            department: {
+              code: '11',
+              name: 'Aude',
+              region: 'Languedoc-Roussillon'
+            },
             date: currentDate,
             edition: '1',
             distanceType: {name:'S', i18n:''}
