@@ -23,7 +23,7 @@ div(class="container create-workout")
 
 				div(class="form-group" ng-class="{'has-error':!workoutEventForm.date.$pristine && workoutEventForm.date.$invalid, 'has-success': !workoutEventForm.date.$invalid && !workoutEventForm.date.$pristine}")
 					label(class="control-label") {{'Date' | translate}}
-					input(type="text" class="form-control" ng-model="workout.date" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="{{'Date' | translate}}" ng-required="true")
+					input(type="text" class="form-control" ng-model="workout.date" name="date" bs-datepicker startWeek="1" date-format="dd MMMM yyyy" placeholder="{{'Date' | translate}}" ng-required="true")
 
 				div(class="form-group" ng-class="{'has-error':!workoutEventForm.time.$pristine && workoutEventForm.time.$invalid, 'has-success': !workoutEventForm.time.$invalid && !workoutEventForm.time.$pristine}")
 					label(class="control-label") {{'Heure' | translate}}

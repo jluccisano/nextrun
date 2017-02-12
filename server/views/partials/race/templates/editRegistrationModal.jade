@@ -8,11 +8,11 @@ div(class="modal-body")
 					div(class="col-md-4")
 						label(for="openingDate" translate) Date d'ouverture
 						div(id="openingDate" class="form-group" ng-class="{'has-error': !registrationForm.openingDate.$pristine && registrationForm.openingDate.$invalid, 'has-success': !registrationForm.openingDate.$pristine && !registrationForm.openingDate.$invalid}")
-							input(type="text" name="openingDate" class="form-control" size="10" ng-model="registration.openingDate" data-autoclose="1" placeholder="{{ 'Ouverture' | translate }}" bs-datepicker ng-required="true")
+							input(type="text" name="openingDate" class="form-control" size="10" ng-model="registration.openingDate" data-autoclose="1" placeholder="{{ 'Ouverture' | translate }}" startWeek="1" bs-datepicker ng-required="true")
 					div(class="col-md-4")
 						label(for="closingDate" translate) Date de fermeture
 						div(id="closingDate" class="form-group" ng-class="{'has-error': !registrationForm.closingDate.$pristine && registrationForm.closingDate.$invalid, 'has-success': !registrationForm.closingDate.$pristine && !registrationForm.closingDate.$invalid}")
-							input(type="text" name="closingDate" class="form-control" size="10" ng-model="registration.closingDate" data-autoclose="1" placeholder="{{ 'Fermeture' | translate }}" bs-datepicker ng-required="true")
+							input(type="text" name="closingDate" class="form-control" size="10" ng-model="registration.closingDate" data-autoclose="1" placeholder="{{ 'Fermeture' | translate }}" startWeek="1" bs-datepicker ng-required="true")
 				div(class="row")
 					div(class="col-md-4")
 						label(for="limitedPlaces" translate) Nombre de places

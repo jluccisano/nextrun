@@ -4,7 +4,7 @@ form(role="form" name="dateForm" novalidate)
 			h5(class="text-left") {{workout.date | date:'dd MMMM yyyy'}}
 		div(class="col-md-6" ng-if="editMode && edit" class="form-group" ng-class="{'has-error':!dateForm.date.$pristine && dateForm.date.$invalid, 'has-success': !dateForm.date.$invalid && !dateForm.date.$pristine}")
 			label(class="control-label") {{'Date' | translate}}
-			input(type="text" class="form-control" ng-model="workout.date" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
+			input(type="text" class="form-control" ng-model="workout.date" name="date" bs-datepicker startWeek="1" date-format="dd MMMM yyyy" placeholder="Date")
 		div(ng-if="editMode && !edit" class="col-md-2")
 			button(ng-click="toggleEdit()" class="btn btn-default btn-sm")
 				i(class="fa fa-pencil-square-o")

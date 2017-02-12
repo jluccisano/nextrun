@@ -37,14 +37,14 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 		};
 
 		$scope.submit = function() {
-			$cookieStore.put('workout', $scope.workout);
+			$cookieStore.put("workout", $scope.workout);
 
 			$scope.workout.participants = [];
 
 			angular.forEach($scope.guests, function(guest) {
 				var participant = {
 					email: guest
-				}
+				};
 				$scope.workout.participants.push(participant);
 
 			});
@@ -73,11 +73,11 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 				history: {
 					history: false
 				}
-			}).get().on('pnotify.confirm', function() {
+			}).get().on("pnotify.confirm", function() {
 				$state.go("editWorkout", {
 					id: workoutId
 				});
-			}).on('pnotify.cancel', function() {
+			}).on("pnotify.cancel", function() {
 				$state.go("myworkouts");
 			});
 		};

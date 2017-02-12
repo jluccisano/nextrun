@@ -4,7 +4,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
+msgid "&nbsp; Ajouter un parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/race.html
 msgid "&nbsp; Départ: {{(race.schedule.events[0].date | date:'HH:mm') || 'non communiqué'}}"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/workout.html
+msgid "&nbsp; Départ: {{(workout.time | date:'HH:mm') || 'non communiqué'}}"
 msgstr ""
 
 #: .tmp/generated/views/index.html
@@ -196,12 +205,18 @@ msgid ""
 "        </div>"
 msgstr ""
 
+#: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
+msgid "<i translate=\"translate\" class=\"fa fa-plus\">&nbsp; Ajouter un parcours</i>"
+msgstr ""
+
 #: .tmp/generated/views/partials/auth/users.html
 #: .tmp/generated/views/partials/home/contacts.html
 #: .tmp/generated/views/partials/race/allraces.html
 #: .tmp/generated/views/partials/race/races.html
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/routes.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
 msgid "<span class=\"glyphicon glyphicon-edit\"></span>"
 msgstr ""
 
@@ -245,6 +260,10 @@ msgstr ""
 msgid "Adresse"
 msgstr ""
 
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Adresse du départ"
+msgstr ""
+
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
 msgid "Adresse postale"
 msgstr ""
@@ -256,11 +275,15 @@ msgstr ""
 #: .tmp/generated/views/partials/race/races.html
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/routes.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
+#: .tmp/generated/views/partials/workout/templates/participants.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Ajouter"
 msgstr ""
 
-#: .tmp/generated/views/partials/race/race.html
-msgid "Ajouter un parcours"
+#: .tmp/generated/views/partials/workout/templates/participants.html
+#: .tmp/generated/views/partials/workout/workout.html
+msgid "Ajouter un participant"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/home.html
@@ -289,7 +312,12 @@ msgstr ""
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 #: .tmp/generated/views/partials/race/templates/richTextEditorModal.html
 #: .tmp/generated/views/partials/race/templates/viewPlan2.html
+#: .tmp/generated/views/partials/workout/templates/feedbackModal.html
 msgid "Annuler"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/results.html
+msgid "Année"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
@@ -310,12 +338,30 @@ msgstr ""
 #: .tmp/generated/views/partials/home/templates/contact.html
 #: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
+#: client/modules/workout/scripts/controllers/workoutFeedbackModalController.js
 msgid "Autre"
 msgstr ""
 
 #: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
+#: client/modules/workout/scripts/controllers/workoutFeedbackModalController.js
 msgid "Bug"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Ces emails sont incorrects {{rejects.join(', ')}}"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Ces emails sont répétés {{repeats[0]}}"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Cet email est incorrect {{rejects[0]}}"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Cet email est incorrect {{repeats[0]}}"
 msgstr ""
 
 #: .tmp/generated/views/partials/auth/settings.html
@@ -344,6 +390,9 @@ msgstr ""
 #: client/modules/race/scripts/controllers/racesController.js
 #: client/modules/route/scripts/controllers/editRouteController.js
 #: client/modules/route/scripts/controllers/routesController.js
+#: client/modules/workout/scripts/controllers/createWorkoutController.js
+#: client/modules/workout/scripts/controllers/editWorkoutController.js
+#: client/modules/workout/scripts/controllers/workoutsController.js
 msgid "Confirmation requise"
 msgstr ""
 
@@ -375,11 +424,16 @@ msgstr ""
 
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/home.html
+#: .tmp/generated/views/partials/workout/create.html
 msgid "Continuer"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/create.html
 msgid "Création d'une manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Création d'une sortie"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
@@ -394,16 +448,24 @@ msgstr ""
 msgid "Créer une manifestation"
 msgstr ""
 
+#: .tmp/generated/views/partials/route/mapView.html
+msgid "Créer une sortie"
+msgstr ""
+
 #: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "D+"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "D-"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/templates/date.html
+#: .tmp/generated/views/partials/workout/create.html
+#: .tmp/generated/views/partials/workout/templates/date.html
 msgid "Date"
 msgstr ""
 
@@ -431,6 +493,7 @@ msgstr ""
 #: .tmp/generated/views/partials/race/races.html
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/routes.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
 msgid "Dernière mise à jour"
 msgstr ""
 
@@ -447,6 +510,8 @@ msgstr ""
 #: .tmp/generated/views/partials/route/mapEditor.html
 #: .tmp/generated/views/partials/route/mapView.html
 #: .tmp/generated/views/partials/route/routes.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Distance"
 msgstr ""
 
@@ -460,6 +525,7 @@ msgstr ""
 
 #: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
+#: client/modules/workout/scripts/controllers/workoutFeedbackModalController.js
 msgid "Dupliquer"
 msgstr ""
 
@@ -504,8 +570,10 @@ msgstr ""
 #: .tmp/generated/views/partials/home/contacts.html
 #: .tmp/generated/views/partials/main/contact.html
 #: .tmp/generated/views/partials/main/templates/feedback.html
-#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
+#: .tmp/generated/views/partials/workout/templates/feedbackModal.html
+#: .tmp/generated/views/partials/workout/templates/participants.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Email"
 msgstr ""
 
@@ -515,8 +583,11 @@ msgstr ""
 #: .tmp/generated/views/partials/auth/signup.html
 #: .tmp/generated/views/partials/main/contact.html
 #: .tmp/generated/views/partials/main/templates/feedback.html
-#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
+#: .tmp/generated/views/partials/workout/create.html
+#: .tmp/generated/views/partials/workout/templates/feedbackModal.html
+#: .tmp/generated/views/partials/workout/templates/participants.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Email invalide"
 msgstr ""
 
@@ -547,6 +618,8 @@ msgstr ""
 #: .tmp/generated/views/partials/home/templates/contact.html
 #: .tmp/generated/views/partials/main/contact.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
+#: .tmp/generated/views/partials/workout/templates/feedbackModal.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Envoyer"
 msgstr ""
 
@@ -568,12 +641,24 @@ msgstr ""
 msgid "Etes-vous sûr de vouloir supprimer ce parcours ?"
 msgstr ""
 
+#: client/modules/workout/scripts/controllers/editWorkoutController.js
+msgid "Etes-vous sûr de vouloir supprimer ce participant ?"
+msgstr ""
+
+#: client/modules/workout/scripts/controllers/editWorkoutController.js
+msgid "Etes-vous sûr de vouloir supprimer ce sortie ?"
+msgstr ""
+
 #: client/modules/auth/scripts/controllers/usersController.js
 msgid "Etes-vous sûr de vouloir supprimer ce utilisateur ?"
 msgstr ""
 
 #: client/modules/race/scripts/controllers/racesController.js
 msgid "Etes-vous sûr de vouloir supprimer cette manifestation ?"
+msgstr ""
+
+#: client/modules/workout/scripts/controllers/workoutsController.js
+msgid "Etes-vous sûr de vouloir supprimer cette sortie ?"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
@@ -612,10 +697,12 @@ msgstr ""
 
 #: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Général"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/editScheduleModal.html
+#: .tmp/generated/views/partials/workout/create.html
 msgid "Heure"
 msgstr ""
 
@@ -633,6 +720,7 @@ msgstr ""
 
 #: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
+#: client/modules/workout/scripts/controllers/workoutFeedbackModalController.js
 msgid "Information erronée"
 msgstr ""
 
@@ -650,12 +738,20 @@ msgstr ""
 msgid "Inscription par courrier"
 msgstr ""
 
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Inviter"
+msgstr ""
+
 #: client/modules/race/scripts/controllers/createRaceController.js
 msgid "La manifestation a bien été créée"
 msgstr ""
 
 #: client/modules/race/scripts/controllers/racesController.js
 msgid "La manifestation a bien été supprimée"
+msgstr ""
+
+#: client/modules/workout/scripts/controllers/workoutsController.js
+msgid "La sortie a bien été supprimé"
 msgstr ""
 
 #: client/modules/home/scripts/controllers/contactsController.js
@@ -696,6 +792,10 @@ msgstr ""
 msgid "Le parcours a bien été supprimé"
 msgstr ""
 
+#: client/modules/workout/scripts/controllers/editWorkoutController.js
+msgid "Le sortie a bien été supprimée"
+msgstr ""
+
 #: client/modules/auth/scripts/controllers/usersController.js
 msgid "Le utilisateur a bien été supprimé"
 msgstr ""
@@ -718,6 +818,7 @@ msgstr ""
 
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/templates/address.html
+#: .tmp/generated/views/partials/workout/templates/address.html
 msgid "Lieu"
 msgstr ""
 
@@ -737,6 +838,7 @@ msgid "Manifestations"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Max"
 msgstr ""
 
@@ -759,6 +861,7 @@ msgid "Mettre à jour son profil"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Min"
 msgstr ""
 
@@ -798,6 +901,7 @@ msgstr ""
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/mapEditor.html
 #: .tmp/generated/views/partials/route/routes.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
 msgid "Nom"
 msgstr ""
 
@@ -835,7 +939,13 @@ msgid "Organisateurs"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Organisation"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
+msgid "Organiser une sortie entre amis"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
@@ -861,7 +971,13 @@ msgstr ""
 #: .tmp/generated/views/layouts/header.html
 #: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/route/allroutes.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/workout.html
+msgid "Participants"
 msgstr ""
 
 #: client/modules/race/scripts/services/dateRanges.js
@@ -894,6 +1010,11 @@ msgstr ""
 #: .tmp/generated/views/partials/home/templates/carousel.html
 #: .tmp/generated/views/partials/race/home.html
 msgid "Promouvoir votre manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/templates/participants.html
+#: .tmp/generated/views/partials/workout/workout.html
+msgid "Pseudo"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/allraces.html
@@ -994,6 +1115,7 @@ msgid "Si vous souhaitez supprimer votre compte, tous les parcours que vous avez
 msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
+#: .tmp/generated/views/partials/workout/templates/feedbackModal.html
 msgid "Signaler une erreur"
 msgstr ""
 
@@ -1001,8 +1123,22 @@ msgstr ""
 msgid "Site web"
 msgstr ""
 
+#: .tmp/generated/views/partials/workout/allworkouts.html
+msgid "Sortie"
+msgstr ""
+
+#: .tmp/generated/views/index.html
+#: .tmp/generated/views/layouts/body.html
+#: .tmp/generated/views/layouts/header.html
+msgid "Sorties"
+msgstr ""
+
 #: client/modules/race/scripts/controllers/createRaceController.js
 msgid "Souhaitez-vous éditer votre manifestation maintenant?"
+msgstr ""
+
+#: client/modules/workout/scripts/controllers/createWorkoutController.js
+msgid "Souhaitez-vous éditer votre sortie maintenant?"
 msgstr ""
 
 #: .tmp/generated/views/partials/auth/settings.html
@@ -1020,15 +1156,19 @@ msgstr ""
 #: .tmp/generated/views/partials/main/contact.html
 #: .tmp/generated/views/partials/main/templates/feedback.html
 #: .tmp/generated/views/partials/race/create.html
-#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 #: .tmp/generated/views/partials/race/templates/type.html
 #: .tmp/generated/views/partials/route/mapEditor.html
+#: .tmp/generated/views/partials/workout/templates/feedbackModal.html
 msgid "Sélectionner..."
 msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/results.html
 msgid "Titre"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Titre de la sortie"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
@@ -1063,13 +1203,13 @@ msgstr ""
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/races.html
 #: .tmp/generated/views/partials/race/search.html
-#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 #: .tmp/generated/views/partials/race/templates/search.html
 #: .tmp/generated/views/partials/race/templates/type.html
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/mapEditor.html
 #: .tmp/generated/views/partials/route/routes.html
+#: .tmp/generated/views/partials/workout/templates/feedbackModal.html
 msgid "Type"
 msgstr ""
 
@@ -1082,12 +1222,21 @@ msgstr ""
 msgid "Un email vous a été envoyé"
 msgstr ""
 
+#: client/modules/workout/scripts/controllers/editWorkoutController.js
+msgid "Un nouveau participant a été ajouté"
+msgstr ""
+
+#: client/modules/workout/scripts/controllers/editWorkoutController.js
+msgid "Un participant a été supprimé"
+msgstr ""
+
 #: .tmp/generated/views/partials/errors/500.html
 msgid "Une erreur s'est produite."
 msgstr ""
 
 #: .tmp/generated/views/partials/race/allraces.html
 #: .tmp/generated/views/partials/route/allroutes.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
 msgid "Utilisateur"
 msgstr ""
 
@@ -1127,10 +1276,15 @@ msgid "Votre contact a bien été publiée"
 msgstr ""
 
 #: client/modules/race/scripts/controllers/editRaceController.js
+msgid "Votre image a bien été mise à jour"
+msgstr ""
+
+#: client/modules/race/scripts/controllers/editRaceController.js
 #: client/modules/race/scripts/directives/addressDirective.js
 #: client/modules/race/scripts/directives/dateDirective.js
 #: client/modules/race/scripts/directives/titleDirective.js
 #: client/modules/race/scripts/directives/typeDirective.js
+#: client/modules/workout/scripts/directives/nrTitleDirective.js
 msgid "Votre manifestation a bien été mise à jour"
 msgstr ""
 
@@ -1144,6 +1298,7 @@ msgstr ""
 
 #: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
+#: client/modules/workout/scripts/controllers/workoutFeedbackModalController.js
 msgid "Votre message nous a bien été transmis"
 msgstr ""
 
@@ -1163,6 +1318,14 @@ msgstr ""
 msgid "Votre parcours a bien été ajouté à votre manifestation"
 msgstr ""
 
+#: client/modules/route/scripts/controllers/editRouteController.js
+msgid "Votre parcours a bien été ajouté à votre sortie"
+msgstr ""
+
+#: client/modules/workout/scripts/controllers/editWorkoutController.js
+msgid "Votre parcours a bien été mise à jour"
+msgstr ""
+
 #: client/modules/route/scripts/controllers/routesController.js
 msgid "Votre parcours a bien été publiée"
 msgstr ""
@@ -1179,6 +1342,10 @@ msgstr ""
 msgid "Votre profil a bien été modifié"
 msgstr ""
 
+#: client/modules/workout/scripts/controllers/viewWorkoutController.js
+msgid "Votre réponse a bien été prise en compte"
+msgstr ""
+
 #: client/modules/race/scripts/directives/resultsDirective.js
 msgid "Votre résultat a bien été ajouté"
 msgstr ""
@@ -1187,17 +1354,39 @@ msgstr ""
 msgid "Votre résultat a bien été supprimé"
 msgstr ""
 
+#: client/modules/workout/scripts/controllers/createWorkoutController.js
+msgid "Votre sortie a bien été créée"
+msgstr ""
+
+#: client/modules/workout/scripts/directives/nrAddressDirective.js
+#: client/modules/workout/scripts/directives/nrDateDirective.js
+msgid "Votre sortie a bien été mise à jour"
+msgstr ""
+
 #: client/modules/auth/scripts/controllers/usersController.js
 msgid "Votre utilisateur a bien été publiée"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/create.html
+msgid "description"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/type.html
 msgid "distance"
 msgstr ""
 
+#: .tmp/generated/views/partials/workout/create.html
+msgid "ex: 3 rue de la République 31000 Toulouse"
+msgstr ""
+
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/templates/address.html
+#: .tmp/generated/views/partials/workout/templates/address.html
 msgid "ex: Paris"
+msgstr ""
+
+#: .tmp/generated/views/partials/workout/create.html
+msgid "ex: Sortie entre amis"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/create.html
@@ -1209,14 +1398,18 @@ msgstr ""
 msgid "manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, &amp;eacute;preuve, ironman, longue distance, course &amp;agrave; pied, parcours, d&amp;eacute;nivel&amp;eacute;, cross, marathon, duathlon, ski de fond, aquathlon"
 msgstr ""
 
+#: .tmp/generated/views/partials/workout/create.html
+msgid "martin@gmail.com,jean@yahoo.com"
+msgstr ""
+
 #: .tmp/generated/views/partials/race/templates/type.html
 msgid "type"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/contact.html
 #: .tmp/generated/views/partials/main/templates/feedback.html
-#: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
+#: .tmp/generated/views/partials/workout/templates/feedbackModal.html
 msgid "votre message"
 msgstr ""
 

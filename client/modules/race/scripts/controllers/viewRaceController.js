@@ -104,12 +104,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
             $scope.isCollapsed = true;
         };
 
-        $scope.openLightboxModal = function($index) {
-            Lightbox.openModal($scope.images, $index);
-        };
-
-
-         $scope.initSelection = function(selection) {
+        $scope.initSelection = function(selection) {
             if (selection) {
                 $scope.selection = selection;
                 $scope.active = selection;

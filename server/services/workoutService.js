@@ -131,10 +131,6 @@ exports.updateParticipant = function(workout, participant, req, res, cb) {
 
 	var participantId = participant._id;
 
-	/*if (participant._id) {
-		delete participant._id;
-	}*/
-
 	var query = {
 		_id: workout._id,
 		"participants._id": participantId
@@ -211,7 +207,7 @@ exports.deleteParticipant = function(workout, participantId, res, cb) {
 	}, options);
 };
 
-exports.findParticipant = function(workout, participant , res, cb) {
+exports.findParticipant = function(workout, participant, res, cb) {
 
 	var criteria = {
 		"_id": workout._id,
@@ -265,14 +261,14 @@ exports.checkIfParticipantAvailable = function(participantEmail, workout, res, c
 
 	var criteria = {
 		"_id": workout._id,
-		"participants.email": participantEmail		
+		"participants.email": participantEmail
 	};
 
 	var projection = {
 		"participants.$": 1
 	};
 
-	Workout.findByCriteria(criteria, function(error, participants) {
+	Workout.findByCriteria(criteria, projection, function(error, participants) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {

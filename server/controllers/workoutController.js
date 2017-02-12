@@ -63,27 +63,7 @@ exports.getWorkoutsByUser = function(req, res) {
         });
     });
 };
-/*
-exports.joinWorkout = function(req, res) {
-    var workout = req.workout;
-    var participantId = req.params.participantId;
-    var workoutOwner = req.workoutOwner;
-    workoutService.joinWorkout(workout, participantId, true, res, function() {
-        email.sendNotificationToOwner(workout, workoutOwner, participantId);
-        res.sendStatus(200);
-    });
-};
 
-exports.unjoinWorkout = function(req, res) {
-    var workout = req.workout;
-    var participantId = req.params.participantId;
-    var workoutOwner = req.workoutOwner;
-    workoutService.joinWorkout(workout, participantId, false, res, function() {
-        email.sendNotificationToOwner(workout, workoutOwner, participantId);
-        res.sendStatus(200);
-    });
-};
-*/
 exports.updateParticipant = function(req, res) {
     var workout = req.workout;
     var participantId = req.params.participantId;
@@ -98,7 +78,6 @@ exports.updateParticipant = function(req, res) {
 exports.addParticipant = function(req, res, next) {
     var workout = req.workout;
     var participant = req.body;
-    var user = req.user;
     workoutService.addParticipant(workout, participant, res, function() {
         next();
     });
@@ -114,7 +93,7 @@ exports.getNewParticipant = function(req, res) {
     });
 };
 
-exports.deleteParticipant = function(req, res, next) {
+exports.deleteParticipant = function(req, res) {
     var workout = req.workout;
     var participantId = req.params.participantId;
     workoutService.deleteParticipant(workout, participantId, res, function() {

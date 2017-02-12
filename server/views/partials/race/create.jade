@@ -9,7 +9,7 @@ div(class="container create-race")
 				
 				div(class="form-group" ng-class="{'has-error':!raceForm.date.$pristine && raceForm.date.$invalid, 'has-success': !raceForm.date.$invalid && !raceForm.date.$pristine}")
 					label(class="control-label") {{'Date' | translate}}
-					input(type="text" class="form-control" ng-model="race.date" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
+					input(type="text" class="form-control" ng-model="race.date" name="date" bs-datepicker startWeek="1" date-format="dd MMMM yyyy" placeholder="Date")
 
 				div(class="form-group" ng-class="{'has-error': !raceForm.place.$pristine && raceForm.place.$error.validLocation && raceForm.place.$invalid, 'has-success': !raceForm.place.$error.validLocation && raceForm.place.$valid  && !raceForm.place.$pristine}")
 					label(class="control-label") {{'Lieu' | translate}}

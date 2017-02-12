@@ -1,5 +1,6 @@
 var raceService = require("../services/raceService"),
 	logger = require("../logger"),
+	crypto = require("crypto"),
 	fs = require("fs");
 
 exports.createRace = function(req, res) {
@@ -150,20 +151,35 @@ exports.uploadPicture = function(req, res) {
 		return response;
 	};
 
-	//var path = req.files.file.path;
 	var race = req.race;
-	//var originalName = req.files.file.originalname;
 
 	var imageBuffer = decodeBase64Image(req.body.base64);
 
-	fs.writeFile("./.tmp/tmpImg.jpg", imageBuffer.data, function(error) {
+	var fileName = "test.jpg";
+	var format = "jpg";
+
+	//image/jpeg
+	//image/png
+	//text/csv
+	//text/plain
+	//text/html
+
+	//application/pdf
+
+	//application/vnd.ms-excel
+
+	var tmpFileName = "tmp"+crypto.randomBytes(4).readUInt32LE(0)+"."+format;
+
+	var tmpFilePath = "./.tmp/" + tmpFileName;
+
+	fs.writeFile(tmpFilePath, imageBuffer.data, function(error) {
 		if(error) {
 			logger.error(error);
 		}
 	});
 
 
-	raceService.uploadPicture(race, "./.tmp/tmpImg.jpg", "test.jpg", res, function() {
+	raceService.uploadPicture(race, tmpFilePath, fileName, res, function() {
 		res.status(200).json({
 			id: race._id
 		});
