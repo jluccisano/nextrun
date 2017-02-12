@@ -2,6 +2,7 @@
 
 angular.module("nextrunApp.race").controller("CreateRaceController",
 	function(
+		$rootScope,
 		$scope,
 		$location,
 		$modal,
@@ -69,13 +70,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 						$scope.openRedirectionModal(response.data.raceId);
 					});
 			} else {
-				$scope.tabs = [{
-					active: false,
-					disabled: false
-				}, {
-					active: true,
-					disabled: false
-				}];
+				$rootScope.mode = "login";
 			}
 		};
 

@@ -86,9 +86,12 @@ nextrunApp.run(function(
       
 
       notificationService.info(gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"));
+    } else {
+
+        $rootScope.mode = "app";
     }
 
-    $rootScope.mode = "app";
+    
     
   });
 

@@ -2,6 +2,7 @@
 
 angular.module("nextrunApp.auth").controller("LoginController",
 	function(
+		$rootScope,
 		$scope,
 		$location,
 		$modal,
@@ -19,7 +20,8 @@ angular.module("nextrunApp.auth").controller("LoginController",
 				email: $scope.user.email,
 				password: $scope.user.password
 			}).then(function() {
-				$location.path("/myraces");
+				//$location.path("/myraces");
+				$rootScope.mode = "app";
 			});
 		};
 
