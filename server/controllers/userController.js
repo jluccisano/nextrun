@@ -68,7 +68,7 @@ exports.signup = function(req, res) {
  */
 exports.logout = function(req, res) {
     req.logout();
-    return res.status(200);
+    return res.status(200).end();
 };
 
 /**
