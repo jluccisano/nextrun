@@ -231,13 +231,6 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			}
 		};
 
-		$scope.resetDataRangeFilter = function() {
-			$scope.dateRange = {
-				"startDate": moment(),
-				"endDate": moment().add('days', 29)
-			};
-
-		};
 
 		$scope.toggleDepartmentSelection = function(term) {
 			var idx = $scope.departments.indexOf(term);
