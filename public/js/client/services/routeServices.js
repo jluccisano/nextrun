@@ -653,10 +653,12 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 				if (race.pin) {
 					marker = {
-						id: race._id,
+						raceId: race._id,
+						raceName: race.name,
 						latitude: race.pin.location.lat,
 						longitude: race.pin.location.lon,
 						icon: "../../../img/start.png",
+						showWindow: false,
 						title: "hello"
 					}
 				}

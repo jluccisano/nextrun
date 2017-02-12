@@ -38,11 +38,12 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				streetViewControl: false,
 				zoomControl: true
 			},
-			events: {
-				click: function(mapModel, eventName, originalEventArgs) {
-
-				}
-			}
+			clusterOptions: {
+				gridSize: 60,
+				ignoreHidden: true,
+				minimumClusterSize: 2
+			},
+			doClusterMarkers: true
 		};
 
 
@@ -170,7 +171,17 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 						$scope.emptyResults = false;
 
-						$scope.markers = RouteFactory.convertRacesLocationToMarkers(response.races);
+						$scope.map.markers = RouteFactory.convertRacesLocationToMarkers(response.races);
+
+						_.each($scope.map.markers, function(marker) {
+							marker.closeClick = function() {
+								marker.showWindow = false;
+								$scope.$apply();
+							};
+							marker.onClicked = function() {
+								$scope.onMarkerClicked(marker);
+							};
+						});
 
 					} else {
 
@@ -187,10 +198,10 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 		}
 
 		$scope.onMarkerClicked = function(marker) {
-			if (marker) {
-				$location.path("/races/view/" + marker.id);
-			}
+			marker.showWindow = true;
+			$scope.$apply();
 		}
+
 
 
 		$scope.getRaces();
