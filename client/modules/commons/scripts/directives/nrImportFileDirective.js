@@ -1,4 +1,4 @@
-angular.module('ifApp.commons').directive('ifImportFile', function($rootScope) {
+angular.module('ifApp.commons').directive('nrImportFile', function($rootScope) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -24,7 +24,7 @@ angular.module('ifApp.commons').directive('ifImportFile', function($rootScope) {
     }
 });
 
-angular.module('ifApp.commons').directive('ifDownload', ['ImportExportService', function(ImportExportService, $log) {
+/*angular.module('ifApp.commons').directive('ifDownload', ['ImportExportService', function(ImportExportService, $log) {
     return {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
@@ -114,4 +114,4 @@ angular.module('ifApp.commons').directive('ifDownload', ['ImportExportService', 
         <span class="glyphicon glyphicon-cloud-download"></span>
         <span>Import</span>
     </a>
-</li>
+</li>*/

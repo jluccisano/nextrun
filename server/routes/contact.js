@@ -5,37 +5,37 @@ var contactController = require("../controllers/contactController"),
 var routes = [{
     path: "/feedback",
     httpMethod: "POST",
-    middleware: [contactController.feedback],
+    middleware: [contactController.sendFeedback],
     accessLevel: accessLevels.public
 },{
     path: "/:id",
     httpMethod: "GET",
-    middleware: [contactController.find],
+    middleware: [contactController.getContact],
     accessLevel: accessLevels.admin
 }, {
     path: "/new",
     httpMethod: "POST",
-    middleware: [contactController.create],
+    middleware: [contactController.createContact],
     accessLevel: accessLevels.public
 }, {
     path: "/find/page/(:page)?",
     httpMethod: "GET",
-    middleware: [contactController.findAll],
+    middleware: [contactController.getContacts],
     accessLevel: accessLevels.admin
 }, {
     path: "/:id/delete",
     httpMethod: "DELETE",
-    middleware: [contactController.delete],
+    middleware: [contactController.deleteContact],
     accessLevel: accessLevels.admin
 }, {
     path: "/:id/update",
     httpMethod: "PUT",
-    middleware: [contactController.update],
+    middleware: [contactController.updateContact],
     accessLevel: accessLevels.admin
 }];
 
 module.exports = function(app, express) {
     var router = express.Router();
-    router.param("id", contactController.load);
+    router.param("id", contactController.loadContact);
     routerService.register(app, router, routes, "/api/contacts");
 };

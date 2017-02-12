@@ -21,7 +21,8 @@ var raceModule = angular.module("nextrunApp.race", [
   "nextrunApp.commons",
   "nextrunApp.route",
   "ezfb",
-  "jlareau.pnotify"
+  "jlareau.pnotify",
+  "lr.upload"
 ]);
 
 
@@ -38,28 +39,38 @@ raceModule.config(
       templateUrl: "/partials/race/home",
       controller: "RaceHomeController",
       data: {
-        access: access.public
+        access: access.public,
+        fullscreen: false
       }
     }).state("myraces", {
-      url: "/races/myraces",
-      templateUrl: "/partials/race/myraces",
-      controller: "MyRacesController",
+      url: "/users/:id/races",
+      templateUrl: "/partials/race/races",
+      controller: "RacesController",
       data: {
         access: access.user
       }
+    }).state("allraces", {
+      url: "/races",
+      templateUrl: "/partials/race/allraces",
+      controller: "RacesController",
+      data: {
+        access: access.admin
+      },
     }).state("create", {
       url: "/races/create",
       templateUrl: "/partials/race/create",
       controller: "CreateRaceController",
       data: {
-        access: access.public
+        access: access.public,
+        fullscreen: false
       },
     }).state("view", {
       url: "/races/view/:id",
       templateUrl: "/partials/race/race",
       controller: "ViewRaceController",
       data: {
-        access: access.public
+        access: access.public,
+        fullscreen: false
       },
       resolve: {
         raceId: ['$stateParams',
@@ -73,7 +84,8 @@ raceModule.config(
       templateUrl: "/partials/race/race",
       controller: "EditRaceController",
       data: {
-        access: access.user
+        access: access.user,
+        fullscreen: false
       },
       resolve: {
         raceId: ['$stateParams',
@@ -87,8 +99,9 @@ raceModule.config(
       templateUrl: "/partials/race/search",
       controller: "SearchRaceController",
       data: {
-        access: access.public
-      }
+        access: access.public,
+        fullscreen: false
+      }    
     });
 
     $locationProvider.html5Mode(true);

@@ -300,7 +300,7 @@ module.exports = function(grunt) {
       options: {
         port: 3000,
         background: true,
-        debug: false,
+        debug: true,
       },
       development: {
         options: {
@@ -319,6 +319,10 @@ module.exports = function(grunt) {
           node_env: "test"
         }
       }
+    },
+
+    "node-inspector": {
+      dev: {}
     },
 
     /********************************** checkcode ***************************************************/
@@ -581,6 +585,7 @@ module.exports = function(grunt) {
       "replace:development",
       "autoprefixer",
       "express:development",
+      "node-inspector:dev",
       "watch"
     ]);
 

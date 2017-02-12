@@ -1,10 +1,11 @@
 "use strict";
 
-angular.module("nextrunApp.race").controller("MyRacesController",
+angular.module("nextrunApp.race").controller("RacesController",
 	function(
 		$scope,
 		$state,
 		$modal,
+		$stateParams,
 		RaceService,
 		notificationService,
 		MetaService,
@@ -16,7 +17,16 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 		$scope.races = [];
 
 		$scope.init = function() {
-			RaceService.find($scope.currentPage).then(
+
+			var promise;
+
+			if($stateParams.id) {
+				promise = RaceService.find($stateParams.id, $scope.currentPage);
+			} else {
+				promise = RaceService.findAll($scope.currentPage);
+			}
+			
+			promise.then(
 				function(response) {
 					if (response.data && response.data.items && response.data.items.length > 0) {
 						$scope.races = response.data.items;
@@ -34,12 +44,22 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 			$state.go("create");
 		};
 
-		$scope.publish = function(race, value) {
-			RaceService.publish(race._id, value).then(
-				function() {
-					notificationService.success(gettextCatalog.getString("Votre manifestation a bien été publiée"));
-					$scope.init();
-				});
+		$scope.publish = function(race) {
+
+			if (!race.published) {
+				RaceService.unpublish(race._id).then(
+					function() {
+						notificationService.success(gettextCatalog.getString("Votre manifestation a bien été retiré	"));
+						$scope.init();
+					});
+			} else {
+				RaceService.publish(race._id).then(
+					function() {
+						notificationService.success(gettextCatalog.getString("Votre manifestation a bien été publiée"));
+						$scope.init();
+					});
+			}
+
 		};
 
 		$scope.openDeleteConfirmation = function(race) {

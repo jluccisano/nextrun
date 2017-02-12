@@ -24,14 +24,16 @@ homeModule.config(
             templateUrl: "/partials/home/home",
             controller: "HomeController",
             data: {
-                access: access.public
+                access: access.public,
+                fullscreen: false
             }
         }).state("contacts", {
             url: "/contacts",
             templateUrl: "/partials/home/contacts",
             controller: "ContactsController",
             data: {
-                access: access.admin
+                access: access.admin,
+                fullscreen: false
             }
         });
 

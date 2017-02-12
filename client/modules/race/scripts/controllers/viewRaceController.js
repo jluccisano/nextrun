@@ -11,6 +11,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         RouteService,
         GpxService,
         MetaService,
+        RouteUtilsService,
         RouteHelperService,
         raceId) {
 
@@ -30,12 +31,17 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                 promises.push(RouteService.retrieve(routeId));
             });
 
-            $q.all(promises).then(function(routes){
-                angular.forEach(routes, function(response){
-                    $scope.routesViewModel.push(RouteBuilderService.createRouteViewModel(response.data, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig()), false);
+            $q.all(promises).then(function(routes) {
+                angular.forEach(routes, function(response) {
+                    var routeViewModel = RouteBuilderService.createRouteViewModel(response.data, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig(), false);
+                    routeViewModel.setCenter(RouteUtilsService.getCenter($scope.race));
+                    $scope.routesViewModel.push(routeViewModel);
                 });
-                $scope.selection = $scope.routesViewModel[0].getType() + 0;
-                $scope.routesViewModel[0].setVisible(true);
+
+                if ($scope.routesViewModel.length > 0) {
+                    $scope.selection = $scope.routesViewModel[0].getType() + 0;
+                    $scope.routesViewModel[0].setVisible(true);
+                }
             });
         }
 
@@ -58,7 +64,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                 controller: "FeedbackModalController",
                 resolve: {
                     raceId: function() {
-                        return raceId;
+                        return $scope.raceId;
                     }
                 }
             });

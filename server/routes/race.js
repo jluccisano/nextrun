@@ -1,4 +1,5 @@
 var raceController = require("../controllers/raceController"),
+    raceController = require("../controllers/raceController"),
     routeController = require("../controllers/routeController"),
     routerService = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
@@ -6,43 +7,49 @@ var raceController = require("../controllers/raceController"),
 var routes = [{
     path: "/:id",
     httpMethod: "GET",
-    middleware: [raceController.find],
+    middleware: [raceController.getRace],
     accessLevel: accessLevels.public
 }, {
     path: "/create",
     httpMethod: "POST",
-    middleware: [raceController.create],
+    middleware: [raceController.createRace],
     accessLevel: accessLevels.user
 }, {
-    path: "/find",
+    path: "/:id/find/page/(:page)?",
     httpMethod: "GET",
-    middleware: [raceController.findByUser],
+    middleware: [raceController.getRacesByUser],
     accessLevel: accessLevels.user
 }, {
     path: "/find/page/(:page)?",
     httpMethod: "GET",
-    middleware: [raceController.findByUser],
+    middleware: [raceController.getRaces],
     accessLevel: accessLevels.user
 }, {
     path: "/:id/update",
     httpMethod: "PUT",
-    middleware: [raceController.update],
+    middleware: [raceController.updateRace],
     accessLevel: accessLevels.user
 }, {
     path: "/:id/route/:routeId/update",
     httpMethod: "PUT",
-    middleware: [raceController.updateRoute],
+    middleware: [raceController.addRouteRef],
     accessLevel: accessLevels.user
 }, {
-    path: "/:id/publish/:value",
+    path: "/:id/publish",
     httpMethod: "PUT",
-    middleware: [raceController.publish],
+    middleware: [raceController.publishRace],
+    accessLevel: accessLevels.user
+
+}, {
+    path: "/:id/unpublish",
+    httpMethod: "PUT",
+    middleware: [raceController.unpublishRace],
     accessLevel: accessLevels.user
 
 }, {
     path: "/:id/delete",
     httpMethod: "DELETE",
-    middleware: [raceController.delete],
+    middleware: [raceController.deleteRace],
     accessLevel: accessLevels.user
 }, {
     path: "/search",
@@ -55,20 +62,20 @@ var routes = [{
     middleware: [raceController.autocomplete],
     accessLevel: accessLevels.public
 }, {
-    path: "/uploadImage",
+    path: "/:id/upload",
     httpMethod: "POST",
-    middleware: [raceController.uploadImage],
+    middleware: [raceController.deletePicture, raceController.uploadPicture],
     accessLevel: accessLevels.public
 }, {
-    path: "/",
-    httpMethod: "GET",
-    middleware: [raceController.findAll],
+    path: "/:id/download",
+    httpMethod: "POST",
+    middleware: [raceController.downloadPicture],
     accessLevel: accessLevels.public
 }];
 
 module.exports = function(app, express) {
     var router = express.Router();
-    router.param("id", raceController.load);
-    router.param("routeId", routeController.load);
+    router.param("id", raceController.loadRace);
+    router.param("routeId", routeController.loadRoute);
     routerService.register(app, router, routes, "/api/races");
 };

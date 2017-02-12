@@ -3,7 +3,10 @@
 angular.module("nextrunApp.commons").factory("RouteService",
     function(HttpUtils) {
         return {
-            find: function(page) {
+            find: function(id, page) {
+                return HttpUtils.get("/api/routes/" + id + "/find/page/" + page);
+            },
+            findAll: function(page) {
                 return HttpUtils.get("/api/routes/find/page/" + page);
             },
             delete: function(id) {
@@ -13,7 +16,7 @@ angular.module("nextrunApp.commons").factory("RouteService",
                 return HttpUtils.get("/api/routes/" + id);
             },
             saveOrUpdate: function(data) {
-                if(data._id) {
+                if (data._id) {
                     return HttpUtils.put("/api/routes/" + data._id + "/update", data);
                 } else {
                     return HttpUtils.post("/api/routes/new", data);

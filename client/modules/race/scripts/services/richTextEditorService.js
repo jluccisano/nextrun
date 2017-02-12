@@ -5,7 +5,7 @@ angular.module("nextrunApp.race").factory("RichTextEditorService",
         return {
             openRichTextEditorModal: function(content) {
                 var modalInstance = $modal.open({
-                    templateUrl: "partials/race/richTextEditorModal",
+                    templateUrl: "partials/race/templates/richTextEditorModal",
                     controller: "RichTextEditorModalController",
                     size: "lg",
                     resolve: {

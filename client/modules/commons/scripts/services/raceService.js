@@ -6,7 +6,10 @@ angular.module("nextrunApp.commons").factory("RaceService",
             create: function(data) {
                 return HttpUtils.post("/api/races/create", data);
             },
-            find: function(page) {
+            find: function(id, page) {
+                return HttpUtils.get("/api/races/"+ id +"/find/page/" + page);
+            },
+            findAll: function(page) {
                 return HttpUtils.get("/api/races/find/page/" + page);
             },
             update: function(id, data) {
@@ -21,16 +24,16 @@ angular.module("nextrunApp.commons").factory("RaceService",
             retrieve: function(id) {
                 return HttpUtils.get("/api/races/" + id);
             },
-            publish: function(id, value) {
-                return HttpUtils.put("/api/races/" + id + "/publish/" + value, undefined);
+            publish: function(id) {
+                return HttpUtils.put("/api/races/" + id + "/publish/", undefined);
+            },
+            unpublish: function(id) {
+                return HttpUtils.put("/api/races/" + id + "/unpublish/", undefined);
             },
             search: function(criteria) {
                 return HttpUtils.post("/api/races/search/", {
                     "criteria": criteria
                 });
-            },
-            findAll: function() {
-                return HttpUtils.get("/api/races/");
             },
             suggest: function(criteria) {
                 return HttpUtils.post("/api/races/autocomplete/", {
@@ -42,8 +45,12 @@ angular.module("nextrunApp.commons").factory("RaceService",
                     "text": text
                 });
             },
-            uploadImage: function() {
-                return HttpUtils.get("/api/races/uploadImage");
+            uploadImage: function(id, file) {
+                return HttpUtils.post("/api/races/" + id + "/upload/", file);
             },
+            download: function(id) {
+                return HttpUtils.post("/api/races/" + id + "/download/");
+            }
+
         };
     });

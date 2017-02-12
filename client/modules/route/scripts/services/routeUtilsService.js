@@ -57,15 +57,15 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsAp
 				longitude: 2.43896484375,
 			};
 
-			if (angular.isDefined(race.pin)) {
-				if (angular.isDefined(race.pin.location)) {
+			if (angular.isDefined(race.place)) {
+				if (angular.isDefined(race.place.location)) {
 					center = {
-						latitude: race.pin.location.lat,
-						longitude: race.pin.location.lon
+						latitude: race.place.location.latitude,
+						longitude: race.place.location.longitude
 					};
 				} else {
 					//set the department of location
-					center = race.pin.department.center;
+					center = race.place.department.center;
 				}
 			}
 			return center;

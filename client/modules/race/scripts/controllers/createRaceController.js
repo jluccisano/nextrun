@@ -31,13 +31,9 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		$scope.types = RaceTypeEnum.getValues();
 
 		$scope.submit = function() {
-			var data = {
-				race: $scope.race
-			};
-
 			$cookieStore.put('race', $scope.race);
 
-			RaceService.create(data).then(function(response) {
+			RaceService.create($scope.race).then(function(response) {
 				notificationService.success(gettextCatalog.getString("La manifestation a bien été créée"));
 				$scope.openRedirectionModal(response.data.id);
 				$cookieStore.remove("race");

@@ -1,7 +1,13 @@
 .search-race {
 
+    padding-top: 60px;
+
     input[type="range"] {
         width: 200px;
+    }
+
+    .checkbox, .radio {
+        padding-left: 20px;
     }
 
     google-map {

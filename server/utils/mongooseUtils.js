@@ -45,3 +45,15 @@ exports.delete = function(req, res, id, model) {
         }
     });
 };
+
+exports.findByCriteria = function(req, res, id, model, options) {
+    model.findByCriteria(options, function(error, items) {
+        if (error) {
+            errorUtils.handleError(res, error);
+        } else {
+            res.status(200).json({
+                items: items
+            });
+        }
+    });
+};

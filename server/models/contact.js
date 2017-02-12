@@ -1,4 +1,5 @@
 var mongoose = require("mongoose"),
+    genericDao = require("../dao/genericDao"),
     Schema = mongoose.Schema;
 
 var ContactSchema = new Schema({
@@ -46,41 +47,6 @@ ContactSchema.pre("save", function(next) {
     next();
 });
 
-ContactSchema.statics = {
-
-    /**
-     * Find contacts by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     */
-
-    load: function(id, cb) {
-        this.findOne({
-            _id: id
-        }).exec(cb);
-    },
-
-    findByCriteria: function(options, cb) {
-
-        var criteria = options.criteria || {};
-        this.find(criteria, {})
-            .limit(options.perPage)
-            .skip(options.perPage * options.page)
-            .exec(cb);
-    },
-
-    /**
-     * Remove user by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     */
-    destroy: function(id, cb) {
-        this.remove({
-            _id: id
-        }).exec(cb);
-    }
-};
+ContactSchema.statics = genericDao;
 
 mongoose.model("Contact", ContactSchema);

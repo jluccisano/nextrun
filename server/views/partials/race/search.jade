@@ -12,23 +12,23 @@ div(class="container search-race")
 						input(type="text" class="form-control" ng-model="dateRanges[4].endDate" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
 
 				div(class="form-group")
-					button(type="button" class="btn btn-default" ng-change="search()" ng-model="criteria.type" data-html="1" ng-options="type.name as type.name for type in listOfTypes" placeholder="{{'Sélectionner...' | translate}}" bs-select)
+					button(type="button" class="btn btn-default" ng-change="onChangeType()" ng-model="criteria.type" data-html="1" ng-options="type.name as type.name for type in listOfTypes" placeholder="{{'Sélectionner...' | translate}}" bs-select)
 						span(class="caret")
-
-				label(class="checkbox" ng-repeat="distance in listOfTypes | distanceTypeFilter:criteria.type")
-					input(type="checkbox" checklist-model="criteria.distances" checklist-change="search()" checklist-value="distance.name") 
-					| {{distance.name}}
-
-				span {{criteria}}
-
+				div(class="form-group")
+					label(class="checkbox" for="{{distance.name}}" ng-repeat="distance in listOfTypes | distanceTypeFilter:criteria.type")
+						input(type="checkbox" ng-model="distanceSelection[distance.name]" ng-change="onChangeDistance()" id="{{distance.name}}") 
+						| {{distance.name}}
 		div(class="col-md-10")
 			div(class="input-group")
-				input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location")
+				input(type="text" class="form-control"  placeholder="{{'Entrer un lieu' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location")
 				span(class="input-group-addon")
-					form(oninput="radiusValue.value=radius.value")
-						span Elargir à
-						input(type="range" id="radius" ng-model="criteria.radius" name="radius" min="20" max="100" step="20")
-						output(name="radiusValue" for="radius")
+					span  Elargir à   
+					input(type="radio" value="30" ng-change="search()" ng-model="criteria.radius" ng-disabled="!criteria.location.locality")
+					span  30km 
+					input(type="radio" value="60" ng-change="search()" ng-model="criteria.radius" ng-disabled="!criteria.location.locality")
+					span  60km 
+					input(type="radio" value="120" ng-change="search()" ng-model="criteria.radius" ng-disabled="!criteria.location.locality")
+					span  120km 
 			google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true" draggable="true" mark-click="true" events="map.events")
 				marker(ng-repeat="marker in map.markers" idkey="marker.id" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
 					windows(show="'showWindow'" closeClick="'closeClick'" data-ng-cloak)

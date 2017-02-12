@@ -1,4 +1,5 @@
 var mongoose = require("mongoose"),
+    genericDao = require("../dao/genericDao"),
     Schema = mongoose.Schema;
 
 var PointSchema = new Schema({
@@ -46,45 +47,6 @@ RouteSchema.pre("save", function(next, req, callback) {
     next(callback);
 });
 
-RouteSchema.statics = {
-
-    /**
-     * Find routes by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     */
-    load: function(id, cb) {
-        this.findOne({
-            _id: id
-        }).exec(cb);
-    },
-
-    /**
-     * Remove route by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     */
-    destroy: function(id, cb) {
-        this.remove({
-            _id: id
-        }).exec(cb);
-    },
-
-    /**
-     *
-     *
-     */
-    findByCriteria: function(options, cb) {
-        var criteria = options.criteria || {};
-        this.find(criteria, {})
-            .limit(options.perPage)
-            .skip(options.perPage * options.page)
-            .exec(cb);
-    }
-
-
-};
+RouteSchema.statics = genericDao;
 
 mongoose.model("Route", RouteSchema);

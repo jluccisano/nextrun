@@ -9,7 +9,7 @@ module.exports = function(passport, config) {
 
     // serialize sessions
     passport.serializeUser(function(user, done) {
-        done(null, user.id);
+        done(null, user._id);
     });
 
     passport.deserializeUser(function(id, done) {
@@ -33,12 +33,12 @@ module.exports = function(passport, config) {
                     return done(err);
                 }
                 if (!user) {
-                    return done(null, false, {
+                    return done(true, false, {
                         message: ["error.invalidEmailOrPassword"]
                     });
                 }
                 if (!user.authenticate(password)) {
-                    return done(null, false, {
+                    return done(true, false, {
                         message: ["error.invalidEmailOrPassword"]
                     });
                 }

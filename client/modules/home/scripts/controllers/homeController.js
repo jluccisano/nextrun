@@ -14,22 +14,21 @@ angular.module("nextrunApp.home").controller("HomeController",
         MetaService,
         gettextCatalog) {
 
+        $scope.criteria = {};
+
         var initContact = function() {
             $scope.contact = {
                 type: "Organisateur"
             };
         };
 
-        var initAutocomplete = function() {
-            $scope.autocomplete = {
-                options: {
-                    country: "fr",
-                    types: "(cities)"
-                }
-            };
+        $scope.autocomplete = {
+            options: {
+                country: "fr",
+                types: "(regions)"
+            }
         };
 
-        initAutocomplete();
         initContact();
 
         $scope.listOfTypes = RaceTypeEnum.getValues();
@@ -45,11 +44,20 @@ angular.module("nextrunApp.home").controller("HomeController",
             $state.go("races");
         };
 
+        $scope.$watch("criteria.location", function(newValue, oldValue) {
+            if (newValue === oldValue) {
+                return;
+            }
+            $scope.submitSearchWithCriteria();
+        }, true);
+
+
         $scope.submitSearchWithCriteria = function() {
-            $state.go("search");
             setTimeout(function() {
                 SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria);
+                $state.go("search");
             }, 1000);
+
         };
 
         MetaService.ready("Accueil");

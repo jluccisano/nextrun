@@ -12,7 +12,7 @@ angular.module("nextrunApp.commons").factory("SharedCriteriaService",
         };
 
         sharedService.broadcastCriteriaItem = function() {
-            $rootScope.$broadcast("handleCriteriaBroadcast");
+            $rootScope.$broadcast("handleCriteriaBroadcast", this.criteria);
         };
 
         return sharedService;

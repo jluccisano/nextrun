@@ -19,7 +19,8 @@ routeModule.config(
 			templateUrl: "/partials/route/mapEditor",
 			controller: "EditRouteController",
 			data: {
-				access: access.user
+				access: access.user,
+				fullscreen: true
 			},
 			resolve: {
 				race: function() {
@@ -31,7 +32,8 @@ routeModule.config(
 			templateUrl: "/partials/route/mapEditor",
 			controller: "EditRouteController",
 			data: {
-				access: access.user
+				access: access.user,
+				fullscreen: true
 			},
 			resolve: {
 				race: function($stateParams, RaceService) {
@@ -43,7 +45,8 @@ routeModule.config(
 			templateUrl: "/partials/route/mapEditor",
 			controller: "EditRouteController",
 			data: {
-				access: access.user
+				access: access.user,
+				fullscreen: true
 			},
 			resolve: {
 				race: function() {
@@ -55,7 +58,8 @@ routeModule.config(
 			templateUrl: "/partials/route/mapEditor",
 			controller: "EditRouteController",
 			data: {
-				access: access.user
+				access: access.user,
+				fullscreen: true
 			},
 			resolve: {
 				race: function($stateParams, RaceService) {
@@ -63,11 +67,20 @@ routeModule.config(
 				}
 			}
 		}).state("routes", {
-			url: "/users/routes",
+			url: "/users/:id/routes",
 			templateUrl: "/partials/route/routes",
 			controller: "RoutesController",
 			data: {
-				access: access.user
+				access: access.user,
+				fullscreen: false
+			}
+		}).state("allroutes", {
+			url: "/routes",
+			templateUrl: "/partials/route/allroutes",
+			controller: "RoutesController",
+			data: {
+				access: access.user,
+				fullscreen: false
 			}
 		});
 

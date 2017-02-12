@@ -1,38 +1,18 @@
 div(class="container search")
 	div(class="row")
 		div(class="col-lg-6 col-lg-offset-3")
-			div(class="col-lg-4")
-				hr
-			div(class="col-lg-3")
-				p(translate) Par critères
-			div(class="col-lg-4")
-				hr
-	div(class="row")
-		div(class="col-lg-6 col-lg-offset-3")
 			form(role="form" name="searchForm" novalidate)
 				div(class="row")
 					div(class="col-lg-8")
-						div(class="form-group" ng-class="{'has-error': !searchForm.location.$pristine && searchForm.location.$error.validLocation && searchForm.location.$invalid, 'has-success': !searchForm.location.$pristine  && !searchForm.location.$error.validLocation}")
-							input(class="form-control" name="location" id="location" placeholder="{{'Tapez une ville' | translate}}" ng-model="criteria.autocomplete.location.pin.name" nr-has-location gmaps-autocomplete options="autocomplete.options" details="criteria.autocomplete.location.pin")
+						div(class="form-group" ng-class="{'has-error': !searchForm.location.$pristine && searchForm.location.$error.validLocation && searchForm.location.$invalid, 'has-success': !searchForm.location.$pristine  && !searchForm.location.$error.validLocation}")							
+							input(type="text" class="form-control" name="location"  placeholder="{{'Entrer un lieu' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location")
+
 							span(class="help-block" ng-show="searchForm.location.$dirty && searchForm.location.$error.validLocation" translate)  Veuillez saisir une ville correcte
-						div(class="row")
-							div(class="col-lg-8")
-								div(class="checkbox")
-									label 
-										input(type="checkbox" ng-model="criteria.searchAround")
-										span(translate) Elargir aux alentours
-							div(class="col-lg-4")
-								div(class="form-group")
-									select(class="form-control" ng-model="criteria.distance" ng-change="onChangeDistance()")
-										option(value="15" translate) 15km
-										option(value="30" translate) 30km
-										option(value="50" translate) 50km
-										option(value="100" translate) 100km
-					div(class="col-lg-4")
+					//div(class="col-lg-4")
 						div(class="form-group")
 							button(type="button" class="btn btn-default" ng-model="criteria.types" data-html="1" data-multiple="1" max-length-html="{{'Sélectionnés' | translate}}" ng-options="type.name as type.name for type in listOfTypes" placeholder="{{'Sélectionner...' | translate}}" bs-select)
 								span(class="caret")
-				div(class="row")
+				//div(class="row")
 					div(class="col-lg-3 col-lg-offset-9")
 						div(class="form-group")
 							button(class="btn btn-primary" type="submit" ng-click="submitSearchWithCriteria()" ng-disabled="searchForm.$invalid" translate) Rechercher	

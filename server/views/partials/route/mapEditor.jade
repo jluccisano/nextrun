@@ -3,7 +3,7 @@ div(class="edit-route")
 		div(class="collapse navbar-collapse")
 			form(class="navbar-form navbar-left" role="search")
 				div(class="input-group")
-					input(type="text" class="form-control" ng-change="centerToLocation(routeViewModel, location.details)" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="map.options" details="location.details")
+					input(type="text" class="form-control" on-change="centerToLocation(routeViewModel, location.details)" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="map.options" details="location.details")
 					span(class="input-group-btn")
 						button(class="btn btn-default" type="submit")
 							span(class="glyphicon glyphicon-search")
@@ -26,23 +26,23 @@ div(class="edit-route")
 
 			//div(class="navbar-form navbar-right")
 			//	input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)")
-			form(class="navbar-form navbar-right")
-				div(class="form-group")
+			form(class="navbar-form navbar-right" name="routeForm" novalidate role="form")
+				div(class="form-group"  ng-class="{'has-error': !routeForm.name.$pristine && routeForm.name.$invalid, 'has-success': !routeForm.name.$invalid && !routeForm.name.$pristine}")
 					label(class="control-label" for="name" translate) Nom
-					input(class="form-control" id="name" name="name" type="text" ng-model="routeViewModel.data.name")
+					input(class="form-control" id="name" name="name" placeholder="{{'Nom' | translate}}" type="text" ng-model="routeViewModel.data.name" ng-required="true")
 
-				div(class="form-group")
-					label(class="control-label") {{'Type' | translate}}
-					select(class="form-control" class="form-control" ng-change="onChange(routeViewModel.data.type)" name="type" ng-model="routeViewModel.data.type" ng-options="type as gettextCatalog.getString(type) for type in types" ng-required="true")
+				div(class="form-group" ng-class="{'has-error': !routeForm.type.$pristine && routeForm.type.$invalid, 'has-success': !routeForm.type.$invalid && !routeForm.type.$pristine}")
+					label(class="control-label" for="type") {{'Type' | translate}}
+					select(class="form-control"  id="type" class="form-control" ng-change="onChange(routeViewModel.data.type)" name="type" ng-model="routeViewModel.data.type" ng-options="type as gettextCatalog.getString(type) for type in types" ng-required="true")
 						option(value="") {{'Sélectionner...' | translate}}
 				div(class="form-group")
 					div(class="btn-group" dropdown is-open="status.isopen")
-						button(type="button" class="btn btn-primary" ng-click="submit()") Enregistrer
+						button(type="button" class="btn btn-primary" ng-disabled="routeForm.$invalid" ng-click="submit()") Enregistrer
 						button(type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" dropdown-toggle)
 							span(class="caret")
 							span(class="sr-only") Split button!
 						ul(class="dropdown-menu" role="menu")
-							li
+							li(ng-class="{'disabled' : routeForm.$invalid}")
 								a(ng-click="submit()" translate) Enregistrer
 							li(class="divider")
 							li
@@ -52,6 +52,8 @@ div(class="edit-route")
 
 	include edit
 	div(class="inline-stats")
+		a(ng-click="isCollapsed = !isCollapsed")
+			span(class="hyperspan")
 		div(class="well")
 			ul(class="list-inline")
 				li(class="text-center")
@@ -74,7 +76,7 @@ div(class="edit-route")
 					strong {{routeViewModel.getMinElevation() | number:0 }} m
 					br
 					span(class="small" translate) Altitude min
-			div(class="row")
+			div(class="row" collapse="isCollapsed")
 				div(class="col-md-12")
 					highchart(ng-if="routeViewModel.isVisible()" id="{{routeViewModel.getType()}}" ng-hide="routeViewModel.getType() === 'Natation'" config="routeViewModel.getChartConfig()")
 

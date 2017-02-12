@@ -1,13 +1,13 @@
 div(class="container view-race")
   div(class="row")
     div(class="col-md-2")
-      div(class="bs-sidebar hidden-print affix" role="complementary" data-offset-top="-110" data-offset-bottom="230" bs-affix bs-scrollspy-list)
+      div(class="bs-sidebar hidden-print affix" role="complementary" data-offset-top="-110" data-offset-bottom="150" bs-affix bs-scrollspy-list)
         ul(id="menu" class="list-group")
           a(ng-class="{'active': active === 'general'}" ng-click="isCollapsed = false;active = 'general'" nr-scroll-to="general" class="list-group-item")
             h4(class="list-group-item-heading" translate) Général
           a(ng-click="isCollapsed = true" nr-scroll-to="routes" class="list-group-item")
             h4(class="list-group-item-heading" translate) Parcours
-            a(ng-class="{'active': active === (routeViewModel.getType() + $index)}" bs-scrollspy ng-click="setSelection(routeViewModel, $index);routeViewModel.setVisible(true)" ng-repeat="routeViewModel in routesViewModel" nr-scroll-to="route{{$index}}" class="list-group-item") {{routeViewModel.getType()}}
+            a(ng-class="{'active': active === (routeViewModel.getType() + $index)}" bs-scrollspy ng-click="setSelection(routeViewModel, $index);routeViewModel.setVisible(true)" ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" nr-scroll-to="route{{$index}}" class="list-group-item") {{routeViewModel.getType()}}
           a(class="list-group-item")
             h4(class="list-group-item-heading" translate) Organisation
             a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Inscription
@@ -45,7 +45,7 @@ div(class="container view-race")
                 div(class="row")
                   nr-date(edit-mode="editMode" race="race")
                   div(class="col-md-12")
-                    img(src="" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
+                    img(ng-src="data:image/jpeg;base64,{{image}}" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
                 hr
                 div(class="row")
                   div(class="col-md-12")
@@ -58,16 +58,18 @@ div(class="container view-race")
                 nr-address(edit-mode="editMode" race="race")
 
               a(ng-if="editMode" class="btn btn-link" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate) Ajouter un parcours
-              a(ng-if="editMode" class="btn btn-link" type="button" ng-click="uploadImage()" translate) Ajouter une image
-
+              //a(ng-if="editMode" class="btn btn-link" type="button" ng-click="uploadImage()" translate) Ajouter une image
+              //input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)") Ajouter une image
+              upload-button(class="btn btn-primary btn-upload" url="{{'api/races/'+race._id+'/upload'}}" param="file" accept="acceptTypes" multiple="allowMultiple" force-iframe-upload="forceIframeUpload" data="uploadData" on-upload="onUpload(files)" on-success="onGlobalSuccess(response)" on-error="onError(response)" on-complete="onComplete(response)") Fileupload
 
       div(class="bs-docs-section")
-        div(ng-repeat="routeViewModel in routesViewModel" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )
+        div(ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
               h4(class="panel-title pull-left") {{routeViewModel.getType()}}
               div(class="btn-group pull-right")
-                nr-download(ng-if="!editMode" id="content" get-data="exportGPX(routeViewModel)" class="btn btn-default btn-sm")
+                a(id="content" nr-download nr-file-name="{{routeViewModel.data.name}}" get-data="exportGPX(routeViewModel)" class="btn btn-default btn-sm")
+                  i(class="fa fa-download fa-3")
                 a(ng-if="editMode" ng-click="editRoute(routeViewModel)" class="btn btn-default btn-sm")
                   i(class="fa fa-pencil-square-o")
                 a(ng-if="editMode" ng-click="openDeleteConfirmation(routeViewModel)" class="btn btn-default btn-sm")

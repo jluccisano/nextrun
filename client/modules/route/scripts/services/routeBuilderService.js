@@ -16,7 +16,7 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 			createRouteViewModel: function(route, chartConfig, gmapsConfig, showSegment) {
 				var routeDataModel;
 
-				if (angular.isUndefined(route)) {
+				if (!angular.isObject(route)) {
 					routeDataModel = {
 						type: "Vélo", //TO be defined
 						segments: [],
@@ -27,7 +27,6 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 				}
 
 				var routeViewModel = new routeBuilder.Route(routeDataModel, angular.copy(chartConfig), angular.copy(gmapsConfig), showSegment);
-				routeViewModel.setCenter(RouteUtilsService.getCenter({})); //TO be defined
 
 				return routeViewModel;
 

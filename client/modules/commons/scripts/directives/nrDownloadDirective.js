@@ -2,19 +2,19 @@
 
 angular.module("nextrunApp.commons").directive("nrDownload", function($compile) {
     return {
-        restrict: "E",
+        restrict: "A",
         replace: true,
         scope: {
-            getUrlData: "&getData"
+            getUrlData: "&getData",
+            nrFileName: "@nrFileName"
         },
-        link: function(scope, elm) {
-            var url = URL.createObjectURL(scope.getUrlData());
-            elm.append($compile(
-                "<a download='export.gpx'" +
-                "href='" + url + "'>" +
-                "<i class='fa fa-download fa-3'></i>" +
-                "</a>"
-            )(scope));
+        link: function($scope, $element, $attrs) {
+            $element.bind('click', function(event) {
+                var name = $scope.nrFileName;
+                var href = URL.createObjectURL($scope.getUrlData());
+                $element.attr("href", href);
+                $element.attr("download", name + ".gpx");
+            });
         }
     };
 });

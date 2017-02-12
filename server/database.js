@@ -1,6 +1,6 @@
 var logger = require("./logger");
 
-module.exports = function(app, mongoose, GridFs) {
+module.exports = function(app, mongoose) {
 
     var connect = function() {
 
@@ -26,9 +26,4 @@ module.exports = function(app, mongoose, GridFs) {
     mongoose.connection.on('disconnected', function() {
         connect();
     });
-
-    mongoose.connection.once('open', function() {
-        var gfs = GridFs(mongoose.connection.db, mongoose.mongo);
-    });
-
 };

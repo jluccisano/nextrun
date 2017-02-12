@@ -24,28 +24,32 @@ authModule.config(
             templateUrl: "/partials/auth/login",
             controller: "LoginController",
             data: {
-                access: access.public
+                access: access.public,
+                fullscreen: false
             }
         }).state("signup", {
             url: "/signup",
             templateUrl: "/partials/auth/signup",
             controller: "SignupController",
             data: {
-                access: access.public
+                access: access.public,
+                fullscreen: false
             }
         }).state("settings", {
             url: "/users/settings",
             templateUrl: "/partials/auth/settings",
             controller: "SettingsController",
             data: {
-                access: access.user
+                access: access.user,
+                fullscreen: false
             }
         }).state("users", {
             url: "/users",
             templateUrl: "/partials/auth/users",
             controller: "UsersController",
             data: {
-                access: access.admin
+                access: access.admin,
+                fullscreen: false
             }
         });
 

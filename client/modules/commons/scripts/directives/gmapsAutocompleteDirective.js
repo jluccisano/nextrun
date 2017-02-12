@@ -25,7 +25,7 @@
  *    }
  **/
 angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
-  function(GmapsApiService,DepartmentEnum) {
+  function(GmapsApiService,DepartmentEnum,RegionEnum) {
 
     return {
       restrict: "A",
@@ -91,9 +91,13 @@ angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
 
         scope.getDetails = function(result) {
 
-          var place = {};
+          var place = {
+            locality: false
+          };
+
           var country;
           var departmentCode;
+          var regionName;
 
           if ("undefined" !== typeof result.name) {
             place.name = result.name;
@@ -111,8 +115,16 @@ angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
 
               angular.forEach(component.types, function(type) {
 
+                if ("locality" === type) {
+                  place.locality = true;
+                }
+
                 if ("administrative_area_level_2" === type) {
                   departmentCode = component.short_name;
+                }
+
+                if ("administrative_area_level_1" === type) {
+                  regionName = component.short_name;
                 }
 
                 if ("country" === type) {
@@ -122,12 +134,18 @@ angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
               });
             });
 
-            if ("undefined" !== typeof country && "FR" === country) {
+            if (country && "FR" === country) {
 
-              if ("undefined" !== typeof departmentCode) {
+              if (departmentCode) {
 
                 place.department = DepartmentEnum.getDepartmentByCode(departmentCode);
               }
+
+              if (regionName) {
+
+                place.region = RegionEnum.getRegionByName(regionName);
+              }
+
             }
 
           }

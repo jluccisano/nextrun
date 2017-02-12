@@ -12,7 +12,8 @@ var nextrunApp = angular.module("nextrunApp", [
   "nextrunApp.home",
   "ezfb",
   "jlareau.pnotify",
-  "services.config"
+  "services.config",
+  "ct.ui.router.extras"
 ]);
 
 nextrunApp.config(
@@ -23,7 +24,9 @@ nextrunApp.config(
     $urlRouterProvider,
     $httpProvider,
     configuration,
-    ezfbProvider) {
+    ezfbProvider,
+    cfpLoadingBarProvider,
+    notificationServiceProvider) {
 
     var access = routingConfig.accessLevels;
 
@@ -32,14 +35,16 @@ nextrunApp.config(
       templateUrl: "/partials/main/credits",
       controller: "CreditController",
       data: {
-        access: access.public
+        access: access.public,
+        fullscreen: false
       }
     }).state("about", {
       url: "/about",
       templateUrl: "/partials/main/about",
       controller: "AboutController",
       data: {
-        access: access.public
+        access: access.public,
+        fullscreen: false
       }
     });
 
@@ -48,7 +53,7 @@ nextrunApp.config(
     $urlRouterProvider.otherwise('/');
 
     if (configuration.debugEnabled === "false") {
-        $logProvider.debugEnabled(false);
+      $logProvider.debugEnabled(false);
     }
 
     $httpProvider.interceptors.push("ErrorHandlerInterceptor");
@@ -58,6 +63,21 @@ nextrunApp.config(
     });
 
     ezfbProvider.setLocale("fr_FR");
+
+    cfpLoadingBarProvider.includeSpinner = true;
+
+    notificationServiceProvider.setDefaults({
+      history: false,
+      delay: 3000,
+      closer: false,
+      closer_hover: false
+    }).setDefaultStack("bottom_right").setStack('bottom_right', 'stack-bottomright', {
+      dir1: 'up',
+      dir2: 'left',
+      firstpos1: 25,
+      firstpos2: 25
+    });
+
   });
 
 nextrunApp.run(function(
@@ -65,6 +85,7 @@ nextrunApp.run(function(
   $state,
   $anchorScroll,
   $cookieStore,
+  $previousState,
   SharedMetaService,
   AuthService,
   MetaService,
@@ -75,12 +96,19 @@ nextrunApp.run(function(
 
     MetaService.loading();
 
+    if (angular.isDefined(toState.data.fullscreen)) {
+      $rootScope.fullscreen = toState.data.fullscreen;
+    }
+
+    $previousState.memo("previousState");
+
     if (!AuthService.authorize(toState.data.access)) {
       event.preventDefault();
       if (AuthService.isLoggedIn()) {
         $state.go("home");
       } else {
         $cookieStore.remove("user");
+        //fixme use previous state if possible
         AuthService.saveAttemptUrl(toState);
         $state.go("login");
       }

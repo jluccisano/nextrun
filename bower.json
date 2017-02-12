@@ -25,7 +25,9 @@
     "angular-bootstrap-switch": "~0.3.0",
     "angular-easyfb": "~1.2.1",
     "angular-pnotify": "~0.0.6",
-    "angular-ui-router": "~0.2.13"
+    "angular-ui-router": "~0.2.13",
+    "angular-upload": "~1.0.11",
+    "ui-router-extras": "~0.0.11"
   },
   "resolutions": {
     "angular": "~1.2.26",

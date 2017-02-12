@@ -1,6 +1,8 @@
 var mongoose = require("mongoose"),
     Schema = mongoose.Schema,
+    genericDao = require("../dao/genericDao"),
     crypto = require("crypto"),
+    userRoles = require("../../client/routingConfig").userRoles,
     authTypes = ["facebook"];
 
 var UserSchema = new Schema({
@@ -118,46 +120,8 @@ UserSchema.pre("save", function(next) {
 /**
  * Methods
  */
+UserSchema.statics = genericDao;
 
-UserSchema.statics = {
-
-    /**
-     * Find user by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     */
-
-    load: function(id, cb) {
-        this.findOne({
-            _id: id
-        }).exec(cb);
-    },
-
-    findByCriteria: function(options, cb) {
-
-        var criteria = options.criteria || {};
-        this.find(criteria, {
-            hashedPassword: 0,
-            salt: 0
-        })
-            .limit(options.perPage)
-            .skip(options.perPage * options.page)
-            .exec(cb);
-    },
-
-    /**
-     * Remove user by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     */
-    destroy: function(id, cb) {
-        this.remove({
-            _id: id
-        }).exec(cb);
-    }
-};
 
 UserSchema.methods = {
 

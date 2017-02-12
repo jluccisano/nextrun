@@ -5,6 +5,7 @@ angular.module("nextrunApp.route").controller("RoutesController",
 		$scope,
 		$state,
 		$modal,
+		$stateParams,
 		RouteService,
 		notificationService,
 		MetaService,
@@ -16,7 +17,16 @@ angular.module("nextrunApp.route").controller("RoutesController",
 		$scope.routes = [];
 
 		$scope.init = function() {
-			RouteService.find($scope.currentPage).then(function(response) {
+
+			var promise;
+
+			if($stateParams.id) {
+				promise = RouteService.find($stateParams.id, $scope.currentPage);
+			} else {
+				promise = RouteService.findAll($scope.currentPage);
+			}
+			
+			promise.then(function(response) {
 				if (response.data && response.data.items && response.data.items.length > 0) {
 					$scope.routes = response.data.items;
 					$scope.totalItems = $scope.routes.length;

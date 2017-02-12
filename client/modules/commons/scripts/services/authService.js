@@ -47,8 +47,8 @@ angular.module("nextrunApp.commons").factory("AuthService",
             },
             register: function(user) {
                 var promise = HttpUtils.post("/api/users/signup", user);
-                promise.then(function(user) {
-                    changeUser(user);
+                promise.then(function(response) {
+                    changeUser(response.data);
                 });
                 return promise;
             },

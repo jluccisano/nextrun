@@ -5,6 +5,7 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         $scope,
         $stateParams,
         $state,
+        $previousState,
         RouteBuilderService,
         RouteService,
         GpxService,
@@ -18,6 +19,8 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         RaceService,
         AuthService,
         RouteTypeEnum) {
+
+        $scope.isCollapsed = false;
 
         $scope.location = {
             details: {},
@@ -59,6 +62,7 @@ angular.module("nextrunApp.route").controller("EditRouteController",
                     $scope.route = response.data;
                     angular.copy($scope.route, $scope.tmpRoute);
                     $scope.createRoute();
+                    $scope.isCollapsed = true;
                 }).
                 finally(function() {
                     MetaService.ready("Editer un parcours");
@@ -70,6 +74,7 @@ angular.module("nextrunApp.route").controller("EditRouteController",
 
         $scope.createRoute = function() {
             $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 180), RouteHelperService.getGmapsConfig(), true);
+            $scope.routeViewModel.setCenter(RouteUtilsService.getCenter($scope.race));
             $scope.routeViewModel.addClickListener($scope.onClickMap);
             $scope.routeViewModel.setVisible(true);
         };
@@ -136,6 +141,7 @@ angular.module("nextrunApp.route").controller("EditRouteController",
 
         $scope.cancel = function() {
             angular.copy($scope.tmpRoute, $scope.routeViewModel.getData());
+            $previousState.go("previousState");
         };
 
         $scope.init();

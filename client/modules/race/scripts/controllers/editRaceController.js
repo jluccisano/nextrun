@@ -48,17 +48,24 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         $scope.retrieveRoutes = function() {
             var promises = [];
             $scope.routesViewModel = [];
-            
+
             angular.forEach($scope.race.routes, function(routeId) {
                 promises.push(RouteService.retrieve(routeId));
             });
 
-            $q.all(promises).then(function(routes){
-                angular.forEach(routes, function(response){
-                    $scope.routesViewModel.push(RouteBuilderService.createRouteViewModel(response.data, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig()), false);
+            $q.all(promises).then(function(routes) {
+                angular.forEach(routes, function(response) {
+                    if (angular.isObject(response.data) && response.data._id) {
+                        var routeViewModel = RouteBuilderService.createRouteViewModel(response.data, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig(), false);
+                        routeViewModel.setCenter(RouteUtilsService.getCenter($scope.race));
+                        $scope.routesViewModel.push(routeViewModel);
+                    }
                 });
-                $scope.selection = $scope.routesViewModel[0].getType() + 0;
-                $scope.routesViewModel[0].setVisible(true);
+
+                if ($scope.routesViewModel.length > 0) {
+                    $scope.selection = $scope.routesViewModel[0].getType() + 0;
+                    $scope.routesViewModel[0].setVisible(true);
+                }
             });
         }
 
@@ -66,9 +73,15 @@ angular.module("nextrunApp.race").controller("EditRaceController",
             RaceService.retrieve($scope.raceId).then(function(response) {
                 $scope.race = response.data;
                 $scope.retrieveRoutes();
+
+                RaceService.download($scope.race._id).then(function(response) {
+                    $scope.image = response.data;
+                });
             }).finally(function() {
                 MetaService.ready($scope.race.name, $scope.generateRaceDescription());
             });
+
+
         };
 
         $scope.isLoggedIn = function() {
@@ -188,9 +201,38 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         };
 
         $scope.uploadImage = function() {
-            RaceService.uploadImage().then(function(response){
+            RaceService.uploadImage().then(function(response) {
 
             });
+        };
+
+        // App variable to show the uploaded response
+        $scope.responseData = undefined;
+
+        // Global handler for onSuccess that adds the uploaded files to the list
+        $scope.onGlobalSuccess = function(response) {
+            console.log('AppCtrl.onSuccess', response);
+            $scope.responseData = response.data;
+            //$scope.uploads = $scope.uploads.concat(response.data.files);
+        };
+
+
+        // Valid mimetypes
+        $scope.acceptTypes = 'image/*,application/pdf';
+        // Data to be sent to the server with the upload request
+        $scope.uploadData = {
+            myformdata: 'hello world'
+        };
+        $scope.onUpload = function(files) {
+            console.log('AdvancedMarkupCtrl.onUpload', files);
+        };
+        $scope.onError = function(response) {
+            console.error('AdvancedMarkupCtrl.onError', response);
+            $scope.responseData = response.data;
+        };
+        $scope.onComplete = function(response) {
+            console.log('AdvancedMarkupCtrl.onComplete', response);
+            $scope.responseData = response.data;
         };
 
         $scope.init();

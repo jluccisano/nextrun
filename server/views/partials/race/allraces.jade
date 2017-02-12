@@ -1,0 +1,36 @@
+div(class="container races")
+	h1(translate) Manifestations
+	div(class="pull-right")
+		button(class="btn btn-primary" ng-click="addNewRace()") 
+			span(class="glyphicon glyphicon-plus") 
+			span(translate)  Ajouter
+	table(class="table table-hover")
+		thead
+			tr
+				th(style="width: 40%" translate) Nom
+				th(style="width: 10%" translate) Type
+				th(style="width: 15%" translate) Type de distance
+				th(style="width: 15%" translate) Dernière mise à jour
+				th(style="width: 10%" translate) Utilisateur
+				th(style="width: 5%")
+				th(style="width: 5%")
+				th(style="width: 10%" translate) Publier
+		tbody
+			tr(ng-repeat="race in races")
+				td 
+					a(ui-sref="view({id: race._id})") {{race.name}}	
+				td {{race.type | translate}}
+				td {{race.distanceType | translate}}
+				td(ng-if="race.lastUpdate != null")  {{race.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
+				td {{race.userId}}
+				td
+					a(ui-sref="edit({id: race._id})" translate)
+						span(class="glyphicon glyphicon-edit")
+				td
+					a(ng-click="openDeleteConfirmation(race)")
+						span(class="glyphicon glyphicon-trash")
+				td
+					input(bs-switch type="checkbox" ng-model="race.published" ng-change="publish(race)" switch-on-color="success" switch-off-color="default" switch-on-text="On" switch-off-text="Off")
+	div(class="col-lg-8 col-lg-offset-4")
+		pagination(boundary-links="true" ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
+				

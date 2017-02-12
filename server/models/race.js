@@ -3,6 +3,7 @@
  */
 
 var mongoose = require("mongoose"),
+    genericDao = require("../dao/genericDao"),
     Schema = mongoose.Schema;
 
 var OptionSchema = new Schema({
@@ -22,6 +23,7 @@ var RaceSchema = new Schema({
     type: String,
     date: Date,
     creationDate: Date,
+    pictureId: Schema.Types.ObjectId,
     userId: Schema.Types.ObjectId,
     lastUpdate: Date,
     publicationDate: Date,
@@ -173,162 +175,6 @@ RaceSchema.path("userId").validate(function(userId, fn) {
 
 }, "error.unknownUser");
 
-
-RaceSchema.statics = {
-
-    autocomplete: function(text, cb) {
-
-        var pattern = new RegExp("^" + text, "i");
-
-        this.find({
-            name: {
-                $regex: pattern
-            }
-        }, {
-            name: 1,
-            id: 1
-        }).limit(8).exec(cb);
-    },
-
-    search: function(criteria, cb) {
-
-        var query = {};
-        var dateRange = {};
-        var type = {};
-        var andArray = [];
-        var location = {};
-
-        andArray.push({
-            "published": true
-        });
-
-        if (criteria.location) {
-
-            var radius = criteria.radius || 60;
-
-            console.log(criteria.location);
-
-            if (criteria.location.location.latitude && criteria.location.location.longitude) {
-                location = {
-                    "place.geo": {
-                        $near: {
-                            $geometry: {
-                                type: "Point",
-                                coordinates: [criteria.location.location.latitude, criteria.location.location.longitude]
-                            },
-                            $maxDistance: radius * 1000
-                        }
-                    }
-                };
-                andArray.push(location);
-            }
-        }
-
-        if (criteria.dateRange) {
-            dateRange = {
-                "date": {
-                    "$gte": criteria.dateRange.startDate,
-                    "$lt": criteria.dateRange.endDate
-                }
-            };
-            andArray.push(dateRange);
-        }
-
-        if (criteria.type) {
-            type = {
-                "type": criteria.type
-            };
-            andArray.push(type);
-
-            if (criteria.distances && criteria.distances.length > 0) {
-
-                var distances = {
-                    "distanceType": {
-                        $in: criteria.distances
-                    }
-                };
-                andArray.push(distances);
-            }
-        }
-
-        if (andArray.length > 0) {
-            query = {
-                $and: andArray
-            };
-        }
-
-        console.log(query);
-
-        this.find(query, {
-            routes: 0
-        }).exec(cb);
-    },
-
-    /**
-     *
-     *
-     */
-    findByCriteria: function(options, cb) {
-
-        var criteria = options.criteria || {};
-        this.find(criteria, {
-            routes: 0
-        })
-            .limit(options.perPage)
-            .skip(options.perPage * options.page)
-            .exec(cb);
-    },
-
-    /**
-     * Find races by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     */
-
-    load: function(id, cb) {
-        this.findOne({
-            _id: id
-        }).exec(cb);
-    },
-
-    /**
-     * find all
-     *
-     * @param {Function} cb
-     */
-    findAll: function(cb) {
-        this.find({
-            published: true
-        }, {
-            name: 1,
-            pin: 1
-        }).exec(cb);
-    },
-
-    /**
-     * Remove race by id
-     *
-     * @param {ObjectId} id
-     * @param {Function} cb
-     */
-    destroy: function(id, cb) {
-        this.remove({
-            _id: id
-        }).exec(cb);
-    },
-
-    /**
-     * Remove all race by user_id
-     *
-     * @param {User} user
-     * @param {Function} cb
-     */
-    destroyAllRaceOfUser: function(user, cb) {
-        this.remove({
-            userId: user._id
-        }).exec(cb);
-    }
-};
+RaceSchema.statics = genericDao;
 
 mongoose.model("Race", RaceSchema);
