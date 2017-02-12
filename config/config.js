@@ -40,5 +40,18 @@ module.exports = {
       user: "postmaster@nextrunjosephluccisano.mailgun.org",
       password: "1jo8rmgvkpe6"
     }
+  },
+  valid: {
+    db: 'mongodb://af_nextrun-valid-joseph_luccisano:nextrun2014@ds031319.mongolab.com:31319/af_nextrun-valid-joseph_luccisano',
+    root: rootPath,
+    facebook: {
+      clientID: "195803770591615",
+      clientSecret: "409c4b0d091efef8e7d03db2bce807e9",
+      callbackURL: "http://nextrun.fr/auth/facebook/callback"
+    },
+    mailgun: {
+      user: "postmaster@nextrunjosephluccisano.mailgun.org",
+      password: "1jo8rmgvkpe6"
+    }
   }
 };

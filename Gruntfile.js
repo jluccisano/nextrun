@@ -89,7 +89,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/public/js/client/app.min.js': ['tmp/public/js/client/app.js'],
-          'dist/public/js/client/routingConfig.min.js': ['tmp/public/js/client/routingConfig.js'],
+          'dist/public/js/client/routingConfig.js': ['tmp/public/js/client/routingConfig.js'],
           'dist/public/js/client/controllers.min.js': ['tmp/public/js/client/controllers.js'],
           'dist/public/js/client/directives.min.js': ['tmp/public/js/client/directives.js'],
           'dist/public/js/client/services.min.js': ['tmp/public/js/client/services.js'],
