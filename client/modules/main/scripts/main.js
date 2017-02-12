@@ -71,6 +71,7 @@ nextrunApp.run(function(
   $rootScope,
   $state,
   $anchorScroll,
+  $cookieStore,
   SharedMetaService,
   AuthService,
   notificationService,
@@ -86,6 +87,8 @@ nextrunApp.run(function(
       if (AuthService.isLoggedIn()) {
         $state.go("home");
       } else {
+        $cookieStore.remove("user");
+        AuthService.saveAttemptUrl();
         $state.go("login");
       }
 

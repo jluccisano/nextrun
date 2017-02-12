@@ -3,7 +3,7 @@
 angular.module("nextrunApp.race").directive("nrTitle", function() {
   return {
     restrict: "E",
-    templateUrl: "/partials/race/title",
+    templateUrl: "/partials/race/templates/title",
     controller: "TitleController",
     scope: {
       editMode: "=editMode",

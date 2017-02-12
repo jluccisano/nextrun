@@ -7,11 +7,10 @@
 @import '../../auth/styles/auth.scss';
 @import '../../home/styles/home.scss';
 @import '../../race/styles/race.scss';
+@import '../../route/styles/route.scss';
 @import 'header.scss';
-@import 'animations.scss';
 @import 'footer.scss';
 @import 'loader.scss';
-@import 'alert.scss';
  html, body {
     height: 100%;
     /* The html and body elements cannot have any padding or margin. */
@@ -23,9 +22,6 @@
         margin: 0 auto -60px;
         /* Pad bottom by footer height */
         padding: 0 0 60px;
-        .view-container {
-           /*padding-top: 120px;*/
-        }
     }
     
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

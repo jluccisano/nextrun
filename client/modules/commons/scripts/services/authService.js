@@ -1,6 +1,6 @@
 "use strict";
 angular.module("nextrunApp.commons").value("redirectToUrlAfterLogin", {
-    url: "/",
+    name: "home",
     params: {}
 });
 
@@ -19,7 +19,7 @@ angular.module("nextrunApp.commons").factory("AuthService",
         $cookieStore.remove("user");
 
         function changeUser(user) {
-            _.extend(currentUser, user);
+            angular.extend(currentUser, user);
         }
 
         return {
@@ -91,13 +91,13 @@ angular.module("nextrunApp.commons").factory("AuthService",
                     url: $state.current.url,
                     name: $state.current.name,
                     params: $state.params
-                }
+                };
             },
             redirectToAttemptedUrl: function() {
                 $state.go(redirectToUrlAfterLogin.name, redirectToUrlAfterLogin.params);
             },
-            accessLevels: this.accessLevels,
-            userRoles: this.userRoles,
-            user: this.currentUser
+            accessLevels: accessLevels,
+            userRoles: userRoles,
+            user: currentUser
         };
     });

@@ -6,11 +6,7 @@
 var mongoose = require("mongoose"),
     Route = mongoose.model("Route"),
     errorUtils = require("../utils/errorUtils"),
-    util = require("util"),
-    env = process.env.NODE_ENV || "development",
-    config = require("../../config/config")[env],
-    underscore = require("underscore"),
-    logger = require("../logger");
+    underscore = require("underscore");
 
 /**
  * Load By Id
@@ -29,14 +25,13 @@ exports.load = function(req, res, next, id) {
 };
 
 exports.create = function(req, res) {
-    var body = req.body;
     var userConnected = req.user;
 
     var route = new Route(req.body.data);
     route.userId = userConnected._id;
 
     route.save(function(error, route) {
-        if (err) {
+        if (error) {
             errorUtils.handleError(error);
         } else {
             return res.status(200).json({
@@ -81,9 +76,9 @@ exports.update = function(req, res) {
 exports.find = function(req, res) {
     var route = req.route;
 
-    if (!underscore.isUndefined(data)) {
+    if (!underscore.isUndefined(route)) {
         return res.status(200).json({
-            data: data
+            data: route
         });
     } else {
         return res.status(400).json({

@@ -1,5 +1,4 @@
-var logger = require("../logger"),
-    underscore = require("underscore");
+var underscore = require("underscore");
 
 exports.checkBodyParams = function(req, res, next) {
     var body = req.body;
@@ -25,7 +24,7 @@ exports.checkUserConnected = function(req, res, next) {
     }
 };
 
-exports.checkUserOwner = function(id, res, next) {
+exports.checkUserOwner = function(id, req, res, next) {
     var user = req.user;
 
     if (id.equals(user._id)) {

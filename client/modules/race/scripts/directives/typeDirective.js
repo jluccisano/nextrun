@@ -3,7 +3,7 @@
 angular.module("nextrunApp.race").directive("nrType", function() {
   return {
     restrict: "E",
-    templateUrl: "/partials/race/type",
+    templateUrl: "/partials/race/templates/type",
     controller: "TypeController",
     scope: {
       editMode: "=editMode",

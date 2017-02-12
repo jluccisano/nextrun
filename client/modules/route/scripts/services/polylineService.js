@@ -1,14 +1,14 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("PolylineService",
-	function() {
+	function(underscore) {
 
 		return {
 			createPolyline: function(route, path, editable, draggable, geodesic, visible, color, weight) {
 
 				var pathArray = [];
 
-				_.each(path, function(point) {
+				underscore.each(path, function(point) {
 
 					if (!(point instanceof google.maps.LatLng)) {
 						throw new Error("point is not instance of google.maps.Latlng");

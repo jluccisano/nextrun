@@ -58,7 +58,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.openFeedbackModal = function(raceId) {
             $scope.modalInstance = $modal.open({
-                templateUrl: "partials/race/feedbackModal",
+                templateUrl: "partials/race/templates/feedbackModal",
                 controller: "FeedbackModalController",
                 resolve: {
                     raceId: function() {

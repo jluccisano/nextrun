@@ -64,17 +64,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			}).on('pnotify.cancel', function() {
 				$state.go("myraces");
 			});
-
-			
-			/*$scope.modalInstance = $modal.open({
-				templateUrl: "partials/race/redirectionModal",
-				controller: "RedirectionModalController",
-				resolve: {
-					raceId: function() {
-						return raceId;
-					}
-				}
-			});*/
 		};
 
 		MetaService.ready("Ajouter une manifestation");

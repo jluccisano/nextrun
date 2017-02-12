@@ -3,19 +3,15 @@
 angular.module("nextrunApp.route").controller("EditRouteController",
     function(
         $scope,
-        $modalInstance,
         $timeout,
         $stateParams,
         RouteBuilderService,
         RouteService,
         GpxService,
         FileReaderService,
-        routeDataModel,
-        race,
         RouteUtilsService,
         RouteHelperService,
-        notificationService,
-        routeId) {
+        MetaService) {
 
         $scope.location = {
             details: {},
@@ -43,14 +39,33 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         $scope.route = {};
         $scope.routeViewModel = {};
 
-        $scope.init = function() {
-            $scope.route = routeDataModel;
-
-            angular.copy(routeDataModel, $scope.tmpRoute);
-
+        $scope.createRouteViewModel = function() {
             $scope.routeViewModel = new routeBuilder.Route($scope.route, RouteHelperService.getChartConfig($scope, 150), RouteHelperService.getGmapsConfig());
-            $scope.routeViewModel.setCenter(RouteUtilsService.getCenter(race));
+            $scope.routeViewModel.setCenter(RouteUtilsService.getCenter({}));
             $scope.routeViewModel.addClickListener($scope.onClickMap);
+        };
+
+        $scope.init = function() {
+
+            $scope.routeId = $stateParams.id;
+
+            if ($scope.routeId) {
+                RouteService.retrieve($scope.routeId).then(function(response) {
+
+                    $scope.route = response.data;
+
+                    angular.copy($scope.route, $scope.tmpRoute);
+
+                    $scope.createRouteViewModel();
+                }).
+                finally(function() {
+                    MetaService.ready("Editer un parcours");
+                });
+            } else {
+
+                $scope.createRouteViewModel();
+            }
+
 
             $timeout(function() {
                 $scope.routeViewModel.setVisible(true);
@@ -92,12 +107,23 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         };
 
         $scope.submit = function() {
-            $modalInstance.close($scope.routeViewModel.data);
+
+            /*var fields = {};
+            fields["routes.$"] = routeDataModel;
+
+            var query = {};
+            query = {
+                "routes._id": routeDataModel._id
+            };
+
+            $scope.update({
+                query: query,
+                fields: fields
+            });*/
         };
 
         $scope.cancel = function() {
             angular.copy($scope.tmpRoute, $scope.routeViewModel.data);
-            $modalInstance.dismiss("cancel");
         };
 
         $scope.init();

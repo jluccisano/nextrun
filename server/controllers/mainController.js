@@ -25,3 +25,16 @@ exports.partials = function(req, res) {
 
     res.render(partial);
 };
+
+exports.templates = function(req, res) {
+    var name = req.params.name;
+    var type = req.params.type;
+
+    var templates;
+
+    if (type) {
+        templates = "partials/" + type + "/templates" + name;
+    }
+
+    res.render(templates);
+};

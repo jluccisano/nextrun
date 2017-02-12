@@ -1,0 +1,73 @@
+div(class="container-fluid edit-route")
+	nav(class="navbar navbar-default" role="navigation")
+		div(class="collapse navbar-collapse")
+			form(class="navbar-form navbar-left" role="search")
+				div(class="input-group")
+					input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="map.options" details="location.details")
+					span(class="input-group-btn")
+						button(class="btn btn-default" type="button" ng-click="centerToLocation(routeViewModel, location.details)")
+							span(class="glyphicon glyphicon-search")
+			
+			ul(class="nav navbar-nav")
+				li
+					a(ng-click="undo(routeViewModel)" class="text-center")
+						i(class="fa fa-undo fa-3")
+						br
+						span(translate) Retour
+				li
+					a(ng-click="delete(routeViewModel)" class="text-center")
+						i(class="fa fa-remove fa-3")
+						br
+						span(translate) Effacer
+
+
+			form(class="navbar-form navbar-left")
+				input(bs-switch type="checkbox" ng-model="modeManu" switch-label="manu" switch-on-color="success" switch-off-color="default" switch-on-text="On" switch-off-text="Off")
+
+			//div(class="navbar-form navbar-right")
+			//	input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)")
+
+			ul(class="nav navbar-nav navbar-right")
+				div(class="btn-group" dropdown is-open="status.isopen")
+					button(type="button" class="btn btn-primary" ng-click="submit()") Enregistrer
+					button(type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" dropdown-toggle)
+						span(class="caret")
+						span(class="sr-only") Split button!
+					ul(class="dropdown-menu" role="menu")
+						li
+							a(ng-click="submit()" translate) Enregistrer
+						li(class="divider")
+						li
+							a(ng-click="import()" translate) Importer GPX
+						li
+							a(ng-click="cancel()" translate) Fermer
+
+	include edit
+	div(class="inline-stats")
+		div(class="well")
+			ul(class="list-inline")
+				li(class="text-center")
+					strong {{routeViewModel.getDistance() | number:2 }} km
+					br
+					span(class="small" translate) Distance
+				li(class="text-center")
+					strong {{routeViewModel.getAscendant() | number:0 }} m
+					br
+					span(class="small" translate) Dénivelé positif
+				li(class="text-center")
+					strong {{routeViewModel.getDescendant() | number:0 }} m
+					br
+					span(class="small" translate) Dénivelé négatif
+				li(class="text-center")
+					strong {{routeViewModel.getMaxElevation() | number:0 }} m
+					br
+					span(class="small" translate) Altitude max
+				li(class="text-center")
+					strong {{routeViewModel.getMinElevation() | number:0 }} m
+					br
+					span(class="small" translate) Altitude min
+			div(class="row")
+				div(class="col-md-12")
+					highchart(ng-if="routeViewModel.isVisible()" id="{{routeViewModel.getType()}}" ng-hide="routeViewModel.getType() === 'Natation'" config="routeViewModel.getChartConfig()")
+
+

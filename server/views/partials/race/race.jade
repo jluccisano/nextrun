@@ -68,7 +68,7 @@ div(class="container view-race")
                   i(class="fa fa-pencil-square-o")
             div(class="panel-body")
                 div(id="{{selection}}")
-                  include map
+                  include ./templates/map
                   highchart(ng-hide="routeViewModel.getType() === 'Natation'" config="routeViewModel.getChartConfig()")
                     
                   div(class="row text-center")

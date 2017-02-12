@@ -1,13 +1,13 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("GpxService",
-	function(x2js, RouteService, RouteUtilsService, RouteHelperService) {
+	function(x2js, RouteService, RouteUtilsService, RouteHelperService, underscore) {
 
 		return {
 
 			getTrkpts: function(gpxToJson) {
 
-				if (_.isNull(gpxToJson) || _.isUndefined(gpxToJson) || _.isUndefined(gpxToJson.gpx) || _.isUndefined(gpxToJson.gpx.trk) || _.isUndefined(gpxToJson.gpx.trk.trkseg) || _.isUndefined(gpxToJson.gpx.trk.trkseg.trkpt)) {
+				if (underscore.isNull(gpxToJson) || underscore.isUndefined(gpxToJson) || underscore.isUndefined(gpxToJson.gpx) || underscore.isUndefined(gpxToJson.gpx.trk) || underscore.isUndefined(gpxToJson.gpx.trk.trkseg) || underscore.isUndefined(gpxToJson.gpx.trk.trkseg.trkpt)) {
 					throw new Error("parse.gpx.error");
 				}
 
@@ -39,7 +39,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 					points: []
 				};
 
-				_.each(trkpts, function(trkpt, i) {
+				underscore.each(trkpts, function(trkpt, i) {
 
 					if (pointer === offset || i === (trkpts.length - 1)) {
 
@@ -92,9 +92,9 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 				var arrayOfTrkpt = [];
 
-				_.each(route.getSegments(), function(segment) {
+				underscore.each(route.getSegments(), function(segment) {
 
-					_.each(segment.getPoints(), function(point) {
+					underscore.each(segment.getPoints(), function(point) {
 
 						var trkpt = {
 							"_lat": point.getLatitude(),
@@ -139,7 +139,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 					var segmentsDataModel = this.splitTrkptsToSegments(trkpts);
 
-					_.each(segmentsDataModel, function(segmentDataModel) {
+					underscore.each(segmentsDataModel, function(segmentDataModel) {
 
 						//segmentDataModel.distance = RouteUtilsService.calculateDistanceOfSegment(segmentDataModel);
 

@@ -38,7 +38,7 @@ exports.handleError = function(res, error) {
     logger.error(error);
 
     return res.status(400).json({
-        message: this.errors(err.errors)
+        message: this.errors(error.errors)
     });
 };
 

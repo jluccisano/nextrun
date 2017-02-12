@@ -18,7 +18,7 @@ var routes = [
         httpMethod: "POST",
         middleware: [routeController.create],
         accessLevel: accessLevels.user
-    }, {
+    },/* {
         path: "/find",
         httpMethod: "GET",
         middleware: [routeController.findByUser],
@@ -31,14 +31,14 @@ var routes = [
     }, {
         path: "/:routeId/update",
         httpMethod: "PUT",
-        middleware: [routeController.checkAuthorization, routeController.update],
+        middleware: [routeController.update],
         accessLevel: accessLevels.user
     }, {
         path: "/:routeId/delete",
         httpMethod: "DELETE",
-        middleware: [routeController.checkAuthorization, routeController.delete],
+        middleware: [routeController.delete],
         accessLevel: accessLevels.user
-    },
+    },*/
 
 ];
 

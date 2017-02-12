@@ -1,4 +1,0 @@
-form(class="form-horizontal" role="form" name="raceForm" novalidate)
-	div(class="form-group" ng-class="{'has-error': !raceForm.name.$pristine && raceForm.name.$invalid, 'has-success': !raceForm.name.$invalid && !raceForm.name.$pristine}")
-		label(class="control-label") {{'Nom' | translate}}
-		input(class="form-control" type="text" name="name" placeholder="{{'ex: Triathlon de Paris' | translate}}" ng-model="race.name" ng-required="true")

@@ -3,7 +3,7 @@ form(role="form" name="titleForm" novalidate)
 		div(ng-if="!editMode || !edit")
 			h4(class="text-left") {{race.name}}
 		div(ng-if="editMode && edit" class="form-group" ng-class="{'has-error':!titleForm.title.$pristine && titleForm.title.$invalid, 'has-success': !titleForm.title.$invalid && !titleForm.title.$pristine}")
-			input(type="text" class="form-control" ng-model="race.name" name="title"  placeholder="Title")
+			input(type="text" class="form-control" ng-model="race.name" name="title")
 		div(ng-if="editMode && !edit" class="col-md-2")
 			button(ng-click="toggleEdit()" class="btn btn-default btn-sm")
 				i(class="fa fa-pencil-square-o")

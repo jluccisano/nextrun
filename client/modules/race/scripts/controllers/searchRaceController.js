@@ -11,7 +11,8 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         MetaService,
         gettextCatalog,
         RouteHelperService,
-        RouteBuilderService) {
+        RouteBuilderService,
+        underscore) {
 
         $scope.setRange = function(index) {
             $scope.active = index;
@@ -106,7 +107,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
                     $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
 
-                    _.each($scope.map.markers, function(marker) {
+                    underscore.each($scope.map.markers, function(marker) {
                         marker.closeClick = function() {
                             marker.showWindow = false;
                             $scope.$apply();

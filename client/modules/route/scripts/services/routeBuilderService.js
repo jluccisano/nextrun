@@ -10,7 +10,8 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 		SegmentService, 
 		ElevationService,
 		MarkerService,
-		PolylineService) {
+		PolylineService,
+		underscore) {
 		return {
 			createRoutesViewModel: function(race, chartConfig, gmapsConfig) {
 				var routesViewModel = [];
@@ -18,10 +19,10 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 				if (race) {
 					var raceType = RaceTypeEnum.getRaceTypeByName(race.type);
 
-					_.each(raceType.routes, function(routeType, index) {
+					underscore.each(raceType.routes, function(routeType, index) {
 						var currentRoute;
 
-						if (!_.isUndefined(race.routes[index])) {
+						if (!underscore.isUndefined(race.routes[index])) {
 							currentRoute = race.routes[index];
 						} else {
 							currentRoute = {
@@ -115,7 +116,7 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 							marker.icon = "client/modules/route/images/end.png";
 						}
 
-						routeViewModel.data.elevationPoints = _.difference(routeViewModel.data.elevationPoints, _.where(routeViewModel.data.elevationPoints, {
+						routeViewModel.data.elevationPoints = underscore.difference(routeViewModel.data.elevationPoints, underscore.where(routeViewModel.data.elevationPoints, {
 							"segmentId": lastSegment.getId()
 						}));
 
@@ -131,7 +132,7 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 
 				var markers = [];
 
-				_.each(races, function(race) {
+				underscore.each(races, function(race) {
 
 					var marker;
 

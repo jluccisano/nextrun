@@ -19,6 +19,11 @@ var routes = [
         httpMethod: "GET",
         middleware: [mainController.partials],
         accessLevel: accessLevels.public
+    },{
+        path: "/partials/(:type)?/templates/:name",
+        httpMethod: "GET",
+        middleware: [mainController.templates],
+        accessLevel: accessLevels.public
     },
 
     // redirect all others to the index (HTML5 history)
