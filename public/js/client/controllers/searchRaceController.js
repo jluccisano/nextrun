@@ -114,7 +114,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 			hasTypes = hasTypes.substr(0, hasTypes.length - 1);
 
-			if (hasTypes != "") {
+			if (hasTypes !== "") {
 				url = url + '/types/' + hasTypes;
 			}
 
