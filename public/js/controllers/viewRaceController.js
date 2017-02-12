@@ -173,7 +173,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 									data: []
 								}, {
 									name: "> 2% et < 5%",
-									data: []
+									data: [],
 								}, {
 									name: "> 5%",
 									data: []
@@ -212,7 +212,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 									longitude: $scope.race.pin.location.lon
 								};
 							} else {
-								route.center = $scope.race.department.center;
+								route.center = $scope.race.pin.department.center;
 							}
 						}
 

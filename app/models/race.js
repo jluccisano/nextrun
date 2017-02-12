@@ -43,15 +43,6 @@ var RaceSchema = new Schema({
     name: String,
     i18n: String
   },
-  department: {
-    code: String,
-    name: String,
-    region: String,
-    center: {
-      latitude: Number,
-      longitude: Number
-    }
-  },
   date: Date,
   edition: Number,
   distanceType: {
@@ -191,6 +182,15 @@ var RaceSchema = new Schema({
     }
   },
   pin: {
+    department: {
+      code: String,
+      name: String,
+      region: String,
+      center: {
+        latitude: Number,
+        longitude: Number
+      }
+    },
     name: String,
     location: {
       lat: Number,

@@ -38,21 +38,6 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 
 		$scope.submit = function() {
 
-			var place = $scope.details;
-
-			if ('undefined' !== typeof place) {
-
-				$scope.race.pin = {};
-				$scope.race.pin.name = place.name;
-				$scope.race.pin.location = {
-					lat: place.geometry.location.lat(),
-					lon: place.geometry.location.lng()
-				}
-				$scope.race.department = place.department;
-				
-			}
-
-
 			var data = {
 				race: $scope.race
 			};

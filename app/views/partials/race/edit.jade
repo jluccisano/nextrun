@@ -1,15 +1,18 @@
 div.container(style="padding-bottom: 50px;")
 	h3 Edition d'une manifestation
+	span(us-spinner spinner-key="loader")
 	div.row
 		div.col-lg-12
 			div.row
 				div.col-lg-6.col-lg-offset-2
 					form.form-horizontal(role="form", name="form1", novalidate, style="margin-top:50px")
-						div.form-group(data-ng-class="{'has-error': !form1.name.$pristine && form1.name.$invalid, 'has-success': !form1.name.$invalid && !form1.name.$pristine}")
+						div.form-group(data-ng-class="{'has-error': !form1.name.$pristine && form1.name.$invalid, 'has-success': !form1.name.$invalid}")
 							label.control-label(for="name") Nom
 							input.form-control(name="name", id="name", placeholder="ex: Triathlon de Paris",data-ng-model="race.name", required)
+							span {{form1.name.$pristine}}
+							span {{form1.name.$invalid}}
 						
-						div.form-group(data-ng-class="{'has-error':!form1.datetime.$pristine && form1.datetime.$invalid, 'has-success': !form1.datetime.$pristine && !form1.datetime.$invalid}")
+						div.form-group(data-ng-class="{'has-error':!form1.datetime.$pristine && form1.datetime.$invalid, 'has-success': !form1.datetime.$invalid}")
 							label.control-label(for="date") Date
 							div(class="dropdown")
 								a(class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#")
@@ -20,16 +23,16 @@ div.container(style="padding-bottom: 50px;")
 								ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
 									datetimepicker(name="datetime" data-ng-model="race.date" required  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'day' }")
 								
-						div.form-group(data-ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$pristine  && !form1.location.$error.validLocation && form1.location.$valid}")
+						div.form-group(data-ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$error.validLocation && form1.location.$valid}")
 							label.control-label(for="location") Lieu
-							input.form-control(name="location" id="location" placeholder="ex: Castelnaudary" data-ng-model="race.pin.name" has-location required ng-autocomplete options="options" details="details")
+							input.form-control(name="location" id="location" placeholder="ex: Castelnaudary" data-ng-model="race.pin.name" has-location required ng-autocomplete options="options" details="race.pin")
 									
-						div.form-group(data-ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid && !form1.type.$pristine}")
+						div.form-group(data-ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid}")
 							label.control-label(for="type") Type
 							select.form-control(data-ng-model="race.type", name="type", data-ng-options="type.value as getType(type.value) for type in types", required, data-ng-change="onChange()")
 								option(value="") Sélectionner...
 
-						div.form-group(data-ng-class="{'has-error': !form1.distanceType.$pristine && form1.distanceType.$invalid, 'has-success': !form1.distanceType.$invalid && !form1.distanceType.$pristine}")
+						div.form-group(data-ng-class="{'has-error': !form1.distanceType.$pristine && form1.distanceType.$invalid, 'has-success': !form1.distanceType.$invalid}")
 							label.control-label(for="distanceType") Distance
 							select.form-control(data-ng-model="race.distanceType", name="type", data-ng-options="distance.name for distance in distances", required)
 								option(value="") Sélectionner...

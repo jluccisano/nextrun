@@ -52,6 +52,7 @@ exports.create = function(req, res) {
 
   race.save(function(err, race) {
     if (err) {
+      console.log(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });

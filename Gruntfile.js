@@ -372,7 +372,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test-client:unit', ['karma:unit']);
   grunt.registerTask('test-client:e2e', ['bgShell:start_selenium', 'express:test', 'protractor:singleRun']);
 
-  grunt.registerTask('test-server', ['jshint:src', 'test-server:unit', 'test-server:integration', 'mochaTest:html-cov', 'mochaTest:travis-cov']);
+  grunt.registerTask('test-server', ['jshint:src', 'test-server:unit', 'mochaTest:html-cov', 'mochaTest:travis-cov']);
   grunt.registerTask('test-server:unit', ['mochaTest:unit']);
   grunt.registerTask('test-server:integration', ['mochaTest:integration']);
 

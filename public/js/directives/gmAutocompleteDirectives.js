@@ -102,16 +102,19 @@ angular.module("ngAutocomplete", [])
 
         var getDetails = function(result) {
 
-          var details = {};
+          var pin = {};
           var country;
           var departmentCode;
 
           if ('undefined' !== typeof result.name) {
-            details.name = result.name;
+            pin.name = result.name;
           }
 
           if ('undefined' !== typeof result.geometry) {
-            details.geometry = result.geometry;
+            pin.location = {
+              lat: result.geometry.location.lat(),
+              lon: result.geometry.location.lng()
+            }
           }
 
           if ('undefined' !== typeof result.address_components) {
@@ -134,12 +137,12 @@ angular.module("ngAutocomplete", [])
 
               if ('undefined' !== typeof departmentCode) {
 
-                details.department = getDepartmentByCode(DEPARTMENTS, departmentCode);
+                pin.department = getDepartmentByCode(DEPARTMENTS, departmentCode);
               }
             }
 
           }
-          return details;
+          return pin;
         }
 
         //function to get retrieve the autocompletes first result using the AutocompleteService 

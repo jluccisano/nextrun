@@ -32,6 +32,7 @@ module.exports = function(config) {
             'bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
             'bower_components/angular-date-time-input/src/dateTimeInput.js',
             'bower_components/angular-gm-googlemaps/src/module.js',
+            'bower_components/AngularGM/angular-gm.js',
 
             'public/lib/enum-0.2.5.js',
             'public/lib/textAngular.js',

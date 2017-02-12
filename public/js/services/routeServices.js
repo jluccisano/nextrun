@@ -427,12 +427,15 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 	var addClimbsToElevationChart = function(route, elevationPoints, index, climbs) {
 
-		if (elevationPoints[index].grade > 5) {
+		var previousElevationPoint;
+		var previousData;
 
+		if (elevationPoints[index].grade > 5) {
+			
 			//get previous point
 			if (index > 0) {
-				var previousElevationPoint = elevationPoints[index - 1];
-				var previousData = {
+				previousElevationPoint = elevationPoints[index - 1];
+				previousData = {
 					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
 					y: previousElevationPoint.elevation,
 					grade: previousElevationPoint.grade,
@@ -458,8 +461,8 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		} else if (elevationPoints[index].grade >= 2) {
 			//get previous point
 			if (index > 0) {
-				var previousElevationPoint = elevationPoints[index - 1];
-				var previousData = {
+				previousElevationPoint = elevationPoints[index - 1];
+				previousData = {
 					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
 					y: previousElevationPoint.elevation,
 					grade: previousElevationPoint.grade,

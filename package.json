@@ -90,5 +90,5 @@
     "grunt-blanket": "0.0.8",
     "grunt-shell": "~0.6.4",
     "grunt-bg-shell": "~2.3.1"
-  }
+   }
 }

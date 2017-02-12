@@ -22,10 +22,15 @@
     "bootstrap-multiselect": "~0.9.3",
     "angular-date-time-input": "~0.1.0",
     "x2js": "*",
-    "AngularGM": "~1.0.0"
+    "AngularGM": "~1.0.0",
+    "spin.js": "~2.0.0",
+    "angular-spinner": "~0.4.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14",
     "angular-scenario": "~1.2.14"
+  },
+  "resolutions": {
+    "bootstrap": "~3.1.1"
   }
 }

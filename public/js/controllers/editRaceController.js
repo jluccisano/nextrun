@@ -1,6 +1,6 @@
-angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', '$log', 'RouteFactory', '$window', '$modal', 'fileReader',
+angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', '$log', 'RouteFactory', '$window', '$modal', 'fileReader', 'usSpinnerService',
 
-	function($scope, $location, RaceServices, Alert, Aut, $routeParams, $log, RouteFactory, window, $modal, fileReader) {
+	function($scope, $location, RaceServices, Alert, Aut, $routeParams, $log, RouteFactory, window, $modal, fileReader, usSpinnerService) {
 		'use strict';
 		$scope.Math = window.Math;
 
@@ -313,7 +313,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 									longitude: $scope.race.pin.location.lon
 								}
 							} else {
-								route.center = $scope.race.department.center;
+								route.center = $scope.race.pin.department.center;
 							}
 
 						}
@@ -328,7 +328,6 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 					$scope.race.type = raceType;
 					$scope.currentRaceType = raceType;
 					$scope.distances = $scope.race.type.distances;
-					$scope.race.department = getDepartmentByCode(DEPARTMENTS, $scope.race.department.code);
 
 
 					_.each($scope.race.type.distances, function(distanceType) {
@@ -367,29 +366,18 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 		$scope.submit = function(race) {
 
-
-			var place = $scope.details;
-
-			if ('undefined' !== typeof place) {
-
-				$scope.race.pin = {};
-				$scope.race.pin.name = place.name;
-				$scope.race.pin.location = {
-					lat: place.geometry.location.lat(),
-					lon: place.geometry.location.lng()
-				}
-				$scope.race.department = place.department;
-
-			}
-
 			var data = {
 				race: $scope.race
 			};
 
+			usSpinnerService.spin('loader');
+
 			RaceServices.update($scope.raceId, data,
 				function(res) {
 					Alert.add("success", "Votre manifestation a bien été modifiée", 3000);
+					usSpinnerService.stop('loader');
 					$location.path('/myraces');
+
 				},
 				function(error) {
 					_.each(error.message, function(message) {
@@ -583,7 +571,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							longitude: $scope.race.pin.location.lon
 						}
 					} else {
-						route.center = $scope.race.department.center;
+						route.center = $scope.race.pin.department.center;
 					}
 				}
 

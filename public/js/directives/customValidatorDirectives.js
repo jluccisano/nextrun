@@ -9,8 +9,8 @@ angular.module('nextrunApp').directive('hasLocation', function() {
         return viewValue;
       }
 
-      scope.$watch('details', function(newValue, oldValue) {
-        if (newValue !== undefined && newValue.geometry !== undefined && newValue.department !== undefined && newValue.name !== undefined) {
+      scope.$watch('race.pin', function(newValue, oldValue) {
+        if (newValue !== undefined && newValue.location !== undefined && newValue.department !== undefined && newValue.name !== undefined) {
           ctrl.$setValidity('validLocation', true);
         } else {
           ctrl.$setValidity('validLocation', false);
