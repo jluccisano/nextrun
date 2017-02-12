@@ -138,7 +138,7 @@ module.exports = function(grunt) {
 
 
 
-          'dist/public/lib/enums.min.js': ['tmp/public/lib/enum-0.2.5.js', 'tmp/public/js/constants/typeOfRaces.js', 'tmp/public/js/constants/departments.js'],
+          'dist/public/lib/enums.min.js': ['tmp/public/lib/enum-0.2.5.js', 'tmp/public/js/constants/typeOfRaces.js', 'tmp/public/js/constants/departments.js', 'tmp/public/js/constants/regions.js'],
 
           'dist/public/lib/textAngular.min.js': ['tmp/public/lib/textAngular.js'],
 
