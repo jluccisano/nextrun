@@ -11,7 +11,7 @@ describe("route utils", function() {
 		RouteUtilsService = _RouteUtilsService_;
 	}));
 
-	describe("rad", function() {
+	/*describe("rad", function() {
 		it("should return a radian", function() {
 			expect(RouteUtilsService.rad(100)).toBe(1.7453292519943295);
 		});
@@ -21,9 +21,9 @@ describe("route utils", function() {
 		it("should return a UUID", function() {
 			expect(RouteUtilsService.generateUUID().length).toBe(36);
 		});
-	});
+	});*/
 
-	describe("calculateDistanceBetween2Points", function() {
+	/*describe("calculateDistanceBetween2Points", function() {
 
 		it("should throw error when longitude is undbounds", function() {
 			var p1 = {
@@ -73,6 +73,6 @@ describe("route utils", function() {
 			};
 			expect(RouteUtilsService.calculateDistanceBetween2Points(p1, p2)).toBe("11.147");
 		});
-	});
+	});*/
 
 });

@@ -1,10 +1,10 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("SegmentService",
-	function($log, RouteUtilsService, MarkerService, PolylineService) {
+	function() {
 
 		return {
-			calculateDistanceOfSegment: function(legs) {
+			/*calculateDistanceOfSegment: function(legs) {
 
 				if (!legs) {
 					throw new Error("legs is undefined");
@@ -18,8 +18,8 @@ angular.module("nextrunApp.route").factory("SegmentService",
 					segmentDistance += distance;
 				}
 				return segmentDistance;
-			},
-			createSegment: function(path, legs, isFirstPoint) {
+			},*/
+			/*createSegment: function(path, legs, isFirstPoint) {
 
 				if (!path) {
 					throw new Error("path is undefined");
@@ -96,7 +96,7 @@ angular.module("nextrunApp.route").factory("SegmentService",
 				}
 
 				return lastPointOfLastSegment;
-			},
+			},*/
 			/**
 			 * Cette fonction créé un segment d"un seul point
 			 * Il s"agit d"un segment dont le point A et le dernier point du segment précédent
@@ -105,7 +105,7 @@ angular.module("nextrunApp.route").factory("SegmentService",
 			 * @throws {Error} If params are not defined or are not instance of google.maps.Latlng
 			 * @returns {Segment}
 			 */
-			createSimpleSegment: function(startLatlng, destinationLatlng) {
+			/*createSimpleSegment: function(startLatlng, destinationLatlng) {
 
 				if (!startLatlng) {
 					throw new Error("start Latlng is undefined");
@@ -150,14 +150,14 @@ angular.module("nextrunApp.route").factory("SegmentService",
 				segment.points = segmentPoints;
 
 				return segment;
-			},
-			removeLastSegment: function(route) {
+			},*/
+			/*removeLastSegment: function(route) {
 				route.segments.splice(route.segments.length - 1, 1);
 
 				if (route.polylines.length > 0) {
 					route.polylines.splice(route.polylines.length - 1, 1);
 				}
-			},
+			},*/
 			/**
 			* Cette fonction retourne le dernier segment de la liste
 			* @throws {Error} if segment is undefined
@@ -165,7 +165,7 @@ angular.module("nextrunApp.route").factory("SegmentService",
 			* @param {Array} of {Segments}
 			* @return {Segment}
 			*/
-			getLastSegment: function(segments) {
+			/*getLastSegment: function(segments) {
 
 				if (!segments) {
 					throw new Error("segments is undefined");
@@ -181,8 +181,8 @@ angular.module("nextrunApp.route").factory("SegmentService",
 					lastSegment = segments[segments.length - 1];
 				}
 				return lastSegment;
-			},
-			clearSegment: function(route) {
+			},*/
+			/*clearSegment: function(route) {
 
 				var lastPointOfLastSegment = this.getLastPointOfLastSegment(route.segments);
 
@@ -199,8 +199,8 @@ angular.module("nextrunApp.route").factory("SegmentService",
 					route.maxElevation = 0;
 					route.distance = 0.0;
 				}
-			},
-			getLastLatLngOfPath: function(path) {
+			},*/
+			/*getLastLatLngOfPath: function(path) {
 
 				var lastLatLng;
 
@@ -217,8 +217,8 @@ angular.module("nextrunApp.route").factory("SegmentService",
 
 				return lastLatLng;
 
-			},
-			addMarkerToRoute: function(route, path) {
+			},*/
+			/*addMarkerToRoute: function(route, path) {
 
 				try {
 
@@ -254,16 +254,16 @@ angular.module("nextrunApp.route").factory("SegmentService",
 				}
 
 
-			},
-			drawSegment: function(route, path) {
+			},*/
+			/*drawSegment: function(route, path) {
 
 				this.addMarkerToRoute(route, path);
 
 				var polyline = PolylineService.createPolyline(path, false, false, false, true, "red", 5);
 
 				route.polylines.push(polyline);
-			},
-			calculateDistanceFromStartForEachPointOfSegment: function(segmentPoints, lastPointOfLastSegment) {
+			},*/
+			/*calculateDistanceFromStartForEachPointOfSegment: function(segmentPoints, lastPointOfLastSegment) {
 
 				if (!segmentPoints) {
 					throw new Error("segmentPoints is undefined");
@@ -294,17 +294,15 @@ angular.module("nextrunApp.route").factory("SegmentService",
 				}
 
 				return segmentPoints;
-			},
-			findSamplesPointIntoSegment: function(segment, samples) {
+			},*/
+			/*findSamplesPointIntoSegment: function(segment, samples) {
 
 				var distanceBetween2Points = 0.0;
 				var samplesPoints = [];
 				var segmentPoints = segment.points;
 				var lastPoint = null;
 
-				/*if (route.segments.length > 0) {
-					lastPoint = this.getLastPointOfLastSegment(segments);
-				}*/
+	
 
 				var cursor = lastPoint;
 
@@ -326,7 +324,7 @@ angular.module("nextrunApp.route").factory("SegmentService",
 
 				return samplesPoints;
 
-			}
+			}*/
 
 
 		};

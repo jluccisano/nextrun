@@ -11,7 +11,8 @@ angular.module("nextrunApp.home").controller("HomeController",
         RouteService,
         RegionEnum,
         RaceTypeEnum,
-        MetaService) {
+        MetaService,
+        gettextCatalog) {
 
         var initCriteria = function() {
             $scope.criteria = {
@@ -97,7 +98,7 @@ angular.module("nextrunApp.home").controller("HomeController",
         $scope.submit = function(contact) {
             ContactService.addContact(contact).then(
                 function() {
-                    AlertService.add("success", "message.addContact.successfully", 3000);
+                    AlertService.add("success", gettextCatalog.getString("Le contact a été ajouté"), 3000);
                 });
         };
 
@@ -186,12 +187,11 @@ angular.module("nextrunApp.home").controller("HomeController",
                                 $scope.onMarkerClicked(marker);
                             };
                         });
-
-                        MetaService.ready("title.home", $location.path(), "message.home.description");
-
                     } else {
                         $scope.emptyResults = true;
                     }
+                }).finally(function() {
+                    MetaService.ready(gettextCatalog.getString("Accueil"), $location.path(), gettextCatalog.getString("Accueil"));
                 });
         };
 

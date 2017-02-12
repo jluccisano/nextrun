@@ -31,14 +31,12 @@ module.exports.register = function(app, express, routes, routerPath) {
 
         if (!(accessLevel.bitMask & role.bitMask)) {
             logger.error("error.accessDenied");
-            return res.send(403, {
+            return res.status(403).json({
                 message: ["error.accessDenied"]
             });
         }
         return next();
     };
-
-    //app.param(":raceId", raceController.load);
 
     underscore.each(routes, function(route) {
 
@@ -46,6 +44,7 @@ module.exports.register = function(app, express, routes, routerPath) {
 
         switch (route.httpMethod.toUpperCase()) {
             case "GET":
+                logger.info(route.path);
                 router.get(route.path, route.middleware);
                 break;
             case "POST":

@@ -56,7 +56,7 @@ describe("SettingsController", function() {
 			$scope.updateProfile();
 			$scope.$apply();
 
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.update.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalled();
 			expect($scope.reset).toHaveBeenCalled();
 		});
 	});
@@ -78,7 +78,7 @@ describe("SettingsController", function() {
 			$scope.updatePassword();
 			$scope.$apply();
 
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.update.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalled();
 			expect($scope.reset).toHaveBeenCalled();
 		});
 	});
@@ -100,7 +100,7 @@ describe("SettingsController", function() {
 			$scope.deleteAccount();
 			$scope.$apply();
 
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.account.deleted.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalled();
 			expect($location.path).toHaveBeenCalledWith("/");
 		});
 	});

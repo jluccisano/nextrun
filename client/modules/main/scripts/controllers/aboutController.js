@@ -3,7 +3,8 @@
 angular.module("nextrunApp").controller("AboutController",
 	function(
 		$location,
-		MetaService) {
+		MetaService,
+		gettextCatalog) {
 
-		MetaService.ready("title.about", $location.path(), "message.about.description");
+		MetaService.ready(gettextCatalog.getString("A propos"), $location.path(), gettextCatalog.getString("A propos"));
 	});

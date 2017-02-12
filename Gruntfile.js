@@ -62,7 +62,7 @@ module.exports = function(grunt) {
     nggettext_extract: {
       pot: {
         files: {
-          'locales/template.pot': ['.tmp/generated/views/**/*.html']
+          "locales/template.pot": [".tmp/generated/views/**/*.html", "<%= yeoman.client %>/modules/**/*.js"]
         }
       },
     },
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
     nggettext_compile: {
       all: {
         files: {
-          '<%= yeoman.client %>/modules/main/scripts/locales.js': ['locales/*.po']
+          "<%= yeoman.client %>/modules/main/scripts/locales.js": ["locales/*.po"]
         }
       },
     },

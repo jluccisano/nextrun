@@ -10,7 +10,6 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $filter,
         RaceTypeEnum,
         RaceService,
-        AlertService,
         RouteHelperService,
         MetaService) {
 
@@ -78,10 +77,11 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                 //TODO create service
                 $scope.loading = false;
 
-                MetaService.ready($scope.race.name, $location.path(), $scope.generateRaceDescription());
 
             }).then(function() {
                 $scope.loading = false;
+            }).finally(function() {
+                MetaService.ready($scope.race.name, $location.path(), $scope.generateRaceDescription());
             });
         };
 
@@ -92,7 +92,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.openFeedbackModal = function(raceId) {
             $scope.modalInstance = $modal.open({
-                templateUrl: "partials/race/feedback",
+                templateUrl: "partials/race/feedbackModal",
                 controller: "FeedbackModalController",
                 resolve: {
                     raceId: function() {

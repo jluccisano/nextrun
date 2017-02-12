@@ -7,7 +7,8 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 		$modal,
 		RaceService,
 		AlertService,
-		MetaService) {
+		MetaService,
+		gettextCatalog) {
 
 		$scope.currentPage = 1;
 		$scope.maxSize = 5;
@@ -24,7 +25,8 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 						$scope.totalItems = 0;
 						$scope.races = [];
 					}
-					MetaService.ready("title.myRaces", $location.path, "message.myRaces.description");
+				}).finally(function() {
+					MetaService.ready(gettextCatalog.getString("Mes manifestations"), $location.path, gettextCatalog.getString("Mes manifestations"));
 				});
 		};
 
@@ -35,14 +37,14 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 		$scope.publish = function(race, value) {
 			RaceService.publish(race._id, value).then(
 				function() {
-					AlertService.add("success", "message.publish.successfully", 3000);
+					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été publiée"), 3000);
 					$scope.init();
 				});
 		};
 
 		$scope.openDeleteConfirmation = function(race) {
 			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/race/deleteconfirmation",
+				templateUrl: "partials/race/deleteconfirmationModal",
 				controller: "DeleteConfirmationModalController",
 				resolve: {
 					race: function() {

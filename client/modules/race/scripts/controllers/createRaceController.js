@@ -9,7 +9,8 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		AlertService, 
 		AuthService,  
 		RaceTypeEnum,
-		MetaService) {
+		MetaService,
+		gettextCatalog) {
 
 		$scope.race = {};
 		$scope.user = {};
@@ -56,7 +57,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			if ($scope.isLoggedIn()) {
 				RaceService.create(data).then(
 					function(res) {
-						AlertService.add("success", "message.create.successfully", 3000);
+						AlertService.add("success", gettextCatalog.getString("La manifestation a bien été créée"), 3000);
 						$scope.openRedirectionModal(res.raceId);
 					});
 			} else {
@@ -89,7 +90,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 
 		$scope.openRedirectionModal = function(raceId) {
 			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/race/redirection",
+				templateUrl: "partials/race/redirectionModal",
 				controller: "RedirectionModalController",
 				resolve: {
 					raceId: function() {
@@ -101,11 +102,11 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 
 		$scope.openForgotPasswordModal = function() {
 			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/auth/forgotpassword",
+				templateUrl: "partials/auth/forgotpasswordModal",
 				controller: "ForgotPasswordModalController"
 			});
 		};
 
-		MetaService.ready("title.create.newRace", $location.path, "message.create.description");
+		MetaService.ready(gettextCatalog.getString("Ajouter une manifestation"), $location.path, gettextCatalog.getString("Ajouter une manifestation"));
 
 	});

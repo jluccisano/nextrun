@@ -15,13 +15,13 @@ var routes = [
         httpMethod: "POST",
         middleware: [raceController.create],
         accessLevel: accessLevels.user
-    }, {
+    },{
         path: "/find",
         httpMethod: "GET",
         middleware: [raceController.findByUser],
         accessLevel: accessLevels.user
-    }, {
-        path: "/find/page/:page",
+    },{
+        path: "/find/page/(:page)?",
         httpMethod: "GET",
         middleware: [raceController.findByUser],
         accessLevel: accessLevels.user
@@ -66,5 +66,8 @@ var routes = [
 ];
 
 module.exports = function(app, express) {
+
+    app.param(":raceId", raceController.load);
+
     router.register(app, express, routes, "/api/races");
 };

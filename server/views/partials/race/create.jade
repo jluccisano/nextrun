@@ -5,7 +5,7 @@ div.container
 			tabset(horizontal="true" type="navType")
 				tab(heading="{{'Informations' | translate}}" active="tabs[0].active" disabled="tabs[0].disabled")
 					include ./templates/raceForm
-					button.btn.btn-primary(ng-click="submit()", ng-disabled="form.$invalid" translate) Continuer
+					button.btn.btn-primary(ng-click="submit()" ng-disabled="raceForm.$invalid" translate) Continuer
 				tab(heading="Confirmation" ng-hide="isLoggedIn()" active="tabs[1].active" disabled="tabs[1].disabled")
 					div(ng-show="accountExists")
 						include ../auth/login

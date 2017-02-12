@@ -1,9 +1,9 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("RouteHelperService",
-    function(RouteService) {
+    function() {
         
-        var googleMapsConfig = {
+        /*var googleMapsConfig = {
             mapTypeId: google.maps.MapTypeId.TERRAIN,
             mapTypeControlOptions: {
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP,
@@ -18,9 +18,9 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
             draggableCursor: "crosshair",
             streetViewControl: false,
             zoomControl: true
-        };
+        };*/
 
-        var chartConfig = function($scope) {
+        /*var chartConfig = function($scope) {
 
             return {
                 loading: false,
@@ -151,9 +151,9 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
                     text: ""
                 }
             };
-        };
+        };*/
 
-        var setCenter = function(scope, currentRoute) {
+       /*var setCenter = function(scope, currentRoute) {
 
             //default France center
             var center = {
@@ -177,10 +177,10 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
 
             }
             return center;
-        };
+        };*/
 
         return {
-            generateRoute: function(scope, currentRoute, routeType) {
+           /* generateRoute: function(scope, currentRoute, routeType) {
 
                 var route = {
                     isVisible: false,
@@ -207,7 +207,8 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
 
                 route.events = {
                     click: function(mapModel, eventName, originalEventArgs) {
-                        RouteService.onClickMap(scope, route, originalEventArgs[0].latLng);
+                        
+                        //RouteService.onClickMap(scope, route, originalEventArgs[0].latLng);
                     }
                 };
 
@@ -221,6 +222,6 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
                 }
 
                 return route;
-            }
+            }*/
         };
     });

@@ -10,7 +10,8 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         DepartmentEnum,
         RegionEnum,
         RaceTypeEnum,
-        MetaService) {
+        MetaService,
+        gettextCatalog) {
 
         var initCriteria = function() {
             $scope.criteria = {
@@ -217,7 +218,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             initCriteria();
         };
 
-        MetaService.ready("title.searchRace", $location.path(), "message.search.description");
+        MetaService.ready(gettextCatalog.getString("Rechercher une manifestation"), $location.path(), gettextCatalog.getString("Rechercher une manifestation"));
 
         $scope.search();
 

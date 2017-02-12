@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("GpxService",
-	function(XmlService, RouteUtilsService, SegmentService, ElevationService) {
+	function(XmlService, RouteUtilsService) {
 
 		return {
 
@@ -46,7 +46,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 						//calculate distance
 						
-						segment.distance = SegmentService.calculateDistanceFromStartForEachPointOfSegment(route, segment);
+						segment.distance = route.calculateDistanceFromStartForEachPointOfSegment(segment);
 
 						//add segment into the list
 						segments.push(segment);
@@ -65,9 +65,8 @@ angular.module("nextrunApp.route").factory("GpxService",
 			},
 
 
-			convertGPXtoRoute: function(gpx) {
-
-				var route = {};
+			convertGPXtoRoute: function() {
+				/*var route = {};
 				
 				try {
 					
@@ -141,7 +140,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 					throw new Error(ex);
 				}
 
-				return route;
+				return route;*/
 			}
 		};
 	});

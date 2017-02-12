@@ -6,7 +6,8 @@ angular.module("nextrunApp.auth").controller("SettingsController",
         $location,
         AuthService,
         AlertService,
-        MetaService) {
+        MetaService,
+        gettextCatalog) {
 
         $scope.user = {};
         $scope.master = {};
@@ -24,7 +25,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
             AuthService.updateProfile({
                 user: $scope.user
             }).then(function(response) {
-                AlertService.add("success", "message.update.successfully", 3000);
+                AlertService.add("success", gettextCatalog.getString("Votre profil a bien été modifié"), 3000);
                 $scope.master = angular.copy(response.user);
                 $scope.reset();
             });
@@ -35,7 +36,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
                 actual: $scope.actualPassword,
                 new: $scope.newPassword
             }).then(function(response) {
-                AlertService.add("success", "message.update.successfully", 3000);
+                AlertService.add("success", gettextCatalog.getString("Votre mot de passe a bien été modifié"), 3000);
                 $scope.master = angular.copy(response.user);
                 $scope.reset();
             });
@@ -43,7 +44,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
 
         $scope.deleteAccount = function() {
             AuthService.deleteAccount().then(function() {
-                AlertService.add("success", "message.account.deleted.successfully", 3000);
+                AlertService.add("success", gettextCatalog.getString("Votre compte a bien été supprimé"), 3000);
                 $location.path("/");
             });
         };
@@ -61,6 +62,6 @@ angular.module("nextrunApp.auth").controller("SettingsController",
 
         $scope.init();
 
-        MetaService.ready("title.settings", $location.path(), "message.settings.description");
+        MetaService.ready(gettextCatalog.getString("Paramètres"), $location.path(), gettextCatalog.getString("Paramètres"));
 
     });

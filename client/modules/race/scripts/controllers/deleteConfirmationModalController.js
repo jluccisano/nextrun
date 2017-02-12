@@ -6,14 +6,15 @@ angular.module("nextrunApp.race").controller("DeleteConfirmationModalController"
         $modalInstance,
         AlertService,
         RaceService,
-        race) {
+        race,
+        gettextCatalog) {
 
         $scope.race = race;
 
         $scope.deleteRace = function() {
             RaceService.delete($scope.race._id).then(
                 function() {
-                    AlertService.add("success", "message.delete.successfully", 3000);
+                    AlertService.add("success", gettextCatalog.getString("La manifestation a bien été supprimée"), 3000);
                     $modalInstance.close();
                 });
         };

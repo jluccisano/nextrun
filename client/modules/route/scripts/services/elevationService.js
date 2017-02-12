@@ -1,12 +1,12 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("ElevationService",
-	function(GmapsApiService) {
+	function() {
 
-		var gmElevationService = GmapsApiService.ElevationService();
+		//var gmElevationService = GmapsApiService.ElevationService();
 
 		return {
-			setGrade: function(lastElevationPoint, newElevationPoint) {
+			/*setGrade: function(lastElevationPoint, newElevationPoint) {
 
 				var grade = 0;
 
@@ -20,8 +20,8 @@ angular.module("nextrunApp.route").factory("ElevationService",
 
 				newElevationPoint.grade = grade;
 
-			},
-			getElevationFromSamplesPoints: function($scope, route, segment, path, samplesPoints) {
+			},*/
+			/*getElevationFromSamplesPoints: function($scope, route, segment, path, samplesPoints) {
 
 				var samplesLatlng = this.getAllLatlngFromPoints(samplesPoints);
 
@@ -31,7 +31,7 @@ angular.module("nextrunApp.route").factory("ElevationService",
 						return;
 					}
 
-					for (var k = 0; k < result.length; k++) {
+					/*for (var k = 0; k < result.length; k++) {
 
 						samplesPoints[k].elevation = result[k].elevation;
 
@@ -48,29 +48,29 @@ angular.module("nextrunApp.route").factory("ElevationService",
 						}
 
 						route.elevationPoints.push(samplesPoints[k]);
-					}
+					}*/
 
-					this.addPointsToElevationChart(route, samplesPoints);
+					//this.addPointsToElevationChart(route, samplesPoints);
 
-					this.calculateElevationDataAlongRoute(route);
+					//this.calculateElevationDataAlongRoute(route);
 
 
 					//SegmentService.drawSegment(route, path);
 
-					$scope.$apply();
+			//		$scope.$apply();
 
-				});
+			//	});
 
-				return samplesPoints;
-			},
-			getElevationFromLocation: function(locations, cb) {
+			//	return samplesPoints;
+			//},
+			/*getElevationFromLocation: function(locations, cb) {
 				var positionalRequest = {
 					locations: locations
 				};
 
 				gmElevationService.getElevationForLocations(positionalRequest, cb);
-			},
-			getAllLatlngFromPoints: function(points) {
+			},*/
+			/*getAllLatlngFromPoints: function(points) {
 				var samplesLatlng = [];
 
 				for (var k = 0; k < points.length; k++) {
@@ -78,11 +78,11 @@ angular.module("nextrunApp.route").factory("ElevationService",
 				}
 
 				return samplesLatlng;
-			},
-			getLastElevationPoint: function(elevationPoints) {
+			},*/
+			/*getLastElevationPoint: function(elevationPoints) {
 				return elevationPoints[elevationPoints.length - 1];
-			},
-			removePointsToElevationChartBySegmentId: function(route, segmentId) {
+			},*/
+			/*removePointsToElevationChartBySegmentId: function(route, segmentId) {
 				route.chartConfig.series[0].data = _.difference(route.chartConfig.series[0].data, _.where(route.chartConfig.series[0].data, {
 					"segmentId": segmentId
 				}));
@@ -98,8 +98,8 @@ angular.module("nextrunApp.route").factory("ElevationService",
 				route.chartConfig.series[4].data = _.difference(route.chartConfig.series[4].data, _.where(route.chartConfig.series[4].data, {
 					"segmentId": segmentId
 				}));
-			},
-			calculateElevationDataAlongRoute: function(route) {
+			},*/
+			/*calculateElevationDataAlongRoute: function(route) {
 
 				route.ascendant = 0;
 				route.descendant = 0;
@@ -128,8 +128,8 @@ angular.module("nextrunApp.route").factory("ElevationService",
 						}
 					}
 				}
-			},
-			addPointsToElevationChart: function(series, elevationPoints) {
+			},*/
+			/*addPointsToElevationChart: function(series, elevationPoints) {
 
 				var datas = [];
 				var climbs = {
@@ -165,8 +165,8 @@ angular.module("nextrunApp.route").factory("ElevationService",
 				series[2].data = series[2].data.concat(climbs.climbsInf10);
 				series[3].data = series[3].data.concat(climbs.climbsInf15);
 				series[4].data = series[4].data.concat(climbs.climbsSup15);
-			},
-			addClimbsToElevationChart: function(elevationPoints, index, climbs) {
+			},*/
+			/*addClimbsToElevationChart: function(elevationPoints, index, climbs) {
 
 				var previousElevationPoint;
 				var previousData;
@@ -282,6 +282,6 @@ angular.module("nextrunApp.route").factory("ElevationService",
 					climbs.climbsSup15.push(point0);
 				}
 				return climbs;
-			}
+			}*/
 		};
 	});

@@ -6,7 +6,8 @@ angular.module("nextrunApp.auth").controller("LoginController",
 		$location,
 		$modal,
 		AuthService,
-		MetaService) {
+		MetaService,
+		gettextCatalog) {
 
 		$scope.user = {};
 
@@ -25,7 +26,7 @@ angular.module("nextrunApp.auth").controller("LoginController",
 
 		$scope.open = function() {
 			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/auth/forgotpassword",
+				templateUrl: "partials/auth/forgotpasswordModal",
 				controller: "ForgotPasswordModalController"
 			});
 
@@ -34,6 +35,6 @@ angular.module("nextrunApp.auth").controller("LoginController",
 			});
 		};
 
-		MetaService.ready("title.login", $location.path(), "message.login.description");
+		MetaService.ready(gettextCatalog.getString("Se connecter"), $location.path(), gettextCatalog.getString("Se connecter"));
 
 	});

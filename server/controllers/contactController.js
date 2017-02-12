@@ -19,16 +19,16 @@ exports.create = function(req, res) {
         contact.save(function(err) {
             if (!err) {
                 email.sendEmailNewContact(contact);
-                return res.json(200);
+                return res.status(200);
             } else {
                 logger.error(err);
-                return res.json(400, {
+                return res.status(400).json({
                     message: errorUtils.errors(err.errors)
                 });
             }
         });
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.bodyParamRequired"]
         });
     }
@@ -46,10 +46,10 @@ exports.feedback = function(req, res) {
 
         feedback = req.body.feedback;
         email.sendEmailNewFeedback(feedback);
-        return res.json(200);
+        return res.status(200);
     } else {
         logger.error("error.occured");
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.occured"]
         });
     }

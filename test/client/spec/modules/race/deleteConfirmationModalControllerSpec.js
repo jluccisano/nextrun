@@ -37,7 +37,7 @@ describe('DeleteConfirmationModalController', function() {
 			$scope.$apply();
 			expect(mockRaceService.delete).toHaveBeenCalledWith(1);
 			expect(mockModal.close).toHaveBeenCalledWith();
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.delete.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalled();
 		});
 	});
 

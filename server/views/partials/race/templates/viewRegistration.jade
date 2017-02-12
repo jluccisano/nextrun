@@ -20,7 +20,7 @@ div.container
 						td(ng-if="race.registration.registrationLimitDate == null" class="rowItalic") {{'Non communiqué' | translate}}
 
 					tr
-						td(class="rowBold") {{'Site web de l\'organisateur' | translate}}
+						td(class="rowBold") {{'Site web' | translate}}
 
 						td(ng-if="race.registration.registrationWebSite != null" class="rowBasic") 
 							a(ng-href="http://{{race.registration.registrationWebSite}}" target="_blank")

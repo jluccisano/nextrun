@@ -15,7 +15,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		RouteHelperService,
 		TextAngularConfig,
 		MetaService,
-		GpxService) {
+		GpxService,
+		gettextCatalog) {
 
 		/** init google maps service **/
 		google.maps.visualRefresh = true;
@@ -54,49 +55,56 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			RaceService.retrieve($scope.raceId).then(function(response) {
 
-					$scope.race = response.race;
+				$scope.race = response.race;
 
-					var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type.name);
+				var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type.name);
 
-					_.each(raceType.routes, function(routeType, index) {
+				_.each(raceType.routes, function(routeType, index) {
 
-						var currentRoute = null;
+					var currentRoute = null;
 
-						if (!_.isUndefined($scope.race.routes[index])) {
-							currentRoute = $scope.race.routes[index];
-						}
+					if (!_.isUndefined($scope.race.routes[index])) {
+						currentRoute = $scope.race.routes[index];
+					}
 
-						var route = RouteHelperService.generateRoute($scope, currentRoute, routeType);
+					//var route = RouteHelperService.generateRoute($scope, currentRoute, routeType);
+					var route = new routeBuilder.Route(currentRoute);
+					route.addClickListener($scope.onClickMap);
 
-						$scope.race.routes[index] = route;
-						$scope.race.routes[0].isVisible = true;
-					});
-
-					$scope.race.type = raceType;
-					$scope.currentRaceType = raceType;
-					$scope.distances = $scope.race.type.distances;
-
-					_.each($scope.race.type.distances, function(distanceType) {
-						if ($scope.race.distanceType.name === distanceType.name) {
-							$scope.race.distanceType = distanceType;
-						}
-					});
-
-					$scope.loading = false;
-
-					MetaService.ready("title.editRace", $location.path, "message.editRace.description");
-
-				}).then(function() {
-					$scope.loading = false;
+					$scope.race.routes[index] = route;
+					$scope.race.routes[0].isVisible = true;
 				});
+
+				$scope.race.type = raceType;
+				$scope.currentRaceType = raceType;
+				$scope.distances = $scope.race.type.distances;
+
+				_.each($scope.race.type.distances, function(distanceType) {
+					if ($scope.race.distanceType.name === distanceType.name) {
+						$scope.race.distanceType = distanceType;
+					}
+				});
+
+				$scope.loading = false;
+
+
+			}).then(function() {
+				$scope.loading = false;
+			}).finally(function() {
+				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
+			});
+		};
+
+		$scope.onClickMap = function(route, destinationLatlng) {
+			RouteService.createNewSegment(route, destinationLatlng);
 		};
 
 		$scope.delete = function(route) {
-			RouteService.delete(route);
+			RouteService.deleteRoute(route);
 		};
 
 		$scope.undo = function(route) {
-			RouteService.undo(route);
+			RouteService.deleteLastSegment(route);
 		};
 
 		$scope.isLoggedIn = function() {
@@ -117,7 +125,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			RaceService.update($scope.raceId, data).then(
 				function() {
-					AlertService.add("success", "message.update.successfully", 3000);
+					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
 					$scope.saving = false;
 					$location.path("/myraces");
 				});
@@ -126,7 +134,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.openChangeTypeConfirmation = function() {
 
 			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/race/changetypeconfirmation",
+				templateUrl: "partials/race/changetypeconfirmationModal",
 				controller: "ChangeTypeConfirmationController"
 			});
 
@@ -160,25 +168,25 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			FileReaderService.readAsDataUrl(file, $scope).then(function(result) {
 
-					//reinit route
-	
-					try {
-						route = GpxService.convertGPXtoRoute($scope, result);
-						route = RouteHelperService.generateRoute($scope, undefined, route.routeType);
+				//reinit route
 
-						if (route.segments.length > 0) {
-							route.markers = RouteService.rebuildMarkers(route.segments, true);
-							route.polylines = RouteService.rebuildPolylines(route.segments);
-						}
+				try {
+					route = GpxService.convertGPXtoRoute($scope, result);
+					route = RouteHelperService.generateRoute($scope, undefined, route.routeType);
 
-						$scope.$apply();
-
-					} catch (ex) {
-						AlertService.add("danger", ex.message, 3000);
-					} finally {
-						$scope.pending = false;
+					if (route.segments.length > 0) {
+						route.markers = RouteService.rebuildMarkers(route.segments, true);
+						route.polylines = RouteService.rebuildPolylines(route.segments);
 					}
-				});
+
+					$scope.$apply();
+
+				} catch (ex) {
+					AlertService.add("danger", ex.message, 3000);
+				} finally {
+					$scope.pending = false;
+				}
+			});
 		};
 
 		$scope.init();

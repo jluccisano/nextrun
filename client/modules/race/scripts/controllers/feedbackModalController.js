@@ -6,18 +6,19 @@ angular.module("nextrunApp.race").controller("FeedbackModalController",
 		$modalInstance,
 		AlertService,
 		ContactService,
-		raceId) {
+		raceId,
+		gettextCatalog) {
 
 		$scope.feedback = {};
 
 		$scope.types = [{
-			name: "Bug"
+			name: gettextCatalog.getString("Bug")
 		}, {
-			name: "Information erronée"
+			name: gettextCatalog.getString("Information erronée")
 		}, {
-			name: "Dupliquer"
+			name: gettextCatalog.getString("Dupliquer")
 		}, {
-			name: "Autre"
+			name: gettextCatalog.getString("Autre")
 		}];
 
 		$scope.feedback.raceId = raceId;
@@ -26,7 +27,7 @@ angular.module("nextrunApp.race").controller("FeedbackModalController",
 			ContactService.sendFeedback({
 				feedback: feedback
 			}).then(function() {
-				AlertService.add("success", "message.sendFeedback.successfully", 3000);
+				AlertService.add("success", gettextCatalog.getString("Votre message nous a bien été transmis"), 3000);
 				$modalInstance.close();
 			});
 		};

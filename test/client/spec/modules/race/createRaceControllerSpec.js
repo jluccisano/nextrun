@@ -49,7 +49,7 @@ describe('MyRacesController', function() {
 			$scope.submit();
 			$scope.$apply();
 
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.create.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalled();
 			expect($scope.openRedirectionModal).toHaveBeenCalledWith(mockRace._id);
 
 		});

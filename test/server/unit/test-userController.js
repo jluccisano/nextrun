@@ -12,7 +12,7 @@
 **/
 
 process.env.NODE_ENV = "test";
-process.env.PORT= 4000;
+process.env.PORT = 4000;
 
 var mongoose = require("mongoose"),
 	chai = require("chai"),
@@ -82,7 +82,7 @@ describe("UserController", function() {
 				return true;
 			};
 
-			res.send = function(httpStatus) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -115,11 +115,15 @@ describe("UserController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.bodyParamRequired");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.bodyParamRequired");
+						done();
+					}
+				};
 			};
 
 			UserController.signup(req, res);
@@ -135,11 +139,15 @@ describe("UserController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			UserController.signup(req, res);
@@ -160,11 +168,15 @@ describe("UserController", function() {
 				});
 			};
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			UserController.signup(req, res);
@@ -180,12 +192,15 @@ describe("UserController", function() {
 				return cb(null);
 			};
 
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data.username).to.equal(req.body.user.username);
-				expect(data.email).to.equal(req.body.user.email);
-
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data.username).to.equal(req.body.user.username);
+						expect(data.email).to.equal(req.body.user.email);
+						done();
+					}
+				};
 			};
 
 			UserController.signup(req, res);
@@ -210,11 +225,15 @@ describe("UserController", function() {
 
 			req.body.user = undefined;
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.bodyParamRequired");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.bodyParamRequired");
+						done();
+					}
+				};
 			};
 
 			UserController.forgotPassword(req, res);
@@ -233,11 +252,15 @@ describe("UserController", function() {
 				}, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.invalidEmail");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.invalidEmail");
+						done();
+					}
+				};
 			};
 
 			UserController.forgotPassword(req, res);
@@ -258,12 +281,15 @@ describe("UserController", function() {
 				});
 			});
 
-
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			UserController.forgotPassword(req, res);
@@ -282,8 +308,7 @@ describe("UserController", function() {
 				cb(null);
 			});
 
-
-			res.json = function(httpStatus) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -309,11 +334,15 @@ describe("UserController", function() {
 
 			req.user = undefined;
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotConnected");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotConnected");
+						done();
+					}
+				};
 			};
 
 			UserController.settings(req, res);
@@ -322,13 +351,16 @@ describe("UserController", function() {
 
 		it("should return error 200", function(done) {
 
-
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data.user._id).to.equal(req.user._id);
-				expect(data.user.username).to.equal(req.user.username);
-				expect(data.user.email).to.equal(req.user.email);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data.user._id).to.equal(req.user._id);
+						expect(data.user.username).to.equal(req.user.username);
+						expect(data.user.email).to.equal(req.user.email);
+						done();
+					}
+				};
 			};
 
 			UserController.settings(req, res);
@@ -356,11 +388,15 @@ describe("UserController", function() {
 
 			req.body.user = undefined;
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.bodyParamRequired");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.bodyParamRequired");
+						done();
+					}
+				};
 			};
 
 			UserController.checkIfEmailAlreadyExists(req, res);
@@ -377,11 +413,16 @@ describe("UserController", function() {
 				}, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			UserController.checkIfEmailAlreadyExists(req, res);
@@ -394,11 +435,15 @@ describe("UserController", function() {
 				cb(null, new User());
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.emailAlreadyExists");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.emailAlreadyExists");
+						done();
+					}
+				};
 			};
 
 			UserController.checkIfEmailAlreadyExists(req, res);
@@ -411,7 +456,7 @@ describe("UserController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -444,11 +489,15 @@ describe("UserController", function() {
 
 			req.user = undefined;
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotConnected");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotConnected");
+						done();
+					}
+				};
 			};
 
 			UserController.updatePassword(req, res);
@@ -459,11 +508,15 @@ describe("UserController", function() {
 
 			req.body.actual = undefined;
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.bodyParamRequired");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.bodyParamRequired");
+						done();
+					}
+				};
 			};
 
 			UserController.updatePassword(req, res);
@@ -474,11 +527,15 @@ describe("UserController", function() {
 
 			sandbox.stub(req.user, "authenticate").returns(false);
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.invalidPassword");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.invalidPassword");
+						done();
+					}
+				};
 			};
 
 			UserController.updatePassword(req, res);
@@ -497,12 +554,15 @@ describe("UserController", function() {
 				});
 			});
 
-
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.occured");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.occured");
+						done();
+					}
+				};
 			};
 
 			UserController.updatePassword(req, res);
@@ -517,8 +577,7 @@ describe("UserController", function() {
 				cb(null);
 			});
 
-
-			res.json = function(httpStatus) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -553,11 +612,15 @@ describe("UserController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			UserController.deleteAccount(req, res);
@@ -573,7 +636,8 @@ describe("UserController", function() {
 				return true;
 			};
 
-			res.json = function(httpStatus) {
+
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -618,11 +682,15 @@ describe("UserController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			UserController.updateProfile(req, res);
@@ -642,10 +710,14 @@ describe("UserController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, user) {
-				expect(httpStatus).to.equal(200);
-				expect(req.body.email).to.equal(user.email);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(user) {
+						expect(httpStatus).to.equal(200);
+						expect(req.body.email).to.equal(user.email);
+						done();
+					}
+				};
 			};
 
 			UserController.updateProfile(req, res);

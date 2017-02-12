@@ -3,6 +3,7 @@
 var homeModule = angular.module("nextrunApp.home", [
     "ngRoute",
     "ui.bootstrap",
+    "gettext",
     "nextrunApp.commons",
     "nextrunApp.route"
 ]);

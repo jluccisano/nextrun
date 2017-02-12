@@ -1,12 +1,12 @@
 div.row
 	div.col-lg-6.col-lg-offset-2
-		form.form-horizontal(role="form" name="form1" style="margin-top:50px" novalidate)
+		form.form-horizontal(role="form" name="raceForm" style="margin-top:50px" novalidate)
 			
-			div.form-group(ng-class="{'has-error': !form1.name.$pristine && form1.name.$invalid, 'has-success': !form1.name.$invalid}")
+			div.form-group(ng-class="{'has-error': !raceForm.name.$pristine && raceForm.name.$invalid, 'has-success': !raceForm.name.$invalid}")
 				label.control-label(for="name") {{'Nom' | translate}}
 				input.form-control(name="name" placeholder="ex: Triathlon de Paris" ng-model="race.name" required)
 			
-			div.form-group(ng-class="{'has-error':!form1.datetime.$pristine && form1.datetime.$invalid, 'has-success': !form1.datetime.$invalid}")
+			div.form-group(ng-class="{'has-error':!raceForm.datetime.$pristine && raceForm.datetime.$invalid, 'has-success': !raceForm.datetime.$invalid}")
 				label.control-label(for="date") {{'Date' | translate}}
 				div(class="dropdown")
 					a(class="dropdown-toggle my-toggle-select" role="button" data-toggle="dropdown" data-target="#" href="#")
@@ -17,16 +17,16 @@ div.row
 					ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
 						datetimepicker(name="datetime" ng-model="race.date" datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'day' }" required)
 					
-			div.form-group(ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$error.validLocation && form1.location.$valid}")
+			div.form-group(ng-class="{'has-error': !raceForm.location.$pristine && raceForm.location.$error.validLocation && raceForm.location.$invalid, 'has-success': !raceForm.location.$error.validLocation && raceForm.location.$valid}")
 				label.control-label(for="location") {{'Lieu' | translate}}
 				input.form-control(name="location" placeholder="{{'ex: Paris' | translate}}" ng-model="race.pin.name" nr-has-location  gmaps-autocomplete options="options" details="race.pin" required)
 						
-			div.form-group(ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid}")
+			div.form-group(ng-class="{'has-error': !raceForm.type.$pristine && raceForm.type.$invalid, 'has-success': !raceForm.type.$invalid}")
 				label.control-label(for="type") {{'Type' | translate}}
-				select.form-control(ng-model="race.type" name="type" ng-options="type.value as getType(type.value) for type in types" ng-change="openChangeTypeConfirmation()" required)
+				select.form-control(ng-model="race.type" name="type" ng-options="type.value as getType(type.value) for type in types" ng-change="onChange()" required)
 					option(value="") {{'Sélectionner...' | translate}}
 
-			div.form-group(ng-class="{'has-error': !form1.distanceType.$pristine && form1.distanceType.$invalid, 'has-success': !form1.distanceType.$invalid}")
+			div.form-group(ng-class="{'has-error': !raceForm.distanceType.$pristine && raceForm.distanceType.$invalid, 'has-success': !raceForm.distanceType.$invalid}")
 				label.control-label(for="distanceType") {{'Distance' | translate}}
 				select.form-control(ng-model="race.distanceType" name="type" ng-options="distance.name for distance in distances" required)
 					option(value="") {{'Sélectionner...' | translate}}

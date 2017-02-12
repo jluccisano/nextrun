@@ -8,7 +8,7 @@ div.row
 			div.form-group
 				label.col-lg-4.control-label
 				div.col-lg-8
-					input.form-control(ng-model="race.plan.address.address2" placeholder="{{'Complément d\'adresse' | translate}}")
+					input.form-control(ng-model="race.plan.address.address2" placeholder="{{'Complément' | translate}}")
 			div.form-group
 				label.col-lg-4.control-label(translate) Code postal
 				div.col-lg-8
@@ -18,5 +18,5 @@ div.row
 				div.col-lg-8
 					input.form-control(ng-model="race.plan.address.city" placeholder="{{'Ville' | translate}}")
 			div.form-group
-				label.col-lg-4.control-label race.moreInformation
+				label.col-lg-4.control-label(translate) Plus d'informations
 			div.col-lg-12(text-angular text-angular-name="demo1" ng-model="race.plan.planMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")

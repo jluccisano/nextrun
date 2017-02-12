@@ -36,7 +36,7 @@ describe('FeedbackModalController', function() {
 			$scope.$apply();
 			expect(mockContactService.sendFeedback).toHaveBeenCalled();
 			expect(mockModal.close).toHaveBeenCalledWith();
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", 'message.sendFeedback.successfully', 3000);
+			expect(mockAlertService.add).toHaveBeenCalled();
 		});
 	});
 

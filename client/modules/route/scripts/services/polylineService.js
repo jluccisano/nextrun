@@ -1,11 +1,11 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("PolylineService",
-	function(RouteUtilsService) {
+	function() {
 
 		return {
 
-			createPolyline: function(path, editable, draggable, geodesic, visible, color, weight) {
+			/*createPolyline: function(path, editable, draggable, geodesic, visible, color, weight) {
 
 				var pathArray = [];
 				var polyLine;
@@ -41,6 +41,6 @@ angular.module("nextrunApp.route").factory("PolylineService",
 
 
 				return polyLine;
-			}
+			}*/
 		};
 	});

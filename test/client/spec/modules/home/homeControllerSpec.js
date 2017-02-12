@@ -47,7 +47,7 @@ describe("HomeController", function() {
 			spyOn(mockAlert, "add");
 			$scope.submit(mockContact);
 			$scope.$apply();
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.addContact.successfully", 3000);
+			expect(mockAlert.add).toHaveBeenCalled();
 			expect(mockContactService.addContact).toHaveBeenCalledWith(mockContact);
 		});
 	});

@@ -66,7 +66,7 @@ describe("GPX Services", function() {
 	}));
 
 
-	describe("getTrkpts", function() {
+	/*describe("getTrkpts", function() {
 
 		it("should throw error when gpxToJson is invalid", function() {
 			expect(function() {
@@ -291,6 +291,6 @@ describe("GPX Services", function() {
 			});
 
 		});
-	});
+	});*/
 
 });

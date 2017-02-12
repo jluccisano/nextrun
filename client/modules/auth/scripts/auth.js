@@ -4,6 +4,7 @@ var authModule = angular.module("nextrunApp.auth", [
     "ui.bootstrap",
     "ngRoute",
     "ngCookies",
+    "gettext",
     "nextrunApp.commons"
 ]);
 

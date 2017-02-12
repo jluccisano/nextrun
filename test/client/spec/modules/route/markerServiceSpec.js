@@ -12,7 +12,7 @@ describe("Marker Services", function() {
 		mockMarkers = _MockFactory_.getMockMarkers();
 	}));
 
-	describe("createMarker", function() {
+	/*describe("createMarker", function() {
 
 		it("should throw error when latLng is not an instance of google.maps.LatLng", function() {
 			expect(function() {
@@ -79,6 +79,6 @@ describe("Marker Services", function() {
 
 		});
 
-	});
+	});*/
 
 });

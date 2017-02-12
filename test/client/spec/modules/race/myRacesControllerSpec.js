@@ -68,8 +68,7 @@ describe('MyRacesController', function() {
 			$scope.$apply();
 
 			expect($scope.init).toHaveBeenCalled();
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.publish.successfully", 3000);
-
+			expect(mockAlertService.add).toHaveBeenCalled();
 		});
 
 	});

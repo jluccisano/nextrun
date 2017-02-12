@@ -34,7 +34,7 @@ exports.signup = function(req, res) {
         user.save(function(err) {
             if (err) {
                 logger.error(err);
-                return res.json(400, {
+                return res.status(400).json({
                     message: errorUtils.errors(err.errors)
                 });
             }
@@ -42,11 +42,11 @@ exports.signup = function(req, res) {
             req.logIn(user, function(err) {
                 if (err) {
                     logger.error(err);
-                    return res.json(400, {
+                    return res.status(400).json({
                         message: errorUtils.errors(err.errors)
                     });
                 }
-                return res.json(200, {
+                return res.status(200).json({
                     role: user.role,
                     username: user.username,
                     email: user.email
@@ -54,7 +54,7 @@ exports.signup = function(req, res) {
             });
         });
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.bodyParamRequired"]
         });
     }
@@ -68,7 +68,7 @@ exports.signup = function(req, res) {
  */
 exports.logout = function(req, res) {
     req.logout();
-    return res.send(200);
+    return res.status(200);
 };
 
 /**
@@ -83,19 +83,19 @@ exports.login = function(req, res) {
     passport.authenticate("local", function(err, user, message) {
         if (err) {
             logger.error(message);
-            return res.json(400, message);
+            return res.status(400).json(message);
         }
         if (!user) {
             logger.error(message);
-            return res.json(400, message);
+            return res.status(400).json(message);
         }
 
         req.logIn(user, function(err) {
             if (err) {
                 logger.error(err);
-                return res.json(400, message);
+                return res.status(400).json(message);
             }
-            return res.json(200, {
+            return res.status(200).json({
                 "role": user.role,
                 "username": user.username
             });
@@ -141,10 +141,10 @@ exports.forgotPassword = function(req, res) {
 
                     if (!err) {
                         email.sendEmailPasswordReinitialized(user.email, newPassword);
-                        return res.json(200);
+                        return res.status(200);
                     } else {
                         logger.error(err);
-                        return res.json(400, {
+                        return res.status(400).json({
                             message: errorUtils.errors(err.errors)
                         });
                     }
@@ -152,13 +152,13 @@ exports.forgotPassword = function(req, res) {
 
             } else {
                 logger.error("error.invalidEmail");
-                return res.json(400, {
+                return res.status(400).json({
                     message: ["error.invalidEmail"]
                 });
             }
         });
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.bodyParamRequired"]
         });
     }
@@ -177,7 +177,7 @@ exports.settings = function(req, res) {
 
         userConnected = req.user;
 
-        return res.json(200, {
+        return res.status(200).json({
             user: {
                 _id: userConnected._id,
                 username: userConnected.username,
@@ -185,7 +185,7 @@ exports.settings = function(req, res) {
             }
         });
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.userNotConnected"]
         });
     }
@@ -211,20 +211,20 @@ exports.checkIfEmailAlreadyExists = function(req, res) {
         }, function(err, user) {
             if (err) {
                 logger.error(err);
-                return res.json(400, {
+                return res.status(400).json({
                     message: errorUtils.errors(err.errors)
                 });
             }
             if (!user) {
-                return res.json(200);
+                return res.status(200);
             }
             logger.error("error.emailAlreadyExists");
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.emailAlreadyExists"]
             });
         });
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.bodyParamRequired"]
         });
     }
@@ -244,11 +244,11 @@ exports.updateProfile = function(req, res) {
     user.save(function(err) {
         if (err) {
             logger.error(err);
-            return res.json(400, {
+            return res.status(400).json({
                 message: errorUtils.errors(err.errors)
             });
         }
-        return res.json(200, {
+        return res.status(200).json({
             user: {
                 _id: user._id,
                 username: user.username,
@@ -295,29 +295,29 @@ exports.updatePassword = function(req, res) {
                     upsert: true
                 }, function(err) {
                     if (!err) {
-                        return res.json(200);
+                        return res.status(200);
 
                     } else {
                         logger.error("error.occured");
-                        return res.json(400, {
+                        return res.status(400).json({
                             message: ["error.occured"]
                         });
                     }
                 });
             } else {
                 logger.error("error.invalidPassword");
-                return res.json(400, {
+                return res.status(400).json({
                     message: ["error.invalidPassword"]
                 });
             }
         } else {
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.bodyParamRequired"]
             });
         }
 
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.userNotConnected"]
         });
     }
@@ -333,10 +333,10 @@ exports.deleteAccount = function(req, res) {
     User.destroy(req.user._id, function(err) {
         if (!err) {
             req.logout();
-            return res.json(200);
+            return res.status(200);
         } else {
             logger.error(err);
-            return res.json(400, {
+            return res.status(400).json({
                 message: errorUtils.errors(err.errors)
             });
         }

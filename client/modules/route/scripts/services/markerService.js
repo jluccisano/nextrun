@@ -3,7 +3,7 @@
 angular.module("nextrunApp.route").factory("MarkerService", function() {
 	return {
 
-		createMarker: function(latLng, icon, title) {
+		/*createMarker: function(latLng, icon, title) {
 
 			if (!(latLng instanceof google.maps.LatLng)) {
 				throw new Error("latLng is not instance of google.maps.Latlng");
@@ -34,6 +34,6 @@ angular.module("nextrunApp.route").factory("MarkerService", function() {
 			}
 
 			markers.splice(markers.length - 1, 1);	
-		}
+		}*/
 	};
 });

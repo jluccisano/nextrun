@@ -42,6 +42,7 @@
     "FB": false,
     "moment": false,
     "google": false,
-    "Enum": false
+    "Enum": false,
+    "routeBuilder": false
   }
 }

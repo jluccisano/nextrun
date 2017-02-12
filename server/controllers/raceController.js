@@ -25,16 +25,17 @@ var elasticSearchClient = new ElasticSearchClient(serverOptions);
  * Load By Id
  */
 exports.load = function(req, res, next, id) {
+
     Race.load(id, function(err, race) {
         if (err) {
             logger.error(err);
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.unknownId"]
             });
         }
         if (!race) {
             logger.error("error.unknownId");
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.unknownId"]
             });
         }
@@ -66,23 +67,23 @@ exports.create = function(req, res) {
             race.save(function(err, race) {
                 if (err) {
                     logger.error(err);
-                    return res.json(400, {
+                    return res.status(400).json({
                         message: errorUtils.errors(err.errors)
                     });
                 } else {
-                    return res.json(200, {
+                    return res.status(200).json({
                         raceId: race._id
                     });
                 }
 
             });
         } else {
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.userNotConnected"]
             });
         }
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.bodyParamRequired"]
         });
     }
@@ -118,17 +119,17 @@ exports.findByUser = function(req, res) {
     Race.findByCriteria(options, function(err, races) {
         if (err) {
             logger.error(err);
-            return res.json(400, {
+            return res.status(400).json({
                 message: errorUtils.errors(err.errors)
             });
         }
         if (races) {
-            return res.json(200, {
+            return res.status(200).json({
                 races: races
             });
         } else {
             logger.error("error.occured");
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.occured"]
             });
         }
@@ -144,15 +145,14 @@ exports.findByUser = function(req, res) {
  * @returns race loaded by load parameter id
  */
 exports.find = function(req, res) {
-
     var race = req.race;
 
     if (!underscore.isUndefined(race)) {
-        return res.json(200, {
+        return res.status(200).json({
             race: race
         });
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.unknownRace"]
         });
     }
@@ -196,32 +196,32 @@ exports.update = function(req, res) {
                         upsert: true
                     }, function(err) {
                         if (!err) {
-                            return res.json(200);
+                            return res.status(200);
                         } else {
                             logger.error(err);
-                            return res.json(400, {
+                            return res.status(400).json({
                                 message: errorUtils.errors(err.errors)
                             });
                         }
                     });
                 } else {
                     logger.error("error.userNotOwner");
-                    return res.json(400, {
+                    return res.status(400).json({
                         message: ["error.userNotOwner"]
                     });
                 }
             } else {
-                return res.json(400, {
+                return res.status(400).json({
                     message: ["error.userNotConnected"]
                 });
             }
         } else {
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.unknownRace"]
             });
         }
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.bodyParamRequired"]
         });
     }
@@ -244,27 +244,27 @@ exports.delete = function(req, res) {
             if (req.race.userId.equals(userConnected._id)) {
                 Race.destroy(race._id, function(err) {
                     if (!err) {
-                        return res.json(200);
+                        return res.status(200);
                     } else {
                         logger.error(err);
-                        return res.json(400, {
+                        return res.status(400).json({
                             message: errorUtils.errors(err.errors)
                         });
                     }
                 });
             } else {
                 logger.error("error.userNotOwner");
-                return res.json(400, {
+                return res.status(400).json({
                     message: ["error.userNotOwner"]
                 });
             }
         } else {
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.userNotConnected"]
             });
         }
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.unknownRace"]
         });
     }
@@ -340,10 +340,10 @@ exports.publish = function(req, res) {
                     upsert: true
                 }, function(err) {
                     if (!err) {
-                        return res.json(200);
+                        return res.status(200);
                     } else {
                         logger.error(err);
-                        return res.json(400, {
+                        return res.status(400).json({
                             message: errorUtils.errors(err.errors)
                         });
                     }
@@ -351,17 +351,17 @@ exports.publish = function(req, res) {
 
             } else {
                 logger.error("error.userNotOwner");
-                return res.json(400, {
+                return res.status(400).json({
                     message: ["error.userNotOwner"]
                 });
             }
         } else {
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.userNotConnected"]
             });
         }
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.unknownRace"]
         });
     }
@@ -384,13 +384,13 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
                 next();
             } else {
                 logger.error(err);
-                return res.json(400, {
+                return res.status(400).json({
                     message: errorUtils.errors(err.errors)
                 });
             }
         });
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.unknownUser"]
         });
     }
@@ -647,7 +647,7 @@ exports.search = function(req, res) {
         elasticSearchClient.search(config.racesidx, "race", operation, function(err, data) {
             if (err) {
                 logger.error(err);
-                return res.json(400, {
+                return res.status(400).json({
                     message: errorUtils.errors(err.errors)
                 });
             }
@@ -656,15 +656,15 @@ exports.search = function(req, res) {
                 if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
                     logger.info(JSON.parse(data));
                 }
-                return res.json(200, JSON.parse(data));
+                return res.status(200).json(JSON.parse(data));
             } else {
-                return res.json(400, {
+                return res.status(400).json({
                     message: ["error.noData"]
                 });
             }
         });
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.noCriteria"]
         });
     }
@@ -762,7 +762,7 @@ exports.autocomplete = function(req, res) {
         elasticSearchClient.search(config.racesidx, "race", query, function(err, data) {
             if (err) {
                 logger.error(err);
-                return res.json(400, {
+                return res.status(400).json({
                     message: errorUtils.errors(err.errors)
                 });
             }
@@ -771,16 +771,16 @@ exports.autocomplete = function(req, res) {
                 if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
                     logger.info(JSON.parse(data));
                 }
-                return res.json(200, JSON.parse(data));
+                return res.status(200).json(JSON.parse(data));
             } else {
-                return res.json(400, {
+                return res.status(400).json({
                     message: ["error.noData"]
                 });
             }
         });
 
     } else {
-        return res.json(400, {
+        return res.status(400).json({
             message: ["error.noCriteria"]
         });
     }
@@ -799,16 +799,16 @@ exports.findAll = function(req, res) {
     Race.findAll(function(err, races) {
         if (err) {
             logger.error(err);
-            return res.json(400, {
+            return res.status(400).json({
                 message: errorUtils.errors(err.errors)
             });
         }
         if (races) {
-            return res.json(200, {
+            return res.status(200).json({
                 races: races
             });
         } else {
-            return res.json(400, {
+            return res.status(400).json({
                 message: ["error.occured"]
             });
         }

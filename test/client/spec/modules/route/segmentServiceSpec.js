@@ -17,7 +17,7 @@ describe("Segment Services", function() {
 		mockPoint = _MockFactory_.getMockPoint();
 	}));
 
-	describe("calculateDistanceOfSegment", function() {
+	/*describe("calculateDistanceOfSegment", function() {
 
 		it("should throw error when legs is undefined", function() {
 			expect(function() {
@@ -249,6 +249,6 @@ describe("Segment Services", function() {
 			expect(SegmentService.getLastSegment(mockSegments)).toEqual(mockSegments[mockSegments.length-1]);
 		});
 
-	});
+	});*/
 
 });

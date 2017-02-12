@@ -34,7 +34,7 @@ describe("ForgotPasswordModalController", function() {
 			$scope.$apply();
 			expect(mockAuthService.forgotPassword).toHaveBeenCalled();
 			expect(mockModal.close).toHaveBeenCalledWith();
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.email.send.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalled();
 		});
 
 		it("submit with error", function() {

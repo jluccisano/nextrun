@@ -12,7 +12,7 @@
 **/
 
 process.env.NODE_ENV = "test";
-process.env.PORT= 4000;
+process.env.PORT = 4000;
 
 var mongoose = require("mongoose"),
 	should = require("should"),
@@ -80,11 +80,16 @@ describe("RaceController", function() {
 				}, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.unknownId");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.unknownId");
+						done();
+
+					}
+				};
 			};
 
 			RaceController.load(req, res, next, 1);
@@ -96,11 +101,16 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.unknownId");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.unknownId");
+						done();
+
+					}
+				};
 			};
 
 			RaceController.load(req, res, next, 1);
@@ -147,11 +157,16 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+
+					}
+				};
 			};
 
 			RaceController.destroyAllRaceOfUser(req, res, next);
@@ -169,11 +184,16 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.unknownUser");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.unknownUser");
+						done();
+
+					}
+				};
 			};
 
 			RaceController.destroyAllRaceOfUser(req, res, next);
@@ -221,11 +241,15 @@ describe("RaceController", function() {
 				}, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			RaceController.findByUser(req, res);
@@ -239,11 +263,16 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.occured");
-				done();
+
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.occured");
+						done();
+					}
+				};
 			};
 
 			RaceController.findByUser(req, res);
@@ -259,11 +288,16 @@ describe("RaceController", function() {
 				cb(null, mockRaces);
 			});
 
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data.races).to.be.an("array");
-				expect(data.races[0]).to.equal(mockRaces[0]);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data.races).to.be.an("array");
+						expect(data.races[0]).to.equal(mockRaces[0]);
+						done();
+					}
+				};
+
 			};
 
 			RaceController.findByUser(req, res);
@@ -297,11 +331,15 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.bodyParamRequired");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.bodyParamRequired");
+						done();
+					}
+				};
 			};
 
 			RaceController.create(req, res);
@@ -317,11 +355,15 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotConnected");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotConnected");
+						done();
+					}
+				};
 			};
 
 			RaceController.create(req, res);
@@ -339,11 +381,15 @@ describe("RaceController", function() {
 				}, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			RaceController.create(req, res);
@@ -357,10 +403,15 @@ describe("RaceController", function() {
 				cb(null, race);
 			});
 
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data.raceId).to.equal(race._id);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data.raceId).to.equal(race._id);
+						done();
+					}
+				};
+
 			};
 
 			RaceController.create(req, res);
@@ -376,11 +427,15 @@ describe("RaceController", function() {
 			//set race to undefined
 			req.race = undefined;
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.unknownRace");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.unknownRace");
+						done();
+					}
+				};
 			};
 
 			RaceController.find(req, res);
@@ -390,9 +445,14 @@ describe("RaceController", function() {
 
 			req.race = race;
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(200);
-				done();
+
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(200);
+						done();
+					}
+				};
 			};
 
 			RaceController.find(req, res);
@@ -449,11 +509,15 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.bodyParamRequired");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.bodyParamRequired");
+						done();
+					}
+				};
 			};
 
 			RaceController.update(req, res);
@@ -473,11 +537,15 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.unknownRace");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.unknownRace");
+						done();
+					}
+				};
 			};
 
 			RaceController.update(req, res);
@@ -497,11 +565,15 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotConnected");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotConnected");
+						done();
+					}
+				};
 			};
 
 			RaceController.update(req, res);
@@ -521,11 +593,15 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotOwner");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotOwner");
+						done();
+					}
+				};
 			};
 
 			RaceController.update(req, res);
@@ -543,11 +619,15 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			RaceController.update(req, res);
@@ -562,10 +642,11 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
+
 			RaceController.update(req, res);
 
 		});
@@ -599,11 +680,15 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			RaceController.delete(req, res);
@@ -619,11 +704,15 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotOwner");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotOwner");
+						done();
+					}
+				};
 			};
 
 			RaceController.delete(req, res);
@@ -638,11 +727,15 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.unknownRace");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.unknownRace");
+						done();
+					}
+				};
 			};
 
 			RaceController.delete(req, res);
@@ -657,11 +750,15 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotConnected");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotConnected");
+						done();
+					}
+				};
 			};
 
 			RaceController.delete(req, res);
@@ -673,9 +770,10 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
+
 			};
 
 			RaceController.delete(req, res);
@@ -702,7 +800,7 @@ describe("RaceController", function() {
 			});
 
 			RaceController.updateLatLng.bind(undefined, undefined).should.
-			throw (new Error("raceId is not defined"));
+			throw(new Error("raceId is not defined"));
 			done();
 		});
 
@@ -712,7 +810,7 @@ describe("RaceController", function() {
 			});
 
 			RaceController.updateLatLng.bind("98a7082cad21354c23000001", undefined).should.
-			throw (new Error("latlng is not defined"));
+			throw(new Error("latlng is not defined"));
 			done();
 		});
 
@@ -769,11 +867,15 @@ describe("RaceController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			RaceController.publish(req, res);
@@ -789,11 +891,15 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotOwner");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotOwner");
+						done();
+					}
+				};
 			};
 
 			RaceController.publish(req, res);
@@ -808,11 +914,16 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.unknownRace");
-				done();
+
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.unknownRace");
+						done();
+					}
+				};
 			};
 
 			RaceController.publish(req, res);
@@ -827,11 +938,15 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.userNotConnected");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.userNotConnected");
+						done();
+					}
+				};
 			};
 
 			RaceController.publish(req, res);
@@ -843,9 +958,10 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
+
 			};
 
 			RaceController.publish(req, res);
@@ -880,11 +996,15 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.noCriteria");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.noCriteria");
+						done();
+					}
+				};
 			};
 
 			RaceController.search(req, res);
@@ -897,11 +1017,15 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.noData");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.noData");
+						done();
+					}
+				};
 			};
 
 			RaceController.search(req, res);
@@ -919,11 +1043,15 @@ describe("RaceController", function() {
 				}, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			RaceController.search(req, res);
@@ -939,10 +1067,14 @@ describe("RaceController", function() {
 				cb(null, mockData);
 			});
 
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data).to.equal(true);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data).to.equal(true);
+						done();
+					}
+				};
 			};
 
 			RaceController.search(req, res);
@@ -974,10 +1106,14 @@ describe("RaceController", function() {
 				cb(null, mockData);
 			});
 
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data).to.equal(true);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data).to.equal(true);
+						done();
+					}
+				};
 			};
 
 			RaceController.search(req, res);
@@ -1008,10 +1144,14 @@ describe("RaceController", function() {
 				cb(null, mockData);
 			});
 
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data).to.equal(true);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data).to.equal(true);
+						done();
+					}
+				};
 			};
 
 			RaceController.search(req, res);
@@ -1046,11 +1186,15 @@ describe("RaceController", function() {
 				}, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			RaceController.autocomplete(req, res);
@@ -1063,11 +1207,15 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.noData");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.noData");
+						done();
+					}
+				};
 			};
 
 			RaceController.autocomplete(req, res);
@@ -1082,11 +1230,15 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.noCriteria");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.noCriteria");
+						done();
+					}
+				};
 			};
 
 			RaceController.autocomplete(req, res);
@@ -1101,10 +1253,16 @@ describe("RaceController", function() {
 				cb(null, mockData);
 			});
 
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data).to.equal(true);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data).to.equal(true);
+						done();
+					}
+				};
+
+
 			};
 
 			RaceController.autocomplete(req, res);
@@ -1124,11 +1282,15 @@ describe("RaceController", function() {
 				}, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			RaceController.findAll(req, res);
@@ -1141,11 +1303,15 @@ describe("RaceController", function() {
 				cb(null, null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.occured");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.occured");
+						done();
+					}
+				};
 			};
 
 			RaceController.findAll(req, res);
@@ -1161,11 +1327,15 @@ describe("RaceController", function() {
 				cb(null, mockRaces);
 			});
 
-			res.json = function(httpStatus, data) {
-				expect(httpStatus).to.equal(200);
-				expect(data.races).to.be.an("array");
-				expect(data.races[0]).to.equal(mockRaces[0]);
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(data) {
+						expect(httpStatus).to.equal(200);
+						expect(data.races).to.be.an("array");
+						expect(data.races[0]).to.equal(mockRaces[0]);
+						done();
+					}
+				};
 			};
 
 			RaceController.findAll(req, res);

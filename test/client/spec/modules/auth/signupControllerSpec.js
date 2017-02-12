@@ -34,7 +34,7 @@ describe("SignupController", function() {
 			$scope.submit();
 			$scope.$apply();
 			expect(mockAuthService.register).toHaveBeenCalled();
-			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.signup.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalled();
 			expect($location.path).toHaveBeenCalledWith("/");
 			expect(mockMetaService.ready).toHaveBeenCalled();
 		});

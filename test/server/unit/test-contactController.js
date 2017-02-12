@@ -12,7 +12,7 @@
 **/
 
 process.env.NODE_ENV = "test";
-process.env.PORT= 4000;
+process.env.PORT = 4000;
 
 var mongoose = require("mongoose"),
 	chai = require("chai"),
@@ -65,11 +65,15 @@ describe("ContactController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.bodyParamRequired");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.bodyParamRequired");
+						done();
+					}
+				};
 			};
 
 			ContactController.create(req, res);
@@ -87,11 +91,15 @@ describe("ContactController", function() {
 				});
 			});
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error");
+						done();
+					}
+				};
 			};
 
 			ContactController.create(req, res);
@@ -105,7 +113,7 @@ describe("ContactController", function() {
 				cb(null);
 			});
 
-			res.json = function(httpStatus, data) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -132,11 +140,15 @@ describe("ContactController", function() {
 
 			var emailStub = sandbox.stub(email, "sendEmailNewFeedback").returns();
 
-			res.json = function(httpStatus, err) {
-				expect(httpStatus).to.equal(400);
-				expect(err.message).to.be.an("array");
-				expect(err.message[0]).to.equal("error.occured");
-				done();
+			res.status = function(httpStatus) {
+				return {
+					json: function(err) {
+						expect(httpStatus).to.equal(400);
+						expect(err.message).to.be.an("array");
+						expect(err.message[0]).to.equal("error.occured");
+						done();
+					}
+				};
 			};
 
 			ContactController.feedback(req, res);
@@ -146,7 +158,7 @@ describe("ContactController", function() {
 
 			var emailStub = sandbox.stub(email, "sendEmailNewFeedback").returns();
 
-			res.json = function(httpStatus, data) {
+			res.status = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
