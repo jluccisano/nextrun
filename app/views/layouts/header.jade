@@ -8,6 +8,10 @@ header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner" d
 					span.icon-bar
 				a.navbar-brand(href="/") NEXTRUN
 			div.navbar-collapse.collapse.bs-navbar-collapse
+
+				ul.nav.navbar-nav
+					li
+						a(href="/races/search") Rechercher
 				ul.nav.navbar-nav.navbar-right
 					li.dropdown(data-ng-show="isLoggedIn()")
 						a.dropdown-toggle(data-toggle="dropdown") {{user.username}}
@@ -17,9 +21,6 @@ header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner" d
 								a(href="/myraces") Mes manifestations
 							li
 								a(href="/users/settings") Paramètres
-							if (req.isAuthenticated() && req.user.profile == "superadmin")
-								li
-									a(href="#/users/admin") Administration
 							li
 								a(data-ng-click="logout()") Se déconnecter
 					li(data-ng-hide="isLoggedIn()")

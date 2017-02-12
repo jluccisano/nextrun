@@ -36,12 +36,12 @@
         this.separator = ' - ';
 
         this.locale = {
-            applyLabel: 'Apply',
-            cancelLabel: 'Cancel',
-            fromLabel: 'From',
-            toLabel: 'To',
-            weekLabel: 'W',
-            customRangeLabel: 'Custom Range',
+            applyLabel: 'Valider',
+            cancelLabel: 'Annuler',
+            fromLabel: 'De',
+            toLabel: 'Au',
+            weekLabel: 'S',
+            customRangeLabel: 'Personnalisé',
             daysOfWeek: moment()._lang._weekdaysMin.slice(),
             monthNames: moment()._lang._monthsShort.slice(),
             firstDay: 0

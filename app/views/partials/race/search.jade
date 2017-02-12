@@ -107,9 +107,6 @@ div.container
 									  data-ng-true-value="true", 
 									  data-ng-disabled="facet.count === 0",
 									  data-ng-false-value="false")
-					//div(data-ng-show="region.name==='Toute la France'")
-					//	h4 par Région
-					//	select(class="multiselect" data-ng-change="onChange()" data-placeholder="Sélectionner..." data-ng-model="departments" data-ng-options="department as displayDepartmentFacet(department) group by department.region for department in departmentFacets" multiple="multiple" multiselect-dropdown)
 					h4 par Date
 					div.input-group
 						span.input-group-addon
@@ -144,7 +141,7 @@ div.container
 							td(align="center") {{race.fields.partial1[0].department.code}} - {{race.fields.partial1[0].department.name}}
 							td(align="center") {{race.fields.partial1[0].distanceType.name}}
 							td(align="center") {{getDate(race.fields.partial1[0].date)}}
-				div.col-lg-6.col-lg-offset-4
+				div.col-lg-4.col-lg-offset-4
 					span.label.label-default(data-ng-show="emptyResults") Aucun Résultats
 				div.col-lg-6.col-lg-offset-4
 					pagination(boundary-links="true" max-size="maxSize" num-pages="numPages" items-per-page="pageSize"  on-select-page="onSelectPage()" total-items="totalItems" page="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")

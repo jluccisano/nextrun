@@ -294,44 +294,46 @@ exports.search = function(req, res) {
   query.bool = {};
   query.bool.should = [];
 
-  var raceName_query = elasticsearchUtils.buildQueryString("race.name.autocomplete", criteria.fulltext);
+  if ('undefined' !== typeof(criteria.fulltext) && criteria.fulltext.length > 2) {
 
-  if (raceName_query) {
-    query.bool.should.push(raceName_query);
+    var raceName_query = elasticsearchUtils.buildQueryString("race.name.autocomplete", criteria.fulltext);
+
+    if (raceName_query) {
+      query.bool.should.push(raceName_query);
+    }
+
+    var departmentName_query = elasticsearchUtils.buildQueryString("race.department.name.autocomplete", criteria.fulltext);
+
+    if (departmentName_query) {
+      query.bool.should.push(departmentName_query);
+    }
+
+    var departmentRegion_query = elasticsearchUtils.buildQueryString("race.department.region.autocomplete", criteria.fulltext);
+
+    if (departmentRegion_query) {
+      query.bool.should.push(departmentRegion_query);
+
+    }
+
+    var departmentCode_query = elasticsearchUtils.buildQueryString("race.department.code.autocomplete", criteria.fulltext);
+
+    if (departmentCode_query) {
+      query.bool.should.push(departmentCode_query);
+    }
+
+    var distanceType_query = elasticsearchUtils.buildQueryString("race.distanceType.i18n.autocomplete", criteria.fulltext);
+
+    if (distanceType_query) {
+      query.bool.should.push(distanceType_query);
+    }
+
+    var raceType_query = elasticsearchUtils.buildQueryString("race.type.name.autocomplete", criteria.fulltext);
+
+    if (raceType_query) {
+      query.bool.should.push(raceType_query);
+    }
+
   }
-
-  var departmentName_query = elasticsearchUtils.buildQueryString("race.department.name.autocomplete", criteria.fulltext);
-
-  if (departmentName_query) {
-    query.bool.should.push(departmentName_query);
-  }
-
-  var departmentRegion_query = elasticsearchUtils.buildQueryString("race.department.region.autocomplete", criteria.fulltext);
-
-  if (departmentRegion_query) {
-    query.bool.should.push(departmentRegion_query);
-
-  }
-
-  var departmentCode_query = elasticsearchUtils.buildQueryString("race.department.code.autocomplete", criteria.fulltext);
-
-  if (departmentCode_query) {
-    query.bool.should.push(departmentCode_query);
-  }
-
-  var distanceType_query = elasticsearchUtils.buildQueryString("race.distanceType.i18n.autocomplete", criteria.fulltext);
-
-  if (distanceType_query) {
-    query.bool.should.push(distanceType_query);
-  }
-
-  var raceType_query = elasticsearchUtils.buildQueryString("race.type.name.autocomplete", criteria.fulltext);
-
-  if (raceType_query) {
-    query.bool.should.push(raceType_query);
-  }
-
-
 
   if (query.bool.should.length > 0) {
     operation.query = query;
@@ -378,13 +380,18 @@ exports.search = function(req, res) {
   }
 
   var distance = 5;
-  if(criteria.searchAround === true) {
+  if (criteria.searchAround === true) {
     distance = criteria.distance;
   }
 
   var geoDistance_filter = elasticsearchUtils.buildGeoDistanceFilter(criteria.location, distance);
   if (geoDistance_filter) {
     filter.and.push(geoDistance_filter);
+  }
+
+  var published_filter = elasticsearchUtils.buildTermFilter("race.published", true);
+  if (published_filter) {
+    filter.and.push(published_filter);
   }
 
   if (filter.and.length > 0) {
@@ -439,6 +446,12 @@ exports.search = function(req, res) {
   if (departmentOfRegion_filter) {
     departmentFacetFilter.and.push(departmentOfRegion_filter);
     typeFacetFilter.and.push(departmentOfRegion_filter);
+  }
+
+  //set for all published filter
+  if(published_filter) {
+    departmentFacetFilter.and.push(published_filter);
+    typeFacetFilter.and.push(published_filter);
   }
 
 

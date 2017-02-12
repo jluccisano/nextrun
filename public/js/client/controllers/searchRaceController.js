@@ -48,6 +48,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			$scope.searchAround = undefined;
 			$scope.distance = undefined;
 			$scope.details = undefined;
+			$scope.dateRange = {
+				"startDate": moment(),
+				"endDate": moment().add('days', 179)
+			};
 
 			$scope.search();
 		});
@@ -60,6 +64,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			$scope.details = sharedService.criteria.details;
 			$scope.isModeGeolocation = true;
 			$scope.fulltext = undefined;
+			$scope.dateRange = {
+				"startDate": moment(),
+				"endDate": moment().add('days', 179)
+			};
 
 			$scope.search();
 		});
@@ -76,11 +84,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			timePickerIncrement: 1,
 			timePicker12Hour: true,
 			ranges: {
-				"Aujourd'hui": [moment(), moment()],
 				"Les 7 Prochains jours": [moment(), moment().add('days', 6)],
 				"Les 30 Prochains jours": [moment(), moment().add('days', 29)],
-				"Ce mois-ci": [moment().startOf('month'), moment().endOf('month')],
-				"Le mois prochain": [moment().add('month', 1).startOf('month'), moment().add('month', 1).endOf('month')]
+				"Les 3 mois à venir": [moment(), moment().add('days', 89)],
+				"Les 6 mois à venir": [moment(), moment().add('days', 179)]
 			},
 			opens: 'left',
 			buttonClasses: ['btn btn-default'],
@@ -101,7 +108,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.dateRange = {
 			"startDate": moment(),
-			"endDate": moment().add('days', 365)
+			"endDate": moment().add('days', 179)
 		};
 
 
@@ -110,7 +117,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			$scope.departments = [];
 			$scope.dateRange = {
 				"startDate": moment(),
-				"endDate": moment().add('days', 29)
+				"endDate": moment().add('days', 179)
 			};
 		}
 

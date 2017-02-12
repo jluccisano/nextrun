@@ -8,7 +8,6 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 		/** init google maps service **/
 		google.maps.visualRefresh = true;
 
-		$scope.departments = DEPARTMENTS.enums;
 		$scope.types = TYPE_OF_RACES.enums;
 		$scope.distances = [];
 		$scope.cursorMarker = {};
@@ -115,10 +114,6 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 		$scope.onChangeTab = function(route) {
 			route.isVisible = true;
-		};
-
-		$scope.getDepartment = function(department) {
-			return department.code + ' - ' + department.name;
 		};
 
 		$scope.getType = function(type) {
@@ -364,13 +359,16 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 			var place = $scope.details;
 
-			if (place !== undefined) {
+			if ('undefined' !== typeof place) {
+
 				$scope.race.pin = {};
 				$scope.race.pin.name = place.name;
 				$scope.race.pin.location = {
 					lat: place.geometry.location.lat(),
 					lon: place.geometry.location.lng()
 				}
+				$scope.race.department = place.department;
+
 			}
 
 			var data = {

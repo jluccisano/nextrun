@@ -15,7 +15,6 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 			types: "(cities)"
 		};
 
-		$scope.departments = DEPARTMENTS.enums;
 		$scope.types = TYPE_OF_RACES.enums;
 		$scope.distances = [];
 
@@ -29,11 +28,6 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 			return Auth.isLoggedIn();
 		};
 
-
-		$scope.getDepartment = function(department) {
-			return department.code + ' - ' + department.name;
-		};
-
 		$scope.getType = function(type) {
 			return type.i18n;
 		};
@@ -42,18 +36,20 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 			return distanceType.i18n;
 		};
 
-
 		$scope.submit = function() {
 
 			var place = $scope.details;
 
-			if (place !== undefined) {
+			if ('undefined' !== typeof place) {
+
 				$scope.race.pin = {};
 				$scope.race.pin.name = place.name;
 				$scope.race.pin.location = {
 					lat: place.geometry.location.lat(),
 					lon: place.geometry.location.lng()
 				}
+				$scope.race.department = place.department;
+				
 			}
 
 

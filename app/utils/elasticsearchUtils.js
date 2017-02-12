@@ -26,6 +26,21 @@ exports.buildGeoDistanceFilter = function(location, distance) {
 
 };
 
+exports.buildTermFilter = function(field, term) {
+  var term_filter;
+
+  if ('undefined' !== typeof(field) && 'undefined' !== typeof(term)) {
+
+    var term_filter = {};
+    term_filter.term = {};
+    term_filter.term[field] = term;
+   
+  }
+
+  return term_filter;
+
+};
+
 exports.buildTermsFilter = function(field, terms) {
   var terms_filter;
 
