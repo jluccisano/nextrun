@@ -634,7 +634,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 	}
 
 	return {
-		onClickMap: function($scope, route, destinationLatlng, travelMode) {
+		onClickMap: function($scope, route, destinationLatlng) {
 
 			var lastLatlngOfLastSegment;
 
@@ -650,12 +650,12 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				isFirstPoint = true;
 			}
 
-			if (route.stayOnTheRoad) {
+			if (route.travelMode !== 'NONE') {
 
 				var directionsRequest = {
 					origin: new google.maps.LatLng(lastLatlngOfLastSegment.mb, lastLatlngOfLastSegment.nb),
 					destination: destinationLatlng,
-					travelMode: travelMode,
+					travelMode: route.travelMode,
 					provideRouteAlternatives: false,
 					avoidHighways: true,
 					avoidTolls: true,

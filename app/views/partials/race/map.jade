@@ -12,9 +12,18 @@ div(data-ng-if="route.isVisible")
 	div(data-ng-show="route.editMode" style="padding: 5px; z-index: 0; position: absolute; top: 300px; right: 20px;")
 		div.well
 			form
-				div.checkbox
-					label Suivre la route
-						input(type="checkbox" checked="checked" data-ng-model="route.stayOnTheRoad")
+				div(class="radio")
+					label
+						input(type="radio" data-ng-model="route.travelMode" ng-value="'DRIVING'" ) 
+						span Suivre la route
+				div(class="radio")
+					label
+						input(type="radio"  data-ng-model="route.travelMode" ng-value="'WALKING'") 
+						span Suivre le chemin
+				div(class="radio")
+					label
+						input(type="radio" data-ng-model="route.travelMode" ng-value="'NONE'") 
+						span Segment direct
 				div.button-group
 					button.btn.btn-primary.btn-xs(data-ng-click="undo(route)")
 						i.fa.fa-reply

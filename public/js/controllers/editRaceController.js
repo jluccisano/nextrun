@@ -161,8 +161,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							maxElevation: (currentRoute) ? currentRoute.maxElevation : 0,
 							elevationPoints: (currentRoute && currentRoute.elevationPoints.length > 0) ? currentRoute.elevationPoints : [],
 							type: routeType.i18n,
-							stayOnTheRoad: true,
-							travelMode: google.maps.TravelMode.WALKING,
+							travelMode: google.maps.TravelMode.DRIVING,
 							zoom: 14,
 							fit: true,
 							markers: [],
@@ -322,7 +321,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 						route.events = {
 							click: function(mapModel, eventName, originalEventArgs) {
-								RouteFactory.onClickMap($scope, route, originalEventArgs[0].latLng, google.maps.TravelMode.DRIVING);
+								RouteFactory.onClickMap($scope, route, originalEventArgs[0].latLng);
 							}
 						}
 
@@ -469,8 +468,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 					maxElevation: 0,
 					elevationPoints: [],
 					type: routeType.i18n,
-					stayOnTheRoad: true,
-					travelMode: google.maps.TravelMode.WALKING,
+					travelMode: google.maps.TravelMode.DRIVING,
 					zoom: 10,
 					fit: true,
 					markers: [],
@@ -629,7 +627,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 				route.events = {
 					click: function(mapModel, eventName, originalEventArgs) {
-						RouteFactory.onClickMap($scope, route, originalEventArgs[0].latLng, google.maps.TravelMode.DRIVING);
+						RouteFactory.onClickMap($scope, route, originalEventArgs[0].latLng);
 					}
 				}
 
