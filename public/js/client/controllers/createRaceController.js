@@ -1,9 +1,20 @@
-angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth','$modal',
+angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal',
 	function($scope, $location, RaceServices, Alert, Auth, $modal) {
 		'use strict';
+
+		$scope.tabs = [{
+			active: true,
+			disabled: false
+		}, {
+			active: false,
+			disabled: true
+		}];
+
 		$scope.departments = DEPARTMENTS.enums;
 		$scope.types = TYPE_OF_RACES.enums;
 		$scope.distances = [];
+
+		$scope.accountExists = true;
 
 		$scope.onChange = function() {
 			$scope.distances = $scope.race.type.distances;
@@ -27,23 +38,37 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 		};
 
 
-		$scope.submit = function(race) {
+		$scope.submit = function() {
 
 			var data = {
-				race: race
+				race: $scope.race
 			};
 
-			RaceServices.create(data,
-				function(res) {
-					Alert.add("success", "Votre nouvelle manifestation a bien été créé", 3000);
-					$scope.openRedirectionModal(res.raceId);
+			if ($scope.isLoggedIn()) {
+				RaceServices.create(data,
+					function(res) {
+						Alert.add("success", "Votre nouvelle manifestation a bien été créé", 3000);
+						$scope.openRedirectionModal(res.raceId);
 
-				},
-				function(error) {
-					_.each(error.message, function(message) {
-						Alert.add("danger", message, 3000);
+					},
+					function(error) {
+						_.each(error.message, function(message) {
+							Alert.add("danger", message, 3000);
+						});
 					});
-			});
+			} else {
+
+				$scope.tabs = [{
+					active: false,
+					disabled: false
+				}, {
+					active: true,
+					disabled: false
+				}];
+
+			}
+
+
 		};
 
 		$scope.openRedirectionModal = function(raceId) {
@@ -64,6 +89,47 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 
 			});
 		};
+
+		$scope.login = function() {
+
+			Auth.login({
+					email: $scope.user.email,
+					password: $scope.user.password
+				},
+				function(res) {
+					$scope.submit();
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
+				});
+		};
+
+		$scope.open = function() {
+
+			var modalInstance = $modal.open({
+				templateUrl: 'partials/forgotpassword',
+				controller: 'ForgotPasswordCtrl'
+			});
+		};
+
+		$scope.signup = function() {
+
+			Auth.register({
+					user: $scope.newuser
+				},
+				function(res) {
+					$scope.submit();
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
+				});
+		};
+
+
 	}
 ]);
 
@@ -74,13 +140,41 @@ angular.module('nextrunApp').controller('RedirectionCtrl', ['$scope', '$modalIns
 
 
 		$scope.goToEdit = function() {
-			$location.path('/races/edit/'+$scope.raceId);
+			$location.path('/races/edit/' + $scope.raceId);
 			$modalInstance.close();
 		};
 
 		$scope.goToMyRaces = function() {
 			$location.path('/myraces');
 			$modalInstance.close();
+		};
+
+		$scope.cancel = function() {
+			$modalInstance.dismiss('cancel');
+		};
+	}
+]);
+
+angular.module('nextrunApp').controller('ForgotPasswordCtrl', ['$scope', '$modalInstance', 'Auth', 'Alert', '$location',
+	function($scope, $modalInstance, Auth, Alert, $location) {
+
+		$scope.user = {};
+
+		$scope.submit = function() {
+
+			Auth.forgotpassword({
+					user: $scope.user
+				},
+				function(res) {
+					Alert.add("success", "Un email vient de vous être envoyé", 3000);
+					$modalInstance.close();
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
+					$modalInstance.close();
+				});
 		};
 
 		$scope.cancel = function() {

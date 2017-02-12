@@ -36,7 +36,8 @@
     "i18next": "latest",
     "underscore": "latest",
     "forever": "latest",
-    "nodemailer": "latest"
+    "nodemailer": "latest",
+    "googlemaps": "latest"
   },
   "devDependencies": {
     "mocha": "latest",

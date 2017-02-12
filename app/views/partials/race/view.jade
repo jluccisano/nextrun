@@ -11,8 +11,9 @@ div.container(style="margin-top:50px")
 			h3 {{race.distanceType.name}}
 			span.small distance
 		div.col-md-4
-			a.btn.btn-link(data-ng-click="openFeedbackModal(race._id)") 
-				i.glyphicon.glyphicon-thumbs-down Signaler une erreur		
+			a(data-ng-click="openFeedbackModal(race._id)") 
+				i.glyphicon.glyphicon-thumbs-down 
+					span Signaler une erreur		
 	h2 Parcours
 	hr
 	div.row
@@ -41,3 +42,8 @@ div.container(style="margin-top:50px")
 							h3 {{Math.floor(route.minElevation)}}
 								small m
 							span.small Min
+	h2 Organisation
+	hr
+	div.row
+		div.col-lg-12
+			include templates/viewOrganisation

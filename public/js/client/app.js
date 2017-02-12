@@ -51,6 +51,11 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       controller: 'CreateRaceCtrl',
       access: access.user
     }).
+    when('/races/home', {
+      templateUrl: '/partials/race/home',
+      controller: 'RaceHomeCtrl',
+      access: access.public
+    }).
     when('/races/view/:raceId', {
       templateUrl: '/partials/race/view',
       controller: 'ViewRaceCtrl',

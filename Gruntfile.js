@@ -45,7 +45,7 @@ module.exports = function(grunt) {
       basic_and_extras: {
         files: {
           'tmp/public/js/client/app.js': ['public/js/client/app.js'],
-          'tmp/public/js/client/app.js': ['public/js/client/routingConfig.js'],
+          'tmp/public/js/client/routingConfig.js': ['public/js/client/routingConfig.js'],
           'tmp/public/js/client/controllers.js': [
             'public/js/client/controllers.js',
             'public/js/client/controllers/*.js'

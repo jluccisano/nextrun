@@ -29,6 +29,19 @@ angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', '
 			$location.path('/races/create');
 		};
 
+		$scope.publish = function(race) {
+			RaceServices.publish(race._id,
+				function(response) {
+					Alert.add("success", "Votre manifestation a bien été publié", 3000);
+					$scope.init();
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
+				});
+		};
+
 		$scope.openDeleteConfirmation = function(race) {
 
 			var modalInstance = $modal.open({

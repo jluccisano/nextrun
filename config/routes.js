@@ -10,6 +10,7 @@ var mainController = require('../app/controllers/mainController'),
     userRoles = require('../public/js/client/routingConfig').userRoles,
     _ = require('underscore'),
     util = require('util'),
+    gmaps = require('./middlewares/gmaps'),
     auth = require('./middlewares/authorization');
 
 
@@ -24,6 +25,7 @@ var routes = [
         path: '/defaultsite',
         httpMethod: 'GET',
         middleware: [
+
             function(req, res) {
                 res.redirect('/');
             }
@@ -49,8 +51,7 @@ var routes = [
         httpMethod: 'POST',
         middleware: [contactController.create],
         accessLevel: accessLevels.public
-    },
-    {
+    }, {
         path: '/api/contacts/feedback',
         httpMethod: 'POST',
         middleware: [contactController.feedback],
@@ -125,8 +126,14 @@ var routes = [
     }, {
         path: '/api/races/:raceId/update',
         httpMethod: 'PUT',
-        middleware: [raceController.update],
+        middleware: [gmaps.geocodeAddress, raceController.update],
         accessLevel: accessLevels.user
+    }, {
+        path: '/api/races/:raceId/publish',
+        httpMethod: 'PUT',
+        middleware: [raceController.publish],
+        accessLevel: accessLevels.user
+
     }, {
         path: '/api/races/:raceId/delete',
         httpMethod: 'DELETE',

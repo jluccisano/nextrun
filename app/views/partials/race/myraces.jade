@@ -26,7 +26,7 @@ div.container
 				td
 					a(ng-click="openDeleteConfirmation(race)") Supprimer
 				td
-					a(data-toggle="modal" data-id="{{race._id}}" title="Publier cette manifestation" href="#publishModal") Publier
+					a(ng-click="publish(race)") Publier
 
 	div.col-lg-8.col-lg-offset-4
 		pagination(boundary-links="true" on-select-page="onSelectPage(page)" total-items="totalItems" page="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")

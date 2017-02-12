@@ -8,13 +8,58 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 		$scope.raceId = $routeParams.raceId;
 		$scope.cursorMarker = {};
+		$scope.addressMarker = {};
+
+		$scope.plan = {
+			isVisible: false,
+			editMode: false,
+			travelMode: google.maps.TravelMode.DRIVING,
+			zoom: 13,
+			fit: true,
+			markers: [],
+			polylines: [],
+			center: {
+				latitude: 46.52863469527167,
+				longitude: 2.43896484375,
+			},
+			options: {
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				mapTypeControlOptions: {
+					mapTypeIds: [google.maps.MapTypeId.ROADMAP,
+						google.maps.MapTypeId.HYBRID,
+						google.maps.MapTypeId.SATELLITE
+					]
+				},
+				disableDoubleClickZoom: true,
+				scrollwheel: true,
+				draggableCursor: "crosshair",
+				streetViewControl: false,
+				zoomControl: true
+			},
+			events: {},
+		};
 
 		$scope.onChangeTab = function(route) {
 			route.isVisible = true;
 		};
 
+		$scope.onChangeOrganisationTab = function(plan) {
+			plan.isVisible = true;
+		};
+
 		$scope.getDate = function(dateString) {
-			return moment(new Date(dateString)).format("DD MMMM YYYY");
+			if (dateString) {
+				return moment(new Date(dateString)).format("DD MMMM YYYY");
+			}
+			return '-';
+		};
+
+
+		$scope.getHour = function(dateString) {
+			if (dateString) {
+				return moment(new Date(dateString)).format("HH:mm");
+			}
+			return '-';
 		};
 
 		$scope.init = function() {
@@ -180,9 +225,24 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 						}
 
 						$scope.race.routes[index] = route;
-						$scope.race.routes[0].isVisible = true;
+
 
 					});
+
+					$scope.race.routes[0].isVisible = true;
+
+
+					$scope.addressMarker = {
+						latitude: $scope.race.plan.address.latlng.lat,
+						longitude: $scope.race.plan.address.latlng.lng,
+						icon: "../../../img/start.png",
+						title: "hello"
+					};
+
+					$scope.plan.center = {
+						latitude: $scope.race.plan.address.latlng.lat,
+						longitude: $scope.race.plan.address.latlng.lng,
+					};
 				},
 				function(error) {
 					_.each(error.message, function(message) {
@@ -235,7 +295,9 @@ angular.module('nextrunApp').controller('FeedbackCtrl', ['$scope', '$modalInstan
 		$scope.feedback.raceId = raceId;
 
 		$scope.submit = function(feedback) {
-			ContactServices.sendFeedback({feedback: feedback},
+			ContactServices.sendFeedback({
+					feedback: feedback
+				},
 				function(response) {
 					Alert.add("success", "Votre message a bien été envoyé", 3000);
 					$modalInstance.close();

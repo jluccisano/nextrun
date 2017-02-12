@@ -137,11 +137,11 @@ var RaceSchema = new Schema({
         default: null
       },
       latlng: {
-        mb: {
+        lat: {
           type: Number,
           default: null
         },
-        nb: {
+        lng: {
           type: Number,
           default: null
         }

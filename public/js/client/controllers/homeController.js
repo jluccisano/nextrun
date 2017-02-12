@@ -23,5 +23,10 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 					});
 				});
 		};
+
+		$scope.goToNewRace = function() {
+			$location.path("/races/home")
+		}
+
 	}
 ]);

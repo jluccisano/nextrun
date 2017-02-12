@@ -41,13 +41,15 @@ exports.create = function(req, res) {
   race.created_date = new Date();
   race.user_id = req.user._id;
 
-  race.save(function(err,race) {
+  race.save(function(err, race) {
     if (err) {
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
     } else {
-      return res.json(200,{raceId: race._id});
+      return res.json(200, {
+        raceId: race._id
+      });
     }
 
   });
@@ -165,4 +167,71 @@ exports.delete = function(req, res) {
       message: ["error.userNotOwner"]
     });
   }
+};
+
+/**
+ * @method update LatLng of event address
+ * @param req
+ * @param res
+ */
+exports.updateLatLng = function(raceId, latlng) {
+  Race.update({
+    _id: raceId
+  }, {
+    $set: {
+      "plan.address.latlng": latlng
+    }
+  }, {
+    upsert: true
+  }, function(err) {
+    if (err) {
+      console.log("error during try to update latlng for: " + raceId + " , details: " + err);
+    } else {
+      console.log("latlng updated for: " + raceId);
+    }
+  });
+};
+
+/**
+ * @method publish the race
+ * @param req
+ * @param res
+ */
+exports.publish = function(req, res) {
+  var race = req.race;
+
+  if (race.user_id.equals(req.user._id)) {
+
+    Race.update({
+      _id: race._id
+    }, {
+      $set: {
+        last_update: new Date(),
+        published: true,
+        publication_date: new Date()
+      }
+    }, {
+      upsert: true
+    }, function(err) {
+      if (!err) {
+        return res.json(200);
+      } else {
+        return res.json(400, {
+          message: errorUtils.errors(err.errors)
+        });
+      }
+    });
+
+  } else {
+    return res.json(400, {
+      message: ["error.userNotOwner"]
+    });
+  }
+};
+
+/**
+ * TODO
+ */
+exports.destroyAllRaceOfUser = function(req, res, next) {
+
 };

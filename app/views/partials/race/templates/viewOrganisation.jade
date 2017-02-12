@@ -1,0 +1,86 @@
+div.container
+	div.bs-callout.bs-callout-info
+		h4 Infomations
+		p Tous les champs  sont facultatifs. Tous les champs qui ne seront pas renseigné n'apparaitront pas dans la vue finale.
+	tabset(vertical="false" type="pills")
+		tab(heading=t("race.timing"))
+			div.container
+				dl.dl-horizontal
+					dt=t("race.startingTime")
+					dd {{getHour(race.timing.startingTime)}}
+					dt=t("race.briefingTime")
+					dd {{getHour(race.timing.briefingTime)}}
+					dt=t("race.checkoutBibTime")
+					dd {{getHour(race.timing.checkoutBibTime)}}
+				dl(data-ng-if="race.timing.timingMoreInformation")
+					dt=t("race.moreInformation")
+					dd {{race.timing.timingMoreInformation}}
+		tab(heading=t("race.pricing"))
+			div.container
+				dl.dl-horizontal
+					dt=t("race.memberFFPrice")
+					dd {{race.pricing.memberFFPrice}}
+						i.fa.fa-eur
+					dt=t("race.notMemberFFPrice")
+					dd {{race.pricing.notMemberFFPrice}}
+						i.fa.fa-eur
+				dl(data-ng-if="race.timing.pricingMoreInformation")
+					dt=t("race.moreInformation")
+					dd {{race.timing.pricingMoreInformation}}
+		tab(heading=t("race.registration"))
+			div.container
+				dl.dl-horizontal
+					dt=t("race.registrationOpeningDate")
+					dd {{getDate(race.registration.registrationOpeningDate)}}
+					dt=t("race.registrationLimitDate")
+					dd {{getDate(race.registration.registrationLimitDate)}}
+					dt=t("race.registrationOnPlace")
+					dd
+					dt=t("race.numberOfPlacesAvailable")
+					dd {{race.registration.numberOfPlacesAvailable}}
+				dl(data-ng-if="race.timing.registrationMoreInformation")
+					dt=t("race.moreInformation")
+					dd {{race.registration.registrationMoreInformation}}
+		tab(data-ng-click="onChangeOrganisationTab(plan)" heading=t("race.plan"))
+			div.container
+				div.row(style="margin-top:20px")
+					div.col-lg-4(data-ng-if="race.plan != null && race.plan.address")
+						address 
+							span {{race.plan.address.address1}}
+							br
+							span(data-ng-if="race.plan.address.address2 != ''") {{race.plan.address.address2}}
+							br
+							span <strong>{{race.plan.address.postcode}} - {{race.plan.address.city}}</strong>
+							br
+					div.col-lg-4(data-ng-if="plan.isVisible")
+						google-map(center="plan.center" refresh="true" options="plan.options" zoom="plan.zoom" draggable="true" mark-click="false" style="height:50px")
+							markers
+								marker(coords="addressMarker" icon="addressMarker.icon")
+		tab(heading=t("race.rights"))
+			div.container
+				dl.dl-horizontal
+					dt=t("race.medicalCertificate")
+					dd {{race.rights.medicalCertificate}}
+					dt=t("race.minAge")
+					dd {{race.rights.minAge}}
+				dl(data-ng-if="race.timing.rightsMoreInformation")
+					dt=t("race.moreInformation")
+					dd {{race.rights.rightsMoreInformation}}
+		tab(heading=t("race.therace"))
+			div.container
+				dl.dl-horizontal
+					dt=t("race.numberOfProvisions")
+					dd {{race.therace.numberOfProvisions}}
+					dt=t("race.rewards")
+					dd {{race.therace.rewards}}
+				dl(data-ng-if="race.timing.theRaceMoreInformation")
+					dt=t("race.moreInformation")
+					dd {{race.therace.theRaceMoreInformation}}
+		tab(heading=t("race.miscellaneous"))
+			div.container
+				dl.dl-horizontal
+					dt=t("race.organizerWebSite")
+					dd {{race.organizerWebSite}}
+				dl(data-ng-if="race.timing.miscellaneousMoreInformation")
+					dt=t("race.moreInformation")
+					dd {{race.miscellaneous.miscellaneousMoreInformation}}
