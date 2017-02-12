@@ -14,9 +14,11 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             name: ""
         };
 
-        $scope.options = {
-            country: "fr",
-            types: "(cities)"
+        $scope.map = {
+            options: {
+                country: "fr",
+                types: "(cities)"
+            }
         };
 
         $scope.cursorMarker = {
