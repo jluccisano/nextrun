@@ -45,7 +45,7 @@ module.exports = function(app, config, passport) {
 	app.use(express.static(config.root + '/public'));
 
 	if (process.env.NODE_ENV !== 'production') {
-		app.use('/bower_components', express.static(config.root + '/bower_components'));
+		app.use('/bower_components', express.static(config.root + '/public/bower_components'));
 	}
 
 	// don't use logger for test env
