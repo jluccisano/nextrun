@@ -8,7 +8,7 @@ div.row
 			
 			div.form-group(ng-class="{'has-error':!raceForm.date.$pristine && raceForm.date.$invalid, 'has-success': !raceForm.date.$invalid && !raceForm.date.$pristine}")
 				label.control-label {{'Date' | translate}}
-				input.form-control(type="text" name="date" placeholder="{{'Date' | translate}}" ng-model="race.date" bs-datepicker date-format="dd MMMM yyyy")
+				input(type="text" class="form-control" ng-model="race.date" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
 
 			div.form-group(ng-class="{'has-error': !raceForm.location.$pristine && raceForm.location.$error.validLocation && raceForm.location.$invalid, 'has-success': !raceForm.location.$error.validLocation && raceForm.location.$valid  && !raceForm.location.$pristine}")
 				label.control-label {{'Lieu' | translate}}

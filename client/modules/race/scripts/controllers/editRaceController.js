@@ -12,8 +12,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		RaceTypeEnum,
 		RouteService,
 		FileReaderService,
-		RouteHelperService,
-		RouteUtilsService,
 		MetaService,
 		GpxService,
 		gettextCatalog) {
@@ -52,41 +50,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 				$scope.race = response.race;
 
-				if ($scope.race) {
-
-					var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type);
-
-					_.each(raceType.routes, function(routeType, index) {
-
-						var currentRoute;
-
-						if (!_.isUndefined($scope.race.routes[index])) {
-							currentRoute = $scope.race.routes[index];
-						} else {
-							currentRoute = {
-								type: routeType,
-								segments: [],
-								elevationPoints: []
-							};
-						}
-
-						var center = RouteUtilsService.setCenter($scope, currentRoute);
-
-						var route = new routeBuilder.Route(currentRoute,
-							RouteHelperService.getChartConfig($scope),
-							RouteHelperService.getGmapsConfig(), center);
-
-						route.addClickListener($scope.onClickMap);
-
-						//$scope.race.routes[index] = route;
-						$scope.routesViewModel.push(route);
-
-					});
-
-					//$scope.race.routes[0].setVisible(true);
-					$scope.routesViewModel[0].setVisible(true);
-
-				}
+				$scope.routesViewModel = RouteService.createRoutesViewModel($scope, $scope.race);
 
 			}).finally(function() {
 				$scope.loading = false;
@@ -96,10 +60,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		$scope.onClickMap = function(route, destinationLatlng) {
 			RouteService.createNewSegment(route, destinationLatlng);
-		};
-
-		$scope.getTypeLabelName = function(type) {
-			return gettextCatalog.getString(type.name);
 		};
 
 		$scope.delete = function(route) {
@@ -163,7 +123,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			_.each(raceType.routes, function(routeType, index) {
 
-				var route = RouteHelperService.generateRoute($scope, undefined, routeType);
+				//var route = RouteHelperService.generateRoute($scope, undefined, routeType);
 
 				$scope.race.routes[index] = route;
 				$scope.race.routes[0].isVisible = true;
@@ -180,7 +140,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				//reinit route
 				try {
 					route = GpxService.convertGPXtoRoute($scope, result);
-					route = RouteHelperService.generateRoute($scope, undefined, route.routeType);
+					//route = RouteHelperService.generateRoute($scope, undefined, route.routeType);
 
 					if (route.segments.length > 0) {
 						route.markers = RouteService.rebuildMarkers(route.segments, true);

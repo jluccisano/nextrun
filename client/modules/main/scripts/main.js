@@ -3,6 +3,7 @@
 var nextrunApp = angular.module("nextrunApp", [
   "ngRoute",
   "gettext",
+  "ui.bootstrap.dropdown",
   "mgcrea.ngStrap.navbar",
   "nextrunApp.commons",
   "nextrunApp.auth",

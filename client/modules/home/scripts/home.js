@@ -2,7 +2,9 @@
 
 var homeModule = angular.module("nextrunApp.home", [
     "ngRoute",
-    "ui.bootstrap",
+    "ui.bootstrap.tpls",
+    "ui.bootstrap.transition",
+    "ui.bootstrap.carousel",
     "ui.select",
     "gettext",
     "nextrunApp.commons",

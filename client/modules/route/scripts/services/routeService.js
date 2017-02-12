@@ -5,7 +5,9 @@ angular.module("nextrunApp.route").factory("RouteService",
 		$q,
 		$log,
 		GmapsApiService,
-		RouteUtilsService) {
+		RouteUtilsService,
+		RouteHelperService,
+		RaceTypeEnum) {
 
 		var getElevation = function(segment) {
 
@@ -44,8 +46,48 @@ angular.module("nextrunApp.route").factory("RouteService",
 		};
 
 		return {
-			
-			
+
+			createRoutesViewModel: function($scope, race) {
+
+				var routesViewModel = [];
+
+				if (race) {
+					var raceType = RaceTypeEnum.getRaceTypeByName(race.type);
+
+					_.each(raceType.routes, function(routeType, index) {
+
+						var currentRoute;
+
+						if (!_.isUndefined(race.routes[index])) {
+							currentRoute = race.routes[index];
+						} else {
+							currentRoute = {
+								type: routeType,
+								segments: [],
+								elevationPoints: []
+							};
+						}
+
+						var center = RouteUtilsService.setCenter($scope, currentRoute);
+
+						var route = new routeBuilder.Route(currentRoute,
+							RouteHelperService.getChartConfig($scope),
+							RouteHelperService.getGmapsConfig(), center);
+
+						route.addClickListener($scope.onClickMap);
+
+						routesViewModel.push(route);
+
+					});
+
+					routesViewModel[0].setVisible(true);
+
+				}
+				return routesViewModel;
+
+			},
+
+
 			createNewSegment: function(route, destinationLatlng) {
 
 				var lastLatlngOfLastSegment;
@@ -92,7 +134,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 						route.addElevationPoints(data.samplingPoints, data.elevations);
 
-						
+
 					});
 				}
 			},

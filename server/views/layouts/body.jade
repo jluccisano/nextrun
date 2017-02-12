@@ -1,13 +1,13 @@
+div(class="wrapper")
+	header
+		include ./header
 
-header
-	include ./header
+	div(id="fb-root")
 
-div(id="fb-root")
+	include ./messages
 
-include ./messages
-
-div(ng-cloak class="view-container")
-	div(ng-view class="view-frame")
+	div(ng-cloak class="view-container")
+		div(ng-view class="view-frame")
 
 footer(role="contentinfo")
 	include ./footer

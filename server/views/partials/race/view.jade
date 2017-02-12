@@ -1,22 +1,22 @@
-div.container
+div(class="container")
 	h1 {{race.name}}
-		small  ({{race.pin.department.code}})
-	h4.text-right {{race.date | date:'dd MMMM yyyy'}}
-	div.row
+		small({{race.pin.department.code}})
+	h4(class="text-right") {{race.date | date:'dd MMMM yyyy'}}
+	div(class="row")
 		div(ng-show="loading")
 			span(class="fa fa-spinner fa-spin")
 			span {{'Chargement...' | translate}}
 	hr
-	div.row.text-center
-		div.col-md-4
-			h3 {{race.type.i18n}}
-			span.small(translate) type
-		div.col-md-4
-			h3 {{race.distanceType.name}}
-			span.small(translate) distance
-		div.col-md-4
-			div.row
-				div.col-md-8.col-md-offset-4
+	div(class="row text-center")
+		div(class="col-md-4")
+			h3 {{race.type}}
+			span(class"small" translate) type
+		div(class="col-md-4")
+			h3 {{race.distanceType}}
+			span(class"small" translate) distance
+		div(class="col-md-4")
+			div(class="row")
+				div(class"col-md-8 col-md-offset-4")
 					table.table
 						tbody
 							tr
@@ -38,33 +38,33 @@ div.container
 		div.well(ng-bind-html="race.description")
 	h2 {{'Parcours' | translate}}
 	hr
-	div.row
-		div.col-lg-12
-			tabset(vertical="false" type="navType")
-				tab(ng-repeat="route in race.routes" heading="{{route.type}}" ng-click="onChangeTab(route)")
+	div(class="row")
+		div(class="col-lg-12")
+			tabset
+				tab(ng-repeat="route in routesViewModel" heading="{{route.getType()}}" ng-click="onChangeTab(route)")
 					div(ng-if="route.description")
 						h4 <strong>{{'Présentation' | translate}}</strong>
-						div.well(ng-bind-html="route.description")
+						div(class="well" ng-bind-html="route.description")
 					include showMap
-					div.row.text-center
-						div.col-lg-4
-							h3 {{ route.distance | number: 2}}
+					div(class="row text-center")
+						div(class="col-lg-4")
+							h3 {{ route.getDistance() | number: 2}}
 								small km
 							span.small {{ 'Distance' | translate}}
-						div.col-lg-4
-							h3 {{route.ascendant | number: 0 }}
+						div(class="col-lg-4")
+							h3 {{route.getAscendant() | number: 0 }}
 								small m
 							span.small {{ 'D+' | translate}}
-						div.col-lg-4
-							h3 {{route.descendant | number: 0 }}
+						div(class="col-lg-4")
+							h3 {{route.getDescendant() | number: 0 }}
 								small m
 							span.small {{ 'D-' | translate}}
-						div.col-lg-4
-							h3 {{route.maxElevation | number: 0 }}
+						div(class="col-lg-4")
+							h3 {{route.getMaxElevation() | number: 0 }}
 								small m
 							span.small {{ 'Max' | translate}}
-						div.col-lg-4
-							h3 {{route.minElevation | number: 0 }}
+						div(class="col-lg-4")
+							h3 {{route.getMinElevation() | number: 0 }}
 								small m
 							span.small {{ 'Min' | translate}}
 	h2 {{'Organisation' | translate}}

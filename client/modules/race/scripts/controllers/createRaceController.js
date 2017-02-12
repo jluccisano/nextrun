@@ -2,12 +2,12 @@
 
 angular.module("nextrunApp.race").controller("CreateRaceController",
 	function(
-		$scope, 
-		$location, 
+		$scope,
+		$location,
 		$modal,
-		RaceService, 
-		AlertService, 
-		AuthService,  
+		RaceService,
+		AlertService,
+		AuthService,
 		RaceTypeEnum,
 		MetaService,
 		gettextCatalog) {
@@ -94,6 +94,13 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 				templateUrl: "partials/auth/forgotpasswordModal",
 				controller: "ForgotPasswordModalController"
 			});
+		};
+
+		$scope.open = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+
+			$scope.opened = true;
 		};
 
 		MetaService.ready(gettextCatalog.getString("Ajouter une manifestation"), $location.path, gettextCatalog.getString("Ajouter une manifestation"));

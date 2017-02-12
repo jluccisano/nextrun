@@ -8,9 +8,8 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $routeParams,
         $modal,
         $filter,
-        RaceTypeEnum,
         RaceService,
-        RouteHelperService,
+        RouteService,
         MetaService) {
 
         google.maps.visualRefresh = true;
@@ -19,6 +18,8 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $scope.raceId = $routeParams.raceId;
         $scope.cursorMarker = {};
         $scope.navType = "pills";
+
+        $scope.routesViewModel = [];
 
         //TODO create directive
         $scope.onChangeTab = function(route) {
@@ -38,50 +39,11 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
                 $scope.race = response.race;
 
-                //TODO create services
-                var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type.name);
+                $scope.routesViewModel = RouteService.createRoutesViewModel($scope, $scope.race);
 
-                _.each(raceType.routes, function(routeType, index) {
-
-                    var currentRoute = $scope.race.routes[index];
-
-                    var route = RouteHelperService.generateRoute($scope, currentRoute, routeType);
-
-                    $scope.race.routes[index] = route;
-
-                });
-
-                $scope.race.routes[0].isVisible = true;
-
-                $scope.isVisible = false;
-
-                $scope.options = {
-                    map: {
-                        center: new google.maps.LatLng($scope.race.plan.address.latlng.lat, $scope.race.plan.address.latlng.lng),
-                        zoom: 6,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    }
-                };
-
-                if (!_.isUndefined($scope.race.plan) && !_.isUndefined($scope.race.plan.address) && !_.isUndefined($scope.race.plan.address.latlng) && !_.isUndefined($scope.race.plan.address.latlng.lat) && !_.isUndefined($scope.race.plan.address.latlng.lon)) {
-                    $scope.addressMarkers = [{
-                        id: 0,
-                        location: {
-                            lat: $scope.race.plan.address.latlng.lat,
-                            lng: $scope.race.plan.address.latlng.lng
-                        }
-
-                    }];
-                }
-
-                //TODO create service
-                $scope.loading = false;
-
-
-            }).then(function() {
-                $scope.loading = false;
             }).finally(function() {
                 MetaService.ready($scope.race.name, $location.path(), $scope.generateRaceDescription());
+                $scope.loading = false;
             });
         };
 
