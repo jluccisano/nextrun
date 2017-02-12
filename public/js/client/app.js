@@ -6,7 +6,8 @@ var nextrunApp = angular.module('nextrunApp', [
   'google-maps',
   'highcharts-ng',
   'ui.bootstrap.datetimepicker',
-  'ui.dateTimeInput'
+  'ui.dateTimeInput',
+  'AngularGM'
 ]);
 
 /** Initialize i18n **/
