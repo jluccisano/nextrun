@@ -34,20 +34,30 @@ div.container(data-ng-controller="SettingsCtrl")
 				div.bs-docs-section
 					div.page-header	
 						h1(id="changePasswordTab") Changement de mot de passe
-					form(id="settingsPasswordForm", role="form",  style="margin-top:50px")
-						div.form-group
-							label(type="password", for="inputActualPassword") Mot de passe actuel
-							input.form-control(type="password", name="actualPassword",  id="inputActualPassword", placeholder="Mot de passe actuel")
-						div.form-group
-							label(type="password", for="inputNewPassword") Nouveau mot de passe
-							input.form-control(type="password", name="newPassword",  id="inputNewPassword", placeholder="Nouveau mot de passe")
-						div.form-group
-							label(type="password", for="inputPassword") confirmer le mot de passe
-							input.form-control(type="password", name="confirmPassword",  id="inputConfirmNewPassword", placeholder="Confirmer le nouveau mot de passe")
+					form(role="form", name="form", style="margin-top:50px")
+						div.form-group(ng-class="{'has-error': !form.actualPassword.$pristine && form.actualPassword.$invalid, 'has-success': !form.actualPassword.$invalid && !form.actualPassword.$pristine}")
+							label.control-label(type="password", for="actualPassword") Mot de passe
+							input.form-control(type="password", name="actualPassword", id="actualPassword", placeholder="Mot de passe actuel",data-ng-model="actualPassword",  required, ng-minlength="4", ng-maxlength="8")
+							span.help-block(ng-show="form.actualPassword.$dirty && form.actualPassword.$error.required") Please enter a password
+							span.help-block(data-ng-show="form.actualPassword.$dirty && form.actualPassword.$error.minlength") Votre mot de passe doit contenir entre 4 et 8 caractères
+							span.help-block(data-ng-show="form.actualPassword.$dirty && form.actualPassword.$error.maxlength") Votre mot de passe doit contenir entre 4 et 8 caractères
+						
+						div.form-group(ng-class="{'has-error': !form.newPassword.$pristine && form.newPassword.$invalid, 'has-success': !form.newPassword.$invalid && !form.newPassword.$pristine}")
+							label.control-label(type="password", for="newPassword") Mot de passe
+							input.form-control(type="password", name="newPassword",  id="newPassword", placeholder="Nouveau mot de passe",data-ng-model="newPassword",  required, match="confirmNewPassword", ng-minlength="4", ng-maxlength="8")
+							span.help-block(ng-show="form.newPassword.$dirty && form.newPassword.$error.required") Please enter a password
+							span.help-block(data-ng-show="form.newPassword.$dirty && form.newPassword.$error.minlength") Votre mot de passe doit contenir entre 4 et 8 caractères
+							span.help-block(data-ng-show="form.newPassword.$dirty && form.newPassword.$error.maxlength") Votre mot de passe doit contenir entre 4 et 8 caractères
+						
+						div.form-group(ng-class="{'has-error': !form.confirmNewPassword.$pristine && form.confirmPassword.$invalid, 'has-success': !form.confirmPassword.$error.match && !form.confirmPassword.$pristine}")
+							label.control-label(for="confirmNewPassword") Confirmer le mot de passe
+							input.form-control(type="password", name="confirmNewPassword", placeholder="Confirmer le mot de passe", required, match="confirmNewPassword",data-ng-model="confirmNewPassword"))
+							span.help-block(ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.required") Please repeat your password
+							span.help-block(ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.match && !form.confirmPassword.$error.required") Passwords don't match
 						div.alert.alert-danger.fade.hide(id="invalidPassword")
 						hr
 						div.form-group.text-right
-							button.btn.btn-primary(id="submitPasswordSettings", type="submit") Enregistrer
+							button.btn.btn-primary(ng-click="updatePassword()") Enregistrer
 				div.bs-docs-section
 					div.page-header	
 						h1(id="deleteAccountTab") Supprimer mon compte

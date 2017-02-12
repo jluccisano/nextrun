@@ -4,6 +4,7 @@ jQuery(document).ready(function(){
 
 	jQuery('#carousel').carousel();
 	
+	/*
 	jQuery.validator.addMethod("valueNotEquals", function(value, element, arg){
 		return arg !== value;
 	}, "");
@@ -45,6 +46,8 @@ jQuery(document).ready(function(){
 			}
 		}
 	});
+
+*/
 
 	jQuery("#contactType").change(function () {
 		if(jQuery(this).val() === "default") {

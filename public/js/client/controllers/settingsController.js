@@ -16,8 +16,25 @@ nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Au
 
 	    $scope.updateProfile = function () {
 
-		  	Auth.updateProfile({
+		  	Auth.updateProfile($scope.user._id, {
 				user: $scope.user
+            },
+            function(response) {
+				Alert.add("success", "Les changements ont bien été pris en compte", 3000);
+				$scope.master = angular.copy(response.user);
+				$scope.reset();
+
+            },
+            function(error) {
+				Alert.add("danger", error.message, 3000);
+            });
+		};
+
+		$scope.updatePassword = function () {
+
+		  	Auth.updatePassword($scope.user._id, {
+				actual: $scope.actualPassword,
+				new: $scope.newPassword
             },
             function(response) {
 				Alert.add("success", "Les changements ont bien été pris en compte", 3000);

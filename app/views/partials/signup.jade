@@ -5,7 +5,6 @@ div.container(data-ng-controller='SignupCtrl', style="margin-top:50px")
 				div.panel-heading <strong>S'inscrire</strong>
 				div.panel-body
 					form(id="signupForm",role="form", name="form", novalidate)
-						input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}",data-ng-model="user._csrf")
 						div.form-group(ng-class="{'has-error': !form.username.$pristine && form.username.$invalid, 'has-success': !form.username.$invalid && !form.username.$pristine}")
 							label.control-label(for="username") Nom complet
 							input.form-control(type="text", name="username", id="username", placeholder="Nom complet",data-ng-model="user.username",  ng-minlength="4", ng-maxlength="30", required)
