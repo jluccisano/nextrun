@@ -126,7 +126,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		$scope.editRichTextEditor = function(model, field) {
 			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal(model);
-			
+
 			$scope.modalInstance.result.then(function(data) {
 				if (!angular.equals(data, model)) {
 					var params = {};
@@ -153,20 +153,22 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				}
 			});
 
-			$scope.modalInstance.result.then(function(route) {
-				//if (!angular.equals(route.data, $scope.routesViewModel[$index].data)) {
+			$scope.modalInstance.result.then(function(routeDataModel) {
+				if (!angular.equals(routeDataModel, $scope.routesViewModel[$index].data)) {
 
-				var fields = {};
-				fields["routes"] = route.data;
+					var fields = {};
+					fields["routes.$"] = routeDataModel;
 
-				var query = {};
-				query = {"routes.type": route.getType()};
+					var query = {};
+					query = {
+						"routes._id": routeDataModel._id
+					};
 
-				$scope.update({
-					query: query,
-					fields: fields
-				});
-				//}
+					$scope.update({
+						query: query,
+						fields: fields
+					});
+				}
 			});
 		};
 
@@ -176,7 +178,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 					$scope.init();
 					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
 				});
-		}
+		};
 
 		$scope.editRegistration = function() {
 			$scope.modalInstance = $modal.open({

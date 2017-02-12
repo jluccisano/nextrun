@@ -33,8 +33,8 @@ describe("Notification", function() {
 
 		it("should not send email when framework failed", function(done) {
 
-			var transportMock = nodemailer.createTransport("SMTP", {
-				service: "Mailgun",
+			var transportMock = nodemailer.createTransport({
+				service: "Gmail",
 				auth: {
 					user: "toto",
 					pass: "titi"
@@ -61,8 +61,8 @@ describe("Notification", function() {
 
 		it("should send email", function(done) {
 
-			var transportMock = nodemailer.createTransport("SMTP", {
-				service: "Mailgun",
+			var transportMock = nodemailer.createTransport({
+				service: "Gmail",
 				auth: {
 					user: "toto",
 					pass: "titi"
@@ -72,7 +72,11 @@ describe("Notification", function() {
 			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
 			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
-				cb(null, null);
+				cb(null, {
+					"response": {
+						"info": "success"
+					}
+				});
 
 			});
 
@@ -95,8 +99,8 @@ describe("Notification", function() {
 
 		it("should not send email when framework failed", function(done) {
 
-			var transportMock = nodemailer.createTransport("SMTP", {
-				service: "Mailgun",
+			var transportMock = nodemailer.createTransport({
+				service: "Gmail",
 				auth: {
 					user: "toto",
 					pass: "titi"
@@ -123,8 +127,8 @@ describe("Notification", function() {
 
 		it("should send email", function(done) {
 
-			var transportMock = nodemailer.createTransport("SMTP", {
-				service: "Mailgun",
+			var transportMock = nodemailer.createTransport({
+				service: "Gmail",
 				auth: {
 					user: "toto",
 					pass: "titi"
@@ -134,7 +138,11 @@ describe("Notification", function() {
 			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
 			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
-				cb(null, null);
+				cb(null, {
+					"response": {
+						"info": "success"
+					}
+				});
 
 			});
 
@@ -157,8 +165,8 @@ describe("Notification", function() {
 
 		it("should not send email when framework failed", function(done) {
 
-			var transportMock = nodemailer.createTransport("SMTP", {
-				service: "Mailgun",
+			var transportMock = nodemailer.createTransport({
+				service: "Gmail",
 				auth: {
 					user: "toto",
 					pass: "titi"
@@ -185,8 +193,8 @@ describe("Notification", function() {
 
 		it("should send email", function(done) {
 
-			var transportMock = nodemailer.createTransport("SMTP", {
-				service: "Mailgun",
+			var transportMock = nodemailer.createTransport({
+				service: "Gmail",
 				auth: {
 					user: "toto",
 					pass: "titi"
@@ -196,7 +204,11 @@ describe("Notification", function() {
 			sandbox.stub(nodemailer, "createTransport").returns(transportMock);
 
 			var nodeMailerStub = sandbox.stub(transportMock, "sendMail", function(undefined, cb) {
-				cb(null, null);
+				cb(null, {
+					"response": {
+						"info": "success"
+					}
+				});
 
 			});
 

@@ -17,13 +17,13 @@ div(class="container")
 
 						div(class="form-group" ng-class="{'has-error': !form1.username.$pristine && form1.username.$invalid, 'has-success': !form1.username.$pristine && !form1.username.$invalid}")
 							label(class="control-label" for="username" translate) Nom complet
-							input(class="form-control" type="text" name="username" placeholder="{{'Nom complet' | translate }}" ng-model="user.username"  ng-minlength="4"  ng-maxlength="30" required)
+							input(class="form-control" type="text" name="username" placeholder="{{'Nom complet' | translate }}" ng-model="user.username"  ng-minlength="4"  ng-maxlength="30" ng-required="true")
 							span(class="help-block" name="username-minLength" ng-show="form1.username.$dirty && form1.username.$error.minlength" translate) Le mot de passe doit contenir au minium 4 lettres.
 							span(class="help-block" name="username-maxLength" ng-show="form1.username.$dirty && form1.username.$error.maxlength" translate) Le mot de passe doit contenir au maximm 16 lettres.
 						
 						div(class="form-group" ng-class="{'has-error': !form1.email.$pristine && form1.email.$invalid, 'has-success': !form1.email.$invalid && !form1.email.$pristine}")
 							label(class="control-label" for="email" translate) Email
-							input(class="form-control" type="email" name="email" placeholder="{{'Email' | translate }}" ng-model="user.email" required)
+							input(class="form-control" type="email" name="email" placeholder="{{'Email' | translate }}" ng-model="user.email" ng-required="true")
 							span(class="help-block" name="email-invalid" ng-show="form1.email.$error.email" translate) Email invalide
 						hr
 						div(class="form-group text-right")
@@ -35,20 +35,20 @@ div(class="container")
 						
 						div(class="form-group" ng-class="{'has-error': !form.actualPassword.$pristine && form.actualPassword.$invalid, 'has-success': !form.actualPassword.$invalid && !form.actualPassword.$pristine}")
 							label(class="control-label" type="password" for="actualPassword" translate) Mot de passe actuel
-							input(class="form-control" type="password" name="actualPassword" placeholder="{{'Mot de passe actuel' | translate}}" ng-model="actualPassword" ng-minlength="4" ng-maxlength="8" required)
+							input(class="form-control" type="password" name="actualPassword" placeholder="{{'Mot de passe actuel' | translate}}" ng-model="actualPassword" ng-minlength="4" ng-maxlength="8" ng-required="true")
 							span(class="help-block" name="actualPassword-minLength" ng-show="form.actualPassword.$dirty && form.actualPassword.$error.minlength" translate) Le mot de passe doit contenir au minium 4 lettres.
 							span(class="help-block" name="actualPassword-maxLength" ng-show="form.actualPassword.$dirty && form.actualPassword.$error.maxlength" translate) Le mot de passe doit contenir au maximum 16 lettres.
 						
 						div(class="form-group" ng-class="{'has-error': !form.newPassword.$pristine && form.newPassword.$invalid, 'has-success': !form.newPassword.$invalid && !form.newPassword.$pristine}")
 							label(class="control-label" type="password" for="newPassword" translate) Nouveau mot de passe
-							input(class="form-control" type="password" name="newPassword" placeholder="{{'Nouveau mot de passe' | translate}}" ng-model="newPassword" match="confirmNewPassword" ng-minlength="4" ng-maxlength="8" required)
+							input(class="form-control" type="password" name="newPassword" placeholder="{{'Nouveau mot de passe' | translate}}" ng-model="newPassword" match="confirmNewPassword" ng-minlength="4" ng-maxlength="8" ng-required="true")
 							span(class="help-block" name="newPassword-minLength" ng-show="form.newPassword.$dirty && form.newPassword.$error.minlength" translate) Le mot de passe doit contenir au minium 4 lettres.
 							span(class="help-block" name="newPassword-maxLength" ng-show="form.newPassword.$dirty && form.newPassword.$error.maxlength" translate) Le mot de passe doit contenir au maximm 16 lettres.
 						
 						div(class="form-group" ng-class="{'has-error': !form.confirmNewPassword.$pristine && form.confirmNewPassword.$invalid, 'has-success': !form.confirmNewPassword.$error.match && !form.confirmNewPassword.$pristine}")
 							label(class="control-label" for="confirmNewPassword" translate) Confirmer le mot de passe
-							input(class="form-control" type="password" name="confirmNewPassword" placeholder="{{'Confirmer le mot de passe' | translate}}" nr-password-match="confirmNewPassword" ng-model="newPassword" required)
-							span(class="help-block" name="confirmNewPassword-match" ng-show="form.confirmNewPassword.$dirty && form.confirmNewPassword.$error.nrPasswordMatch && !form.confirmNewPassword.$error.required" translate) Le mot de passe est différent
+							input(class="form-control" type="password" name="confirmNewPassword" placeholder="{{'Confirmer le mot de passe' | translate}}" nr-password-match="confirmNewPassword" ng-model="newPassword" ng-required="true")
+							span(class="help-block" name="confirmNewPassword-match" ng-show="form.confirmNewPassword.$dirty && form.confirmNewPassword.$error.nrPasswordMatch && !form.confirmNewPassword.$error.ng-required="true"" translate) Le mot de passe est différent
 						hr
 						div(class="form-group text-right")
 							button(class="btn btn-primary" type="submit" name="submit" ng-disabled="form.$invalid" translate) Enregistrer

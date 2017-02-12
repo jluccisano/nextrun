@@ -5,7 +5,7 @@ div(class="container")
 			form(class="form-horizontal" role="form" name="raceForm" novalidate)
 				div(class="form-group" ng-class="{'has-error': !raceForm.name.$pristine && raceForm.name.$invalid, 'has-success': !raceForm.name.$invalid && !raceForm.name.$pristine}")
 					label(class="control-label") {{'Nom' | translate}}
-					input(class="form-control" type="text" name="name" placeholder="{{'ex: Triathlon de Paris' | translate}}" ng-model="race.name" required)
+					input(class="form-control" type="text" name="name" placeholder="{{'ex: Triathlon de Paris' | translate}}" ng-model="race.name" ng-required="true")
 				
 				div(class="form-group" ng-class="{'has-error':!raceForm.date.$pristine && raceForm.date.$invalid, 'has-success': !raceForm.date.$invalid && !raceForm.date.$pristine}")
 					label(class="control-label") {{'Date' | translate}}
@@ -13,16 +13,16 @@ div(class="container")
 
 				div(class="form-group" ng-class="{'has-error': !raceForm.location.$pristine && raceForm.location.$error.validLocation && raceForm.location.$invalid, 'has-success': !raceForm.location.$error.validLocation && raceForm.location.$valid  && !raceForm.location.$pristine}")
 					label(class="control-label") {{'Lieu' | translate}}
-					input(class="form-control" type="text" name="location" placeholder="{{'ex: Paris' | translate}}" ng-model="race.pin.name" nr-has-location gmaps-autocomplete options="options" details="race.pin" required)
+					input(class="form-control" type="text" name="location" placeholder="{{'ex: Paris' | translate}}" ng-model="race.pin.name" nr-has-location gmaps-autocomplete options="options" details="race.pin" ng-required="true")
 							
 				div(class="form-group" ng-class="{'has-error': !raceForm.type.$pristine && raceForm.type.$invalid, 'has-success': !raceForm.type.$invalid && !raceForm.type.$pristine}")
 					label(class="control-label") {{'Type' | translate}}
-					select(class="form-control" class="form-control" name="type" ng-model="race.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in types" required)
+					select(class="form-control" class="form-control" name="type" ng-model="race.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in types" ng-required="true")
 						option(value="") {{'Sélectionner...' | translate}}
 
 				div(class="form-group" ng-class="{'has-error': !raceForm.distanceType.$pristine && raceForm.distanceType.$invalid, 'has-success': !raceForm.distanceType.$invalid && !raceForm.distanceType.$pristine}")
 					label(class="control-label") {{'Distance' | translate}}
-					select(class="form-control" name="distanceType" ng-model="race.distanceType" ng-options="distance.name as distance.label for distance in types | distanceTypeFilter:race.type" required)
+					select(class="form-control" name="distanceType" ng-model="race.distanceType" ng-options="distance.name as distance.label for distance in types | distanceTypeFilter:race.type" ng-required="true")
 						option(value="") {{'Sélectionner...' | translate}}
 						
 				button(class="btn btn-primary pull-right" ng-click="submit()" ng-disabled="raceForm.$invalid" translate) Continuer

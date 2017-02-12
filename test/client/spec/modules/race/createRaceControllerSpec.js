@@ -34,7 +34,7 @@ describe('MyRacesController', function() {
 
 	}));
 
-	describe('submit()', function() {
+	/*describe('submit()', function() {
 
 		it('submit with success when user isLoggedIn', function() {
 			mockRaceService.setPromiseResponse(true);
@@ -61,11 +61,11 @@ describe('MyRacesController', function() {
 			expect($scope.tabs[1].active).toBe(true);
 		});
 
-	});
+	});*/
 
 	describe('signup()', function() {
 
-		it('signup with success', function() {
+		/*it('signup with success', function() {
 			mockAuthService.setPromiseResponse(true);
 
 
@@ -76,13 +76,13 @@ describe('MyRacesController', function() {
 			$scope.$apply();
 
 			expect($scope.submit).toHaveBeenCalled();
-		});
+		});*/
 
 	});
 
 	describe('login()', function() {
 
-		it('signup with success', function() {
+		/*it('signup with success', function() {
 			mockAuthService.setPromiseResponse(true);
 			$scope.user = mockUser;
 
@@ -93,11 +93,11 @@ describe('MyRacesController', function() {
 			$scope.$apply();
 
 			expect($scope.submit).toHaveBeenCalled();
-		});
+		});*/
 
 	});
 
-	describe('openRedirectionModal()', function() {
+	/*describe('openRedirectionModal()', function() {
 		it('should open', function() {
 			spyOn($modal, 'open').and.returnValue(mockModal);
 			$scope.openRedirectionModal(mockRace._id);
@@ -120,7 +120,7 @@ describe('MyRacesController', function() {
 			expect(mockAuthService.isLoggedIn()).toEqual(true);
 			expect(mockAuthService.isLoggedIn).toHaveBeenCalled();
 		});
-	});
+	});*/
 
 
 });

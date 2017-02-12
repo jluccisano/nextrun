@@ -682,6 +682,10 @@ var routeBuilder = {};
 
 		this._calculateElevationDataAlongRoute();
 
+		this.getId = function() {
+			return this.data._id;
+		};
+
 		this.getEvents = function() {
 			return this._events;
 		};

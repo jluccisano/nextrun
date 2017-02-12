@@ -1,8 +1,8 @@
-google-map(ng-if="route.isVisible()" center="route.getCenter()" options="route.getOptions()" zoom="route._zoom" refresh="true"  draggable="true" mark-click="true" class="gmapsEditor" events="route.getEvents()")
+google-map(ng-if="routeViewModel.isVisible()" center="routeViewModel.getCenter()" options="routeViewModel.getOptions()" zoom="routeViewModel._zoom" refresh="true"  draggable="true" mark-click="true" class="gmapsEditor" events="routeViewModel.getEvents()")
 
-	markers(models="route.getMarkers()" coords="'self'" icon="'icon'" click="onMarkerClicked(marker)")
-		marker(ng-repeat="marker in route.getMarkers()" idKey="marker.id" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
+	markers(models="routeViewModel.getMarkers()" coords="'self'" icon="'icon'" click="onMarkerClicked(marker)")
+		marker(ng-repeat="marker in routeViewModel.getMarkers()" idKey="marker.id" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
 
 		marker(idKey="cursorMarker.id" coords="cursorMarker" icon="cursorMarker.icon")
 
-	nr-polyline(polylines="route.getPolylines()")
+	nr-polyline(polylines="routeViewModel.getPolylines()")

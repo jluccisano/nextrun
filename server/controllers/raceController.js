@@ -1,4 +1,4 @@
-    /**
+/**
  * @module Race Controller
  * @author jluccisano
  */
@@ -20,6 +20,37 @@ var serverOptions = {
 };
 
 var elasticSearchClient = new ElasticSearchClient(serverOptions);
+
+exports.checkAuthorization = function(req, res, next) {
+
+    var race = req.race;
+    var userConnected = req.user;
+
+    if (!underscore.isUndefined(race) && !underscore.isUndefined(race.userId) && !underscore.isUndefined(race._id)) {
+
+        if (!underscore.isUndefined(userConnected) && !underscore.isUndefined(userConnected._id)) {
+
+            if (race.userId.equals(userConnected._id)) {
+
+                next();
+
+            } else {
+                logger.error("error.userNotOwner");
+                return res.status(400).json({
+                    message: ["error.userNotOwner"]
+                });
+            }
+        } else {
+            return res.status(400).json({
+                message: ["error.userNotConnected"]
+            });
+        }
+    } else {
+        return res.status(400).json({
+            message: ["error.unknownRace"]
+        });
+    }
+};
 
 /**
  * Load By Id
@@ -159,130 +190,37 @@ exports.find = function(req, res) {
     }
 };
 
-exports.updateField = function(req, res) {
+exports.update = function(req, res) {
 
     var race = req.race;
-    var userConnected = req.user;
     var fieldsToUpdate;
 
     if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.fields)) {
 
         fieldsToUpdate = req.body.fields;
+        fieldsToUpdate.lastUpdate = new Date();
 
-        if (!underscore.isUndefined(race) && !underscore.isUndefined(race.userId) && !underscore.isUndefined(race._id)) {
+        var query = {};
+        if (!underscore.isUndefined(req.body.query)) {
+            query = req.body.query;
+        }
 
-            if (!underscore.isUndefined(userConnected) && !underscore.isUndefined(userConnected._id)) {
+        query._id = race._id;
 
-                if (race.userId.equals(userConnected._id)) {
-
-                    fieldsToUpdate.lastUpdate = new Date();
-
-                    var query = req.body.query;
-                    query._id = race._id;
-
-                    console.log(fieldsToUpdate);
-                    console.log(query);
-
-                    Race.update(query , {
-                        $addToSet: fieldsToUpdate
-                    }, {
-                        upsert: true
-                    }, function(err) {
-                        if (!err) {
-                            return res.sendStatus(200);
-                        } else {
-                            logger.error(err);
-                            return res.status(400).json({
-                                message: errorUtils.errors(err.errors)
-                            });
-                        }
-                    });
-                } else {
-                    logger.error("error.userNotOwner");
-                    return res.status(400).json({
-                        message: ["error.userNotOwner"]
-                    });
-                }
+        Race.update(query, {
+            $set: fieldsToUpdate
+        }, {
+            upsert: true
+        }, function(err) {
+            if (!err) {
+                return res.sendStatus(200);
             } else {
+                logger.error(err);
                 return res.status(400).json({
-                    message: ["error.userNotConnected"]
+                    message: errorUtils.errors(err.errors)
                 });
             }
-        } else {
-            return res.status(400).json({
-                message: ["error.unknownRace"]
-            });
-        }
-    } else {
-        return res.status(400).json({
-            message: ["error.bodyParamRequired"]
         });
-    }
-};
-
-
-/**
- * @method update race
- * @param req
- * @param res
- * @returns success if OK
- */
-exports.update = function(req, res) {
-
-    var race = req.race;
-    var userConnected = req.user;
-    var raceToUpdate;
-
-    if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.race)) {
-
-        raceToUpdate = req.body.race;
-
-        if (!underscore.isUndefined(race) && !underscore.isUndefined(race.userId) && !underscore.isUndefined(race._id)) {
-
-            if (!underscore.isUndefined(userConnected) && !underscore.isUndefined(userConnected._id)) {
-
-                if (race.userId.equals(userConnected._id)) {
-
-                    if (!underscore.isUndefined(raceToUpdate.lastUpdate)) {
-                        raceToUpdate.lastUpdate = new Date();
-                    }
-
-                    if (!underscore.isUndefined(raceToUpdate._id)) {
-                        delete raceToUpdate._id;
-                    }
-
-                    Race.update({
-                        _id: race._id
-                    }, {
-                        $set: raceToUpdate
-                    }, {
-                        upsert: true
-                    }, function(err) {
-                        if (!err) {
-                            return res.sendStatus(200);
-                        } else {
-                            logger.error(err);
-                            return res.status(400).json({
-                                message: errorUtils.errors(err.errors)
-                            });
-                        }
-                    });
-                } else {
-                    logger.error("error.userNotOwner");
-                    return res.status(400).json({
-                        message: ["error.userNotOwner"]
-                    });
-                }
-            } else {
-                return res.status(400).json({
-                    message: ["error.userNotConnected"]
-                });
-            }
-        } else {
-            return res.status(400).json({
-                message: ["error.unknownRace"]
-            });
-        }
     } else {
         return res.status(400).json({
             message: ["error.bodyParamRequired"]
@@ -298,39 +236,17 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
 
     var race = req.race;
-    var userConnected = req.user;
 
-    if (!underscore.isUndefined(race) && !underscore.isUndefined(race.userId)) {
-
-        if (!underscore.isUndefined(userConnected) && !underscore.isUndefined(userConnected._id)) {
-
-            if (req.race.userId.equals(userConnected._id)) {
-                Race.destroy(race._id, function(err) {
-                    if (!err) {
-                        return res.sendStatus(200);
-                    } else {
-                        logger.error(err);
-                        return res.status(400).json({
-                            message: errorUtils.errors(err.errors)
-                        });
-                    }
-                });
-            } else {
-                logger.error("error.userNotOwner");
-                return res.status(400).json({
-                    message: ["error.userNotOwner"]
-                });
-            }
+    Race.destroy(race._id, function(err) {
+        if (!err) {
+            return res.sendStatus(200);
         } else {
+            logger.error(err);
             return res.status(400).json({
-                message: ["error.userNotConnected"]
+                message: errorUtils.errors(err.errors)
             });
         }
-    } else {
-        return res.status(400).json({
-            message: ["error.unknownRace"]
-        });
-    }
+    });
 };
 
 /**
@@ -348,49 +264,27 @@ exports.publish = function(req, res) {
         value = req.params.value;
     }
 
-    if (!underscore.isUndefined(race) && !underscore.isUndefined(race.userId)) {
-
-        if (!underscore.isUndefined(userConnected) && !underscore.isUndefined(userConnected._id)) {
-
-            if (race.userId.equals(userConnected._id)) {
-
-                Race.update({
-                    _id: race._id
-                }, {
-                    $set: {
-                        lastUpdate: new Date(),
-                        published: value,
-                        publicationDate: new Date()
-                    }
-                }, {
-                    upsert: true
-                }, function(err) {
-                    if (!err) {
-                        return res.sendStatus(200);
-                    } else {
-                        logger.error(err);
-                        return res.status(400).json({
-                            message: errorUtils.errors(err.errors)
-                        });
-                    }
-                });
-
-            } else {
-                logger.error("error.userNotOwner");
-                return res.status(400).json({
-                    message: ["error.userNotOwner"]
-                });
-            }
+    Race.update({
+        _id: race._id
+    }, {
+        $set: {
+            lastUpdate: new Date(),
+            published: value,
+            publicationDate: new Date()
+        }
+    }, {
+        upsert: true
+    }, function(err) {
+        if (!err) {
+            return res.sendStatus(200);
         } else {
+            logger.error(err);
             return res.status(400).json({
-                message: ["error.userNotConnected"]
+                message: errorUtils.errors(err.errors)
             });
         }
-    } else {
-        return res.status(400).json({
-            message: ["error.unknownRace"]
-        });
-    }
+    });
+
 };
 
 /**

@@ -11,17 +11,12 @@ var raceModule = angular.module("nextrunApp.race", [
   "gettext",
   "ui.bootstrap.pagination",
   "ui.bootstrap.accordion",
-  //"ui.bootstrap.datepicker",
-  //"ui.bootstrap.timepicker",
-  //"mgcrea.ngStrap.tab",
   "ui.bootstrap.tabs",
   "mgcrea.ngStrap.datepicker",
   "mgcrea.ngStrap.timepicker",
   "mgcrea.ngStrap.affix",
   "mgcrea.ngStrap.scrollspy",
   "mgcrea.ngStrap.helpers.dimensions",
-  //"mgcrea.ngStrap.aside",
-  //"mgcrea.ngStrap.button",
   "ui.bootstrap.modal",
   "xeditable",
   "nextrunApp.commons",
@@ -59,12 +54,12 @@ raceModule.config(
       access: access.public
     }).
     when("/races/view/:raceId", {
-      templateUrl: "/partials/race/view2",
+      templateUrl: "/partials/race/race",
       controller: "ViewRaceController",
       access: access.public
     }).
     when("/races/edit/:raceId", {
-      templateUrl: "/partials/race/view2",
+      templateUrl: "/partials/race/race",
       controller: "EditRaceController",
       access: access.user
     }).

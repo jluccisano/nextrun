@@ -138,53 +138,53 @@ angular.module("nextrunApp.route").factory("RouteService",
 					});
 				}
 			},
-			resetRoute: function(route) {
-				route.data.ascendant = 0;
-				route.data.descendant = 0;
-				route.data.minElevation = 0;
-				route.data.maxElevation = 0;
-				route.data.distance = 0.0;
-				route.data.elevationPoints = [];
-				route.data.segments = [];
-				route.segments = [];
-				route.elevationPoints = [];
+			resetRoute: function(routeViewModel) {
+				routeViewModel.data.ascendant = 0;
+				routeViewModel.data.descendant = 0;
+				routeViewModel.data.minElevation = 0;
+				routeViewModel.data.maxElevation = 0;
+				routeViewModel.data.distance = 0.0;
+				routeViewModel.data.elevationPoints = [];
+				routeViewModel.data.segments = [];
+				routeViewModel.segments = [];
+				routeViewModel.elevationPoints = [];
 
-				route._markers.length = 0;
-				route._polylines.length = 0;
-				route._climbs = [];
+				routeViewModel._markers.length = 0;
+				routeViewModel._polylines.length = 0;
+				routeViewModel._climbs = [];
 
-				route._chartConfig.series[0].data = [];
-				route._chartConfig.series[1].data = [];
-				route._chartConfig.series[2].data = [];
-				route._chartConfig.series[3].data = [];
-				route._chartConfig.series[4].data = [];
+				routeViewModel._chartConfig.series[0].data = [];
+				routeViewModel._chartConfig.series[1].data = [];
+				routeViewModel._chartConfig.series[2].data = [];
+				routeViewModel._chartConfig.series[3].data = [];
+				routeViewModel._chartConfig.series[4].data = [];
 			},
 
-			deleteLastSegment: function(route) {
+			deleteLastSegment: function(routeViewModel) {
 				try {
 
-					if (route.getSegments().length > 0) {
+					if (routeViewModel.getSegments().length > 0) {
 
-						var lastSegment = route.getLastSegment();
+						var lastSegment = routeViewModel.getLastSegment();
 
-						route.removeLastSegment();
+						routeViewModel.removeLastSegment();
 
-						route.removeLastMarker();
+						routeViewModel.removeLastMarker();
 
 						//set the new end marker
-						if (route.getMarkers().length > 1) {
-							var marker = route.getLastMarker();
+						if (routeViewModel.getMarkers().length > 1) {
+							var marker = routeViewModel.getLastMarker();
 							marker.icon = "client/modules/route/images/end.png";
 						}
 
-						route.data.elevationPoints = _.difference(route.data.elevationPoints, _.where(route.data.elevationPoints, {
+						routeViewModel.data.elevationPoints = _.difference(routeViewModel.data.elevationPoints, _.where(routeViewModel.data.elevationPoints, {
 							"segmentId": lastSegment.getId()
 						}));
 
 
-						route.clearSegment();
+						routeViewModel.clearSegment();
 
-						route.removePointsToElevationChartBySegmentId(lastSegment.getId());
+						routeViewModel.removePointsToElevationChartBySegmentId(lastSegment.getId());
 					}
 
 				} catch (ex) {

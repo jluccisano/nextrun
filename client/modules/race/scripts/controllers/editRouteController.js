@@ -11,7 +11,8 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         routeDataModel,
         race,
         RouteUtilsService,
-        RouteHelperService) {
+        RouteHelperService,
+        AlertService) {
 
 
         $scope.location = {
@@ -31,35 +32,40 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         };
 
         $scope.tmpRoute = {};
+        $scope.route = {};
+        $scope.routeViewModel = {};
 
         $scope.init = function() {
-            $scope.route = new routeBuilder.Route(routeDataModel, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
-            $scope.route.setCenter(RouteUtilsService.getCenter(race));
-            $scope.route.addClickListener($scope.onClickMap);
+            $scope.route = routeDataModel;
+
+            angular.copy(routeDataModel, $scope.tmpRoute);
+
+            $scope.routeViewModel = new routeBuilder.Route($scope.route, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
+            $scope.routeViewModel.setCenter(RouteUtilsService.getCenter(race));
+            $scope.routeViewModel.addClickListener($scope.onClickMap);
             
             $timeout(function() {
-                $scope.route.setVisible(true);
+                $scope.routeViewModel.setVisible(true);
             });
 
-            angular.copy($scope.route, $scope.tmpRoute);
         };
 
-        $scope.onClickMap = function(route, destinationLatlng) {
-            RouteService.createNewSegment(route, destinationLatlng);
+        $scope.onClickMap = function(routeViewModel, destinationLatlng) {
+            RouteService.createNewSegment(routeViewModel, destinationLatlng);
         };
 
-        $scope.delete = function(route) {
-            RouteService.resetRoute(route);
+        $scope.delete = function(routeViewModel) {
+            RouteService.resetRoute(routeViewModel);
         };
 
-        $scope.undo = function(route) {
-            RouteService.deleteLastSegment(route);
+        $scope.undo = function(routeViewModel) {
+            RouteService.deleteLastSegment(routeViewModel);
         };
 
-        $scope.getFile = function(route, file) {
+        $scope.getFile = function(routeViewModel, file) {
             FileReaderService.readAsDataUrl(file, $scope).then(function(result) {
                 try {
-                    route = GpxService.convertGPXtoRoute($scope, route.routeType, result);
+                    routeViewModel = GpxService.convertGPXtoRoute($scope, routeViewModel.getType(), result);
                 } catch (ex) {
                     AlertService.add("danger", ex.message, 3000);
                 } finally {
@@ -68,22 +74,22 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             });
         };
 
-        $scope.centerToLocation = function(route, details) {
+        $scope.centerToLocation = function(routeViewModel, details) {
             if (details && details.location) {
                 var center = {
                     latitude: details.location.lat,
                     longitude: details.location.lon
                 };
-                route.setCenter(center);
+                routeViewModel.setCenter(center);
             }
         };
 
         $scope.submit = function() {
-            $modalInstance.close($scope.route);
+            $modalInstance.close($scope.routeViewModel.data);
         };
 
         $scope.cancel = function() {
-            angular.copy($scope.tmpRoute, $scope.route);
+            angular.copy($scope.tmpRoute, $scope.routeViewModel.data);
             $modalInstance.dismiss("cancel");
         };
 

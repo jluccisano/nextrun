@@ -7,7 +7,7 @@ div(class="container view-race")
             h4(class="list-group-item-heading" translate) Général
           a(ng-click="status.open = true" nr-scroll-to="routes" class="list-group-item")
             h4(class="list-group-item-heading" translate) Parcours
-            a(ng-class="{'active': active === (route.getType() + $index)}" bs-scrollspy ng-click="status.open = false;setSelection(route, $index);route.setVisible(true)" ng-repeat="route in routesViewModel" nr-scroll-to="route{{$index}}" class="list-group-item") {{route.getType()}}
+            a(ng-class="{'active': active === (routeViewModel.getType() + $index)}" bs-scrollspy ng-click="status.open = false;setSelection(routeViewModel, $index);route.setVisible(true)" ng-repeat="routeViewModel in routesViewModel" nr-scroll-to="route{{$index}}" class="list-group-item") {{routeViewModel.getType()}}
           a(class="list-group-item")
             h4(class="list-group-item-heading" translate) Organisation
             a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="status.open = false;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Inscription
@@ -61,37 +61,37 @@ div(class="container view-race")
                     google-map(center="race.plan.location" zoom="17")
 
       div(class="bs-docs-section")
-        div(ng-repeat="route in routesViewModel" ng-if="selection === (route.getType() + $index) && route.isVisible()")
+        div(ng-repeat="routeViewModel in routesViewModel" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left") {{route.getType()}}
+              h4(class="panel-title pull-left") {{routeViewModel.getType()}}
               div(class="btn-group pull-right")
-                nr-download(ng-if="!editMode" id="content" get-data="exportGPX(route)" class="btn btn-default btn-sm")
-                a(ng-if="editMode" ng-click="editRoute(route, $index)" class="btn btn-default btn-sm")
+                nr-download(ng-if="!editMode" id="content" get-data="exportGPX(routeViewModel)" class="btn btn-default btn-sm")
+                a(ng-if="editMode" ng-click="editRoute(routeViewModel, $index)" class="btn btn-default btn-sm")
                   i(class="fa fa-pencil-square-o")
             div(class="panel-body")
                 div(id="{{selection}}")
                   include map
-                  highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
+                  highchart(ng-hide="routeViewModel.getType() === 'Natation'" config="routeViewModel.getChartConfig()")
                   div(class="row text-center")
                     div(class="col-lg-4")
-                      h3 {{ route.getDistance() | number: 2}}
+                      h3 {{ routeViewModel.getDistance() | number: 2}}
                         small km
                       span.small {{ 'Distance' | translate}}
                     div(class="col-lg-4")
-                      h3 {{route.getAscendant() | number: 0 }}
+                      h3 {{routeViewModel.getAscendant() | number: 0 }}
                         small m
                       span.small {{ 'D+' | translate}}
                     div(class="col-lg-4")
-                      h3 {{route.getDescendant() | number: 0 }}
+                      h3 {{routeViewModel.getDescendant() | number: 0 }}
                         small m
                       span.small {{ 'D-' | translate}}
                     div(class="col-lg-4")
-                      h3 {{route.getMaxElevation() | number: 0 }}
+                      h3 {{routeViewModel.getMaxElevation() | number: 0 }}
                         small m
                       span.small {{ 'Max' | translate}}
                     div(class="col-lg-4")
-                      h3 {{route.getMinElevation() | number: 0 }}
+                      h3 {{routeViewModel.getMinElevation() | number: 0 }}
                         small m
                       span.small {{ 'Min' | translate}}
         div(id="registration" ng-show="selection == 'registration'")

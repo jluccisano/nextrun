@@ -41,8 +41,8 @@ module.exports = function(config) {
             "client/bower_components/textAngular/dist/textAngular.min.js",
             "client/bower_components/angular-x2js/dist/x2js.min.js",
             "client/bower_components/angular-loading-bar/build/loading-bar.js",
-
-
+            "client/bower_components/angular-xeditable/dist/js/xeditable.js",
+            "client/bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js",
 
             "client/bower_components/angular-mocks/angular-mocks.js",
             

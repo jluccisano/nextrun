@@ -31,7 +31,7 @@ var routes = [
     }, {
         path: "/:raceId/update",
         httpMethod: "PUT",
-        middleware: [raceController.updateField],
+        middleware: [raceController.checkAuthorization, raceController.update],
         accessLevel: accessLevels.user
     }, {
         path: "/:raceId/publish/:value",
@@ -42,7 +42,7 @@ var routes = [
     }, {
         path: "/:raceId/delete",
         httpMethod: "DELETE",
-        middleware: [raceController.delete],
+        middleware: [raceController.checkAuthorization, raceController.delete],
         accessLevel: accessLevels.user
     }, {
         path: "/search",

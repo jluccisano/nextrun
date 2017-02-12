@@ -13,7 +13,7 @@ div.container
 						
 						div.form-group(ng-class="{'has-error': !form.password.$pristine && form.password.$invalid, 'has-success': !form.password.$invalid && !form.password.$pristine}")
 							label.control-label(type="password" for="password"  translate) Mot de passe
-							input.form-control(type="password" name="password" placeholder="{{'Mot de passe' | translate }}" ng-model="user.password" ng-minlength="4" ng-maxlength="16" required)
+							input.form-control(type="password" name="password" placeholder="{{'Mot de passe' | translate }}" ng-model="user.password" ng-minlength="4" ng-maxlength="16" ng-required="true")
 							span.help-block(ng-show="form.password.$dirty && form.password.$error.minlength" translate) Le mot de passe doit contenir au minium 4 lettres.
 							span.help-block(ng-show="form.password.$dirty && form.password.$error.maxlength" translate) Le mot de passe doit contenir au maximum 16 lettres.
 						

@@ -1,11 +1,11 @@
-div.modal-header
-	button.close(type="button",data-dismiss="modal" aria-hidden="true" ng-click="cancel()") &times;
-	h4.modal-title(translate) Redirection
-div.modal-body
-	div.row
-		div.col-lg-10
-			label.control-label(translate) Souhaitez-vous éditer votre manifestation ?
-			<b>{{race.name}}</b>
-			button.btn.btn-default(type="button" ng-click="goToEdit()" translate) Editer maintenant
-			button.btn.btn-primary(type="button" ng-click="goToMyRaces()" translate) Plus tard
-div.modal-footer
+div(class="modal-header")
+	button(class="close" type="button" data-dismiss="modal" aria-hidden="true" ng-click="cancel()") &times;
+	h4(class="modal-title" translate) Redirection
+div(class="modal-body")
+	div(class="row")
+		div(class="col-lg-10")
+			label(class="control-label" translate) Souhaitez-vous éditer votre manifestation ?
+			b {{race.name}}
+div(class="modal-footer")
+	button(class="btn btn-default" type="button" ng-click="goToEdit()" translate) Editer maintenant
+	button(class="btn btn-primary" type="button" ng-click="goToMyRaces()" translate) Plus tard

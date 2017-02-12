@@ -38,10 +38,29 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			return AuthService.isLoggedIn();
 		};
 
+		$scope.initRouteDataModel = function() {
+			var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type);
+
+			$scope.race.routes = [];
+
+			_.each(raceType.routes, function(routeType) {
+
+				$scope.race.routes.push({
+					type: routeType,
+					segments: [],
+					elevationPoints: []
+				});
+
+			});
+		};
+
 		$scope.submit = function() {
+			$scope.initRouteDataModel();
+
 			var data = {
 				race: $scope.race
 			};
+
 
 			if ($scope.isLoggedIn()) {
 				RaceService.create(data).then(
