@@ -166,7 +166,7 @@ angular.module('nextrunApp').factory('RouteServices', function() {
 
 		removeElevationPointsBySegmentId: function(segmentId) {
 			for (var k = route.elevationPoints.length - 1; k >= 0; k--) {
-				if (route.elevationPoints[k].getSegmentId() == segmentId) {
+				if (route.elevationPoints[k].getSegmentId() === segmentId) {
 					route.elevationPoints.splice(k, 1);
 				}
 			}

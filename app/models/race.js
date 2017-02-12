@@ -44,7 +44,6 @@ var RaceSchema = new Schema({
   date: Date,
   edition: Number,
   distanceType: String,
-
   routes: [RouteSchema],
   timing: {
     startingTime: {

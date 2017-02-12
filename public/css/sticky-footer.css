@@ -32,6 +32,10 @@ body {
   color: white;
 }
 
+#footer a {
+  color: white;
+}
+
 
 /* Custom page CSS
 -------------------------------------------------- */
@@ -47,6 +51,7 @@ body {
 #footer > .container {
   padding-left: 15px;
   padding-right: 15px;
+  margin-bottom: 50px;
 }
 
 code {

@@ -6,10 +6,9 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 		$scope.types = [{
 			name: 'Athlète'
 		}, {
-			name: 'Organisteur'
+			name: 'Organisateur'
 		}, {
-			name: 'Autre',
-			shade: 'dark'
+			name: 'Autre'
 		}];
 
 		$scope.submit = function(contact) {

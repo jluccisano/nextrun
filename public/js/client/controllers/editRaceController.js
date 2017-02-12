@@ -223,7 +223,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		var segmentPoints = [];
 
 		var startIndex = 1;
-		if (isFirstPoint == true) {
+		if (isFirstPoint === true) {
 			startIndex = 0
 		}
 
@@ -253,7 +253,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 			var r = (d + Math.random() * 16) % 16 | 0;
 			d = Math.floor(d / 16);
-			return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16);
+			return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
 		});
 		return uuid;
 	};
@@ -274,7 +274,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 	var getLastPointOfLastSegment = function(route) {
 
-		var lastPointOfLastSegment = null;
+		var lastPointOfLastSegment;
 		var segmentIndex = 0;
 		var pointIndex = 0;
 
@@ -291,7 +291,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				pointIndex = pointsOfLastSegment.length - 1;
 			}
 
-			var lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
+			lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
 		}
 
 		return lastPointOfLastSegment;
@@ -355,7 +355,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		if (lastPoint) {
 			for (var k = 0, lk = segmentPoints.length; k < lk; k++) {
 
-				if (k == 0) {
+				if (k === 0) {
 
 					distanceBetween2Points = parseFloat(calculateDistanceBetween2Points(lastPoint.latlng, segmentPoints[k].latlng));
 
@@ -395,13 +395,13 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 				distanceBetween2Points = parseFloat(calculateDistanceBetween2Points(cursor.latlng, segmentPoints[k].latlng));
 
-				if (k == (segmentPoints.length - 1) || distanceBetween2Points >= samples) {
+				if (k === (segmentPoints.length - 1) || distanceBetween2Points >= samples) {
 					samplesPoints.push(segmentPoints[k]);
 					cursor = segmentPoints[k];
 				}
 			}
 		} else {
-			if (segmentPoints.length == 1) {
+			if (segmentPoints.length === 1) {
 				samplesPoints.push(segmentPoints[0]);
 			}
 		}
@@ -416,7 +416,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 		getElevationFromLocation(samplesLatlng, function(result, status) {
 
-			if (status != google.maps.ElevationStatus.OK) {
+			if (status !== google.maps.ElevationStatus.OK) {
 				return;
 			}
 
@@ -430,7 +430,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					var diffElevation = (parseFloat(samplesPoints[k].elevation) - parseFloat(lastPoint.elevation));
 					var distanceWithLastPoint = samplesPoints[k].distanceFromStart - lastPoint.distanceFromStart;
 					var grade = 0;
-					if (distanceWithLastPoint != 0 && diffElevation != 0) {
+					if (distanceWithLastPoint !== 0 && diffElevation !== 0) {
 						grade = ((diffElevation / (distanceWithLastPoint * 1000)) * 100).toFixed(1);
 					}
 					samplesPoints[k].grade = grade;
@@ -468,9 +468,11 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 	var createMarker = function($scope, route, segment, path, _this) {
 
-		if (route.segments.length == 1) {
+		var marker = {};
 
-			var marker = {
+		if (route.segments.length === 1) {
+
+			marker = {
 				latitude: path[path.length - 1].lat(),
 				longitude: path[path.length - 1].lng(),
 				icon: "../../../img/start.png",
@@ -478,9 +480,9 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			}
 		} else {
 
-			replaceLastMarkerBySegmentPoint($scope,route);
+			replaceLastMarkerBySegmentPoint($scope, route);
 
-			var marker = {
+			marker = {
 				latitude: path[path.length - 1].lat(),
 				longitude: path[path.length - 1].lng(),
 				icon: "../../../img/end.png",
@@ -640,7 +642,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 				directionService.route(directionsRequest, function(result, status) {
 
-					if (status == google.maps.DirectionsStatus.OK && directionsRequest.unitSystem == google.maps.UnitSystem.METRIC) {
+					if (status === google.maps.DirectionsStatus.OK && directionsRequest.unitSystem === google.maps.UnitSystem.METRIC) {
 
 						var segment = createSegment(result.routes[0], isFirstPoint);
 
@@ -650,8 +652,8 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 						route.segments.push(segment);
 
-						samplesPoints = getElevationFromSamplesPoints($scope,route, segment, result.routes[0].overview_path, samplesPoints);
-					
+						samplesPoints = getElevationFromSamplesPoints($scope, route, segment, result.routes[0].overview_path, samplesPoints);
+
 					}
 				});
 
