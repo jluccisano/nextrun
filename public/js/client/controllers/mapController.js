@@ -445,6 +445,13 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 				strokeWeight: 5
 			});*/
 			
+			/*
+			var pathArray = [];
+			_.each(path, function(point) {
+				pathArray.push({latitude: point.lat(), longitude: point.lng()})
+			});
+*/
+			
 			var polyLine = {
 				path: path,
 				stroke: {

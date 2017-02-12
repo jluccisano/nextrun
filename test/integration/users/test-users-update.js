@@ -29,6 +29,8 @@ var user1 = {
   password: '123'
 };
 
+
+
 var user2 = {
   username: 'foobar2',
   email: "foobar2@example.com",

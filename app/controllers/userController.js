@@ -200,7 +200,7 @@ exports.checkIfEmailAlreadyExists = function(req, res) {
 exports.checkUser = function(req, res, next) {
   if (req.user && req.user.email) {
     User.findOne({
-      email: req.body.user.email
+      email: req.user.email
     }, function(err, user) {
       if (err) {
         return res.json(400, {
@@ -233,7 +233,10 @@ exports.updateProfile = function(req, res) {
   user.email = req.body.user.email;
   user.username = req.body.user.username;
 
-  user.save(function(err) {
+  var userModel = new User(user);
+  console.log(userModel);
+
+  userModel.save(function(err) {
     if (err) {
       return res.json(400, {
         message: errorUtils.errors(err.errors)
@@ -259,6 +262,7 @@ exports.updatePassword = function(req, res) {
   var user = req.user;
 
   var actualPassword = req.body.actual;
+
 
   if (user.authenticate(actualPassword)) {
 
