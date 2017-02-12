@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
   , Contact = mongoose.model('contact')
-  , email = require('../config/middlewares/notification');
+  , email = require('../../config/middlewares/notification');
  
 /**
  * Create

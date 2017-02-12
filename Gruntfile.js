@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         'tmp/public/js/libs/jquery.validate.js': ['public/js/libs/jquery.validate.js'],
         'tmp/public/js/libs/angular.js': ['public/js/libs/angular.js'],
         'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
-        'tmp/public/js/libs/raphaeljs.js': ['public/js/libs/raphaeljs.js']
+        'tmp/public/js/libs/raphael.js': ['public/js/libs/raphael.js']
       },
     },
     },
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
           'dist/public/js/libs/jquery.validate.min.js': ['tmp/public/js/libs/jquery.validate.js'],
           'dist/public/js/libs/angular.min.js': ['tmp/public/js/libs/angular.js'],
           'dist/public/js/libs/angular-route.min.js': ['tmp/public/js/libs/angular-route.js'],
-          'dist/public/js/libs/raphaeljs.min.js': ['tmp/public/js/libs/raphaeljs.js'],
+          'dist/public/js/libs/raphael.min.js': ['tmp/public/js/libs/raphael.js'],
         }
       }
     },

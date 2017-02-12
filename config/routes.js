@@ -2,7 +2,9 @@
  * Module dependencies.
  */
 
-var mainController = require('../app/controllers/mainController');
+var mainController = require('../app/controllers/mainController')
+,contactController = require('../app/controllers/contactController');
+
 
 module.exports = function (app, passport) {
 
