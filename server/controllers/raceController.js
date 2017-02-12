@@ -7,7 +7,23 @@ var mongoose = require("mongoose"),
     Race = mongoose.model("Race"),
     errorUtils = require("../utils/errorUtils"),
     mongooseUtils = require("../utils/mongooseUtils"),
-    underscore = require("underscore");
+    underscore = require("underscore"),
+    //GridFs = require("gridfs-stream"),
+    fs = require("fs");
+
+
+exports.uploadImage = function(req, res) {
+
+    console.log("start upload");
+
+    /* var writestream = GridFs.createWriteStream({
+        filename: 'my_file.txt'
+    });
+
+    fs.createReadStream('../utils/logo_officiel.png').pipe(writestream);*/
+
+    res.sendStatus(200);
+};
 
 /**
  * Load By Id
@@ -104,7 +120,7 @@ exports.findByUser = function(req, res) {
  * @returns race loaded by load parameter id
  */
 exports.find = function(req, res) {
-    mongooseUtils.find(req,res,"race");
+    mongooseUtils.find(req, res, "race");
     /*var race = req.race;
     if (!underscore.isUndefined(race)) {
         res.status(200).json(race);

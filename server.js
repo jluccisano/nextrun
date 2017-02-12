@@ -13,6 +13,7 @@ var express = require("express"),
     passport = require("passport"),
     config = require("./config/config")[env],
     mongoose = require("mongoose"),
+    GridFs = require('gridfs-stream'),
     app = express();
 
 
@@ -20,7 +21,7 @@ var express = require("express"),
 app.config = config;
 
 // Database
-require("./server/database")(app, mongoose);
+require("./server/database")(app, mongoose, GridFs);
 
 // Bootstrap models
 var models_path = __dirname + "/server/models";

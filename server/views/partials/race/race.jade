@@ -58,6 +58,7 @@ div(class="container view-race")
                 nr-address(edit-mode="editMode" race="race")
 
               a(ng-if="editMode" class="btn btn-link" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate) Ajouter un parcours
+              a(ng-if="editMode" class="btn btn-link" type="button" ng-click="uploadImage()" translate) Ajouter une image
 
 
       div(class="bs-docs-section")

@@ -187,5 +187,11 @@ angular.module("nextrunApp.race").controller("EditRaceController",
             $scope.isCollapsed = true;
         };
 
+        $scope.uploadImage = function() {
+            RaceService.uploadImage().then(function(response){
+
+            });
+        };
+
         $scope.init();
     });

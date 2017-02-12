@@ -1,4 +1,6 @@
-module.exports = function(app, mongoose) {
+var logger = require("./logger");
+
+module.exports = function(app, mongoose, GridFs) {
 
     var connect = function() {
 
@@ -17,12 +19,16 @@ module.exports = function(app, mongoose) {
 
     // Error handler
     mongoose.connection.on('error', function(err) {
-        console.error('MongoDB Connection Error. Please make sure MongoDB is running.\n' + err);
+        logger.error('MongoDB Connection Error. Please make sure MongoDB is running.\n' + err);
     });
 
     // Reconnect when closed
     mongoose.connection.on('disconnected', function() {
         connect();
+    });
+
+    mongoose.connection.once('open', function() {
+        var gfs = GridFs(mongoose.connection.db, mongoose.mongo);
     });
 
 };

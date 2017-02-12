@@ -42,5 +42,8 @@ angular.module("nextrunApp.commons").factory("RaceService",
                     "text": text
                 });
             },
+            uploadImage: function() {
+                return HttpUtils.get("/api/races/uploadImage");
+            },
         };
     });
