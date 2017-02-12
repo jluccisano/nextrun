@@ -9,7 +9,6 @@ coverage.html
 jshint.xml
 test-results.xml
 coverage/
-.bowerrc
 karma.log
 
 
