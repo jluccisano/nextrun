@@ -88,7 +88,7 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
 
         
         <!-- routingConfig.js is not minified and not concatenated -->
-        script(src="    .js")
+        script(src="/routingConfig.js")
 
         <!-- build:js(client) client/scripts/widgets/socialbuttons.min.js -->
         script(src="/widgets/socialbuttons.js")
@@ -178,7 +178,7 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
 
         <!-- main module -->
         <!-- config.js is not minified and not concatenated -->
-        <script src="client/modules/main/scripts/services/clientConfig.js"></script>
+        script(src="/client/modules/main/scripts/services/clientConfig.js")
         <!-- build:js(client) client/scripts/main.min.js -->
         script(src="/modules/main/scripts/main.js")
         script(src="/modules/main/scripts/controllers/aboutController.js")
