@@ -30,6 +30,8 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             id: 1
         };
 
+        $scope.tmpRoute = {};
+
         $scope.init = function() {
             $scope.route = new routeBuilder.Route(routeDataModel, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
             $scope.route.setCenter(RouteUtilsService.getCenter(race));
@@ -39,7 +41,7 @@ angular.module("nextrunApp.race").controller("EditRouteController",
                 $scope.route.setVisible(true);
             });
 
-
+            angular.copy($scope.route, $scope.tmpRoute);
         };
 
         $scope.onClickMap = function(route, destinationLatlng) {
@@ -81,6 +83,7 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         };
 
         $scope.cancel = function() {
+            angular.copy($scope.tmpRoute, $scope.route);
             $modalInstance.dismiss("cancel");
         };
 

@@ -1,21 +1,12 @@
 div(class="container")
 	div(class="row")
-		div(class="col-md-6")
+		div(class="col-md-6" ng-repeat="option in race.registration.options")
 			div(class="list-group")
 				a(class="list-group-item active")
-					h4(class="list-group-item-heading" translate) Licencié
+					h4(class="list-group-item-heading" translate) option.name
 				a(class="list-group-item") 
-					h2(class="list-group-item-heading" translate) 15 euros
-				a(class="list-group-item") Date limite: 13/11/2014
-				a(class="list-group-item active")
-					button(class="btn btn-primary" disabled) S'inscrire
-		div(class="col-md-6")
-			div(class="list-group")
-				a(class="list-group-item active")
-					h4(class="list-group-item-heading" translate) Non Licencié
-				a(class="list-group-item")
-					h2(class="list-group-item-heading" translate) 20 euros
-				a(class="list-group-item") Date limite: 13/11/2014
+					h2(class="list-group-item-heading" translate) option.price
+				a(class="list-group-item") Date limite: {{option.closingDate}}
 				a(class="list-group-item active")
 					button(class="btn btn-primary" disabled) S'inscrire
 

@@ -22,7 +22,7 @@ div(class="container")
 										span  {{'Signaler une erreur' | translate}}
 							tr(ng-if="race.organizerWebSite")
 								td(class="rowBasic")
-									a(ng-href="{{race.organizerWebSite}}" nr-add-http target="_blank")
+									a(ng-href="{{race.organizerWebSite}}"  e-type="url" target="_blank")
 										i.glyphicon.glyphicon-info-sign
 										span {{race.organizerWebSite}}
 							tr

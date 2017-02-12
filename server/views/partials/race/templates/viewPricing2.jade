@@ -4,26 +4,16 @@ div(class="example")
 		div(class="col-md-12")
 			div(class="pricing")
 				ul
-					li(class="unit price-primary")
+					li(class="unit price-primary" ng-repeat="option in race.registration.options")
 						div(class="price-title")
-							h3 15€
+							h3 {{option.price}}
+								i(class="fa fa-eur")
 						div(class="price-body")
-							h4 Licencié FFTri
+							h4 {{option.name}}
 							p
 							ul
-								li Date limite: 13/11/2014
-								li Nombre de dossard: 250
+								li(translate) Date limite: {{race.registration.closingDate | date:"dd/mm/yyyy"}}
+								li(translate) Nombre de dossard: {{race.registration.limitedPlaces}}
 						div(class="price-foot")
-							button(type="button" class="btn btn-primary") S'inscrire
-					li(class="unit price-success active")
-						div(class="price-title")
-							h3 20€
-						div(class="price-body")
-							h4 Non Licencié
-							p
-							ul
-								li Date limite: 13/11/2014
-								li Nombre de dossard: 250
-						div(class="price-foot")
-							button(type="button" class="btn btn-primary") S'inscrire
+							button(type="button" class="btn btn-primary" translate) S'inscrire
 

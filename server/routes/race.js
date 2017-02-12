@@ -31,7 +31,7 @@ var routes = [
     }, {
         path: "/:raceId/update",
         httpMethod: "PUT",
-        middleware: [raceController.update],
+        middleware: [raceController.updateField],
         accessLevel: accessLevels.user
     }, {
         path: "/:raceId/publish/:value",

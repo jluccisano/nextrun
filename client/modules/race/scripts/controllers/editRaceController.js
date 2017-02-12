@@ -22,8 +22,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.editMode = true;
 		$scope.active = "general";
 		$scope.status = {
-            open: true
-        };
+			open: true
+		};
 
 		$scope.activePanel = 1;
 		$scope.gettextCatalog = gettextCatalog;
@@ -47,6 +47,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			RaceService.retrieve($scope.raceId).then(function(response) {
 				$scope.race = response.data.race;
 				$scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
+				$scope.selection = $scope.routesViewModel[0].getType() + 0;
 			}).
 			finally(function() {
 				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
@@ -126,7 +127,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.editMoreInformation = function(model) {
 			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal(model.moreInformation);
 			$scope.modalInstance.result.then(function(moreInformation) {
-				model.moreInformation = moreInformation;	
+				model.moreInformation = moreInformation;
 			});
 		};
 
@@ -146,10 +147,26 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				}
 			});
 
-			$scope.modalInstance.result.then(function(result) {
-				$scope.routesViewModel[$index] = result;
+			$scope.modalInstance.result.then(function(route) {
+				//if (!angular.equals(route.data, $scope.routesViewModel[$index].data)) {
+
+				var fields = {};
+				fields["routes.$"] = route.data;
+
+				$scope.update({
+					fields: fields
+				});
+				//}
 			});
 		};
+
+		$scope.update = function(data) {
+			RaceService.update($scope.raceId, data).then(
+				function() {
+					$scope.init();
+					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
+				});
+		}
 
 		$scope.editRegistration = function() {
 			$scope.modalInstance = $modal.open({
@@ -164,13 +181,20 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				}
 			});
 
-			$scope.modalInstance.result.then(function(result) {
+			$scope.modalInstance.result.then(function(data) {
+				if (!angular.equals(data, $scope.race.registration)) {
+					$scope.update({
+						fields: {
+							"registration": data
+						}
+					});
+				}
 			});
 		};
 
-		 $scope.setSelection = function(route, index) {
-            $scope.selection = route.getType() + index;
-            $scope.active = route.getType() + index;
-        };
+		$scope.setSelection = function(route, index) {
+			$scope.selection = route.getType() + index;
+			$scope.active = route.getType() + index;
+		};
 		$scope.init();
 	});

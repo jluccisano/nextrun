@@ -97,7 +97,7 @@ var RaceSchema = new Schema({
             type: Date,
             default: null
         },
-        limitDate: {
+        closingDate: {
             type: Date,
             default: null
         },
@@ -113,7 +113,7 @@ var RaceSchema = new Schema({
             type: String,
             default: null
         },
-        numberOfPlacesAvailable: {
+        limitedPlaces: {
             type: Number,
             default: 0
         },

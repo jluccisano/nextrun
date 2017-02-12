@@ -28,6 +28,10 @@ accordion {
     }
 }
 
+textarea[name=description] {
+    resize: none;
+}
+
 .modal-fullscreen .modal-dialog {
     width: 100%;
     height: 100%;

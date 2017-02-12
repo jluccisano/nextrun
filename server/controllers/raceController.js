@@ -159,6 +159,66 @@ exports.find = function(req, res) {
     }
 };
 
+exports.updateField = function(req, res) {
+
+    var race = req.race;
+    var userConnected = req.user;
+    var fieldsToUpdate;
+
+    if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.fields)) {
+
+        fieldsToUpdate = req.body.fields;
+
+        if (!underscore.isUndefined(race) && !underscore.isUndefined(race.userId) && !underscore.isUndefined(race._id)) {
+
+            if (!underscore.isUndefined(userConnected) && !underscore.isUndefined(userConnected._id)) {
+
+                if (race.userId.equals(userConnected._id)) {
+
+                    fieldsToUpdate.lastUpdate = new Date();
+
+                    console.log(fieldsToUpdate);
+
+                    Race.update({
+                        _id: race._id
+                    }, {
+                        $set: fieldsToUpdate
+                    }, {
+                        upsert: true
+                    }, function(err) {
+                        if (!err) {
+                            return res.sendStatus(200);
+                        } else {
+                            logger.error(err);
+                            return res.status(400).json({
+                                message: errorUtils.errors(err.errors)
+                            });
+                        }
+                    });
+                } else {
+                    logger.error("error.userNotOwner");
+                    return res.status(400).json({
+                        message: ["error.userNotOwner"]
+                    });
+                }
+            } else {
+                return res.status(400).json({
+                    message: ["error.userNotConnected"]
+                });
+            }
+        } else {
+            return res.status(400).json({
+                message: ["error.unknownRace"]
+            });
+        }
+    } else {
+        return res.status(400).json({
+            message: ["error.bodyParamRequired"]
+        });
+    }
+};
+
+
 /**
  * @method update race
  * @param req
