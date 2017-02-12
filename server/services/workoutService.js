@@ -35,7 +35,18 @@ exports.getWorkoutsByUser = function(req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(workouts);
+			Workout.countTotal(criteria, function(error, count) {
+				if (error) {
+					errorUtils.handleError(res, error);
+				} else {
+					cb({
+						items: workouts,
+						total: count,
+						limit: limit,
+						skip: skip
+					});
+				}
+			});
 		}
 	}, projection, limit, skip);
 };
@@ -55,7 +66,18 @@ exports.getWorkouts = function(req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(workouts);
+			Workout.countTotal(criteria, function(error, count) {
+				if (error) {
+					errorUtils.handleError(res, error);
+				} else {
+					cb({
+						items: workouts,
+						total: count,
+						limit: limit,
+						skip: skip
+					});
+				}
+			});
 		}
 	}, projection, limit, skip);
 
@@ -191,7 +213,7 @@ exports.deleteParticipant = function(workout, participantId, res, cb) {
 		},
 		$pull: {
 			participants: {
-				_id:  mongoose.Types.ObjectId(participantId)
+				_id: mongoose.Types.ObjectId(participantId)
 			}
 		}
 	};

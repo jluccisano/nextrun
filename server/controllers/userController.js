@@ -131,10 +131,8 @@ exports.deleteAccount = function(req, res) {
 };
 
 exports.getUsers = function(req, res) {
-    userService.getUsers(req, res, function(users) {
-        res.status(200).json({
-            items: users
-        });
+    userService.getUsers(req, res, function(data) {
+        res.status(200).json(data);
     });
 };
 

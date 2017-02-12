@@ -29,7 +29,7 @@ angular.module("nextrunApp.workout").controller("WorkoutsController",
 			promise.then(function(response) {
 				if (response.data && response.data.items && response.data.items.length > 0) {
 					$scope.workouts = response.data.items;
-					$scope.totalItems = $scope.workouts.length;
+					$scope.totalItems = response.data.total;
 				} else {
 					$scope.totalItems = 0;
 					$scope.workouts = [];

@@ -19,7 +19,7 @@ angular.module("nextrunApp.home").controller("ContactsController",
 			ContactService.find($scope.currentPage).then(function(response) {
 				if (response.data && response.data.items && response.data.items.length > 0) {
 					$scope.contacts = response.data.items;
-					$scope.totalItems = $scope.contacts.length;
+					$scope.totalItems = response.data.total;
 				} else {
 					$scope.totalItems = 0;
 					$scope.contacts = [];

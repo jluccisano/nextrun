@@ -29,7 +29,7 @@ angular.module("nextrunApp.route").controller("RoutesController",
 			promise.then(function(response) {
 				if (response.data && response.data.items && response.data.items.length > 0) {
 					$scope.routes = response.data.items;
-					$scope.totalItems = $scope.routes.length;
+					$scope.totalItems = response.data.total;
 				} else {
 					$scope.totalItems = 0;
 					$scope.routes = [];

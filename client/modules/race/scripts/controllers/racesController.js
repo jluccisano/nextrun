@@ -31,7 +31,7 @@ angular.module("nextrunApp.race").controller("RacesController",
 				function(response) {
 					if (response.data && response.data.items && response.data.items.length > 0) {
 						$scope.races = response.data.items;
-						$scope.totalItems = $scope.races.length;
+						$scope.totalItems = response.data.total;
 					} else {
 						$scope.totalItems = 0;
 						$scope.races = [];

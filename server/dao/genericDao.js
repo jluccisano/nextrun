@@ -31,7 +31,12 @@ module.exports = {
 		query.exec(cb);
 	},
 
+	countTotal: function(criteria, cb) {
+		var query = this.count(criteria);
+		query.exec(cb);
+	},
+
 	deleteByCriteria: function(criteria, cb) {
 		this.remove(criteria).exec(cb);
-	},
+	}
 };

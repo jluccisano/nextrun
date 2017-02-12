@@ -19,7 +19,7 @@ angular.module("nextrunApp.auth").controller("UsersController",
 			AuthService.find($scope.currentPage).then(function(response) {
 				if (response.data && response.data.items && response.data.items.length > 0) {
 					$scope.users = response.data.items;
-					$scope.totalItems = $scope.users.length;
+					$scope.totalItems = response.data.total;
 				} else {
 					$scope.totalItems = 0;
 					$scope.users = [];
@@ -28,7 +28,7 @@ angular.module("nextrunApp.auth").controller("UsersController",
 		};
 
 		$scope.addNewUser = function() {
-			$state.go("newUser");
+			$state.go("signup");
 		};
 
 		$scope.publish = function(user, value) {

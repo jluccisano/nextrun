@@ -1420,3 +1420,14 @@ msgstr ""
 #: .tmp/generated/views/partials/home/templates/contact.html
 msgid "votre@email.com"
 msgstr ""
+
+#: .tmp/generated/views/partials/auth/users.html
+#: .tmp/generated/views/partials/home/contacts.html
+#: .tmp/generated/views/partials/race/allraces.html
+#: .tmp/generated/views/partials/race/races.html
+#: .tmp/generated/views/partials/route/allroutes.html
+#: .tmp/generated/views/partials/route/routes.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
+#: .tmp/generated/views/partials/workout/workouts.html
+msgid "{{totalItems}} <small>Résulats</small>"
+msgstr ""

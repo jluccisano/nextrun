@@ -40,7 +40,18 @@ exports.getRoutesByUser = function(req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(routes);
+			Route.countTotal(criteria, function(error, count) {
+				if (error) {
+					errorUtils.handleError(res, error);
+				} else {
+					cb({
+						items: routes,
+						total: count,
+						limit: limit,
+						skip: skip
+					});
+				}
+			});
 		}
 	}, projection, limit, skip);
 };
@@ -63,7 +74,18 @@ exports.getRoutes = function(req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(routes);
+			Route.countTotal(criteria, function(error, count) {
+				if (error) {
+					errorUtils.handleError(res, error);
+				} else {
+					cb({
+						items: routes,
+						total: count,
+						limit: limit,
+						skip: skip
+					});
+				}
+			});
 		}
 	}, projection, limit, skip);
 

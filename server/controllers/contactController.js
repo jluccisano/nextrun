@@ -39,10 +39,8 @@ exports.updateContact = function(req, res) {
 };
 
 exports.getContacts = function(req, res) {
-    contactService.getContacts(req, res, function(contacts) {
-        res.status(200).json({
-            items: contacts
-        });
+    contactService.getContacts(req, res, function(data) {
+        res.status(200).json(data);
     });
 };
 

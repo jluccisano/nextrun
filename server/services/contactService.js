@@ -36,7 +36,18 @@ exports.getContacts = function(req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(contacts);
+			Contact.countTotal(criteria, function(error, count) {
+				if (error) {
+					errorUtils.handleError(res, error);
+				} else {
+					cb({
+						items: contacts,
+						total: count,
+						limit: limit,
+						skip: skip
+					});
+				}
+			});
 		}
 	}, projection, limit, skip);
 

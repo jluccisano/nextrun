@@ -56,18 +56,14 @@ exports.deleteWorkout = function(req, res) {
 };
 
 exports.getWorkouts = function(req, res) {
-    workoutService.getWorkouts(req, res, function(workouts) {
-        res.status(200).json({
-            items: workouts
-        });
+    workoutService.getWorkouts(req, res, function(data) {
+        res.status(200).json(data);
     });
 };
 
 exports.getWorkoutsByUser = function(req, res) {
-    workoutService.getWorkoutsByUser(req, res, function(workouts) {
-        res.status(200).json({
-            items: workouts
-        });
+    workoutService.getWorkoutsByUser(req, res, function(data) {
+        res.status(200).json(data);
     });
 };
 

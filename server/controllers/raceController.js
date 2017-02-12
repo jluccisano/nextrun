@@ -28,18 +28,14 @@ exports.loadRace = function(req, res, next, id) {
 };
 
 exports.getRacesByUser = function(req, res) {
-	raceService.getRacesByUser(req, res, function(races) {
-		res.status(200).json({
-			items: races
-		});
+	raceService.getRacesByUser(req, res, function(data) {
+		res.status(200).json(data);
 	});
 };
 
 exports.getRaces = function(req, res) {
-	raceService.getRaces(req, res, function(races) {
-		res.status(200).json({
-			items: races
-		});
+	raceService.getRaces(req, res, function(data) {
+		res.status(200).json(data);
 	});
 };
 

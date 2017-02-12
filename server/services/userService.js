@@ -5,9 +5,9 @@ var errorUtils = require("../utils/errorUtils"),
 
 
 exports.save = function(user, res, cb) {
-	
-	if(!user._id) {
-	   user = new User(user);
+
+	if (!user._id) {
+		user = new User(user);
 	}
 
 	user.save(function(error, newUser) {
@@ -101,7 +101,18 @@ exports.getUsers = function(req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(users);
+			User.countTotal(criteria, function(error, count) {
+				if (error) {
+					errorUtils.handleError(res, error);
+				} else {
+					cb({
+						items: users,
+						total: count,
+						limit: limit,
+						skip: skip
+					});
+				}
+			});
 		}
 	}, projection, limit, skip);
 

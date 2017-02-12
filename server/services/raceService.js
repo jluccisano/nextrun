@@ -41,7 +41,18 @@ exports.getRacesByUser = function(req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(races);
+			Race.countTotal(criteria, function(error, count) {
+				if (error) {
+					errorUtils.handleError(res, error);
+				} else {
+					cb({
+						items: races,
+						total: count,
+						limit: limit,
+						skip: skip
+					});
+				}
+			});
 		}
 	}, projection, limit, skip);
 };
@@ -101,7 +112,18 @@ exports.getRaces = function(req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(races);
+			Race.countTotal(criteria, function(error, count) {
+				if (error) {
+					errorUtils.handleError(res, error);
+				} else {
+					cb({
+						items: races,
+						total: count,
+						limit: limit,
+						skip: skip
+					});
+				}
+			});
 		}
 	}, projection, limit, skip);
 

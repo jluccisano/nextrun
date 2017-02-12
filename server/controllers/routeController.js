@@ -32,18 +32,14 @@ exports.updateRoute = function(req, res) {
 };
 
 exports.getRoutes = function(req, res) {
-    routeService.getRoutes(req, res, function(routes) {
-        res.status(200).json({
-            items: routes
-        });
+    routeService.getRoutes(req, res, function(data) {
+        res.status(200).json(data);
     });
 };
 
 exports.getRoutesByUser = function(req, res) {
-    routeService.getRoutesByUser(req, res, function(routes) {
-        res.status(200).json({
-            items: routes
-        });
+    routeService.getRoutesByUser(req, res, function(data) {
+        res.status(200).json(data);
     });
 };
 
