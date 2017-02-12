@@ -494,7 +494,7 @@ module.exports = function(grunt) {
           archive: 'docker/nextrun.zip'
         },
         files: [
-          {cwd: 'dist/', src: ['/**'], dest: '/docker' }, // includes files in path
+          {expand: true, cwd: '<%= yeoman.dist %>' , src: ['**/*'], dest: '/' }
         ]
       }
     },
@@ -594,7 +594,8 @@ module.exports = function(grunt) {
     "usemin",
     "copy:fonts",
     "jsdoc",
-    "install"
+    "install",
+    "compress"
   ]);
 
   grunt.registerTask("default", [
