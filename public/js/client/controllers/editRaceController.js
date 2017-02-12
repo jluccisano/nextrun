@@ -160,7 +160,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							type: routeType.i18n,
 							stayOnTheRoad: true,
 							travelMode: google.maps.TravelMode.WALKING,
-							zoom: 10,
+							zoom: 14,
 							fit: true,
 							markers: [],
 							polylines: [],
@@ -300,7 +300,16 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 
 						if (route.segments.length === 0) {
-							route.center = $scope.race.department.center;
+
+							if ('undefined' !== typeof $scope.race.pin.location) {
+								route.center = {
+									latitude: $scope.race.pin.location.lat,
+									longitude: $scope.race.pin.location.lon
+								}
+							} else {
+								route.center = $scope.race.department.center;
+							}
+
 						}
 
 						$scope.race.routes[index] = route;
@@ -551,7 +560,14 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 				}
 
 				if (route.segments.length === 0) {
-					route.center = $scope.race.department.center;
+					if ('undefined' !== typeof $scope.race.pin.location) {
+						route.center = {
+							latitude: $scope.race.pin.location.lat,
+							longitude: $scope.race.pin.location.lon
+						}
+					} else {
+						route.center = $scope.race.department.center;
+					}
 				}
 
 				$scope.race.routes[index] = route;

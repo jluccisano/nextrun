@@ -8,7 +8,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 		$scope.raceId = $routeParams.raceId;
 		$scope.cursorMarker = {};
-		
+
 		$scope.onChangeTab = function(route) {
 			route.isVisible = true;
 		};
@@ -195,6 +195,17 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 							route.polylines = RouteFactory.drawPolylines(route.segments);
 						}
 
+						if (route.segments.length === 0) {
+							if ('undefined' !== $scope.race.pin.location) {
+								route.center = {
+									latitude: $scope.race.pin.location.lat,
+									longitude: $scope.race.pin.location.lon
+								};
+							} else {
+								route.center = $scope.race.department.center;
+							}
+						}
+
 						$scope.race.routes[index] = route;
 
 
@@ -203,7 +214,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 					$scope.race.routes[0].isVisible = true;
 
 					$scope.isVisible = false;
-					
+
 					$scope.options = {
 						map: {
 							center: new google.maps.LatLng($scope.race.plan.address.latlng.lat, $scope.race.plan.address.latlng.lng),

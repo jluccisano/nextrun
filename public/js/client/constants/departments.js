@@ -463,8 +463,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Marne',
 		region: 'Champagne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.940797,
+			longitude: 4.322137
 		}
 	},
 	HAUTE_MARNE: {
@@ -472,8 +472,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Haute-Marne',
 		region: 'Champagne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.141192,
+			longitude: 5.154453
 		}
 	},
 	MAYENNE: {
@@ -481,8 +481,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Mayenne',
 		region: 'Pays-de-la-Loire',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.451686,
+			longitude: -0.526860
 		}
 	},
 	MEURTHE_ET_MOSELLE: {
@@ -490,8 +490,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Meurthe-et-Moselle',
 		region: 'Lorraine',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.723838,
+			longitude: 6.162051
 		}
 	},
 	MEUSE: {
@@ -499,8 +499,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Meuse',
 		region: 'Lorraine',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 49.127189,
+			longitude: 5.382278
 		}
 	},
 	MORBIHAN: {
@@ -508,8 +508,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Morbihan',
 		region: 'Bretagne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.902047,
+			longitude: -2.758784
 		}
 	},
 	MOSELLE: {
@@ -517,8 +517,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Moselle',
 		region: 'Lorraine',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 49.025426,
+			longitude: 6.595664
 		}
 	},
 	NIEVRE: {
@@ -526,8 +526,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Nièvre',
 		region: 'Bourgogne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.148617,
+			longitude: 3.585092
 		}
 	},
 	NORD: {
@@ -535,8 +535,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Nord',
 		region: 'Nord',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 50.693731,
+			longitude: 2.970973
 		}
 	},
 	OISE: {
@@ -544,8 +544,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Oise',
 		region: 'Picardie',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 49.316528,
+			longitude: 2.468694
 		}
 	},
 	ORNE: {
@@ -553,8 +553,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Orne',
 		region: 'Basse-Normandie',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.658825,
+			longitude: 0.115679
 		}
 	},
 	PAS_DE_CALAIS: {
@@ -562,8 +562,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Pas-de-Calais',
 		region: 'Nord',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 50.452973,
+			longitude: 2.371892
 		}
 	},
 	PUY_DE_DOME: {
@@ -571,8 +571,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Puy-de-Dôme',
 		region: 'Auvergne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.771728,
+			longitude: 3.124682
 		}
 	},
 	PYRENEES_ATLANTIQUES: {
@@ -580,8 +580,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Pyrénées-Atlantiques',
 		region: 'Aquitaine',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 43.268179,
+			longitude: -0.664279
 		}
 	},
 	HAUTES_PYRENEES: {
@@ -589,8 +589,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Hautes-Pyrénées',
 		region: 'Midi-Pyrénées',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 43.104229,
+			longitude: 0.175959
 		}
 	},
 	PYRENEES_ORIENTALES: {
@@ -598,8 +598,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Pyrénées-Orientales',
 		region: 'Languedoc',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 42.619209,
+			longitude: 2.467587
 		}
 	},
 	BAS_RHIN: {
@@ -607,8 +607,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Bas-Rhin',
 		region: 'Alsace',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.598214,
+			longitude: 7.691452
 		}
 	},
 	HAUT_RHIN: {
@@ -616,8 +616,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Haut-Rhin',
 		region: 'Alsace',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.761518,
+			longitude: 7.338690
 		}
 	},
 	RHONE: {
@@ -625,8 +625,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Rhône',
 		region: 'Rhône-Alpes',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.673624,
+			longitude: 4.870888
 		}
 	},
 	HAUTE_SAONE: {
@@ -634,8 +634,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Haute-Saône',
 		region: 'Franche-Comté',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.626323,
+			longitude: 6.093195
 		}
 	},
 	SAONE_ET_LOIRE: {
@@ -643,8 +643,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Saône-et-Loire',
 		region: 'Bourgogne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 46.709622,
+			longitude: 4.642818
 		}
 	},
 	SARTHE: {
@@ -652,8 +652,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Sarthe',
 		region: 'Pays-de-la-Loire',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.009257,
+			longitude: 0.187596
 		}
 	},
 	SAVOIE: {
@@ -661,8 +661,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Savoie',
 		region: 'Rhône-Alpes',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.524947,
+			longitude: 6.475145
 		}
 	},
 	HAUTE_SAVOIE: {
@@ -670,8 +670,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Haute-Savoie',
 		region: 'Rhône-Alpes',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 46.099732,
+			longitude: 6.468988
 		}
 	},
 	PARIS: {
@@ -679,8 +679,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Paris',
 		region: 'Ile-de-France',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.856431,
+			longitude: 2.347232
 		}
 	},
 	SEINE_MARITIME: {
@@ -688,8 +688,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Seine-Maritime',
 		region: 'Haute-Normandie',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 49.639142,
+			longitude: 1.070904
 		}
 	},
 	SEINE_ET_MARNE: {
@@ -697,8 +697,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Seine-et-Marne',
 		region: 'Ile-de-France',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.647124,
+			longitude: 2.981160
 		}
 	},
 	YVELINES: {
@@ -706,8 +706,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Yvelines',
 		region: 'Ile-de-France',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.776937,
+			longitude: 1.873354
 		}
 	},
 	DEUX_SEVRES: {
@@ -715,8 +715,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Deux-Sèvres',
 		region: 'Poitou-Charente',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 46.572161,
+			longitude: -0.264733
 		}
 	},
 	SOMME: {
@@ -724,8 +724,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Somme',
 		region: 'Picardie',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 49.900910,
+			longitude: 2.302340
 		}
 	},
 	TARN: {
@@ -733,8 +733,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Tarn',
 		region: 'Midi-Pyrénées',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 43.885989,
+			longitude: 2.170418
 		}
 	},
 	TARN_ET_GARONNE: {
@@ -742,8 +742,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Tarn-et-Garonne',
 		region: 'Midi-Pyrénées',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.046713,
+			longitude: 1.310303
 		}
 	},
 	VAR: {
@@ -751,8 +751,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Var',
 		region: 'Provence-Alpes-Côte d\'Azur',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 43.510086,
+			longitude: 6.258967
 		}
 	},
 	VAUCLUSE: {
@@ -760,8 +760,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Vaucluse',
 		region: 'Provence-Alpes-Côte d\'Azur',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.007126,
+			longitude: 5.197715
 		}
 	},
 	VENDEE: {
@@ -769,8 +769,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Vendée',
 		region: 'Pays-de-la-Loire',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 46.667293,
+			longitude: -1.295977
 		}
 	},
 	VIENNE: {
@@ -778,8 +778,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Vienne',
 		region: 'Poitou-Charente',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 46.569662,
+			longitude: 0.378321
 		}
 	},
 	HAUTE_VIENNE: {
@@ -787,8 +787,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Haute-Vienne',
 		region: 'Limousin',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.864626,
+			longitude: 1.248192
 		}
 	},
 	VOSGES: {
@@ -805,8 +805,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Yonne',
 		region: 'Bourgogne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.837701,
+			longitude: 3.470768
 		}
 	},
 	TERRITOIRE_DE_BELFORT: {
@@ -814,8 +814,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Territoire-de-Belfort',
 		region: 'Franche-Comté',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.633413,
+			longitude: 6.886647
 		}
 	},
 	ESSONNE: {
@@ -823,8 +823,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Essonne',
 		region: 'Ile-de-France',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.497139,
+			longitude: 2.232220
 		}
 	},
 	HAUTS_DE_SEINE: {
@@ -832,8 +832,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Hauts-de-Seine',
 		region: 'Ile-de-France',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.851227,
+			longitude: 2.207676
 		}
 	},
 	SEINE_ST_DENIS: {
@@ -841,8 +841,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Seine-St-Denis',
 		region: 'Ile-de-France',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.929108,
+			longitude: 2.357787
 		}
 	},
 	VAL_DE_MARNE: {
@@ -850,8 +850,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Val-de-Marne',
 		region: 'Ile-de-France',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.777165,
+			longitude: 2.461472
 		}
 	},
 	VAL_DOISE: {

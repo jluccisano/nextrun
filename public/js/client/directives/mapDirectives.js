@@ -47,6 +47,7 @@ angular.module("google-maps")
                         var map = mapCtrl.getMap();
                         var bounds = new google.maps.LatLngBounds();
                         var pathPoints = [];
+                        var polyline = undefined;
 
                         for (var p = 0; p < scope.polylines.length; p++) {
 
@@ -70,20 +71,25 @@ angular.module("google-maps")
                             }
                         }
 
-                        map.fitBounds(bounds);
 
-                        var polyline = new google.maps.Polyline({
-                            map: map,
-                            path: pathPoints,
-                            strokeColor: '#FF0000',
-                            strokeOpacity: 1.0,
-                            strokeWeight: 5
-                        });
+                        if (pathPoints.length > 0) {
+                            map.fitBounds(bounds);
+
+                            polyline = new google.maps.Polyline({
+                                map: map,
+                                path: pathPoints,
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 1.0,
+                                strokeWeight: 5
+                            });
+
+                        }
 
                         // Remove polyline on scope $destroy
                         scope.$on("$destroy", function() {
-                            polyline.setMap(null);
-
+                            if('undefined' !== polyline) {
+                                polyline.setMap(null);
+                            }
                         });
                     });
                 }
