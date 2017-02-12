@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("GpxService",
-	function(x2js, RouteService, RouteUtilsService, RouteHelperService) {
+	function(x2js, RouteService, RouteUtilsService, MarkerService, PolylineService) {
 
 		return {
 

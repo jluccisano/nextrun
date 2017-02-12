@@ -4,6 +4,7 @@ angular.module("nextrunApp.home").controller("HomeController",
     function(
         $scope,
         $state,
+        $timeout,
         ContactService,
         notificationService,
         SharedCriteriaService,
@@ -59,7 +60,7 @@ angular.module("nextrunApp.home").controller("HomeController",
         };
 
         $scope.submitSearchWithCriteria = function() {
-            setTimeout(function() {
+            $timeout(function() {
                 SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria);
                 $state.go("search");
             }, 1000);

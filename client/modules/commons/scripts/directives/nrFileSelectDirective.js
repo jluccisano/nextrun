@@ -55,7 +55,7 @@ angular.module("nextrunApp.commons").directive("nrImageSelect", function($modal,
 	};
 });
 
-angular.module("nextrunApp.commons").directive("nrImportGpx", function($modal, RaceService, notificationService, gettextCatalog) {
+angular.module("nextrunApp.commons").directive("nrImportGpx", function() {
 	return {
 		link: function($scope, $element) {
 
@@ -80,7 +80,7 @@ angular.module("nextrunApp.commons").directive("nrImportGpx", function($modal, R
 				reader.onload = function(evt) {
 					$scope.$apply(function($scope) {
 						//$scope.myImage = evt.target.result;
-						$scope.getFile(evt.target.result;);
+						$scope.getFile(evt.target.result);
 						
 					});
 				};

@@ -4,8 +4,10 @@ angular.module("nextrunApp").controller("HeaderController",
 	function(
 		$scope,
 		$state,
+		$timeout,
 		AuthService,
-		RaceService) {
+		RaceService,
+		SharedCriteriaService) {
 
 		$scope.user = AuthService.user;
 
@@ -16,7 +18,9 @@ angular.module("nextrunApp").controller("HeaderController",
 		};
 
 		$scope.onSelect = function($item) {
-			$state.go("view", { id: $item._id });
+			$state.go("view", {
+				id: $item._id
+			});
 			$scope.selectedItem = "";
 		};
 
@@ -24,6 +28,26 @@ angular.module("nextrunApp").controller("HeaderController",
 			AuthService.logout().then(function() {
 				$state.go("login");
 			});
+		};
+
+		$scope.goToSearch = function() {
+			var criteria = {
+				published: true,
+				place: {
+					country: "FR",
+					location: {
+						latitude: 46.227638,
+						longitude: 2.213749000000007
+					},
+					name: "France",
+					place_type: "country"
+				}
+			};
+
+			$timeout(function() {
+				SharedCriteriaService.prepForCriteriaBroadcast(criteria);
+				$state.go("allraces");
+			}, 1000);
 		};
 
 		$scope.isLoggedIn = function() {

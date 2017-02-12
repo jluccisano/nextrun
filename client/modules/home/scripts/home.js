@@ -35,14 +35,6 @@ homeModule.config(
                 access: access.admin,
                 fullscreen: false
             }
-        }).state("contact", {
-            url: "/contact",
-            templateUrl: "/partials/home/contact",
-            controller: "ContactController",
-            data: {
-                access: access.public,
-                fullscreen: false
-            }
         });
 
         $locationProvider.html5Mode(true);

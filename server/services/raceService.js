@@ -211,68 +211,71 @@ exports.search = function(criteria, res, cb) {
 	var andArray = [];
 	var location = {};
 
-	if (criteria.dateRange && criteria.dateRange.startDate && criteria.dateRange.endDate) {
-		dateRange = {
-			"date": {
-				"$gte": criteria.dateRange.startDate,
-				"$lt": criteria.dateRange.endDate
-			}
-		};
-		andArray.push(dateRange);
-	}
+	if (criteria) {
 
-	if (criteria.type) {
-		type = {
-			"type": criteria.type
-		};
-		andArray.push(type);
-
-		if (criteria.distances && criteria.distances.length > 0) {
-
-			var distances = {
-				"distanceType": {
-					$in: criteria.distances
+		if (criteria.dateRange && criteria.dateRange.startDate && criteria.dateRange.endDate) {
+			dateRange = {
+				"date": {
+					"$gte": criteria.dateRange.startDate,
+					"$lt": criteria.dateRange.endDate
 				}
 			};
-			andArray.push(distances);
+			andArray.push(dateRange);
 		}
-	}
 
-	if (criteria.place) {
-		if (criteria.place.place_type === "locality") {
+		if (criteria.type) {
+			type = {
+				"type": criteria.type
+			};
+			andArray.push(type);
 
-			var radius = criteria.radius || 60;
+			if (criteria.distances && criteria.distances.length > 0) {
 
-			if (criteria.place.location && criteria.place.location.latitude && criteria.place.location.longitude) {
-				location = {
-					"place.geo": {
-						$near: {
-							$geometry: {
-								type: "Point",
-								coordinates: [criteria.place.location.latitude, criteria.place.location.longitude]
-							},
-							$maxDistance: radius * 1000
-						}
+				var distances = {
+					"distanceType": {
+						$in: criteria.distances
 					}
 				};
-				andArray.push(location);
+				andArray.push(distances);
 			}
-		} else if (criteria.place.place_type === "administrative_area_level_1") {
-			var administrative_area_level_1 = {
-				"place.administrative_area_level_1": criteria.place.administrative_area_level_1
-			};
-			andArray.push(administrative_area_level_1);
+		}
 
-		} else if (criteria.place.place_type === "administrative_area_level_2") {
-			var administrative_area_level_2 = {
-				"place.administrative_area_level_2": criteria.place.administrative_area_level_2
-			};
-			andArray.push(administrative_area_level_2);
-		} else if (criteria.place.place_type === "country") {
-			var country = {
-				"place.country": criteria.place.country
-			};
-			andArray.push(country);
+		if (criteria.place) {
+			if (criteria.place.place_type === "locality") {
+
+				var radius = criteria.radius || 60;
+
+				if (criteria.place.location && criteria.place.location.latitude && criteria.place.location.longitude) {
+					location = {
+						"place.geo": {
+							$near: {
+								$geometry: {
+									type: "Point",
+									coordinates: [criteria.place.location.latitude, criteria.place.location.longitude]
+								},
+								$maxDistance: radius * 1000
+							}
+						}
+					};
+					andArray.push(location);
+				}
+			} else if (criteria.place.place_type === "administrative_area_level_1") {
+				var administrative_area_level_1 = {
+					"place.administrative_area_level_1": criteria.place.administrative_area_level_1
+				};
+				andArray.push(administrative_area_level_1);
+
+			} else if (criteria.place.place_type === "administrative_area_level_2") {
+				var administrative_area_level_2 = {
+					"place.administrative_area_level_2": criteria.place.administrative_area_level_2
+				};
+				andArray.push(administrative_area_level_2);
+			} else if (criteria.place.place_type === "country") {
+				var country = {
+					"place.country": criteria.place.country
+				};
+				andArray.push(country);
+			}
 		}
 	}
 

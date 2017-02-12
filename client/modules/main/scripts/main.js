@@ -46,6 +46,14 @@ nextrunApp.config(
         access: access.public,
         fullscreen: false
       }
+    }).state("contact", {
+      url: "/contact",
+      templateUrl: "/partials/main/contact",
+      controller: "ContactController",
+      data: {
+        access: access.public,
+        fullscreen: false
+      }
     });
 
     $locationProvider.html5Mode(true);

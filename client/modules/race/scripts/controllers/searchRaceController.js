@@ -27,26 +27,10 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             if (criteria) {
                 $scope.criteria = criteria;
             }
-
             $scope.search();
         });
 
         $scope.dateRanges = angular.copy(dateRanges.getValues());
-
-        $scope.criteria = {
-            published: true,
-            place: {
-                country: "FR",
-                location: {
-                    latitude: 46.227638,
-                    longitude: 2.213749000000007
-                },
-                name: "France",
-                place_type: "country"
-            }
-        };
-
-        $scope.place = "France";
 
         $scope.radius = [{
             value: 30,
@@ -96,37 +80,36 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         };
 
         $scope.search = function() {
-            RaceService.search($scope.criteria).then(function(response) {
-                if (response.data.items.length > 0) {
-                    $scope.isFiltered = true;
-                    $scope.emptyResults = false;
-                    $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
-                    angular.forEach($scope.map.markers, function(marker) {
-                        marker.showWindow = false;
-                        marker.closeClick = function() {
+            if ($scope.criteria) {
+                RaceService.search($scope.criteria).then(function(response) {
+                    if (response.data.items.length > 0) {
+                        $scope.isFiltered = true;
+                        $scope.emptyResults = false;
+                        $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
+                        angular.forEach($scope.map.markers, function(marker) {
                             marker.showWindow = false;
-                            $scope.$apply();
-                        };
-                        marker.onClicked = function() {
-                            $scope.onMarkerClicked(marker);
-                        };
-                    });
+                            marker.closeClick = function() {
+                                marker.showWindow = false;
+                                $scope.$apply();
+                            };
+                            marker.onClicked = function() {
+                                $scope.onMarkerClicked(marker);
+                            };
+                        });
 
-                } else {
-                    $scope.emptyResults = true;
-                    $scope.map.markers = [];
-                }
-            }).
-            finally(function() {
-                MetaService.ready("Manifestations");
-            });
-
+                    } else {
+                        $scope.emptyResults = true;
+                        $scope.map.markers = [];
+                    }
+                }).
+                finally(function() {
+                    MetaService.ready("Manifestations");
+                });
+            }
         };
 
         $scope.onMarkerClicked = function(marker) {
             marker.showWindow = true;
             $scope.$apply();
         };
-
-        $scope.search();
     });

@@ -12,7 +12,7 @@ var PointSchema = new Schema({
 });
 
 var SegmentSchema = new Schema({
-    segmentId: Number,
+    segmentId: String,
     points: [PointSchema],
     distance: Number
 });

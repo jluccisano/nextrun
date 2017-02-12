@@ -306,12 +306,12 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/contact.html
-#: client/modules/home/scripts/controllers/contactController.js
+#: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Autre"
 msgstr ""
 
-#: client/modules/home/scripts/controllers/contactController.js
+#: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Bug"
 msgstr ""
@@ -340,6 +340,7 @@ msgstr ""
 #: client/modules/race/scripts/controllers/createRaceController.js
 #: client/modules/race/scripts/controllers/editRaceController.js
 #: client/modules/race/scripts/controllers/racesController.js
+#: client/modules/route/scripts/controllers/editRouteController.js
 #: client/modules/route/scripts/controllers/routesController.js
 msgid "Confirmation requise"
 msgstr ""
@@ -353,16 +354,20 @@ msgstr ""
 msgid "Consulter les résultats"
 msgstr ""
 
+#: .tmp/generated/views/index.html
+#: .tmp/generated/views/layouts/body.html
+#: .tmp/generated/views/layouts/footer.html
+msgid "Contact"
+msgstr ""
+
 #: .tmp/generated/views/partials/main/about.html
 msgid "Contacter nextrun"
 msgstr ""
 
 #: .tmp/generated/views/index.html
 #: .tmp/generated/views/layouts/body.html
-#: .tmp/generated/views/layouts/footer.html
 #: .tmp/generated/views/layouts/header.html
 #: .tmp/generated/views/partials/home/contacts.html
-#: .tmp/generated/views/partials/main/contacts.html
 msgid "Contacts"
 msgstr ""
 
@@ -450,7 +455,7 @@ msgstr ""
 msgid "Donner son avis et partager son expérience"
 msgstr ""
 
-#: client/modules/home/scripts/controllers/contactController.js
+#: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Dupliquer"
 msgstr ""
@@ -491,10 +496,9 @@ msgstr ""
 #: .tmp/generated/views/partials/auth/settings.html
 #: .tmp/generated/views/partials/auth/signup.html
 #: .tmp/generated/views/partials/auth/users.html
-#: .tmp/generated/views/partials/home/contact.html
 #: .tmp/generated/views/partials/home/contacts.html
-#: .tmp/generated/views/partials/home/templates/feedback.html
-#: .tmp/generated/views/partials/main/contacts.html
+#: .tmp/generated/views/partials/main/contact.html
+#: .tmp/generated/views/partials/main/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 msgid "Email"
@@ -504,8 +508,8 @@ msgstr ""
 #: .tmp/generated/views/partials/auth/login.html
 #: .tmp/generated/views/partials/auth/settings.html
 #: .tmp/generated/views/partials/auth/signup.html
-#: .tmp/generated/views/partials/home/contact.html
-#: .tmp/generated/views/partials/home/templates/feedback.html
+#: .tmp/generated/views/partials/main/contact.html
+#: .tmp/generated/views/partials/main/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 msgid "Email invalide"
@@ -534,15 +538,14 @@ msgstr ""
 
 #: .tmp/generated/views/partials/auth/forgotpasswordModal.html
 #: .tmp/generated/views/partials/auth/signup.html
-#: .tmp/generated/views/partials/home/contact.html
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/contact.html
-#: .tmp/generated/views/partials/main/contacts.html
+#: .tmp/generated/views/partials/main/contact.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 msgid "Envoyer"
 msgstr ""
 
-#: .tmp/generated/views/partials/home/contact.html
+#: .tmp/generated/views/partials/main/contact.html
 msgid "Envoyer un message"
 msgstr ""
 
@@ -555,6 +558,7 @@ msgid "Etes-vous sûr de vouloir supprimer ce contact ?"
 msgstr ""
 
 #: client/modules/race/scripts/controllers/editRaceController.js
+#: client/modules/route/scripts/controllers/editRouteController.js
 #: client/modules/route/scripts/controllers/routesController.js
 msgid "Etes-vous sûr de vouloir supprimer ce parcours ?"
 msgstr ""
@@ -622,7 +626,7 @@ msgstr ""
 msgid "Importer un fichier GPX"
 msgstr ""
 
-#: client/modules/home/scripts/controllers/contactController.js
+#: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Information erronée"
 msgstr ""
@@ -743,10 +747,6 @@ msgstr ""
 #: .tmp/generated/views/layouts/header.html
 #: .tmp/generated/views/partials/route/routes.html
 msgid "Mes Parcours"
-msgstr ""
-
-#: .tmp/generated/views/partials/main/contacts.html
-msgid "Message"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
@@ -1012,8 +1012,8 @@ msgstr ""
 msgid "Supprimer une manifestation"
 msgstr ""
 
-#: .tmp/generated/views/partials/home/contact.html
-#: .tmp/generated/views/partials/home/templates/feedback.html
+#: .tmp/generated/views/partials/main/contact.html
+#: .tmp/generated/views/partials/main/templates/feedback.html
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
@@ -1049,11 +1049,11 @@ msgstr ""
 msgid "Trouver et préparer votre course"
 msgstr ""
 
-#: .tmp/generated/views/partials/home/contact.html
 #: .tmp/generated/views/partials/home/contacts.html
 #: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/feedback.html
 #: .tmp/generated/views/partials/home/templates/search.html
+#: .tmp/generated/views/partials/main/contact.html
+#: .tmp/generated/views/partials/main/templates/feedback.html
 #: .tmp/generated/views/partials/race/allraces.html
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/races.html
@@ -1137,7 +1137,7 @@ msgstr ""
 msgid "Votre manifestation a bien été retiré"
 msgstr ""
 
-#: client/modules/home/scripts/controllers/contactController.js
+#: client/modules/main/scripts/controllers/contactController.js
 #: client/modules/race/scripts/controllers/feedbackModalController.js
 msgid "Votre message nous a bien été transmis"
 msgstr ""
@@ -1204,9 +1204,8 @@ msgstr ""
 msgid "type"
 msgstr ""
 
-#: .tmp/generated/views/partials/home/contact.html
-#: .tmp/generated/views/partials/home/templates/feedback.html
-#: .tmp/generated/views/partials/main/contacts.html
+#: .tmp/generated/views/partials/main/contact.html
+#: .tmp/generated/views/partials/main/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedback.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 msgid "votre message"

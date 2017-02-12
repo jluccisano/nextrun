@@ -624,6 +624,10 @@ var routeBuilder = {};
 			return this.data.type;
 		};
 
+		this.getName = function() {
+			return this.data.name;
+		};
+
 		this.getPolylines = function() {
 			return this._polylines;
 		};
