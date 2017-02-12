@@ -475,24 +475,25 @@ exports.autocomplete = function(req, res) {
             }
           },
 
-        ],
-        "must_not": [],
-        "must": [{
-          "term": {
-            "race.published": true
-          }
-        }]
+        ]
       }
     },
     "from": 0,
     "size": 8,
     "sort": [],
-    "facets": {}
+    "filter": {
+      "and": [{
+        "term": {
+          "race.published": true
+        }
+      }]
+
+    }
   };
 
   if (criteria.region !== undefined) {
 
-    query.query.bool.must.push({
+    query.filter.and.push({
       "terms": {
         "race.department.code": criteria.region.departments
       }
