@@ -1,5 +1,29 @@
 'use strict';
 
+function reloadSocial() {
+
+	// Reload Facebook
+	var config = {appId: '195803770591615', status: true, cookie: true, xfbml: true, channelUrl: 'http://www.nextrun.fr'};
+	if (window.fbAsyncInit && FB !== undefined) {
+		FB.init(config);
+	} else {
+		window.fbAsyncInit = function () {
+		FB.init(config);
+		};
+	}
+	/* Reload Twitter
+	if (window.twttr) {
+		twttr.widgets.load();
+	}*/
+	/*Reload Google + 1
+	if (window.gapi) {
+		gapi.load('googleapis.client:plusone', {'callback': window['__bsld']});
+	}*/
+
+
+
+}
+
 window.onload = function() {
 
 	//FACEBOOK
