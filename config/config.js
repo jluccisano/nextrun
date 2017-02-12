@@ -3,8 +3,8 @@ var path = require('path'),
 
 module.exports = {
   development: {
-    host: 'Helios',
-    db: 'mongodb://Helios/nextrun',
+    host: 'localhost',
+    db: 'mongodb://localhost/nextrun',
     root: rootPath,
     facebook: {
       clientID: "APP_ID",
@@ -18,13 +18,13 @@ module.exports = {
     racesidx: "racesidx_v1"
   },
   test: {
-    host: 'Helios',
-    db: 'mongodb://Helios/nextrun_test',
+    host: 'localhost',
+    db: 'mongodb://localhost/nextrun_test',
     root: rootPath,
     facebook: {
       clientID: "APP_ID",
       clientSecret: "APP_SECRET",
-      callbackURL: 'http://Helios:3000/auth/facebook/callback'
+      callbackURL: 'http://localhost:3000/auth/facebook/callback'
     },
     mailgun: {
       user: "user",

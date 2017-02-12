@@ -32,4 +32,4 @@ div(data-ng-if="route.isVisible")
 					span Max: {{Math.floor(route.maxElevation)}} m
 				div
 					span Min: {{Math.floor(route.minElevation)}} m
-	highchart(config="route.chartConfig")
+	highchart(data-ng-hide="route.type === 'Natation'" config="route.chartConfig")
