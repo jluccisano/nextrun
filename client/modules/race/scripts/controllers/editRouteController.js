@@ -14,6 +14,7 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         RouteHelperService,
         AlertService) {
 
+        $scope.polylines;
 
         $scope.location = {
             details: {},
@@ -48,6 +49,8 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             $scope.routeViewModel.setCenter(RouteUtilsService.getCenter(race));
             $scope.routeViewModel.addClickListener($scope.onClickMap);
 
+            $scope.polylines = $scope.routeViewModel.getPolylines();
+
             $timeout(function() {
                 $scope.routeViewModel.setVisible(true);
             });
@@ -56,14 +59,20 @@ angular.module("nextrunApp.race").controller("EditRouteController",
 
         $scope.onClickMap = function(routeViewModel, destinationLatlng) {
             RouteService.createNewSegment(routeViewModel, destinationLatlng);
+            $scope.polylines.length = 0;
+            $scope.polylines = routeViewModel.getPolylines();
         };
 
         $scope.delete = function(routeViewModel) {
             RouteService.resetRoute(routeViewModel);
+
+            $scope.polylines = routeViewModel.getPolylines();
         };
 
         $scope.undo = function(routeViewModel) {
             RouteService.deleteLastSegment(routeViewModel);
+            $scope.polylines.length = 0;
+            $scope.polylines = routeViewModel.getPolylines();
         };
 
         $scope.getFile = function(routeViewModel, file) {
