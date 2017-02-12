@@ -40,5 +40,8 @@ angular.module("nextrunApp.commons").factory("WorkoutService",
             checkIfParticipantAvailable: function(id, data) {
                 return HttpUtils.post("/api/workouts/" + id + "/participants/available/", data);
             },
+            updateRoute: function(workoutId, routeId) {
+                return HttpUtils.put("/api/workouts/" + workoutId + "/route/" + routeId + "/update");
+            },
         };
     });

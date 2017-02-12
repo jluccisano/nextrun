@@ -36,7 +36,7 @@ div(class="container create-workout")
 
 				div(class="form-group")
 					label(class="control-label") Description
-					textarea(class="form-control" name="description" ng-model="workout.description" rows="3" placeholder="{{'description' | translate}}" ng-required="true")
+					textarea(class="form-control" name="description" ng-model="workout.description" rows="3" placeholder="{{'description' | translate}}")
 									
 				button(class="btn btn-primary pull-right" ng-click="submit()" ng-disabled="workoutEventForm.$invalid" translate) Continuer
 			

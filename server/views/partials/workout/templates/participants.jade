@@ -1,12 +1,13 @@
 div(class="create-workout")
-	h3(translate) Ajouter un participant
-	form(class="form-inline" role="form" name="participantForm" novalidate)
-		div(class="form-group" ng-class="{'has-error': !participantForm.email.$pristine && participantForm.email.$invalid, 'has-success': !participantForm.email.$invalid && !participantForm.email.$pristine}")
-			label(class="sr-only" for="email" translate) Email
-			input(class="form-control" id="email" name="email" type="email" workout="workout" nr-unique-participant placeholder="{{'Email' | translate }}" ng-model="newParticipant.email")
-			span(class="help-block" ng-show="participantForm.email.$error.email" translate) Email invalide
+	div(ng-if="editMode")
+		h3(translate) Ajouter un participant
+		form(class="form-inline" role="form" name="participantForm" novalidate)
+			div(class="form-group" ng-class="{'has-error': !participantForm.email.$pristine && participantForm.email.$invalid, 'has-success': !participantForm.email.$invalid && !participantForm.email.$pristine}")
+				label(class="sr-only" for="email" translate) Email
+				input(class="form-control" id="email" name="email" type="email" workout="workout" nr-unique-participant placeholder="{{'Email' | translate }}" ng-model="newParticipant.email")
+				span(class="help-block" ng-show="participantForm.email.$error.email" translate) Email invalide
 
-		button(class="btn btn-primary" ng-click="addNewParticipant(newParticipant)" ng-disabled="participantForm.$invalid" translate) Ajouter
+			button(class="btn btn-primary" ng-click="addNewParticipant(newParticipant)" ng-disabled="participantForm.$invalid" translate) Ajouter
 
 table(class="table table-hover")
 		thead
@@ -15,9 +16,11 @@ table(class="table table-hover")
 				th(style="width: 5%")
 				th(style="width: 5%" ng-if="editMode")
 		tbody
-			tr(ng-repeat="participant in workout.participants | filter:{ pseudo: '!' }" ng-class="{'success': participant.willBePresent === 'yes' , 'danger': !participant.willBePresent === 'no', 'warning': participant.willBePresent === 'maybe'}")
+			tr(ng-repeat="participant in workout.participants" ng-class="{'success': participant.willBePresent === 'yes' , 'danger': !participant.willBePresent === 'no', 'warning': participant.willBePresent === 'maybe'}")
 				td 
-					a {{participant.pseudo}}	
+					a {{participant.pseudo}}
+				td 
+					a(ng-if="editMode") {{participant.email}}	
 				td
 					span(ng-if="participant.willBePresent" class="glyphicon glyphicon-ok")
 					span(ng-if="!participant.willBePresent" class="glyphicon glyphicon-remove")

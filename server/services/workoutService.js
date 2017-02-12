@@ -127,13 +127,13 @@ exports.updateWorkout = function(workout, req, res, cb) {
 	}, options);
 };
 
-exports.updateParticipant = function(participant, req, res, cb) {
+exports.updateParticipant = function(workout, participant, req, res, cb) {
 
 	var participantId = participant._id;
 
-	if (participant._id) {
+	/*if (participant._id) {
 		delete participant._id;
-	}
+	}*/
 
 	var query = {
 		_id: workout._id,
@@ -306,4 +306,27 @@ exports.checkIfParticipantAvailable = function(participantEmail, workout, res, c
 			cb(participants);
 		}
 	});
+};
+
+exports.addRouteRef = function(workout, route, res, cb) {
+	var query = {
+		_id: workout._id
+	};
+
+	var update = {
+		$set: {
+			lastUpdate: new Date(),
+			routeId: route._id
+		}
+	};
+
+	var options = {};
+
+	Workout.update(query, update, function(error) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else {
+			cb();
+		}
+	}, options);
 };

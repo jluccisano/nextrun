@@ -141,11 +141,14 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                 $scope.selection = selection;
                 $scope.active = selection;
                 if (selection !== "general") {
-                    $scope.isCollapsed = true;
+                    $scope.isCollapsed = false;
                 } else {
                     $scope.isCollapsed = true;
 
                 }
+            } else {
+                $scope.selection = "general";
+                $scope.isCollapsed = false;
             }
         }
 
@@ -188,7 +191,7 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                         $state.go("editWorkoutWithSelection", {
                             id: $scope.workoutId,
                             selection: "participants"
-                        });
+                        }, true);
                     });
             });
         };

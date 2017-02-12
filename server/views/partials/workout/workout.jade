@@ -10,7 +10,7 @@ div(class="container view-race")
             a(ng-class="{'active': active === (routeViewModel.getType() + $index)}" bs-scrollspy ng-click="setSelection(routeViewModel, $index);routeViewModel.setVisible(true)" ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" nr-scroll-to="route{{$index}}" class="list-group-item") {{routeViewModel.getName()}}
           a(class="list-group-item")
             h4(class="list-group-item-heading" translate) Organisation
-            a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Participants
+            a(ng-class="{'active': active === 'participants'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'participants';active = 'participants'" nr-scroll-to="participants" class="list-group-item") Participants
 
 
     div(class="col-md-10")
@@ -44,13 +44,13 @@ div(class="container view-race")
                         label(class="sr-only" for="pseudo" translate) Pseudo
                         input(class="form-control" id="pseudo" name="pseudo" type="pseudo" participants="workout.participants" nr-unique-pseudo placeholder="{{'Pseudo' | translate }}" ng-model="participant.pseudo" ng-required="true")
                       label(class="radio-inline")
-                        input(type="radio" ng-model="participant.willBePresent" ng-value="yes" required) 
+                        input(type="radio" ng-model="participant.willBePresent" value="yes" required) 
                         | Oui
                       label(class="radio-inline")
-                        input(type="radio" ng-model="participant.willBePresent" ng-value="no" required) 
+                        input(type="radio" ng-model="participant.willBePresent" value="no" required) 
                         | Non
                       label(class="radio-inline")
-                        input(type="radio" ng-model="participant.willBePresent" ng-value="maybe" required) 
+                        input(type="radio" ng-model="participant.willBePresent" value="maybe" required) 
                         | Peut-être
                       button(class="btn btn-primary" ng-click="updateParticipant(participant)" ng-disabled="participantResponseForm.$invalid" translate) Envoyer
 
@@ -64,7 +64,7 @@ div(class="container view-race")
                 hr
                 nr-workout-address(edit-mode="editMode" workout="workout")
 
-              a(ng-if="editMode" class="btn btn-link" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate) Ajouter un parcours
+              a(ng-if="editMode" ng-if="!workout.routeId" class="btn btn-link" type="button" ui-sref="newWorkoutRoute({workoutId: workoutId})" translate) Ajouter un parcours
 
       div(class="bs-docs-section")
         div(ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )

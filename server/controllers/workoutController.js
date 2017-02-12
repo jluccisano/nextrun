@@ -89,7 +89,7 @@ exports.updateParticipant = function(req, res) {
     var participantId = req.params.participantId;
     var participant = req.body;
     var workoutOwner = req.workoutOwner;
-    workoutService.updateParticipant(participant, req, res, function() {
+    workoutService.updateParticipant(workout,participant, req, res, function() {
         email.sendNotificationToOwner(workout, workoutOwner, participantId);
         res.sendStatus(200);
     });
@@ -149,5 +149,13 @@ exports.checkIfParticipantAvailable = function(req, res) {
         res.status(200).json({
             items: items
         });
+    });
+};
+
+exports.updateRoute = function(req, res) {
+    var workout = req.workout;
+    var route = req.routeData;
+    workoutService.addRouteRef(workout, route, res, function() {
+        res.sendStatus(200);
     });
 };

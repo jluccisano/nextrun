@@ -67,6 +67,11 @@ var routes = [{
     httpMethod: "POST",
     middleware: [workoutController.checkIfParticipantAvailable],
     accessLevel: accessLevels.public
+},{
+    path: "/:id/route/:routeId/update",
+    httpMethod: "PUT",
+    middleware: [workoutController.addRouteRef],
+    accessLevel: accessLevels.user
 }, ];
 
 module.exports = function(app, express) {

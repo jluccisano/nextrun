@@ -71,9 +71,9 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 		$scope.retrieveParticipant = function() {
 			var participantId = $stateParams.participantId;
 			if (participantId) {
-				angular.forEach($scope.workout.participants, function(participant) {
-					if (angular.equals(participant._id, participantId)) {
-						$scope.participant = participant;
+				angular.forEach($scope.workout.participants, function(theParticipant) {
+					if (angular.equals(theParticipant._id, participantId)) {
+						$scope.participant = theParticipant;
 					}
 				});
 			}
