@@ -5,3 +5,4 @@ div.container
 				google-map(id="mymap" center="center"  zoom="zoom"  draggable="true" mark-click="true" style="height: 400px" events="events")
 					markers
 						marker(ng-repeat="marker in markers" coords="marker")
+					polyline(ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable")

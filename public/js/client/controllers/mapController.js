@@ -3,6 +3,8 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 	function($scope, $location, $rootScope, Auth, Alert, $log, LayerFactory, RouteFactory) {
 		'use strict';
 
+		google.maps.visualRefresh = true;
+
 		$scope.directionService = new google.maps.DirectionsService();
 		$scope.elevationService = new google.maps.ElevationService();
 
@@ -312,7 +314,7 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			if (lastPoint) {
 				for (var k = 0, lk = segmentPoints.length; k < lk; k++) {
 
-					distanceBetween2Points = parseFloat(calculateDistanceBetween2Points(cursor.latlng, segmentPoints[k].latlng));
+					distanceBetween2Points = parseFloat($scope.calculateDistanceBetween2Points(cursor.latlng, segmentPoints[k].latlng));
 
 					if (k == (segmentPoints.length - 1) || distanceBetween2Points >= samples) {
 						samplesPoints.push(segmentPoints[k]);
@@ -411,14 +413,23 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 				);
 			}
 
-			var marker = new google.maps.Marker({
+			/*var marker = new google.maps.Marker({
 				position: path[path.length - 1],
 				//map: _this.display.getMap(),
 				icon: icon
-			});
+			});*/
+
+			var marker = {
+				latitude:  path[path.length - 1].lat(),
+				longitude:  path[path.length - 1].lng(),
+				icon: "../../../img/start.png"
+
+			}
 
 			//_this.getLayer().addMarker(marker);
 			$scope.markers.push(marker);
+
+			$scope.$apply();
 
 			/*google.maps.event.addListener(marker, 'dblclick', function(event) {
 				_this.deleteLastSegment(_this);
@@ -428,18 +439,33 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 		$scope.createPolyLine = function(path) {
 
-			var polyLine = new google.maps.Polyline({
+			/*var polyLine = new google.maps.Polyline({
 				//map: _this.display.getMap(),
 				strokeColor: "red",
 				strokeWeight: 5
-			});
+			});*/
+			
+			var polyLine = {
+				path: path,
+				stroke: {
+					color: "red",
+					weight: 5
+				},
+			    editable:true,
+                draggable:false,
+                geodesic:false,
+                visible:true
+
+			}
 
 			//polyLine.setPath(path);
 
-			$scope.polylines.push(path);
+			$scope.polylines.push(polyLine);
+
+			$scope.$apply();
 
 			//_this.getLayer().addPolyLine(polyLine);
-			$scope.layer.polylines.push(polyLine);
+			//$scope.layer.polylines.push(polyLine);
 		};
 
 
@@ -533,7 +559,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 					for (var k = 1, lk = route.elevationPoints.length; k < lk; ++k) {
 
-						diffElevation = (parseFloat(route.elevationPoints[k].elevation) - parseFloat(route.elevationPoints[k - 1].elevation));
+						var diffElevation = (parseFloat(route.elevationPoints[k].elevation) - parseFloat(route.elevationPoints[k - 1].elevation));
 
 						if (diffElevation > 0) {
 							route.ascendant = (route.ascendant + diffElevation);
