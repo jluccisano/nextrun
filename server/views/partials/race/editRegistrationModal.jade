@@ -1,0 +1,30 @@
+div(class="modal-header")
+	h3(class="modal-title" translate) Inscription
+div(class="modal-body")
+	form(role="form" name="registrationForm" novalidate)
+		button(type="button" class="btn btn-default btn-lg" ng-click="addOption()")
+			span(class="glyphicon glyphicon-plus")
+		table(class="table table-hover")
+			thead
+				tr
+					th Formule
+					th Prix
+					th Description
+			tbody
+				tr(ng-repeat="option in registration.options" ng-form="optionsForm")
+					td
+						div(class="form-group" ng-class="{'has-error': optionForm.name.$invalid, 'has-success': !optionForm.name.$invalid}")
+							input(type="text" name="name" class="form-control" ng-model="option.name")
+					td
+						div(class="form-group" ng-class="{'has-error': optionForm.price.$invalid, 'has-success': !optionForm.price.$invalid}")
+							input(type="number" name="price" class="form-control" ng-model="option.price")
+					td
+						div(class="form-group" ng-class="{'has-error': optionForm.description.$invalid, 'has-success': !optionForm.description.$invalid}")
+							textarea(name="description" class="form-control" ng-model="option.description")
+					td
+						div(class="form-group")
+							button(type="button" class="btn btn-default btn-lg" ng-click="deleteOption(option)")
+								span(class="glyphicon glyphicon-trash")
+div(class="modal-footer")
+	button(class="btn btn-primary" ng-click="submit()" ng-disabled="registrationForm.$invalid" translate) Valider
+	button(class="btn btn-default" ng-click="cancel()" translate) Annuler

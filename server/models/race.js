@@ -32,6 +32,12 @@ var RouteSchema = new Schema({
     description: String
 });
 
+var OptionSchema = new Schema({
+    name: String,
+    price: Number,
+    description: String
+});
+
 var RaceSchema = new Schema({
     name: String,
     type: String,
@@ -71,7 +77,7 @@ var RaceSchema = new Schema({
             default: ""
         }
     },
-    pricing: {
+    /*pricing: {
         memberFFPrice: {
             type: Number,
             default: null
@@ -84,13 +90,14 @@ var RaceSchema = new Schema({
             type: String,
             default: ""
         }
-    },
+    },*/
     registration: {
-        registrationOpeningDate: {
+        options: [OptionSchema],
+        openingDate: {
             type: Date,
             default: null
         },
-        registrationLimitDate: {
+        limitDate: {
             type: Date,
             default: null
         },
@@ -98,11 +105,11 @@ var RaceSchema = new Schema({
             type: String,
             default: "non"
         },
-        registrationWebSite: {
+        webSite: {
             type: String,
             default: null
         },
-        registrationAddress: {
+        address: {
             type: String,
             default: null
         },

@@ -149,7 +149,24 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			$scope.modalInstance.result.then(function(result) {
 				$scope.routesViewModel[$index] = result;
 			});
-		}
+		};
+
+		$scope.editRegistration = function() {
+			$scope.modalInstance = $modal.open({
+				templateUrl: "partials/race/editRegistrationModal",
+				controller: "EditRegistrationModalController",
+				size: "lg",
+				backdrop: false,
+				resolve: {
+					registration: function() {
+						return $scope.race.registration;
+					}
+				}
+			});
+
+			$scope.modalInstance.result.then(function(result) {
+			});
+		};
 
 		 $scope.setSelection = function(route, index) {
             $scope.selection = route.getType() + index;

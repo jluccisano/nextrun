@@ -76,11 +76,6 @@ nextrunApp.run(function(
     }
   });
 
-  $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
-    $location.hash($routeParams.scrollTo);
-    $anchorScroll();
-  });
-
-  gettextCatalog.currentLanguage = 'en';
+  gettextCatalog.currentLanguage = "en";
   gettextCatalog.debug = true;
 });

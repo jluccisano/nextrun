@@ -97,6 +97,9 @@ div(class="container view-race")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
               h4(class="panel-title pull-left") {{selection}}
+              div(class="btn-group pull-right")
+                a(ng-if="editMode" ng-click="editRegistration()" class="btn btn-default btn-sm")
+                  i(class="fa fa-pencil-square-o")
             div(class="panel-body")
               include ./templates/viewPricing2
         div(id="rights" ng-show="selection == 'rights'")
