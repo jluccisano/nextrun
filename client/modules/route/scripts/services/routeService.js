@@ -124,7 +124,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 						MarkerService.addMarkerToRoute(route, result.path);
 
 						if (!isFirstPoint) {
-							route.addPolyline(result.path, false, false, false, true, "red", 5);
+							PolylineService.createPolyline(route,result.path, false, false, false, true, "red", 5);
 						}
 
 						return ElevationService.getElevation(result.segment);
@@ -150,7 +150,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 					MarkerService.addMarkerToRoute(route, path);
 
 					if (!isFirstPoint) {
-						PolylineService.createPolyline(path, false, false, false, true, "red", 5);
+						PolylineService.createPolyline(route, path, false, false, false, true, "red", 5);
 					}
 
 					ElevationService.getElevation(segment).then(function(data) {
@@ -198,34 +198,6 @@ angular.module("nextrunApp.route").factory("RouteService",
 					$log.error("an error occured during undo", ex.message);
 				}
 			},
-
-			//TO BE REMOVED
-			/*getDirection: function(route, directionsRequest, isFirstPoint) {
-
-				var defer = $q.defer();
-
-				GmapsApiService.DirectionsService().route(directionsRequest, function(result, status) {
-					if (status === google.maps.DirectionsStatus.OK) {
-
-						var path = result.routes[0].overview_path;
-						var legs = result.routes[0].legs;
-
-						var segmentDataModel = SegmentService.createSegmentDataModel(path, legs);
-
-						var segment = route.addSegment(segmentDataModel);
-
-						var data = {
-							segment: segment,
-							path: path
-						};
-
-						defer.resolve(data);
-					} else {
-						defer.reject(status);
-					}
-				});
-				return defer.promise;
-			},*/
 
 			//MAYBE MOVED TO UTILS
 			convertRacesLocationToMarkers: function(races) {

@@ -22,7 +22,7 @@ angular.module("nextrunApp.route").factory("PolylineService",
 
 				if (pathArray.length > 1) {
 					var polyline = {
-						id: RouteUtilsService.generateUUID(),
+						id: routeBuilder.generateUUID(),
 						path: pathArray,
 						stroke: {
 							color: (color) ? color : "red",

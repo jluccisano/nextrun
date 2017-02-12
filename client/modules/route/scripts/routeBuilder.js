@@ -8,8 +8,7 @@
 var routeBuilder = {};
 
 (function() {
-
-
+	
 	routeBuilder.Route = function(dataModel, chartConfig, gmapsConfig) {
 
 		this.data = dataModel;
@@ -95,52 +94,6 @@ var routeBuilder = {};
 
 			return newSegment;
 		};
-
-		//TO BE REMOVED
-		/*this.createSimpleSegmentDataModel = function(startLatlng, destinationLatlng) {
-
-			if (!startLatlng) {
-				throw new Error("start Latlng is undefined");
-			}
-
-			if (!destinationLatlng) {
-				throw new Error("destination Latlng is undefined");
-			}
-
-			if (!(startLatlng instanceof google.maps.LatLng)) {
-				throw new Error("start Latlng is not instance of google.maps.Latlng");
-			}
-
-			if (!(destinationLatlng instanceof google.maps.LatLng)) {
-				throw new Error("destination Latlng is not instance of google.maps.Latlng");
-			}
-
-			var segmentDataModel = {
-				segmentId: routeBuilder.generateUUID(),
-				points: [],
-				distance: 0
-			};
-
-			var segmentPoints = [];
-			segmentPoints.push({
-				lat: destinationLatlng.lat(),
-				lng: destinationLatlng.lng(),
-				elevation: 0,
-				distanceFromStart: 0,
-				grade: 0,
-				segmentId: segmentDataModel.segmentId
-			});
-
-			try {
-				segmentDataModel.distance = parseFloat(routeBuilder.calculateDistanceBetween2Points(startLatlng, destinationLatlng));
-			} catch (ex) {
-				console.log(ex.message);
-			}
-
-			segmentDataModel.points = segmentPoints;
-
-			return segmentDataModel;
-		};*/
 
 		//KEEP
 		this.removeLastSegment = function() {
@@ -341,45 +294,6 @@ var routeBuilder = {};
 			this._polylines.push(polylineDataModel);
 		}
 
-		//TO BE REMOVED
-		/*this.addPolyline = function(path, editable, draggable, geodesic, visible, color, weight) {
-
-			var pathArray = [];
-
-			_.each(path, function(point) {
-
-				if (!(point instanceof google.maps.LatLng)) {
-					throw new Error("point is not instance of google.maps.Latlng");
-				}
-
-				pathArray.push({
-					latitude: point.lat(),
-					longitude: point.lng()
-				});
-			});
-
-			if (pathArray.length > 1) {
-				var polyline = {
-					id: routeBuilder.generateUUID(),
-					path: pathArray,
-					stroke: {
-						color: (color) ? color : "red",
-						weight: (weight) ? weight : 5
-					},
-					editable: (editable) ? editable : false,
-					draggable: (draggable) ? draggable : false,
-					geodesic: (geodesic) ? geodesic : false,
-					visible: (visible) ? visible : true
-				};
-				this._polylines.push(polyline);
-
-			} else {
-				throw new Error("polyline must contain at least two point");
-			}
-		};*/
-
-
-
 		this._createMarkersDataModel = function(segmentsViewModel, showSegment) {
 			var markersDataModel = [];
 
@@ -424,24 +338,6 @@ var routeBuilder = {};
 			return markersDataModel;
 		};
 
-		//TO BE REMOVED
-		/*this._createMarker = function(latLng, icon, title) {
-
-			if (!(latLng instanceof google.maps.LatLng)) {
-				throw new Error("latLng is not instance of google.maps.Latlng");
-			}
-
-			var marker = {
-				id: routeBuilder.generateUUID(),
-				latitude: latLng.lat(),
-				longitude: latLng.lng(),
-				icon: icon,
-				title: title
-			};
-
-			return marker;
-		};*/
-
 		//KEEP
 		this.getLastMarker = function() {
 			return this._markers[this._markers.length - 1];
@@ -452,53 +348,13 @@ var routeBuilder = {};
 			this.getMarkers().splice(this.getMarkers().length - 1, 1);
 		};
 
-		//TO BE REMOVED
-		/*this.addMarkerToRoute = function(path) {
-			try {
-
-				var marker = {};
-
-				var lastLatLng = this._getLastLatLngOfPath(path);
-
-				if (this.segments.length === 1) {
-
-					marker = this._createMarker(lastLatLng, "client/modules/route/images/start.png", "first point");
-
-				} else {
-
-					if (this.segments.length > 2) {
-						//replace last marker by segment point
-						var segmentIcon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
-							new google.maps.Size(32, 32),
-							new google.maps.Point(0, 0),
-							new google.maps.Point(8, 8),
-							new google.maps.Size(16, 16)
-						);
-
-						var lastMarker = this.getLastMarker();
-						lastMarker.icon = segmentIcon;
-
-					}
-
-					//create the new last marker
-					marker = this._createMarker(lastLatLng, "client/modules/route/images/end.png", "end point");
-				}
-
-				this._markers.push(marker);
-
-			} catch (ex) {
-				console.log("an error occured during add marker to route", ex.message);
-			}
-		};*/
-
 		//NEW
-		this.addMarker = function() {
+		this.addMarker = function(marker) {
 			this._markers.push(marker);
 		}
 
 
-		//TO BE REMOVED
-		/*this._addClimbToSerie = function(previousElevationPoint, nextElevationPoint, serie) {
+		this._addClimbToSerie = function(previousElevationPoint, nextElevationPoint, serie) {
 
 			var previousData;
 
@@ -526,10 +382,9 @@ var routeBuilder = {};
 				lng: nextElevationPoint.lng
 
 			});
-		};*/
+		};
 
-		//TO BE REMOVED
-		/*this._createClimbsDataModel = function(elevationPointsDataModel) {
+		this._createClimbsDataModel = function(elevationPointsDataModel) {
 
 			var climbsDataModel = {
 				climbsInf7: [],
@@ -582,7 +437,7 @@ var routeBuilder = {};
 			}
 
 			return climbsDataModel;
-		};*/
+		};
 
 		this.removePointsToElevationChartBySegmentId = function(segmentId) {
 			_.each(this.getChartConfig().series, function(serie) {
@@ -590,22 +445,6 @@ var routeBuilder = {};
 					"segmentId": segmentId
 				}));
 			});
-
-			/*this.getChartConfig().series[0].data = _.difference(this.getChartConfig().series[0].data, _.where(this.getChartConfig().series[0].data, {
-				"segmentId": segmentId
-			}));
-			this.getChartConfig().series[1].data = _.difference(this.getChartConfig().series[1].data, _.where(this.getChartConfig().series[1].data, {
-				"segmentId": segmentId
-			}));
-			this.getChartConfig().series[2].data = _.difference(this.getChartConfig().series[2].data, _.where(this.getChartConfig().series[2].data, {
-				"segmentId": segmentId
-			}));
-			this.getChartConfig().series[3].data = _.difference(this.getChartConfig().series[3].data, _.where(this.getChartConfig().series[3].data, {
-				"segmentId": segmentId
-			}));
-			this.getChartConfig().series[4].data = _.difference(this.getChartConfig().series[4].data, _.where(this.getChartConfig().series[4].data, {
-				"segmentId": segmentId
-			}));*/
 		};
 
 		this._addPointsToElevationChart = function(elevationPointsDataModel) {
@@ -662,25 +501,6 @@ var routeBuilder = {};
 		this._updateDistance = function() {
 			this.setDistance(this.getLastPointOfLastSegmentDataModel().distanceFromStart);
 		};
-
-		//TO BE REMOVED
-		/*this._getLastLatLngOfPath = function(path) {
-
-			var lastLatLng;
-
-			if (!path || path.length === 0) {
-				throw new Error("path is must contain at least one LatLng");
-			}
-
-			lastLatLng = path[path.length - 1];
-
-
-			if (!(lastLatLng instanceof google.maps.LatLng)) {
-				throw new Error("Last LatLng is not instance of google.maps.Latlng");
-			}
-
-			return lastLatLng;
-		};*/
 
 		this._visible = false;
 		this._zoom = 13;
@@ -1006,11 +826,10 @@ var routeBuilder = {};
 
 	};
 
-	//TO BE REMOVED
 	routeBuilder.rad = function(x) {
 		return (x * Math.PI) / 180;
 	};
-	//TO BE REMOVED
+
 	routeBuilder.calculateDistanceBetween2Points = function(p1, p2) {
 
 		if ((!p1 || (p1.lat >= 180 || p1.lat <= -180)) || (!p2 || (p2.lat >= 180 || p2.lat <= -180))) {

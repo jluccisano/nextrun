@@ -1,16 +1,16 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("SegmentService",
-	function(RouteUtilsService, GmapsApiService) {
+	function(RouteUtilsService, GmapsApiService, $q) {
 
 		return {
-			createSegmentDataModel: function(path, legs) {
+			createSegmentDataModel: function(path, legs, isFirstPoint) {
 
 				var points = RouteUtilsService.convertPathToPoints(path, isFirstPoint);
 				var distance = RouteUtilsService.calculateDistanceFromLegs(legs);
 
 				var segmentDataModel = {
-					id: RouteUtilsService.generateUUID(),
+					id: routeBuilder.generateUUID(),
 					distance: distance,
 					points: points
 				};
@@ -36,7 +36,7 @@ angular.module("nextrunApp.route").factory("SegmentService",
 				}
 
 				var segmentDataModel = {
-					segmentId: RouteUtilsService.generateUUID(),
+					segmentId: routeBuilder.generateUUID(),
 					points: [],
 					distance: 0
 				};
@@ -52,7 +52,7 @@ angular.module("nextrunApp.route").factory("SegmentService",
 				});
 
 				try {
-					segmentDataModel.distance = parseFloat(RouteUtilsService.calculateDistanceBetween2Points(startLatlng, destinationLatlng));
+					segmentDataModel.distance = parseFloat(routeBuilder.calculateDistanceBetween2Points(startLatlng, destinationLatlng));
 				} catch (ex) {
 					console.log(ex.message);
 				}
@@ -65,13 +65,15 @@ angular.module("nextrunApp.route").factory("SegmentService",
 
 				var defer = $q.defer();
 
+				var _this = this;
+
 				GmapsApiService.DirectionsService().route(directionsRequest, function(result, status) {
 					if (status === google.maps.DirectionsStatus.OK) {
 
 						var path = result.routes[0].overview_path;
 						var legs = result.routes[0].legs;
 
-						var segmentDataModel = SegmentService.createSegmentDataModel(path, legs);
+						var segmentDataModel = _this.createSegmentDataModel(path, legs, isFirstPoint);
 
 						var segment = route.addSegment(segmentDataModel);
 
