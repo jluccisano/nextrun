@@ -99,8 +99,8 @@ module.exports = function(grunt) {
       ],
       dist: [
         'compass:dist',
-        // 'imagemin',
-        // 'svgmin'
+        'imagemin',
+        'svgmin'
       ]
     },
 
@@ -185,11 +185,11 @@ module.exports = function(grunt) {
     // additional tasks can operate on them
 
     useminPrepare: {
-      html: '<%= yeoman.dist %>/server/views/index.html',
+      jade: '<%= yeoman.dist %>/server/views/index.jade',
       options: {
         dest: '<%= yeoman.dist %>',
         flow: {
-          html: {
+          jade: {
             steps: {
               js: ['concat', 'uglifyjs'],
               css: ['cssmin']
@@ -202,12 +202,13 @@ module.exports = function(grunt) {
 
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
-      html: ['<%= yeoman.dist %>/server/views/{,*/}*.html'],
+      jade: ['<%= yeoman.dist %>/server/views/{,*/}*.jade'],
       css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
       js: ['<%= yeoman.dist %>/client/scripts/{,*/}*.js'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>'],
         patterns: {
+          jade: require('usemin-patterns').jade,
           js: [
             [/(client\/modules\/route\/images\/.*?\.(?:gif|jpeg|jpg|png|webp))/gm, 'Update the JS to reference our revved images']
           ]
@@ -237,24 +238,6 @@ module.exports = function(grunt) {
       }
     },
 
-
-    htmlmin: {
-      dist: {
-        options: {
-          collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeCommentsFromCDATA: true,
-          removeOptionalTags: true
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.dist %>/server',
-          src: ['views/{,*/}*.html'],
-          dest: '<%= yeoman.dist %>/server'
-        }]
-      }
-    },
-
     // ngmin tries to make the code safe for minification automatically by
     // using the Angular long form for dependency injection. It doesn't work on
     // things like resolve or inject so those have to be done manually.
@@ -276,7 +259,7 @@ module.exports = function(grunt) {
       server: {
         files: [{
           expand: true,
-          src: ['server/**/*.{js,html}', 'config/**', 'locales/**', 'server.js', 'package.json'],
+          src: ['server/**', 'config/**', 'locales/**', 'server.js', 'package.json'],
           dest: '<%= yeoman.dist %>'
         }]
       },
@@ -313,13 +296,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // Replace Google CDN references
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/server/views/**/*.html']
-      }
-    },
-
     /******************************** JS DOC **********************************************/
 
     jsdoc: {
@@ -339,7 +315,6 @@ module.exports = function(grunt) {
         port: 4000,
         background: false,
         debug: true,
-        script: 'server.js',
       },
       development: {
         options: {
@@ -349,7 +324,7 @@ module.exports = function(grunt) {
       },
       dist: {
         options: {
-          node_env: 'prod',
+          node_env: 'dist',
           script: '<%= yeoman.dist %>/server.js',
         }
       },
@@ -359,32 +334,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
-    /*express: {
-      options: {
-        hostname: "0.0.0.0",
-        port: "3000",
-        server: "server.js",
-        debug: true
-      },
-      livereload: {
-        options: {
-          bases: [path.resolve("client"), path.resolve('client/modules'), path.resolve('client/bower_components'), path.resolve(path.normalize(__dirname + "/..") + '/.tmp/')],
-          livereload: true, // if you just specify `true`, default port `35729` will be used
-          serverreload: true
-        }
-      },
-      test: {
-        options: {
-          bases: ["<%= yeoman.dist %>", ".tmp"]
-        }
-      },
-      dist: {
-        options: {
-          bases: ["<%= yeoman.dist %>"]
-        }
-      }
-    },*/
 
     /********************************** checkcode ***************************************************/
 
@@ -499,22 +448,22 @@ module.exports = function(grunt) {
       options: {
         stdout: true
       },
-      selenium_install: {
+      seleniumInstall: {
         command: 'node ./node_modules/protractor/bin/webdriver-manager update'
       },
-      npm_install: {
+      npmInstall: {
         command: 'npm install'
       },
-      bower_install: {
+      bowerInstall: {
         command: 'bower install'
       },
-      elasticsearch_install_test_idx: {
+      elasticsearchInstallTestIdx: {
         command: 'sh ./scripts/es_racesidx_install.sh racesidx_test_v1 nextrun_test ' + config.test.host,
       },
-      elasticsearch_install_prod_idx: {
+      elasticsearchInstallProdIdx: {
         command: 'sh ./scripts/es_racesidx_install.sh racesidx_v1 nextrun ' + config.prod.host,
       },
-      elasticsearch_start: {
+      elasticsearchStart: {
         command: 'elasticsearch'
       }
     },
@@ -522,10 +471,10 @@ module.exports = function(grunt) {
       _defaults: {
         bg: true
       },
-      start_selenium: {
+      startSelenium: {
         cmd: 'node ./node_modules/protractor/bin/webdriver-manager start'
       },
-      stop_selenium: {
+      stopSelenium: {
         cmd: 'curl -s -L http://localhost:4444/selenium-server/driver?cmd=shutDownSeleniumServer'
       }
     },
@@ -544,20 +493,20 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test-client', ['jshint:src', 'test-client:unit']); //'test-client:e2e'
   grunt.registerTask('test-client:unit', ['karma:unit']);
-  grunt.registerTask('test-client:e2e', ['bgShell:stop_selenium', 'mongo_drop:test', 'bgShell:start_selenium', 'express:test', 'protractor:singleRun', 'bgShell:stop_selenium']);
+  grunt.registerTask('test-client:e2e', ['bgShell:stopSelenium', 'mongo_drop:test', 'bgShell:startSelenium', 'express:test', 'protractor:singleRun', 'bgShell:stopSelenium']);
 
   grunt.registerTask('test-server', ['jshint:src', 'test-server:unit', 'mochaTest:html-cov', 'mochaTest:travis-cov']); //'test-server:integration'
   grunt.registerTask('test-server:unit', ['mochaTest:unit', 'mochaTest:unit-coverage', 'mochaTest:unit-travis-cov']);
-  grunt.registerTask('test-server:integration', ['shell:elasticsearch_install_test_idx', 'mochaTest:integration']); //'mochaTest:integration-coverage', 'mochaTest:integration-travis-cov'
+  grunt.registerTask('test-server:integration', ['shell:elasticsearchInstallTestIdx', 'mochaTest:integration']); //'mochaTest:integration-coverage', 'mochaTest:integration-travis-cov'
 
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 
   grunt.registerTask('minify', ['concat', 'uglify', 'cssmin', 'imagemin']);
 
-  grunt.registerTask('install', ['update', 'shell:selenium_install', 'copy:move_css']);
+  grunt.registerTask('install', ['update', 'shell:seleniumInstall', 'copy:move_css']);
 
-  grunt.registerTask('update', ['shell:npm_install', 'shell:bower_install']);
+  grunt.registerTask('update', ['shell:npmInstall', 'shell:bowerInstall']);
 
   grunt.registerTask('test', ['test-server', 'test-client']);
 
@@ -586,19 +535,16 @@ module.exports = function(grunt) {
     'clean:dist',
     'bowerInstall',
     'copy:server',
-    'jade',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
     'concat',
     'copy:dist',
-    'cdnify',
     'ngmin',
     'cssmin',
     'uglify',
     'rev',
     'usemin',
-    'htmlmin',
     'jsdoc',
     'install'
   ]);
@@ -611,7 +557,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('serve', function(target) {
     if (target === 'dist') {
-      return grunt.task.run(['newbuild', 'express:prod']);
+      return grunt.task.run(['newbuild', 'express:dist']);
     }
 
     grunt.task.run([

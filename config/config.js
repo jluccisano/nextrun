@@ -18,6 +18,22 @@ module.exports = {
     },
     racesidx: "racesidx_v1"
   },
+  dist: {
+    logLevel: "info",
+    host: "localhost",
+    db: "mongodb://localhost/nextrun",
+    root: rootPath,
+    facebook: {
+      clientID: "APP_ID",
+      clientSecret: "APP_SECRET",
+      callbackURL: "http://localhost:3000/auth/facebook/callback"
+    },
+    mailgun: {
+      user: "devmaster@nextrunjosephluccisano.mailgun.org",
+      password: "devmaster"
+    },
+    racesidx: "racesidx_v1"
+  },
   test: {
     logLevel: "info",
     host: "localhost",
