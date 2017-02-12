@@ -335,7 +335,11 @@ module.exports = function(grunt) {
     },
 
     "node-inspector": {
-      dev: {}
+      dev: {
+        options: {
+          "web-port": 9094,
+        }
+      }
     },
 
     /********************************** checkcode ***************************************************/

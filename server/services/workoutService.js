@@ -209,7 +209,7 @@ exports.deleteParticipant = function(workout, participantId, res, cb) {
 exports.findParticipant = function(workout, participant , res, cb) {
 
 	var criteria = {
-		"workout._id": workout._id,
+		"_id": workout._id,
 		"participants.email": participant.email
 	};
 
@@ -234,7 +234,7 @@ exports.findParticipant = function(workout, participant , res, cb) {
 exports.checkIfParticipantAlreadyExists = function(participant, workout, res, cb) {
 
 	var criteria = {
-		"workout._id": workout._id,
+		"_id": workout._id,
 		"participants.email": participant.email
 	};
 
@@ -259,10 +259,8 @@ exports.checkIfParticipantAlreadyExists = function(participant, workout, res, cb
 exports.checkIfParticipantAvailable = function(participantEmail, workout, res, cb) {
 
 	var criteria = {
-		"workout._id": workout._id,
-		"participants.email": {
-			$ne: participantEmail
-		}
+		"_id": workout._id,
+		"participants.email": participantEmail		
 	};
 
 	var projection = {

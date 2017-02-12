@@ -59,6 +59,9 @@ angular.module("nextrunApp.commons").factory("RaceService",
             },
             download: function(id) {
                 return HttpUtils.post("/api/races/" + id + "/download/");
+            },
+            downloadResult: function(id, resultId) {
+                return HttpUtils.post("/api/races/" + id + "/results/" + resultId + "/download/");
             }
 
         };

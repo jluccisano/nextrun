@@ -24,6 +24,7 @@ var raceModule = angular.module("nextrunApp.race", [
   "jlareau.pnotify",
   "lr.upload",
   "ngImgCrop",
+  "base64"
 ]);
 
 raceModule.config(

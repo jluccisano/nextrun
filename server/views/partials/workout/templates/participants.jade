@@ -1,14 +1,12 @@
 div(class="create-workout")
-	div(class="row")
-		h3(translate) Ajouter un participant
-		form(class="form-horizontal" role="form" name="participantForm" novalidate)
-			div(class="form-group" ng-class="{'has-error': !participantForm.email.$pristine && participantForm.email.$invalid, 'has-success': !participantForm.email.$invalid && !participantForm.email.$pristine}")
-				label(class="control-label" for="email" translate) Email
-				input(class="form-control" id="email" name="email" type="email" workout="workout" nr-unique-participant placeholder="{{'Email' | translate }}" ng-model="newParticipant.email")
-				span(class="help-block" ng-show="participantForm.email.$error.email" translate) Email invalide
+	h3(translate) Ajouter un participant
+	form(class="form-inline" role="form" name="participantForm" novalidate)
+		div(class="form-group" ng-class="{'has-error': !participantForm.email.$pristine && participantForm.email.$invalid, 'has-success': !participantForm.email.$invalid && !participantForm.email.$pristine}")
+			label(class="sr-only" for="email" translate) Email
+			input(class="form-control" id="email" name="email" type="email" workout="workout" nr-unique-participant placeholder="{{'Email' | translate }}" ng-model="newParticipant.email")
+			span(class="help-block" ng-show="participantForm.email.$error.email" translate) Email invalide
 
-
-			button(class="btn btn-primary pull-right" ng-click="addNewParticipant(newParticipant)" ng-disabled="participantForm.$invalid" translate) Ajouter
+		button(class="btn btn-primary" ng-click="addNewParticipant(newParticipant)" ng-disabled="participantForm.$invalid" translate) Ajouter
 
 table(class="table table-hover")
 		thead
@@ -17,7 +15,7 @@ table(class="table table-hover")
 				th(style="width: 5%")
 				th(style="width: 5%" ng-if="editMode")
 		tbody
-			tr(ng-repeat="participant in workout.participants")
+			tr(ng-repeat="participant in workout.participants" ng-class="{'success': participant.willBePresent , 'warning': !participant.willBePresent}")
 				td 
 					a {{participant.email}}	
 				td

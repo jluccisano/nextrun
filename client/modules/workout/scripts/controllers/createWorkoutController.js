@@ -14,6 +14,8 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 		$scope.gettextCatalog = gettextCatalog;
 
 		$scope.guests = [];
+		$scope.repeats = [];
+		$scope.rejects = [];
 
 		var workout = $cookieStore.get("workout");
 

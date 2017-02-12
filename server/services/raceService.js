@@ -591,3 +591,16 @@ exports.findResult = function(id, res, cb) {
 		}
 	});
 };
+
+exports.getResult = function(race, result, res, cb) {
+	gridfsService.getFile(result.fileId, res, function(bufs) {
+		var fbuf = Buffer.concat(bufs);
+		var base64 = (fbuf.toString("base64"));
+		if (base64) {
+			cb(base64);
+		} else {
+			cb();
+		}
+
+	});
+};

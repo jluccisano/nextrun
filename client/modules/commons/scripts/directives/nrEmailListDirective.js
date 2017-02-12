@@ -1,18 +1,16 @@
 "use strict";
 
-var EMAIL_REX = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;
-
 angular.module("nextrunApp.commons").directive("nrEmailList", function() {
     return {
-        'restrict': 'E',
-        'require': '?ngModel',
-        'scope': {
-            'rejected': '=rejected',
-            'repeat': '=repeat'
+        restrict: "E",
+        require: "?ngModel",
+        scope: {
+            rejected: "=rejected",
+            repeat: "=repeat"
         },
-        'replace': true,
-        'template': '<textarea><textarea>',
-        'link': function($scope, elem, attrs, model) {
+        replace: true,
+        template: "<textarea><textarea>",
+        link: function($scope, elem, attrs, model) {
 
             model.$parsers.push(function(value) {
                 var parsed = [];
@@ -21,11 +19,11 @@ angular.module("nextrunApp.commons").directive("nrEmailList", function() {
                 if (value === undefined) {
                     return parsed;
                 }
-                angular.forEach(value.split(','), function(email) {
+                angular.forEach(value.split(","), function(email) {
                     email = email.trim();
                     if (EMAIL_REX.test(email)) {
                         parsed.push(email);
-                    } else if (email !== '') {
+                    } else if (email !== "") {
                         $scope.rejected.push(email);
                     }
                 });
@@ -48,25 +46,27 @@ angular.module("nextrunApp.commons").directive("nrEmailList", function() {
             model.$parsers.push(function(value) {
                 var error = value.length === 0;
                 if ($scope.rejected.length !== 0) {
-                    model.$setValidity('email', false);
+                    model.$setValidity("email", false);
                     error = true;
                 } else {
-                    model.$setValidity('email', true);
+                    model.$setValidity("email", true);
                 }
                 if (attrs.repeat && $scope.repeat && $scope.repeat.length !== 0) {
-                    model.$setValidity('repeat', false);
+                    model.$setValidity("repeat", false);
                     error = true;
                 } else {
-                    model.$setValidity('repeat', true);
+                    model.$setValidity("repeat", true);
                 }
 
                 if (error) {
-                    model.$setValidity('emailList', false);
+                    model.$setValidity("emailList", false);
                     return;
                 }
-                model.$setValidity('emailList', true);
+                model.$setValidity("emailList", true);
                 return value;
             });
         }
     };
 });
+
+var EMAIL_REX = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;

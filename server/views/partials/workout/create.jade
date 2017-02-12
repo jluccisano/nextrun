@@ -11,7 +11,16 @@ div(class="container create-workout")
 				div(class="form-group" ng-class="{'has-error':!workoutEventForm.guests.$pristine && workoutEventForm.guests.$invalid, 'has-success': !workoutEventForm.guests.$invalid && !workoutEventForm.guests.$pristine}")
 					label(class="control-label") {{'Inviter' | translate}}
 					//textarea(class="form-control" name="guests" ng-model="guests" ng-list="&#10;" ng-trim="false" placeholder="{{'martin@gmail.com,jean@yahoo.com' | translate}}" ng-required="true")
-					nr-email-list(class="form-control" ng-model="guests" name="guests" placeholder="{{'martin@gmail.com,jean@yahoo.com' | translate}}" ng-required="true")
+					nr-email-list(class="form-control" ng-model="guests" rejected="rejects" repeat="repeats" name="guests" placeholder="{{'martin@gmail.com,jean@yahoo.com' | translate}}" ng-required="true")
+					
+					span(class="help-block" ng-show="workoutEventForm.guests.$error.emailList" translate) Email invalide
+
+					span(class="help-block" ng-show="workoutEventForm.guests.$error.email && rejects.length === 1" translate) Cet email est incorrect {{rejects[0]}}
+					span(class="help-block" ng-show="workoutEventForm.guests.$error.email && rejects.length > 1" translate) Ces emails sont incorrects {{rejects.join(', ')}}
+
+					span(class="help-block" ng-show="workoutEventForm.guests.$error.repeat && repeats.length === 1" translate) Cet email est incorrect {{repeats[0]}}
+					span(class="help-block" ng-show="workoutEventForm.guests.$error.repeat && repeats.length > 1" translate) Ces emails sont répétés {{repeats[0]}}
+
 
 				div(class="form-group" ng-class="{'has-error':!workoutEventForm.date.$pristine && workoutEventForm.date.$invalid, 'has-success': !workoutEventForm.date.$invalid && !workoutEventForm.date.$pristine}")
 					label(class="control-label") {{'Date' | translate}}

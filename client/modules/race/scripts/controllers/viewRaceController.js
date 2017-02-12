@@ -6,6 +6,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $modal,
         $filter,
         $q,
+        $base64,
         RaceService,
         RouteBuilderService,
         RouteService,
@@ -60,6 +61,19 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
             });
         };
 
+        $scope.showImage = function() {
+            $scope.modalInstance = $modal.open({
+                templateUrl: "partials/race/templates/lightBoxModal",
+                controller: "LightBoxModalController",
+                size: "lg",
+                resolve: {
+                    image: function() {
+                        return $scope.image;
+                    }
+                }
+            });
+        };
+
         $scope.generateRaceDescription = function() {
             return $scope.race.name + " , date: " + $filter("date")($scope.race.date, "dd MMMM yyyy") + " , type: " + $scope.race.type.i18n + " , distance: " + $scope.race.distanceType.name;
         };
@@ -92,6 +106,17 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.openLightboxModal = function($index) {
             Lightbox.openModal($scope.images, $index);
+        };
+
+        $scope.downloadResult = function(result) {
+            RaceService.downloadResult($scope.race._id, result._id).then(function(response) {
+                var base64EncodedString = decodeURIComponent(response.data);
+                var decodedString = $base64.decode(base64EncodedString);
+                var blob = new Blob([decodedString], {
+                    type: "text/pdf"
+                });
+                return blob;
+            });
         };
 
         $scope.init();

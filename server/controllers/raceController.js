@@ -259,3 +259,11 @@ exports.deleteResult = function(req, res) {
 		res.sendStatus(200);
 	});
 };
+
+exports.getResult = function(req, res) {
+	var race = req.race;
+	var result = req.result;
+	raceService.getResult(race, result, res, function(data) {
+		res.status(200).send(data);
+	});
+};
