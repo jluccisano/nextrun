@@ -170,7 +170,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 				setTimeout(function() {
 					sharedService.prepForFullTextBroadcast($scope.fulltext);
-				}, 1000);
+				}, 2000);
 			}
 		};
 
