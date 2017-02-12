@@ -255,11 +255,38 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
 };
 
 /**
+ * @method Get facets
+ * @param req
+ * @param res
+ */
+exports.facets = function(req, res) {
+
+  var operation = {
+    department: {},
+    type: {},
+    date: {}
+  };
+
+  Race.facets(operation, function(err, facets) {
+    if (err) {
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+    return res.json(200, {
+      races: req.races,
+      facets: facets
+    });
+  });
+
+};
+
+/**
  * @method Search races by criteria
  * @param req
  * @param res
  */
-exports.search = function(req, res) {
+exports.search = function(req, res, next) {
 
   var operation = {
     department: {},
@@ -329,7 +356,8 @@ exports.search = function(req, res) {
       });
     }
     console.log(races);
-    return res.json(200, {races : races});
+    req.races = races;
+    return next();
   });
 
 

@@ -1,12 +1,43 @@
 div.container
 	h2 Rechercher une manifestation
+
+	div.row
+		div.col-lg-4.col-lg-offset-4
+			input.form-control(type="text" placeholder="Rechercher" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="selected" typeahead="names for names in autocomplete($viewValue) | filter:$viewValue | limitTo:8")
+	div.row
+		div.col-lg-4
+			h4 {{total}} <small>résultats</small>
 	div.row
 			div.col-lg-4
 				div.well
+					h3 Affiner la Recherche
+
+					h2 par Type
+					div.checkbox(ng-repeat="facet in facets")
+						div(ng-switch on="currentTypeSelected.indexOf(facet._id.name) > -1")
+							div(ng-switch-when="false")
+								label {{facet._id.name}} ({{facet.total}})
+								input(type="checkbox" 
+								  ng-change="onChange()",
+								  ng-model="facet.selected",
+								  ng-checked="currentTypeSelected.indexOf(facet._id.name) > -1"
+								  ng-click="toggleSelection(facet._id.name)"
+								  ng-true-value="true", 
+								  ng-false-value="false")
+							div(ng-switch-when="true")
+								label <strong>{{facet._id.name}}</strong>
+								input(type="checkbox" 
+								  ng-change="onChange()",
+								  ng-model="facet.selected",
+								  ng-checked="currentTypeSelected.indexOf(facet._id.name) > -1"
+								  ng-click="toggleSelection(facet._id.name)"
+								  ng-true-value="true", 
+								  ng-false-value="false")
+
 			div.col-lg-8
 				div.row
-					div.col-lg-12(data-ng-repeat="event in events")
-						h2 {{getDate(event._id)}}
+					div.col-lg-12
+						//h2 {{getDate(event._id)}}
 						hr
 						table.table
 							thead
@@ -15,6 +46,8 @@ div.container
 									th(style="width: 30%")
 									th(style="width: 10%")
 							tbody
-								tr(data-ng-repeat="race in event.races")
+								tr(data-ng-repeat="race in races")
 									td(style="border:0", align="left") {{race.name}}
 						div.col-lg-8.col-lg-offset-4
+							pagination(boundary-links="true" max-size="maxSize" num-pages="numPages" items-per-page="pageSize"  on-select-page="onSelectPage()" total-items="totalItems" page="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
+							pre Page: {{currentPage}} / {{numPages}}

@@ -318,6 +318,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 
 		var polyLine = {
+			id: generateUUID(),
 			path: pathArray,
 			stroke: {
 				color: "red",
@@ -568,6 +569,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			});
 
 			var polyLine = {
+				id: generateUUID(),
 				path: pathArray,
 				stroke: {
 					color: "red",
@@ -615,6 +617,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				});
 
 				var polyLine = {
+					id: generateUUID(),
 					path: pathArray,
 					stroke: {
 						color: "red",

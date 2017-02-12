@@ -142,7 +142,7 @@ var routes = [
     }, {
         path: '/api/races/search/(department/:department)?',
         httpMethod: 'GET',
-        middleware: [raceController.search],
+        middleware: [raceController.search, raceController.facets],
         accessLevel: accessLevels.public
     },
 
