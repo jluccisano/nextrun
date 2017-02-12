@@ -9,6 +9,8 @@
         height: 350px;
     }
 }
+
+
 .tab-content {
     padding-top: 20px;
 }
@@ -59,7 +61,7 @@ textarea[name=description] {
                 } 
             }
 
-            google-map {
+            ui-gmap-google-map {
                 width: 100%;
                 height: 95%;
                 .angular-google-map {

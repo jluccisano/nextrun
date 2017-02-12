@@ -1,1 +1,1 @@
-angular.module("nextrunApp.route", ["nextrunApp.commons", "google-maps", "cb.x2js"]);
+angular.module("nextrunApp.route", ["nextrunApp.commons", "cb.x2js"]);

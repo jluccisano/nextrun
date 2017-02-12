@@ -4,7 +4,7 @@ var raceModule = angular.module("nextrunApp.race", [
   "ngRoute",
   "ngAnimate",
   "ngSanitize",
-  "google-maps",
+  "uiGmapgoogle-maps",
   "highcharts-ng",
   "frapontillo.bootstrap-switch",
   "textAngular",

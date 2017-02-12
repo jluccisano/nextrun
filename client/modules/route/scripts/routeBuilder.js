@@ -160,6 +160,7 @@ var routeBuilder = {};
 
 			if (pathArray.length > 0) {
 				var polyline = {
+					id: routeBuilder.generateUUID(),
 					path: pathArray,
 					stroke: {
 						color: "red",

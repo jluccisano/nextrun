@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("google-maps").directive("nrPolyline",
+/*angular.module("google-maps").directive("nrPolyline",
     function($log, $timeout, GmapsApiService) {
 
         function validatePathPoints(path) {
@@ -14,9 +14,7 @@ angular.module("google-maps").directive("nrPolyline",
             return true;
         }
 
-        /*
-         * Utility functions
-         */
+
         return {
             restrict: "ECA",
             replace: true,
@@ -91,3 +89,4 @@ angular.module("google-maps").directive("nrPolyline",
             }
         };
     });
+    */
