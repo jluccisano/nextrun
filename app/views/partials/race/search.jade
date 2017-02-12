@@ -32,52 +32,54 @@ div.container
 								span.label.label-warning {{formatDateRange(dateRange)}}
 					h4 par Type
 					div.checkbox(data-ng-repeat="facet in typeFacets")
-						div(data-ng-switch="currentTypeSelected.indexOf(facet._id.name) > -1")
+						div(data-ng-switch="currentTypeSelected.indexOf(facet.term) > -1")
 							div(data-ng-switch-when="false")
-								label {{facet._id.i18n}} ({{facet.total}})
+								label(data-ng-class="{'disabled': facet.count === 0}") {{getTypeByName(facet.term)}} ({{facet.count}})
 								input(type="checkbox" 
 								  data-ng-change="onChange()",
 								  data-ng-model="facet.selected",
-								  data-ng-checked="currentTypeSelected.indexOf(facet._id.name) > -1"
-								  data-ng-click="toggleTypeSelection(facet._id.name)"
-								  vng-true-value="true", 
+								  data-ng-checked="currentTypeSelected.indexOf(facet.term) > -1"
+								  data-ng-click="toggleTypeSelection(facet.term)"
+								  data-ng-true-value="true", 
+								  data-ng-disabled="facet.count === 0",
 								  data-ng-false-value="false")
 							div(data-ng-switch-when="true")
-								label <strong>{{facet._id.i18n}}</strong>
+								label <strong>{{getTypeByName(facet.term)}}</strong>
 								input(type="checkbox" 
 								  data-ng-change="onChange()",
 								  data-ng-model="facet.selected",
-								  data-ng-checked="currentTypeSelected.indexOf(facet._id.name) > -1"
-								  data-ng-click="toggleTypeSelection(facet._id.name)"
+								  data-ng-checked="currentTypeSelected.indexOf(facet.term) > -1"
+								  data-ng-click="toggleTypeSelection(facet.term)"
 								  data-ng-true-value="true", 
+								  data-ng-disabled="facet.count === 0",
 								  data-ng-false-value="false")
 					div(data-ng-hide="region.name==='Toute la France'")
 						h4 par Département
 						div.checkbox(data-ng-repeat="facet in departmentFacets")
 							div(data-ng-switch="departments.indexOf(facet.department.code) > -1")
 								div(data-ng-switch-when="false")
-									label(data-ng-class="{'disabled': facet.total === 0}") {{facet.department.code}} - {{facet.department.name}} ({{facet.total}})
+									label(data-ng-class="{'disabled': facet.count === 0}") {{facet.department.code}} - {{facet.department.name}} ({{facet.count}})
 									input(type="checkbox" 
 									  data-ng-change="onChange()",
 									  data-ng-model="facet.department.selected",
 									  data-ng-checked="departments.indexOf(facet.department.code) > -1"
 									  data-ng-click="toggleDepartmentSelection(facet.department.code)"
 									  data-true-value="true", 
-									  data-ng-disabled="facet.total === 0",
+									  data-ng-disabled="facet.count === 0",
 									  data-ng-false-value="false")
 								div(data-ng-switch-when="true")
 									label <strong>{{facet.department.code}} - {{facet.department.name}}</strong>
 									input(type="checkbox" 
 									  data-ng-change="onChange()",
-									  data-ng-model="facet.department.selected",
+									  data-ng-model="facet.deparment.selected",
 									  data-ng-checked="departments.indexOf(facet.department.code) > -1"
 									  data-ng-click="toggleDepartmentSelection(facet.department.code)"
 									  data-ng-true-value="true", 
-									  data-ng-disabled="facet.total === 0",
+									  data-ng-disabled="facet.count === 0",
 									  data-ng-false-value="false")
-					div(data-ng-show="region.name==='Toute la France'")
-						h4 par Région
-						select(class="multiselect" data-ng-change="onChange()" data-placeholder="Sélectionner..." data-ng-model="departments" data-ng-options="department as displayDepartmentFacet(department) group by department.region for department in departmentFacets" multiple="multiple" multiselect-dropdown)
+					//div(data-ng-show="region.name==='Toute la France'")
+					//	h4 par Région
+					//	select(class="multiselect" data-ng-change="onChange()" data-placeholder="Sélectionner..." data-ng-model="departments" data-ng-options="department as displayDepartmentFacet(department) group by department.region for department in departmentFacets" multiple="multiple" multiselect-dropdown)
 					h4 par Date
 					div.input-group
 						span.input-group-addon
@@ -107,11 +109,11 @@ div.container
 					tbody
 						tr(data-ng-repeat="race in races")
 							td(align="left")
-								a(data-ng-href='/races/view/{{race._id}}') {{race.name}}
-							td(align="center") {{race.type.i18n}}
-							td(align="center") {{race.department.code}} - {{race.department.name}}
-							td(align="center") {{race.distanceType.name}}
-							td(align="center") {{getDate(race.date)}}
+								a(data-ng-href='/races/view/{{race.fields._id}}') {{race.fields.name}}
+							td(align="center") {{race.fields.type.i18n}}
+							td(align="center") {{race.fields.department.code}} - {{race.fields.department.name}}
+							td(align="center") {{race.fields.distanceType.name}}
+							td(align="center") {{getDate(race.fields.date)}}
 				div.col-lg-6.col-lg-offset-4
 					span.label.label-default(data-ng-show="emptyResults") Aucun Résultats
 				div.col-lg-6.col-lg-offset-4

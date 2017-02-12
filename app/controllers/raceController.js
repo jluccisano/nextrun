@@ -267,13 +267,11 @@ exports.extractCriteria = function(req, res, next) {
     fulltext: "*",
     departments: {},
     types: {},
-    date: {},
+    date: undefined,
     page: 0,
     size: 20,
     region: {},
-    sort: {
-      "date": 1
-    }
+    sort: "_score"
   };
 
   var criteria = req.body.criteria;
@@ -289,6 +287,8 @@ exports.extractCriteria = function(req, res, next) {
     }
 
     if (criteria.sort) {
+
+      operation.sort = criteria.sort;
       /*operation.sort = {
         "date": 1
       };*/
@@ -305,9 +305,9 @@ exports.extractCriteria = function(req, res, next) {
     }
     if (criteria.departments.length > 0) {
 
-       operation.departments = criteria.departments;
+      operation.departments = criteria.departments;
 
-     /* operation.departments = {
+      /* operation.departments = {
         "department.code": {
           '$in': criteria.departments
         }
@@ -315,6 +315,8 @@ exports.extractCriteria = function(req, res, next) {
     }
 
     if (criteria.region !== undefined) {
+
+      operation.region = criteria.region;
       /*operation.region = {
         "department.code": {
           '$in': criteria.region.departments
@@ -325,7 +327,7 @@ exports.extractCriteria = function(req, res, next) {
     if (criteria.fulltext) {
 
       operation.fulltext = criteria.fulltext;
-     /* var regex = new RegExp('\\b' + criteria.fulltext, 'i');
+      /* var regex = new RegExp('\\b' + criteria.fulltext, 'i');
       operation.fulltext = {
         "name": regex
       }*/
@@ -333,12 +335,17 @@ exports.extractCriteria = function(req, res, next) {
 
 
     if (criteria.dateRange && criteria.dateRange.startDate && criteria.dateRange.endDate) {
-      /*operation.date = {
+      /* operation.date = {
         "date": {
           $gte: new Date(criteria.dateRange.startDate),
           $lt: new Date(criteria.dateRange.endDate)
         }
       };*/
+
+      operation.date = {
+        "from": new Date(criteria.dateRange.startDate),
+        "to": new Date(criteria.dateRange.endDate)
+      };
     }
   }
 
@@ -359,10 +366,10 @@ exports.search = function(req, res) {
   var operation = req.operation;
 
   //var search = "*";
-  var page = 0;
-  var pageSize = 20;
-  var sort = "_score";
-  var filters = "";
+  //var page = 0;
+  //var pageSize = 20;
+  //var sort = "_score";
+  //var filters = "";
   var criteria = {};
 
   var fields = [
@@ -370,7 +377,8 @@ exports.search = function(req, res) {
     "distanceType",
     "type",
     "department",
-    "_id"
+    "_id",
+    "date"
   ];
 
   var type_filter = {};
@@ -383,11 +391,11 @@ exports.search = function(req, res) {
   query.bool = {};
   query.bool.should = [];
   query.bool.should.push(buildQueryString("race.name.autocomplete", operation.fulltext));
-  query.bool.should.push(buildQueryString("race.department.name.autocomplete",  operation.fulltext));
-  query.bool.should.push(buildQueryString("race.department.region.autocomplete",  operation.fulltext));
-  query.bool.should.push(buildQueryString("race.department.code.autocompletee",  operation.fulltext));
-  query.bool.should.push(buildQueryString("race.distanceType.i18n.autocomplete",  operation.fulltext));
-  query.bool.should.push(buildQueryString("race.type.name.autocomplete",  operation.fulltext));
+  query.bool.should.push(buildQueryString("race.department.name.autocomplete", operation.fulltext));
+  query.bool.should.push(buildQueryString("race.department.region.autocomplete", operation.fulltext));
+  query.bool.should.push(buildQueryString("race.department.code.autocomplete", operation.fulltext));
+  query.bool.should.push(buildQueryString("race.distanceType.i18n.autocomplete", operation.fulltext));
+  query.bool.should.push(buildQueryString("race.type.name.autocomplete", operation.fulltext));
 
   criteria.query = query;
 
@@ -398,8 +406,10 @@ exports.search = function(req, res) {
 
   var typesArray = [];
 
-  if (operation.types) {
+  if (operation.types.length > 0) {
     typesArray = operation.types;
+
+    console.log(typesArray);
 
     type_filter = {
       "terms": {
@@ -412,8 +422,10 @@ exports.search = function(req, res) {
 
   var departmentsArray = [];
 
-  if (operation.departments) {
+  if (operation.departments.length > 0) {
     departmentsArray = operation.departments;
+
+    console.log(departmentsArray);
 
     department_filter = {
       "terms": {
@@ -421,7 +433,39 @@ exports.search = function(req, res) {
       }
     };
 
-    filter.and.push(department_filter);
+  }
+
+  if (operation.date !== undefined) {
+
+    date_filter = {
+      "range": {
+        "race.date": {
+          "from": operation.date.from,
+          "to": operation.date.to
+        }
+      }
+    };
+
+    filter.and.push(date_filter);
+  }
+
+  var departmentsOfRegionArray = [];
+
+  console.log(operation.region);
+
+  if (operation.region.departments !== undefined && operation.region.departments.length > 0) {
+    departmentsOfRegionArray = operation.region.departments;
+
+    console.log(departmentsOfRegionArray);
+
+    departmentOfRegion_filter = {
+      "terms": {
+        "race.department.code": departmentsOfRegionArray
+      }
+    };
+
+    filter.and.push(departmentOfRegion_filter);
+
   }
 
 
@@ -439,14 +483,14 @@ exports.search = function(req, res) {
       "terms": {
         "field": "race.department.code",
         "order": "term",
-        "all_terms": true
+        "all_terms": false
       }
     },
     "typeFacets": {
       "terms": {
         "field": "race.type.name",
         "order": "term",
-        "all_terms": true
+        "all_terms": false
       }
     }
   };
@@ -456,12 +500,33 @@ exports.search = function(req, res) {
   var typeFacetFilter = {}
   typeFacetFilter.and = [];
 
+  var date_filter_withRange = {
+    "range": {
+      "race.date": {
+        "gt": operation.date.from,
+        "lte": operation.date.to
+      }
+    }
+  };
+
+  if(operation.date !== undefined) {
+    departmentFacetFilter.and.push(date_filter_withRange);
+    typeFacetFilter.and.push(date_filter_withRange);
+  }
+   
+
   if (departmentsArray.length > 0) {
     typeFacetFilter.and.push(department_filter);
   }
 
   if (typesArray.length > 0) {
     departmentFacetFilter.and.push(type_filter);
+   
+  }
+
+  if (departmentsOfRegionArray.length > 0) {
+    departmentFacetFilter.and.push(departmentOfRegion_filter);
+    typeFacetFilter.and.push(departmentOfRegion_filter);
   }
 
   if (typeFacetFilter.and.length > 0) {
@@ -475,12 +540,12 @@ exports.search = function(req, res) {
   criteria.facets = facets;
 
 
-  criteria.from = page;
-  criteria.size = pageSize;
+  criteria.from = operation.page;
+  criteria.size = operation.size;
   criteria.fields = fields;
-  criteria.sort = [sort];
+  criteria.sort = [operation.sort];
 
-  console.log(util.inspect(criteria));
+  console.log(util.inspect(criteria.sort));
 
   elasticSearchClient.search('racesidx_v1', 'race', criteria)
     .on('data', function(data) {

@@ -867,7 +867,7 @@ var DEPARTMENTS = new Enum({
 
 
 var getDepartmentByCode = function(DEPARTMENTS, code) {
-	switch (code.toString()) {
+	switch (code.toString().toUpperCase()) {
 		case '01':
 			if (true) {
 				return DEPARTMENTS.AIN.value;

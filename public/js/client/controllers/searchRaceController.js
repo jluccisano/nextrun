@@ -249,6 +249,12 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			return department.code + ' - ' + department.name;
 		}
 
+		$scope.getTypeByName = function(typeName) {
+			var type = getRaceTypeByName(TYPE_OF_RACES, typeName);
+			return type.i18n;
+		}
+
+
 
 		$scope.search = function() {
 
@@ -259,33 +265,30 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				fulltext: ($scope.fulltext !== undefined && $scope.fulltext.fullname) ? $scope.fulltext.fullname : "",
 				page: ($scope.currentPage - 1),
 				size: $scope.pageSize,
-				sort: {
-					"date": 1
-				},
+				sort: $scope.sort,
 				types: $scope.currentTypeSelected,
 				departments: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.departments : [],
-				region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined
-				//dateRange: $scope.dateRange
+				region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined,
+				dateRange: $scope.dateRange
 			};
 
 			RaceServices.search(criteria,
 				function(response) {
 
-					if (response.races.length > 0) {
+					if (response.hits.hits.length > 0) {
 
 						$scope.emptyResults = false;
 
-						$scope.races = response.races[0].results;
+						$scope.races = response.hits.hits;
 
-						$scope.typeFacets = response.facets[1];
+						$scope.typeFacets = response.facets.typeFacets.terms;
 
+						$scope.departmentFacets = $scope.buildDepartmentFacets(response.facets.departmentFacets.terms);
 
-						$scope.departmentFacets = $scope.buildDepartmentFacets(response.facets[0]);
+						$scope.total = response.hits.total;
+						$scope.totalItems = $scope.total;
 
-
-						$scope.totalItems = response.races[0].size;
-
-						$scope.total = response.races[0].total;
+						
 
 					} else {
 
@@ -310,6 +313,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				});
 		};
 
+
 		$scope.buildDepartmentFacets = function(entries) {
 			var results = [];
 
@@ -317,14 +321,14 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 				var departmentFacet = {
 					department: getDepartmentByCode(DEPARTMENTS, department),
-					total: 0
+					count: 0
 				}
 
 				var hasFacet = _.findWhere(entries, {
-					_id: departmentFacet.department.code
+					term: departmentFacet.department.code
 				});
 				if (hasFacet !== undefined) {
-					departmentFacet.total = hasFacet.total;
+					departmentFacet.count = hasFacet.count;
 				}
 
 				results.push(departmentFacet);
@@ -334,9 +338,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		};
 
 		$scope.displayDepartmentFacet = function(department) {
-			return department.department.name + ' (' + department.total + ') ';
+			return department.department.name + ' (' + department.count + ') ';
 		};
 
-		//$scope.search();
 	}
 ]);

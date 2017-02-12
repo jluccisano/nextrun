@@ -92,7 +92,7 @@ var TYPE_OF_RACES = new Enum({
 	},
 	NIGHT_TRAIL: {
 		i18n: "Trail de nuit",
-		name: 'nighttrail',
+		name: 'night_trail',
 		distances: [{
 			name: 'Course nature',
 			i18n: 'Course nature - < à 21km'
@@ -213,7 +213,7 @@ var TYPE_OF_RACES = new Enum({
 	},
 	SNOW_TRIATHLON: {
 		i18n: "Triathlon des neiges",
-		name: 'snowtriathlon',
+		name: 'snow_triathlon',
 		distances: [{
 			name: 'XS',
 			i18n: 'XS - 2km/3,5km/3km'
@@ -237,7 +237,7 @@ var TYPE_OF_RACES = new Enum({
 	},
 	SNOW_DUATHLON: {
 		i18n: "Duathlon des neiges",
-		name: 'snowduathlon',
+		name: 'snow_duathlon',
 		distances: [{
 			name: 'XS',
 			i18n: 'XS - 2km/3km/2km'
@@ -261,7 +261,7 @@ var TYPE_OF_RACES = new Enum({
 	},
 	CROSS_TRIATHLON: {
 		i18n: "Cross Triathlon",
-		name: 'crosstriathlon',
+		name: 'cross_triathlon',
 		distances: [{
 			name: 'XS',
 			i18n: 'XS - 250m/5,5km/2km'
@@ -291,7 +291,7 @@ var TYPE_OF_RACES = new Enum({
 	},
 	CROSS_DUATHLON: {
 		i18n: "Cross Duathlon",
-		name: 'crossduathlon',
+		name: 'cross_duathlon',
 		distances: [{
 			name: 'XS',
 			i18n: 'XS - 2km/5,5km/1km'

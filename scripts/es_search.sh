@@ -46,7 +46,9 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
   },
   "from": 0,
   "size": 10,
-  "sort": ["_score"],
+  "sort": [
+    "_score"
+  ],
   "filter": {
     "and": [
       {
@@ -62,6 +64,14 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
             "duathlon"
           ]
         }
+      },
+      {
+        "range": {
+          "race.date": {
+            "from": "2008-01-01",
+            "to": "2014-12-13"
+          }
+        }
       }
     ]
   },
@@ -70,7 +80,7 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
       "terms": {
         "field": "race.department.code",
         "order": "term",
-        "all_terms": true
+        "all_terms": false
       },
       "facet_filter": {
         "and": [
@@ -88,7 +98,7 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
       "terms": {
         "field": "race.type.name",
         "order": "term",
-        "all_terms": true
+        "all_terms": false
       },
       "facet_filter": {
         "and": [
