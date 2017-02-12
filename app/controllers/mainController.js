@@ -23,17 +23,17 @@ exports.index = function(req, res) {
     'role': role
   }));
 
-  var ua = req.headers['user-agent'];
+  /*var ua = req.headers['user-agent'];
   if ((typeof(ua) !== "undefined" && ua.match(/bot/i)) || typeof(req.query._escaped_fragment_) !== "undefined" || typeof(req.query.fb_locale) !== "undefined") {
 
     generateSnapshot(req, res);
 
   } else {
-    res.render('index', {
-      title: 'Accueil'
-    });
-  }
 
+  }*/
+  res.render('index', {
+    title: 'Accueil'
+  });
 
 };
 

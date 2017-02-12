@@ -400,6 +400,7 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.registerTask('test', ['test-server', 'test-client']);
 
   grunt.registerTask('test-client', ['jshint:src', 'test-client:unit', 'test-client:e2e']);
   grunt.registerTask('test-client:unit', ['karma:unit']);

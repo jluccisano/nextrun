@@ -47,7 +47,8 @@
     "async": "~0.2.9",
     "view-helpers": "~0.1.4",
     "node-phantom-simple": "~1.2.0",
-    "phantomjs": "~1.9.7-1"
+    "phantomjs": "~1.9.7-1",
+    "prerender-node": "~1.0.1"
   },
   "devDependencies": {
     "chai": "~1.9.0",

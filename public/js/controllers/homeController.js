@@ -209,7 +209,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 						});
 
 						setTimeout(function() {
-							sharedMetaService.prepForMetaBroadcast('Accueil', $location.path(), "Toutes les &eacute;preuves d&apos;endurances regroup&eacute;es sur un m&ecirc;me site");
+							sharedMetaService.prepForMetaBroadcast('Accueil', $location.path(), "Toutes les &eacute;preuves d&apos;endurance regroup&eacute;es sur un m&ecirc;me site");
 						}, 1000);
 
 
