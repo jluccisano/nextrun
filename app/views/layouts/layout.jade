@@ -1,5 +1,5 @@
 !!! 5
-html(ng-app="nextrunApp")
+html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#")
 
 	<!-- build:js /js/client/widgets/google-analytics.min.js -->
 	script(src="/js/client/widgets/google-analytics.js", charset="UTF-8")
@@ -203,8 +203,15 @@ html(ng-app="nextrunApp")
 			base(href="/")
 			block meta
 				meta(charset='utf8')
-				meta(name='description', content='')
-				meta(name='keywords', content='')
+				meta(name='description', content="Toutes les épreuves d'endurances regroupées sur un même site")
+				meta(name='keywords', content='manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, épreuve, ironman, longue distance, course à pied, parcours, dénivelé, cross, marathon, duathlon, ski de fond, aquathlon')
+
+				//facebook meta tags
+				meta(property="og:title" content="Nextrun")
+				meta(property="og:type" content="website")
+				meta(property="og:image" content="http://www.nextrun.fr/img/logo.png")
+				meta(property="og:url" content="http://www.nextrun.fr")
+				meta(property="og:description" content="Toutes les épreuves d'endurances regroupées sur un même site")
 			block title
-				title Nextrun		
+				title Nextrun
 	block body

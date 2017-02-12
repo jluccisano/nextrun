@@ -251,6 +251,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 
-  grunt.registerTask('default', ['clean:build', 'jshint:src', 'mochaTest', 'concat', 'uglify', 'cssmin', 'imagemin', 'copy', 'usemin', 'jsdoc', 'clean:tmp']);
+  grunt.registerTask('default', ['clean:build', 'jshint:src', 'concat', 'uglify', 'cssmin', 'imagemin', 'copy', 'usemin', 'jsdoc', 'clean:tmp']);
 
 };
