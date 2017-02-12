@@ -11,11 +11,11 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
 
         <!-- build:css(server/views) client/styles/vendor.min.css -->
         // bower:css
-        link(rel='stylesheet' href='../../client/bower_components/bootstrap/dist/css/bootstrap.css')
-        link(rel='stylesheet' href='../../client/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css')
-        link(rel='stylesheet' href='../../client/bower_components/font-awesome/css/font-awesome.css')
-        link(rel='stylesheet' href='../../client/bower_components/angular-motion/dist/angular-motion.css')
-        link(rel='stylesheet' href='../../client/bower_components/angular-ui-select/dist/select.css')
+        link(rel='stylesheet', href='../../client/bower_components/bootstrap/dist/css/bootstrap.css')
+        link(rel='stylesheet', href='../../client/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css')
+        link(rel='stylesheet', href='../../client/bower_components/font-awesome/css/font-awesome.css')
+        link(rel='stylesheet', href='../../client/bower_components/angular-motion/dist/angular-motion.css')
+        link(rel='stylesheet', href='../../client/bower_components/angular-ui-select/dist/select.css')
         // endbower
         <!-- endbuild -->
 
@@ -101,6 +101,7 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
         script(src="/modules/race/scripts/controllers/searchRaceController.js")
         script(src="/modules/race/scripts/controllers/viewRaceController.js")
         script(src="/modules/race/scripts/filters/distanceTypeFilter.js")
+        script(src="/modules/race/scripts/services/textAngularConfig.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/commons.min.js -->

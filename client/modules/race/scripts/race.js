@@ -1,14 +1,16 @@
 "use strict";
 
-var raceModule = angular.module("nextrunApp.race", 
-  ["ngRoute",
+var raceModule = angular.module("nextrunApp.race", [
+  "ngRoute",
   "google-maps",
   "highcharts-ng",
   "AngularGM",
   "textAngular",
   "gettext",
-  "ui.bootstrap.modal",
-  "ui.bootstrap.tooltip",
+  //"ui.bootstrap",
+  //"mgcrea.ngStrap.tooltip",
+  "mgcrea.ngStrap.collapse",
+  "mgcrea.ngStrap.tab",
   "mgcrea.ngStrap.datepicker",
   "mgcrea.ngStrap.timepicker",
   "nextrunApp.commons",

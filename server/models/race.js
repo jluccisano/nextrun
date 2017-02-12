@@ -7,10 +7,8 @@ var mongoose = require("mongoose"),
 
 var PointSchema = new Schema({
     segmentId: String,
-    latlng: {
-        mb: Number,
-        nb: Number
-    },
+    lat: Number,
+    lng: Number,
     elevation: Number,
     distanceFromStart: Number,
     grade: Number
@@ -28,7 +26,6 @@ var RouteSchema = new Schema({
     minElevation: Number,
     maxElevation: Number,
     distance: Number,
-    points: [PointSchema],
     elevationPoints: [PointSchema],
     segments: [SegmentSchema],
     type: String,
@@ -37,18 +34,21 @@ var RouteSchema = new Schema({
 
 var RaceSchema = new Schema({
     name: String,
-    type: {
-        name: String,
-        i18n: String
-    },
+    type: String,
     date: Date,
+    creationDate: Date,
+    userId: Schema.Types.ObjectId,
+    lastUpdate: Date,
+    publicationDate: Date,
+    organizerWebSite: String,
     edition: Number,
     description: String,
-    distanceType: {
-        name: String,
-        i18n: String
-    },
+    distanceType: String,
     routes: [RouteSchema],
+    published: {
+        type: Boolean,
+        default: false
+    },
     timing: {
         startingTime: {
             type: Date,
@@ -71,15 +71,6 @@ var RaceSchema = new Schema({
             default: null
         }
     },
-    lastUpdate: Date,
-    publicationDate: Date,
-    published: {
-        type: Boolean,
-        default: false
-    },
-    creationDate: Date,
-    userId: Schema.Types.ObjectId,
-    organizerWebSite: String,
     pricing: {
         memberFFPrice: {
             type: Number,

@@ -2,18 +2,18 @@ div.container
 	div.bs-callout.bs-callout-info
 		h4(translate) Informations
 		p(translate) Tous les champs  sont facultatifs. Tous les champs qui ne seront pas renseigné n'apparaitront pas dans la vue finale.
-	tabset(vertical="false" type="navType" class="nrEditTab")
-		tab(heading="{{'Horaires' | translate}}")
+	div(bs-tabs class="nrEditTab")
+		div(bs-pane title="{{'Horaires' | translate}}")
 			include ./editSchedule
-		tab(heading="{{'Tarifs' | translate}}")
+		div(bs-pane title="{{'Tarifs' | translate}}")
 			include ./editPricing
-		tab(heading="{{'Inscription' | translate}}")
+		div(bs-pane title="{{'Inscription' | translate}}")
 			include ./editRegistration
-		tab(heading="{{'Plan' | translate}}")
+		div(bs-pane title="{{'Plan' | translate}}")
 			include ./editPlan
-		tab(heading="{{'Règlements' | translate}}")
+		div(bs-pane title="{{'Règlements' | translate}}")
 			include ./editRights
-		tab(heading="{{'La course' | translate}}")
+		div(bs-pane title="{{'La course' | translate}}")
 			include ./editRace
-		tab(heading="{{'Divers' | translate}}")
+		div(bs-pane title="{{'Divers' | translate}}")
 			include ./editMiscellaneous

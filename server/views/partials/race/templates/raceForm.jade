@@ -1,25 +1,25 @@
 div.row
-	div.col-lg-6.col-lg-offset-2
+	div.col-lg-4.col-lg-offset-4
 		form.form-horizontal(role="form" name="raceForm" novalidate)
 			
-			div.form-group(ng-class="{'has-error': !raceForm.name.$pristine && raceForm.name.$invalid, 'has-success': !raceForm.name.$invalid}")
+			div.form-group(ng-class="{'has-error': !raceForm.name.$pristine && raceForm.name.$invalid, 'has-success': !raceForm.name.$invalid && !raceForm.name.$pristine}")
 				label.control-label {{'Nom' | translate}}
-				input.form-control(name="name" placeholder="ex: Triathlon de Paris" ng-model="race.name" required)
+				input.form-control(type="text" name="name" placeholder="{{'ex: Triathlon de Paris' | translate}}" ng-model="race.name" required)
 			
-			div.form-group(ng-class="{'has-error':!raceForm.datetime.$pristine && raceForm.datetime.$invalid, 'has-success': !raceForm.datetime.$invalid}")
+			div.form-group(ng-class="{'has-error':!raceForm.date.$pristine && raceForm.date.$invalid, 'has-success': !raceForm.date.$invalid && !raceForm.date.$pristine}")
 				label.control-label {{'Date' | translate}}
-				input(type="text" class="form-control" ng-model="race.date" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
+				input.form-control(type="text" name="date" placeholder="{{'Date' | translate}}" ng-model="race.date" bs-datepicker date-format="dd MMMM yyyy")
 
-			div.form-group(ng-class="{'has-error': !raceForm.location.$pristine && raceForm.location.$error.validLocation && raceForm.location.$invalid, 'has-success': !raceForm.location.$error.validLocation && raceForm.location.$valid}")
+			div.form-group(ng-class="{'has-error': !raceForm.location.$pristine && raceForm.location.$error.validLocation && raceForm.location.$invalid, 'has-success': !raceForm.location.$error.validLocation && raceForm.location.$valid  && !raceForm.location.$pristine}")
 				label.control-label {{'Lieu' | translate}}
-				input.form-control(name="location" placeholder="{{'ex: Paris' | translate}}" ng-model="race.pin.name" nr-has-location  gmaps-autocomplete options="options" details="race.pin" required)
+				input.form-control(type="text" name="location" placeholder="{{'ex: Paris' | translate}}" ng-model="race.pin.name" nr-has-location gmaps-autocomplete options="options" details="race.pin" required)
 						
-			div.form-group(ng-class="{'has-error': !raceForm.type.$pristine && raceForm.type.$invalid, 'has-success': !raceForm.type.$invalid}")
+			div.form-group(ng-class="{'has-error': !raceForm.type.$pristine && raceForm.type.$invalid, 'has-success': !raceForm.type.$invalid && !raceForm.type.$pristine}")
 				label.control-label {{'Type' | translate}}
-				select.form-control(ng-model="race.type" name="type" ng-options="type.name as type.i18n for type in types" required)
+				select.form-control(name="type" ng-model="race.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in types" required)
 					option(value="") {{'Sélectionner...' | translate}}
 
-			div.form-group(ng-class="{'has-error': !raceForm.distanceType.$pristine && raceForm.distanceType.$invalid, 'has-success': !raceForm.distanceType.$invalid}")
+			div.form-group(ng-class="{'has-error': !raceForm.distanceType.$pristine && raceForm.distanceType.$invalid, 'has-success': !raceForm.distanceType.$invalid && !raceForm.distanceType.$pristine}")
 				label.control-label {{'Distance' | translate}}
-				select.form-control(ng-model="race.distanceType" name="type" ng-options="distance.name as distance.i18n for distance in types | distanceTypeFilter:race.type" required)
+				select.form-control(name="distanceType" ng-model="race.distanceType" ng-options="distance.name as distance.label for distance in types | distanceTypeFilter:race.type" required)
 					option(value="") {{'Sélectionner...' | translate}}

@@ -6,13 +6,13 @@ msgstr ""
 #: .tmp/generated/views/partials/home/home.html
 msgid ""
 "- Analyser le détail du parcours:\n"
-"              distance, <strong style=\"color:#428bca\">dénivelé</strong>, difficultés."
+"              distance, <strong>dénivelé</strong>, difficultés."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/templates/marketing.html
 msgid ""
 "- Analyser le détail du parcours:\n"
-"      distance, <strong style=\"color:#428bca\">dénivelé</strong>, difficultés."
+"      distance, <strong>dénivelé</strong>, difficultés."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
@@ -22,7 +22,7 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/marketing.html
-msgid "- Difficultés à obtenir les <strong style=\"color:#428bca\">résultats</strong>."
+msgid "- Difficultés à obtenir les <strong>résultats</strong>."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
@@ -44,13 +44,13 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 msgid ""
-"- Exporter le fichier <strong style=\"color:#428bca\">GPX</strong> et aller faire\n"
+"- Exporter le fichier <strong>GPX</strong> et aller faire\n"
 "              une reconnaissance du parcours."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/templates/marketing.html
 msgid ""
-"- Exporter le fichier <strong style=\"color:#428bca\">GPX</strong> et aller faire\n"
+"- Exporter le fichier <strong>GPX</strong> et aller faire\n"
 "      une reconnaissance du parcours."
 msgstr ""
 
@@ -76,19 +76,19 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/marketing.html
-msgid "- Publier les <strong style=\"color:#428bca\">résultats</strong>."
+msgid "- Publier les <strong>résultats</strong>."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 msgid ""
-"- Rarement le <strong style=\"color:#428bca\">détail du parcours</strong> et \n"
-"              son <strong style=\"color:#428bca\">dénivelé</strong>."
+"- Rarement le <strong>détail du parcours</strong> et \n"
+"              son <strong>dénivelé</strong>."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/templates/marketing.html
 msgid ""
-"- Rarement le <strong style=\"color:#428bca\">détail du parcours</strong> et \n"
-"      son <strong style=\"color:#428bca\">dénivelé</strong>."
+"- Rarement le <strong>détail du parcours</strong> et \n"
+"      son <strong>dénivelé</strong>."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
@@ -105,7 +105,7 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/marketing.html
-msgid "- Tracer vos parcours avec <strong style=\"color:#428bca\">Google Maps</strong> ou importer un fichier .gpx."
+msgid "- Tracer vos parcours avec <strong>Google Maps</strong> ou importer un fichier .gpx."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html

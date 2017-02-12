@@ -18,6 +18,58 @@ var routeBuilder = {};
 			this.data.distance = 0;
 		}
 
+		this.getLastPointOfLastSegment = function() {
+
+			var lastPointOfLastSegment;
+			var segmentIndex = 0;
+			var pointIndex = 0;
+			var segments = this.segments;
+
+			if (segments.length > 0) {
+				segmentIndex = segments.length - 1;
+			}
+
+			var lastSegment = segments[segmentIndex];
+
+			if (lastSegment) {
+				var pointsOfLastSegment = lastSegment.getPoints();
+
+				if (pointsOfLastSegment.length > 0) {
+					pointIndex = pointsOfLastSegment.length - 1;
+				}
+
+				lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
+			}
+
+			return lastPointOfLastSegment;
+		};
+
+		this.getLastPointOfLastSegmentDataModel = function() {
+
+			var lastPointOfLastSegment;
+			var segmentIndex = 0;
+			var pointIndex = 0;
+			var segments = this.data.segments;
+
+			if (segments.length > 0) {
+				segmentIndex = segments.length - 1;
+			}
+
+			var lastSegment = segments[segmentIndex];
+
+			if (lastSegment) {
+				var pointsOfLastSegment = lastSegment.points;
+
+				if (pointsOfLastSegment.length > 0) {
+					pointIndex = pointsOfLastSegment.length - 1;
+				}
+
+				lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
+			}
+
+			return lastPointOfLastSegment;
+		};
+
 		this._calculateElevationDataAlongRoute = function() {
 
 			this.data.ascendant = 0;
@@ -35,17 +87,17 @@ var routeBuilder = {};
 					var diffElevation = (parseFloat(this.data.elevationPoints[k].elevation) - parseFloat(this.data.elevationPoints[k - 1].elevation));
 
 					if (diffElevation > 0) {
-						this.setAscendant(this.getAscendant() + diffElevation);
+						this.data.ascendant = this.data.ascendant + diffElevation;
 					} else {
-						this.setDescendant(this.getDescendant() + diffElevation);
+						this.data.descendant = this.data.descendant + diffElevation;
 					}
 
-					if (this.data.elevationPoints[k - 1].elevation > this.getMaxElevation()) {
-						this.setMaxElevation(this.data.elevationPoints[k - 1].elevation);
+					if (this.data.elevationPoints[k - 1].elevation > this.data.maxElevation) {
+						this.data.maxElevation = this.data.elevationPoints[k - 1].elevation;
 					}
 
-					if (this.data.elevationPoints[k - 1].elevation < this.getMinElevation()) {
-						this.setMinElevation(this.data.elevationPoints[k - 1].elevation);
+					if (this.data.elevationPoints[k - 1].elevation < this.data.minElevation) {
+						this.data.minElevation = this.data.elevationPoints[k - 1].elevation;
 					}
 				}
 			}
@@ -54,8 +106,11 @@ var routeBuilder = {};
 		this._createSegmentsViewModel = function(segmentsDataModel) {
 			var segmentsViewModel = [];
 
+			var _this = this;
+
+
 			_.each(segmentsDataModel, function(segmentDataModel) {
-				segmentsViewModel.push(new routeBuilder.Segment(segmentDataModel));
+				segmentsViewModel.push(new routeBuilder.Segment(segmentDataModel, _this.getLastPointOfLastSegmentDataModel()));
 			});
 
 			return segmentsViewModel;
@@ -72,33 +127,33 @@ var routeBuilder = {};
 			return elevationPointsViewModel;
 		};
 
-		this._createPolylinesDataModel = function(segmentsDataModel) {
+		this._createPolylinesDataModel = function(segmentsViewModel) {
 			var polylinesDataModel = [];
 			var pathArray = [];
 
-			_.each(segmentsDataModel, function(segment, index) {
+			_.each(segmentsViewModel, function(segment, index) {
 
 				var lastPointOfLastSegment;
 
 				if (index > 0) {
 
-					var previousSegment = segmentsDataModel[index - 1];
+					var previousSegment = segmentsViewModel[index - 1];
 
 					if (typeof previousSegment.points[previousSegment.points.length - 1] !== "undefined") {
 						lastPointOfLastSegment = previousSegment.points[previousSegment.points.length - 1];
 					}
 
 					pathArray.push({
-						latitude: lastPointOfLastSegment.latlng.getLatitude(),
-						longitude: lastPointOfLastSegment.latlng.getLongitude()
+						latitude: lastPointOfLastSegment.getLatitude(),
+						longitude: lastPointOfLastSegment.getLongitude()
 					});
 
 				}
 
 				_.each(segment.points, function(point) {
 					pathArray.push({
-						latitude: point.latlng.getLatitude(),
-						longitude: point.latlng.getLongitude()
+						latitude: point.getLatitude(),
+						longitude: point.getLongitude()
 					});
 				});
 			});
@@ -120,10 +175,10 @@ var routeBuilder = {};
 			return polylinesDataModel;
 		};
 
-		this._createMarkersDataModel = function(segmentsDataModel, showSegment) {
+		this._createMarkersDataModel = function(segmentsViewModel, showSegment) {
 			var markersDataModel = [];
 
-			_.each(segmentsDataModel, function(segment, index) {
+			_.each(segmentsViewModel, function(segment, index) {
 
 				var lastPointOfSegment;
 				var icon;
@@ -135,7 +190,7 @@ var routeBuilder = {};
 
 				if (index === 0) {
 					icon = "client/modules/route/images/start.png";
-				} else if (index === (segmentsDataModel.length - 1)) {
+				} else if (index === (segmentsViewModel.length - 1)) {
 					icon = "client/modules/route/images/end.png";
 				} else if (showSegment) {
 					icon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
@@ -148,8 +203,8 @@ var routeBuilder = {};
 
 				if (icon) {
 					marker = {
-						latitude: lastPointOfSegment.latlng.getLatitude(),
-						longitude: lastPointOfSegment.latlng.getLongitude(),
+						latitude: lastPointOfSegment.getLatitude(),
+						longitude: lastPointOfSegment.getLongitude(),
 						icon: icon,
 						title: "hello"
 					};
@@ -176,7 +231,8 @@ var routeBuilder = {};
 					color: "blue",
 					fillColor: "blue",
 					segmentId: elevationPoint.segmentId,
-					latlng: elevationPoint.latlng
+					lat: elevationPoint.lat,
+					lng: elevationPoint.lng
 
 				};
 				elevationsDataModel.push(data);
@@ -185,31 +241,32 @@ var routeBuilder = {};
 			return elevationsDataModel;
 		};
 
-		this._addClimbToSerie = function(elevationPointsDataModel, index, serie) {
+		this._addClimbToSerie = function(previousElevationPoint, nextElevationPoint, serie) {
 
-			var previousElevationPoint;
 			var previousData;
 
 			//get previous point
-			if (index > 0) {
-				previousElevationPoint = elevationPointsDataModel[index - 1];
+			if (previousElevationPoint) {
 				previousData = {
 					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
-					y: previousElevationPoint.elevation,
+					y: Math.floor(previousElevationPoint.elevation),
 					grade: previousElevationPoint.grade,
 					segmentId: previousElevationPoint.segmentId,
-					latlng: previousElevationPoint.latlng
+					lat: previousElevationPoint.lat,
+					lng: previousElevationPoint.lng
+
 
 				};
 				serie.push(previousData);
 			}
 
 			serie.push({
-				x: parseFloat(elevationPointsDataModel[index].distanceFromStart.toFixed(2)),
-				y: elevationPointsDataModel[index].elevation,
-				grade: elevationPointsDataModel[index].grade,
-				segmentId: elevationPointsDataModel[index].segmentId,
-				latlng: elevationPointsDataModel[index].latlng
+				x: parseFloat(nextElevationPoint.distanceFromStart.toFixed(2)),
+				y: Math.floor(nextElevationPoint.elevation),
+				grade: nextElevationPoint.grade,
+				segmentId: nextElevationPoint.segmentId,
+				lat: nextElevationPoint.lat,
+				lng: nextElevationPoint.lng
 
 			});
 		};
@@ -223,32 +280,39 @@ var routeBuilder = {};
 				climbsSup15: []
 			};
 
-			_.each(elevationPointsDataModel, function(elevationPoint, index) {
+			for (var k = 0; k < elevationPointsDataModel.length; k++) {
 
-				if (elevationPointsDataModel[index].grade > 5 && elevationPointsDataModel[index].grade <= 7) {
+				var previousElevationPoint;
 
-					this._addClimbToSerie(elevationPointsDataModel, index, climbsDataModel.climbsInf7);
+				if (k > 0) {
+					previousElevationPoint = elevationPointsDataModel[k - 1];
+				}
 
-				} else if (elevationPointsDataModel[index].grade > 7 && elevationPointsDataModel[index].grade <= 10) {
+				if (elevationPointsDataModel[k].grade > 5 && elevationPointsDataModel[k].grade <= 7) {
 
-					this._addClimbToSerie(elevationPointsDataModel, index, climbsDataModel.climbsInf10);
+					this._addClimbToSerie(previousElevationPoint, elevationPointsDataModel[k], climbsDataModel.climbsInf7);
 
-				} else if (elevationPointsDataModel[index].grade > 10 && elevationPointsDataModel[index].grade <= 15) {
+				} else if (elevationPointsDataModel[k].grade > 7 && elevationPointsDataModel[k].grade <= 10) {
 
-					this._addClimbToSerie(elevationPointsDataModel, index, climbsDataModel.climbsInf15);
+					this._addClimbToSerie(previousElevationPoint, elevationPointsDataModel[k], climbsDataModel.climbsInf10);
 
-				} else if (elevationPointsDataModel[index].grade > 15) {
+				} else if (elevationPointsDataModel[k].grade > 10 && elevationPointsDataModel[k].grade <= 15) {
 
-					this._addClimbToSerie(elevationPointsDataModel, index, climbsDataModel.climbsSup15);
+					this._addClimbToSerie(previousElevationPoint, elevationPointsDataModel[k], climbsDataModel.climbsInf15);
+
+				} else if (elevationPointsDataModel[k].grade > 15) {
+
+					this._addClimbToSerie(previousElevationPoint, elevationPointsDataModel[k], climbsDataModel.climbsSup15);
 
 				} else {
 
 					var point0 = {
-						x: parseFloat(elevationPointsDataModel[index].distanceFromStart.toFixed(2)),
+						x: parseFloat(elevationPointsDataModel[k].distanceFromStart.toFixed(2)),
 						y: null,
-						grade: elevationPointsDataModel[index].grade,
-						segmentId: elevationPointsDataModel[index].segmentId,
-						latlng: elevationPointsDataModel[index].latlng
+						grade: elevationPointsDataModel[k].grade,
+						segmentId: elevationPointsDataModel[k].segmentId,
+						lat: elevationPointsDataModel[k].lat,
+						lng: elevationPointsDataModel[k].lng
 
 					};
 					climbsDataModel.climbsInf7.push(point0);
@@ -257,10 +321,9 @@ var routeBuilder = {};
 					climbsDataModel.climbsSup15.push(point0);
 				}
 
-			});
+			}
 
 			return climbsDataModel;
-
 		};
 
 		this.getLastElevationPoint = function() {
@@ -270,28 +333,28 @@ var routeBuilder = {};
 		this.addElevationPoints = function(samplingPoints, result) {
 			for (var k = 0; k < result.length; k++) {
 
-				samplingPoints[k].data.elevation = result[k].elevation;
+				samplingPoints[k].elevation = result[k].elevation;
 
 				var lastPoint = this.getLastElevationPoint();
 
 				if (lastPoint) {
-					var diffElevation = (parseFloat(samplingPoints[k].getElevation()) - parseFloat(lastPoint.getElevation()));
-					var distanceWithLastPoint = samplingPoints[k].getDistanceFromStart() - lastPoint.getDistanceFromStart();
+					var diffElevation = (parseFloat(samplingPoints[k].elevation) - parseFloat(lastPoint.elevation));
+					var distanceWithLastPoint = samplingPoints[k].distanceFromStart - lastPoint.distanceFromStart;
 					var grade = 0;
 					if (distanceWithLastPoint !== 0 && diffElevation !== 0) {
-						grade = ((diffElevation / (distanceWithLastPoint * 1000)) * 100).toFixed(1);
+						grade = Math.floor((diffElevation / (distanceWithLastPoint * 1000)) * 100);
 					}
-					samplingPoints[k].data.grade = grade;
+					samplingPoints[k].grade = grade;
 				}
 
-				this.data.elevationPoints.push(samplingPoints[k].data);
+				this.data.elevationPoints.push(samplingPoints[k]);
 
-				this.elevationPoints.push(samplingPoints[k]);
-
-				this._calculateElevationDataAlongRoute();
-
-				this._addPointsToElevationChart(samplingPoints[k]);
+				//this.elevationPoints.push(samplingPoints[k]);
 			}
+
+			this._calculateElevationDataAlongRoute();
+
+			this._addPointsToElevationChart(samplingPoints);
 		};
 
 		this._addPointsToElevationChart = function(elevationPointsDataModel) {
@@ -312,12 +375,14 @@ var routeBuilder = {};
 
 				var data = {
 					x: parseFloat(sortedElevationPoints[k].distanceFromStart.toFixed(2)),
-					y: sortedElevationPoints[k].elevation,
+					y: Math.floor(sortedElevationPoints[k].elevation),
 					grade: sortedElevationPoints[k].grade,
 					color: "blue",
 					fillColor: "blue",
 					segmentId: sortedElevationPoints[k].segmentId,
-					latlng: sortedElevationPoints[k].latlng
+					lat: sortedElevationPoints[k].lat,
+					lng: sortedElevationPoints[k].lng,
+
 				};
 
 				datas.push(data);
@@ -325,7 +390,7 @@ var routeBuilder = {};
 
 			climbs = this._createClimbsDataModel(elevationPointsDataModel);
 
-			this._chartConfig.series[0].data = datas;
+			this._chartConfig.series[0].data = this._chartConfig.series[0].data.concat(datas);
 			this._chartConfig.series[1].data = this._chartConfig.series[1].data.concat(climbs.climbsInf7);
 			this._chartConfig.series[2].data = this._chartConfig.series[2].data.concat(climbs.climbsInf10);
 			this._chartConfig.series[3].data = this._chartConfig.series[3].data.concat(climbs.climbsInf15);
@@ -345,7 +410,7 @@ var routeBuilder = {};
 
 			this.data.segments.push(segmentDataModel);
 
-			var newSegment = new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegment());
+			var newSegment = new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegmentDataModel());
 
 			this.segments.push(newSegment);
 
@@ -355,7 +420,7 @@ var routeBuilder = {};
 		};
 
 		this._updateDistance = function() {
-			this.setDistance(this.getLastPointOfLastSegment().getDistanceFromStart());
+			this.setDistance(this.getLastPointOfLastSegmentDataModel().distanceFromStart);
 		};
 
 		this.createSimpleSegment = function(startLatlng, destinationLatlng) {
@@ -384,7 +449,8 @@ var routeBuilder = {};
 
 			var segmentPoints = [];
 			segmentPoints.push({
-				latlng: destinationLatlng,
+				lat: destinationLatlng.lat(),
+				lng: destinationLatlng.lng(),
 				elevation: 0,
 				distanceFromStart: 0,
 				grade: 0,
@@ -401,34 +467,10 @@ var routeBuilder = {};
 
 			this.data.segments.push(segmentDataModel);
 
-			this.segments.push(new routeBuilder.Segment(segmentDataModel));
+			this.segments.push(new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegmentDataModel()));
 		};
 
-		this.getLastPointOfLastSegment = function() {
-
-			var lastPointOfLastSegment;
-			var segmentIndex = 0;
-			var pointIndex = 0;
-			var segments = this.getSegments();
-
-			if (segments.length > 0) {
-				segmentIndex = segments.length - 1;
-			}
-
-			var lastSegment = segments[segmentIndex];
-
-			if (lastSegment) {
-				var pointsOfLastSegment = lastSegment.getPoints();
-
-				if (pointsOfLastSegment.length > 0) {
-					pointIndex = pointsOfLastSegment.length - 1;
-				}
-
-				lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
-			}
-
-			return lastPointOfLastSegment;
-		};
+		
 
 		this._createMarker = function(latLng, icon, title) {
 
@@ -479,16 +521,19 @@ var routeBuilder = {};
 
 				} else {
 
-					//replace last marker by segment point
-					var segmentIcon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
-						new google.maps.Size(32, 32),
-						new google.maps.Point(0, 0),
-						new google.maps.Point(8, 8),
-						new google.maps.Size(16, 16)
-					);
+					if (this.segments.length > 2) {
+						//replace last marker by segment point
+						var segmentIcon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
+							new google.maps.Size(32, 32),
+							new google.maps.Point(0, 0),
+							new google.maps.Point(8, 8),
+							new google.maps.Size(16, 16)
+						);
 
-					var lastMarker = this._getLastMarker(this.markers);
-					lastMarker.icon = segmentIcon;
+						var lastMarker = this._getLastMarker(this.markers);
+						lastMarker.icon = segmentIcon;
+
+					}
 
 					//create the new last marker
 					marker = this._createMarker(lastLatLng, "client/modules/route/images/end.png", "end point");
@@ -499,8 +544,6 @@ var routeBuilder = {};
 			} catch (ex) {
 				console.log("an error occured during add marker to route", ex.message);
 			}
-
-
 		};
 
 		this._getLastMarker = function() {
@@ -602,7 +645,6 @@ var routeBuilder = {};
 			} else {
 				throw new Error("polyline must contain at least two point");
 			}
-
 		};
 
 
@@ -620,8 +662,8 @@ var routeBuilder = {};
 		this.segments = this._createSegmentsViewModel(this.data.segments);
 		this.elevationPoints = this._createElevationPointsViewModel(this.data.elevationPoints);
 
-		this._markers = this._createMarkersDataModel(this.data.segments);
-		this._polylines = this._createPolylinesDataModel(this.data.segments);
+		this._markers = this._createMarkersDataModel(this.segments);
+		this._polylines = this._createPolylinesDataModel(this.segments);
 
 		this.data.elevationPoints = _.sortBy(this.data.elevationPoints, function(elevationPoint) {
 			return parseFloat(elevationPoint.distanceFromStart.toFixed(2));
@@ -707,11 +749,7 @@ var routeBuilder = {};
 		};
 
 		this.getType = function() {
-			return this._type;
-		};
-
-		this.setType = function(type) {
-			this._type = type;
+			return this.data.type;
 		};
 
 		this.getPolylines = function() {
@@ -802,12 +840,12 @@ var routeBuilder = {};
 
 			if (lastPointOfLastSegment) {
 
-				cumulatedDistance = this.getLastPointOfLastSegment().getDistanceFromStart();
+				cumulatedDistance = this.getLastPointOfLastSegment().distanceFromStart;
 
 				for (var k = 0, lk = pointsDataModel.length; k < lk; k++) {
 
 					if (k === 0) {
-						distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(lastPointOfLastSegment.data, pointsDataModel[k]));
+						distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(lastPointOfLastSegment, pointsDataModel[k]));
 					} else {
 						distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(pointsDataModel[k - 1], pointsDataModel[k]));
 					}
@@ -838,18 +876,18 @@ var routeBuilder = {};
 			var cursor = lastPoint;
 
 			if (lastPoint) {
-				for (var k = 0, lk = this.points.length; k < lk; k++) {
+				for (var k = 0, lk = this.data.points.length; k < lk; k++) {
 
-					distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(cursor.data, this.points[k].data));
+					distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(cursor, this.points[k]));
 
 					if (k === (this.points.length - 1) || distanceBetween2Points >= samples) {
-						samplingPointsViewModel.push(this.points[k]);
-						cursor = this.points[k];
+						samplingPointsViewModel.push(this.data.points[k]);
+						cursor = this.data.points[k];
 					}
 				}
 			} else {
-				if (this.points.length === 1) {
-					samplingPointsViewModel.push(this.points[0]);
+				if (this.data.points.length === 1) {
+					samplingPointsViewModel.push(this.data.points[0]);
 				}
 			}
 			return samplingPointsViewModel;

@@ -312,7 +312,7 @@ describe("UserController", function() {
 				cb(null);
 			});
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -460,7 +460,7 @@ describe("UserController", function() {
 				cb(null, null);
 			});
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -581,7 +581,7 @@ describe("UserController", function() {
 				cb(null);
 			});
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -641,7 +641,7 @@ describe("UserController", function() {
 			};
 
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};

@@ -8,7 +8,7 @@ div(ng-if="route.isVisible()")
 
 		nr-polyline(polylines="route.getPolylines()")
 
-	div(ng-show="route.isEditMode()" class="mapPanel")
+	div.mapControl(ng-show="route.isEditMode()")
 		div.well
 			form
 				div(class="radio")

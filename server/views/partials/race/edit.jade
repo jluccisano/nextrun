@@ -4,40 +4,69 @@ div.container
 		div.col-lg-offset-8.col-lg-4(ng-show="loading")
 			span(class="fa fa-spinner fa-spin")
 			span  {{'Chargement...' | translate}}
-		div.col-lg-12
-			include ./templates/raceForm
+
+		div.panel-group(bs-collapse ng-model="activePanel")
+			div.panel.panel-default
+				div.panel-heading
+					h4.panel-title
+						a(bs-collapse-toggle="0") {{'Général' | translate}}
+				div.panel-collapse(bs-collapse-target)
+					div.panel-body
+						include ./templates/raceForm
 						
-			div.row
-				hr
-				div.bs-callout.bs-callout-info
-					h4 {{'Informations' | translate}}
-					p {{'Ajouter la description de votre manifestation' | translate}}
-				div.form-group
-					label.col-lg-4.control-label(translate) Description
-					div.col-lg-12(text-angular ng-model="race.description")
-			hr
-			div.row
-				div.col-lg-12
-					tabset(vertical="false" type="navType")
-						tab(ng-repeat="route in race.routes" heading="{{route.data.type.i18n}}" ng-click="route.setVisible(true)")
-							div.bs-callout.bs-callout-info
-								h4 {{'Informations' | translate}}
-								p  {{'Ajouter des informations concernant le parcours' | translate}}
-							input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
-							div.row
-								div.col-lg-4(ng-show="pending")
-									span(class="fa fa-spinner fa-spin")
-									span  {{'Chargement en cours' | translate}}
-							hr
-							include map
-			h2 {{'Organisation' | translate}}
-			hr
-			include templates/editOrganisation
-			hr
-			div.row
-				div.col-lg-offset-4.col-lg-8
-					button.btn.btn-primary(ng-click="submit(race)" ng-disabled="form1.$invalid") {{'Sauvegarder' | translate}}
-					button.btn.btn-default(ng-click="cancel()") {{'Annuler' | translate}}
-					div(ng-show="saving")
-						span(class="fa fa-spinner fa-spin")
-						span  {{'Sauvegarde en cours' | translate}}
+			div.panel.panel-default
+				div.panel-heading
+					h4.panel-title
+						a(bs-collapse-toggle="1") {{'Parcours' | translate}}
+				div.panel-collapse(bs-collapse-target)
+					div.panel-body
+		
+						div.bs-callout.bs-callout-info
+							h4 {{'Informations' | translate}}
+							p {{'Ajouter la description de votre manifestation' | translate}}
+						
+						
+						div.row
+							div.col-lg-2 
+								h4 {{'Description' | translate}}
+							div.col-lg-2.col-lg-offset-10
+								i.fa.fa-pencil.fa-2
+						div.well(ng-bind-html="race.description")
+						
+						
+						//div(text-angular ng-model="race.description")
+
+						//div.form-group
+						//	label.col-lg-4.control-label(translate) Description
+						//	div.col-lg-12(text-angular ng-model="race.description")
+						
+						hr
+
+						div(bs-tabs)
+							div(bs-pane ng-repeat="route in routesViewModel" title="{{route.getType()}}" ng-click="route.setVisible(true)")
+								div.bs-callout.bs-callout-info
+									h4 {{'Informations' | translate}}
+									p  {{'Ajouter des informations concernant le parcours' | translate}}
+								input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
+								div.row
+									div.col-lg-4(ng-show="pending")
+										span(class="fa fa-spinner fa-spin")
+										span  {{'Chargement en cours' | translate}}
+								hr
+								include map
+		
+			div.panel.panel-default
+				div.panel-heading
+					h4.panel-title
+						a(bs-collapse-toggle="2") {{'Organisation' | translate}}
+				div.panel-collapse(bs-collapse-target)
+					div.panel-body
+						include templates/editOrganisation
+		
+		div.row
+			div.col-lg-offset-4.col-lg-8
+				button.btn.btn-primary(ng-click="submit(race)" ng-disabled="form1.$invalid") {{'Sauvegarder' | translate}}
+				button.btn.btn-default(ng-click="cancel()") {{'Annuler' | translate}}
+				div(ng-show="saving")
+					span(class="fa fa-spinner fa-spin")
+					span  {{'Sauvegarde en cours' | translate}}

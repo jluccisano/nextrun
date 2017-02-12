@@ -642,7 +642,7 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -770,7 +770,7 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 
@@ -958,7 +958,7 @@ describe("RaceController", function() {
 				cb(null);
 			});
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 

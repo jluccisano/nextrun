@@ -75,7 +75,6 @@ exports.create = function(req, res) {
                         raceId: race._id
                     });
                 }
-
             });
         } else {
             return res.status(400).json({
@@ -198,7 +197,7 @@ exports.update = function(req, res) {
                         upsert: true
                     }, function(err) {
                         if (!err) {
-                            return res.status(200);
+                            return res.sendStatus(200);
                         } else {
                             logger.error(err);
                             return res.status(400).json({
@@ -246,7 +245,7 @@ exports.delete = function(req, res) {
             if (req.race.userId.equals(userConnected._id)) {
                 Race.destroy(race._id, function(err) {
                     if (!err) {
-                        return res.status(200);
+                        return res.sendStatus(200);
                     } else {
                         logger.error(err);
                         return res.status(400).json({
@@ -342,7 +341,7 @@ exports.publish = function(req, res) {
                     upsert: true
                 }, function(err) {
                     if (!err) {
-                        return res.status(200);
+                        return res.sendStatus(200);
                     } else {
                         logger.error(err);
                         return res.status(400).json({

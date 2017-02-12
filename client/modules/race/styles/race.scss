@@ -1,4 +1,4 @@
-
+@import 'text-angular.scss';
 
 
 
@@ -12,10 +12,12 @@
 	}
 }
 
-
-
-
-
+.mapControl {
+	z-index: 0; 
+	position: absolute; 
+	top: 680px; 
+	right: 170px;
+}
 
 
 .rowBasic {
@@ -44,13 +46,7 @@
 	height:30%;
 }
 
-.mapPanel {
-	padding: 5px; 
-	z-index: 0; 
-	position: absolute; 
-	top: 350px; 
-	right: 20px;
-}
+
 
 span.glyphicon.glyphicon-remove {
 	cursor:pointer;

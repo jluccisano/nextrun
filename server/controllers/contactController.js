@@ -19,7 +19,7 @@ exports.create = function(req, res) {
         contact.save(function(err) {
             if (!err) {
                 email.sendEmailNewContact(contact);
-                return res.status(200);
+                return res.sendStatus(200);
             } else {
                 logger.error(err);
                 return res.status(400).json({
@@ -46,7 +46,7 @@ exports.feedback = function(req, res) {
 
         feedback = req.body.feedback;
         email.sendEmailNewFeedback(feedback);
-        return res.status(200);
+        return res.sendStatus(200);
     } else {
         logger.error("error.occured");
         return res.status(400).json({

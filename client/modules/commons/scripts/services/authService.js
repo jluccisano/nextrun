@@ -32,7 +32,11 @@ angular.module("nextrunApp.commons").factory("AuthService",
                 return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
             },
             register: function(user) {
-                return RestAPIHelper.sendPOST("/api/users/signup", user);
+                var promise = RestAPIHelper.sendPOST("/api/users/signup", user);
+                promise.then(function(user) {
+                    changeUser(user);
+                });
+                return promise;
             },
             login: function(user) {
                 var promise = RestAPIHelper.sendPOST("/api/users/session", user);

@@ -37,13 +37,15 @@ angular.module("nextrunApp.route").factory("RouteService",
 			var samplesLatlng = [];
 
 			_.each(points, function(point) {
-				samplesLatlng.push(GmapsApiService.LatLng(point.getLatitude(), point.getLongitude()));
+				samplesLatlng.push(GmapsApiService.LatLng(point.lat, point.lng));
 			});
 
 			return samplesLatlng;
 		};
 
 		return {
+			
+			
 			createNewSegment: function(route, destinationLatlng) {
 
 				var lastLatlngOfLastSegment;

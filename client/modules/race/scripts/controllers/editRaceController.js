@@ -18,6 +18,10 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		GpxService,
 		gettextCatalog) {
 
+		$scope.activePanel = 1;
+
+		$scope.gettextCatalog = gettextCatalog;
+
 		/** init google maps service **/
 		google.maps.visualRefresh = true;
 
@@ -26,9 +30,10 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.loading = false;
 		$scope.pending = false;
 
-
 		$scope.types = RaceTypeEnum.getValues();
-		$scope.distances = [];
+
+		$scope.routesViewModel = [];
+
 		$scope.cursorMarker = {};
 		$scope.currentRaceType = {};
 
@@ -47,57 +52,54 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 				$scope.race = response.race;
 
-				var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type.name);
+				if ($scope.race) {
 
-				_.each(raceType.routes, function(routeType, index) {
+					var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type);
 
-					var currentRoute = null;
+					_.each(raceType.routes, function(routeType, index) {
 
-					if (!_.isUndefined($scope.race.routes[index])) {
-						currentRoute = $scope.race.routes[index];
-					}
+						var currentRoute;
 
-					if(!currentRoute) {
-						currentRoute = {
-							segments: [],
-							markers: [],
-							polylines: []
-						};
-					}
-					var center = RouteUtilsService.setCenter($scope, currentRoute);
-					
-					var route = new routeBuilder.Route(currentRoute, 
-						RouteHelperService.getChartConfig($scope), 
-						RouteHelperService.getGmapsConfig(), center);
+						if (!_.isUndefined($scope.race.routes[index])) {
+							currentRoute = $scope.race.routes[index];
+						} else {
+							currentRoute = {
+								type: routeType,
+								segments: [],
+								elevationPoints: []
+							};
+						}
 
-					route.addClickListener($scope.onClickMap);
+						var center = RouteUtilsService.setCenter($scope, currentRoute);
 
-					$scope.race.routes[index] = route;
-				});
+						var route = new routeBuilder.Route(currentRoute,
+							RouteHelperService.getChartConfig($scope),
+							RouteHelperService.getGmapsConfig(), center);
 
-				$scope.race.routes[0].setVisible(true);
-				$scope.race.type = raceType;
-				$scope.currentRaceType = raceType;
-				$scope.distances = $scope.race.type.distances;
+						route.addClickListener($scope.onClickMap);
 
-				_.each($scope.race.type.distances, function(distanceType) {
-					if ($scope.race.distanceType.name === distanceType.name) {
-						$scope.race.distanceType = distanceType;
-					}
-				});
+						//$scope.race.routes[index] = route;
+						$scope.routesViewModel.push(route);
 
-				$scope.loading = false;
+					});
 
+					//$scope.race.routes[0].setVisible(true);
+					$scope.routesViewModel[0].setVisible(true);
 
-			}).then(function() {
-				$scope.loading = false;
+				}
+
 			}).finally(function() {
+				$scope.loading = false;
 				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
 			});
 		};
 
 		$scope.onClickMap = function(route, destinationLatlng) {
 			RouteService.createNewSegment(route, destinationLatlng);
+		};
+
+		$scope.getTypeLabelName = function(type) {
+			return gettextCatalog.getString(type.name);
 		};
 
 		$scope.delete = function(route) {
@@ -117,6 +119,12 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		};
 
 		$scope.submit = function() {
+
+			$scope.race.routes = [];
+
+			_.each($scope.routesViewModel, function(route) {
+				$scope.race.routes.push(route.data);
+			})
 
 			var data = {
 				race: $scope.race

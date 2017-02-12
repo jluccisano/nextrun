@@ -141,7 +141,7 @@ exports.forgotPassword = function(req, res) {
 
                     if (!err) {
                         email.sendEmailPasswordReinitialized(user.email, newPassword);
-                        return res.status(200);
+                        return res.sendStatus(200);
                     } else {
                         logger.error(err);
                         return res.status(400).json({
@@ -216,7 +216,7 @@ exports.checkIfEmailAlreadyExists = function(req, res) {
                 });
             }
             if (!user) {
-                return res.status(200);
+                return res.sendStatus(200);
             }
             logger.error("error.emailAlreadyExists");
             return res.status(400).json({
@@ -295,7 +295,7 @@ exports.updatePassword = function(req, res) {
                     upsert: true
                 }, function(err) {
                     if (!err) {
-                        return res.status(200);
+                        return res.sendStatus(200);
 
                     } else {
                         logger.error("error.occured");
@@ -333,7 +333,7 @@ exports.deleteAccount = function(req, res) {
     User.destroy(req.user._id, function(err) {
         if (!err) {
             req.logout();
-            return res.status(200);
+            return res.sendStatus(200);
         } else {
             logger.error(err);
             return res.status(400).json({

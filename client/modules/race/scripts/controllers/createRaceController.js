@@ -12,6 +12,8 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		MetaService,
 		gettextCatalog) {
 
+		$scope.gettextCatalog = gettextCatalog;
+
 		$scope.race = {};
 		$scope.user = {};
 
