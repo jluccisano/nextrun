@@ -14,9 +14,14 @@ var raceModule = angular.module("nextrunApp.race", [
   "ui.bootstrap.tabs",
   "mgcrea.ngStrap.datepicker",
   "mgcrea.ngStrap.timepicker",
+  "xeditable",
   "nextrunApp.commons",
   "nextrunApp.route"
 ]);
+
+raceModule.run(function(editableOptions) {
+  editableOptions.theme = "bs3";
+});
 
 raceModule.config(
   function(

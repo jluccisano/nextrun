@@ -45,8 +45,6 @@ exports.geocodeAddress = function(req, res, next) {
                         } catch (ex) {
                             logger.error("raceController updateLatLng failed: " + ex);
                         }
-
-
                     }
                 } else {
                     logger.error(err);

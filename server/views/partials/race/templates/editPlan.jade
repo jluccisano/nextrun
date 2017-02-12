@@ -1,22 +1,48 @@
 div(class="row")
 	div(class="col-sm-6")
-		form(class="form-horizontal" role="form")
-			div(class="form-group")
-				label(class="col-sm-2 control-label" translate) Adresse
-				div(class="col-sm-10")
-					input(type="text" class="form-control" ng-model="race.plan.address.address1" placeholder="{{'Adresse'| translate}}")
-			div(class="form-group")
-				label(class="col-sm-2 control-label" translate)
-				div(class="col-sm-10")
-					input(type="text" class="form-control" ng-model="race.plan.address.address2" placeholder="{{'Complément' | translate}}")
-			div(class="form-group")
-				label(class="col-sm-2 control-label" translate) Code postal
-				div(class="col-sm-10")
-					input(type="text" class="form-control" ng-model="race.plan.address.postcode" placeholder="{{'Code postal' | translate}}")
-			div(class="form-group")
-				label(class="col-sm-2 control-label" translate) Ville
-				div(class="col-sm-10")
-					input(type="text" class="form-control" ng-model="race.plan.address.city" placeholder="{{'Ville' | translate}}")
+		form(editable-form name="planForm")
+			address
+				span(editable-text="race.plan.address.address1" e-name="address1" e-required e-placeholder="{{'Adresse'| translate}}") {{race.plan.address.address1}}
+
+				div(class="buttons")
+
+					button(type="button" class="btn btn-default" ng-click="planForm.$show()" ng-show="!planForm.$visible" translate) Editer
+
+					span(ng-show="editableForm.$visible")
+						button(type="submit" class="btn btn-primary" ng-disabled="planForm.$waiting" translate) Save
+						button(type="button" class="btn btn-default" ng-disabled="planForm.$waiting" ng-click="planForm.$cancel()")
+
+		//form(class="form-horizontal" name="planForm" role="form")
+		//	div(class="form-group")
+		//		label(class="col-sm-2 control-label" translate) Adresse
+		//		div(class="col-sm-10")
+		//			input(type="text" class="form-control" ng-model="race.plan.address.address1" placeholder="{{'Adresse'| translate}}")
+		
+		//	div(class="form-group")
+		//		label(class="col-sm-2 control-label" translate)
+		//		div(class="col-sm-10")
+		//			input(type="text" class="form-control" ng-model="race.plan.address.address2" placeholder="{{'Complément' | translate}}")
+		//	div(class="form-group")
+		//		label(class="col-sm-2 control-label" translate) Code postal
+		//		div(class="col-sm-10")
+		//			input(type="text" class="form-control" ng-model="race.plan.address.postcode" placeholder="{{'Code postal' | translate}}")
+		//	div(class="form-group")
+		//		label(class="col-sm-2 control-label" translate) Ville
+		
+		//		div(class="col-sm-10")
+		//			input(type="text" class="form-control" ng-model="race.plan.address.city" placeholder="{{'Ville' | translate}}")
+
+		//	button(class="btn btn-primary" ng-click="submit()" ng-disabled="planForm.$invalid" translate) Valider
+		//	button(class="btn btn-default" ng-click="cancel()" translate) Annuler
+	//div(class="col-sm-6" ng-if="!isEditable")
+	//	address
+	//		span {{race.plan.address.address1}}
+	//		br
+	//		span(ng-if="race.plan.address.address2 != ''") {{race.plan.address.address2}}
+	//		br(ng-if="race.plan.address.address2 != ''")
+	//		span <strong>{{race.plan.address.postcode}} - {{race.plan.address.city}}</strong>
+	//		br
+
 div(class="row")
 	div(class="col-sm-12")
 		div(class="form-group")

@@ -23,7 +23,8 @@
     "angular-strap": "~2.1.2",
     "textAngular": "~1.2.2",
     "angular-x2js": "~0.1.1",
-    "angular-loading-bar": "~0.6.0"
+    "angular-loading-bar": "~0.6.0",
+    "angular-xeditable": "~0.1.8"
   },
   "resolutions": {
     "angular": "~1.2.26",
