@@ -114,5 +114,7 @@ var generateSnapshot = function(req, res) {
         }
       });
     });
+  }, {
+    phantomPath: require('phantomjs').path
   });
 };
