@@ -213,7 +213,8 @@ module.exports = function(grunt) {
               'bower_components/moment/min/moment-with-langs.min.js',
               'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
               'bower_components/x2js/xml2json.min.js',
-              'bower_components/font-awesome/css/font-awesome.min.css'
+              'bower_components/font-awesome/css/font-awesome.min.css',
+              'bower_components/angular-easyfb/angular-easyfb.min.js'
             ],
             dest: 'dist/public/lib/'
           },
