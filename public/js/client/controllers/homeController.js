@@ -27,7 +27,6 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 			}
 		}
 
-
 		$scope.map = {
 			isVisible: false,
 			editMode: true,
