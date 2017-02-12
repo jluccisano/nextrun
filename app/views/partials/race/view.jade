@@ -2,6 +2,10 @@ div.container(style="margin-top:50px",style="padding-bottom: 50px;")
 	h1 {{race.name}}
 		small  ({{race.pin.department.code}})
 	h4.text-right  {{getDate(race.date)}}
+	div.row
+		div(ng-show="loading")
+			span(class="fa fa-spinner fa-spin")
+			span  Chargement en cours...
 	hr
 	div.row.text-center
 		div.col-md-4

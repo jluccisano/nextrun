@@ -4,6 +4,8 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 
 		google.maps.visualRefresh = true;
 
+		$scope.loading = false;
+
 		$scope.Math = window.Math;
 
 		$scope.raceId = $routeParams.raceId;
@@ -35,6 +37,9 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 		};
 
 		$scope.init = function() {
+
+			$scope.loading = true;
+
 			RaceServices.retrieve($scope.raceId,
 				function(response) {
 
@@ -170,14 +175,24 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 									}
 								},
 								series: [{
-									name: "Altitude (m)",
-									data: []
-								}, {
-									name: "> 2% et < 5%",
+									name: "< 5%",
 									data: [],
 								}, {
-									name: "> 5%",
-									data: []
+									name: "< 7%",
+									data: [],
+									color: 'yellow'
+								}, {
+									name: "< 10% ",
+									data: [],
+									color: 'orange'
+								}, {
+									name: "< 15% ",
+									data: [],
+									color: 'red'
+								}, {
+									name: "> 15% ",
+									data: [],
+									color: 'brown'
 								}],
 								xAxis: {
 									title: {
@@ -242,8 +257,13 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 						}
 
 					}];
+
+					$scope.loading = false;
 				},
 				function(error) {
+					
+					$scope.loading = false;
+
 					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
 					});

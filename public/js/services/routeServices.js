@@ -396,8 +396,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 	var addPointsToElevationChart = function(route, samplesPoints) {
 
 		var climbs = {
-			climbsSup2: [],
-			climbsSup5: []
+			climbsInf7: [],
+			climbsInf10: [],
+			climbsInf15: [],
+			climbsSup15: []
 		}
 
 		for (var k = 0; k < samplesPoints.length; k++) {
@@ -420,9 +422,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 		}
 
-		route.chartConfig.series[1].data = route.chartConfig.series[1].data.concat(climbs.climbsSup2);
-		route.chartConfig.series[2].data = route.chartConfig.series[2].data.concat(climbs.climbsSup5);
-
+		route.chartConfig.series[1].data = route.chartConfig.series[1].data.concat(climbs.climbsInf7);
+		route.chartConfig.series[2].data = route.chartConfig.series[2].data.concat(climbs.climbsInf10);
+		route.chartConfig.series[3].data = route.chartConfig.series[3].data.concat(climbs.climbsInf15);
+		route.chartConfig.series[4].data = route.chartConfig.series[4].data.concat(climbs.climbsSup15);
 	};
 
 	var addClimbsToElevationChart = function(route, elevationPoints, index, climbs) {
@@ -430,7 +433,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		var previousElevationPoint;
 		var previousData;
 
-		if (elevationPoints[index].grade >= 7) {
+		if (elevationPoints[index].grade > 5 && elevationPoints[index].grade <= 7) {
 
 			//get previous point
 			if (index > 0) {
@@ -445,10 +448,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					latlng: previousElevationPoint.latlng
 
 				};
-				climbs.climbsSup5.push(previousData);
+				climbs.climbsInf7.push(previousData);
 			}
 
-			climbs.climbsSup5.push({
+			climbs.climbsInf7.push({
 				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
 				y: elevationPoints[index].elevation,
 				grade: elevationPoints[index].grade,
@@ -458,7 +461,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				latlng: elevationPoints[index].latlng
 
 			});
-		} else if (elevationPoints[index].grade >= 5) {
+		} else if (elevationPoints[index].grade > 7 && elevationPoints[index].grade <= 10) {
 			//get previous point
 			if (index > 0) {
 				previousElevationPoint = elevationPoints[index - 1];
@@ -472,10 +475,65 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					latlng: previousElevationPoint.latlng
 
 				};
-				climbs.climbsSup2.push(previousData);
+				climbs.climbsInf10.push(previousData);
 			}
 
-			climbs.climbsSup2.push({
+			climbs.climbsInf10.push({
+				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
+				y: elevationPoints[index].elevation,
+				grade: elevationPoints[index].grade,
+				color: 'red',
+				fillColor: 'red',
+				segmentId: elevationPoints[index].segmentId,
+				latlng: elevationPoints[index].latlng
+
+			});
+		} else if (elevationPoints[index].grade > 10 && elevationPoints[index].grade <= 15) {
+			//get previous point
+			if (index > 0) {
+				previousElevationPoint = elevationPoints[index - 1];
+				previousData = {
+					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
+					y: previousElevationPoint.elevation,
+					grade: previousElevationPoint.grade,
+					color: 'orange',
+					fillColor: 'orange',
+					segmentId: previousElevationPoint.segmentId,
+					latlng: previousElevationPoint.latlng
+
+				};
+				climbs.climbsInf15.push(previousData);
+			}
+
+			climbs.climbsInf15.push({
+				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
+				y: elevationPoints[index].elevation,
+				grade: elevationPoints[index].grade,
+				color: 'red',
+				fillColor: 'red',
+				segmentId: elevationPoints[index].segmentId,
+				latlng: elevationPoints[index].latlng
+
+			});
+
+		} else if (elevationPoints[index].grade > 15) {
+			//get previous point
+			if (index > 0) {
+				previousElevationPoint = elevationPoints[index - 1];
+				previousData = {
+					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
+					y: previousElevationPoint.elevation,
+					grade: previousElevationPoint.grade,
+					color: 'orange',
+					fillColor: 'orange',
+					segmentId: previousElevationPoint.segmentId,
+					latlng: previousElevationPoint.latlng
+
+				};
+				climbs.climbsSup15.push(previousData);
+			}
+
+			climbs.climbsSup15.push({
 				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
 				y: elevationPoints[index].elevation,
 				grade: elevationPoints[index].grade,
@@ -487,7 +545,8 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			});
 
 		} else {
-			climbs.climbsSup5.push({
+
+			var point0 = {
 				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
 				y: null,
 				grade: elevationPoints[index].grade,
@@ -496,18 +555,11 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				segmentId: elevationPoints[index].segmentId,
 				latlng: elevationPoints[index].latlng
 
-			});
-
-			climbs.climbsSup2.push({
-				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
-				y: null,
-				grade: elevationPoints[index].grade,
-				color: 'red',
-				fillColor: 'red',
-				segmentId: elevationPoints[index].segmentId,
-				latlng: elevationPoints[index].latlng
-
-			});
+			}
+			climbs.climbsInf7.push(point0);
+			climbs.climbsInf10.push(point0);
+			climbs.climbsInf15.push(point0);
+			climbs.climbsSup15.push(point0);
 		}
 
 		return climbs;
@@ -831,11 +883,15 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 			var datas = [];
 			var climbs = {
-				climbsSup2: [],
-				climbsSup5: []
+				climbsInf7: [],
+				climbsInf10: [],
+				climbsInf15: [],
+				climbsSup15: []
 			}
 
-			var elevationPoints = route.elevationPoints;
+			var elevationPoints = _.sortBy(route.elevationPoints, function(elevationPoint) {
+				return parseFloat(elevationPoint.distanceFromStart.toFixed(2));
+			});
 
 			_.each(elevationPoints, function(elevationPoint, index) {
 
@@ -855,8 +911,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 			});
 			route.chartConfig.series[0].data = datas;
-			route.chartConfig.series[1].data = climbs.climbsSup2;
-			route.chartConfig.series[2].data = climbs.climbsSup5;
+			route.chartConfig.series[1].data = climbs.climbsInf7;
+			route.chartConfig.series[2].data = climbs.climbsInf10;
+			route.chartConfig.series[3].data = climbs.climbsInf15;
+			route.chartConfig.series[4].data = climbs.climbsSup15;
 			//return datas;
 		},
 		delete: function(route) {
@@ -936,14 +994,18 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 				var index = 0;
 
+				var segmentPointsOffset = parseInt(trkpts.length * 0.05);
+
+				var sample = segmentPointsOffset * 0.001;
+
 				_.each(trkpts, function(trkpt, i) {
 
-					if (index === 500 || i === (trkpts.length - 1)) {
+					if (index === segmentPointsOffset || i === (trkpts.length - 1)) {
 
 						segment2.distance = calculateDistanceFromStartForEachPointOfSegment(route, segment2);
 						route.segments.push(segment2);
 
-						var samplesPoints = findSamplesPointIntoSegment(route, segment2, 0.5);
+						var samplesPoints = findSamplesPointIntoSegment(route, segment2, sample);
 						samplesPointCount = samplesPointCount + samplesPoints.length;
 						arrayOfSamplesPoint.push(samplesPoints);
 
@@ -1013,8 +1075,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 								var datas = [];
 								var climbs = {
-									climbsSup2: [],
-									climbsSup5: []
+									climbsInf7: [],
+									climbsInf10: [],
+									climbsInf15: [],
+									climbsSup15: []
 								}
 
 								var elevationPoints = _.sortBy(route.elevationPoints, function(elevationPoint) {
@@ -1041,8 +1105,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 
 								route.chartConfig.series[0].data = datas;
-								route.chartConfig.series[1].data = climbs.climbsSup2;
-								route.chartConfig.series[2].data = climbs.climbsSup5;
+								route.chartConfig.series[1].data = climbs.climbsInf7;
+								route.chartConfig.series[2].data = climbs.climbsInf10;
+								route.chartConfig.series[3].data = climbs.climbsInf15;
+								route.chartConfig.series[4].data = climbs.climbsSup15;
 
 
 							}

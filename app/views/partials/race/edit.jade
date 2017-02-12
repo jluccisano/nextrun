@@ -1,6 +1,9 @@
 div.container(style="padding-bottom: 50px;")
 	h3 Edition d'une manifestation
-	span(us-spinner spinner-key="loader")
+	div.row
+		div.col-lg-offset-8.col-lg-4(ng-show="loading")
+			span(class="fa fa-spinner fa-spin")
+			span  Chargement en cours...
 	div.row
 		div.col-lg-12
 			div.row
@@ -9,8 +12,6 @@ div.container(style="padding-bottom: 50px;")
 						div.form-group(data-ng-class="{'has-error': !form1.name.$pristine && form1.name.$invalid, 'has-success': !form1.name.$invalid}")
 							label.control-label(for="name") Nom
 							input.form-control(name="name", id="name", placeholder="ex: Triathlon de Paris",data-ng-model="race.name", required)
-							span {{form1.name.$pristine}}
-							span {{form1.name.$invalid}}
 						
 						div.form-group(data-ng-class="{'has-error':!form1.datetime.$pristine && form1.datetime.$invalid, 'has-success': !form1.datetime.$invalid}")
 							label.control-label(for="date") Date
@@ -45,7 +46,13 @@ div.container(style="padding-bottom: 50px;")
 								h4 Infomations
 								p Vous pouvez soit dessiner votre parcours directement sur la carte soit importer un fichier au format .gpx
 							input(type="file" ng-model="$files" ng-file-select="onFileSelect($files, route)")
+							div.row
+								div.col-lg-4(ng-show="pending")
+									span(class="fa fa-spinner fa-spin")
+									span  Chargement en cours...
+
 							hr
+							
 							include map
 			h2 Organisation
 			hr
@@ -55,4 +62,7 @@ div.container(style="padding-bottom: 50px;")
 				div.col-lg-offset-4.col-lg-8
 					button.btn.btn-primary(data-ng-click="submit(race)", data-ng-disabled="form1.$invalid") Sauvegarder
 					button.btn.btn-default(data-ng-click="cancel()") Retour
+					div(ng-show="saving")
+						span(class="fa fa-spinner fa-spin")
+						span  Sauvegarde en cours...
 

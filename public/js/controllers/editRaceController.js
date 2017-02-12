@@ -1,6 +1,6 @@
-angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', '$log', 'RouteFactory', '$window', '$modal', 'fileReader', 'usSpinnerService',
+angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', '$log', 'RouteFactory', '$window', '$modal', 'fileReader',
 
-	function($scope, $location, RaceServices, Alert, Aut, $routeParams, $log, RouteFactory, window, $modal, fileReader, usSpinnerService) {
+	function($scope, $location, RaceServices, Alert, Aut, $routeParams, $log, RouteFactory, window, $modal, fileReader) {
 		'use strict';
 		$scope.Math = window.Math;
 
@@ -8,7 +8,10 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 		google.maps.visualRefresh = true;
 
 		$scope.navType = "pills";
-		$scope.progress = 0;
+		$scope.saving = false;
+		$scope.loading = false;
+		$scope.pending = false;
+
 
 		$scope.types = TYPE_OF_RACES.enums;
 		$scope.distances = [];
@@ -129,6 +132,9 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 
 		$scope.init = function() {
+
+			$scope.loading = true;
+
 			RaceServices.retrieve($scope.raceId,
 				function(response) {
 
@@ -261,14 +267,24 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 									}
 								},
 								series: [{
-									name: "Altitude (m)",
-									data: []
+									name: "< 5%",
+									data: [],
 								}, {
-									name: "> 2% et < 5%",
-									data: []
+									name: "< 7%",
+									data: [],
+									color: 'yellow'
 								}, {
-									name: "> 5%",
-									data: []
+									name: "< 10% ",
+									data: [],
+									color: 'orange'
+								}, {
+									name: "< 15% ",
+									data: [],
+									color: 'red'
+								}, {
+									name: "> 15% ",
+									data: [],
+									color: 'brown'
 								}],
 								xAxis: {
 									title: {
@@ -335,8 +351,13 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							$scope.race.distanceType = distanceType;
 						}
 					});
+
+					$scope.loading = false;
 				},
 				function(error) {
+
+					$scope.loading = false;
+
 					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
 					});
@@ -370,16 +391,17 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 				race: $scope.race
 			};
 
-			usSpinnerService.spin('loader');
+			$scope.saving = true;
 
 			RaceServices.update($scope.raceId, data,
 				function(res) {
 					Alert.add("success", "Votre manifestation a bien été modifiée", 3000);
-					usSpinnerService.stop('loader');
+					$scope.saving = false;
 					$location.path('/myraces');
 
 				},
 				function(error) {
+					$scope.saving = false;
 					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
 					});
@@ -531,14 +553,24 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							}
 						},
 						series: [{
-							name: "Altitude (m)",
-							data: []
+							name: "< 5%",
+							data: [],
 						}, {
-							name: "> 2% et < 5%",
-							data: []
+							name: "< 7%",
+							data: [],
+							color: 'yellow'
 						}, {
-							name: "> 5%",
-							data: []
+							name: "< 10% ",
+							data: [],
+							color: 'orange'
+						}, {
+							name: "< 15% ",
+							data: [],
+							color: 'red'
+						}, {
+							name: "> 15% ",
+							data: [],
+							color: 'brown'
 						}],
 						xAxis: {
 							title: {
@@ -582,7 +614,9 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 		};
 
 		$scope.getFile = function(route, file) {
-			$scope.progress = 0;
+
+			$scope.pending = true;
+
 			fileReader.readAsDataUrl(file, $scope)
 				.then(function(result) {
 
@@ -594,29 +628,23 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 					route.minElevation = 0;
 					route.maxElevation = 0;
 
-					$scope.progress = 0;
 
 					try {
 						RouteFactory.convertGPXtoRoute($scope, route, result);
+
+						if (route.segments.length > 0) {
+							route.markers = RouteFactory.rebuildMarkers(route.segments, true);
+							route.polylines = RouteFactory.rebuildPolylines(route.segments);
+						}
+
 					} catch (ex) {
 						Alert.add("danger", ex.message, 3000);
-					}
-
-
-
-					if (route.segments.length > 0) {
-						route.markers = RouteFactory.rebuildMarkers(route.segments, true);
-						route.polylines = RouteFactory.rebuildPolylines(route.segments);
+					} finally {
+						$scope.pending = false;
 					}
 
 				});
 		};
-
-		$scope.$on("fileProgress", function(e, progress) {
-			$scope.progress = (progress.loaded / progress.total) * 100;
-			$scope.$apply();
-		});
-
 
 		$scope.init();
 
@@ -645,7 +673,6 @@ angular.module('nextrunApp').directive("ngFileSelect", function() {
 		link: function($scope, el, $attributes, ngModel) {
 
 			el.bind("change", function(e) {
-
 				$scope.file = (e.srcElement || e.target).files[0];
 				$scope.getFile($scope.route, $scope.file);
 			})

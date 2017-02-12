@@ -241,7 +241,7 @@ RaceSchema.statics = {
 
     var criteria = options.criteria || {}
 
-    this.find(criteria)
+    this.find(criteria, {routes: 0})
       .limit(options.perPage)
       .skip(options.perPage * options.page)
       .exec(cb);

@@ -1,22 +1,26 @@
-angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal',
-	function($scope, $location, RaceServices, Alert, Auth, $modal) {
+angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal', 'usSpinnerService',
+	function($scope, $location, RaceServices, Alert, Auth, $modal, usSpinnerService) {
 		'use strict';
 		$scope.currentPage = 1;
 		$scope.maxSize = 5;
 
 		$scope.init = function() {
+
 			RaceServices.find($scope.currentPage,
 				function(response) {
 
 					$scope.races = response.races;
 
-					$scope.totalItems = $scope.races.length;
+					$scope.totalItems = $scope.races.length;					
 
 				},
 				function(error) {
+
 					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
 					});
+
+
 				});
 		};
 
