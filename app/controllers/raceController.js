@@ -302,7 +302,7 @@ exports.extractCriteria = function(req, res, next) {
       };
     }
 
-    if (criteria.region != undefined) {
+    if (criteria.region !== undefined) {
       operation.region = {
         "department.code": {
           '$in': criteria.region.departments
@@ -442,7 +442,7 @@ exports.autocomplete = function(req, res) {
       operation.name = regex;
     }
 
-    if (criteria.region != undefined) {
+    if (criteria.region !== undefined) {
 
       operation = {
         name: operation.name,

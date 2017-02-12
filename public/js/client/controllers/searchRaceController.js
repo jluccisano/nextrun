@@ -321,7 +321,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				var hasFacet = _.findWhere(entries, {
 					_id: departmentFacet.department.code
 				});
-				if (hasFacet != undefined) {
+				if (hasFacet !== undefined) {
 					departmentFacet.total = hasFacet.total;
 				}
 

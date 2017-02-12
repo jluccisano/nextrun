@@ -36,7 +36,7 @@ var user1 = {
   password: '123'
 };
 
-describe('Search races with autocomplete: GET /api/races/autocomplete/:query_string', function() {
+describe('Search races with autocomplete: POST /api/races/autocomplete', function() {
 
   var currentRace;
   var currentDate = new Date();
@@ -114,8 +114,13 @@ describe('Search races with autocomplete: GET /api/races/autocomplete/:query_str
   describe('valid parameters', function() {
 
     it('should return one race', function(done) {
-      superagent.get('http://localhost:3000/api/races/autocomplete/du')
-        .send()
+      superagent.post('http://localhost:3000/api/races/autocomplete')
+        .send({
+          criteria: {
+            fulltext: "du",
+            region: undefined
+          }
+        })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
