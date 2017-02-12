@@ -50,7 +50,7 @@ var user2 = {
 };
 
 
-describe('Update Race: UPDATE /races', function() {
+describe('Update Race: UPDATE /api/races', function() {
 
   var currentRace;
   var currentDate = new Date();
@@ -116,7 +116,7 @@ describe('Update Race: UPDATE /races', function() {
   describe('invalid parameters', function() {
 
     it('should not update because unknown user', function(done) {
-      superagent.put('http://localhost:3000/races/' + currentRace._id + '/update')
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -131,7 +131,7 @@ describe('Update Race: UPDATE /races', function() {
 
       passportStub.login(user2);
 
-      superagent.put('http://localhost:3000/races/' + currentRace._id+'/update')
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id+'/update')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -145,7 +145,7 @@ describe('Update Race: UPDATE /races', function() {
 
     it('should not update because race id is unknown', function(done) {
       passportStub.login(user1);
-      superagent.put('http://localhost:3000/races/523726537a11c4aa8d789bbb/update')
+      superagent.put('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/update')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -163,7 +163,7 @@ describe('Update Race: UPDATE /races', function() {
     
     it('should update success', function(done) {
       passportStub.login(user1);
-      superagent.put('http://localhost:3000/races/' + currentRace._id+'/update')
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id+'/update')
         .send({
           race: {
             name: 'Triathlon de Castelnaudary',

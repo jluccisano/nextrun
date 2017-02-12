@@ -16,7 +16,7 @@ var mongoose = require('mongoose'),
  * Create contact tests
  */
 
-describe('Create Contact: POST /contacts', function() {
+describe('Create Contact: POST /api/contacts', function() {
 
   var count;
 
@@ -30,7 +30,7 @@ describe('Create Contact: POST /contacts', function() {
   describe('Invalid parameters', function() {
 
     it('no email - should respond with errors', function(done) {
-      superagent.post('http://localhost:3000/contacts')
+      superagent.post('http://localhost:3000/api/contacts')
         .send({
           type: 'athlete'
         })
@@ -44,7 +44,7 @@ describe('Create Contact: POST /contacts', function() {
     });
 
     it('email blank - should respond with errors', function(done) {
-      superagent.post('http://localhost:3000/contacts')
+      superagent.post('http://localhost:3000/api/contacts')
         .send({
           email: '',
           type: 'athlete'
@@ -72,7 +72,7 @@ describe('Create Contact: POST /contacts', function() {
   describe('Valid parameters', function() {
 
     it('add new contact success', function(done) {
-      superagent.post('http://localhost:3000/contacts')
+      superagent.post('http://localhost:3000/api/contacts')
         .send({
           email: 'foobar@example.com',
           type: 'athlete'
@@ -96,7 +96,7 @@ describe('Create Contact: POST /contacts', function() {
   describe('Contact already exists', function() {
 
     it('Contact already exists', function(done) {
-      superagent.post('http://localhost:3000/contacts')
+      superagent.post('http://localhost:3000/api/contacts')
         .send({
           email: 'foobar@example.com',
           type: 'athlete'

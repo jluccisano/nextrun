@@ -16,7 +16,7 @@ var mongoose = require('mongoose'),
  * Check User tests
  */
 
-describe('Check user: POST /users/check/email', function() {
+describe('Check user: POST /api/users/check/email', function() {
 
 
   var currentUser;
@@ -49,7 +49,7 @@ describe('Check user: POST /users/check/email', function() {
 
 
     it('should response email Already Exists', function(done) {
-      superagent.post('http://localhost:3000/users/check/email')
+      superagent.post('http://localhost:3000/api/users/check/email')
         .send({
           user: {
             email: 'foobar@example.com'
@@ -72,7 +72,7 @@ describe('Check user: POST /users/check/email', function() {
   describe('Email Valid', function() {
 
     it('should response success', function(done) {
-      superagent.post('http://localhost:3000/users/check/email')
+      superagent.post('http://localhost:3000/api/users/check/email')
         .send({
           user: {
             email: 'hello@example.com'

@@ -30,19 +30,19 @@ angular.module('nextrunApp')
                 return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
             },
             register: function(user, success, error) {
-                $http.post('/users/signup', user).success(function(res) {
+                $http.post('/api/users/signup', user).success(function(res) {
                     changeUser(res);
                     success();
                 }).error(error);
             },
             login: function(user, success, error) {
-                $http.post('/users/session', user).success(function(user) {
+                $http.post('/api/users/session', user).success(function(user) {
                     changeUser(user);
                     success(user);
                 }).error(error);
             },
             logout: function(success, error) {
-                $http.post('/users/logout').success(function() {
+                $http.post('/api/users/logout').success(function() {
                     changeUser({
                         id: '',
                         email: '',
@@ -53,32 +53,32 @@ angular.module('nextrunApp')
                 }).error(error);
             },
             forgotpassword: function(user, success, error) {
-                $http.post('/users/forgotpassword', user).success(function() {
+                $http.post('/api/users/forgotpassword', user).success(function() {
                     success();
                 }).error(error);
             },
             checkEmail: function(user, success, error) {
-                $http.post('/users/check/email', user).success(function() {
+                $http.post('/api/users/check/email', user).success(function() {
                     success();
                 }).error(error);
             },
             updateProfile: function(user, success, error) {
-                $http.put('/users/update/profile', user).success(function(user) {
+                $http.put('/api/users/update/profile', user).success(function(user) {
                     success(user);
                 }).error(error);
             },
             updatePassword: function(id, data, success, error) {
-                $http.put('/users/update/password', data).success(function(user) {
+                $http.put('/api/users/update/password', data).success(function(user) {
                     success(user);
                 }).error(error);
             },
             getUserProfile: function(success, error) {
-                $http.get('/users/settings').success(function(user) {
+                $http.get('/api/users/settings').success(function(user) {
                     success(user);
                 }).error(error);
             },
             deleteAccount: function(id, success, error) {
-                $http.delete('/users/delete').success(function() {
+                $http.delete('/api/users/delete').success(function() {
                     changeUser({
                         id: '',
                         email: '',

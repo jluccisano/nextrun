@@ -17,7 +17,7 @@ var mongoose = require('mongoose'),
 /**
  * Create user tests
  */
-describe('Create User: POST /users', function() {
+describe('Create User: POST /api/users', function() {
 
 
 
@@ -34,7 +34,7 @@ describe('Create User: POST /users', function() {
 
 
     it('no email - should respond with errors', function(done) {
-      superagent.post('http://localhost:3000/users/signup')
+      superagent.post('http://localhost:3000/api/users/signup')
         .send({
           user: {
             username: 'foobar',
@@ -52,7 +52,7 @@ describe('Create User: POST /users', function() {
     });
 
     it('no body - should respond with errors', function(done) {
-      superagent.post('http://localhost:3000/users/signup')
+      superagent.post('http://localhost:3000/api/users/signup')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -81,7 +81,7 @@ describe('Create User: POST /users', function() {
 
 
     it('should response success', function(done) {
-      superagent.post('http://localhost:3000/users/signup')
+      superagent.post('http://localhost:3000/api/users/signup')
         .send({
           user: {
             username: 'foobar',

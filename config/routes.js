@@ -26,46 +26,44 @@ module.exports = function(app, passport) {
 
 	/** JSON API **/
 
-	/** contacts **/
-	app.post('/contacts', auth.ensureAuthorized, contactController.create);
+	/** api contacts **/
+	app.post('/api/contacts', auth.ensureAuthorized, contactController.create);
 
 
-	/** users **/
-	app.post('/users/signup', auth.ensureAuthorized, userController.signup);
+	/** api users **/
+	app.post('/api/users/signup', auth.ensureAuthorized, userController.signup);
 
-	app.post('/users/session', auth.ensureAuthorized, function(req, res, next) {
+	app.post('/api/users/session', auth.ensureAuthorized, function(req, res, next) {
 		userController.login(passport, req, res);
 	});
 
-	app.post('/users/logout', auth.ensureAuthorized, userController.logout);
+	app.post('/api/users/logout', auth.ensureAuthorized, userController.logout);
 
-	app.post('/users/forgotpassword', auth.ensureAuthorized, userController.forgotPassword);
+	app.post('/api/users/forgotpassword', auth.ensureAuthorized, userController.forgotPassword);
 
-	app.get('/users/settings', auth.ensureAuthorized, userController.settings);
+	app.get('/api/users/settings', auth.ensureAuthorized, userController.settings);
 
-	app.put('/users/update/profile', auth.ensureAuthorized, userController.updateProfile);
+	app.put('/api/users/update/profile', auth.ensureAuthorized, userController.updateProfile);
 
-	app.put('/users/update/password', auth.ensureAuthorized, userController.updatePassword);
+	app.put('/api/users/update/password', auth.ensureAuthorized, userController.updatePassword);
 
-	app.post('/users/check/email', auth.ensureAuthorized, userController.checkIfEmailAlreadyExists);
+	app.post('/api/users/check/email', auth.ensureAuthorized, userController.checkIfEmailAlreadyExists);
 
-	app.del('/users/delete', auth.ensureAuthorized, userController.deleteAccount);
-
-
+	app.del('/api/users/delete', auth.ensureAuthorized, userController.deleteAccount);
 
 	app.param(':userId', userController.load);
 
-	/** races **/
+	/** api races **/
 
-	app.post('/races/create', auth.ensureAuthorized, raceController.create);
+	app.post('/api/races/create', auth.ensureAuthorized, raceController.create);
 
-	app.get('/races/find/(page/:page)?', auth.ensureAuthorized, raceController.findByUser);
+	app.get('/api/races/find/(page/:page)?', auth.ensureAuthorized, raceController.findByUser);
 
-	app.get('/races/:raceId', auth.ensureAuthorized, raceController.find);
+	app.get('/api/races/:raceId', auth.ensureAuthorized, raceController.find);
 
-	app.put('/races/:raceId/update', auth.ensureAuthorized, raceController.update);
+	app.put('/api/races/:raceId/update', auth.ensureAuthorized, raceController.update);
 
-	app.del('/races/:raceId/delete', auth.ensureAuthorized, raceController.delete);
+	app.del('/api/races/:raceId/delete', auth.ensureAuthorized, raceController.delete);
 
 	app.param(':raceId', raceController.load);
 

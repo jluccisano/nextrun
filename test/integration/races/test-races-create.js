@@ -36,7 +36,7 @@ var user1 = {
   password: '123'
 };
 
-describe('Create race: POST /races', function() {
+describe('Create race: POST /api/races', function() {
 
   var currentDate = new Date();
 
@@ -63,7 +63,7 @@ describe('Create race: POST /races', function() {
 
     it('should response success', function(done) {
       passportStub.login(user1);
-      superagent.post('http://localhost:3000/races/create')
+      superagent.post('http://localhost:3000/api/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -104,7 +104,7 @@ describe('Create race: POST /races', function() {
 
     it('create new race with distance type different should response success', function(done) {
       passportStub.login(user1);
-      superagent.post('http://localhost:3000/races/create')
+      superagent.post('http://localhost:3000/api/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -129,7 +129,7 @@ describe('Create race: POST /races', function() {
   describe('Invalid parameters', function() {
 
     it('should not create because access denied', function(done) {
-      superagent.post('http://localhost:3000/races/create')
+      superagent.post('http://localhost:3000/api/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -151,7 +151,7 @@ describe('Create race: POST /races', function() {
 
     it('should response raceAlreadyExists', function(done) {
       passportStub.login(user1);
-      superagent.post('http://localhost:3000/races/create')
+      superagent.post('http://localhost:3000/api/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',

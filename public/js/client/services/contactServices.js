@@ -3,7 +3,7 @@ angular.module('nextrunApp')
 		'use strict';
 		return {
 			addContact: function(contact, success, error) {
-				$http.post('/contacts', contact).success(function() {
+				$http.post('/api/contacts', contact).success(function() {
 					success();
 				}).error(error);
 			}

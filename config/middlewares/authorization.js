@@ -8,35 +8,37 @@ exports.ensureAuthorized = function(req, res, next) {
 
     var routes = [
 
+
+
         {
-            path: "/users/signup",
+            path: "/api/users/signup",
             accessLevel: accessLevels.public
         }, {
-            path: "/users/session",
+            path: "/api/users/session",
             accessLevel: accessLevels.public
         }, {
-            path: "/users/forgotpassword",
+            path: "/api/users/forgotpassword",
             accessLevel: accessLevels.public
         }, {
-            path: "/users/logout",
+            path: "/api/users/check/email",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/api/contacts",
+            accessLevel: accessLevels.public
+        }, {
+            path: "/api/users/delete",
             accessLevel: accessLevels.user
         }, {
-            path: "/users/check/email",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/users/delete",
+            path: "/api/users/logout",
             accessLevel: accessLevels.user
         }, {
-            path: "/users/update/profile",
+            path: "/api/users/update/profile",
             accessLevel: accessLevels.user
         }, {
-            path: "/users/update/password",
+            path: "/api/users/update/password",
             accessLevel: accessLevels.user
         }, {
-            path: "/contacts",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/users/settings",
+            path: "/api/users/settings",
             accessLevel: accessLevels.user
         }, {
             path: "/partials/user/*",
@@ -45,22 +47,22 @@ exports.ensureAuthorized = function(req, res, next) {
             path: "/partials/race/*",
             accessLevel: accessLevels.public
         }, {
-            path: "/races/create",
+            path: "/api/races/create",
             accessLevel: accessLevels.user
         }, {
-            path: "/races/find/:raceId",
+            path: "/api/races/find/:raceId",
             accessLevel: accessLevels.user
         }, {
-            path: "/races/find/(page/:page)?",
+            path: "/api/races/find/(page/:page)?",
             accessLevel: accessLevels.user
         }, {
-            path: "/races/:raceId/update",
+            path: "/api/races/:raceId/update",
             accessLevel: accessLevels.user
         }, {
-            path: "/races/:raceId/delete",
+            path: "/api/races/:raceId/delete",
             accessLevel: accessLevels.user
         }, {
-            path: "/races/:raceId",
+            path: "/api/races/:raceId",
             accessLevel: accessLevels.public
         }
 

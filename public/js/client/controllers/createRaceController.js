@@ -3,6 +3,7 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 		'use strict';
 		$scope.departments = DEPARTMENTS.enums;
 		$scope.types = TYPE_OF_RACES.enums;
+		$scope.distances = [];
 
 		$scope.onChange = function() {
 			$scope.distances = $scope.race.type.value.distances;

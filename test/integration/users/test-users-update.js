@@ -43,11 +43,11 @@ var user2 = {
   password: '123'
 };
 
-describe('Update User: PUT /users/update', function() {
+describe('Update User: PUT /api/users/update', function() {
 
 
 
-  describe('PUT /users/update/profile', function() {
+  describe('PUT /api/users/update/profile', function() {
 
     before(function(done) {
       User.create(user1, function(err, user) {
@@ -70,7 +70,7 @@ describe('Update User: PUT /users/update', function() {
     describe('Invalid Parameters', function() {
 
       it('should response access denied', function(done) {
-        superagent.put('http://localhost:3000/users/update/profile')
+        superagent.put('http://localhost:3000/api/users/update/profile')
           .send()
           .set('Accept', 'application/json')
           .end(function(err, res) {
@@ -92,7 +92,7 @@ describe('Update User: PUT /users/update', function() {
         console.log(userStub);
 
         passportStub.login(user1);
-        superagent.put('http://localhost:3000/users/update/profile')
+        superagent.put('http://localhost:3000/api/users/update/profile')
           .send({
             user: {
               email: 'hello@example.com',
@@ -120,7 +120,7 @@ describe('Update User: PUT /users/update', function() {
   });
 
 
-  describe('PUT /users/update/password', function() {
+  describe('PUT /api/users/update/password', function() {
 
     before(function(done) {
       User.create(user1, function(err, user) {
@@ -143,7 +143,7 @@ describe('Update User: PUT /users/update', function() {
     describe('Invalid Parameters', function() {
 
       it('should response access denied', function(done) {
-        superagent.put('http://localhost:3000/users/update/password')
+        superagent.put('http://localhost:3000/api/users/update/password')
           .send()
           .set('Accept', 'application/json')
           .end(function(err, res) {
@@ -156,7 +156,7 @@ describe('Update User: PUT /users/update', function() {
 
       it('should response invalid password', function(done) {
         passportStub.login(user1);
-        superagent.put('http://localhost:3000/users/update/password/')
+        superagent.put('http://localhost:3000/api/users/update/password/')
           .send({
             actual: "foobar3",
             new: "foobar2"
@@ -176,7 +176,7 @@ describe('Update User: PUT /users/update', function() {
 
       it('should response update password success', function(done) {
         passportStub.login(user1);
-        superagent.put('http://localhost:3000/users/update/password/')
+        superagent.put('http://localhost:3000/api/users/update/password/')
           .send({
             actual: "foobar",
             new: "foobar2"

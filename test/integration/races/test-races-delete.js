@@ -50,7 +50,7 @@ var user2 = {
   password: '123'
 };
 
-describe('Delete race: DELETE /races', function() {
+describe('Delete race: DELETE /api/races', function() {
 
   var currentRace;
   var currentDate = new Date();
@@ -121,7 +121,7 @@ describe('Delete race: DELETE /races', function() {
   describe('invvalid parameters', function() {
 
     it('should not delete because access denied', function(done) {
-      superagent.del('http://localhost:3000/races/' + currentRace._id + '/delete')
+      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -138,7 +138,7 @@ describe('Delete race: DELETE /races', function() {
 
       passportStub.login(user2);
 
-      superagent.del('http://localhost:3000/races/' + currentRace._id + '/delete')
+      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -157,7 +157,7 @@ describe('Delete race: DELETE /races', function() {
 
       passportStub.login(user1);
 
-      superagent.del('http://localhost:3000/races/523726537a11c4aa8d789bbb/delete')
+      superagent.del('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -178,7 +178,7 @@ describe('Delete race: DELETE /races', function() {
 
       passportStub.login(user1);
 
-      superagent.del('http://localhost:3000/races/' + currentRace._id + '/delete')
+      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {

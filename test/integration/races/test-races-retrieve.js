@@ -48,7 +48,7 @@ var user2 = {
   password: '123'
 };
 
-describe('Retrieve races: GET /users/:userId/races/(page/:page)?', function() {
+describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function() {
 
   var currentRace;
   var currentDate = new Date();
@@ -114,7 +114,7 @@ describe('Retrieve races: GET /users/:userId/races/(page/:page)?', function() {
   describe('invalid parameters', function() {
 
     it('should not retrieve because access denied', function(done) {
-      superagent.get('http://localhost:3000/races/find')
+      superagent.get('http://localhost:3000/api/races/find')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -129,7 +129,7 @@ describe('Retrieve races: GET /users/:userId/races/(page/:page)?', function() {
 
       passportStub.login(user2);
 
-      superagent.get('http://localhost:3000/races/find')
+      superagent.get('http://localhost:3000/api/races/find')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -147,7 +147,7 @@ describe('Retrieve races: GET /users/:userId/races/(page/:page)?', function() {
 
     it('should return one race', function(done) {
       passportStub.login(user1);
-      superagent.get('http://localhost:3000/races/find')
+      superagent.get('http://localhost:3000/api/races/find')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -162,7 +162,7 @@ describe('Retrieve races: GET /users/:userId/races/(page/:page)?', function() {
 
     it('test with page parameter should return one race', function(done) {
       passportStub.login(user1);
-      superagent.get('http://localhost:3000/races/find/page/1')
+      superagent.get('http://localhost:3000/api/races/find/page/1')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {

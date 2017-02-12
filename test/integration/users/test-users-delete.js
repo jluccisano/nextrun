@@ -29,7 +29,7 @@ var user1 = {
   password: '123'
 };
 
-describe('Delete User: DELETE /users', function() {
+describe('Delete User: DELETE /api/users', function() {
 
   before(function(done) {
     User.create(user1, function(err, user) {
@@ -53,7 +53,7 @@ describe('Delete User: DELETE /users', function() {
   describe('Delete user failed', function() {
 
     it('should response access denied', function(done) {
-      superagent.del('http://localhost:3000/users/delete')
+      superagent.del('http://localhost:3000/api/users/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -70,7 +70,7 @@ describe('Delete User: DELETE /users', function() {
 
     it('should response delete account success', function(done) {
       passportStub.login(user1);
-      superagent.del('http://localhost:3000/users/delete')
+      superagent.del('http://localhost:3000/api/users/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {

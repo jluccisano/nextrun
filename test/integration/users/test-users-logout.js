@@ -28,7 +28,7 @@ var user1 = {
   password: '123'
 };
 
-describe('Log Out User: GET /logout', function() {
+describe('Log Out User: GET /api/users/logout', function() {
 
   before(function(done) {
     User.create(user1, function(err, user) {
@@ -53,7 +53,7 @@ describe('Log Out User: GET /logout', function() {
   describe('log out failed user not authenticated', function() {
 
     it('should logout failed', function(done) {
-      superagent.post('http://localhost:3000/users/logout')
+      superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(403);
@@ -67,7 +67,7 @@ describe('Log Out User: GET /logout', function() {
 
     it('should logout successfully', function(done) {
       passportStub.login(user1);
-      superagent.post('http://localhost:3000/users/logout')
+      superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

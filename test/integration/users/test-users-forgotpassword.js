@@ -16,7 +16,7 @@ var mongoose = require('mongoose'),
  * Forgot Password tests
 */
 
-describe('Forgot Password: POST /users/forgotpassword', function() {
+describe('Forgot Password: POST /api/users/forgotpassword', function() {
 
   var currentUser;
 
@@ -46,7 +46,7 @@ describe('Forgot Password: POST /users/forgotpassword', function() {
   describe('Invalid Parameters', function() {
 
     it('should failed cause email unknown', function(done) {
-      superagent.post('http://localhost:3000/users/forgotpassword')
+      superagent.post('http://localhost:3000/api/users/forgotpassword')
         .send({
           user: {
             email: 'toto@example.com'
@@ -62,7 +62,7 @@ describe('Forgot Password: POST /users/forgotpassword', function() {
     });
 
     it('should failed cause email cannot be blank', function(done) {
-      superagent.post('http://localhost:3000/users/forgotpassword')
+      superagent.post('http://localhost:3000/api/users/forgotpassword')
         .send({
           user: {
             email: ''
@@ -78,7 +78,7 @@ describe('Forgot Password: POST /users/forgotpassword', function() {
     });
 
     it('should failed cause email is required', function(done) {
-      superagent.post('http://localhost:3000/users/forgotpassword')
+      superagent.post('http://localhost:3000/api/users/forgotpassword')
         .send({
           user: {}
         })
@@ -95,7 +95,7 @@ describe('Forgot Password: POST /users/forgotpassword', function() {
   describe('Valid Parameters', function() {
 
     it('should response success', function(done) {
-      superagent.post('http://localhost:3000/users/forgotpassword')
+      superagent.post('http://localhost:3000/api/users/forgotpassword')
         .send({
           user: {
             email: 'foobar@example.com'
