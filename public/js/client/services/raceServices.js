@@ -1,5 +1,5 @@
 angular.module('nextrunApp')
-    .factory('RaceServices', function($http) {
+    .factory('RaceServices',['$http', function($http) {
         'use strict';
         return {
             create: function(data, success, error) {
@@ -38,4 +38,4 @@ angular.module('nextrunApp')
                 }).error(error);
             }
         };
-    });
+    }]);

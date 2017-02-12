@@ -42,7 +42,7 @@ module.exports = {
     }
   },
   valid: {
-    db: 'mongodb://af_nextrun-valid-joseph_luccisano:nextrun2014@ds031319.mongolab.com:31319/af_nextrun-valid-joseph_luccisano',
+    db: 'mongodb://af_nextrun-valid-joseph_luccisano:n7udg9kmgpt0lrnt6hv2ahke0i@ds029979.mongolab.com:29979/af_nextrun-valid-joseph_luccisano',
     root: rootPath,
     facebook: {
       clientID: "195803770591615",

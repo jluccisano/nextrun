@@ -1,5 +1,5 @@
 angular.module('nextrunApp')
-    .factory('Auth', function($http, $cookieStore) {
+    .factory('Auth', ['$http', '$cookieStore', function($http, $cookieStore) {
         'use strict';
         var accessLevels = routingConfig.accessLevels,
             userRoles = routingConfig.userRoles,
@@ -92,4 +92,4 @@ angular.module('nextrunApp')
             userRoles: userRoles,
             user: currentUser
         };
-    });
+    }]);

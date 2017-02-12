@@ -1,7 +1,4 @@
 div.container
-	div.bs-callout.bs-callout-info
-		h4 Infomations
-		p Tous les champs  sont facultatifs. Tous les champs qui ne seront pas renseigné n'apparaitront pas dans la vue finale.
 	tabset(vertical="false" type="pills")
 		tab(heading=t("race.timing"))
 			div.container
@@ -14,8 +11,6 @@ div.container
 					dd {{getHour(race.timing.checkoutBibTime)}}
 					dt=t("race.rewardsTime")
 					dd {{getHour(race.timing.rewardsTime)}}
-				//dl(data-ng-if="race.timing.timingMoreInformation")
-				//	dt=t("race.moreInformation")
 				div.well(data-ng-bind-html="race.timing.timingMoreInformation")
 		tab(heading=t("race.pricing"))
 			div.container
@@ -33,24 +28,30 @@ div.container
 			div.container
 				div.row
 					div.col-lg-4
-						table.table
+						table.table.table-hover
 							thead
 								tr
-									th(style="width: 50%")
-									th(style="width: 50%")
+									th(style="width: 50%;border:0; border-top: none;")
+									th(style="width: 50%;border:0; border-top: none;")
 							tbody
 								tr
-									td(align="left")=t("race.registrationOpeningDate")
-									td(align="left") {{getDate(race.registration.registrationOpeningDate)}}
+									td(align="left" style="border:0; border-top: none;")<strong>=t("race.registrationOpeningDate")</strong>
+									td(align="left" style="border:0; border-top: none;") {{getDate(race.registration.registrationOpeningDate)}}
 								tr
-									td(align="left")=t("race.registrationLimitDate")
-									td(align="left") {{getDate(race.registration.registrationLimitDate)}}
+									td(align="left" style="border:0; border-top: none;")=t("race.registrationLimitDate")
+									td(align="left" style="border:0; border-top: none;") {{getDate(race.registration.registrationLimitDate)}}
 								tr
-									td(align="left")=t("race.registrationOnPlace")
-									td(align="left") {{race.registration.registrationOnPlace}}
+									td(align="left" style="border:0; border-top: none;")=t("race.registrationWebSite")
+									td(align="left" style="border:0; border-top: none;") {{race.registration.registrationWebSite}}
 								tr
-									td(align="left")=t("race.numberOfPlacesAvailable")
-									td(align="left") {{race.registration.numberOfPlacesAvailable}}
+									td(align="left" style="border:0; border-top: none;")=t("race.registrationAddress")
+									td(align="left" style="border:0; border-top: none;") {{race.registration.registrationAddress}}
+								tr
+									td(align="left" style="border:0; border-top: none;")=t("race.registrationOnPlace")
+									td(align="left" style="border:0; border-top: none;") {{race.registration.registrationOnPlace}}
+								tr
+									td(align="left" style="border:0; border-top: none;")=t("race.numberOfPlacesAvailable")
+									td(align="left" style="border:0; border-top: none;") {{race.registration.numberOfPlacesAvailable}}
 				div.well(data-ng-bind-html="race.registration.registrationMoreInformation")
 
 		tab(data-ng-click="onChangeOrganisationTab()" heading=t("race.plan"))
@@ -75,19 +76,29 @@ div.container
 			div.well(data-ng-bind-html="race.rights.rightsMoreInformation")
 		tab(heading=t("race.therace"))
 			div.container
-				dl.dl-horizontal
-					dt=t("race.numberOfProvisions")
-					dd {{race.therace.numberOfProvisions}}
-					dt=t("race.rewards")
-					dd {{race.therace.rewards}}
-				dl(data-ng-if="race.timing.theRaceMoreInformation")
-					dt=t("race.moreInformation")
-					dd {{race.therace.theRaceMoreInformation}}
+				div.row
+					div.col-lg-4
+						table.table
+							thead
+								tr
+									th(style="width: 50%;border:0; border-top: none;")
+									th(style="width: 50%;border:0; border-top: none;")
+							tbody
+								tr
+									td(align="left" style="border:0; border-top: none;")=t("race.numberOfProvisions")
+									td(align="left" style="border:0; border-top: none;") {{race.therace.numberOfProvisions}}
+				div.well(data-ng-bind-html="race.therace.theRaceMoreInformation")
 		tab(heading=t("race.miscellaneous"))
 			div.container
-				dl.dl-horizontal
-					dt=t("race.organizerWebSite")
-					dd {{race.organizerWebSite}}
-				dl(data-ng-if="race.timing.miscellaneousMoreInformation")
-					dt=t("race.moreInformation")
-					dd {{race.miscellaneous.miscellaneousMoreInformation}}
+				div.row
+					div.col-lg-4
+						table.table
+							thead
+								tr
+									th(style="width: 50%;border:0; border-top: none;" )
+									th(style="width: 50%;border:0; border-top: none;")
+							tbody
+								tr
+									td(align="left" style="border:0; border-top: none;")=t("race.organizerWebSite")
+									td(align="left" style="border:0; border-top: none;") {{race.organizerWebSite}}
+				div.well(data-ng-bind-html="race.miscellaneous.miscellaneousMoreInformation")

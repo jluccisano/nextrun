@@ -1,6 +1,6 @@
-'use strict';
-
 var loadMapFrance = function() {
+
+  'use strict';
 
   //Create map
 

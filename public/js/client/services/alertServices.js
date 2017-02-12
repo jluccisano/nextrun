@@ -1,5 +1,5 @@
 angular.module('nextrunApp')
-    .factory('Alert', function($rootScope, $timeout) {
+    .factory('Alert', ['$rootScope', '$timeout', function($rootScope, $timeout) {
         'use strict';
         var alertService = {};
 
@@ -32,4 +32,4 @@ angular.module('nextrunApp')
 
         return alertService;
 
-    });
+    }]);

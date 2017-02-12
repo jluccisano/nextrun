@@ -1,5 +1,5 @@
 angular.module('nextrunApp')
-	.factory('ContactServices', function($http) {
+	.factory('ContactServices', ['$http', function($http) {
 		'use strict';
 		return {
 			addContact: function(contact, success, error) {
@@ -13,4 +13,4 @@ angular.module('nextrunApp')
 				}).error(error);
 			},
 		};
-	});
+	}]);

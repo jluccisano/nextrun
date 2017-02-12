@@ -1,15 +1,7 @@
-/*body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
-a {
-  color: #00B7FF;
-}
-
-.borderless {
- border:none;
-}*/
+.table th, .table td { 
+     border-top: none; 
+ }
 
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {

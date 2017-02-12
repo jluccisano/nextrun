@@ -122,7 +122,7 @@ var routes = [
         path: '/api/races/:raceId',
         httpMethod: 'GET',
         middleware: [raceController.find],
-        accessLevel: accessLevels.user
+        accessLevel: accessLevels.public
     }, {
         path: '/api/races/:raceId/update',
         httpMethod: 'PUT',
