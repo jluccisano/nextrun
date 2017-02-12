@@ -1,17 +1,29 @@
-div(class="row")
-	div(class="col-lg-8")
-		div
-			span(class="title" e-translate) Licenciés:
-			a(href="#" editable-number="race.pricing.memberFFPrice" e-min="0") {{ race.pricing.memberFFPrice || 'Non communiqué' }}
-		div
-			span(class="title" e-translate) Non licenciés:
-			a(href="#" editable-number="race.pricing.notMemberFFPrice" e-min="0") {{ race.pricing.notMemberFFPrice || 'Non communiqué' }}
-div(class="row")
-	div(class="col-sm-12")
-		div(class="panel panel-default")
-			div(class="panel-heading" translate) Plus d'informations
-				a(class="pull-right" ng-click="editMoreInformation(race.pricing)")
-					span(class="glyphicon glyphicon-pencil")
+div(class="example")
+	h2(class="example-title")
+	div(class="row")
+		div(class="col-md-12")
+			div(class="pricing")
+				ul
+					li(class="unit price-primary")
+						div(class="price-title")
+							h3 15€
+						div(class="price-body")
+							h4 Licencié FFTri
+							p
+							ul
+								li Date limite: 13/11/2014
+								li Nombre de dossard: 250
+						div(class="price-foot")
+							button(type="button" class="btn btn-primary") S'inscrire
+					li(class="unit price-success active")
+						div(class="price-title")
+							h3 20€
+						div(class="price-body")
+							h4 Non Licencié
+							p
+							ul
+								li Date limite: 13/11/2014
+								li Nombre de dossard: 250
+						div(class="price-foot")
+							button(type="button" class="btn btn-primary") S'inscrire
 
-			div(ng-if="race.pricing.moreInformation" class="panel-body" ng-bind-html="race.pricing.moreInformation")
-			div(ng-if="!race.pricing.moreInformation" class="panel-body" translate) Non communiqué

@@ -10,8 +10,7 @@ div(class="container view-race")
             a(ng-class="{'active': active === (route.getType() + $index)}" bs-scrollspy ng-click="status.open = false;setSelection(route, $index);route.setVisible(true)" ng-repeat="route in routesViewModel" nr-scroll-to="route{{$index}}" class="list-group-item") {{route.getType()}}
           a(ng-class="{'active': active === 'organisation'}" bs-scrollspy ng-click="status.open = false;selection = 'organisation';active = 'organisation'" nr-scroll-to="organisation" class="list-group-item")
             h4(class="list-group-item-heading" translate) Organisation
-            a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="status.open = false;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") 
-
+            a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="status.open = false;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Inscription
           a(ng-class="{'active': active === 'rights'}" bs-scrollspy ng-click="status.open = false;selection = 'rights';active = 'rights'" nr-scroll-to="rights" class="list-group-item") 
             h4(class="list-group-item-heading" translate) Règlement
           a(ng-class="{'active': active === 'misc'}" bs-scrollspy ng-click="status.open = false;selection = 'misc';active = 'misc'" nr-scroll-to="misc" class="list-group-item")
@@ -89,9 +88,8 @@ div(class="container view-race")
                     span.small {{ 'Min' | translate}}
             div(ng-show="selection == 'organisation'")
               h1(id="organisation") organisation
-            div(ng-show="selection == 'registration'")
-              h1(id="registration") Inscription
-              include ./templates/viewRegistration
+            div(id="registration" ng-show="selection == 'registration'")
+              include ./templates/viewPricing2
             div(ng-show="selection == 'rights'") 
               h1(id="rights") règlement
               div(ng-if="race.rights.moreInformation" class="well" ng-bind-html="race.rights.moreInformation")
