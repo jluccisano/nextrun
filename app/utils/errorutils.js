@@ -6,10 +6,10 @@
  * @api public
  */
 exports.errors = function(errors) {
-  
+  var errs = []
   if (errors instanceof Object) {
     var keys = Object.keys(errors);
-    var errs = []
+    
     // if there is no validation error, just display a generic error
     if (!keys) {
       console.log(errors);
