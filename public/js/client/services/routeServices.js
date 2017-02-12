@@ -415,6 +415,8 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 	var removeLastMarker = function(route) {
 
+		var marker = {};
+
 		if (route.markers.length > 0) {
 			route.markers[route.markers.length - 1];
 			route.markers.splice(route.markers.length - 1, 1);
@@ -422,14 +424,14 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 		if (route.markers.length > 1) {
 
-			var marker = getMarkerByIndex(route, route.markers.length - 1);
+			marker = getMarkerByIndex(route, route.markers.length - 1);
 
 			marker.icon = "../../../img/end.png";
 		}
 
-		if (route.markers.length == 1) {
+		if (route.markers.length === 1) {
 
-			var marker = getMarkerByIndex(route, 0);
+			marker = getMarkerByIndex(route, 0);
 		}
 	};
 
