@@ -46,7 +46,11 @@ var RaceSchema = new Schema({
   department: {
     code: String,
     name: String,
-    region: String
+    region: String,
+    center: {
+      latitude: Number,
+      longitude: Number
+    }
   },
   date: Date,
   edition: Number,
@@ -285,7 +289,7 @@ RaceSchema.statics = {
     var regex = new RegExp('\\b' + query_string, 'i');
 
     this.find({
-      name: regex
+      name: regex , published: true
     }, {
       name: 1
     }).limit(8).exec(cb);

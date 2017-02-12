@@ -106,7 +106,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 			}
 		};
-		
+
 
 		$scope.onChangeTab = function(route) {
 			route.isVisible = true;
@@ -294,8 +294,14 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 
 
+						if (route.segments.length == 0) {
+							route.center = $scope.race.department.center;
+						}
+
 						$scope.race.routes[index] = route;
 						$scope.race.routes[0].isVisible = true;
+
+
 
 					});
 
@@ -303,6 +309,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 					$scope.currentRaceType = raceType;
 					$scope.distances = $scope.race.type.distances;
 					$scope.race.department = getDepartmentByCode(DEPARTMENTS, $scope.race.department.code);
+
 
 					_.each($scope.race.type.distances, function(distanceType) {
 						if ($scope.race.distanceType.name === distanceType.name) {
@@ -524,6 +531,10 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 					click: function(mapModel, eventName, originalEventArgs) {
 						RouteFactory.onClickMap($scope, route, originalEventArgs[0].latLng, google.maps.TravelMode.DRIVING);
 					}
+				}
+
+				if (route.segments.length == 0) {
+					route.center = $scope.race.department.center;
 				}
 
 				$scope.race.routes[index] = route;

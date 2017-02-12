@@ -1,16 +1,22 @@
-angular.module('nextrunApp').factory('sharedService', function($rootScope) {
-    var sharedService = {};
-    
-    sharedService.fulltext = '';
+angular.module('nextrunApp')
+    .factory('mySharedService', ['$rootScope',
+        function($rootScope) {
 
-    sharedService.prepForBroadcast = function(fulltext) {
-        this.fulltext = fulltext;
-        this.broadcastItem();
-    };
+            'use strict';
 
-    sharedService.broadcastItem = function() {
-        $rootScope.$broadcast('handleBroadcast');
-    };
+            var sharedService = {};
 
-    return sharedService;
-});
+            sharedService.fulltext = '';
+
+            sharedService.prepForBroadcast = function(fulltext) {
+                this.fulltext = fulltext;
+                this.broadcastItem();
+            };
+
+            sharedService.broadcastItem = function() {
+                $rootScope.$broadcast('handleBroadcast');
+            };
+
+            return sharedService;
+        }
+    ]);

@@ -86,7 +86,6 @@ module.exports = function(grunt) {
           'tmp/public/js/libs/textAngular.js': ['public/js/libs/textAngular.js'],
           'tmp/public/js/libs/bootstrap-multiselect.js': ['public/js/libs/bootstrap-multiselect.js'],
           'tmp/public/js/libs/daterangepicker.js': ['public/js/libs/daterangepicker.js'],
-          'tmp/public/js/libs/ng-bs-daterangepicker.js': ['public/js/libs/ng-bs-daterangepicker.js'],
           'tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js': ['public/js/libs/ui-bootstrap-tpls-0.7.0.js']
         },
       },
@@ -130,7 +129,6 @@ module.exports = function(grunt) {
           'dist/public/js/libs/textAngular.min.js': ['tmp/public/js/libs/textAngular.js'],
           'dist/public/js/libs/bootstrap-multiselect.min.js': ['tmp/public/js/libs/bootstrap-multiselect.js'],
           'dist/public/js/libs/daterangepicker.min.js': ['tmp/public/js/libs/daterangepicker.js'],
-          'dist/public/js/libs/ng-bs-daterangepicker.min.js': ['tmp/public/js/libs/ng-bs-daterangepicker.js'],
           'dist/public/js/libs/ui-bootstrap-tpls-0.7.0.min.js': ['tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js']
         }
       }

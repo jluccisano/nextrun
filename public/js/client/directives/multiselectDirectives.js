@@ -27,13 +27,13 @@ angular.module("nextrunApp").directive('multiselectDropdown', [function() {
             },
             // Replicate the native functionality on the elements so
             // that angular can handle the changes for us.
-            onChange: function (optionElement, checked) {
+            /*onChange: function (optionElement, checked) {
                 optionElement.removeAttr('selected');
                 if (checked) {
                     optionElement.attr('selected', 'selected');
                 }
                 element.change();
-            }
+            }*/
             
         });
         // Watch for any changes to the length of our select element

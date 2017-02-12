@@ -11,9 +11,9 @@ div.container
 		div.col-lg-4
 			h4 {{total}} <small>résultats</small>
 	div.row
-			div.col-lg-4
+			div.col-lg-3
 				div.well
-					h2 Affiner la Recherche
+					h4 Affiner la Recherche
 					a(data-ng-click="onSelect('*')") Tout supprimer
 					div.row
 						div.col-lg-12
@@ -25,36 +25,36 @@ div.container
 						div.col-lg-12
 							a(data-ng-click="resetDataRangeFilter();onChange()") 
 								span.label.label-warning {{formatDateRange(dateRange)}}
-					h3 par Type
-					div.checkbox(ng-repeat="facet in typeFacets")
-						div(ng-switch="currentTypeSelected.indexOf(facet._id.name) > -1")
-							div(ng-switch-when="false")
+					h4 par Type
+					div.checkbox(data-ng-repeat="facet in typeFacets")
+						div(data-ng-switch="currentTypeSelected.indexOf(facet._id.name) > -1")
+							div(data-ng-switch-when="false")
 								label {{facet._id.name}} ({{facet.total}})
 								input(type="checkbox" 
-								  ng-change="onChange()",
-								  ng-model="facet.selected",
-								  ng-checked="currentTypeSelected.indexOf(facet._id.name) > -1"
-								  ng-click="toggleTypeSelection(facet._id.name)"
-								  ng-true-value="true", 
-								  ng-false-value="false")
-							div(ng-switch-when="true")
+								  data-ng-change="onChange()",
+								  data-ng-model="facet.selected",
+								  data-ng-checked="currentTypeSelected.indexOf(facet._id.name) > -1"
+								  data-ng-click="toggleTypeSelection(facet._id.name)"
+								  vng-true-value="true", 
+								  data-ng-false-value="false")
+							div(data-ng-switch-when="true")
 								label <strong>{{facet._id.name}}</strong>
 								input(type="checkbox" 
-								  ng-change="onChange()",
-								  ng-model="facet.selected",
-								  ng-checked="currentTypeSelected.indexOf(facet._id.name) > -1"
-								  ng-click="toggleTypeSelection(facet._id.name)"
-								  ng-true-value="true", 
-								  ng-false-value="false")
-					h3 par Département
-					select(class="multiselect" data-ng-change="onChange()"  data-placeholder="Sélectionner..." data-ng-model="departments" data-ng-options="department.value as getDepartment(department.value) for department in listOfDepartments" multiple="multiple" multiselect-dropdown)
-					h3 par Date
+								  data-ng-change="onChange()",
+								  data-ng-model="facet.selected",
+								  data-ng-checked="currentTypeSelected.indexOf(facet._id.name) > -1"
+								  data-ng-click="toggleTypeSelection(facet._id.name)"
+								  data-ng-true-value="true", 
+								  data-ng-false-value="false")
+					h4 par Département
+					select(class="multiselect" data-ng-change="onChange()" data-placeholder="Sélectionner..." data-ng-model="departments" data-ng-options="department.value as getDepartment(department.value) for department in listOfDepartments" multiple="multiple" multiselect-dropdown)
+					h4 par Date
 					div.input-group
 						span.input-group-addon
 							i.glyphicon.glyphicon-calendar
 						input.form-control(type="daterange" min-date="{{datarangeConfig.minDate}}" max-date="{{datarangeConfig.maxDate}}" data-ng-model="dateRange" data-ng-change="onChange()" format="{{datarangeConfig.format}}" locale="{{datarangeConfig.locale}}" ranges="{{datarangeConfig.ranges}}")
 			
-			div.col-lg-8
+			div.col-lg-9
 				div.col-lg-3
 					pre Page: {{currentPage}} / {{numPages}}
 				div.col-lg-3.col-lg-offset-4
@@ -71,6 +71,7 @@ div.container
 						tr
 							th(style="width: 40%;border:0; border-top: none;")
 							th(style="width: 20%;border:0; border-top: none;")
+							th(style="width: 20%;border:0; border-top: none;")
 							th(style="width: 10%;border:0; border-top: none;")
 							th(style="width: 30%;border:0; border-top: none;")
 					tbody
@@ -78,6 +79,7 @@ div.container
 							td(align="left")
 								a(data-ng-href='/races/view/{{race._id}}') {{race.name}}
 							td(align="center") {{race.type.i18n}}
+							td(align="center") {{race.department.code}} - {{race.department.name}}
 							td(align="center") {{race.distanceType.name}}
 							td(align="center") {{getDate(race.date)}}
 				div.col-lg-6.col-lg-offset-4

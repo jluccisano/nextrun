@@ -268,10 +268,7 @@ exports.extractCriteria = function(req, res, next) {
     }
   };
 
-  console.log(util.inspect(req.body.criteria.dateRange, true));
-
   var criteria = req.body.criteria;
-
 
   if (criteria) {
 
@@ -321,7 +318,7 @@ exports.extractCriteria = function(req, res, next) {
       };
     }
   }
-
+  
   req.operation = operation;
   req.races = [];
   req.facets = [];
@@ -343,8 +340,6 @@ exports.typeFacets = function(req, res) {
       });
     }
     req.facets.push(typeFacets);
-
-    console.log(util.inspect(req.facets, true));
 
     return res.json(200, {
       races: req.races,
@@ -408,7 +403,6 @@ exports.search = function(req, res, next) {
         message: errorUtils.errors(err.errors)
       });
     }
-    console.log(races);
     req.races = races;
     return next();
   });
@@ -421,8 +415,6 @@ exports.search = function(req, res, next) {
  */
 exports.autocomplete = function(req, res) {
 
-  console.log(util.inspect(req.params.query_string, true));
-
   Race.autocomplete(req.params.query_string, function(err, races) {
     if (err) {
       console.log(err);
@@ -430,7 +422,6 @@ exports.autocomplete = function(req, res) {
         message: errorUtils.errors(err.errors)
       });
     }
-    console.log(races);
     req.races = races;
      return res.json(200, {
       races: req.races

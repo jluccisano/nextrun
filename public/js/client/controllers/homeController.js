@@ -1,4 +1,4 @@
-angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$location', 'ContactServices', 'Alert', 'sharedService', '$rootScope',
+angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$location', 'ContactServices', 'Alert', 'mySharedService', '$rootScope',
 	function($scope, $http, $location, ContactServices, Alert, sharedService, $rootScope) {
 		'use strict';
 

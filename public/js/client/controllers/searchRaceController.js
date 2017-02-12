@@ -1,4 +1,4 @@
-angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'sharedService', '$rootScope',
+angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'mySharedService', '$rootScope',
 	function($scope, $location, $routeParams, RaceServices, $http, sharedService, $rootScope) {
 		'use strict';
 
@@ -15,10 +15,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.currentTypeSelected = [];
 		$scope.departments = [];
-		$scope.dateRange = {
-			"startDate": moment(),
-			"endDate": moment().add('days', 29)
-		};
+
 
 		$scope.listOfDepartments = DEPARTMENTS.enums;
 
@@ -46,8 +43,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			timePicker12Hour: true,
 			ranges: {
 				"Aujourd'hui": [moment(), moment()],
-				"Les 7 Prochains jours": [moment().add('days', 6), moment()],
-				"Les 30 Prochains jours": [moment().add('days', 29), moment()],
+				"Les 7 Prochains jours": [moment(), moment().add('days', 6)],
+				"Les 30 Prochains jours": [moment(), moment().add('days', 29)],
 				"Ce mois-ci": [moment().startOf('month'), moment().endOf('month')],
 				"Le mois prochain": [moment().add('month', 1).startOf('month'), moment().add('month', 1).endOf('month')]
 			},
@@ -56,18 +53,22 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			applyClass: 'btn-small btn-primary',
 			cancelClass: 'btn-small',
 			format: 'DD/MM/YYYY',
-			separator: ' à ',
+			separator: ' a ',
 			locale: {
 				applyLabel: 'Valider',
 				fromLabel: 'de',
-				toLabel: 'à',
-				customRangeLabel: 'Personnalisé',
+				toLabel: 'a',
+				customRangeLabel: 'Personnalise',
 				daysOfWeek: ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'],
-				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+				monthNames: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
 				firstDay: 0
 			},
 		};
 
+		$scope.dateRange = {
+			"startDate": moment(),
+			"endDate": moment().add('days', 29)
+		};
 
 
 		$scope.computeUrlParams = function() {
@@ -90,7 +91,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.deleteFilters = function() {
 			$scope.currentTypeSelected = [];
 			$scope.departments = [];
-			$scope.dateRange = {};
+			$scope.dateRange = {
+				"startDate": moment(),
+				"endDate": moment().add('days', 29)
+			};
 		}
 
 
@@ -150,17 +154,14 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.onChangePageSize = function() {
 			$scope.search();
-			$scope.currentPage = 1;
 		};
 
 		$scope.onChangeSort = function() {
 			$scope.search();
-			$scope.currentPage = 1;
 		};
 
 		$scope.onChange = function() {
 			$scope.search();
-			$scope.currentPage = 1;
 		}
 
 		$scope.onSelect = function($item) {
@@ -183,7 +184,11 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		};
 
 		$scope.resetDataRangeFilter = function() {
-			$scope.dateRange = {};
+			$scope.dateRange = {
+				"startDate": moment(),
+				"endDate": moment().add('days', 29)
+			};
+
 		};
 
 		$scope.toggleDepartmentSelection = function(term) {
@@ -225,6 +230,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 
 		$scope.search = function() {
+
+			$scope.currentPage = 1;
 
 			var criteria = {
 				fulltext: ($scope.fulltext !== undefined && $scope.fulltext.fullname) ? $scope.fulltext.fullname : "",
@@ -284,5 +291,6 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				});
 		};
 		$scope.computeUrlParams();
+		$scope.search();
 	}
 ]);

@@ -2,482 +2,866 @@ var DEPARTMENTS = new Enum({
 	AIN: {
 		code: '01',
 		name: 'Ain',
-		region: 'Rhône-Alpes'
+		region: 'Rhône-Alpes',
+		center: {
+			latitude: 46.324172,
+			longitude: 5.135284
+		}
 	},
 	AISNE: {
 		code: '02',
 		name: 'Aisne',
-		region: 'Picardie'
+		region: 'Picardie',
+		center: {
+			latitude: 49.553726,
+			longitude: 3.459869
+		}
 	},
 	CORSE_DU_SUD: {
 		code: '2A',
 		name: 'Corse du Sud',
-		region: 'Corse'
+		region: 'Corse',
+		center: {
+			latitude: 41.853196,
+			longitude: 8.997391
+		}
 	},
 	HAUTE_CORSE: {
 		code: '2B',
 		name: 'Haute-Corse',
-		region: 'Corse'
+		region: 'Corse',
+		center: {
+			latitude: 42.468045,
+			longitude: 9.238678
+		}
 	},
 	ALLIER: {
 		code: '03',
 		name: 'Allier',
-		region: 'Auvergne'
+		region: 'Auvergne',
+		center: {
+			latitude: 46.418926,
+			longitude: 3.281754
+		}
 	},
 	ALPES_DE_HAUTE_PROVENCE: {
 		code: '04',
 		name: 'Alpes de Haute-Provence',
-		region: 'Provence-Alpes-Côte d\'Azur'
+		region: 'Provence-Alpes-Côte d\'Azur',
+		center: {
+			latitude: 44.162504,
+			longitude: 6.244904
+		}
 	},
 	HAUTES_ALPES: {
 		code: '05',
 		name: 'Hautes-Alpes',
-		region: 'Provence-Alpes-Côte d\'Azur'
+		region: 'Provence-Alpes-Côte d\'Azur',
+		center: {
+			latitude: 44.6413,
+			longitude: 6.31398
+		}
 	},
 	ALPES_MARITIMES: {
 		code: '06',
 		name: 'Alpes-Maritimes',
-		region: 'Provence-Alpes-Côte d\'Azur'
+		region: 'Provence-Alpes-Côte d\'Azur',
+		center: {
+			latitude: 43.931528,
+			longitude: 7.1819
+		}
 	},
 	ARDECHE: {
 		code: '07',
 		name: 'Ardèche',
-		region: 'Rhône-Alpes'
+		region: 'Rhône-Alpes',
+		center: {
+			latitude: 44.750634,
+			longitude: 4.432159
+		}
 	},
 	ARDENNES: {
 		code: '08',
 		name: 'Ardennes',
-		region: 'Champagne'
+		region: 'Champagne',
+		center: {
+			latitude: 49.624946,
+			longitude: 4.613434
+		}
 	},
 	ARIEGE: {
 		code: '09',
 		name: 'Ariège',
-		region: 'Midi-Pyrénées'
+		region: 'Midi-Pyrénées',
+		center: {
+			latitude: 42.958433,
+			longitude: 1.441544
+		}
 	},
 	AUBE: {
 		code: '10',
 		name: 'Aube',
-		region: 'Champagne'
+		region: 'Champagne',
+		center: {
+			latitude: 48.312428,
+			longitude: 4.157501
+		}
 	},
 	AUDE: {
 		code: '11',
 		name: 'Aude',
-		region: 'Languedoc-Roussillon'
+		region: 'Languedoc-Roussillon',
+		center: {
+			latitude: 43.115019,
+			longitude: 2.383621
+		}
 	},
 	AVEYRON: {
 		code: '12',
 		name: 'Aveyron',
-		region: 'Midi-Pyrénées'
+		region: 'Midi-Pyrénées',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	BOUCHES_DU_RHONE: {
 		code: '13',
 		name: 'Bouches du Rhône',
-		region: 'Provence-Alpes-Côte d\'Azur'
+		region: 'Provence-Alpes-Côte d\'Azur',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	CALVADOS: {
 		code: '14',
 		name: 'Calvados',
-		region: 'Basse-Normandie'
+		region: 'Basse-Normandie',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	CANTAL: {
 		code: '15',
 		name: 'Cantal',
-		region: 'Auvergne'
+		region: 'Auvergne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	CHARENTE: {
 		code: '16',
 		name: 'Charente',
-		region: 'Poitou-Charente'
+		region: 'Poitou-Charente',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	CHARENTE_MARITIME: {
 		code: '17',
 		name: 'Charente Maritime',
-		region: 'Poitou-Charente'
+		region: 'Poitou-Charente',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	CHER: {
 		code: '18',
 		name: 'Cher',
-		region: 'Centre'
+		region: 'Centre',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	CORREZE: {
 		code: '19',
 		name: 'Corrèze',
-		region: 'Limousin'
+		region: 'Limousin',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	COTE_DOR: {
 		code: '21',
 		name: 'Côte d\'Or',
-		region: 'Bourgogne'
+		region: 'Bourgogne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	COTES_DARMOR: {
 		code: '22',
 		name: 'Côtes d\'Armor',
-		region: 'Bretagne'
+		region: 'Bretagne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	CREUSE: {
 		code: '23',
 		name: 'Creuse',
-		region: 'Limousin'
+		region: 'Limousin',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	DORDOGNE: {
 		code: '24',
 		name: 'Dordogne',
-		region: 'Aquitaine'
+		region: 'Aquitaine',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	DOUBS: {
 		code: '25',
 		name: 'Doubs',
-		region: 'Franche-Comté'
+		region: 'Franche-Comté',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	DROME: {
 		code: '26',
 		name: 'Drôme',
-		region: 'Rhône-Alpes'
+		region: 'Rhône-Alpes',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	EURE: {
 		code: '27',
 		name: 'Eure',
-		region: 'Haute-Normandie'
+		region: 'Haute-Normandie',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	EURE_ET_LOIR: {
 		code: '28',
 		name: 'Eure-et-Loir',
-		region: 'Centre'
+		region: 'Centre',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	FINISTERE: {
 		code: '29',
 		name: 'Finistère',
-		region: 'Bretagne'
+		region: 'Bretagne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	GARD: {
 		code: '30',
 		name: 'Gard',
-		region: 'Languedoc'
+		region: 'Languedoc',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUTE_GARONNE: {
 		code: '31',
 		name: 'Haute-Garonne',
-		region: 'Midi-Pyrénées'
+		region: 'Midi-Pyrénées',
+		center: {
+			latitude: 43.468868,
+			longitude: 1.141754
+		}
 	},
 	GERS: {
 		code: '32',
 		name: 'Gers',
-		region: 'Midi-Pyrénées'
+		region: 'Midi-Pyrénées',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	GIRONDE: {
 		code: '33',
 		name: 'Gironde',
-		region: 'Aquitaine'
+		region: 'Aquitaine',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HERAULT: {
 		code: '34',
 		name: 'Hérault',
-		region: 'Languedoc'
+		region: 'Languedoc',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	ILLE_ET_VILAINE: {
 		code: '35',
 		name: 'Ille-et-Vilaine',
-		region: 'Bretagne'
+		region: 'Bretagne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	INDRE: {
 		code: '36',
 		name: 'Indre',
-		region: 'Centre'
+		region: 'Centre',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	INDRE_ET_LOIRE: {
 		code: '37',
 		name: 'Indre-et-Loire',
-		region: 'Centre'
+		region: 'Centre',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	ISERE: {
 		code: '38',
 		name: 'Isère',
-		region: 'Rhône-Alpes'
+		region: 'Rhône-Alpes',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	JURA: {
 		code: '39',
 		name: 'Jura',
-		region: 'Franche-Comté'
+		region: 'Franche-Comté',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	LANDES: {
 		code: '40',
 		name: 'Landes',
-		region: 'Aquitaine'
+		region: 'Aquitaine',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	LOIR_ET_CHER: {
 		code: '41',
 		name: 'Loir-et-Cher',
-		region: 'Centre'
+		region: 'Centre',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	LOIRE: {
 		code: '42',
 		name: 'Loire',
-		region: 'Rhône-Alpes'
+		region: 'Rhône-Alpes',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUTE_LOIRE: {
 		code: '43',
 		name: 'Haute-Loire',
-		region: 'Auvergne'
+		region: 'Auvergne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	LOIRE_ATLANTIQUE: {
 		code: '44',
 		name: 'Loire-Atlantique',
-		region: 'Pays-de-la-Loire'
+		region: 'Pays-de-la-Loire',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	LOIRET: {
 		code: '45',
 		name: 'Loiret',
-		region: 'Centre'
+		region: 'Centre',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	LOT: {
 		code: '46',
 		name: 'Lot',
-		region: 'Midi-Pyrénées'
+		region: 'Midi-Pyrénées',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	LOT_ET_GARONNE: {
 		code: '47',
 		name: 'Lot-et-Garonne',
-		region: 'Aquitaine'
+		region: 'Aquitaine',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	LOZERE: {
 		code: '48',
 		name: 'Lozère',
-		region: 'Languedoc'
+		region: 'Languedoc',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	MAINE_ET_LOIRE: {
 		code: '49',
 		name: 'Maine-et-Loire',
-		region: 'Pays-de-la-Loire'
+		region: 'Pays-de-la-Loire',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	MANCHE: {
 		code: '50',
 		name: 'Manche',
-		region: 'Normandie'
+		region: 'Normandie',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	MARNE: {
 		code: '51',
 		name: 'Marne',
-		region: 'Champagne'
+		region: 'Champagne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUTE_MARNE: {
 		code: '52',
 		name: 'Haute-Marne',
-		region: 'Champagne'
+		region: 'Champagne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	MAYENNE: {
 		code: '53',
 		name: 'Mayenne',
-		region: 'Pays-de-la-Loire'
+		region: 'Pays-de-la-Loire',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	MEURTHE_ET_MOSELLE: {
 		code: '54',
 		name: 'Meurthe-et-Moselle',
-		region: 'Lorraine'
+		region: 'Lorraine',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	MEUSE: {
 		code: '55',
 		name: 'Meuse',
-		region: 'Lorraine'
+		region: 'Lorraine',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	MORBIHAN: {
 		code: '56',
 		name: 'Morbihan',
-		region: 'Bretagne'
+		region: 'Bretagne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	MOSELLE: {
 		code: '57',
 		name: 'Moselle',
-		region: 'Lorraine'
+		region: 'Lorraine',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	NIEVRE: {
 		code: '58',
 		name: 'Nièvre',
-		region: 'Bourgogne'
+		region: 'Bourgogne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	NORD: {
 		code: '59',
 		name: 'Nord',
-		region: 'Nord'
+		region: 'Nord',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	OISE: {
 		code: '60',
 		name: 'Oise',
-		region: 'Picardie'
+		region: 'Picardie',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	ORNE: {
 		code: '61',
 		name: 'Orne',
-		region: 'Basse-Normandie'
+		region: 'Basse-Normandie',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	PAS_DE_CALAIS: {
 		code: '62',
 		name: 'Pas-de-Calais',
-		region: 'Nord'
+		region: 'Nord',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	PUY_DE_DOME: {
 		code: '63',
 		name: 'Puy-de-Dôme',
-		region: 'Auvergne'
+		region: 'Auvergne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	PYRENEES_ATLANTIQUES: {
 		code: '64',
 		name: 'Pyrénées-Atlantiques',
-		region: 'Aquitaine'
+		region: 'Aquitaine',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUTES_PYRENEES: {
 		code: '65',
 		name: 'Hautes-Pyrénées',
-		region: 'Midi-Pyrénées'
+		region: 'Midi-Pyrénées',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	PYRENEES_ORIENTALES: {
 		code: '66',
 		name: 'Pyrénées-Orientales',
-		region: 'Languedoc'
+		region: 'Languedoc',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	BAS_RHIN: {
 		code: '67',
 		name: 'Bas-Rhin',
-		region: 'Alsace'
+		region: 'Alsace',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUT_RHIN: {
 		code: '68',
 		name: 'Haut-Rhin',
-		region: 'Alsace'
+		region: 'Alsace',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	RHONE: {
 		code: '69',
 		name: 'Rhône',
-		region: 'Rhône-Alpes'
+		region: 'Rhône-Alpes',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUTE_SAONE: {
 		code: '70',
 		name: 'Haute-Saône',
-		region: 'Franche-Comté'
+		region: 'Franche-Comté',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	SAONE_ET_LOIRE: {
 		code: '71',
 		name: 'Saône-et-Loire',
-		region: 'Bourgogne'
+		region: 'Bourgogne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	SARTHE: {
 		code: '72',
 		name: 'Sarthe',
-		region: 'Pays-de-la-Loire'
+		region: 'Pays-de-la-Loire',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	SAVOIE: {
 		code: '73',
 		name: 'Savoie',
-		region: 'Rhône-Alpes'
+		region: 'Rhône-Alpes',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUTE_SAVOIE: {
 		code: '74',
 		name: 'Haute-Savoie',
-		region: 'Rhône-Alpes'
+		region: 'Rhône-Alpes',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	PARIS: {
 		code: '75',
 		name: 'Paris',
-		region: 'Ile-de-France'
+		region: 'Ile-de-France',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	SEINE_MARITIME: {
 		code: '76',
 		name: 'Seine-Maritime',
-		region: 'Haute-Normandie'
+		region: 'Haute-Normandie',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	SEINE_ET_MARNE: {
 		code: '77',
 		name: 'Seine-et-Marne',
-		region: 'Ile-de-France'
+		region: 'Ile-de-France',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	YVELINES: {
 		code: '78',
 		name: 'Yvelines',
-		region: 'Ile-de-France'
+		region: 'Ile-de-France',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	DEUX_SEVRES: {
 		code: '79',
 		name: 'Deux-Sèvres',
-		region: 'Poitou-Charente'
+		region: 'Poitou-Charente',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	SOMME: {
 		code: '80',
 		name: 'Somme',
-		region: 'Picardie'
+		region: 'Picardie',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	TARN: {
 		code: '81',
 		name: 'Tarn',
-		region: 'Midi-Pyrénées'
+		region: 'Midi-Pyrénées',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	TARN_ET_GARONNE: {
 		code: '82',
 		name: 'Tarn-et-Garonne',
-		region: 'Midi-Pyrénées'
+		region: 'Midi-Pyrénées',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	VAR: {
 		code: '83',
 		name: 'Var',
-		region: 'Provence-Alpes-Côte d\'Azur'
+		region: 'Provence-Alpes-Côte d\'Azur',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	VAUCLUSE: {
 		code: '84',
 		name: 'Vaucluse',
-		region: 'Provence-Alpes-Côte d\'Azur'
+		region: 'Provence-Alpes-Côte d\'Azur',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	VENDEE: {
 		code: '85',
 		name: 'Vendée',
-		region: 'Pays-de-la-Loire'
+		region: 'Pays-de-la-Loire',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	VIENNE: {
 		code: '86',
 		name: 'Vienne',
-		region: 'Poitou-Charente'
+		region: 'Poitou-Charente',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUTE_VIENNE: {
 		code: '87',
 		name: 'Haute-Vienne',
-		region: 'Limousin'
+		region: 'Limousin',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	VOSGES: {
 		code: '88',
 		name: 'Vosges',
-		region: 'Lorraine'
+		region: 'Lorraine',
+		center: {
+			latitude: 48.178907,
+			longitude: 6.333206
+		}
 	},
 	YONNE: {
 		code: '89',
 		name: 'Yonne',
-		region: 'Bourgogne'
+		region: 'Bourgogne',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	TERRITOIRE_DE_BELFORT: {
 		code: '90',
 		name: 'Territoire-de-Belfort',
-		region: 'Franche-Comté'
+		region: 'Franche-Comté',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	ESSONNE: {
 		code: '91',
 		name: 'Essonne',
-		region: 'Ile-de-France'
+		region: 'Ile-de-France',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	HAUTS_DE_SEINE: {
 		code: '92',
 		name: 'Hauts-de-Seine',
-		region: 'Ile-de-France'
+		region: 'Ile-de-France',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	SEINE_ST_DENIS: {
 		code: '93',
 		name: 'Seine-St-Denis',
-		region: 'Ile-de-France'
+		region: 'Ile-de-France',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	VAL_DE_MARNE: {
 		code: '94',
 		name: 'Val-de-Marne',
-		region: 'Ile-de-France'
+		region: 'Ile-de-France',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 	VAL_DOISE: {
 		code: '95',
 		name: 'Val-d\'Oise',
-		region: 'Ile-de-France'
+		region: 'Ile-de-France',
+		center: {
+			latitude: 0,
+			longitude: 0
+		}
 	},
 });
 
