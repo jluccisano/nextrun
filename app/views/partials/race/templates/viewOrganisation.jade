@@ -53,9 +53,11 @@ div.container
 							span <strong>{{race.plan.address.postcode}} - {{race.plan.address.city}}</strong>
 							br
 					div.col-lg-4(data-ng-if="plan.isVisible")
-						google-map(center="plan.center" refresh="true" options="plan.options" zoom="plan.zoom" draggable="true" mark-click="false" style="height:50px")
-							markers
-								marker(coords="addressMarker" icon="addressMarker.icon")
+						gm-map(gm-map-id="'simpleMap'"  style="width:250px;height:250px" class="map")
+
+						//google-map(center="plan.center" refresh="true" options="plan.options" zoom="plan.zoom" draggable="true" mark-click="false" style="height:50px")
+						//	markers
+						//		marker(coords="addressMarker" icon="addressMarker.icon")
 		tab(heading=t("race.rights"))
 			div.container
 				dl.dl-horizontal

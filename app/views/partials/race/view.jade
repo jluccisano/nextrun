@@ -1,4 +1,4 @@
-div.container(style="margin-top:50px")
+div.container(style="margin-top:50px",style="padding-bottom: 50px;")
 	h1 {{race.name}}
 		small  ({{race.department.code}})
 	h4.text-right  {{getDate(race.date)}}
@@ -11,9 +11,20 @@ div.container(style="margin-top:50px")
 			h3 {{race.distanceType.name}}
 			span.small distance
 		div.col-md-4
-			a(data-ng-click="openFeedbackModal(race._id)") 
-				i.glyphicon.glyphicon-thumbs-down 
-					span Signaler une erreur		
+			div.row
+				div.col-md-8.col-md-offset-4
+					table.table
+						tbody
+							tr
+								td(style="border:0", align="left")
+									a(data-ng-click="openFeedbackModal(race._id)") 
+										i.glyphicon.glyphicon-thumbs-down 
+										span  Signaler une erreur
+							tr(data-ng-if="race.organizerWebSite")
+								td(style="border:0", align="left")
+									a(data-ng-href="http://{{race.organizerWebSite}}" target="_blank")
+										i.glyphicon.glyphicon-info-sign
+										span  {{race.organizerWebSite}}
 	h2 Parcours
 	hr
 	div.row
