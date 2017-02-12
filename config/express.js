@@ -71,7 +71,7 @@ module.exports = function(app, config, passport) {
 		//http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
 		//fix bug limit request entity too large
 		app.use(express.json({limit: '15mb'}));
-		app.use(express.urlencoded({limit: '1git 15mb'}));
+		app.use(express.urlencoded({limit: '15mb'}));
 
 		// express/mongo session storage
 		app.use(express.session({
