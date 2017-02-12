@@ -11,13 +11,7 @@ div.container
 				div.input-group-btn(style="width:100%")
 					input.form-control(type="text" placeholder="Rechercher" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in autocomplete($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
 
-				select.form-control(style="width:200px"  data-ng-change="onChangeRegion(region)" data-placeholder="Sélectionner..." data-ng-model="region" data-ng-options="region.value as getRegion(region.value) for region in listOfRegions")
-				//select(style="width:150px" class="multiselect" data-ng-change="onChange()" data-placeholder="Sélectionner..." data-ng-model="regions" data-ng-options="region.value as getRegion(region.value) for region in listOfRegions" multiple="multiple" multiselect-dropdown)
-				//select(class="multiselect" data-ng-change="onChange()" data-placeholder="Sélectionner..." data-ng-model="departments" data-ng-options="department.value as getDepartment(department.value) group by department.value.region for department in listOfDepartments" multiple="multiple" multiselect-dropdown)
-
-				
-
-				
+				select.form-control(style="width:200px"  data-ng-change="onChangeRegion(region)" data-placeholder="Sélectionner..." data-ng-model="region" data-ng-options="region.value as getRegion(region.value) for region in listOfRegions")				
 	div.row
 		div.col-lg-4
 			h4 {{total}} <small>résultats</small>
@@ -32,7 +26,7 @@ div.container
 								span.label.label-primary {{type}}
 						div.col-lg-12
 							a(data-ng-click="toggleDepartmentSelection(department);onChange()" ng-repeat="department in departments") 
-								span.label.label-success {{getDepartment(department)}}
+								span.label.label-success {{getDepartmentByCode(department)}}
 						div.col-lg-12
 							a(data-ng-click="resetDataRangeFilter();onChange()") 
 								span.label.label-warning {{formatDateRange(dateRange)}}
@@ -40,7 +34,7 @@ div.container
 					div.checkbox(data-ng-repeat="facet in typeFacets")
 						div(data-ng-switch="currentTypeSelected.indexOf(facet._id.name) > -1")
 							div(data-ng-switch-when="false")
-								label {{facet._id.name}} ({{facet.total}})
+								label {{facet._id.i18n}} ({{facet.total}})
 								input(type="checkbox" 
 								  data-ng-change="onChange()",
 								  data-ng-model="facet.selected",
@@ -49,7 +43,7 @@ div.container
 								  vng-true-value="true", 
 								  data-ng-false-value="false")
 							div(data-ng-switch-when="true")
-								label <strong>{{facet._id.name}}</strong>
+								label <strong>{{facet._id.i18n}}</strong>
 								input(type="checkbox" 
 								  data-ng-change="onChange()",
 								  data-ng-model="facet.selected",
@@ -57,28 +51,31 @@ div.container
 								  data-ng-click="toggleTypeSelection(facet._id.name)"
 								  data-ng-true-value="true", 
 								  data-ng-false-value="false")
-					h4 par Département
-					div.checkbox(data-ng-repeat="facet in departmentFacets")
-						div(data-ng-switch="departments.indexOf(facet._id) > -1")
-							div(data-ng-switch-when="false")
-								label {{getDepartmentByCode(facet._id)}} ({{facet.total}})
-								input(type="checkbox" 
-								  data-ng-change="onChange()",
-								  data-ng-model="facet.selected",
-								  data-ng-checked="departments.indexOf(facet._id) > -1"
-								  data-ng-click="toggleDepartmentSelection(facet._id)"
-								  vng-true-value="true", 
-								  data-ng-false-value="false")
-							div(data-ng-switch-when="true")
-								label <strong>{{getDepartmentByCode(facet._id)}}</strong>
-								input(type="checkbox" 
-								  data-ng-change="onChange()",
-								  data-ng-model="facet.selected",
-								  data-ng-checked="departments.indexOf(facet._id) > -1"
-								  data-ng-click="toggleDepartmentSelection(facet._id)"
-								  data-ng-true-value="true", 
-								  data-ng-false-value="false")
-					//select(class="multiselect" data-ng-change="onChange()" data-placeholder="Sélectionner..." data-ng-model="departments" data-ng-options="department.value as getDepartment(department.value) for department in listOfDepartments" multiple="multiple" multiselect-dropdown)
+					div(data-ng-hide="region.name==='Toute la France'")
+						h4 par Département
+						div.checkbox(data-ng-repeat="facet in departmentFacets")
+							div(data-ng-switch="departments.indexOf(facet.department.code) > -1")
+								div(data-ng-switch-when="false")
+									label(data-ng-class="{'disabled': facet.total === 0}") {{facet.department.code}} - {{facet.department.name}} ({{facet.total}})
+									input(type="checkbox" 
+									  data-ng-change="onChange()",
+									  data-ng-model="facet.department.selected",
+									  data-ng-checked="departments.indexOf(facet.department.code) > -1"
+									  data-ng-click="toggleDepartmentSelection(facet.department.code)"
+									  data-true-value="true", 
+									  data-ng-false-value="false")
+								div(data-ng-switch-when="true")
+									label <strong>{{facet.department.code}} - {{facet.department.name}}</strong>
+									input(type="checkbox" 
+									  data-ng-change="onChange()",
+									  data-ng-model="facet.department.selected",
+									  data-ng-checked="departments.indexOf(facet.department.code) > -1"
+									  data-ng-click="toggleDepartmentSelection(facet.department.code)"
+									  data-ng-true-value="true", 
+									  data-ng-false-value="false")
+					div(data-ng-show="region.name==='Toute la France'")
+						h4 par Région
+						select(class="multiselect" data-ng-change="onChange()" data-placeholder="Sélectionner..." data-ng-model="departments" data-ng-options="department as displayDepartmentFacet(department) group by department.region for department in departmentFacets" multiple="multiple" multiselect-dropdown)
 					h4 par Date
 					div.input-group
 						span.input-group-addon

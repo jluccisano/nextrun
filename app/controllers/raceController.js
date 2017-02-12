@@ -263,6 +263,7 @@ exports.extractCriteria = function(req, res, next) {
     date: {},
     page: 0,
     size: 20,
+    region: {},
     sort: {
       "date": 1
     }
@@ -301,9 +302,17 @@ exports.extractCriteria = function(req, res, next) {
       };
     }
 
-    if(criteria.fulltext) {
-      var regex = new RegExp('\\b' + criteria.fulltext , 'i');
-      operation.fulltext =  {
+    if (criteria.region != undefined) {
+      operation.region = {
+        "department.code": {
+          '$in': criteria.region.departments
+        }
+      };
+    }
+
+    if (criteria.fulltext) {
+      var regex = new RegExp('\\b' + criteria.fulltext, 'i');
+      operation.fulltext = {
         "name": regex
       }
     }
@@ -318,7 +327,7 @@ exports.extractCriteria = function(req, res, next) {
       };
     }
   }
-  
+
   req.operation = operation;
   req.races = [];
   req.facets = [];
@@ -415,15 +424,48 @@ exports.search = function(req, res, next) {
  */
 exports.autocomplete = function(req, res) {
 
-  Race.autocomplete(req.params.query_string, function(err, races) {
+  var operation = {
+    name: "",
+    published: true
+  }
+
+  var criteria = req.body.criteria;
+
+
+
+  if (criteria) {
+
+
+
+    if (criteria.fulltext) {
+      var regex = new RegExp('\\b' + criteria.fulltext, 'i');
+      operation.name = regex;
+    }
+
+    if (criteria.region != undefined) {
+
+      operation = {
+        name: operation.name,
+        "department.code": {
+          '$in': criteria.region.departments
+        },
+        published: true
+      }
+
+    }
+
+  }
+
+  console.log(util.inspect(operation));
+  Race.autocomplete(operation, function(err, races) {
     if (err) {
       console.log(err);
       return res.json(400, {
-        message: errorUtils.errors(err.errors)
+        message: errorUtils.errors(err)
       });
     }
     req.races = races;
-     return res.json(200, {
+    return res.json(200, {
       races: req.races
     });
   });

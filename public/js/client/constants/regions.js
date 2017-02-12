@@ -1,4 +1,8 @@
 var REGIONS = new Enum({
+	ALL: {
+		name: 'Toute la France',
+		departments: [],
+	},
 	ALSACE: {
 		name: 'Ain',
 		departments: ['67', '68']
@@ -101,7 +105,7 @@ var REGIONS = new Enum({
 	},
 	REUNION: {
 		name: 'La Réunion',
-		departments: ['974'],
+		departments: ['974']
 	},
 	RHONE_ALPES: {
 		name: 'Rhône-Alpes',
