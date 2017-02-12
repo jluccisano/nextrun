@@ -33,7 +33,7 @@ module.exports = function(grunt) {
           quiet: true,
           // specify a destination file to capture the mocha
           // output (the quiet option does not suppress this)
-          captureFile: 'test/coverage/coverage.html'
+          captureFile: 'test/server/coverage/coverage.html'
         },
         src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
       },
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'html-cov',
           quiet: true,
-          captureFile: 'test/coverage/coverage.html'
+          captureFile: 'test/server/coverage/coverage.html'
         },
         src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
       },
@@ -300,13 +300,13 @@ module.exports = function(grunt) {
     },
     karma: {
       unit: {
-        configFile: 'test/karma.conf.js',
+        configFile: 'test/client/spec/karma.conf.js',
         background: false,
         autoWatch: false
       }
     },
     travis: {
-      configFile: 'karma.conf.js',
+      configFile: 'test/client/spec/karma.conf.js',
       singleRun: true,
       browsers: ['Chrome']
     },
@@ -348,7 +348,7 @@ module.exports = function(grunt) {
     },
     protractor: {
       options: {
-        configFile: "protractor-e2e.conf.js", // Default config file
+        configFile: "test/client/e2e/protractor-e2e.conf.js", // Default config file
         keepAlive: true, // If false, the grunt process stops when the test fails.
         noColor: false, // If true, protractor will not use colors in its output.
         args: {
@@ -357,7 +357,7 @@ module.exports = function(grunt) {
       },
       singleRun: {
         options: {
-          configFile: "protractor-e2e.conf.js", // Target-specific config file
+          configFile: "test/client/e2e/protractor-e2e.conf.js", // Target-specific config file
           args: {} // Target-specific arguments
         }
       }

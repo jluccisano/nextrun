@@ -5,7 +5,7 @@ module.exports = function(config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '../',
+        basePath: '../../../',
 
 
         // frameworks to use
@@ -38,7 +38,7 @@ module.exports = function(config) {
 
             'public/js/**/*.js',
 
-            'test/client/unit/**/*Spec.js'
+            'test/client/spec/**/*Spec.js'
         ],
 
 
@@ -63,11 +63,11 @@ module.exports = function(config) {
 
         coverageReporter: {
             type: 'html',
-            dir: './test/coverage/'
+            dir: './test/client/spec/coverage/'
         },
 
         junitReporter: {
-            outputFile: './test/test-reports-junit.xml',
+            outputFile: './test/client/spec/test-reports-junit.xml',
             suite: 'unit'
         },
 
