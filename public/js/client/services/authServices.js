@@ -39,7 +39,7 @@ angular.module('nextrunApp')
                 login: function(user, success, error) {
                     $http.post('/api/users/session', user).success(function(user) {
                         changeUser(user);
-                        success(user);
+                        success();
                     }).error(error);
                 },
                 logout: function(success, error) {

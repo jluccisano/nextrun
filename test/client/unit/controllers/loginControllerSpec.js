@@ -2,13 +2,11 @@
 
 describe('LoginCtrl', function() {
 
-	var rootScope, scope, fakeAuthServices, controller, q, deferred;
-
 	beforeEach(module('nextrunApp'));
 
-	it('should return ', inject(function($rootScope, $controller, $location) {
-		scope = $rootScope.$new();
-		controller = $controller("LoginCtrl", {
+	it('signup() should redirect to /signup view', inject(function($rootScope, $controller, $location) {
+		var scope = $rootScope.$new();
+		var controller = $controller("LoginCtrl", {
 			$scope: scope
 		});
 
@@ -16,31 +14,59 @@ describe('LoginCtrl', function() {
 		expect($location.path()).toBe('/signup');
 	}));
 
+	it('submit() with success change location to /myraces', inject(function($rootScope, $controller, $location) {
 
+		var scope = $rootScope.$new();
 
-	it('Check the value returned', inject(function($controller, $q, $rootScope, $location) {
-		deferred = $q.defer();
-
-		fakeAuthServices = {
-			login: function() {
-				return deferred.promise;
+		var fakeAuthServices = {
+			login: function(user, success, error) {
+				return success();
 			}
 		};
-		spyOn(fakeAuthServices, 'login').and.callThrough();
 
-		rootScope = $rootScope;
-		scope = $rootScope.$new();
-		q = $q;
-		controller = $controller('LoginCtrl', {
+		var controller = $controller('LoginCtrl', {
 			$scope: scope,
 			Auth: fakeAuthServices
 		});
 
-		deferred.resolve();
-		$rootScope.$apply();
+		spyOn(fakeAuthServices, "login").and.callThrough();
 
 		scope.submit();
 
 		expect($location.path()).toBe('/myraces');
+	}));
+
+	it('submit() with error show alert message', inject(function($rootScope, $controller, $location) {
+
+		var scope = $rootScope.$new();
+
+		var errorMsg = {
+			message: ["error"]
+		};
+
+		var fakeAuthServices = {
+			login: function(user, success, error) {
+				return error(errorMsg);
+			}
+		};
+
+		var fakeAlertServices = {
+			add: function(type, msg, timeout) {
+				//nothing
+			}
+		}
+
+		var controller = $controller('LoginCtrl', {
+			$scope: scope,
+			Auth: fakeAuthServices,
+			Alert: fakeAlertServices
+		});
+
+		spyOn(fakeAuthServices, "login").and.callThrough();
+		spyOn(fakeAlertServices, "add").and.callThrough();
+
+		scope.submit();
+
+		expect(fakeAlertServices.add).toHaveBeenCalledWith("danger", errorMsg.message[0], 3000);
 	}));
 });

@@ -241,7 +241,11 @@ module.exports = function(grunt) {
       unit: {
         configFile: 'karma.conf.js',
         background: true
-      }
+      },
+      e2e: {
+        configFile: 'karma-e2e.conf.js',
+        singleRun: true
+      },
     },
     travis: {
       configFile: 'karma.conf.js',
@@ -249,9 +253,57 @@ module.exports = function(grunt) {
       browsers: ['Chrome']
     },
     watch: {
+      express: {
+        files: ['public/js/client/**/*.js', 'test/client/**/*Scenario.js'],
+        tasks: ['express:test'],
+        options: {
+          spawn: false
+        }
+      },
       karma: {
         files: ['public/js/client/**/*.js', 'test/client/**/*Spec.js'],
         tasks: ['karma:unit:run']
+      }
+    },
+    express: {
+      options: {
+        background: true,
+        port: 3000,
+        debug: false
+      },
+      test: {
+        options: {
+          script: 'server.js',
+          node_env: 'test'
+        }
+      }
+    },
+    protractor: {
+      options: {
+        configFile: "protractor-e2e.conf.js", // Default config file
+        keepAlive: true, // If false, the grunt process stops when the test fails.
+        noColor: false, // If true, protractor will not use colors in its output.
+        args: {
+          // Arguments passed to the command
+        }
+      }
+    },
+    shell: {
+      options: {
+        stdout: true
+      },
+      selenium: {
+        command: ' node ./node_modules/protractor/bin/webdriver-manager start',
+        options: {
+          stdout: false,
+          async: true
+        }
+      },
+      protractor_install: {
+        command: 'node ./node_modules/protractor/bin/webdriver-manager update'
+      },
+      npm_install: {
+        command: 'npm install'
       }
     }
   });
@@ -270,11 +322,18 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-express-server');
+  grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.loadNpmTasks('grunt-shell');
 
 
   grunt.registerTask('test', ['mochaTest', 'karma:unit']);
 
-  grunt.registerTask('karmaTests', ['karma:unit','watch']);
+  grunt.registerTask('test-e2e', ['express:test', 'karma:e2e', 'watch', 'express:test:stop']);
+
+  grunt.registerTask('test-protractor-e2e', ['express:test', 'shell:selenium', 'protractor', 'express:test:stop']);
+
+  grunt.registerTask('karmaTests', ['karma:unit', 'watch']);
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 

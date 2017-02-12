@@ -8,7 +8,6 @@ angular.module('nextrunApp').controller('LoginCtrl', ['$scope', '$http', '$locat
 		};
 
 		$scope.submit = function() {
-
 			Auth.login({
 					email: $scope.user.email,
 					password: $scope.user.password
@@ -17,6 +16,7 @@ angular.module('nextrunApp').controller('LoginCtrl', ['$scope', '$http', '$locat
 					$location.path('/myraces');
 				},
 				function(error) {
+					console.log("error message:" + error);
 					_.each(error.message, function(message) {
 						Alert.add("danger", message, 3000);
 					});
