@@ -100,7 +100,7 @@ var count;
           race.edition.should.equal('1');
           race.distanceType.should.equal('S');
           race.status.should.equal('building');
-          race.user_id.should.equal(currentUser._id);
+          //race.user_id.should.equal(currentUser._id);
           race.published.should.equal(false);
           done();
         });

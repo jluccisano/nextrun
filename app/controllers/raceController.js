@@ -36,9 +36,10 @@ exports.create = function (req, res) {
 	race.last_update = new Date();
 	race.created_date = new Date();
 	race.status = "building";
-	race.user_id = req.user._id;
+	console.log(req.isAuthenticated());
+	//race.user_id = req.user._id;
 
-	user.save(function (err) {
+	race.save(function (err) {
 		if (err) {
       		return res.json(400, {message: errorUtils.errors(err.errors)});
 		} else {
