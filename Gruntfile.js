@@ -239,18 +239,18 @@ module.exports = function(grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.config.js',
+        configFile: 'karma.conf.js',
         background: true
       }
     },
     travis: {
-      configFile: 'karma.config.js',
+      configFile: 'karma.conf.js',
       singleRun: true,
       browsers: ['Chrome']
     },
     watch: {
       karma: {
-        files: ['public/js/**/*.js', 'test/client/unit/*.js'],
+        files: ['public/js/client/**/*.js', 'test/client/**/*Spec.js'],
         tasks: ['karma:unit:run']
       }
     }
@@ -272,9 +272,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-karma');
 
 
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('test', ['mochaTest', 'karma:unit']);
 
-  grunt.registerTask('karmaTests', ['karma:unit']);
+  grunt.registerTask('karmaTests', ['karma:unit','watch']);
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 
