@@ -44,7 +44,7 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 
 		$scope.openDeleteConfirmation = function(race) {
 			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/race/deleteconfirmationModal",
+				templateUrl: "partials/race/deleteConfirmationModal",
 				controller: "DeleteConfirmationModalController",
 				resolve: {
 					race: function() {

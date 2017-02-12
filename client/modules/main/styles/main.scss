@@ -6,15 +6,18 @@
 @import 'header.scss';
 @import 'animations.scss';
 @import 'footer.scss';
-
-
-html {
+ html {
     body {
-        height: 100%;
+    	height: 100%;
         .view-container {
+            height: 100%;
             padding-top: 60px;
             min-height: 100%;
             height: auto !important;
+            /* Negative indent footer by its height */
+            margin: 0 auto -60px;
+            /* Pad bottom by footer height */
+            padding: 0 0 60px;
         }
     }
 }
