@@ -491,10 +491,10 @@ module.exports = function(grunt) {
     compress: {
       main: {
         options: {
-          archive: 'nextrun.zip'
+          archive: 'docker/nextrun.zip'
         },
         files: [
-          {src: ['dist/*'], dest: 'docker/', filter: 'isFile'}, // includes files in path
+          {cwd: 'dist/', src: ['/**'], dest: '/docker' }, // includes files in path
         ]
       }
     },

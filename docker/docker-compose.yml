@@ -1,10 +1,12 @@
 web:
   build: .
   ports:
-    - "3000:3000"
+    - "4000:3000"
   links:
     - mongo:mongo
   tty: true
+  environment:
+   - NODE_ENV=prod
 mongo:
   image: mongo
   ports:
