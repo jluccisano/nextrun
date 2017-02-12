@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -60,7 +61,7 @@ describe('Authenticate user: POST /api/users/session', function() {
   describe('Authenticate failed', function() {
 
     it('should response invalidEmailOrPassword', function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar@example.com',
           password: 'badpassword'
@@ -75,7 +76,7 @@ describe('Authenticate user: POST /api/users/session', function() {
     });
 
     it('should response Missing Credentials', function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -90,7 +91,7 @@ describe('Authenticate user: POST /api/users/session', function() {
   describe('Authenticate success', function() {
 
     it('should response success', function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'

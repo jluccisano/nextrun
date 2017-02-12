@@ -1,17 +1,17 @@
-var winston = require('winston'),
-  _ = require('underscore'),
-  env = process.env.NODE_ENV || 'development',
-  config = require('./config')[env];
+var winston = require("winston"),
+  _ = require("underscore"),
+  env = process.env.NODE_ENV || "development",
+  config = require("./config")[env];
 
 
 // Set up logger
 var customColors = {
-  trace: 'white',
-  debug: 'green',
-  info: 'green',
-  warn: 'yellow',
-  crit: 'red',
-  fatal: 'red'
+  trace: "white",
+  debug: "green",
+  info: "green",
+  warn: "yellow",
+  crit: "red",
+  fatal: "red"
 };
 
 var logger = new(winston.Logger)({
@@ -30,18 +30,18 @@ var logger = new(winston.Logger)({
       colorize: true,
       timestamp: true
     })
-    // new (winston.transports.File)({ filename: 'somefile.log' })
+    // new (winston.transports.File)({ filename: "somefile.log" })
   ]
 });
 
 winston.addColors(customColors);
 
-// Extend logger object to properly log 'Error' types
+// Extend logger object to properly log "Error" types
 var origLog = logger.log;
 
 logger.log = function(level, msg) {
   var objType = Object.prototype.toString.call(msg);
-  if (objType === '[object Error]') {
+  if (objType === "[object Error]") {
     origLog.call(logger, level, msg.toString());
   } else {
     origLog.call(logger, level, msg);

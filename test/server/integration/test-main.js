@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -57,7 +58,7 @@ describe('Test partials view: GET /partials/*', function() {
   describe('test set cookie', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -73,7 +74,7 @@ describe('Test partials view: GET /partials/*', function() {
     });
 
     it('get index', function(done) {
-      superagent.get('http://localhost:3000/')
+      superagent.get('http://localhost:'+process.env.PORT+'/')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -84,7 +85,7 @@ describe('Test partials view: GET /partials/*', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -97,7 +98,7 @@ describe('Test partials view: GET /partials/*', function() {
   describe('Valid parameters', function() {
 
     it('get view', function(done) {
-      superagent.get('http://localhost:3000/partials/home')
+      superagent.get('http://localhost:'+process.env.PORT+'/partials/home')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -108,7 +109,7 @@ describe('Test partials view: GET /partials/*', function() {
     });
 
     it('get view with sub type ', function(done) {
-      superagent.get('http://localhost:3000/partials/race/create')
+      superagent.get('http://localhost:'+process.env.PORT+'/partials/race/create')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -119,7 +120,7 @@ describe('Test partials view: GET /partials/*', function() {
     });
 
     it('get index', function(done) {
-      superagent.get('http://localhost:3000/')
+      superagent.get('http://localhost:'+process.env.PORT+'/')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -128,13 +129,11 @@ describe('Test partials view: GET /partials/*', function() {
           done();
         });
     });
-
   });
+});
 
-  after(function(done) {
-    User.remove({}, function() {
-      done();
-    });
+after(function(done) {
+  User.remove({}, function() {
+    done();
   });
-
 });

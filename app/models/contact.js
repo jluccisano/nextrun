@@ -2,18 +2,17 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  _ = require('underscore'),
+var mongoose = require("mongoose"),
   Schema = mongoose.Schema;
 
 var ContactSchema = new Schema({
   email: {
     type: String,
-    default: ''
+    default: ""
   },
   type: {
     type: String,
-    default: ''
+    default: ""
   },
   creationDate: {
     type: Date,
@@ -22,16 +21,16 @@ var ContactSchema = new Schema({
 });
 
 
-ContactSchema.path('email').validate(function(email) {
+ContactSchema.path("email").validate(function(email) {
   return email.length;
 }, "error.emailCannotBeBlank");
 
 
-ContactSchema.path('email').validate(function(email, fn) {
-  var Contact = mongoose.model('Contact');
+ContactSchema.path("email").validate(function(email, fn) {
+  var Contact = mongoose.model("Contact");
 
   // Check only when it is a new contact or when email field is modified
-  if (this.isNew || this.isModified('email')) {
+  if (this.isNew || this.isModified("email")) {
     Contact.find({
       email: email
     }).exec(function(err, contacts) {
@@ -45,11 +44,11 @@ ContactSchema.path('email').validate(function(email, fn) {
  * Pre-save
  */
 
-ContactSchema.pre('save', function(next) {
+ContactSchema.pre("save", function(next) {
   if (this.isNew) {
     return next();
   }
 
 });
 
-mongoose.model('Contact', ContactSchema);
+mongoose.model("Contact", ContactSchema);

@@ -1,6 +1,6 @@
-var userRoles = require('../../public/js/routingConfig').userRoles,
-  phantom = require('node-phantom-simple'),
-  logger = require('../../config/logger.js');
+var userRoles = require("../../public/js/routingConfig").userRoles,
+  phantom = require("node-phantom-simple"),
+  logger = require("../../config/logger.js");
 /*
  * GET home page.
  */
@@ -8,23 +8,23 @@ var userRoles = require('../../public/js/routingConfig').userRoles,
 exports.index = function(req, res) {
 
   var role = userRoles.public,
-    username = '',
-    email = '',
-    id = '';
+    username = "",
+    email = "",
+    id = "";
   if (req.user) {
     id = req.user._id;
     role = req.user.role;
     username = req.user.username;
     email = req.user.email;
   }
-  res.cookie('user', JSON.stringify({
-    'id': id,
-    'email': email,
-    'username': username,
-    'role': role
+  res.cookie("user", JSON.stringify({
+    "id": id,
+    "email": email,
+    "username": username,
+    "role": role
   }));
 
-  /*var ua = req.headers['user-agent'];
+  /*var ua = req.headers["user-agent"];
   if ((typeof(ua) !== "undefined" && ua.match(/bot/i)) || typeof(req.query._escaped_fragment_) !== "undefined" || typeof(req.query.fb_locale) !== "undefined") {
 
     generateSnapshot(req, res);
@@ -32,8 +32,8 @@ exports.index = function(req, res) {
   } else {
 
   }*/
-  res.render('index', {
-    title: 'Accueil'
+  res.render("index", {
+    title: "Accueil"
   });
 
 };
@@ -42,10 +42,10 @@ exports.partials = function(req, res) {
   var name = req.params.name;
   var type = req.params.type;
 
-  var partial = 'partials/' + name;
+  var partial = "partials/" + name;
 
   if (type) {
-    partial = 'partials/' + type + '/' + name;
+    partial = "partials/" + type + "/" + name;
   }
 
   res.render(partial);
@@ -59,12 +59,14 @@ var generateSnapshot = function(req, res) {
 
     if (err) {
       logger.error("error during create new phantom instance: " + err);
+      return res.send(404, "cannot generate snapshot");
     }
 
     ph.createPage(function(err, page) {
 
       if (err) {
         logger.error("error during create new phantom page: " + err);
+        return res.send(404, "cannot generate snapshot");
       }
 
       page.open("http://127.0.0.1:3000" + req.path, function(err, status) {
@@ -74,7 +76,7 @@ var generateSnapshot = function(req, res) {
         };
 
 
-        if (status === 'success') {
+        if (status === "success") {
 
           var delay, checkerCounter = 0,
             checker = (function() {
@@ -82,15 +84,15 @@ var generateSnapshot = function(req, res) {
               checkerCounter++;
 
               page.evaluate(function() {
-                var body = document.getElementsByTagName('body')[0];
-                if (body.getAttribute('data-status') === 'ready') {
+                var body = document.getElementsByTagName("body")[0];
+                if (body.getAttribute("data-status") === "ready") {
                   return document.documentElement.outerHTML;
                 }
               }, function(err, html) {
 
                 if (html || checkerCounter >= 50) {
                   if (html) {
-                    res.send(html);
+                    res.send(200, html);
                   } else {
                     res.send(404, "cannot generate snapshot");
                   }
@@ -116,6 +118,6 @@ var generateSnapshot = function(req, res) {
       });
     });
   }, {
-    phantomPath: require('phantomjs').path
+    phantomPath: require("phantomjs").path
   });
 };

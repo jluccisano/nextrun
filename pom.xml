@@ -43,7 +43,7 @@
                     <npmInstallArgs>install --production</npmInstallArgs>
                     <bowerInstallArgs>install --no-color</bowerInstallArgs>
                     <gruntTestArgs>test --no-color</gruntTestArgs>
-                    <gruntBuildArgs>build-skipTests</gruntBuildArgs>
+                    <gruntBuildArgs>build</gruntBuildArgs>
                     <skipTests>true</skipTests>
                 </configuration>
                 <executions>

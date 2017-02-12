@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -39,7 +40,7 @@ describe('Create User: POST /api/users', function() {
 
 
     it('no email - should respond with errors', function(done) {
-      superagent.post('http://localhost:3000/api/users/signup')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/signup')
         .send({
           user: {
             username: 'foobar',
@@ -57,13 +58,13 @@ describe('Create User: POST /api/users', function() {
     });
 
     it('no body - should respond with errors', function(done) {
-      superagent.post('http://localhost:3000/api/users/signup')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/signup')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
-          res.body.message[0].should.equal("error.emailCannotBeBlank");
+          res.body.message[0].should.equal("error.bodyParamRequired");
           done();
         });
     });
@@ -86,7 +87,7 @@ describe('Create User: POST /api/users', function() {
 
 
     it('should response success', function(done) {
-      superagent.post('http://localhost:3000/api/users/signup')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/signup')
         .send({
           user: {
             username: 'foobar',

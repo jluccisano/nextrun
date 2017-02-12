@@ -2,11 +2,10 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
+var mongoose = require("mongoose"),
   Schema = mongoose.Schema,
-  crypto = require('crypto'),
-  _ = require('underscore'),
-  authTypes = ['facebook'];
+  crypto = require("crypto"),
+  authTypes = ["facebook"];
 
 /**
  * User Schema
@@ -15,27 +14,27 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
   username: {
     type: String,
-    default: ''
+    default: ""
   },
   email: {
     type: String,
-    default: ''
+    default: ""
   },
   provider: {
     type: String,
-    default: ''
+    default: ""
   },
   hashed_password: {
     type: String,
-    default: ''
+    default: ""
   },
   salt: {
     type: String,
-    default: ''
+    default: ""
   },
   authToken: {
     type: String,
-    default: ''
+    default: ""
   },
   role: {
     bitMask: {
@@ -56,7 +55,7 @@ var UserSchema = new Schema({
  */
 
 UserSchema
-  .virtual('password')
+  .virtual("password")
   .set(function(password) {
     this._password = password;
     this.salt = this.makeSalt();
@@ -74,24 +73,24 @@ var validatePresenceOf = function(value) {
 };
 
 // the below 4 validations only apply if you are signing up traditionally
-UserSchema.path('email').validate(function(email) {
-  // if you are authenticating by any of the oauth strategies, don't validate
+UserSchema.path("email").validate(function(email) {
+  // if you are authenticating by any of the oauth strategies, don"t validate
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
   }
   return email.length;
-}, 'error.emailCannotBeBlank');
+}, "error.emailCannotBeBlank");
 
-UserSchema.path('email').validate(function(email, fn) {
-  var User = mongoose.model('User');
+UserSchema.path("email").validate(function(email, fn) {
+  var User = mongoose.model("User");
 
-  // if you are authenticating by any of the oauth strategies, don't validate
+  // if you are authenticating by any of the oauth strategies, don"t validate
   if (authTypes.indexOf(this.provider) !== -1) {
     fn(true);
   }
 
   // Check only when it is a new user or when email field is modified
-  if (this.isNew || this.isModified('email')) {
+  if (this.isNew || this.isModified("email")) {
     User.find({
       email: email
     }).exec(function(err, users) {
@@ -100,28 +99,28 @@ UserSchema.path('email').validate(function(email, fn) {
   } else {
     fn(true);
   }
-}, 'error.emailAlreadyExists');
+}, "error.emailAlreadyExists");
 
-UserSchema.path('hashed_password').validate(function(hashed_password) {
-  // if you are authenticating by any of the oauth strategies, don't validate
+UserSchema.path("hashed_password").validate(function(hashed_password) {
+  // if you are authenticating by any of the oauth strategies, don"t validate
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
   }
   return hashed_password.length;
-}, 'error.passwordCannotBeBlank');
+}, "error.passwordCannotBeBlank");
 
 
 /**
  * Pre-save hook
  */
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre("save", function(next) {
   if (!this.isNew) {
     return next();
   }
 
   if (!validatePresenceOf(this.password) && authTypes.indexOf(this.provider) === -1) {
-    next(new Error('error.invalidPassword'));
+    next(new Error("error.invalidPassword"));
   } else {
     next();
   }
@@ -149,9 +148,9 @@ UserSchema.statics = {
 UserSchema.methods = {
 
   generatePassword: function(n) {
-    var alphanums = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890';
+    var alphanums = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
     var index = (Math.random() * (alphanums.length - 1)).toFixed(0);
-    return n > 0 ? alphanums[index] + this.generatePassword(n - 1) : '';
+    return n > 0 ? alphanums[index] + this.generatePassword(n - 1) : "";
   },
 
   /**
@@ -174,7 +173,7 @@ UserSchema.methods = {
    */
 
   makeSalt: function() {
-    return Math.round((new Date().valueOf() * Math.random())) + '';
+    return Math.round((new Date().valueOf() * Math.random())) + "";
   },
 
   /**
@@ -187,16 +186,16 @@ UserSchema.methods = {
 
   encryptPassword: function(password, salt) {
     if (!password) {
-      return '';
+      return "";
     }
     var encrypred;
     try {
-      encrypred = crypto.createHmac('sha1', salt).update(password).digest('hex');
+      encrypred = crypto.createHmac("sha1", salt).update(password).digest("hex");
       return encrypred;
     } catch (err) {
-      return '';
+      return "";
     }
   }
 };
 
-mongoose.model('User', UserSchema);
+mongoose.model("User", UserSchema);

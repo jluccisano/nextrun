@@ -3,19 +3,19 @@
  * @author jluccisano
  */
 
-var mongoose = require('mongoose'),
-  Race = mongoose.model('Race'),
-  errorUtils = require('../utils/errorutils'),
-  util = require('util'),
-  elasticsearchUtils = require('../utils/elasticsearchUtils'),
-  ElasticSearchClient = require('elasticsearchclient'),
-  env = process.env.NODE_ENV || 'development',
-  config = require('../../config/config')[env],
-  fs = require('fs'),
-  logger = require('../../config/logger.js');
+var mongoose = require("mongoose"),
+  Race = mongoose.model("Race"),
+  errorUtils = require("../utils/errorUtils"),
+  util = require("util"),
+  elasticsearchUtils = require("../utils/elasticsearchUtils"),
+  ElasticSearchClient = require("elasticsearchclient"),
+  env = process.env.NODE_ENV || "development",
+  config = require("../../config/config")[env],
+  _ = require("underscore"),
+  logger = require("../../config/logger.js");
 
 var serverOptions = {
-  host: 'localhost',
+  host: "localhost",
   port: 9200
 };
 
@@ -50,24 +50,43 @@ exports.load = function(req, res, next, id) {
  * @returns success if OK
  */
 exports.create = function(req, res) {
-  var race = new Race(req.body.race);
-  race.last_update = new Date();
-  race.created_date = new Date();
-  race.user_id = req.user._id;
 
-  race.save(function(err, race) {
-    if (err) {
-      logger.error(err);
-      return res.json(400, {
-        message: errorUtils.errors(err.errors)
+  var body = req.body;
+  var userConnected = req.user;
+
+  if (!_.isUndefined(body) && !_.isUndefined(body.race)) {
+
+    if (!_.isUndefined(userConnected) && !_.isUndefined(userConnected._id)) {
+
+      var race = new Race(req.body.race);
+      race.lastUpdate = new Date();
+      race.createdDate = new Date();
+      race.userId = userConnected._id;
+
+      race.save(function(err, race) {
+        if (err) {
+          logger.error(err);
+          return res.json(400, {
+            message: errorUtils.errors(err.errors)
+          });
+        } else {
+          return res.json(200, {
+            raceId: race._id
+          });
+        }
+
       });
     } else {
-      return res.json(200, {
-        raceId: race._id
+      return res.json(400, {
+        message: ["error.userNotConnected"]
       });
     }
+  } else {
+    return res.json(400, {
+      message: ["error.bodyParamRequired"]
+    });
+  }
 
-  });
 };
 
 /**
@@ -83,10 +102,10 @@ exports.findByUser = function(req, res) {
   var perPage = 10;
 
   criteria = {
-    user_id: req.user._id
+    userId: req.user._id
   };
 
-  if (typeof req.params.page !== 'undefined') {
+  if (typeof req.params.page !== "undefined") {
     page = req.params.page;
   }
 
@@ -94,7 +113,7 @@ exports.findByUser = function(req, res) {
     perPage: perPage,
     page: page - 1,
     criteria: criteria
-  }
+  };
 
   Race.findByCriteria(options, function(err, races) {
     if (err) {
@@ -122,12 +141,21 @@ exports.findByUser = function(req, res) {
  * @method find race
  * @param req
  * @param res
- * @returns success if OK
+ * @returns race loaded by load parameter id
  */
 exports.find = function(req, res) {
-  return res.json(200, {
-    race: req.race
-  });
+
+  var race = req.race;
+
+  if (!_.isUndefined(race)) {
+    return res.json(200, {
+      race: race
+    });
+  } else {
+    return res.json(400, {
+      message: ["error.unknownRace"]
+    });
+  }
 };
 
 /**
@@ -139,34 +167,62 @@ exports.find = function(req, res) {
 exports.update = function(req, res) {
 
   var race = req.race;
+  var userConnected = req.user;
+  var raceToUpdate;
 
-  if (race.user_id.equals(req.user._id)) {
+  if (!_.isUndefined(req.body) && !_.isUndefined(req.body.race)) {
 
-    var raceToUpdate = req.body.race;
-    raceToUpdate.last_update = new Date();
+    raceToUpdate = req.body.race;
 
-    delete raceToUpdate._id;
+    if (!_.isUndefined(race) && !_.isUndefined(race.userId) && !_.isUndefined(race._id)) {
 
-    Race.update({
-      _id: race._id
-    }, {
-      $set: raceToUpdate
-    }, {
-      upsert: true
-    }, function(err) {
-      if (!err) {
-        return res.json(200);
+      if (!_.isUndefined(userConnected) && !_.isUndefined(userConnected._id)) {
+
+        if (race.userId.equals(userConnected._id)) {
+
+          if (!_.isUndefined(raceToUpdate.lastUpdate)) {
+            raceToUpdate.lastUpdate = new Date();
+          }
+
+          if (!_.isUndefined(raceToUpdate._id)) {
+            delete raceToUpdate._id;
+          }
+
+          Race.update({
+            _id: race._id
+          }, {
+            $set: raceToUpdate
+          }, {
+            upsert: true
+          }, function(err) {
+            if (!err) {
+              return res.json(200);
+            } else {
+              logger.error(err);
+              return res.json(400, {
+                message: errorUtils.errors(err.errors)
+              });
+            }
+          });
+        } else {
+          logger.error("error.userNotOwner");
+          return res.json(400, {
+            message: ["error.userNotOwner"]
+          });
+        }
       } else {
-        logger.error(err);
         return res.json(400, {
-          message: errorUtils.errors(err.errors)
+          message: ["error.userNotConnected"]
         });
       }
-    });
+    } else {
+      return res.json(400, {
+        message: ["error.unknownRace"]
+      });
+    }
   } else {
-    logger.error("error.userNotOwner");
     return res.json(400, {
-      message: ["error.userNotOwner"]
+      message: ["error.bodyParamRequired"]
     });
   }
 };
@@ -177,21 +233,39 @@ exports.update = function(req, res) {
  * @param res
  */
 exports.delete = function(req, res) {
-  if (req.race.user_id.equals(req.user._id)) {
-    Race.destroy(req.race._id, function(err) {
-      if (!err) {
-        return res.json(200);
+
+  var race = req.race;
+  var userConnected = req.user;
+
+  if (!_.isUndefined(race) && !_.isUndefined(race.userId)) {
+
+    if (!_.isUndefined(userConnected) && !_.isUndefined(userConnected._id)) {
+
+      if (req.race.userId.equals(userConnected._id)) {
+        Race.destroy(race._id, function(err) {
+          if (!err) {
+            return res.json(200);
+          } else {
+            logger.error(err);
+            return res.json(400, {
+              message: errorUtils.errors(err.errors)
+            });
+          }
+        });
       } else {
-        logger.error(err)
+        logger.error("error.userNotOwner");
         return res.json(400, {
-          message: errorUtils.errors(err.errors)
+          message: ["error.userNotOwner"]
         });
       }
-    });
+    } else {
+      return res.json(400, {
+        message: ["error.userNotConnected"]
+      });
+    }
   } else {
-    logger.error("error.userNotOwner");
     return res.json(400, {
-      message: ["error.userNotOwner"]
+      message: ["error.unknownRace"]
     });
   }
 };
@@ -202,6 +276,17 @@ exports.delete = function(req, res) {
  * @param res
  */
 exports.updateLatLng = function(raceId, latlng) {
+
+  var result = false;
+
+  if (_.isUndefined(latlng)) {
+    throw new Error("latlng is not defined");
+  }
+
+  if (_.isUndefined(raceId)) {
+    throw new Error("raceId is not defined");
+  }
+
   Race.update({
     _id: raceId
   }, {
@@ -213,10 +298,13 @@ exports.updateLatLng = function(raceId, latlng) {
   }, function(err) {
     if (err) {
       logger.error("error during try to update latlng for: " + raceId + " , details: " + err);
+      result = false;
     } else {
       logger.info("latlng updated for: " + raceId);
+      result = true;
     }
   });
+  return result;
 };
 
 /**
@@ -226,39 +314,55 @@ exports.updateLatLng = function(raceId, latlng) {
  */
 exports.publish = function(req, res) {
   var race = req.race;
+  var userConnected = req.user;
   var value = false;
 
-  if (req.params.value) {
-    value = req.params.value
+
+  if (!_.isUndefined(req.params) && !_.isUndefined(req.params.value)) {
+    value = req.params.value;
   }
 
-  if (race.user_id.equals(req.user._id)) {
+  if (!_.isUndefined(race) && !_.isUndefined(race.userId)) {
 
-    Race.update({
-      _id: race._id
-    }, {
-      $set: {
-        last_update: new Date(),
-        published: value,
-        publication_date: new Date()
-      }
-    }, {
-      upsert: true
-    }, function(err) {
-      if (!err) {
-        return res.json(200);
+    if (!_.isUndefined(userConnected) && !_.isUndefined(userConnected._id)) {
+
+      if (race.userId.equals(userConnected._id)) {
+
+        Race.update({
+          _id: race._id
+        }, {
+          $set: {
+            lastUpdate: new Date(),
+            published: value,
+            publicationDate: new Date()
+          }
+        }, {
+          upsert: true
+        }, function(err) {
+          if (!err) {
+            return res.json(200);
+          } else {
+            logger.error(err);
+            return res.json(400, {
+              message: errorUtils.errors(err.errors)
+            });
+          }
+        });
+
       } else {
-        logger.error(err);
+        logger.error("error.userNotOwner");
         return res.json(400, {
-          message: errorUtils.errors(err.errors)
+          message: ["error.userNotOwner"]
         });
       }
-    });
-
+    } else {
+      return res.json(400, {
+        message: ["error.userNotConnected"]
+      });
+    }
   } else {
-    logger.error("error.userNotOwner");
     return res.json(400, {
-      message: ["error.userNotOwner"]
+      message: ["error.unknownRace"]
     });
   }
 };
@@ -272,16 +376,25 @@ exports.publish = function(req, res) {
  */
 exports.destroyAllRaceOfUser = function(req, res, next) {
 
-  Race.destroyAllRaceOfUser(req.user, function(err) {
-    if (!err) {
-      next();
-    } else {
-      logger.error(err);
-      return res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    }
-  });
+  var user = req.user;
+
+  if (!_.isUndefined(user)) {
+    Race.destroyAllRaceOfUser(req.user, function(err) {
+      if (!err) {
+        next();
+      } else {
+        logger.error(err);
+        return res.json(400, {
+          message: errorUtils.errors(err.errors)
+        });
+      }
+    });
+  } else {
+    return res.json(400, {
+      message: ["error.unknownUser"]
+    });
+  }
+
 
 };
 
@@ -292,255 +405,269 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
  */
 exports.search = function(req, res) {
 
-  var criteria = req.body.criteria;
+  var criteria;
 
-  if (logger.isLevelEnabled('debug')) {
-    logger.debug(util.inspect(criteria, true, 7, true));
-  }
+  if (!_.isUndefined(req.body) && !_.isUndefined(req.body.criteria)) {
 
-  var operation = {
-    from: 0,
-    size: 20,
-    sort: "_score"
-  };
+    criteria = req.body.criteria;
 
-  var partial_fields = {
-    "partial1": {
-      "exclude": "routes.*"
-    }
-  };
-
-  //query
-
-  var query = {
-    bool: {
-      should: []
-    }
-  };
-
-  if ('undefined' !== typeof(criteria.fulltext) && criteria.fulltext.length > 2) {
-
-    var raceName_query = elasticsearchUtils.buildQueryString("race.name.autocomplete", criteria.fulltext);
-
-    if (raceName_query) {
-      query.bool.should.push(raceName_query);
+    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+      console.log(util.inspect(criteria, true, 7, true));
     }
 
-    var departmentName_query = elasticsearchUtils.buildQueryString("race.pin.department.name.autocomplete", criteria.fulltext);
-
-    if (departmentName_query) {
-      query.bool.should.push(departmentName_query);
-    }
-
-    var departmentRegion_query = elasticsearchUtils.buildQueryString("race.pin.department.region.autocomplete", criteria.fulltext);
-
-    if (departmentRegion_query) {
-      query.bool.should.push(departmentRegion_query);
-
-    }
-
-    var departmentCode_query = elasticsearchUtils.buildQueryString("race.pin.department.code.autocomplete", criteria.fulltext);
-
-    if (departmentCode_query) {
-      query.bool.should.push(departmentCode_query);
-    }
-
-    var distanceType_query = elasticsearchUtils.buildQueryString("race.distanceType.i18n.autocomplete", criteria.fulltext);
-
-    if (distanceType_query) {
-      query.bool.should.push(distanceType_query);
-    }
-
-    var raceType_query = elasticsearchUtils.buildQueryString("race.type.name.autocomplete", criteria.fulltext);
-
-    if (raceType_query) {
-      query.bool.should.push(raceType_query);
-    }
-
-  }
-
-  if (query.bool.should.length > 0) {
-    operation.query = query;
-  } else {
-    operation.query = {
-      "match_all": {}
+    var operation = {
+      from: 0,
+      size: 20,
+      sort: "_score"
     };
-  }
 
-  if (logger.isLevelEnabled('debug')) {
-    logger.debug(util.inspect(query, true, 7, true));
-  }
+    var partialFields = {
+      "partial1": {
+        "exclude": "routes.*"
+      }
+    };
 
+    //query
 
+    var query = {
+      bool: {
+        should: []
+      }
+    };
 
-  //filter
+    if (!_.isUndefined(criteria.fulltext) && criteria.fulltext.length > 2) {
 
-  var filter = {};
-  filter.and = [];
+      var raceNameQuery = elasticsearchUtils.buildQueryString("race.name.autocomplete", criteria.fulltext);
 
+      if (raceNameQuery) {
+        query.bool.should.push(raceNameQuery);
+      }
 
-  var type_filter = elasticsearchUtils.buildTermsFilter("race.type.name", criteria.types);
-  if (type_filter) {
-    filter.and.push(type_filter);
-  }
+      var departmentNameQuery = elasticsearchUtils.buildQueryString("race.pin.department.name.autocomplete", criteria.fulltext);
 
-  var department_filter = elasticsearchUtils.buildTermsFilter("race.pin.department.code", criteria.departments);
-  if (department_filter) {
-    filter.and.push(department_filter);
-  }
+      if (departmentNameQuery) {
+        query.bool.should.push(departmentNameQuery);
+      }
 
-  var date_filter = elasticsearchUtils.buildDateRangeFilter("race.date", criteria.dateRange.startDate, criteria.dateRange.endDate);
-  if (date_filter) {
-    filter.and.push(date_filter);
-  }
+      var departmentRegionQuery = elasticsearchUtils.buildQueryString("race.pin.department.region.autocomplete", criteria.fulltext);
 
-  var departmentOfRegion_filter;
-  if (criteria.region) {
-    departmentOfRegion_filter = elasticsearchUtils.buildTermsFilter("race.pin.department.code", criteria.region.departments);
-    if (departmentOfRegion_filter) {
-      filter.and.push(departmentOfRegion_filter);
+      if (departmentRegionQuery) {
+        query.bool.should.push(departmentRegionQuery);
+
+      }
+
+      var departmentCodeQuery = elasticsearchUtils.buildQueryString("race.pin.department.code.autocomplete", criteria.fulltext);
+
+      if (departmentCodeQuery) {
+        query.bool.should.push(departmentCodeQuery);
+      }
+
+      var distanceTypeQuery = elasticsearchUtils.buildQueryString("race.distanceType.i18n.autocomplete", criteria.fulltext);
+
+      if (distanceTypeQuery) {
+        query.bool.should.push(distanceTypeQuery);
+      }
+
+      var raceTypeQuery = elasticsearchUtils.buildQueryString("race.type.name.autocomplete", criteria.fulltext);
+
+      if (raceTypeQuery) {
+        query.bool.should.push(raceTypeQuery);
+      }
+
     }
-  }
 
-  var distance = 5;
-  if (criteria.searchAround === true) {
-    distance = criteria.distance;
-  }
+    if (query.bool.should.length > 0) {
+      operation.query = query;
+    } else {
+      operation.query = {
+        "match_all": {}
+      };
+    }
 
-  var geoDistance_filter = elasticsearchUtils.buildGeoDistanceFilter(criteria.location, distance);
-  if (geoDistance_filter) {
-    filter.and.push(geoDistance_filter);
-  }
-
-  var published_filter = elasticsearchUtils.buildTermFilter("race.published", true);
-  if (published_filter) {
-    filter.and.push(published_filter);
-  }
-
-  if (filter.and.length > 0) {
-    operation.filter = filter;
-  }
-
-  if (logger.isLevelEnabled('debug')) {
-    logger.debug(util.inspect(filter, true, 7, true));
-  }
+    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+      logger.debug(util.inspect(query, true, 7, true));
+    }
 
 
 
-  //facets
+    //filter
 
-  var facets = {
-    "departmentFacets": {
-      "terms": {
-        "field": "race.pin.department.code",
-        "order": "term",
-        "all_terms": false
-      }
-    },
-    "typeFacets": {
-      "terms": {
-        "field": "race.type.name",
-        "order": "term",
-        "all_terms": false
+    var filter = {};
+    filter.and = [];
+
+
+    var typeFilter = elasticsearchUtils.buildTermsFilter("race.type.name", criteria.types);
+    if (typeFilter) {
+      filter.and.push(typeFilter);
+    }
+
+    var departmentFilter = elasticsearchUtils.buildTermsFilter("race.pin.department.code", criteria.departments);
+    if (departmentFilter) {
+      filter.and.push(departmentFilter);
+    }
+
+    var dateFilter;
+    if (!_.isUndefined(criteria.dateRanges) && criteria.dateRanges[0] && !_.isUndefined(criteria.dateRanges[0].startDate) && !_.isUndefined(criteria.dateRanges[0].endDate)) {
+      dateFilter = elasticsearchUtils.buildDateRangeFilter("race.date", criteria.dateRanges[0].startDate, criteria.dateRanges[0].endDate);
+    }
+    if (dateFilter) {
+      filter.and.push(dateFilter);
+    }
+
+    var departmentOfRegionFilter;
+    if (criteria.region !== "" && !_.isUndefined(criteria.region) && !_.isUndefined(criteria.region.departments)) {
+      departmentOfRegionFilter = elasticsearchUtils.buildTermsFilter("race.pin.department.code", criteria.region.departments);
+      if (departmentOfRegionFilter) {
+        filter.and.push(departmentOfRegionFilter);
       }
     }
-  };
 
-  var departmentFacetFilter = {}
-  departmentFacetFilter.and = [];
-  var typeFacetFilter = {}
-  typeFacetFilter.and = [];
+    var distance = 5;
+    if (criteria.searchAround === true) {
+      distance = criteria.distance;
+    }
 
-  var date_filter_withRange = elasticsearchUtils.buildDateRangeFacetFilter("race.date", criteria.dateRange.startDate, criteria.dateRange.endDate);
+    var geoDistanceFilter = elasticsearchUtils.buildGeoDistanceFilter(criteria.location, distance);
+    if (geoDistanceFilter) {
+      filter.and.push(geoDistanceFilter);
+    }
 
+    var publishedFilter = elasticsearchUtils.buildTermFilter("race.published", true);
+    if (publishedFilter) {
+      filter.and.push(publishedFilter);
+    }
 
-  //add location facet filter on all facets
-  if (geoDistance_filter) {
-    departmentFacetFilter.and.push(geoDistance_filter);
-    typeFacetFilter.and.push(geoDistance_filter);
-  }
+    if (filter.and.length > 0) {
+      operation.filter = filter;
+    }
 
-  //add date facet filter on all facets
-  if (date_filter_withRange) {
-    departmentFacetFilter.and.push(date_filter_withRange);
-    typeFacetFilter.and.push(date_filter_withRange);
-  }
-
-  //add department of region facet filter on all facets
-  if (departmentOfRegion_filter) {
-    departmentFacetFilter.and.push(departmentOfRegion_filter);
-    typeFacetFilter.and.push(departmentOfRegion_filter);
-  }
-
-  //set for all published filter
-  if (published_filter) {
-    departmentFacetFilter.and.push(published_filter);
-    typeFacetFilter.and.push(published_filter);
-  }
+    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+      logger.debug(util.inspect(filter, true, 7, true));
+    }
 
 
-  //add departments facet filter on type facet only
-  if (department_filter) {
-    typeFacetFilter.and.push(department_filter);
-  }
 
-  //add types facet filter on department facet only
-  if (type_filter) {
-    departmentFacetFilter.and.push(type_filter);
+    //facets
 
-  }
-
-  //set type facet filter
-  if (typeFacetFilter.and.length > 0) {
-    facets.typeFacets.facet_filter = typeFacetFilter;
-  }
-
-  //set department facet filter
-  if (departmentFacetFilter.and.length > 0) {
-    facets.departmentFacets.facet_filter = departmentFacetFilter;
-  }
-
-  operation.facets = facets;
-
-  if (logger.isLevelEnabled('debug')) {
-    logger.debug(util.inspect(facets, true, 7, true));
-  }
-
-
-  if (criteria.from) {
-    operation.from = criteria.from;
-  }
-
-  if (criteria.page) {
-    operation.page = criteria.page;
-  }
-
-  if (criteria.size) {
-    operation.size = criteria.size;
-
-  }
-
-  if (criteria.sort) {
-    operation.sort = [criteria.sort];
-  }
-
-  operation.partial_fields = partial_fields;
-
-  elasticSearchClient.search(config.racesidx, 'race', operation)
-    .on('data', function(data) {
-      if (logger.isLevelEnabled('debug')) {
-        logger.debug(JSON.parse(data));
+    var facets = {
+      "departmentFacets": {
+        "terms": {
+          "field": "race.pin.department.code",
+          "order": "term",
+          "all_terms": false
+        }
+      },
+      "typeFacets": {
+        "terms": {
+          "field": "race.type.name",
+          "order": "term",
+          "all_terms": false
+        }
       }
-      res.json(200, JSON.parse(data));
-    })
-    .on('done', function() {})
-    .on('error', function(err) {
-      logger.error(err);
-      res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    })
-    .exec();
+    };
+
+    var departmentFacetFilter = {};
+    departmentFacetFilter.and = [];
+    var typeFacetFilter = {};
+    typeFacetFilter.and = [];
+
+    var dateFilterWithRange;
+    if (!_.isUndefined(criteria.dateRanges) && criteria.dateRanges[0] && !_.isUndefined(criteria.dateRanges[0].startDate) && !_.isUndefined(criteria.dateRanges[0].endDate)) {
+      dateFilterWithRange = elasticsearchUtils.buildDateRangeFacetFilter("race.date", criteria.dateRanges[0].startDate, criteria.dateRanges[0].endDate);
+    }
+
+    //add location facet filter on all facets
+    if (geoDistanceFilter) {
+      departmentFacetFilter.and.push(geoDistanceFilter);
+      typeFacetFilter.and.push(geoDistanceFilter);
+    }
+
+    //add date facet filter on all facets
+    if (dateFilterWithRange) {
+      departmentFacetFilter.and.push(dateFilterWithRange);
+      typeFacetFilter.and.push(dateFilterWithRange);
+    }
+
+    //add department of region facet filter on all facets
+    if (departmentOfRegionFilter) {
+      departmentFacetFilter.and.push(departmentOfRegionFilter);
+      typeFacetFilter.and.push(departmentOfRegionFilter);
+    }
+
+    //set for all published filter
+    if (publishedFilter) {
+      departmentFacetFilter.and.push(publishedFilter);
+      typeFacetFilter.and.push(publishedFilter);
+    }
+
+
+    //add departments facet filter on type facet only
+    if (departmentFilter) {
+      typeFacetFilter.and.push(departmentFilter);
+    }
+
+    //add types facet filter on department facet only
+    if (typeFilter) {
+      departmentFacetFilter.and.push(typeFilter);
+
+    }
+
+    //set type facet filter
+    if (typeFacetFilter.and.length > 0) {
+      facets.typeFacets.facet_filter = typeFacetFilter;
+    }
+
+    //set department facet filter
+    if (departmentFacetFilter.and.length > 0) {
+      facets.departmentFacets.facet_filter = departmentFacetFilter;
+    }
+
+    operation.facets = facets;
+
+    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+      logger.debug(util.inspect(facets, true, 7, true));
+    }
+
+    if (!_.isUndefined(criteria.from)) {
+      operation.from = criteria.from;
+    }
+
+    if (!_.isUndefined(criteria.size)) {
+      operation.size = criteria.size;
+
+    }
+
+    if (!_.isUndefined(criteria.sort)) {
+      operation.sort = [criteria.sort];
+    }
+
+    operation.partialFields = partialFields;
+
+
+    elasticSearchClient.search(config.racesidx, "race", operation, function(err, data) {
+      if (err) {
+        logger.error(err);
+        return res.json(400, {
+          message: errorUtils.errors(err.errors)
+        });
+      }
+
+      if (data) {
+        if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+          console.log(JSON.parse(data));
+        }
+        return res.json(200, JSON.parse(data));
+      } else {
+        return res.json(400, {
+          message: ["error.noData"]
+        });
+      }
+    });
+  } else {
+    return res.json(400, {
+      message: ["error.noCriteria"]
+    });
+  }
 };
 
 /**
@@ -550,94 +677,113 @@ exports.search = function(req, res) {
  */
 exports.autocomplete = function(req, res) {
 
-  var criteria = req.body.criteria;
+  var criteria;
+  var query;
 
-  var query = {
-    "partial_fields": {
-      "partial1": {
-        "exclude": "routes.*"
-      }
-    },
-    "query": {
-      "bool": {
-        "should": [{
-            "query_string": {
-              "default_field": "race.name.autocomplete",
-              "query": criteria.fulltext
-            }
-          }, {
-            "query_string": {
-              "default_field": "race.pin.department.name.autocomplete",
-              "query": criteria.fulltext
-            }
-          }, {
-            "query_string": {
-              "default_field": "race.pin.department.region.autocomplete",
-              "query": criteria.fulltext
-            }
-          }, {
-            "query_string": {
-              "default_field": "race.pin.department.code.autocomplete",
-              "query": criteria.fulltext
-            }
-          }, {
-            "query_string": {
-              "default_field": "race.distanceType.i18n.autocomplete",
-              "query": criteria.fulltext
-            }
-          }, {
-            "query_string": {
-              "default_field": "race.type.name.autocomplete",
-              "query": criteria.fulltext
-            }
-          },
+  if (!_.isUndefined(req.body) && !_.isUndefined(req.body.criteria)) {
 
-        ]
-      }
-    },
-    "from": 0,
-    "size": 8,
-    "sort": [],
-    "filter": {
-      "and": [{
-        "term": {
-          "race.published": true
-        }
-      }]
+    criteria = req.body.criteria;
+    var fulltext = "";
 
+    if (!_.isUndefined(criteria.fulltext)) {
+      fulltext = criteria.fulltext;
     }
-  };
 
-  if (criteria.region !== undefined) {
 
-    query.filter.and.push({
-      "terms": {
-        "race.pin.department.code": criteria.region.departments
+    query = {
+      "partialFields": {
+        "partial1": {
+          "exclude": "routes.*"
+        }
+      },
+      "query": {
+        "bool": {
+          "should": [{
+              "query_string": {
+                "default_field": "race.name.autocomplete",
+                "query": fulltext
+              }
+            }, {
+              "query_string": {
+                "default_field": "race.pin.department.name.autocomplete",
+                "query": fulltext
+              }
+            }, {
+              "query_string": {
+                "default_field": "race.pin.department.region.autocomplete",
+                "query": fulltext
+              }
+            }, {
+              "query_string": {
+                "default_field": "race.pin.department.code.autocomplete",
+                "query": fulltext
+              }
+            }, {
+              "query_string": {
+                "default_field": "race.distanceType.i18n.autocomplete",
+                "query": fulltext
+              }
+            }, {
+              "query_string": {
+                "default_field": "race.type.name.autocomplete",
+                "query": fulltext
+              }
+            },
+
+          ]
+        }
+      },
+      "from": 0,
+      "size": 8,
+      "sort": [],
+      "filter": {
+        "and": [{
+          "term": {
+            "race.published": true
+          }
+        }]
+
+      }
+    };
+
+    if (!_.isUndefined(criteria.region)) {
+
+      query.filter.and.push({
+        "terms": {
+          "race.pin.department.code": criteria.region.departments
+        }
+      });
+    }
+
+    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+      logger.debug(util.inspect(query, true, 7, true));
+    }
+
+    elasticSearchClient.search(config.racesidx, "race", query, function(err, data) {
+      if (err) {
+        logger.error(err);
+        return res.json(400, {
+          message: errorUtils.errors(err.errors)
+        });
+      }
+
+      if (data) {
+        if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+          console.log(JSON.parse(data));
+        }
+        return res.json(200, JSON.parse(data));
+      } else {
+        return res.json(400, {
+          message: ["error.noData"]
+        });
       }
     });
-  }
 
-  if (logger.isLevelEnabled('debug')) {
-    logger.debug(util.inspect(query, true, 7, true));
+  } else {
+    return res.json(400, {
+      message: ["error.noCriteria"]
+    });
   }
-
-  elasticSearchClient.search(config.racesidx, 'race', query)
-    .on('data', function(data) {
-      if (logger.isLevelEnabled('debug')) {
-        logger.debug(JSON.parse(data));
-      }
-      res.json(200, JSON.parse(data));
-    })
-    .on('done', function() {
-      //always returns 0 right now
-    })
-    .on('error', function(err) {
-      logger.error(err);
-      res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    })
-    .exec();
 };
 
 
@@ -646,6 +792,7 @@ exports.autocomplete = function(req, res) {
  * @method Find all races
  * @param req
  * @param res
+ * @return error 400 if database crash otherwise 200
  */
 exports.findAll = function(req, res) {
 
@@ -656,9 +803,14 @@ exports.findAll = function(req, res) {
         message: errorUtils.errors(err.errors)
       });
     }
-    req.races = races;
-    return res.json(200, {
-      races: req.races
-    });
+    if (races) {
+      return res.json(200, {
+        races: races
+      });
+    } else {
+      return res.json(400, {
+        message: ["error.occured"]
+      });
+    }
   });
 };

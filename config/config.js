@@ -1,16 +1,16 @@
-var path = require('path'),
-  rootPath = path.normalize(__dirname + '/..');
+var path = require("path"),
+  rootPath = path.normalize(__dirname + "/..");
 
 module.exports = {
   development: {
-    logLevel: 'info',
-    host: 'localhost',
-    db: 'mongodb://localhost/nextrun',
+    logLevel: "info",
+    host: "localhost",
+    db: "mongodb://localhost/nextrun",
     root: rootPath,
     facebook: {
       clientID: "APP_ID",
       clientSecret: "APP_SECRET",
-      callbackURL: 'http://localhost:3000/auth/facebook/callback'
+      callbackURL: "http://localhost:3000/auth/facebook/callback"
     },
     mailgun: {
       user: "devmaster@nextrunjosephluccisano.mailgun.org",
@@ -19,14 +19,14 @@ module.exports = {
     racesidx: "racesidx_v1"
   },
   test: {
-    logLevel: 'info',
-    host: 'localhost',
-    db: 'mongodb://localhost/nextrun_test',
+    logLevel: "info",
+    host: "localhost",
+    db: "mongodb://localhost/nextrun_test",
     root: rootPath,
     facebook: {
       clientID: "APP_ID",
       clientSecret: "APP_SECRET",
-      callbackURL: 'http://localhost:3000/auth/facebook/callback'
+      callbackURL: "http://localhost:3000/auth/facebook/callback"
     },
     mailgun: {
       user: "user",
@@ -35,9 +35,9 @@ module.exports = {
     racesidx: "racesidx_test_v1"
   },
   prod: {
-    logLevel: 'error',
-    host: '192.95.25.173',
-    db: 'mongodb://192.95.25.173:27017/nextrun',
+    logLevel: "error",
+    host: "192.95.25.173",
+    db: "mongodb://192.95.25.173:27017/nextrun",
     root: rootPath,
     facebook: {
       clientID: "195803770591615",

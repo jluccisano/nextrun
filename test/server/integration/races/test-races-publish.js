@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -133,7 +134,6 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
       race.type.name.should.equal('duathlon');
       race.pin.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
-      //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
       race.distanceType.name.should.equal('S');
       race.user_id.should.eql(user1._id);
@@ -146,7 +146,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
   describe('Access Denied', function() {
 
     it('should not update because unknown user', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish/true')
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/publish/true')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -161,7 +161,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
   describe('invalid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar2@example.com',
           password: '123'
@@ -176,7 +176,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
     it('should not publish because user not Owner', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish/true')
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/publish/true')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -187,7 +187,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -196,9 +196,10 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
     });
   });
 
+
   describe('invalid parameters', function() {
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -213,7 +214,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
     it('should not publish because race id is unknown', function(done) {
-      superagent.put('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/publish/true')
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/523726537a11c4aa8d789bbb/publish/true')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -224,7 +225,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -239,7 +240,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
   describe('Valid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -254,7 +255,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
         });
     });
     it('should update success', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish/true')
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/publish/true')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -277,7 +278,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
     });
 
     it('test unplublished', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/publish/false')
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/publish/false')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -300,7 +301,7 @@ describe('Publish Race: UPDATE /api/races/raceId/publish', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

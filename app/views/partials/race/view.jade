@@ -1,76 +1,76 @@
-div.container(style="margin-top:50px",style="padding-bottom: 50px;")
+div.container(style="margin-top:50px" style="padding-bottom: 50px;")
 	h1 {{race.name}}
 		small  ({{race.pin.department.code}})
-	h4.text-right  {{getDate(race.date)}}
+	h4.text-right {{race.date | amDateFormat:'DD MMMM YYYY'}}
 	div.row
 		div(ng-show="loading")
 			span(class="fa fa-spinner fa-spin")
-			span  Chargement en cours...
+			span {{'loading.pending' | translate}}
 	hr
 	div.row.text-center
-		div.col-lg-4.col-xs-6.col-md-4.col-sm-4
+		div.col-md-4
 			h3 {{race.type.i18n}}
 			span.small type
-		div.col-lg-4.col-xs-6.col-md-4.col-sm-4
+		div.col-md-4
 			h3 {{race.distanceType.name}}
 			span.small distance
-		div.col-lg-4.col-xs-6.col-md-4.col-sm-4
+		div.col-md-4
 			div.row
 				div.col-md-8.col-md-offset-4
 					table.table
 						tbody
 							tr
-								td(style="border:0", align="left")
-									a(data-ng-click="openFeedbackModal(race._id)") 
+								td(style="border:0" align="left")
+									a(ng-click="openFeedbackModal(race._id)") 
 										i.glyphicon.glyphicon-thumbs-down 
-										span  Signaler une erreur
-							tr(data-ng-if="race.organizerWebSite")
+										span  {{'field.createIssue' | translate}}
+							tr(ng-if="race.organizerWebSite")
 								td(style="border:0", align="left")
-									a(data-ng-href="{{addHttp(race.organizerWebSite)}}" target="_blank")
+									a(data-ng-href="{{race.organizerWebSite}}" nr-add-http target="_blank")
 										i.glyphicon.glyphicon-info-sign
-										span  {{race.organizerWebSite}}
+										span {{race.organizerWebSite}}
 							tr
 								td(style="border:0", align="left")
 									div.fb-like(data-href="http://www.nextrun.fr/races/view/{{race._id}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
 	div(data-ng-if="race.description")
-		h2 Présentation
+		h2 {{'title.presentation' | translate}}
 		hr
-		div.well(data-ng-bind-html="race.description")
+		div.well(ng-bind-html="race.description")
 
-	h2 Parcours
+	h2 {{'title.routes' | translate}}
 	hr
 	div.row
 		div.col-lg-12
 			tabset(vertical="false" type="navType")
-				tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" data-ng-click="onChangeTab(route)")
+				tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" ng-click="onChangeTab(route)")
 					div(data-ng-if="route.description")
-						h4 <strong>Description</strong>
-						div.well(data-ng-bind-html="route.description")
+						h4 <strong>{{'title.presentation' | translate}}</strong>
+						div.well(ng-bind-html="route.description")
 					include showMap
 					div.row.text-center
-						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
-							h3 {{route.distance.toFixed(2)}}
-								small km
-							span.small Distance
-						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
-							h3 {{Math.floor(route.ascendant)}}
-								small m
-							span.small D+
-						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
-							h3 {{Math.floor(route.descendant)}}
-								small m
-							span.small D-
-						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
-							h3 {{Math.floor(route.maxElevation)}}
-								small m
-							span.small Max
-						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
-							h3 {{Math.floor(route.minElevation)}}
-								small m
-							span.small Min
+						div.col-lg-4
+							h3 {{ route.distance | number: 2}}
+								small {{'metric.kilometer' | translate}}
+							span.small {{'metric.distance' | translate}}
+						div.col-lg-4
+							h3 {{route.ascendant | number: 0 }}
+								small {{'metric.meter' | translate}}
+							span.small {{'metric.ascendant' | translate}}
+						div.col-lg-4
+							h3 {{route.descendant | number: 0 }}
+								small {{'metric.meter' | translate}}
+							span.small {{'metric.descendant' | translate}}
+						div.col-lg-4
+							h3 {{route.maxElevation | number: 0 }}
+								small {{'metric.meter' | translate}}
+							span.small {{'metric.maxElevation' | translate}}
+						div.col-lg-4
+							h3 {{route.minElevation | number: 0 }}
+								small {{'metric.meter' | translate}}
+							span.small {{'metric.minElevation' | translate}}
 
-	h2 Organisation
+	h2 {{'title.organisation' | translate}}
 	hr
 	div.row
-		div.col-lg-12.col-xs-2.col-md-12.col-sm-12
+		div.col-lg-12
 			include templates/viewOrganisation

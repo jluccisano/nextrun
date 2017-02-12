@@ -22,13 +22,19 @@
     "bootstrap-multiselect": "~0.9.3",
     "angular-date-time-input": "~0.1.0",
     "x2js": "*",
-    "AngularGM": "~1.0.0"
+    "AngularGM": "~1.0.0",
+    "angular-translate": "~2.1.0",
+    "angular-translate-loader-partial": "~2.0.0",
+    "angular-moment": "~0.6.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14",
     "angular-scenario": "~1.2.14"
   },
   "resolutions": {
-    "underscore": "~1.6.0"
+    "bootstrap": "~3.1.1",
+    "jquery": "~2.1.0",
+    "underscore": "~1.6.0",
+    "angular": "~1.2.14"
   }
 }

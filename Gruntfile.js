@@ -2,6 +2,9 @@ module.exports = function(grunt) {
 
   var config = require('./config/config');
 
+  process.env.XUNIT_FILE = 'test-unit-results.xml';
+  process.env.JUNIT_REPORT_PATH = 'test-integration-results.xml';
+
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
@@ -14,42 +17,68 @@ module.exports = function(grunt) {
     mochaTest: {
       unit: {
         options: {
-          reporter: 'spec',
-          require: 'blanket'
+          reporter: 'xunit-file',
+          require: 'blanket',
+          quiet: false
         },
         src: ['test/server/unit/**/test-*.js']
       },
       integration: {
         options: {
-          reporter: 'spec',
+          timeout: 5000,
+          reporter: 'mocha-jenkins-reporter',
+          quiet: false,
           require: 'blanket'
         },
         src: ['test/server/integration/**/test-*.js']
       },
-      coverage: {
+      'integration-coverage': {
         options: {
           reporter: 'html-cov',
           // use the quiet flag to suppress the mocha console output
           quiet: true,
           // specify a destination file to capture the mocha
           // output (the quiet option does not suppress this)
-          captureFile: 'test/server/coverage/coverage.html'
+          captureFile: 'integration-coverage.html'
         },
-        src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
+        src: ['test/server/integration/**/test-*.js']
+      },
+      'unit-coverage': {
+        options: {
+          reporter: 'html-cov',
+          // use the quiet flag to suppress the mocha console output
+          quiet: true,
+          // specify a destination file to capture the mocha
+          // output (the quiet option does not suppress this)
+          captureFile: 'unit-coverage.html'
+        },
+        src: ['test/server/unit/**/test-*.js']
       },
       'html-cov': {
         options: {
           reporter: 'html-cov',
           quiet: true,
-          captureFile: 'test/server/coverage/coverage.html'
+          captureFile: 'coverage.html'
         },
-        src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
+        src: ['test/server/unit/**/test-*.js'] //'test/server/integration/**/test-*.js'
+      },
+      'unit-travis-cov': {
+        options: {
+          reporter: 'travis-cov'
+        },
+        src: ['test/server/unit/**/test-*.js']
+      },
+      'integration-travis-cov': {
+        options: {
+          reporter: 'travis-cov'
+        },
+        src: ['test/server/integration/**/test-*.js']
       },
       'travis-cov': {
         options: {
-          reporter: 'travis-cov',
+          reporter: 'travis-cov'
         },
-        src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
+        src: ['test/server/unit/**/test-*.js'] //'test/server/integration/**/test-*.js'
       }
     },
     usemin: {
@@ -248,22 +277,8 @@ module.exports = function(grunt) {
     },
     jshint: {
       options: {
-        laxcomma: true,
-        curly: true,
-        eqeqeq: true,
-        eqnull: true,
-        browser: true,
-        laxbreak: true,
-        validthis: true,
-        debug: true,
-        devel: true,
-        boss: true,
-        expr: true,
-        asi: true,
-        globals: {
-          jQuery: true
-        },
-        reporter: 'checkstyle',
+        jshintrc: '.jshintrc',
+        reporter: require('jshint-stylish'),
         reporterOutput: 'jshint.xml',
         ignores: ['public/lib/**/*.js', 'public/js/widgets/*.js']
       },
@@ -302,8 +317,14 @@ module.exports = function(grunt) {
       unit: {
         configFile: 'test/client/spec/karma.conf.js',
         background: false,
+        singleRun: true,
         autoWatch: false
-      }
+        logLevel: 'DEBUG'
+    },
+      e2e: {
+        configFile: 'karma-e2e.conf.js',
+        singleRun: true
+      },
     },
     travis: {
       configFile: 'test/client/spec/karma.conf.js',
@@ -330,7 +351,7 @@ module.exports = function(grunt) {
     express: {
       options: {
         background: true,
-        port: 3000,
+        port: 4000,
         debug: false
       },
       test: {
@@ -391,19 +412,28 @@ module.exports = function(grunt) {
       },
       start_selenium: {
         cmd: 'node ./node_modules/protractor/bin/webdriver-manager start'
+      },
+      stop_selenium: {
+        cmd: 'curl -s -L http://localhost:4444/selenium-server/driver?cmd=shutDownSeleniumServer'
       }
+    },
+    mongo_drop: {
+      test: {
+        'uri': 'mongodb://localhost:27017/nextrun_test'
+      },
     }
   });
 
-  grunt.registerTask('test', ['test-server', 'test-client']);
 
-  grunt.registerTask('test-client', ['jshint:src', 'test-client:unit', 'test-client:e2e']);
+
+  grunt.registerTask('test-client', ['jshint:src', 'test-client:unit']); //'test-client:e2e'
   grunt.registerTask('test-client:unit', ['karma:unit']);
-  grunt.registerTask('test-client:e2e', ['bgShell:start_selenium', 'express:test', 'protractor:singleRun']);
+  grunt.registerTask('test-client:e2e', ['bgShell:stop_selenium', 'mongo_drop:test', 'bgShell:start_selenium', 'express:test', 'protractor:singleRun', 'bgShell:stop_selenium']);
 
-  grunt.registerTask('test-server', ['jshint:src', 'test-server:unit', 'test-server:integration', 'mochaTest:html-cov', 'mochaTest:travis-cov']);
-  grunt.registerTask('test-server:unit', ['mochaTest:unit']);
-  grunt.registerTask('test-server:integration', ['shell:elasticsearch_install_test_idx', 'mochaTest:integration']);
+  grunt.registerTask('test-server', ['jshint:src', 'test-server:unit', 'mochaTest:html-cov', 'mochaTest:travis-cov']); //'test-server:integration'
+  grunt.registerTask('test-server:unit', ['mochaTest:unit', 'mochaTest:unit-coverage', 'mochaTest:unit-travis-cov']);
+  grunt.registerTask('test-server:integration', ['shell:elasticsearch_install_test_idx', 'mochaTest:integration', 'mochaTest:integration-coverage', 'mochaTest:integration-travis-cov']);
+
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 
@@ -413,10 +443,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('update', ['shell:npm_install', 'shell:bower_install']);
 
-  grunt.registerTask('build', ['clean:build', 'checkcode', 'test-server', 'test-client', 'minify', 'copy:main', 'usemin', 'jsdoc', 'clean:tmp']);
+  grunt.registerTask('test', ['test-server', 'test-client']);
 
-  grunt.registerTask('build-skipTests', ['clean:build', 'checkcode', 'minify', 'copy:main', 'usemin', 'jsdoc', 'clean:tmp']);
-
+  grunt.registerTask('build', ['clean:build', 'checkcode', 'minify', 'copy:main', 'usemin', 'jsdoc', 'clean:tmp']);
 
   grunt.registerTask('default', ['build']);
 

@@ -2,17 +2,15 @@
  * Module dependencies.
  */
 
-var mainController = require('../app/controllers/mainController'),
-    userController = require('../app/controllers/userController'),
-    contactController = require('../app/controllers/contactController'),
-    raceController = require('../app/controllers/raceController'),
-    accessLevels = require('../public/js/routingConfig').accessLevels,
-    userRoles = require('../public/js/routingConfig').userRoles,
-    _ = require('underscore'),
-    util = require('util'),
-    gmaps = require('./middlewares/gmaps'),
-    auth = require('./middlewares/authorization'),
-    logger = require('./logger');
+var mainController = require("../app/controllers/mainController"),
+    userController = require("../app/controllers/userController"),
+    contactController = require("../app/controllers/contactController"),
+    raceController = require("../app/controllers/raceController"),
+    accessLevels = require("../public/js/routingConfig").accessLevels,
+    userRoles = require("../public/js/routingConfig").userRoles,
+    _ = require("underscore"),
+    gmaps = require("./middlewares/gmaps"),
+    logger = require("./logger");
 
 
 /** ROUTES **/
@@ -22,13 +20,13 @@ var routes = [
     // Views
 
     {
-        path: '/',
-        httpMethod: 'GET',
+        path: "/",
+        httpMethod: "GET",
         middleware: [mainController.index],
         accessLevel: accessLevels.public
     }, {
-        path: '/partials/(:type)?/:name',
-        httpMethod: 'GET',
+        path: "/partials/(:type)?/:name",
+        httpMethod: "GET",
         middleware: [mainController.partials],
         accessLevel: accessLevels.public
     },
@@ -37,61 +35,61 @@ var routes = [
 
     /** api contacts **/
     {
-        path: '/api/contacts',
-        httpMethod: 'POST',
+        path: "/api/contacts",
+        httpMethod: "POST",
         middleware: [contactController.create],
         accessLevel: accessLevels.public
     }, {
-        path: '/api/contacts/feedback',
-        httpMethod: 'POST',
+        path: "/api/contacts/feedback",
+        httpMethod: "POST",
         middleware: [contactController.feedback],
         accessLevel: accessLevels.public
     },
 
     /** api users **/
     {
-        path: '/api/users/signup',
-        httpMethod: 'POST',
+        path: "/api/users/signup",
+        httpMethod: "POST",
         middleware: [userController.signup],
         accessLevel: accessLevels.public
     }, {
-        path: '/api/users/forgotpassword',
-        httpMethod: 'POST',
+        path: "/api/users/forgotpassword",
+        httpMethod: "POST",
         middleware: [userController.forgotPassword],
         accessLevel: accessLevels.public
     }, {
-        path: '/api/users/delete',
-        httpMethod: 'DELETE',
+        path: "/api/users/delete",
+        httpMethod: "DELETE",
         middleware: [raceController.destroyAllRaceOfUser, userController.deleteAccount],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/users/update/profile',
-        httpMethod: 'PUT',
+        path: "/api/users/update/profile",
+        httpMethod: "PUT",
         middleware: [userController.updateProfile],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/users/update/password',
-        httpMethod: 'PUT',
+        path: "/api/users/update/password",
+        httpMethod: "PUT",
         middleware: [userController.updatePassword],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/users/check/email',
-        httpMethod: 'POST',
+        path: "/api/users/check/email",
+        httpMethod: "POST",
         middleware: [userController.checkIfEmailAlreadyExists],
         accessLevel: accessLevels.public
     }, {
-        path: '/api/users/logout',
-        httpMethod: 'POST',
+        path: "/api/users/logout",
+        httpMethod: "POST",
         middleware: [userController.logout],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/users/settings',
-        httpMethod: 'GET',
+        path: "/api/users/settings",
+        httpMethod: "GET",
         middleware: [userController.settings],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/users/session',
-        httpMethod: 'POST',
+        path: "/api/users/session",
+        httpMethod: "POST",
         middleware: [userController.login],
         accessLevel: accessLevels.public
     },
@@ -99,57 +97,57 @@ var routes = [
     /** api races **/
 
     {
-        path: '/api/races/create',
-        httpMethod: 'POST',
+        path: "/api/races/create",
+        httpMethod: "POST",
         middleware: [raceController.create],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/races/find/(page/:page)?',
-        httpMethod: 'GET',
+        path: "/api/races/find/(page/:page)?",
+        httpMethod: "GET",
         middleware: [raceController.findByUser],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/races/:raceId',
-        httpMethod: 'GET',
+        path: "/api/races/:raceId",
+        httpMethod: "GET",
         middleware: [raceController.find],
         accessLevel: accessLevels.public
     }, {
-        path: '/api/races/:raceId/update',
-        httpMethod: 'PUT',
+        path: "/api/races/:raceId/update",
+        httpMethod: "PUT",
         middleware: [gmaps.geocodeAddress, raceController.update],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/races/:raceId/publish/:value',
-        httpMethod: 'PUT',
+        path: "/api/races/:raceId/publish/:value",
+        httpMethod: "PUT",
         middleware: [raceController.publish],
         accessLevel: accessLevels.user
 
     }, {
-        path: '/api/races/:raceId/delete',
-        httpMethod: 'DELETE',
+        path: "/api/races/:raceId/delete",
+        httpMethod: "DELETE",
         middleware: [raceController.delete],
         accessLevel: accessLevels.user
     }, {
-        path: '/api/races/search',
-        httpMethod: 'POST',
+        path: "/api/races/search",
+        httpMethod: "POST",
         middleware: [raceController.search],
         accessLevel: accessLevels.public
     }, {
-        path: '/api/races/autocomplete',
-        httpMethod: 'POST',
+        path: "/api/races/autocomplete",
+        httpMethod: "POST",
         middleware: [raceController.autocomplete],
         accessLevel: accessLevels.public
     }, {
-        path: '/api/races',
-        httpMethod: 'GET',
+        path: "/api/races",
+        httpMethod: "GET",
         middleware: [raceController.findAll],
         accessLevel: accessLevels.public
     },
 
     // redirect all others to the index (HTML5 history)
     {
-        path: '*',
-        httpMethod: 'GET',
+        path: "*",
+        httpMethod: "GET",
         middleware: [mainController.index],
         accessLevel: accessLevels.public
     },
@@ -159,48 +157,48 @@ var routes = [
 
 module.exports = function(app) {
 
-    app.param(':raceId', raceController.load);
+    var ensureAuthorized = function(req, res, next) {
+        var role;
+        if (!req.user) {
+            role = userRoles.public;
+        } else {
+            role = req.user.role;
+        }
+        var accessLevel = _.findWhere(routes, {
+            path: req.route.path
+        }).accessLevel || accessLevels.public;
+
+        if (!(accessLevel.bitMask & role.bitMask)) {
+            logger.error("error.accessDenied");
+            return res.send(403, {
+                message: ["error.accessDenied"]
+            });
+        }
+        return next();
+
+    };
+
+    app.param(":raceId", raceController.load);
 
     _.each(routes, function(route) {
         route.middleware.unshift(ensureAuthorized);
         var args = _.flatten([route.path, route.middleware]);
 
         switch (route.httpMethod.toUpperCase()) {
-            case 'GET':
+            case "GET":
                 app.get.apply(app, args);
                 break;
-            case 'POST':
+            case "POST":
                 app.post.apply(app, args);
                 break;
-            case 'PUT':
+            case "PUT":
                 app.put.apply(app, args);
                 break;
-            case 'DELETE':
+            case "DELETE":
                 app.delete.apply(app, args);
                 break;
             default:
-                throw new Error('Invalid HTTP method specified for route ' + route.path);
+                throw new Error("Invalid HTTP method specified for route " + route.path);
         }
     });
-};
-
-var ensureAuthorized = function(req, res, next) {
-    var role;
-    if (!req.user) {
-        role = userRoles.public;
-    } else {
-        role = req.user.role;
-    }
-    var accessLevel = _.findWhere(routes, {
-        path: req.route.path
-    }).accessLevel || accessLevels.public;
-
-    if (!(accessLevel.bitMask & role.bitMask)) {
-        logger.error('error.accessDenied');
-        return res.send(403, {
-            message: ['error.accessDenied']
-        });
-    }
-    return next();
-
 };

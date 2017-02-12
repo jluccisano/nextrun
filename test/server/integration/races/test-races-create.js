@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -73,7 +74,7 @@ describe('Create race: POST /api/races', function() {
   describe('Valid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -90,7 +91,7 @@ describe('Create race: POST /api/races', function() {
 
     it('should response success', function(done) {
 
-      superagent.post('http://localhost:3000/api/races/create')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -145,7 +146,7 @@ describe('Create race: POST /api/races', function() {
     });
 
     it('create new race with distance type different should response success', function(done) {
-      superagent.post('http://localhost:3000/api/races/create')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -182,7 +183,7 @@ describe('Create race: POST /api/races', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -194,7 +195,7 @@ describe('Create race: POST /api/races', function() {
 
   describe('Access Denied', function() {
     it('should not create because access denied', function(done) {
-      superagent.post('http://localhost:3000/api/races/create')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -235,7 +236,7 @@ describe('Create race: POST /api/races', function() {
   describe('Invalid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -252,7 +253,7 @@ describe('Create race: POST /api/races', function() {
 
     it('should response raceAlreadyExists', function(done) {
 
-      superagent.post('http://localhost:3000/api/races/create')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -290,7 +291,7 @@ describe('Create race: POST /api/races', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

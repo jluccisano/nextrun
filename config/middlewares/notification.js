@@ -1,36 +1,39 @@
 /**
- * Ce module permet d'envoyer des mails
+ * Ce module permet d"envoyer des mails
  *
  */
 var nodemailer = require("nodemailer"),
-	env = process.env.NODE_ENV || 'development',
-	config = require('../config')[env],
-	logger = require('../logger.js');
+	env = process.env.NODE_ENV || "development",
+	config = require("../config")[env],
+	logger = require("../logger.js");
 
-	/**
-	 * Cette fonction permet d'envoyer un mail via Mailgun SMTP
-	 * @param mailOptions
-	 */
-	exports.sendMail = function(mailOptions) {
+/**
+ * Cette fonction permet d"envoyer un mail via Mailgun SMTP
+ * @param mailOptions
+ */
+exports.sendMail = function(mailOptions) {
+
+	var result = false;
+
+	var transport = nodemailer.createTransport("SMTP", {
+		service: "Mailgun",
+		auth: {
+			user: config.mailgun.user,
+			pass: config.mailgun.password
+		}
+	});
 
 
-		var transport = nodemailer.createTransport("SMTP", {
-			service: "Mailgun",
-			auth: {
-				user: config.mailgun.user,
-				pass: config.mailgun.password
-			}
-		});
 
-		transport.sendMail(mailOptions, function(err, res) {
-			if (err) {
-				logger.error(err);
-			} else {
-				logger.info("send email to: " + mailOptions.to + " -> success");
-			}
-		});
-
-	};
+	transport.sendMail(mailOptions, function(err, res) {
+		if (err) {
+			logger.error(err);
+		} else {
+			logger.info("send email to: " + mailOptions.to + " -> success", res);
+		}
+	});
+	return result;
+};
 
 /**
  * Cette fonction envoie un mail lorsque un contact laisse un email

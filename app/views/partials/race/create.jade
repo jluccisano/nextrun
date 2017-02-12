@@ -25,7 +25,7 @@ div.container
 											
 									div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation && form.location.$valid}")
 										label.control-label(for="location") Lieu
-										input.form-control(name="location" id="location" placeholder="ex: Castelnaudary" data-ng-model="race.pin.name" has-location required ng-autocomplete options="options" details="race.pin")
+										input.form-control(name="location" id="location" placeholder="ex: Castelnaudary" data-ng-model="race.pin.name" nr-has-location required gmaps-autocomplete options="options" details="race.pin")
 									
 									div.form-group(data-ng-class="{'has-error': !form.type.$pristine && form.type.$invalid, 'has-success': !form.type.$invalid && !form.type.$pristine}")
 										label.control-label(for="type") Type
@@ -60,7 +60,7 @@ div.container
 												button.btn.btn-primary(type="submit", data-ng-click="login()", data-ng-disabled="form1.$invalid") Se connecter
 												button.btn.btn-link( type="button", data-ng-click="accountExists = false;form1.$setPristine();user={}") S'inscrire
 												hr
-												button.btn.btn-link(id="forgotPasswordLink", type="button",  data-ng-click="open()") Mot de passe oublié ?
+												button.btn.btn-link(id="forgotPasswordLink", type="button",  data-ng-click="openForgotPasswordModal()") Mot de passe oublié ?
 					div(data-ng-hide="accountExists")
 						div.container(style="margin-top:50px")
 							div.row

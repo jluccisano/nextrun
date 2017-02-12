@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -50,7 +51,7 @@ describe('Search races with autocomplete: POST /api/races/autocomplete', functio
       done();
     });
   });
-  
+
   var currentRace;
   var currentDate = new Date();
 
@@ -128,7 +129,21 @@ describe('Search races with autocomplete: POST /api/races/autocomplete', functio
 
   describe('invalid parameters', function() {
 
+    it('should return error when no criteria is sent', function(done) {
+
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/autocomplete')
+        .send()
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(400);
+          res.body.message[0].should.equal("error.noCriteria");
+          done();
+        });
+    });
+
   });
+
 
   describe('valid parameters', function() {
 
@@ -136,15 +151,36 @@ describe('Search races with autocomplete: POST /api/races/autocomplete', functio
       setTimeout(function() {
         //waiting for elasticsearch update index
         done();
-      }, 1500);
+      }, 2500);
     });
 
-    it('should return one race', function(done) {
-      superagent.post('http://localhost:3000/api/races/autocomplete')
+    it('all region - should return one race', function(done) {
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/autocomplete')
         .send({
           criteria: {
             fulltext: "dua",
             region: undefined
+          }
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.hits.hits.length.should.equal(1);
+          res.body.hits.hits[0].fields.partial1[0].name.should.equal("Duathlon de Castelnaudary");
+          done();
+        });
+    });
+
+    it('with specific region - should return one race', function(done) {
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/autocomplete')
+        .send({
+          criteria: {
+            fulltext: "dua",
+            region: {
+              name: 'Languedoc-Roussillon',
+              departments: ['11', '30', '34', '48', '66']
+            }
           }
         })
         .set('Accept', 'application/json')

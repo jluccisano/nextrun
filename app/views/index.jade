@@ -1,4 +1,4 @@
-extends ./layouts/layout
+extends ./layouts/layout2
 
 block body
 
@@ -12,10 +12,8 @@ block body
 
 			include ./layouts/messages
 
-			
-			
 			div.ng-cloak(data-ng-cloak, class="view-container")
 				div(id="main" data-ng-view, class="view-frame ng-cloak")
 
-		div.ng-cloak(id="footer" , data-ng-cloak data-ng-controller="FooterCtrl")
+		div.ng-cloak(id="footer" , data-ng-cloak data-ng-controller="FooterController")
 			include ./layouts/footer

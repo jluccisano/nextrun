@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -150,7 +151,7 @@ describe('Delete race: DELETE /api/races', function() {
 
   describe('Access denied', function() {
     it('should not delete because access denied', function(done) {
-      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
+      superagent.del('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -166,7 +167,7 @@ describe('Delete race: DELETE /api/races', function() {
   describe('invvalid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar2@example.com',
           password: '123'
@@ -182,7 +183,7 @@ describe('Delete race: DELETE /api/races', function() {
     });
 
     it('should not delete because user not Owner', function(done) {
-      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
+      superagent.del('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -194,7 +195,7 @@ describe('Delete race: DELETE /api/races', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -206,7 +207,7 @@ describe('Delete race: DELETE /api/races', function() {
   describe('invvalid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -222,7 +223,7 @@ describe('Delete race: DELETE /api/races', function() {
     });
 
     it('should not delete because race id is unknown', function(done) {
-      superagent.del('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/delete')
+      superagent.del('http://localhost:'+process.env.PORT+'/api/races/523726537a11c4aa8d789bbb/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -234,7 +235,7 @@ describe('Delete race: DELETE /api/races', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -247,7 +248,7 @@ describe('Delete race: DELETE /api/races', function() {
   describe('valid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -263,7 +264,7 @@ describe('Delete race: DELETE /api/races', function() {
     });
 
     it('should delete success', function(done) {
-      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
+      superagent.del('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -284,7 +285,7 @@ describe('Delete race: DELETE /api/races', function() {
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

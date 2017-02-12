@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -73,8 +74,8 @@ describe('Search races: POST /api/races/search', function() {
       },
       pin: {
         location: {
-          lat: 45.34,
-          lon: 1.7
+          lat: 43.317551,
+          lon: 1.954540
         },
         name: 'Castelnaudary',
         department: {
@@ -119,6 +120,19 @@ describe('Search races: POST /api/races/search', function() {
 
   describe('invalid parameters', function() {
 
+    it('should return error when no criteria is sent', function(done) {
+
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
+        .send()
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(400);
+          res.body.message[0].should.equal("error.noCriteria");
+          done();
+        });
+    });
+
   });
 
   describe('valid parameters', function() {
@@ -127,12 +141,12 @@ describe('Search races: POST /api/races/search', function() {
       setTimeout(function() {
         //waiting for elasticsearch update index
         done();
-      }, 1500);
+      }, 2500);
     });
 
     it('should return one race', function(done) {
-      
-      superagent.post('http://localhost:3000/api/races/search')
+
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
         .send({
           criteria: {
             fulltext: "dua",
@@ -153,12 +167,65 @@ describe('Search races: POST /api/races/search', function() {
 
     it('should return one race', function(done) {
 
-      superagent.post('http://localhost:3000/api/races/search')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
         .send({
           criteria: {
             fulltext: "dua",
             types: ['duathlon'],
+            from: 0,
+            size: 100,
+            sort: '_score',
             departments: ['11'],
+            dateRange: {
+              startDate: moment().subtract('days', 29),
+              endDate: moment().add('days', 29)
+            }
+          }
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.hits.hits.length.should.equal(1);
+          res.body.hits.hits[0].fields.partial1[0].name.should.equal("Duathlon de Castelnaudary");
+          done();
+        });
+    });
+
+    it('search with geolocation - should return one race', function(done) {
+
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
+        .send({
+          criteria: {
+            distance: 100,
+            searchAround: true,
+            location: {
+              lat: 43.635340,
+              lon: 1.458438
+            }
+          }
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.hits.hits.length.should.equal(1);
+          res.body.hits.hits[0].fields.partial1[0].name.should.equal("Duathlon de Castelnaudary");
+          done();
+        });
+    });
+
+    it('search with region - should return one race', function(done) {
+
+      superagent.post('http://localhost:'+process.env.PORT+'/api/races/search')
+        .send({
+          criteria: {
+            fulltext: "dua",
+            types: ['duathlon'],
+            region: {
+              name: 'Languedoc-Roussillon',
+              departments: ['11', '30', '34', '48', '66']
+            },
             dateRange: {
               startDate: moment().subtract('days', 29),
               endDate: moment().add('days', 29)

@@ -6,5 +6,5 @@ div(data-ng-if="route.isVisible")
 		
 			marker(coords="cursorMarker" icon="cursorMarker.icon")
 				
-		polylinecustom(polylines="route.polylines")
+		nr-polyline(polylines="route.polylines")
 	highchart(data-ng-hide="route.type === 'Natation'" config="route.chartConfig")

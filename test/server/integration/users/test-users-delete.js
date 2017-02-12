@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -120,7 +121,7 @@ describe('Delete User: DELETE /api/users', function() {
   describe('Delete user failed', function() {
 
     it('should response access denied', function(done) {
-      superagent.del('http://localhost:3000/api/users/delete')
+      superagent.del('http://localhost:'+process.env.PORT+'/api/users/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -137,7 +138,7 @@ describe('Delete User: DELETE /api/users', function() {
 
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -153,7 +154,7 @@ describe('Delete User: DELETE /api/users', function() {
     });
 
     it('should response delete account success', function(done) {
-      superagent.del('http://localhost:3000/api/users/delete')
+      superagent.del('http://localhost:'+process.env.PORT+'/api/users/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {

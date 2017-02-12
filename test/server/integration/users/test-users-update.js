@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -73,7 +74,7 @@ describe('Update User: PUT /api/users/update', function() {
     describe('Invalid Parameters', function() {
 
       it('should response access denied', function(done) {
-        superagent.put('http://localhost:3000/api/users/update/profile')
+        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/profile')
           .send()
           .set('Accept', 'application/json')
           .end(function(err, res) {
@@ -88,7 +89,7 @@ describe('Update User: PUT /api/users/update', function() {
     describe('Valid Parameters', function() {
 
       before(function(done) {
-        superagent.post('http://localhost:3000/api/users/session')
+        superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
           .send({
             email: 'foobar1@example.com',
             password: '123'
@@ -105,7 +106,7 @@ describe('Update User: PUT /api/users/update', function() {
 
 
       it('should response success', function(done) {
-        superagent.put('http://localhost:3000/api/users/update/profile')
+        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/profile')
           .send({
             user: {
               email: 'hello@example.com',
@@ -123,7 +124,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
       after(function(done) {
-        superagent.post('http://localhost:3000/api/users/logout')
+        superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -164,7 +165,7 @@ describe('Update User: PUT /api/users/update', function() {
     describe('Access denied', function() {
 
       it('should response access denied', function(done) {
-        superagent.put('http://localhost:3000/api/users/update/password')
+        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/password')
           .send()
           .set('Accept', 'application/json')
           .end(function(err, res) {
@@ -179,7 +180,7 @@ describe('Update User: PUT /api/users/update', function() {
     describe('Invalid Parameters', function() {
 
       before(function(done) {
-        superagent.post('http://localhost:3000/api/users/session')
+        superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
           .send({
             email: 'foobar1@example.com',
             password: '123'
@@ -195,7 +196,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
       it('should response invalid password', function(done) {
-        superagent.put('http://localhost:3000/api/users/update/password/')
+        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/password/')
           .send({
             actual: "foobar3",
             new: "foobar2"
@@ -210,7 +211,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
       after(function(done) {
-        superagent.post('http://localhost:3000/api/users/logout')
+        superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
@@ -222,7 +223,7 @@ describe('Update User: PUT /api/users/update', function() {
     describe('Update user password', function() {
 
       before(function(done) {
-        superagent.post('http://localhost:3000/api/users/session')
+        superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
           .send({
             email: 'foobar1@example.com',
             password: '123'
@@ -238,7 +239,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
       it('should response update password success', function(done) {
-        superagent.put('http://localhost:3000/api/users/update/password')
+        superagent.put('http://localhost:'+process.env.PORT+'/api/users/update/password')
           .send({
             actual: "123",
             new: "foobar"
@@ -252,7 +253,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
 
       after(function(done) {
-        superagent.post('http://localhost:3000/api/users/logout')
+        superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);

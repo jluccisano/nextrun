@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -60,7 +61,7 @@ describe('Log Out User: GET /api/users/logout', function() {
   describe('log out failed user not authenticated', function() {
 
     it('should logout failed', function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(403);
@@ -73,7 +74,7 @@ describe('Log Out User: GET /api/users/logout', function() {
   describe('log out success', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -89,7 +90,7 @@ describe('Log Out User: GET /api/users/logout', function() {
     });
 
     it('should logout successfully', function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

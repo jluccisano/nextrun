@@ -6,7 +6,7 @@ div(data-ng-if="route.isVisible")
 		
 			marker(coords="cursorMarker" icon="cursorMarker.icon")
 				
-		polylinecustom(polylines="route.polylines")
+		nr-polyline(polylines="route.polylines")
 
 
 	div(data-ng-show="route.editMode" style="padding: 5px; z-index: 0; position: absolute; top: 350px; right: 20px;")
@@ -32,18 +32,17 @@ div(data-ng-if="route.isVisible")
 						i.fa.fa-times
 						span Effacer
 				div
-					h3 {{route.distance.toFixed(2)}} km
+					h3 {{route.distance | number:2 }} km
 				div
-					span D+: {{Math.floor(route.ascendant)}} m
+					span D+: {{route.ascendant | number:0 }} m
 				div
-					span D-: {{Math.floor(route.descendant)}} m
+					span D-: {{route.descendant | number:0 }} m
 				div
-					span Max: {{Math.floor(route.maxElevation)}} m
+					span Max: {{route.maxElevation | number:0 }} m
 				div
-					span Min: {{Math.floor(route.minElevation)}} m
+					span Min: {{route.minElevation | number:0 }} m
 	highchart(data-ng-hide="route.type === 'Natation'" config="route.chartConfig")
 
 	div.form-group
 		label.col-lg-4.control-label Ajouter une description à votre parcours
 	div.col-lg-12(text-angular text-angular-name="description" data-ng-model="route.description" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
-

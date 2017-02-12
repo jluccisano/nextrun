@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -133,7 +134,6 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
       race.type.name.should.equal('duathlon');
       race.pin.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
-      //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
       race.distanceType.name.should.equal('S');
       race.user_id.should.eql(user1._id);
@@ -145,7 +145,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
 
   describe('Access denied', function() {
     it('should not retrieve because access denied', function(done) {
-      superagent.get('http://localhost:3000/api/races/find')
+      superagent.get('http://localhost:'+process.env.PORT+'/api/races/find')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -160,7 +160,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
   describe('invalid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar2@example.com',
           password: '123'
@@ -177,7 +177,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
 
     it('should not retrieve any race for this user', function(done) {
 
-      superagent.get('http://localhost:3000/api/races/find')
+      superagent.get('http://localhost:'+process.env.PORT+'/api/races/find')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -189,7 +189,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -204,7 +204,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
   describe('valid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -220,7 +220,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
 
     it('should return one race', function(done) {
-      superagent.get('http://localhost:3000/api/races/find')
+      superagent.get('http://localhost:'+process.env.PORT+'/api/races/find')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -233,7 +233,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
 
     it('test with page parameter should return one race', function(done) {
-      superagent.get('http://localhost:3000/api/races/find/page/1')
+      superagent.get('http://localhost:'+process.env.PORT+'/api/races/find/page/1')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -246,7 +246,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
     });
 
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

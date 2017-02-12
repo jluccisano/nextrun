@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -19,7 +20,7 @@ var mongoose = require('mongoose'),
     describe('Invalid parameters', function() {
 
       it('no email - should respond with errors', function(done) {
-        superagent.post('http://localhost:3000/api/contacts/feedback')
+        superagent.post('http://localhost:'+process.env.PORT+'/api/contacts/feedback')
           .send()
           .set('Accept', 'application/json')
           .end(function(err, res) {
@@ -36,7 +37,7 @@ var mongoose = require('mongoose'),
     describe('Valid parameters', function() {
 
       it('add new feedback success', function(done) {
-        superagent.post('http://localhost:3000/api/contacts/feedback')
+        superagent.post('http://localhost:'+process.env.PORT+'/api/contacts/feedback')
           .send({
             feedback: {
               email: 'foobar@example.com',

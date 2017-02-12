@@ -2,11 +2,8 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose'),
-  util = require('util'),
-  ObjectId = mongoose.Schema.Types.ObjectId,
-  Schema = mongoose.Schema,
-  _ = require('underscore');
+var mongoose = require("mongoose"),
+  Schema = mongoose.Schema;
 
 var PointSchema = new Schema({
   segmentId: String,
@@ -205,23 +202,23 @@ var RaceSchema = new Schema({
  * Pre-save hook
  */
 
-RaceSchema.pre('save', function(next) {
+RaceSchema.pre("save", function(next) {
   return next();
 });
 
-RaceSchema.path('name').validate(function(name, fn) {
-  var Race = mongoose.model('Race');
+RaceSchema.path("name").validate(function(name, fn) {
+  var Race = mongoose.model("Race");
   Race.find({
-    'name': this.name,
-    'distanceType.name': this.distanceType.name
+    "name": this.name,
+    "distanceType.name": this.distanceType.name
   }).exec(function(err, races) {
     fn(!err && races.length === 0);
   });
 
-}, 'error.raceAlreadyExists');
+}, "error.raceAlreadyExists");
 
-RaceSchema.path('user_id').validate(function(user_id, fn) {
-  var User = mongoose.model('User');
+RaceSchema.path("user_id").validate(function(user_id, fn) {
+  var User = mongoose.model("User");
 
   User.find({
     _id: this.user_id
@@ -229,7 +226,7 @@ RaceSchema.path('user_id').validate(function(user_id, fn) {
     fn(!err && users.length === 1);
   });
 
-}, 'error.unknownUser');
+}, "error.unknownUser");
 
 
 RaceSchema.methods = {
@@ -243,7 +240,9 @@ RaceSchema.statics = {
 
     var criteria = options.criteria || {}
 
-    this.find(criteria, {routes: 0})
+    this.find(criteria, {
+      routes: 0
+    })
       .limit(options.perPage)
       .skip(options.perPage * options.page)
       .exec(cb);
@@ -269,7 +268,9 @@ RaceSchema.statics = {
    */
   findAll: function(cb) {
 
-    this.find({published: true}, {
+    this.find({
+      published: true
+    }, {
       name: 1,
       pin: 1
     }).exec(cb);
@@ -300,4 +301,4 @@ RaceSchema.statics = {
   }
 }
 
-mongoose.model('Race', RaceSchema);
+mongoose.model("Race", RaceSchema);

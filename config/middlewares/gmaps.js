@@ -1,48 +1,59 @@
-var gm = require('googlemaps'),
-	util = require('util'),
-	raceController = require('../../app/controllers/raceController'),
-	logger = require('../logger.js');
+var gm = require("googlemaps"),
+	_ = require("underscore"),
+	raceController = require("../../app/controllers/raceController"),
+	logger = require("../logger.js");
 
-	exports.geocodeAddress = function(req, res, next) {
+exports.geocodeAddress = function(req, res, next) {
 
-		//get race into db
-		var actualRace = req.race;
-		//get race to update
-		var requestRace = req.body.race;
 
-		if (requestRace && actualRace) {
-			
-			var actualAddressComputed = computeAddress(actualRace.plan);
+	var computeAddress = function(plan) {
 
-			var requestAddressComputed = computeAddress(requestRace.plan);
+		var computedAddress = "";
 
-			if (actualAddressComputed !== requestAddressComputed) {
-
-				gm.geocode(requestAddressComputed, function(err, result) {
-
-					if (!err) {
-
-						if (result.results[0] && result.results[0].geometry) {
-							var latlng = result.results[0].geometry.location;
-							raceController.updateLatLng(actualRace._id, latlng);
-						}
-					} else {
-						logger.error(err);
-					}
-				}, false);
-			}
+		if (!_.isUndefined(plan) && !_.isUndefined(plan.address)) {
+			var address = plan.address;
+			computedAddress = address.address1 + " " + address.address2 + " " + address.postcode + " " + address.city;
 		}
+		return computedAddress;
+	};
 
-		return next();
+	//get race into db
+	var actualRace;
+	//get race to update
+	var requestRace;
+
+	if (!_.isUndefined(req.body.race) && !_.isUndefined(req.race)) {
+
+		requestRace = req.body.race;
+		actualRace = req.race;
+
+		var actualAddressComputed = computeAddress(actualRace.plan);
+
+		var requestAddressComputed = computeAddress(requestRace.plan);
+
+		if (actualAddressComputed !== requestAddressComputed) {
+
+			gm.geocode(requestAddressComputed, function(err, result) {
+
+				if (!err) {
+
+					if (result.results[0] && result.results[0].geometry) {
+						var latlng = result.results[0].geometry.location;
+						var response;
+						try {
+							response = raceController.updateLatLng(actualRace._id, latlng);
+						} catch (ex) {
+							logger.error("raceController updateLatLng failed: " + ex);
+						}
+
+
+					}
+				} else {
+					logger.error(err);
+				}
+			}, false);
+		}
 	}
 
-var computeAddress = function(plan) {
-
-	var computedAddress = "";
-
-	if (plan && plan.address) {
-		var address = plan.address;
-		computedAddress = address.address1 + " " + address.address2 + " " + address.postcode + " " + address.city;
-	}
-	return computedAddress;
-}
+	return next();
+};

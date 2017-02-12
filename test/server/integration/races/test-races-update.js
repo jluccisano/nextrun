@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.PORT= 4000;
 
 /**
  * Module dependencies.
@@ -133,7 +134,6 @@ describe('Update Race: UPDATE /api/races', function() {
       race.type.name.should.equal('duathlon');
       race.pin.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
-      //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
       race.distanceType.name.should.equal('S');
       race.user_id.should.eql(user1._id);
@@ -146,7 +146,7 @@ describe('Update Race: UPDATE /api/races', function() {
   describe('Access Denied', function() {
 
     it('should not update because unknown user', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/update')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -161,7 +161,7 @@ describe('Update Race: UPDATE /api/races', function() {
   describe('invalid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar2@example.com',
           password: '123'
@@ -176,8 +176,42 @@ describe('Update Race: UPDATE /api/races', function() {
         });
     });
     it('should not update because user not Owner', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
-        .send()
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/update')
+        .send({
+          race: {
+            name: 'Triathlon de Castelnaudary',
+            type: {
+              name: 'triathlon',
+              i18n: 'Triathlon'
+            },
+            pin: {
+              location: {
+                lat: 45.34,
+                lon: 1.7
+              },
+              name: 'Toulouse',
+              department: {
+                code: '31',
+                name: 'Haute-Garonne',
+                region: 'Midi-Pyrénées'
+              }
+            },
+            date: currentDate,
+            edition: '2',
+            distanceType: {
+              name: 'M',
+              i18n: ''
+            },
+            plan: {
+              address: {
+                address1: '2 Place de la république',
+                address2: '',
+                postcode: '11400',
+                city: 'Castelnaudary'
+              }
+            }
+          }
+        })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
@@ -187,7 +221,7 @@ describe('Update Race: UPDATE /api/races', function() {
         });
     });
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -198,7 +232,7 @@ describe('Update Race: UPDATE /api/races', function() {
 
   describe('invalid parameters', function() {
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -213,7 +247,7 @@ describe('Update Race: UPDATE /api/races', function() {
         });
     });
     it('should not update because race id is unknown', function(done) {
-      superagent.put('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/update')
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/523726537a11c4aa8d789bbb/update')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -224,7 +258,7 @@ describe('Update Race: UPDATE /api/races', function() {
         });
     });
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -239,7 +273,7 @@ describe('Update Race: UPDATE /api/races', function() {
   describe('Valid parameters', function() {
 
     before(function(done) {
-      superagent.post('http://localhost:3000/api/users/session')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/session')
         .send({
           email: 'foobar1@example.com',
           password: '123'
@@ -254,9 +288,10 @@ describe('Update Race: UPDATE /api/races', function() {
         });
     });
     it('should update success', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
+      superagent.put('http://localhost:'+process.env.PORT+'/api/races/' + currentRace._id + '/update')
         .send({
           race: {
+            _id: '123726537a11c4aa8d789bbc',
             name: 'Triathlon de Castelnaudary',
             type: {
               name: 'triathlon',
@@ -308,7 +343,6 @@ describe('Update Race: UPDATE /api/races', function() {
         race.type.name.should.equal('triathlon');
         race.pin.department.name.should.equal('Haute-Garonne');
         race.date.should.be.an.instanceOf(Date);
-        //race.date.getTime().should.equal(new Date(currentDate).getTime());
         race.edition.should.equal(2);
         race.distanceType.name.should.equal('M');
         race.user_id.should.eql(user1._id);
@@ -318,7 +352,7 @@ describe('Update Race: UPDATE /api/races', function() {
       });
     });
     after(function(done) {
-      superagent.post('http://localhost:3000/api/users/logout')
+      superagent.post('http://localhost:'+process.env.PORT+'/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);

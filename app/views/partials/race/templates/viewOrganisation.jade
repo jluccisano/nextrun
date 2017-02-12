@@ -1,6 +1,6 @@
 div.container
 	tabset(vertical="false" type="navType")
-		tab(heading=t("race.timing"))
+		tab(heading="{{'field.timing' | translate}}")
 			div.container
 				div.row
 					div.col-lg-4
@@ -11,27 +11,27 @@ div.container
 									th(style="width: 20%;border:0; border-top: none;")
 							tbody
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.startingTime")
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.startingTime' | translate}}
 										span :
-									td(data-ng-if="race.timing.startingTime != null" align="left" style="border:0; border-top: none;") {{getHour(race.timing.startingTime)}}
-									td(data-ng-if="race.timing.startingTime == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.timing.startingTime != null" align="left" style="border:0; border-top: none;") {{race.timing.startingTime| amDateFormat:'HH:mm'}}
+									td(ng-if="race.timing.startingTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.briefingTime")
+									td(align="left" style="border:0; border-top: none; font-weight:bold"){{'field.briefingTime' | translate}}
 										span :
-									td(data-ng-if="race.timing.briefingTime != null" align="left" style="border:0; border-top: none;") {{getHour(race.timing.briefingTime)}}
-									td(data-ng-if="race.timing.briefingTime == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.timing.briefingTime != null" align="left" style="border:0; border-top: none;")  {{race.timing.briefingTime | amDateFormat:'HH:mm'}}
+									td(ng-if="race.timing.briefingTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.checkoutBibTime")
+									td(align="left" style="border:0; border-top: none; font-weight:bold"){{'field.checkoutBibTime' | translate}}
 										span :
-									td(data-ng-if="race.timing.checkoutBibTime != null" align="left" style="border:0; border-top: none;") {{getHour(race.timing.checkoutBibTime)}}
-									td(data-ng-if="race.timing.checkoutBibTime == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.timing.checkoutBibTime != null" align="left" style="border:0; border-top: none;") {{race.timing.checkoutBibTime | amDateFormat:'HH:mm'}}
+									td(ng-if="race.timing.checkoutBibTime == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.rewardsTime")
+									td(align="left" style="border:0; border-top: none; font-weight:bold"){{'field.rewardsTime' | translate}}
 										span :
-									td(data-ng-if="race.timing.rewardsTime != null" align="left" style="border:0; border-top: none;") {{getHour(race.timing.rewardsTime)}}
-									td(data-ng-if="race.timing.rewardsTime == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.timing.rewardsTime != null" align="left" style="border:0; border-top: none;") {{race.timing.rewardsTime | amDateFormat:'HH:mm'}}
+									td(ng-if="race.timing.rewardsTime == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
 				div.well(data-ng-if="race.timing.timingMoreInformation" data-ng-bind-html="race.timing.timingMoreInformation")
-		tab(heading=t("race.pricing"))
+		tab(heading="{{'field.pricing' | translate}}")
 			div.container
 				div.row
 					div.col-lg-4
@@ -42,19 +42,19 @@ div.container
 									th(style="width: 20%;border:0; border-top: none;")
 							tbody
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.memberFFPrice")
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.memberFFPrice' | translate}}
 										span :
-									td(data-ng-if="race.pricing.memberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.memberFFPrice}}
+									td(ng-if="race.pricing.memberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.memberFFPrice}}
 										i.fa.fa-eur
-									td(data-ng-if="race.pricing.memberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.pricing.memberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.notMemberFFPrice")
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.notMemberFFPrice' | translate}}
 										span :
-									td(data-ng-if="race.pricing.notMemberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.notMemberFFPrice}}
+									td(ng-if="race.pricing.notMemberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.notMemberFFPrice}}
 										i.fa.fa-eur
-									td(data-ng-if="race.pricing.notMemberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
-			div.well(data-ng-if="race.registration.registrationMoreInformation" data-ng-bind-html="race.registration.registrationMoreInformation")
-		tab(heading=t("race.registration"))
+									td(ng-if="race.pricing.notMemberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+			div.well(ng-if="race.registration.registrationMoreInformation" ng-bind-html="race.registration.registrationMoreInformation")
+		tab(heading="{{'field.registration' | translate}}")
 			div.container
 				div.row
 					div.col-lg-5
@@ -65,66 +65,66 @@ div.container
 									th(style="width: 20%;border:0; border-top: none;")
 							tbody
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.registrationOpeningDate")
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.registrationOpeningDate' | translate}}
 										span :
-									td(data-ng-if="race.registration.registrationOpeningDate != null" align="left" style="border:0; border-top: none;") {{getDate(race.registration.registrationOpeningDate)}}
-									td(data-ng-if="race.registration.registrationOpeningDate == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.registration.registrationOpeningDate != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationOpeningDate | amDateFormat:'DD MMMM YYYY'}}
+									td(ng-if="race.registration.registrationOpeningDate == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.registrationLimitDate")
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.registrationLimitDate' | translate}}
 										span :
-									td(data-ng-if="race.registration.registrationLimitDate != null" align="left" style="border:0; border-top: none;") {{getDate(race.registration.registrationLimitDate)}}
-									td(data-ng-if="race.registration.registrationLimitDate == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.registration.registrationLimitDate != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationLimitDate | amDateFormat:'DD MMMM YYYY'}}
+									td(ng-if="race.registration.registrationLimitDate == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
 
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold")=t("race.registrationWebSite")
-										span :
-									td(data-ng-if="race.registration.registrationWebSite != null" align="left" style="border:0; border-top: none;") 
-										a(data-ng-href="http://{{race.registration.registrationWebSite}}" target="_blank")
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.registrationWebSite' | translate}}
+
+									td(ng-if="race.registration.registrationWebSite != null" align="left" style="border:0; border-top: none;") 
+										a(ng-href="http://{{race.registration.registrationWebSite}}" target="_blank")
 											span  {{race.registration.registrationWebSite}}
-									td(data-ng-if="race.registration.registrationWebSite == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.registration.registrationWebSite == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 
 								tr
-									td(align="left" style="border:0; border-top: none;font-weight:bold")=t("race.registrationAddress")
+									td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.registrationAddress' | translate}}
 										span :
-									td(data-ng-if="race.registration.registrationAddress != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationAddress}}
-									td(data-ng-if="race.registration.registrationAddress == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.registration.registrationAddress != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationAddress}}
+									td(ng-if="race.registration.registrationAddress == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 
 								tr
-									td(align="left" style="border:0; border-top: none;font-weight:bold")=t("race.registrationOnPlace")
+									td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.registrationOnPlace' | translate}}
 										span :
-									td(data-ng-if="race.registration.registrationOnPlace != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationOnPlace}}
-									td(data-ng-if="race.registration.registrationOnPlace == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.registration.registrationOnPlace != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationOnPlace}}
+									td(ng-if="race.registration.registrationOnPlace == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
 
 								tr
-									td(align="left" style="border:0; border-top: none;font-weight:bold")=t("race.numberOfPlacesAvailable")
+									td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.numberOfPlacesAvailable' | translate}}
 										span :
-									td(data-ng-if="race.registration.numberOfPlacesAvailable != null" align="left" style="border:0; border-top: none;") {{race.registration.numberOfPlacesAvailable}}
-									td(data-ng-if="race.registration.numberOfPlacesAvailable == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+									td(ng-if="race.registration.numberOfPlacesAvailable != null" align="left" style="border:0; border-top: none;") {{race.registration.numberOfPlacesAvailable}}
+									td(ng-if="race.registration.numberOfPlacesAvailable == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
 
-				div.well(data-ng-if="race.registration.registrationMoreInformation" data-ng-bind-html="race.registration.registrationMoreInformation")
+				div.well(data-ng-if="race.registration.registrationMoreInformation" ng-bind-html="race.registration.registrationMoreInformation")
 
-		tab(data-ng-click="onChangeOrganisationTab()" heading=t("race.plan"))
+		tab(data-ng-click="onChangeOrganisationTab()" heading="{{'field.plan' | translate}}")
 			div.container
-				div(data-ng-if="race.plan.address.city == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+				div(ng-if="race.plan.address.city == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 				div.row(style="margin-top:20px")
-					div.col-lg-4(data-ng-if="race.plan != null && race.plan.address != null && race.plan.address.city != null")
+					div.col-lg-4(ng-if="race.plan != null && race.plan.address != null && race.plan.address.city != null")
 						address
 							span {{race.plan.address.address1}}
 							br
-							span(data-ng-if="race.plan.address.address2 != ''") {{race.plan.address.address2}}
-							br(data-ng-if="race.plan.address.address2 != ''")
+							span(ng-if="race.plan.address.address2 != ''") {{race.plan.address.address2}}
+							br(ng-if="race.plan.address.address2 != ''")
 							span <strong>{{race.plan.address.postcode}} - {{race.plan.address.city}}</strong>
 							br
-						div.well(data-ng-if="race.plan.planMoreInformation" data-ng-bind-html="race.plan.planMoreInformation")
-					div.col-lg-4(data-ng-if="isVisible && race.plan.address.latlng.lat != null && race.plan.address.latlng.lng != null")
+						div.well(ng-if="race.plan.planMoreInformation" ng-bind-html="race.plan.planMoreInformation")
+					div.col-lg-4(ng-if="isVisible && race.plan.address.latlng.lat != null && race.plan.address.latlng.lng != null")
 						gm-map(gm-map-id="'mapPlan'" gm-center="center" gm-zoom="zoom" gm-map-options="options.map" style="width:250px;height:250px" )
 							gm-markers(gm-objects="addressMarkers" gm-id="object.id" gm-position="{lat: object.location.lat, lng: object.location.lng}")
-		tab(heading=t("race.rights"))
+		tab(heading="{{'field.rights' | translate}}")
 			div.container
-				div.well(data-ng-if="race.rights.rightsMoreInformation != null" data-ng-bind-html="race.rights.rightsMoreInformation")
-				div(data-ng-if="race.rights.rightsMoreInformation == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
-		tab(heading=t("race.therace"))
+				div.well(ng-if="race.rights.rightsMoreInformation != null" ng-bind-html="race.rights.rightsMoreInformation")
+				div(ng-if="race.rights.rightsMoreInformation == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+		tab(heading="{{'field.therace' | translate}}")
 			div.container
 				div.row
 					div.col-lg-4
@@ -135,12 +135,12 @@ div.container
 									th(style="width: 50%;border:0; border-top: none;")
 							tbody
 								tr
-									td(align="left" style="border:0; border-top: none;font-weight:bold")=t("race.numberOfProvisions")
+									td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.numberOfProvisions' | translate}}
 										span :
-									td(data-ng-if="race.therace.numberOfProvisions != null" align="left" style="border:0; border-top: none;") {{race.therace.numberOfProvisions}}
-									td(data-ng-if="race.therace.numberOfProvisions == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
-				div.well(data-ng-if="race.therace.theRaceMoreInformation" data-ng-bind-html="race.therace.theRaceMoreInformation")
-		tab(heading=t("race.miscellaneous"))
+									td(ng-if="race.therace.numberOfProvisions != null" align="left" style="border:0; border-top: none;") {{race.therace.numberOfProvisions}}
+									td(ng-if="race.therace.numberOfProvisions == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
+				div.well(ng-if="race.therace.theRaceMoreInformation" ng-bind-html="race.therace.theRaceMoreInformation")
+		tab(heading="{{'field.miscellaneous' | translate}}")
 			div.container
-				div.well(data-ng-if="race.miscellaneous.miscellaneousMoreInformation != null" data-ng-bind-html="race.miscellaneous.miscellaneousMoreInformation")
-				div(data-ng-if="race.miscellaneous.miscellaneousMoreInformation == null" align="left" style="border:0; border-top: none;font-style:italic")=t("race.notCommunicated")
+				div.well(ng-if="race.miscellaneous.miscellaneousMoreInformation != null" ng-bind-html="race.miscellaneous.miscellaneousMoreInformation")
+				div(ng-if="race.miscellaneous.miscellaneousMoreInformation == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}

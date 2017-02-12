@@ -1,3 +1,4 @@
+var _ = require("underscore");
 /**
  * @method Build a geo distance filter
  * @param req
@@ -5,31 +6,31 @@
  */
 exports.buildGeoDistanceFilter = function(location, distance) {
 
-  var geo_filter;
+  var geoFilter;
 
-  if ('undefined' !== typeof(location) && 'undefined' !== typeof(distance)) {
+  if (!_.isUndefined(location) && !_.isUndefined(distance)) {
 
-    if ('number' === typeof(location.lat) && 'number' === typeof(location.lon)) {
+    if (!_.isUndefined(location.lat) && !_.isUndefined(location.lon)) {
 
-      geo_filter = {
-        'geo_distance': {
-          'distance': distance + 'km',
-          'race.pin.location': {
-            'lat': location.lat.toString() ,
-            'lon': location.lon.toString() 
+      geoFilter = {
+        "geo_distance": {
+          "distance": distance + "km",
+          "race.pin.location": {
+            "lat": location.lat.toString() ,
+            "lon": location.lon.toString() 
           }
         }
       };
     }
   }
-  return geo_filter;
+  return geoFilter;
 
 };
 
 exports.buildTermFilter = function(field, term) {
   var term_filter;
 
-  if ('undefined' !== typeof(field) && 'undefined' !== typeof(term)) {
+  if (!_.isUndefined(field) && !_.isUndefined(term)) {
 
     term_filter = {};
     term_filter.term = {};
@@ -44,7 +45,7 @@ exports.buildTermFilter = function(field, term) {
 exports.buildTermsFilter = function(field, terms) {
   var terms_filter;
 
-  if ('undefined' !== typeof(field) && Array.isArray(terms) && terms.length > 0) {
+  if (!_.isUndefined(field) && Array.isArray(terms) && terms.length > 0) {
 
     terms_filter = {};
     terms_filter.terms = {};
@@ -60,7 +61,7 @@ exports.buildDateRangeFilter = function(field, from, to) {
 
   var dateRange_filter;
 
-  if ('undefined' !== typeof(field) && 'undefined' !== typeof(from) && 'undefined' !== typeof(to)) {
+  if (!_.isUndefined(field) && !_.isUndefined(from) && !_.isUndefined(to)) {
 
     var fromDate = new Date(from);
     var toDate = new Date(to);
@@ -77,13 +78,13 @@ exports.buildDateRangeFilter = function(field, from, to) {
     }
   }
   return dateRange_filter;
-}
+};
 
 exports.buildDateRangeFacetFilter = function(field, from, to) {
 
   var dateRange_filter;
 
-  if ('undefined' !== typeof(field) && 'undefined' !== typeof(from) && 'undefined' !== typeof(to)) {
+  if (!_.isUndefined(field) && !_.isUndefined(from) && !_.isUndefined(to)) {
 
     var fromDate = new Date(from);
     var toDate = new Date(to);
@@ -101,21 +102,21 @@ exports.buildDateRangeFacetFilter = function(field, from, to) {
     }
   }
   return dateRange_filter;
-}
+};
 
 exports.buildQueryString = function(field, query) {
 
-  var query_string;
+  var queryString;
 
-  if ('undefined' !== typeof(field) && 'undefined' !== typeof(query)) {
+  if (!_.isUndefined(field) && !_.isUndefined(query)) {
 
-    query_string = {
+    queryString = {
       "query_string": {
         "default_field": field,
         "query": query
       }
-    }
+    };
   }
 
-  return query_string;
+  return queryString;
 };

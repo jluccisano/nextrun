@@ -1,77 +1,76 @@
 div.container(style="padding-bottom: 50px;")
-	h3 Edition d'une manifestation
+	h3 {{'title.editRace' | translate}}
 	div.row
 		div.col-lg-offset-8.col-lg-4(ng-show="loading")
 			span(class="fa fa-spinner fa-spin")
-			span  Chargement en cours...
-	div.row
+			span  {{'loading.pending' | translate}}
 		div.col-lg-12
 			div.row
 				div.col-lg-6.col-lg-offset-2
-					form.form-horizontal(role="form", name="form1", novalidate, style="margin-top:50px")
-						div.form-group(data-ng-class="{'has-error': !form1.name.$pristine && form1.name.$invalid, 'has-success': !form1.name.$invalid}")
-							label.control-label(for="name") Nom
-							input.form-control(name="name", id="name", placeholder="ex: Triathlon de Paris",data-ng-model="race.name", required)
+					form.form-horizontal(role="form" name="form1" style="margin-top:50px" novalidate)
 						
-						div.form-group(data-ng-class="{'has-error':!form1.datetime.$pristine && form1.datetime.$invalid, 'has-success': !form1.datetime.$invalid}")
-							label.control-label(for="date") Date
+						div.form-group(ng-class="{'has-error': !form1.name.$pristine && form1.name.$invalid, 'has-success': !form1.name.$invalid}")
+							label.control-label(for="name") {{'field.race.name' | translate}}
+							input.form-control(name="name" placeholder="ex: Triathlon de Paris" ng-model="race.name" required)
+						
+						div.form-group(ng-class="{'has-error':!form1.datetime.$pristine && form1.datetime.$invalid, 'has-success': !form1.datetime.$invalid}")
+							label.control-label(for="date") {{'field.race.date' | translate}}
 							div(class="dropdown")
-								a(class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#")
+								a(class="dropdown-toggle my-toggle-select" role="button" data-toggle="dropdown" data-target="#" href="#")
 									div(class="input-group")
-										input.form-control(type="text" disabled="disabled" name="date" data-ng-model="race.date" data-date-time-input="DD MMMM YYYY" placeholder="Date")
+										input.form-control(type="text" disabled="disabled" name="date" ng-model="race.date" date-time-input="DD MMMM YYYY" placeholder="Date")
 										span.input-group-addon
 											i.glyphicon.glyphicon-calendar
 								ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
-									datetimepicker(name="datetime" data-ng-model="race.date" required  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'day' }")
+									datetimepicker(name="datetime" ng-model="race.date" datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'day' }" required)
 								
-						div.form-group(data-ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$error.validLocation && form1.location.$valid}")
-							label.control-label(for="location") Lieu
-							input.form-control(name="location" id="location" placeholder="ex: Castelnaudary" data-ng-model="race.pin.name" has-location required ng-autocomplete options="options" details="race.pin")
+						div.form-group(ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$error.validLocation && form1.location.$valid}")
+							label.control-label(for="location") {{'field.race.location' | translate}}
+							input.form-control(name="location" placeholder="{{'field.race.location.placeholder' | translate}}" ng-model="race.pin.name" nr-has-location  gmaps-autocomplete options="options" details="race.pin" required)
 									
-						div.form-group(data-ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid}")
-							label.control-label(for="type") Type
-							select.form-control(data-ng-model="race.type", name="type", data-ng-options="type.value as getType(type.value) for type in types", required, data-ng-change="onChange()")
-								option(value="") Sélectionner...
+						div.form-group(ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid}")
+							label.control-label(for="type") {{'field.race.type' | translate}}
+							select.form-control(ng-model="race.type" name="type" ng-options="type.value as getType(type.value) for type in types" ng-change="openChangeTypeConfirmation()" required)
+								option(value="") {{'message.selectOne' | translate}}
 
-						div.form-group(data-ng-class="{'has-error': !form1.distanceType.$pristine && form1.distanceType.$invalid, 'has-success': !form1.distanceType.$invalid}")
-							label.control-label(for="distanceType") Distance
-							select.form-control(data-ng-model="race.distanceType", name="type", data-ng-options="distance.name for distance in distances", required)
-								option(value="") Sélectionner...
+						div.form-group(ng-class="{'has-error': !form1.distanceType.$pristine && form1.distanceType.$invalid, 'has-success': !form1.distanceType.$invalid}")
+							label.control-label(for="distanceType") {{'field.race.distance' | translate}}
+							select.form-control(ng-model="race.distanceType" name="type" ng-options="distance.name for distance in distances" required)
+								option(value="") {{'message.selectOne' | translate}}
 						
 			div.row
 				hr
 				div.bs-callout.bs-callout-info
-					h4 Informations
-					p Ajouter une description générale à votre manifestation.
+					h4 {{'message.information' | translate}}
+					p {{'message.addRaceDescription.information' | translate}}
 				div.form-group
 					label.col-lg-4.control-label Description
-					div.col-lg-12(text-angular text-angular-name="description" data-ng-model="race.description" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
+					div.col-lg-12(text-angular text-angular-name="description" ng-model="race.description" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
 			hr
 			div.row
 				div.col-lg-12
 					tabset(vertical="false" type="navType")
-						tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" data-ng-click="onChangeTab(route)")
+						tab(ng-repeat="route in race.routes" heading="{{route.type}}" ng-click="route.isVisible=true")
 							div.bs-callout.bs-callout-info
-								h4 Informations
-								p Vous pouvez soit dessiner votre parcours directement sur la carte soit importer un fichier au format .gpx
-							input(type="file" ng-model="$files" ng-file-select="onFileSelect($files, route)")
+								h4 {{'message.information' | translate}}
+								p  {{'message.drawRoute.information' | translate}}
+							input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
 							div.row
 								div.col-lg-4(ng-show="pending")
 									span(class="fa fa-spinner fa-spin")
-									span  Chargement en cours...
+									span  {{'loading.pending' | translate}}
 
 							hr
 							
 							include map
-			h2 Organisation
+			h2 {{'title.organisation' | translate}}
 			hr
-			include templates/organisation
+			include templates/editOrganisation
 			hr
 			div.row
 				div.col-lg-offset-4.col-lg-8
-					button.btn.btn-primary(data-ng-click="submit(race)", data-ng-disabled="form1.$invalid") Sauvegarder
-					button.btn.btn-default(data-ng-click="cancel()") Retour
+					button.btn.btn-primary(ng-click="submit(race)" ng-disabled="form1.$invalid") {{'button.save' | translate}}
+					button.btn.btn-default(ng-click="cancel()") {{'button.cancel' | translate}}
 					div(ng-show="saving")
 						span(class="fa fa-spinner fa-spin")
-						span  Sauvegarde en cours...
-
+						span  {{'saving.pending' | translate}}
