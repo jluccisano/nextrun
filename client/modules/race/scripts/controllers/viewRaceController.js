@@ -8,6 +8,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $routeParams,
         $modal,
         $filter,
+        $anchorScroll,
         RaceService,
         RouteService,
         GpxService,
@@ -21,6 +22,10 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $scope.navType = "pills";
 
         $scope.routesViewModel = [];
+
+        $scope.status = {
+            open: true
+        };
 
         //TODO create directive
         $scope.onChangeOrganisationTab = function() {
@@ -66,6 +71,14 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                 type: "text/xml"
             });
             return blob;
+        };
+
+        $scope.scrolltoHref = function(id) {
+            // set the location.hash to the id of
+            // the element you wish to scroll to.
+            $location.hash(id);
+            // call $anchorScroll()
+            $anchorScroll();
         };
 
         $scope.init();

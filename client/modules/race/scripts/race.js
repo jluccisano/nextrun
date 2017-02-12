@@ -3,6 +3,7 @@
 var raceModule = angular.module("nextrunApp.race", [
   "ngRoute",
   "ngAnimate",
+  "ngSanitize",
   "toggle-switch",
   "google-maps",
   "highcharts-ng",
@@ -17,6 +18,11 @@ var raceModule = angular.module("nextrunApp.race", [
   "ui.bootstrap.tabs",
   "mgcrea.ngStrap.datepicker",
   "mgcrea.ngStrap.timepicker",
+  "mgcrea.ngStrap.affix",
+  "mgcrea.ngStrap.scrollspy",
+  "mgcrea.ngStrap.helpers.dimensions",
+  "mgcrea.ngStrap.aside",
+  "mgcrea.ngStrap.button",
   "xeditable",
   "nextrunApp.commons",
   "nextrunApp.route"
@@ -53,7 +59,7 @@ raceModule.config(
       access: access.public
     }).
     when("/races/view/:raceId", {
-      templateUrl: "/partials/race/view",
+      templateUrl: "/partials/race/view2",
       controller: "ViewRaceController",
       access: access.public
     }).
