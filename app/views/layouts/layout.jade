@@ -1,70 +1,75 @@
 !!! 5
 html(ng-app="nextrunApp")
 
-	<!-- build:css css/bootstrap.min.css -->
-	link(rel="stylesheet", href="/css/bootstrap.css")
-	<!-- endbuild -->
-
-	<!-- build:css css/docs.min.css -->
-	link(rel="stylesheet", href="/css/docs.css")
-	<!-- endbuild -->
-
-	<!-- build:css css/style.min.css -->
-	link(rel="stylesheet", href="/css/style.css")
-	<!-- endbuild -->
-
-	<!-- build:css css/animations.min.css -->
-	link(rel="stylesheet", href="/css/animations.css")
-	<!-- endbuild -->
-
 	<!-- build:js js/client/widgets/google-analytics.min.js -->
 	script(src="/js/client/widgets/google-analytics.js", charset="UTF-8")
 	<!-- endbuild -->
 
-	<!-- build:js js/libs/jquery-2.0.3.min.js -->
-	script(src="/js/libs/jquery-2.0.3.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/libs/jquery.validate.min.js -->
-	script(src="/js/libs/jquery.validate.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/libs/bootstrap.min.js -->
-	script(src="/js/libs/bootstrap.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/libs/angular.min.js -->
-	script(src="/js/libs/angular.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/libs/angular-route.min.js -->
-	script(src="/js/libs/angular-route.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/libs/angular-animate.min.js -->
-	script(src="/js/libs/angular-animate.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/libs/raphael.min.js -->
-	script(src="/js/libs/raphael.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/client/app.min.js -->
-	script(src="/js/client/app.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/client/controllers.min.js -->
-	script(src="/js/client/controllers.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/client/animations.min.js -->
-	script(src="/js/client/animations.js", charset="UTF-8")
-	<!-- endbuild -->
-
-	<!-- build:js js/client/widgets/socialbuttons.min.js -->
-	script(src="/js/client/widgets/socialbuttons.js", charset="UTF-8")
-	<!-- endbuild -->
 	head
+
+		<!-- build:css css/bootstrap.min.css -->
+		link(rel="stylesheet", href="/css/bootstrap.css")
+		<!-- endbuild -->
+
+		<!-- build:css css/docs.min.css -->
+		link(rel="stylesheet", href="/css/docs.css")
+		<!-- endbuild -->
+
+		<!-- build:css css/style.min.css -->
+		link(rel="stylesheet", href="/css/style.css")
+		<!-- endbuild -->
+
+		<!-- build:css css/animations.min.css -->
+		link(rel="stylesheet", href="/css/animations.css")
+		<!-- endbuild -->
+
+
+		
+		<!-- build:js js/libs/jquery-2.0.3.min.js -->
+		script(src="/js/libs/jquery-2.0.3.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/jquery.validate.min.js -->
+		script(src="/js/libs/jquery.validate.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/angular.min.js -->
+		script(src="/js/libs/angular.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/angular-animate.min.js -->
+		script(src="/js/libs/angular-animate.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/angular-route.min.js -->
+		script(src="/js/libs/angular-route.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/angular-resource.min.js -->
+		script(src="/js/libs/angular-resource.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/client/app.min.js -->
+		script(src="/js/client/app.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/client/controllers.min.js -->
+		script(src="/js/client/controllers.js", charset="UTF-8")
+		<!-- endbuild -->
+
+
+		<!-- build:js js/libs/bootstrap.min.js -->
+		script(src="/js/libs/bootstrap.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/raphael.min.js -->
+		script(src="/js/libs/raphael.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/client/widgets/socialbuttons.min.js -->
+		script(src="/js/client/widgets/socialbuttons.js", charset="UTF-8")
+		<!-- endbuild -->
+
 		block head
 			block meta
 				meta(charset='utf8')
@@ -72,6 +77,5 @@ html(ng-app="nextrunApp")
 				meta(name='keywords', content='')
 				base(href='/')
 			block title
-				title Nextrun
-				
+				title Nextrun		
 	block body

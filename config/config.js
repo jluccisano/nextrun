@@ -29,7 +29,7 @@ module.exports = {
     }
   },
   production: {
-    db: 'mongodb://af_nextrun-joseph_luccisano:a6mfnkoa0bt8i7qhdl79qdi7lj@ds057548.mongolab.com:57548/af_nextrun-joseph_luccisano',
+    db: 'mongodb://af_nextrun-joseph_luccisano:c1dhahkj7oo021g9tfaslq3cr1@ds057568.mongolab.com:57568/af_nextrun-joseph_luccisano',
     root: rootPath,
     facebook: {
         clientID: "195803770591615",
@@ -37,8 +37,8 @@ module.exports = {
         callbackURL: "http://nextrun.fr/auth/facebook/callback"
     },
     mailgun: {
-      user:"webmaster@sportevents.mailgun.org",
-      password:"0r5qtpq09vz7"
+      user:"postmaster@nextrunjosephluccisano.mailgun.org",
+      password:"1jo8rmgvkpe6"
     }
   }
 };

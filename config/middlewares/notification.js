@@ -38,8 +38,8 @@ exports.sendMail = function(mailOptions) {
 exports.sendEmailNewContact = function(contact) {
 
 	var mailOptions = {
-		from: "no-reply@sportevents.mailgun.org",
-		to: "webmaster@sportevents.mailgun.org",
+		from: "no-reply@nextrunjosephluccisano.mailgun.org",
+		to: "postmaster@nextrunjosephluccisano.mailgun.org",
 		subject: "Un nouveau contact a été ajouté",
 		text: "nouveau contact: " + contact.email + " type: " + contact.type,
 	};

@@ -9,7 +9,6 @@ window.onload = function() {
 			status     : true,// Check Facebook Login status
 			xfbml      : true// Look for social plugins on the page
 		});
-
 	// Additional initialization code such as adding Event Listeners goes here
 	};
 

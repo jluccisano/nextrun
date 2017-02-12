@@ -2,11 +2,13 @@ extends ./layouts/layout
 
 block body
 
-	include ./layouts/header
+	body
 
-	include ./layouts/messages
-	div(ng-cloak class="view-container")
-		div(ng-view class="view-frame")
+		include ./layouts/header
 
-	div(ng-cloak)
-		include ./layouts/footer
+		include ./layouts/messages
+		div.ng-cloak(ng-cloak class="view-container")
+			div(ng-view class="view-frame ng-cloak")
+
+		div.ng-cloak(ng-cloak ng-controller="FooterCtrl" ng-show="hideFooter")
+			include ./layouts/footer

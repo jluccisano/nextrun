@@ -1,11 +1,12 @@
 var nextrunApp = angular.module('nextrunApp', [
   'ngRoute',
-  'nextrunAnimations',
+  'ngAnimate',
   'nextrunControllers'
 ]);
 
-nextrunApp.config(['$routeProvider', '$locationProvider',
-  function($routeProvider, $locationProvider) {
+
+nextrunApp.config(['$routeProvider',
+  function($routeProvider) {
     $routeProvider.
       when('/', {
           templateUrl: 'partials/home',
@@ -15,5 +16,4 @@ nextrunApp.config(['$routeProvider', '$locationProvider',
           redirectTo: '/'
         });
 
-    $locationProvider.html5Mode(true);
   }]);
