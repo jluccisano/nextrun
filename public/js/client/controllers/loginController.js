@@ -27,7 +27,7 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
 			}).done(function(data) {
 				
 				if (data.response === 'success') {
-					$location.path('/users/races/home');
+					$location.path('/myraces');
 				} else {
 
 					jQuery('.errors').addClass('in').removeClass('hide');
@@ -126,10 +126,10 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
 				jQuery(element).closest('.form-group').removeClass('has-error');
 			},
 			messages: {
-				email: {
+				forgotEmail: {
 					required: jQuery.t("validator.required"),
 					email: jQuery.t("validator.email")
-				},
+				}
 			},
 			errorElement: 'span',
 			errorClass: 'help-block',

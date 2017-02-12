@@ -11,7 +11,7 @@ var ContactSchema = new Schema({
 
 ContactSchema.path('email').validate(function (email) {
   return email.length;
-}, "L'adresse email ne peut-être vide");
+}, "error.emailCannotBeBlank");
 
 
 ContactSchema.path('email').validate(function (email, fn) {
@@ -24,7 +24,7 @@ ContactSchema.path('email').validate(function (email, fn) {
     });
   }
   return true;
-}, "L'adresse email existe déjà");
+}, "error.emailAlreadyExits");
 
 /**
  * Pre-save

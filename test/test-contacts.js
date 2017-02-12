@@ -6,7 +6,7 @@ process.env.NODE_ENV = 'test';
 
 var mongoose = require('mongoose')
   , should = require('should')
-  , request = require('supertest')
+  , superagent = require('superagent')
   , app = require('../server')
   , context = describe
   , Contact = mongoose.model('Contact');
@@ -28,24 +28,39 @@ describe('Contacts', function () {
         });
       });
 
+      /*
       it('no email - should respond with errors', function (done) {
-        request(app)
-        .post('/contacts')
-        .field('type', 'athlete')
-        .end(done);
-      })
+       superagent.post('http://localhost:3000/contacts')
+        .send({ type: 'athlete' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           done();
+        });
+      });
+      */
 
       it('email blank - should respond with errors', function (done) {
-        request(app)
-        .post('/contacts')
-        .field('email', '')
-        .field('type', 'athlete')
-        .end(done);
-      })
+       superagent.post('http://localhost:3000/contacts')
+        .send({ email: '', type: 'athlete' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           done();
+        });
+      });
 
       it('should not save the contact to the database', function (done) {
         Contact.count(function (err, cnt) {
           count = cnt;
+          done();
+        });
+      });
+
+      after(function(done){
+        Contact.remove({}, function(){
           done();
         });
       });
@@ -60,12 +75,15 @@ describe('Contacts', function () {
       });
 
       it('add new contact', function (done) {
-        request(app)
-        .post('/contacts')
-        .field('email', 'foobar@example.com')
-        .field('type', 'athlete')
-        .end(done);
-      })
+       superagent.post('http://localhost:3000/contacts')
+        .send({ email: 'foobar@example.com', type: 'athlete' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           done();
+        });
+      });
 
       it('should save the contact to the database', function (done) {
         Contact.count(function (err, cnt) {
@@ -78,12 +96,15 @@ describe('Contacts', function () {
     describe('Contact already exists', function () {
 
       it('Contact already exists', function (done) {
-        request(app)
-        .post('/contacts')
-        .field('email', 'foobar@example.com')
-        .field('type', 'athlete')
-        .end(done);
-      })
+       superagent.post('http://localhost:3000/contacts')
+        .send({ email: 'foobar@example.com', type: 'athlete' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           done();
+        });
+      });
       
 
       it('should not have new contact to the database', function (done) {
@@ -94,9 +115,12 @@ describe('Contacts', function () {
       });
     });
 
+    after(function(done){
+      Contact.remove({}, function(){
+        done();
+      });
+    });
+
   });
 
-  after(function (done) {
-    require('./helper').clearDb(done)
-  });
 });

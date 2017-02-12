@@ -23,6 +23,10 @@ nextrunApp.config(['$routeProvider',
           templateUrl: 'partials/signup',
           controller: 'SignupCtrl'
         }).
+      when('/myraces', {
+          templateUrl: 'partials/race/myraces',
+          controller: 'MyRacesCtrl'
+        }).
       otherwise({
           redirectTo: '/'
         });

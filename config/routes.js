@@ -18,6 +18,7 @@ app.get('/defaultsite', function (req, res) {
 
 app.get('/', mainController.index);
 app.get('/partials/:name', mainController.partials);
+app.get('/partials/race/:name', mainController.racePartials);
 
 
 /** JSON API **/
