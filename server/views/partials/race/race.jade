@@ -31,7 +31,7 @@ div(class="container view-race")
                 ul(class="nav navbar-nav navbar-right")
                   li(ng-if="!editMode")
                     a
-                      div(class="fb-like" data-href="http://www.nextrun.fr/races/view/{{race._id}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
+                      div(class="fb-like ng-cloak" data-href="http://www.nextrun.fr/races/view/{{race._id}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
                   li(ng-if="!editMode")
                     a(ng-click="openFeedbackModal()")
                       span(class="glyphicon glyphicon-envelope" aria-hidden="true")

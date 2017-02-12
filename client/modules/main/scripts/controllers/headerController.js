@@ -20,6 +20,7 @@ angular.module("nextrunApp").controller("HeaderController",
 
 		$scope.onSelect = function($item) {
 			$location.path("/races/view/" + $item._id + "/");
+			$scope.selectedItem = "";
 		};
 
 		$scope.logout = function() {

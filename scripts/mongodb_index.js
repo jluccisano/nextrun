@@ -18,9 +18,45 @@ db.races.ensureIndex({
 })
 
 
-db.races.find( { $text: { $search: "duathlon" } } )
+db.races.find({
+  $text: {
+    $search: "duathlon"
+  }
+})
 
 db.races.dropIndex("FullTextIndex")
 
 
-db.races.find( { name: { $regex: /^ds/ } }, {name: 1, id: 1} ).count()
+db.races.find({
+  name: {
+    $regex: /^ds/
+  }
+}, {
+  name: 1,
+  id: 1
+}).count()
+
+db.races.find({
+  $and: [{
+    "date": {
+      "$gte": start,
+      "$lt": end
+    }
+  }, {
+    "type": {
+      $or: ["triathlon", "duathlon"]
+    }
+  }]
+});
+
+
+db.races.ensureIndex( { "place.loc" : "2dsphere" } );
+
+db.races.getIndexes();
+
+db.races.find({$and: [{ "place.loc": { $near: { $geometry: { type: "Point", coordinates: [ 48.856614, 2.352221900000018 ] }, $maxDistance: 60000 } }}]});
+
+db.races.find( { "place.loc" :{ $geoWithin :{ $centerSphere :[ [ 47.322047, 5.09 ] , 60 ] } } } )
+
+
+

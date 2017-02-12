@@ -61,6 +61,7 @@ angular.module("nextrunApp.race").controller("TypeController",
           }).then(
             function() {
               $scope.edit = false;
+              $scope.race.routes = [];
               $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
               $scope.selection = $scope.routesViewModel[0].getType() + 0;
               notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));

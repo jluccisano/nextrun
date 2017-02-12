@@ -1,0 +1,136 @@
+div.container
+	h2(translate) Rechercher une manifestation
+	
+	div.row(ng-hide="isModeGeolocation")
+		div.col-lg-6.col-lg-offset-4
+			div.input-group.btn-group(style="margin-top:20px")
+
+				span.input-group-addon
+					span.glyphicon.glyphicon-search
+
+				div.input-group-btn(style="width:100%")
+					input.form-control(type="text" placeholder="Rechercher" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="criteria.fulltext" typeahead="name as name.fullname for name in suggest($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
+
+				select.form-control(style="width:200px"  ng-change="search()" data-placeholder="Sélectionner..." ng-model="criteria.region" ng-options="region as region.name for region in listOfRegion")
+		div.col-lg-3.col-lg-offset-7(style="margin-top:10px")
+			a(ng-click="switchSearchView(true)" translate) Rechercher par géolocalisation
+
+	div.row(ng-show="isModeGeolocation")
+		div.col-lg-6.col-lg-offset-4
+			form(role="form", name="form", novalidate)
+				div.row
+					div.col-lg-8
+						div.form-group(ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation}")
+							input.form-control(name="location" id="location" placeholder="{{'Tapez une ville' | translate}}" ng-model="criteria.location.pin.name" nr-has-location gmaps-autocomplete options="autocomplete.options" details="criteria.location")
+							span.help-block(ng-show="form.location.$dirty && form.location.$error.validLocation" translate)  Veuillez saisir une ville correcte
+						div.row
+							div.col-lg-6
+								div.form-group
+									div.checkbox
+										label
+											em(translate) Elargir aux alentours
+											input(type="checkbox" ng-model="criteria.searchAround")
+							div.col-lg-4
+								div.form-group
+									select(class="form-control" style="width:100px" ng-model="criteria.distance")
+										option(value="15") 15km
+										option(value="30") 30km
+										option(value="50") 50km
+										option(value="100") 100km
+					div.col-lg-4
+						div.form-group
+							button.btn.btn-primary(type="submit" ng-click="search()"  ng-disabled="form.$invalid") Rechercher						
+		div.col-lg-3.col-lg-offset-7(style="margin-top:10px")
+			a(ng-click="switchSearchView(false)" translate) Rechercher par mot-clés
+	div.row
+		div.col-lg-4
+			h4 {{pagination.total}} <small>résultats</small>
+	div.row
+			div.col-lg-3
+				div.well
+					h4(translate) Affiner la Recherche
+					a(ng-click="reinitFilter()" translate) Tout supprimer
+					div.row
+						div.col-lg-12
+							span.label.label-primary(ng-repeat="type in criteria.types")  {{type}} 
+								span.glyphicon.glyphicon-remove(taglist-model="criteria.types" taglist-value="type" taglist-change="search()")
+						div.col-lg-12
+							span.label.label-success(ng-repeat="department in criteria.departments") {{displayDepartment(department)}} 
+								span.glyphicon.glyphicon-remove(taglist-model="criteria.departments" taglist-value="department" taglist-change="search()")
+						div.col-lg-12
+							span.label.label-warning(ng-repeat="dateRange in criteria.dateRanges") {{formatDateRange(dateRange)}}
+								span.glyphicon.glyphicon-remove(ng-click="removeDateRange(dateRange);search()")
+								
+
+					h4(translate) par Type
+					div.checkbox(ng-repeat="facet in facets.typeFacets")
+						div(ng-switch="criteria.types.indexOf(facet.term) > -1")
+							div(ng-switch-when="false")
+								label(ng-class="{'disabled': facet.count === 0}") {{getTypeByName(facet.term)}} ({{facet.count}})
+								input(type="checkbox" 
+								  ng-disabled="facet.count === 0"
+								  checklist-change="search()"
+								  checklist-model="criteria.types"
+								  checklist-value="facet.term")
+							div(ng-switch-when="true")
+								label <strong>{{getTypeByName(facet.term)}}</strong>
+								input(type="checkbox"
+								  ng-disabled="facet.count === 0"
+								  checklist-change="search()"
+								  checklist-model="criteria.types"
+								  checklist-value="facet.term")
+					div(ng-hide="region.name==='Toute la France'")
+						h4(translate) par Département
+						div.checkbox(ng-repeat="facet in facets.departmentFacets")
+							div(ng-switch="criteria.departments.indexOf(facet.department.code) > -1")
+								div(ng-switch-when="false")
+									label(ng-class="{'disabled': facet.count === 0}") {{facet.department.code}} - {{facet.department.name}} ({{facet.count}})
+									input(type="checkbox" 
+										ng-disabled="facet.count === 0"
+										checklist-change="search()"
+										checklist-model="criteria.departments"
+								  		checklist-value="facet.department.code")
+								div(ng-switch-when="true")
+									label <strong>{{facet.department.code}} - {{facet.department.name}}</strong>
+									input(type="checkbox" 
+										ng-disabled="facet.count === 0"
+										checklist-change="search()"
+										checklist-model="criteria.departments"
+										checklist-value="facet.department.code")
+					h4(translate) par Date
+					div.form-group
+						input.form-control(type="text" ng-model="dateRange.startDate" data-max-date="{{dateRange.endDate}}" placeholder="{{'De' | translate }}" bs-datepicker)
+					div.form-group		
+						input.form-control(type="text" ng-model="dateRange.endDate" data-min-date="{{dateRange.startDate}}" placeholder="{{'Au' | translate }}" bs-datepicker)			
+			div.col-lg-9
+				div.col-lg-3
+					pre(translate) Page: {{pagination.currentPage}} / {{pagination.numPages}}
+				div.col-lg-3.col-lg-offset-4
+					select(class="form-control" style="width:150px" ng-model="criteria.sort" ng-change="search()")
+						option(value="_score") par pertinence
+						option(value="race.date") par date
+				div.col-lg-2
+					select(class="form-control" style="width:80px" ng-model="criteria.size" ng-change="search()")
+						option(value="10") 10
+						option(value="20") 20
+						option(value="50") 50
+				table.table.table-hover
+					thead
+						tr
+							th(style="width: 40%;" class="rowBasic")
+							th(style="width: 20%;" class="rowBasic")
+							th(style="width: 20%;" class="rowBasic")
+							th(style="width: 10%;" class="rowBasic")
+							th(style="width: 30%;" class="rowBasic")
+					tbody
+						tr(ng-repeat="race in races")
+							td(align="left")
+								a(ng-href='/races/view/{{race.fields.partial1[0]._id}}') {{race.fields.partial1[0].name}}
+							td(class="rowBasic") {{race.fields.partial1[0].type.i18n}}
+							td(class="rowBasic") {{race.fields.partial1[0].department.code}} - {{race.fields.partial1[0].department.name}}
+							td(class="rowBasic") {{race.fields.partial1[0].distanceType.name}}
+							td(class="rowBasic") {{race.fields.partial1[0].date | date:'dd MMMM yyyy'}}
+				div.col-lg-4.col-lg-offset-4
+					span.label.label-default(ng-show="races.length === 0" translate) Aucun Résultats
+				div.col-lg-6.col-lg-offset-4
+					pagination(boundary-links="true" max-size="pagination.maxSize" num-pages="pagination.numPages" items-per-page="pagination.pageSize"  ng-change="search()" total-items="pagination.total" ng-model="pagination.currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")

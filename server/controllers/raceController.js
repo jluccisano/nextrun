@@ -95,6 +95,15 @@ exports.create = function(req, res) {
             race.creationDate = new Date();
             race.userId = userConnected._id;
 
+            if (race.place.location.latitude && race.place.location.longitude) {
+                console.log(race.place.location);
+                race.place.geo = {
+                    type: [race.place.location.latitude, race.place.location.longitude]
+                };  
+            }
+
+            console.log(race);
+
             race.save(function(err, race) {
                 if (err) {
                     logger.error(err);
@@ -207,6 +216,15 @@ exports.update = function(req, res) {
 
         query._id = race._id;
 
+        if(fieldsToUpdate.place) {
+            if (fieldsToUpdate.place.location.latitude && fieldsToUpdate.place.location.longitude) {
+                console.log(fieldsToUpdate.place.location);
+                fieldsToUpdate.place.geo = {
+                    type: [race.place.location.latitude, race.place.location.longitude]
+                };  
+            }
+        }
+
         Race.update(query, {
             $set: fieldsToUpdate
         }, {
@@ -317,12 +335,41 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
 
 };
 
+exports.search = function(req, res) {
+    if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.criteria)) {
+
+        Race.search(req.body.criteria, function(err, items) {
+            if (err) {
+                logger.error(err);
+                return res.status(400).json({
+                    message: errorUtils.errors(err.errors)
+                });
+            }
+            if (items) {
+                return res.status(200).json({
+                    items: items
+                });
+            } else {
+                logger.error("error.occured");
+                return res.status(400).json({
+                    message: ["error.occured"]
+                });
+            }
+        });
+
+    } else {
+        return res.status(400).json({
+            message: ["error.noCriteria"]
+        });
+    }
+};
+
 /**
  * @method Search races by criteria
  * @param req
  * @param res
  */
-exports.search = function(req, res) {
+exports.searchOld = function(req, res) {
 
     var criteria;
 

@@ -20,6 +20,8 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             name: ""
         };
 
+        $scope.modeManu = false;
+
         $scope.status = {
             isopen: false
         };
@@ -55,7 +57,7 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         };
 
         $scope.onClickMap = function(routeViewModel, destinationLatlng) {
-            RouteService.createNewSegment(routeViewModel, destinationLatlng);
+            RouteService.createNewSegment(routeViewModel, destinationLatlng, $scope.modeManu);
         };
 
         $scope.delete = function(routeViewModel) {

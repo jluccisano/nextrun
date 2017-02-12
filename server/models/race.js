@@ -111,7 +111,20 @@ var RaceSchema = new Schema({
         location: {
             latitude: Number,
             longitude: Number
-        }
+        },
+        loc: {
+            type: {
+                type: "String",
+                required: true,
+                enum: ["Point", "LineString", "Polygon"],
+                default: "Point"
+            },
+            coordinates: {
+                type: Schema.Types.Mixed,
+                index: "2dsphere",
+                default: [0, 0]
+            }
+        },
     },
     plan: {
         address: {
@@ -144,6 +157,7 @@ var RaceSchema = new Schema({
         }
     }
 });
+
 
 /**
  * Pre-save hook
@@ -184,7 +198,7 @@ RaceSchema.statics = {
 
     autocomplete: function(text, cb) {
 
-        var pattern = new RegExp("^"+text, "i");
+        var pattern = new RegExp("^" + text, "i");
 
         this.find({
             name: {
@@ -194,6 +208,78 @@ RaceSchema.statics = {
             name: 1,
             id: 1
         }).limit(8).exec(cb);
+    },
+
+    search: function(criteria, cb) {
+
+        var query = {};
+        var dateRange = {};
+        var type = {};
+        var andArray = [];
+        var location = {};
+
+        andArray.push({ "published" : true });
+
+        if (criteria.location) {
+
+            var radius = criteria.radius || 60;
+
+            console.log(criteria.location);
+
+            if (criteria.location.location.latitude && criteria.location.location.longitude) {
+                location = {
+                    "place.loc": {
+                        $near: {
+                            $geometry: {
+                                type: "Point",
+                                coordinates: [criteria.location.location.latitude, criteria.location.location.longitude]
+                            },
+                            $maxDistance: criteria.radius * 1000
+                        }
+                    }
+                };
+                andArray.push(location);
+            }
+        }
+
+        if (criteria.dateRange) {
+            dateRange = {
+                "date": {
+                    "$gte": criteria.dateRange.startDate,
+                    "$lt": criteria.dateRange.endDate
+                }
+            };
+            andArray.push(dateRange);
+        }
+
+        if (criteria.type) {
+            var type = {
+                "type": criteria.type
+            };
+            andArray.push(type);
+
+            if (criteria.distances && criteria.distances.length > 0) {
+
+                var distances = {
+                    "distanceType": {
+                        $in: criteria.distances
+                    }
+                };
+                andArray.push(distances);
+            }
+        }
+
+        if (andArray.length > 0) {
+            query = {
+                $and: andArray
+            };
+        }
+
+        console.log(query);
+
+        this.find(query, {
+            routes: 0
+        }).exec(cb);
     },
 
 

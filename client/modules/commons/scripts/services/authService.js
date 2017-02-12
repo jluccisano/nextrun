@@ -19,10 +19,8 @@ angular.module("nextrunApp.commons").factory("AuthService",
         }
 
         return {
-            authorize: function(accessLevel, role) {
-                if (role === undefined) {
-                    role = currentUser.role;
-                }
+            authorize: function(accessLevel) {
+                var role = currentUser.role;
                 return accessLevel.bitMask & role.bitMask;
             },
             isLoggedIn: function(user) {

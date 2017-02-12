@@ -426,7 +426,7 @@ var routeBuilder = {};
 			this.setDistance(this.getLastPointOfLastSegmentDataModel().distanceFromStart);
 		};
 
-		this.createSimpleSegment = function(startLatlng, destinationLatlng) {
+		this.createSimpleSegmentDataModel = function(startLatlng, destinationLatlng) {
 
 			if (!startLatlng) {
 				throw new Error("start Latlng is undefined");
@@ -468,9 +468,7 @@ var routeBuilder = {};
 
 			segmentDataModel.points = segmentPoints;
 
-			this.data.segments.push(segmentDataModel);
-
-			this.segments.push(new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegmentDataModel()));
+			return segmentDataModel;
 		};
 
 		this._createMarker = function(latLng, icon, title) {

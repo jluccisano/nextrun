@@ -86,7 +86,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 			},
 
 
-			createNewSegment: function(route, destinationLatlng) {
+			createNewSegment: function(route, destinationLatlng, modeManu) {
 
 				var lastLatlngOfLastSegment;
 
@@ -102,12 +102,12 @@ angular.module("nextrunApp.route").factory("RouteService",
 					isFirstPoint = true;
 				}
 
-				if (route.getTravelMode() !== "NONE") {
+				if (!modeManu) {
 
 					var directionsRequest = {
 						origin: lastLatlngOfLastSegment,
 						destination: destinationLatlng,
-						travelMode: route.getTravelMode(),
+						travelMode: google.maps.TravelMode.DRIVING,
 						provideRouteAlternatives: false,
 						avoidHighways: true,
 						avoidTolls: true,
@@ -136,6 +136,30 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 
 					});
+				} else {
+
+					var segmentDataModel = route.createSimpleSegmentDataModel(lastLatlngOfLastSegment, destinationLatlng);
+
+					var segment = route.addSegment(segmentDataModel);
+
+					var path = [];
+					path.push(lastLatlngOfLastSegment);
+					path.push(destinationLatlng);
+
+					route.addMarkerToRoute(path);
+
+					if (!isFirstPoint) {
+						route.addPolyline(path, false, false, false, true, "red", 5);
+					}
+
+					this.getElevation(segment).then(function(data) {
+
+						route.addElevationPoints(data.samplingPoints, data.elevations);
+
+					});
+
+
+
 				}
 			},
 			resetRoute: function(routeViewModel) {
@@ -414,12 +438,13 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 					var marker;
 
-					if (race.pin) {
+					if (race.place) {
 						marker = {
+							id: routeBuilder.generateUUID(),
 							raceId: race._id,
 							raceName: race.name,
-							latitude: race.pin.location.lat + (Math.random() - 0.5) / 1500,
-							longitude: race.pin.location.lon + (Math.random() - 0.5) / 1500,
+							latitude: race.place.location.latitude + (Math.random() - 0.5) / 1500,
+							longitude: race.place.location.longitude + (Math.random() - 0.5) / 1500,
 							icon: "client/modules/route/images/start.png",
 							showWindow: false,
 							title: "hello"

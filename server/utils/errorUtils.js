@@ -9,7 +9,6 @@ var logger = require("../logger"),
  */
 exports.errors = function(errors) {
     var errs = [];
-    console.log("hello:" + errors);
     if (errors instanceof Object) {
         var keys = Object.keys(errors);
 

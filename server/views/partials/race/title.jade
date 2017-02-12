@@ -1,8 +1,8 @@
 form(role="form" name="titleForm" novalidate)
 	div(class="row")
-		div(ng-if="!editMode || !edit" class="col-md-8")
+		div(ng-if="!editMode || !edit")
 			h4(class="text-left") {{race.name}}
-		div(class="col-md-8" ng-if="editMode && edit" class="form-group" ng-class="{'has-error':!titleForm.title.$pristine && titleForm.title.$invalid, 'has-success': !titleForm.title.$invalid && !titleForm.title.$pristine}")
+		div(ng-if="editMode && edit" class="form-group" ng-class="{'has-error':!titleForm.title.$pristine && titleForm.title.$invalid, 'has-success': !titleForm.title.$invalid && !titleForm.title.$pristine}")
 			input(type="text" class="form-control" ng-model="race.name" name="title"  placeholder="Title")
 		div(ng-if="editMode && !edit" class="col-md-2")
 			button(ng-click="toggleEdit()" class="btn btn-default btn-sm")

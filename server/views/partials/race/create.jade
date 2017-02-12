@@ -11,9 +11,9 @@ div(class="container")
 					label(class="control-label") {{'Date' | translate}}
 					input(type="text" class="form-control" ng-model="race.date" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
 
-				div(class="form-group" ng-class="{'has-error': !raceForm.location.$pristine && raceForm.location.$error.validLocation && raceForm.location.$invalid, 'has-success': !raceForm.location.$error.validLocation && raceForm.location.$valid  && !raceForm.location.$pristine}")
+				div(class="form-group" ng-class="{'has-error': !raceForm.place.$pristine && raceForm.place.$error.validLocation && raceForm.place.$invalid, 'has-success': !raceForm.place.$error.validLocation && raceForm.place.$valid  && !raceForm.place.$pristine}")
 					label(class="control-label") {{'Lieu' | translate}}
-					input(class="form-control" type="text" name="location" placeholder="{{'ex: Paris' | translate}}" ng-model="race.pin.name" nr-has-location gmaps-autocomplete options="options" details="race.pin" ng-required="true")
+					input(class="form-control" type="text" name="place" placeholder="{{'ex: Paris' | translate}}" ng-model="race.place.name" nr-has-location gmaps-autocomplete options="options" details="race.place" ng-required="true")
 							
 				div(class="form-group" ng-class="{'has-error': !raceForm.type.$pristine && raceForm.type.$invalid, 'has-success': !raceForm.type.$invalid && !raceForm.type.$pristine}")
 					label(class="control-label") {{'Type' | translate}}
