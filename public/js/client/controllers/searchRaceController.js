@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams',
-	function($scope, $location, $routeParams) {
+angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices',
+	function($scope, $location, $routeParams, RaceServices) {
 		'use strict';
 
 		$scope.currentPage = 1;

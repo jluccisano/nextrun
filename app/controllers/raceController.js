@@ -312,12 +312,15 @@ exports.search = function(req, res) {
   var departments = req.param('department');
   if (departments) {
     var departmentsArray = departments.split(',');
+    console.log(departmentsArray);
     operation.department = {
-      "department": {
+      "department.code": {
         '$in': departmentsArray
       }
     };
   }
+
+  console.log(util.inspect(operation, true));
 
   Race.search(operation, function(err, races) {
     if (err) {
@@ -325,7 +328,7 @@ exports.search = function(req, res) {
         message: errorUtils.errors(err.errors)
       });
     }
-
+    console.log(races);
     return res.json(200, {races : races});
   });
 

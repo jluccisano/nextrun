@@ -24,17 +24,17 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
     when('/', {
       templateUrl: '/partials/home',
       controller: 'HomeCtrl',
-      access: access.anon
+      access: access.public
     }).
     when('/login', {
       templateUrl: '/partials/login',
       controller: 'LoginCtrl',
-      access: access.anon
+      access: access.public
     }).
     when('/signup', {
       templateUrl: '/partials/signup',
       controller: 'SignupCtrl',
-      access: access.anon
+      access: access.public
     }).
     when('/myraces', {
       templateUrl: '/partials/race/myraces',

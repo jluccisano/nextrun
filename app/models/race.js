@@ -279,8 +279,8 @@ RaceSchema.statics = {
 
     this.aggregate({
       $match: {
-        $and: [operation.date, operation.date, operation.department, {
-          published: "true"
+        $and: [{
+          published: true
         }]
       }
     }, {

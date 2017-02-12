@@ -32,7 +32,7 @@ angular.module('nextrunApp')
                     success();
                 }).error(error);
             },
-            search: function(department, value, success, error) {
+            search: function(department, success, error) {
                 $http.get('/api/races/search/' + 'department/' + department).success(function(races) {
                     success(races);
                 }).error(error);
