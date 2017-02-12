@@ -941,6 +941,10 @@ msgstr ""
 msgid "Nombre de dossards: {{race.registration.limitedPlaces}}"
 msgstr ""
 
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Nombre de participant limité à 20"
+msgstr ""
+
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
 msgid "Nombre de places"
 msgstr ""

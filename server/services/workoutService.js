@@ -1,6 +1,5 @@
 var errorUtils = require("../utils/errorUtils"),
 	mongoose = require("mongoose"),
-	email = require("../middlewares/notification"),
 	Workout = mongoose.model("Workout");
 
 
@@ -14,7 +13,6 @@ exports.save = function(workout, req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			email.sendNewWorkout(req.user, workout);
 			cb(newWorkout);
 		}
 	});

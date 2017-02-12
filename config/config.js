@@ -48,7 +48,7 @@ module.exports = {
         }
     },
     prod: {
-        logLevel: "error",
+        logLevel: "info",
         host: "192.95.25.173",
         db: "mongodb://192.95.25.173:27017/nextrun",
         root: rootPath,
