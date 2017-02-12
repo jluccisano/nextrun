@@ -110,6 +110,7 @@ module.exports = function(app, express, passport) {
         app.use("/client/modules", express.static(app.config.root + "/client/modules"));
         app.use("/client/i18n", express.static(app.config.root + "/client/i18n"));
         app.use("/client/styles", express.static(app.config.root + "/client/styles"));
+        app.use("/client/fonts", express.static(app.config.root + "/client/fonts"));
     }
 
     // development only

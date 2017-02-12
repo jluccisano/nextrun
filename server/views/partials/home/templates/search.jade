@@ -4,7 +4,7 @@ div(class="container search")
 			form(role="form" name="searchForm" novalidate)
 				div(class="row")
 					div(class="col-lg-8")
-						div(class="form-group" ng-class="{'has-error': !searchForm.location.$pristine && searchForm.location.$error.validLocation && searchForm.location.$invalid, 'has-success': !searchForm.location.$pristine  && !searchForm.location.$error.validLocation}")							
+						div(class="form-group" ng-class="{'has-error': !searchForm.location.$pristine && searchForm.location.$error.validLocation && searchForm.location.$invalid, 'has-success': !searchForm.location.$pristine  && !searchForm.location.$error.validLocation}")
 							input(type="text" class="form-control" name="location"  placeholder="{{'Entrer un lieu' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location")
 
 							span(class="help-block" ng-show="searchForm.location.$dirty && searchForm.location.$error.validLocation" translate)  Veuillez saisir une ville correcte

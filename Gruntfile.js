@@ -110,11 +110,11 @@ module.exports = function(grunt) {
         generatedImagesDir: ".tmp/images/generated",
         imagesDir: "<%= yeoman.client %>/modules/main/images",
         javascriptsDir: "<%= yeoman.client %>/modules/main/scripts",
-        fontsDir: "<%= yeoman.client %>/modules/main/styles/fonts",
+        fontsDir: "<%= yeoman.client %>/fonts",
         importPath: "<%= yeoman.client %>/bower_components",
         httpImagesPath: "/images",
         httpGeneratedImagesPath: "/images/generated",
-        httpFontsPath: "/styles/fonts",
+        httpFontsPath: "/fonts",
         relativeAssets: false,
         assetCacheBuster: false,
         raw: "Sass::Script::Number.precision = 10\n"
@@ -186,7 +186,7 @@ module.exports = function(grunt) {
 
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
-      jade: ["<%= yeoman.dist %>/server/views/{,*/}*.jade"],
+      jade: ["<%= yeoman.dist %>/server/views/{,**/}*.jade"],
       css: ["<%= yeoman.dist %>/client/styles/{,*/}*.css"],
       js: ["<%= yeoman.dist %>/client/scripts/{,*/}*.js"],
       options: {
@@ -222,10 +222,10 @@ module.exports = function(grunt) {
       }
     },
 
-    // ngmin tries to make the code safe for minification automatically by
+    // ngAnnotate tries to make the code safe for minification automatically by
     // using the Angular long form for dependency injection. It doesn"t work on
     // things like resolve or inject so those have to be done manually.
-    ngmin: {
+    ngAnnotate: {
       dist: {
         files: [{
           expand: true,
@@ -265,6 +265,19 @@ module.exports = function(grunt) {
           dest: "<%= yeoman.dist %>/client/images",
           src: ["generated/*"]
         }]
+      },
+      fonts: {
+        files: [ //move bootstrap fonts
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              '<%= yeoman.client %>/bower_components/bootstrap/dist/fonts/*',
+              '<%= yeoman.client %>/bower_components/font-awesome/fonts/*',
+            ],
+            dest: '<%= yeoman.dist %>/client/fonts'
+          }
+        ]
       }
     },
 
@@ -275,7 +288,7 @@ module.exports = function(grunt) {
             "<%= yeoman.dist %>/client/scripts/{,*/}*.js",
             "<%= yeoman.dist %>/client/styles/{,*/}*.css",
             "<%= yeoman.dist %>/client/modules/**/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}",
-            "<%= yeoman.dist %>/client/styles/fonts/*"
+            "<%= yeoman.dist %>/client/fonts/*"
           ]
         }
       }
@@ -557,11 +570,12 @@ module.exports = function(grunt) {
     "autoprefixer",
     "concat",
     "copy:dist",
-    "ngmin",
+    "ngAnnotate",
     "cssmin",
     "uglify",
     "rev",
     "usemin",
+    "copy:fonts",
     "jsdoc",
     "install"
   ]);
