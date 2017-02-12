@@ -44,7 +44,6 @@ module.exports.register = function(app, express, routes, routerPath) {
 
         switch (route.httpMethod.toUpperCase()) {
             case "GET":
-                logger.info(route.path);
                 router.get(route.path, route.middleware);
                 break;
             case "POST":

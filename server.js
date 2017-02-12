@@ -39,10 +39,13 @@ require("./server/express")(app, express, passport);
 // Bootstrap routes
 var routes_path = __dirname + "/server/routes";
 fs.readdirSync(routes_path).forEach(function(file) {
-    if (~file.indexOf(".js")) {
+    if (~file.indexOf(".js") && file !== "main.js") {
         require(routes_path + "/" + file)(app, express);
     }
 });
+
+// Load server end point for angularJS at the end
+require(routes_path + "/" + "main.js")(app, express);
 
 
 // all environments

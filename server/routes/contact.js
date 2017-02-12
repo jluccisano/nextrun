@@ -11,16 +11,16 @@ var routes = [
 
     /** api contacts **/
     {
-        path: "/",
-        httpMethod: "POST",
-        middleware: [contactController.create],
-        accessLevel: accessLevels.public
-    }, {
         path: "/feedback",
         httpMethod: "POST",
         middleware: [contactController.feedback],
         accessLevel: accessLevels.public
-    },
+    }, {
+        path: "/",
+        httpMethod: "POST",
+        middleware: [contactController.create],
+        accessLevel: accessLevels.public
+    }
 
 ];
 
