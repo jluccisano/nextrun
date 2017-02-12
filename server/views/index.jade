@@ -7,20 +7,20 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
 
     head
 
-        link(rel="icon", type="image/png",  href="client//modules/main/images/logo_officiel.png")
+        link(rel="icon" type="image/png" href="client//modules/main/images/logo_officiel.png")
 
         <!-- build:css(server/views) client/styles/vendor.min.css -->
         // bower:css
-        link(rel='stylesheet', href='../../client/bower_components/bootstrap/dist/css/bootstrap.css')
-        link(rel='stylesheet', href='../../client/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css')
-        link(rel='stylesheet', href='../../client/bower_components/font-awesome/css/font-awesome.css')
-        link(rel='stylesheet', href='../../client/bower_components/angular-motion/dist/angular-motion.css')
-        link(rel='stylesheet', href='../../client/bower_components/angular-ui-select/dist/select.css')
+        link(rel='stylesheet' href='../../client/bower_components/bootstrap/dist/css/bootstrap.css')
+        link(rel='stylesheet' href='../../client/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css')
+        link(rel='stylesheet' href='../../client/bower_components/font-awesome/css/font-awesome.css')
+        link(rel='stylesheet' href='../../client/bower_components/angular-motion/dist/angular-motion.css')
+        link(rel='stylesheet' href='../../client/bower_components/angular-ui-select/dist/select.css')
         // endbower
         <!-- endbuild -->
 
         <!-- build:css({.tmp,client}) client/styles/main.min.css -->
-        link(rel="stylesheet", href="/styles/main.css")
+        link(rel="stylesheet" href="/styles/main.css")
         <!-- endbuild -->
 
         script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.17")
@@ -153,8 +153,8 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width")
 
-        meta(name='description', content="{{ogDescription}}")
-        meta(name='keywords', content="{{'manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, &eacute;preuve, ironman, longue distance, course &agrave; pied, parcours, d&eacute;nivel&eacute;, cross, marathon, duathlon, ski de fond, aquathlon' | translate}}")
+        meta(name='description' content="{{ogDescription}}")
+        meta(name='keywords' content="{{'manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, &eacute;preuve, ironman, longue distance, course &agrave; pied, parcours, d&eacute;nivel&eacute;, cross, marathon, duathlon, ski de fond, aquathlon' | translate}}")
 
         meta(property="og:title" content="{{ogTitle}}")
         meta(property="og:type" content="website")

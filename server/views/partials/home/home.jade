@@ -1,11 +1,11 @@
-div.custom-bs-background
+div.home.custom-bs-background
 	div.custom-bs-header
 		include ./templates/carousel
 	div.container
 		div.container.custom-marketing
-			div.row(style="margin-top:20px")
+			div.row
 				div.col-lg-7.col-lg-offset-2
-					div.input-group.input-group-lg(style="margin-top:20px")
+					div.input-group.input-group-lg
 						
 						input.form-control.twitter-typeahead(type="text" placeholder="{{'Recherche directe' | translate}}" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in suggest($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
 
@@ -14,7 +14,7 @@ div.custom-bs-background
 				div.col-lg-12
 					div.col-lg-3.col-lg-offset-2
 						hr
-					div.col-lg-1.text-center(style="margin-top:10px")
+					div.col-lg-1.text-center
 						p(translate) Par critères
 					div.col-lg-3
 						hr
@@ -35,7 +35,7 @@ div.custom-bs-background
 													input(type="checkbox" ng-model="criteria.searchAround")
 									div.col-lg-4
 										div.form-group
-											select(class="form-control" style="width:100px" ng-model="criteria.distance" ng-change="onChangeDistance()")
+											select(class="form-control" ng-model="criteria.distance" ng-change="onChangeDistance()")
 												option(value="15") 15km
 												option(value="30") 30km
 												option(value="50") 50km
@@ -46,13 +46,13 @@ div.custom-bs-background
 										ui-select-match(placeholder="{{'Sélectionner...' | translate}}") {{$item}}
 										ui-select-choices(repeat="type in listOfTypes | filter:$select.search") {{type.name}}
 						div.row
-							div.col-lg-2.col-lg-offset-8(style="margin-top:-40px")
+							div.col-lg-2.col-lg-offset-8
 								div.form-group
 									button.btn.btn-primary(type="submit" ng-click="submitSearchWithCriteria()" ng-disabled="form1.$invalid" translate) Rechercher	
 						
 								
-			div.row(style="margin-top:10px")
-				google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true"  draggable="true" mark-click="true" style="gmapsEditor" events="map.events")
+			div.row
+				google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true"  draggable="true" mark-click="true" events="map.events")
 					markers(models="map.markers" click="'onClicked'" coords="'self'" icon="'icon'" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
 						windows(show="'showWindow'" closeClick="'closeClick'" ng-cloak)
 							a(ng-non-bindable href="#/races/view/{{raceId}}") {{raceName}}		

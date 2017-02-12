@@ -1,6 +1,6 @@
 div.row
 	div.col-lg-6.col-lg-offset-2
-		form.form-horizontal(role="form" name="raceForm" style="margin-top:50px" novalidate)
+		form.form-horizontal(role="form" name="raceForm" novalidate)
 			
 			div.form-group(ng-class="{'has-error': !raceForm.name.$pristine && raceForm.name.$invalid, 'has-success': !raceForm.name.$invalid}")
 				label.control-label {{'Nom' | translate}}

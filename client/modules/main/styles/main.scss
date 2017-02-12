@@ -9,18 +9,15 @@
 @import 'docs.scss';
 @import 'sticky-footer.scss';
 @import 'footer.scss';
+@import 'header.scss';
+@import 'marketing.scss';
+@import 'contacts.scss';
 
 
 .custom-bs-background {
   text-shadow: 0 -1px 0 rgba(0,0,0,.15);
   background-color: #545454;
   border-color: #463265;
-}
-
-
-
-.gmapsEditor {
-  height: 600px;
 }
 
 
