@@ -347,6 +347,14 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 		$scope.submit = function(race) {
 
+			var place = $scope.gPlace.getPlace();
+
+			$scope.race.location = {
+				name: place.name,
+				lat: place.geometry.location.lat(),
+				lng: place.geometry.location.lng()
+			}
+
 			var data = {
 				race: $scope.race
 			};

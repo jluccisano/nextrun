@@ -44,7 +44,7 @@ html(ng-app="nextrunApp")
 		link(rel="stylesheet", href="/css/daterangepicker-bs3.css")
 		<!-- endbuild -->
 
-		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")	
+		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")	
 
 		<!-- build:js /js/libs/jquery-2.0.3.min.js -->
 		script(src="/js/libs/jquery-2.0.3.js", charset="UTF-8")
@@ -125,6 +125,7 @@ html(ng-app="nextrunApp")
 		script(src="/js/client/directives/mapDirectives.js", charset="UTF-8")
 		script(src="/js/client/directives/multiselectDirectives.js", charset="UTF-8")
 		script(src="/js/client/directives/dataRangePickerDirectives.js", charset="UTF-8")
+		script(src="/js/client/directives/googlePlaceDirectives.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js /js/client/controllers.min.js -->
