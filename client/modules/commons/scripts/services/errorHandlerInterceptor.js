@@ -1,12 +1,14 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
-	function($q, notificationService, $location) {
+	function($q, notificationService, $state, $cookieStore) {
 		var interceptor = {
 			"responseError": function(response) {
 
 				if (response.status === 401) {
-					$location.path("/login");
+					$cookieStore.remove("user");
+          			AuthService.saveAttemptUrl();
+          			$state.go("login");
 				}
 
 				if (response.data && response.data.message) {

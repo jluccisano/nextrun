@@ -1,7 +1,10 @@
 "use strict";
+angular.module("nextrunApp.commons").value('redirectToUrlAfterLogin', {
+    url: '/'
+});
 
 angular.module("nextrunApp.commons").factory("AuthService",
-    function($cookieStore, HttpUtils) {
+    function($cookieStore, HttpUtils, redirectToUrlAfterLogin, $state) {
 
         var accessLevels = routingConfig.accessLevels,
             userRoles = routingConfig.userRoles,
@@ -82,6 +85,15 @@ angular.module("nextrunApp.commons").factory("AuthService",
                 });
                 return promise;
             },
+            saveAttemptUrl: function() {
+                if ($state.url.toLowerCase() != '/login') {
+                    redirectToUrlAfterLogin.url = $state.url;
+                } else
+                    redirectToUrlAfterLogin.url = "/";
+            },
+            redirectToAttemptedUrl: function() {
+                $state.go(redirectToUrlAfterLogin.url);
+            }
             accessLevels: accessLevels,
             userRoles: userRoles,
             user: currentUser
