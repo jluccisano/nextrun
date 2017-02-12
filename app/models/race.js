@@ -78,6 +78,28 @@ var RaceSchema = new Schema({
   }
 });
 
+/**
+ * Pre-save hook
+ */
+
+RaceSchema.pre('save', function(next) {
+    return next();
+});
+
+RaceSchema.path('name').validate(function (name) {
+  var Race = mongoose.model('Race');
+
+  //console.log("this: "+this);
+  
+  Race.findOne({ name: this.name, distanceType: this.distanceType }).exec(function (err, race) {
+    return false;
+  });
+
+  return true;
+
+}, 'error.raceAlreadyExists');
+
+
 RaceSchema.methods = {
 
 }

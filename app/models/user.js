@@ -102,15 +102,6 @@ UserSchema.pre('save', function(next) {
 });
 
 /**
-* Pre-update hook
-*/ 
-/*UserSchema.pre('update', function(next) {
-    console.log("pre-update hook");
-    return next();
-});
-*/
-
-/**
  * Methods
  */
 

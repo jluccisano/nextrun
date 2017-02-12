@@ -41,11 +41,13 @@ exports.signup = function (req, res) {
 
 	user.save(function (err) {
 		if (err) {
+       console.log(err);
       return res.json(400,  {message: errorUtils.errors(err.errors)  } );
 		}
 		
 		req.logIn(user, function(err) {
 			if (err) {
+         console.log(err);
         return res.json(400,   {message: errorUtils.errors(err.errors)  } );
 			} 
       return res.json(200, { "role": user.role, "username": user.username });
