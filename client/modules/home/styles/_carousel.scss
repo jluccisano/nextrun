@@ -1,5 +1,6 @@
 .carousel {
     background-color: white;
+    min-height: 350px;
     .carousel-control.left, .carousel-control.right {
         display: none;
     }
@@ -12,6 +13,5 @@
     }
     iframe {
         width: 420px;
-        min-height: 315px;
     }
 }
