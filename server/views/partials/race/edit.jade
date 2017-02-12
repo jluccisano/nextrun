@@ -1,67 +1,54 @@
 div(class="container")
 	h3 {{'Editer la manifestation' | translate}}
 	div(class="row")
-		div.col-lg-offset-8.col-lg-4(ng-show="loading")
+		div(class="col-lg-offset-8 col-lg-4" ng-show="loading")
 			span(class="fa fa-spinner fa-spin")
 			span  {{'Chargement...' | translate}}
 
 		accordion
 			accordion-group(heading="{{'Général' | translate}}")
 				include ./templates/raceForm
-						
-			div.panel.panel-default
-				div.panel-heading
-					h4.panel-title
-						a(bs-collapse-toggle="1") {{'Parcours' | translate}}
-				div.panel-collapse(bs-collapse-target)
-					div.panel-body
-		
-						div.bs-callout.bs-callout-info
-							h4 {{'Informations' | translate}}
-							p {{'Ajouter la description de votre manifestation' | translate}}
-						
-						
-						div.row
-							div.col-lg-2 
-								h4 {{'Description' | translate}}
-							div.col-lg-2.col-lg-offset-10
-								i.fa.fa-pencil.fa-2
-						div.well(ng-bind-html="race.description")
-						
-						
-						//div(text-angular ng-model="race.description")
+			accordion-group(heading="{{'Parcours' | translate}}")
+				//div.bs-callout.bs-callout-info
+				//	h4 {{'Informations' | translate}}
+				//	p {{'Ajouter la description de votre manifestation' | translate}}
+				
+				//div.row
+				//	div.col-lg-2 
+				//		h4 {{'Description' | translate}}
+				//	div.col-lg-2.col-lg-offset-10
+				//		i.fa.fa-pencil.fa-2
+				//div.well(ng-bind-html="race.description")
+				
+				
+				//div(text-angular ng-model="race.description")
 
-						//div.form-group
-						//	label.col-lg-4.control-label(translate) Description
-						//	div.col-lg-12(text-angular ng-model="race.description")
-						
-						hr
+				//div.form-group
+				//	label.col-lg-4.control-label(translate) Description
+				//	div.col-lg-12(text-angular ng-model="race.description")
+				
+				hr
 
-						div(bs-tabs)
-							div(bs-pane ng-repeat="route in routesViewModel" title="{{route.getType()}}" ng-click="route.setVisible(true)")
-								div.bs-callout.bs-callout-info
-									h4 {{'Informations' | translate}}
-									p  {{'Ajouter des informations concernant le parcours' | translate}}
-								input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
-								div.row
-									div.col-lg-4(ng-show="pending")
-										span(class="fa fa-spinner fa-spin")
-										span  {{'Chargement en cours' | translate}}
-								hr
-								include mapEditor
-		
-			div.panel.panel-default
-				div.panel-heading
-					h4.panel-title
-						a(bs-collapse-toggle="2") {{'Organisation' | translate}}
-				div.panel-collapse(bs-collapse-target)
-					div.panel-body
-						include templates/editOrganisation
+				tabset
+					tab(ng-repeat="route in routesViewModel" heading="{{route.getType()}}" ng-click="route.setVisible(true)")
+						//div.bs-callout.bs-callout-info
+						//	h4 {{'Informations' | translate}}
+						//	p  {{'Ajouter des informations concernant le parcours' | translate}}
+						//input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
+						//div.row
+						//	div.col-lg-4(ng-show="pending")
+						//		span(class="fa fa-spinner fa-spin")
+						//		span  {{'Chargement en cours' | translate}}
+						//hr
+						include mapEditor
+
+			accordion-group(heading="{{'Organisation' | translate}}")
+				include templates/editOrganisation
 		
 		div.row
-			div.col-lg-offset-4.col-lg-8
-				button.btn.btn-primary(ng-click="submit(race)" ng-disabled="form1.$invalid") {{'Sauvegarder' | translate}}
-				button.btn.btn-default(ng-click="cancel()") {{'Annuler' | translate}}
-				div(ng-show="saving")
-					span(class="fa fa-spinner fa-spin")
-					span  {{'Sauvegarde en cours' | translate}}
+			div(class="col-lg-offset-4 col-lg-8")
+				button(class="btn btn-default" ng-click="cancel()") {{'Annuler' | translate}}
+				button(class="btn btn-primary" ng-click="submit(race)" ng-disabled="form1.$invalid") {{'Sauvegarder' | translate}}
+				//div(ng-show="saving")
+				//	span(class="fa fa-spinner fa-spin")
+				//	span  {{'Sauvegarde en cours' | translate}}
