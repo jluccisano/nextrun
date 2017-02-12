@@ -8,7 +8,7 @@ var express = require('express'),
 	i18n = require('i18next'),
 	flash = require('connect-flash'),
 	pkg = require('../package.json');
-
+	
 i18n.init({
 	resGetPath: 'locales/__lng__/__ns__.json',
 	saveMissing: false,
@@ -111,8 +111,6 @@ module.exports = function(app, config, passport) {
 				next();
 			});
 		}
-
-		
 
 		// routes should be at the last
 		app.use(app.router);

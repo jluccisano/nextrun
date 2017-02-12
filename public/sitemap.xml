@@ -25,11 +25,11 @@
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://nextrun.fr/myraces</loc>
+  <loc>http://nextrun.fr/races/home</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://nextrun.fr/users/settings</loc>
+  <loc>http://nextrun.fr/signup</loc>
   <changefreq>daily</changefreq>
 </url>
 </urlset>

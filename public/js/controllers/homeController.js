@@ -1,8 +1,6 @@
-angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$location', 'ContactServices', 'Alert', 'mySharedService', '$rootScope', 'RaceServices', 'RouteFactory',
-	function($scope, $http, $location, ContactServices, Alert, sharedService, $rootScope, RaceServices, RouteFactory) {
+angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$location', 'ContactServices', 'Alert', 'mySharedService', '$rootScope', 'RaceServices', 'RouteFactory', 'sharedMetaService',
+	function($scope, $http, $location, ContactServices, Alert, sharedService, $rootScope, RaceServices, RouteFactory, sharedMetaService) {
 		'use strict';
-
-		$rootScope.pageTitle = "Nextrun";
 
 		$scope.fulltext = undefined;
 		$scope.names = [];
@@ -121,7 +119,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 			$scope.criteria = {
 				fulltext: (query_string !== undefined) ? query_string : "",
-				region:  undefined
+				region: undefined
 			};
 
 			return $http({
@@ -207,6 +205,11 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 								$scope.onMarkerClicked(marker);
 							};
 						});
+
+						setTimeout(function() {
+							sharedMetaService.prepForMetaBroadcast('Accueil', $location.path(), "Toutes les &eacute;preuves d&apos;endurances regroup&eacute;es sur un m&ecirc;me site");
+						}, 1000);
+
 
 						$scope.ready();
 

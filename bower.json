@@ -22,8 +22,7 @@
     "bootstrap-multiselect": "~0.9.3",
     "angular-date-time-input": "~0.1.0",
     "x2js": "*",
-    "AngularGM": "~1.0.0",
-    "angular-easyfb": "~0.3.1"
+    "AngularGM": "~1.0.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14",

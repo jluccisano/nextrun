@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('SignupCtrl', ['$scope', '$http', '$location', '$rootScope', 'Auth', 'Alert',
-	function($scope, $http, $location, $rootScope, Auth, Alert) {
+angular.module('nextrunApp').controller('SignupCtrl', ['$scope', '$http', '$location', '$rootScope', 'Auth', 'Alert', 'sharedMetaService',
+	function($scope, $http, $location, $rootScope, Auth, Alert, sharedMetaService) {
 		'use strict';
 		$scope.user = {};
 
@@ -18,6 +18,10 @@ angular.module('nextrunApp').controller('SignupCtrl', ['$scope', '$http', '$loca
 					});
 				});
 		};
+
+		setTimeout(function() {
+			sharedMetaService.prepForMetaBroadcast('Inscription', $location.path(), "Inscrivez-vous et cr&eacute;ez votre manifestation en quelques clics.");
+		}, 1000);
 
 		$scope.ready();
 

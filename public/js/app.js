@@ -11,7 +11,7 @@ var nextrunApp = angular.module('nextrunApp', [
   'textAngular',
   'ngSanitize',
   'ngAutocomplete',
-  'ezfb'
+  'FacebookPluginDirectives'
 ]);
 
 /** Initialize i18n **/
@@ -20,16 +20,9 @@ jQuery.i18n.init({
 });
 
 
-nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider', '$FBProvider',
-  function($routeProvider, $locationProvider, $httpProvider, $FBProvider) {
+nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
+  function($routeProvider, $locationProvider, $httpProvider) {
     'use strict';
-
-    $FBProvider.setLocale('fr_FR');
-
-    $FBProvider.setInitParams({
-      appId: '195803770591615'
-    });
-
 
     var access = routingConfig.accessLevels;
 
@@ -149,11 +142,15 @@ nextrunApp.run(['$rootScope', '$location', 'Auth', 'Alert',
 
     $rootScope.ready = function() {
       $rootScope.status = 'ready';
-      if (!$rootScope.$$phase) $rootScope.$apply();
+      if (!$rootScope.$$phase) {
+        $rootScope.$apply();
+      }
     };
     $rootScope.loading = function() {
       $rootScope.status = 'loading';
-      if (!$rootScope.$$phase) $rootScope.$apply();
+      if (!$rootScope.$$phase) {
+        $rootScope.$apply();  
+      }
     };
 
 

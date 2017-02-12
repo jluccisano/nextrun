@@ -1,12 +1,10 @@
 var userRoles = require('../../public/js/routingConfig').userRoles,
-  phantom = require('node-phantom');
+  phantom = require('node-phantom-simple');
 /*
  * GET home page.
  */
 
 exports.index = function(req, res) {
-
-  console.log("index");
 
   var role = userRoles.public,
     username = '',
@@ -25,12 +23,10 @@ exports.index = function(req, res) {
     'role': role
   }));
 
-  var ua;
-  ua = req.headers['user-agent'];
-  console.log(ua);
-  if (ua.match(/bot/i) || typeof(req.query._escaped_fragment_) !== "undefined") {
+  var ua = req.headers['user-agent'];
+  if ((typeof(ua) !== "undefined" && ua.match(/bot/i)) || typeof(req.query._escaped_fragment_) !== "undefined") {
 
-    generateSnapShot(req, res);
+    generateSnapshot(req, res);
 
   } else {
     res.render('index', {
@@ -47,8 +43,6 @@ exports.partials = function(req, res) {
 
   var partial = 'partials/' + name;
 
-  console.log(partial);
-
   if (type) {
     partial = 'partials/' + type + '/' + name;
   }
@@ -56,18 +50,21 @@ exports.partials = function(req, res) {
   res.render(partial);
 };
 
-var generateSnapShot = function(req, res) {
+var generateSnapshot = function(req, res) {
 
-  console.log("generateSnapShot");
+  console.log("new crawler request");
 
   phantom.create(function(err, ph) {
-    console.log("create new instance");
+
+    if (err) {
+      console.log("error during create new phantom instance: " + err);
+    }
+
     ph.createPage(function(err, page) {
 
-      console.log("create new page");
-
-      console.log("error1: " + err);
-      console.log(page);
+      if (err) {
+        console.log("error during create new phantom page: " + err);
+      }
 
       page.open("http://localhost:3000" + req.path, function(err, status) {
 
@@ -84,16 +81,10 @@ var generateSnapShot = function(req, res) {
               checkerCounter++;
 
               page.evaluate(function() {
-
-                console.log("loading");
                 var body = document.getElementsByTagName('body')[0];
-                console.log(body);
                 if (body.getAttribute('data-status') === 'ready') {
-                  console.log("isready");
-                  return document.getElementsByTagName('html')[0].innerHTML;
+                  return document.documentElement.outerHTML;
                 }
-
-
               }, function(err, html) {
 
                 if (html || checkerCounter >= 50) {
@@ -107,6 +98,12 @@ var generateSnapShot = function(req, res) {
                   ph.exit();
                 }
               });
+
+              if (checkerCounter >= 50) {
+                clearTimeout(delay);
+                ph.exit();
+                res.send(404, "cannot generate snapshot");
+              }
 
 
             });

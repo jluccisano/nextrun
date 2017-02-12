@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'mySharedService', '$rootScope', 'Alert',
-	function($scope, $location, $routeParams, RaceServices, $http, sharedService, $rootScope, Alert) {
+angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'mySharedService', '$rootScope', 'Alert', 'sharedMetaService',
+	function($scope, $location, $routeParams, RaceServices, $http, sharedService, $rootScope, Alert, sharedMetaService) {
 		'use strict';
 
 
@@ -410,6 +410,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			$scope.currentTypeSelected = [];
 
 		}
+
+		setTimeout(function() {
+			sharedMetaService.prepForMetaBroadcast('Rechercher', $location.path(), "Rechercher des manifestations &agrave; travers un puissant moteur de recherche");
+		}, 1000);
 
 		$scope.ready();
 

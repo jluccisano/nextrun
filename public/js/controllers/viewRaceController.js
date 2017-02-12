@@ -1,8 +1,6 @@
-angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', 'RouteFactory', '$window', '$modal',
-	function($rootScope, $scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window, $modal) {
+angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', 'RouteFactory', '$window', '$modal', 'sharedMetaService',
+	function($rootScope, $scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window, $modal, sharedMetaService) {
 		'use strict';
-
-		
 
 		google.maps.visualRefresh = true;
 
@@ -53,8 +51,6 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope',
 				function(response) {
 
 					$scope.race = response.race;
-
-					$rootScope.pageTitle = $scope.race.name;
 
 					var raceType = getRaceTypeByName(TYPE_OF_RACES, $scope.race.type.name);
 
@@ -287,6 +283,10 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope',
 
 					$scope.loading = false;
 
+					setTimeout(function() {
+						sharedMetaService.prepForMetaBroadcast($scope.race.name, $location.path(), $scope.generateRaceDescription());
+					}, 1000);
+
 					$scope.ready();
 				},
 				function(error) {
@@ -298,6 +298,10 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope',
 					});
 				});
 		};
+
+		$scope.generateRaceDescription = function() {
+			return $scope.race.name + ' , date: ' + $scope.getDate($scope.race.date) + ' , type: ' + $scope.race.type.i18n + ' , distance: ' + $scope.race.distanceType.name;
+		}
 
 		$scope.openFeedbackModal = function(raceId) {
 

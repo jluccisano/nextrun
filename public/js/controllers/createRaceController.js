@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal',
-	function($scope, $location, RaceServices, Alert, Auth, $modal) {
+angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal', 'sharedMetaService',
+	function($scope, $location, RaceServices, Alert, Auth, $modal, sharedMetaService) {
 		'use strict';
 
 		$scope.race = {};

@@ -1,58 +1,45 @@
-var _app, _location;
+'use strict';
 
-(function() {
-  _app = window.App;
-  _app.run(['$location', function($location) {
-    _location = $location;
-  }]);
-})();
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
 
-var _gotoPage = function($scope, url, onReady) {
-  var $location = _location;
-  if($location) {
-    $location.path(url).replace();
-    if(!$scope.$$phase) {
-      $scope.$apply(function() {
+
+var gotoPage = function(scope, location, url, onReady) {
+  if (location) {
+    location.path(url).replace();
+    if (!scope.$$phase) {
+      scope.$apply(function() {
         onReady();
       });
-    }
-    else {
+    } else {
       onReady();
     }
   };
 };
 
-var _checkIfLoaded = function(url, done) {
-  var $scope = _getTopScope();
-  _gotoPage($scope, url, function() {
-    $scope.$watch('status', function() {
-      if($scope.status == 'ready') {
+var checkIfLoaded = function(scope, location, url, done) {
+  gotoPage(scope, location, url, function() {
+    scope.$watch('status', function() {
+      if (scope.status == 'ready') {
         done();
       }
     });
   });
 };
 
-var _resetVars = function() {
-  _getTopScope().status = null;
-};
 
-var _getTopScope = function() {
-  return angular.element(document).scope();
-};
+describe('Testing all pages to see if they load properly', function(done) {
 
-var _isScopeReset = function() {
-  return _getTopScope().status === null;
-};
+  var rootScope, location;
 
-describe('Testing all pages to see if they load properly', function() {
+  beforeEach(module('nextrunApp'));
 
-  beforeEach(function() {
-    _resetVars();
-  });
+  beforeEach(inject(function($rootScope, $location)  {
+      rootScope = $rootScope;
+      location = $location;
+  }));
 
-  it('GET /home', function(done) {
-    expect(_isScopeReset()).to.equal(true);
-    _checkIfLoaded('/', done);
-  });
+
+  /*it('GET /home', function(done) {
+    checkIfLoaded(rootScope, location, '/', done);
+  });*/
 });

@@ -1,11 +1,12 @@
 !!! 5
-html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#")
+html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#" data-ng-controller='MainCtrl')
 
 	<!-- build:js /js/widgets/google-analytics.min.js -->
 	script(src="/js/widgets/google-analytics.js", charset="UTF-8")
 	<!-- endbuild -->
 
 	head
+	
 		link(rel="icon", type="image/png",  href="/img/logo_officiel.png")
 
 		<!-- build:css /css/font-awesome.min.css -->
@@ -119,6 +120,7 @@ html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#")
 		script(src="/js/services/raceServices.js", charset="UTF-8")
 		script(src="/js/services/routeServices.js", charset="UTF-8")
 		script(src="/js/services/sharedCriteriaServices.js", charset="UTF-8")
+		script(src="/js/services/sharedMetaServices.js", charset="UTF-8")
 		script(src="/js/services/fileReaderServices.js", charset="UTF-8")
 		<!-- endbuild -->
 
@@ -127,6 +129,7 @@ html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#")
 		script(src="/js/directives/multiselectDirectives.js", charset="UTF-8")
 		script(src="/js/directives/dataRangePickerDirectives.js", charset="UTF-8")
 		script(src="/js/directives/customValidatorDirectives.js", charset="UTF-8")
+		script(src="/js/directives/facebookPluginDirectives.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js /js/controllers.min.js -->
@@ -181,10 +184,6 @@ html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#")
 		script(src="/js/constants/departments.js", charset="UTF-8")
 		script(src="/js/constants/typeOfRaces.js", charset="UTF-8")
 		<!-- endbuild -->
-
-		<!-- build:js /lib/angular-easyfb/angular-easyfb.min.js -->
-		script(src="/bower_components/angular-easyfb/angular-easyfb.js", charset="UTF-8")
-		<!-- endbuild -->
 		
 		<!-- build:js /js/widgets/socialbuttons.min.js -->
 		script(src="/js/widgets/socialbuttons.js", charset="UTF-8")
@@ -206,21 +205,22 @@ html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#")
 		block head
 			base(href="/")
 			block meta
-				meta(charset='utf8')
-				meta(name='description', content="Toutes les épreuves d'endurances regroupées sur un même site")
-				meta(name='keywords', content='manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, épreuve, ironman, longue distance, course à pied, parcours, dénivelé, cross, marathon, duathlon, ski de fond, aquathlon')
+				meta(http-equiv="Content-Type" content="text/html; charset=iso-8859-1")
+				
+				meta(name='description', content="{{ogDescription}}")
+				meta(name='keywords', content='manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, &eacute;preuve, ironman, longue distance, course &agrave; pied, parcours, d&eacute;nivel&eacute;, cross, marathon, duathlon, ski de fond, aquathlon')
 
 				//facebook meta tags
-				meta(property="og:title" content="{{pageTitle}}")
+				meta(property="og:title" content="{{ogTitle}}")
 				meta(property="og:type" content="website")
-				meta(property="og:image" content="http://www.nextrun.fr/img/logo.png")
-				meta(property="og:url" content="http://www.nextrun.fr")
-				meta(property="og:description" content="Toutes les épreuves d'endurances regroupées sur un même site")
+				meta(property="og:image" content="http://www.nextrun.fr/img/logo_officiel.png")
+				meta(property="og:url" content="{{ogUrl}}")
+				meta(property="og:description" content="{{ogDescription}}")
 				meta(name="fragment" content="!")
 				meta(name="google-site-verification" content="XyiSoYfguJ-59aia60gM2hXqUantvQTg8eZ_dfKvqzg")
 				meta(property="fb:app_id" content="195803770591615")
 				meta(property="fb:admins" content="1320496159")
 				
 			block title
-				title Nextrun
+				title {{pageTitle}}
 	block body
