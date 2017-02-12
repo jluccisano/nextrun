@@ -8,6 +8,7 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
         $filter,
         $q,
         $timeout,
+        $stateParams,
         WorkoutService,
         notificationService,
         AuthService,
@@ -47,7 +48,7 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
             var promises = [];
             $scope.routesViewModel = [];
 
-            if($scope.workout.routeId) {
+            if ($scope.workout.routeId) {
                 promises.push(RouteService.retrieve($scope.workout.routeId));
             }
 
@@ -61,13 +62,16 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                 });
 
                 if ($scope.routesViewModel.length > 0) {
-                    $scope.selection = $scope.routesViewModel[0].getType() + 0;
+                    //$scope.selection = $scope.routesViewModel[0].getType() + 0;
                     $scope.routesViewModel[0].setVisible(true);
                 }
             });
         };
 
         $scope.init = function() {
+
+            $scope.initSelection($stateParams.selection);
+
             WorkoutService.retrieve($scope.workoutId).then(function(response) {
                 $scope.workout = response.data;
                 $scope.retrieveRoutes();
@@ -113,7 +117,10 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
             }).get().on("pnotify.confirm", function() {
                 RouteService.delete(routeViewModel.data._id).then(function() {
                     notificationService.success(gettextCatalog.getString("Le sortie a bien été supprimée"));
-                    $scope.init();
+                    $state.go("editWorkoutWithSelection", {
+                        id: $scope.workoutId,
+                        selection: "general"
+                    });
                 });
             });
         };
@@ -121,10 +128,26 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
         $scope.update = function(data) {
             WorkoutService.update($scope.workoutId, data).then(
                 function() {
-                    $scope.init();
-                    notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));
+                    notificationService.success(gettextCatalog.getString("Votre parcours a bien été mise à jour"));
+                    $state.go("editWorkoutWithSelection", {
+                        id: $scope.workoutId,
+                        selection: "general"
+                    });
                 });
         };
+
+        $scope.initSelection = function(selection) {
+            if (selection) {
+                $scope.selection = selection;
+                $scope.active = selection;
+                if (selection !== "general") {
+                    $scope.isCollapsed = true;
+                } else {
+                    $scope.isCollapsed = true;
+
+                }
+            }
+        }
 
         $scope.setSelection = function(route, index) {
             $scope.selection = route.getType() + index;
@@ -135,8 +158,11 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
         $scope.addNewParticipant = function(newParticipant) {
             WorkoutService.addParticipant($scope.workoutId, newParticipant).then(
                 function() {
-                    $scope.init();
                     notificationService.success(gettextCatalog.getString("Un nouveau participant a été ajouté"));
+                    $state.go("editWorkoutWithSelection", {
+                        id: $scope.workoutId,
+                        selection: "participants"
+                    });
                 });
         };
 
@@ -158,8 +184,11 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
             }).get().on("pnotify.confirm", function() {
                 WorkoutService.deleteParticipant($scope.workoutId, participant).then(
                     function() {
-                        $scope.init();
                         notificationService.success(gettextCatalog.getString("Un participant a été supprimé"));
+                        $state.go("editWorkoutWithSelection", {
+                            id: $scope.workoutId,
+                            selection: "participants"
+                        });
                     });
             });
         };

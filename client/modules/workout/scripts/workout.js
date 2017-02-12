@@ -55,6 +55,21 @@ routeModule.config(
 					return $stateParams.routeId;
 				}
 			}
+		}).state("editWorkoutWithSelection", {
+			url: "/workouts/:id/edit?selection",
+			templateUrl: "/partials/workout/workout",
+			controller: "EditWorkoutController",
+			data: {
+				access: access.user,
+				fullscreen: true
+			},
+			resolve: {
+				workoutId: ['$stateParams',
+					function($stateParams) {
+						return $stateParams.id;
+					}
+				]
+			}
 		}).state("editWorkout", {
 			url: "/workouts/:id/edit",
 			templateUrl: "/partials/workout/workout",

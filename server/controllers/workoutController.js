@@ -63,7 +63,7 @@ exports.getWorkoutsByUser = function(req, res) {
         });
     });
 };
-
+/*
 exports.joinWorkout = function(req, res) {
     var workout = req.workout;
     var participantId = req.params.participantId;
@@ -79,6 +79,17 @@ exports.unjoinWorkout = function(req, res) {
     var participantId = req.params.participantId;
     var workoutOwner = req.workoutOwner;
     workoutService.joinWorkout(workout, participantId, false, res, function() {
+        email.sendNotificationToOwner(workout, workoutOwner, participantId);
+        res.sendStatus(200);
+    });
+};
+*/
+exports.updateParticipant = function(req, res) {
+    var workout = req.workout;
+    var participantId = req.params.participantId;
+    var participant = req.body;
+    var workoutOwner = req.workoutOwner;
+    workoutService.updateParticipant(participant, req, res, function() {
         email.sendNotificationToOwner(workout, workoutOwner, participantId);
         res.sendStatus(200);
     });

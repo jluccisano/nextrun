@@ -32,7 +32,7 @@ var routes = [{
     httpMethod: "GET",
     middleware: [workoutController.getWorkoutsByUser],
     accessLevel: accessLevels.user
-}, {
+},/* {
     path: "/:id/participants/:participantId/join",
     httpMethod: "PUT",
     middleware: [workoutController.getOwner, workoutController.joinWorkout],
@@ -42,6 +42,12 @@ var routes = [{
     path: "/:id/participants/:participantId/unjoin",
     httpMethod: "PUT",
     middleware: [workoutController.getOwner, workoutController.unjoinWorkout],
+    accessLevel: accessLevels.public
+
+},*/{
+    path: "/:id/participants/:participantId/update",
+    httpMethod: "PUT",
+    middleware: [workoutController.getOwner, workoutController.updateParticipant],
     accessLevel: accessLevels.public
 
 }, {

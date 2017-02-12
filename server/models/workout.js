@@ -6,9 +6,11 @@ var mongoose = require("mongoose"),
 var ParticipantSchema = new Schema({
     email: String,
     willBePresent: {
-        type: Boolean,
-        default: false
-    }
+        type: String,
+        enum: ["yes", "no", "maybe"],
+        default: "no"
+    },
+    pseudo: String
 });
 
 var WorkoutEventSchema = new Schema({

@@ -1,4 +1,4 @@
-div(ng-form="resultsForm" novalidate)
+div(ng-if="editMode" ng-form="resultsForm" novalidate)
 	div(class="form-group")
 		label(for="resultTitle" class="control-label" translate) Titre
 		div(class="form-group" ng-class="{'has-error': resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine, 'has-success': !resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine}")

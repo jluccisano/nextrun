@@ -48,10 +48,10 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 			var promises = [];
 			$scope.routesViewModel = [];
 
-			if($scope.workout.routeId) {
+			if ($scope.workout.routeId) {
 				promises.push(RouteService.retrieve($scope.workout.routeId));
 			}
-			
+
 			$q.all(promises).then(function(routes) {
 				angular.forEach(routes, function(response) {
 					if (angular.isObject(response.data) && response.data._id) {
@@ -71,8 +71,8 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 		$scope.retrieveParticipant = function() {
 			var participantId = $stateParams.participantId;
 			if (participantId) {
-				angular.forEach($scope.workout.participants, function(participant){
-					if(angular.equals(participant._id, participantId)) {
+				angular.forEach($scope.workout.participants, function(participant) {
+					if (angular.equals(participant._id, participantId)) {
 						$scope.participant = participant;
 					}
 				});
@@ -81,7 +81,13 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 
 		$scope.updateParticipant = function(participant) {
 
-			if (!participant.willBePresent) {
+			WorkoutService.updateParticipant($scope.workout._id, participant).then(
+				function() {
+					notificationService.success(gettextCatalog.getString("Votre réponse a bien été prise en compte"));
+					$scope.init();
+				});
+
+			/*if (!participant.willBePresent) {
 				WorkoutService.unjoin($scope.workout._id, participant._id).then(
 					function() {
 						notificationService.success(gettextCatalog.getString("Votre réponse a bien été prise en compte"));
@@ -93,7 +99,7 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 						notificationService.success(gettextCatalog.getString("Votre réponse a bien été prise en compte"));
 						$scope.init();
 					});
-			}
+			}*/
 
 		};
 
@@ -156,7 +162,7 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 			WorkoutService.update($scope.workoutId, data).then(
 				function() {
 					$scope.init();
-					notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));
+					notificationService.success(gettextCatalog.getString("Votre sortie a bien été mise à jour"));
 				});
 		};
 

@@ -22,11 +22,14 @@ angular.module("nextrunApp.commons").factory("WorkoutService",
                     return HttpUtils.post("/api/workouts/new", data);
                 }
             },
-            join: function(id, participantId) {
+            /*join: function(id, participantId) {
                 return HttpUtils.put("/api/workouts/" + id + "/participants/" + participantId + "/join/", undefined);
             },
             unjoin: function(id, participantId) {
                 return HttpUtils.put("/api/workouts/" + id + "/participants/" + participantId + "/unjoin/", undefined);
+            },*/
+            updateParticipant: function(id, participant) {
+                return HttpUtils.put("/api/workouts/" + id + "/participants/" + participant._id + "/update/", participant);
             },
             addParticipant: function(id, participant) {
                 return HttpUtils.put("/api/workouts/" + id + "/participants/new/", participant);
