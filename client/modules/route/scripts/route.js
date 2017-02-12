@@ -1,6 +1,11 @@
 "use strict";
 
-var routeModule = angular.module("nextrunApp.route", ["nextrunApp.commons", "google-maps", "cb.x2js"]);
+var routeModule = angular.module("nextrunApp.route", [
+	"nextrunApp.commons",
+	"google-maps",
+	"cb.x2js",
+	"frapontillo.bootstrap-switch"
+]);
 
 routeModule.config(
 	function(
@@ -20,6 +25,13 @@ routeModule.config(
 			url: "/routes/new",
 			templateUrl: "/partials/route/mapEditor",
 			controller: "EditRouteController",
+			data: {
+				access: access.user
+			}
+		}).state("routes", {
+			url: "/users/routes",
+			templateUrl: "/partials/route/routes",
+			controller: "RoutesController",
 			data: {
 				access: access.user
 			}

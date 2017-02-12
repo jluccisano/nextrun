@@ -11,8 +11,12 @@ var routeBuilder = {};
 	
 	routeBuilder.Route = function(dataModel, chartConfig, gmapsConfig) {
 
-		this.data = dataModel;
+		if(!dataModel) {
+			return;
+		}
 
+		this.data = dataModel;
+		
 		if (!this.data.distance) {
 			this.data.distance = 0;
 		}

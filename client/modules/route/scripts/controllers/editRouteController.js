@@ -11,7 +11,9 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         FileReaderService,
         RouteUtilsService,
         RouteHelperService,
-        MetaService) {
+        MetaService,
+        notificationService,
+        gettextCatalog) {
 
         $scope.location = {
             details: {},
@@ -36,21 +38,8 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         };
 
         $scope.tmpRoute = {};
-        $scope.route = {};
+        $scope.route;
         $scope.routeViewModel = {};
-
-        $scope.createRouteViewModel = function() {
-
-            $scope.route = {
-                type: "Vélop",
-                segments: [],
-                elevationPoints: []
-            };
-            
-            $scope.routeViewModel = new routeBuilder.Route($scope.route, RouteHelperService.getChartConfig($scope, 150), RouteHelperService.getGmapsConfig());
-            $scope.routeViewModel.setCenter(RouteUtilsService.getCenter({}));
-            $scope.routeViewModel.addClickListener($scope.onClickMap);
-        };
 
         $scope.init = function() {
 
@@ -63,14 +52,15 @@ angular.module("nextrunApp.route").controller("EditRouteController",
 
                     angular.copy($scope.route, $scope.tmpRoute);
 
-                    $scope.createRouteViewModel();
+                    $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
+                    $scope.routeViewModel.addClickListener($scope.onClickMap);
                 }).
                 finally(function() {
                     MetaService.ready("Editer un parcours");
                 });
             } else {
-
-                $scope.createRouteViewModel();
+                $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
+                $scope.routeViewModel.addClickListener($scope.onClickMap);
             }
 
 
@@ -114,6 +104,14 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         };
 
         $scope.submit = function() {
+
+            var data = {
+                route: $scope.routeViewModel.data
+            };
+
+            RouteService.saveOrUpdate(data).then(function(response) {
+                notificationService.success(gettextCatalog.getString("Le parcours a bien été créée"));
+            });
 
             /*var fields = {};
             fields["routes.$"] = routeDataModel;

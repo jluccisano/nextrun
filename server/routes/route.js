@@ -14,9 +14,19 @@ var routes = [
         middleware: [routeController.find],
         accessLevel: accessLevels.public
     }, {
-        path: "/create",
+        path: "/new",
         httpMethod: "POST",
         middleware: [routeController.create],
+        accessLevel: accessLevels.user
+    },{
+        path: "/find/page/(:page)?",
+        httpMethod: "GET",
+        middleware: [routeController.findByUser],
+        accessLevel: accessLevels.user
+    },{
+        path: "/:routeId/delete",
+        httpMethod: "DELETE",
+        middleware: [routeController.delete],
         accessLevel: accessLevels.user
     },/* {
         path: "/find",

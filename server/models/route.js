@@ -21,6 +21,10 @@ var SegmentSchema = new Schema({
 });
 
 var RouteSchema = new Schema({
+    creationDate: Date,
+    userId: Schema.Types.ObjectId,
+    lastUpdate: Date,
+    publicationDate: Date,
     ascendant: Number,
     descendant: Number,
     minElevation: Number,
@@ -58,6 +62,18 @@ RouteSchema.statics = {
             _id: id
         }).exec(cb);
     },
+
+    findByCriteria: function(options, cb) {
+
+        var criteria = options.criteria || {};
+        this.find(criteria, {
+            segments: 0,
+            elevationPoints: 0
+        })
+            .limit(options.perPage)
+            .skip(options.perPage * options.page)
+            .exec(cb);
+    }
 
 
 };

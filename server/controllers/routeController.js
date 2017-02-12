@@ -29,6 +29,8 @@ exports.create = function(req, res) {
 
     var route = new Route(req.body.data);
     route.userId = userConnected._id;
+    route.lastUpdate = new Date();
+    route.creationDate = new Date();
 
     route.save(function(error, route) {
         if (error) {
@@ -85,4 +87,74 @@ exports.find = function(req, res) {
             message: ["error.unknownRoute"]
         });
     }
+};
+
+/**
+ * @method find by user
+ * @param req
+ * @param res
+ * @returns success if OK
+ */
+exports.findByUser = function(req, res) {
+
+    var criteria = {};
+    var page = 1;
+    var perPage = 10;
+
+    criteria = {
+        userId: req.user._id
+    };
+
+    if (typeof req.params.page !== "undefined") {
+        page = req.params.page;
+    }
+
+    var options = {
+        perPage: perPage,
+        page: page - 1,
+        criteria: criteria
+    };
+
+    Route.findByCriteria(options, function(err, routes) {
+        console.log(err);
+        console.log(routes);
+        if (err) {
+            logger.error(err);
+            return res.status(400).json({
+                message: errorUtils.errors(err.errors)
+            });
+        }
+        if (routes) {
+            return res.status(200).json({
+                routes: routes
+            });
+        } else {
+            logger.error("error.occured");
+            return res.status(400).json({
+                message: ["error.occured"]
+            });
+        }
+
+    });
+};
+
+/**
+ * @method delete race
+ * @param req
+ * @param res
+ */
+exports.delete = function(req, res) {
+
+    var route = req.route;
+
+    Route.destroy(route._id, function(err) {
+        if (!err) {
+            return res.sendStatus(200);
+        } else {
+            logger.error(err);
+            return res.status(400).json({
+                message: errorUtils.errors(err.errors)
+            });
+        }
+    });
 };

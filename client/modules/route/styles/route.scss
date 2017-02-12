@@ -1,4 +1,11 @@
 .edit-route {
+    .navbar {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top:0px;
+        z-index: 1000;
+    }
     .inline-stats {
         z-index: 0;
         position: absolute;

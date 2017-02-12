@@ -7,12 +7,29 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 		GmapsApiService,
 		RouteUtilsService,
 		RaceTypeEnum,
-		SegmentService, 
+		SegmentService,
 		ElevationService,
 		MarkerService,
 		PolylineService,
 		underscore) {
 		return {
+			createRouteViewModel: function(route, chartConfig, gmapsConfig) {
+				var routeDataModel;
+
+				if (underscore.isUndefined(route)) {
+					routeDataModel = {
+						type: "Vélo", //TO be defined
+						segments: [],
+						elevationPoints: []
+					};
+				}
+
+				var routeViewModel = new routeBuilder.Route(routeDataModel, angular.copy(chartConfig), angular.copy(gmapsConfig));
+				routeViewModel.setCenter(RouteUtilsService.getCenter({})); //TO be defined
+
+				return routeViewModel;
+
+			},
 			createRoutesViewModel: function(race, chartConfig, gmapsConfig) {
 				var routesViewModel = [];
 
@@ -68,7 +85,7 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 						MarkerService.addMarkerToRoute(route, result.path);
 
 						if (!isFirstPoint) {
-							PolylineService.createPolyline(route,result.path, false, false, false, true, "red", 5);
+							PolylineService.createPolyline(route, result.path, false, false, false, true, "red", 5);
 						}
 						return ElevationService.getElevation(result.segment);
 

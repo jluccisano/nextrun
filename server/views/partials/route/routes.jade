@@ -1,0 +1,34 @@
+div(class="container")
+	h1(translate) Mes Parcours
+	div(class="pull-right")
+		button(class="btn btn-primary" ng-click="addNewRoute()") 
+			span(class="glyphicon glyphicon-plus") 
+			span(translate)  Ajouter
+	table(class="table table-hover")
+		thead
+			tr
+				th(style="width: 40%" translate) Nom
+				th(style="width: 10%" translate) Type
+				th(style="width: 15%" translate) Distance
+				th(style="width: 15%" translate) Dernière mise à jour
+				th(style="width: 5%")
+				th(style="width: 5%")
+				th(style="width: 10%" translate) Publier
+		tbody
+			tr(ng-repeat="route in routes")
+				td 
+					a(ui-sref="view({id: route._id})") {{route.name}}	
+				td {{route.type | translate}}
+				td {{route.distance | translate}}
+				td(ng-if="route.lastUpdate != null")  {{route.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
+				td
+					a(ui-sref="editRoute({id: route._id})" translate)
+						span(class="glyphicon glyphicon-edit")
+				td
+					a(ng-click="openDeleteConfirmation(route)")
+						span(class="glyphicon glyphicon-trash")
+				td
+					input(bs-switch type="checkbox" ng-model="route.published" ng-change="publish(route, route.published)" switch-on-color="success" switch-off-color="default" switch-on-text="On" switch-off-text="Off")
+	div(class="col-lg-8 col-lg-offset-4")
+		pagination(boundary-links="true" ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
+				
