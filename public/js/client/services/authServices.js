@@ -44,8 +44,8 @@ angular.module('nextrunApp')
                 success();
             }).error(error);
         },
-        forgotpassword: function(success, error) {
-            $http.post('/users/forgotpassword').success(function(){
+        forgotpassword: function(user, success, error) {
+            $http.post('/users/forgotpassword', user).success(function(){
                 success();
             }).error(error);
         },

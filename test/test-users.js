@@ -173,7 +173,7 @@ describe('Users', function () {
 
       it('should failed cause email unknown', function (done) {
        superagent.post('http://localhost:3000/users/forgotpassword')
-        .send({ email: 'toto@example.com' })
+        .send({user: { email: 'toto@example.com' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
@@ -185,7 +185,7 @@ describe('Users', function () {
 
       it('should failed cause email cannot be blank', function (done) {
        superagent.post('http://localhost:3000/users/forgotpassword')
-        .send({ email: '' })
+        .send({user: { email: '' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
@@ -197,7 +197,7 @@ describe('Users', function () {
 
       it('should failed cause email is required', function (done) {
        superagent.post('http://localhost:3000/users/forgotpassword')
-        .send({})
+        .send({user: {}})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
@@ -221,7 +221,7 @@ describe('Users', function () {
 
       it('should response success', function (done) {
        superagent.post('http://localhost:3000/users/forgotpassword')
-        .send({ email: 'foobar@example.com' })
+        .send({user:{ email: 'foobar@example.com' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);

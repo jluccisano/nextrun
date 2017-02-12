@@ -80,7 +80,7 @@ exports.login = function (passport, req, res) {
 */
 exports.forgotPassword = function (req, res) {
 
-    User.findOne({ email: req.body.email }, function (err, user) {
+    User.findOne({ email: req.body.user.email }, function (err, user) {
         if (!err && user) { 
           
           //le user existe alors change mot de passe et regenerate new one

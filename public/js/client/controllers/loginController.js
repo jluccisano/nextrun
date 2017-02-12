@@ -63,24 +63,12 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$roo
 			}
 		});
 
-		$scope.items = ['item1', 'item2', 'item3'];
 
 		$scope.open = function () {
 
 		    var modalInstance = $modal.open({
 			      templateUrl: 'partials/forgotpassword',
-			      controller: 'ModalInstanceCtrl',
-			      resolve: {
-			        items: function () {
-			          return $scope.items;
-			        }
-			      }
-			    });
-
-			    modalInstance.result.then(function (selectedItem) {
-			      $scope.selected = selectedItem;
-			    }, function () {
-			      $log.info('Modal dismissed at: ' + new Date());
+			      controller: 'ModalInstanceCtrl'
 			    });
   		};
 
@@ -88,16 +76,28 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$roo
 
 }]);
 
-nextrunControllers.controller('ModalInstanceCtrl', ['$scope','$modalInstance', 'items',
-	function($scope, $modalInstance, items) {
+nextrunControllers.controller('ModalInstanceCtrl', ['$scope','$modalInstance', 'Auth', 'Alert',
+	function($scope, $modalInstance, Auth, Alert) {
 
-		  $scope.items = items;
-		  $scope.selected = {
-		    item: $scope.items[0]
-		  };
+		  $scope.user = {};
 
-		  $scope.ok = function () {
-		    $modalInstance.close($scope.selected.item);
+		  $scope.submit = function () {
+
+		  	Auth.forgotpassword({
+				user: $scope.user
+            },
+            function(res) {
+            	Alert.add("success", "Un email vient de vous être envoyé", 3000);
+            	$modalInstance.close();
+				$location.path('/login');
+
+            },
+            function(error) {
+            	Alert.add("danger", error.message, 3000);
+            	$modalInstance.close();
+            });
+
+		    
 		  };
 
 		  $scope.cancel = function () {
@@ -105,64 +105,3 @@ nextrunControllers.controller('ModalInstanceCtrl', ['$scope','$modalInstance', '
 		  };
   	}
 ]);
-
-/*
-nextrunControllers.controller('ForgotPasswordCtrl', ['$scope','$location','Auth','Alert',
-	function($scope, $location, Auth, Alert) {
-
-		$scope.forgotPassword = function() {
-
-			$scope.email =  {
-					_csrf: jQuery('#_csrf').val(),
-					email: jQuery('#forgotEmail').val() 
-				};
-
-			Auth.forgotpassword({
-					_csrf: jQuery('#_csrf').val(),
-					email: jQuery('#forgotEmail').val() 
-            },
-            function(res) {
-            	Alert.add("info", "Un email vient de vous être envoyé", 3000);
-				$location.path('/login');
-            },
-            function(error) {
-            	Alert.add("danger", error.message[0], 3000);
-            });
-		};
-		
-		jQuery('#forgotPasswordForm').validate({
-			submitHandler: function(form) {
-				$scope.forgotPassword();
-			},
-			rules: {
-				forgotEmail: {
-					required: true,
-					email: true
-				}
-			},
-			highlight: function(element) {
-				jQuery(element).closest('.from-group').addClass('has-error');
-			},
-			unhighlight: function(element) {
-				jQuery(element).closest('.form-group').removeClass('has-error');
-			},
-			messages: {
-				forgotEmail: {
-					required: jQuery.t("validator.required"),
-					email: jQuery.t("validator.email")
-				}
-			},
-			errorElement: 'span',
-			errorClass: 'help-block',
-			errorPlacement: function(error, element) {
-				if(element.parent('.input-group').length) {
-					error.insertAfter(element.parent());
-				} else {
-					error.insertAfter(element);
-				}
-			}
-		});
-		
-	}
-]);
-*/
