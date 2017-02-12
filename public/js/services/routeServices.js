@@ -945,6 +945,13 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				removePointsToElevationChartBySegmentId(route, lastSegment.segmentId);
 			}
 		},
+		showNumericStepper : function() {
+
+				//div(class="tooltip top fade in" title content="10")
+				//div(class="tooltip-arrow")
+				//div(class="tooltip-inner")
+				//	span 10	
+		},
 		convertGPXtoRoute: function($scope, route, gpx) {
 			try {
 
