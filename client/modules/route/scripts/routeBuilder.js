@@ -508,7 +508,7 @@ var routeBuilder = {};
 			return lastLatLng;
 		};
 
-		this._getLastMarker = function() {
+		this.getLastMarker = function() {
 			return this._markers[this._markers.length - 1];
 		};
 
@@ -535,7 +535,7 @@ var routeBuilder = {};
 							new google.maps.Size(16, 16)
 						);
 
-						var lastMarker = this._getLastMarker();
+						var lastMarker = this.getLastMarker();
 						lastMarker.icon = segmentIcon;
 
 					}
