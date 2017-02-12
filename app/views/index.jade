@@ -23,6 +23,10 @@ block body
 	script(src="/js/libs/jquery-2.0.3.js", charset="UTF-8")
 	<!-- endbuild -->
 
+	<!-- build:js js/libs/jquery.validate.min.js -->
+	script(src="/js/libs/jquery.validate", charset="UTF-8")
+	<!-- endbuild -->
+
 	<!-- build:js js/libs/bootstrap.min.js -->
 	script(src="/js/libs/bootstrap.js", charset="UTF-8")
 	<!-- endbuild -->
@@ -35,6 +39,10 @@ block body
 	script(src="/js/libs/angular-route.js", charset="UTF-8")
 	<!-- endbuild -->
 
+	<!-- build:js js/libs/raphael.min.js -->
+	script(src="/js/libs/raphael.js", charset="UTF-8")
+	<!-- endbuild -->
+
 	<!-- build:js js/client/app.min.js -->
 	script(src="/js/client/app.js", charset="UTF-8")
 	<!-- endbuild -->
@@ -43,8 +51,12 @@ block body
 	script(src="/js/client/controllers.js", charset="UTF-8")
 	<!-- endbuild -->
 
+	<!-- build:js js/client/widgets/socialbuttons.min.js -->
+	script(src="/js/client/widgets/socialbuttons.js", charset="UTF-8")
+	<!-- endbuild -->
+
 	include ./layouts/header
 
-	div.container(ng-view)
+	div(ng-view)
 
 	include ./layouts/footer

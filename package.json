@@ -53,6 +53,7 @@
     "blanket": "latest",
     "grunt-jsdoc": "latest",
     "grunt-contrib-jshint": "latest",
-    "nodemon": "latest"
+    "nodemon": "latest",
+    "grunt-contrib-imagemin": "~0.4.0"
   }
 }

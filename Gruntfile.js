@@ -40,10 +40,16 @@ module.exports = function(grunt) {
         files: {
         'tmp/public/js/client/app.js': ['public/js/client/app.js'],
         'tmp/public/js/client/controllers.js': ['public/js/client/controllers.js'],
+        'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
+        'tmp/public/js/client/widgets/map-france.js': ['public/js/client/widgets/map-france.js'],
+        'tmp/public/js/client/widgets/google-analytics.js': ['public/js/client/widgets/google-analytics.js'],
+        'tmp/public/js/client/pages/home.js': ['public/js/client/pages/home.js'],
         'tmp/public/js/libs/bootstrap.js': ['public/js/libs/bootstrap.js'],
         'tmp/public/js/libs/jquery-2.0.3.js': ['public/js/libs/jquery-2.0.3.js'],
+        'tmp/public/js/libs/jquery.validate.js': ['public/js/libs/jquery.validate.js'],
         'tmp/public/js/libs/angular.js': ['public/js/libs/angular.js'],
-        'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js']
+        'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
+        'tmp/public/js/libs/raphaeljs.js': ['public/js/libs/raphaeljs.js']
       },
     },
     },
@@ -55,10 +61,16 @@ module.exports = function(grunt) {
         files: {
           'dist/public/js/client/app.min.js': ['tmp/public/js/client/app.js'],
           'dist/public/js/client/controllers.min.js': ['tmp/public/js/client/controllers.js'],
+          'dist/public/js/client/widgets/socialbuttons.min.js': ['tmp/public/js/client/widgets/socialbuttons.js'],
+          'dist/public/js/client/widgets/map-france.min.js': ['tmp/public/js/client/widgets/map-france.js'],
+          'dist/public/js/client/widgets/google-analytics.min.js': ['tmp/public/js/client/widgets/google-analytics.js'],
+          'dist/public/js/client/pages/home.min.js': ['tmp/public/js/client/pages/home.js'],
           'dist/public/js/libs/bootstrap.min.js': ['tmp/public/js/libs/bootstrap.js'],
           'dist/public/js/libs/jquery-2.0.3.min.js': ['tmp/public/js/libs/jquery-2.0.3.js'],
+          'dist/public/js/libs/jquery.validate.min.js': ['tmp/public/js/libs/jquery.validate.js'],
           'dist/public/js/libs/angular.min.js': ['tmp/public/js/libs/angular.js'],
           'dist/public/js/libs/angular-route.min.js': ['tmp/public/js/libs/angular-route.js'],
+          'dist/public/js/libs/raphaeljs.min.js': ['tmp/public/js/libs/raphaeljs.js'],
         }
       }
     },
@@ -97,12 +109,19 @@ module.exports = function(grunt) {
         eqeqeq: true,
         eqnull: true,
         browser: true,
+        laxbreak : true,
+        validthis: true,
+        debug: true,
+        devel: true,
+        boss: true,
+        expr: true,
+        asi: true,
         globals: {
           jQuery: true
         },
        reporter:'checkstyle' ,
        reporterOutput: 'jshint.xml',
-       ignores: [ 'public/js/libs/**/*.js']
+       ignores: [ 'public/js/libs/**/*.js', 'public/js/client/widgets/*.js']
       },
       gruntfile: {
         src: 'Gruntfile.js'
@@ -118,6 +137,17 @@ module.exports = function(grunt) {
           '-W092': true,
         },
       }
+    },
+    imagemin: {
+      static: {
+        options: {
+          optimizationLevel: 3
+        },
+        files: {
+          'dist/public/img/edit_screenshot.png': 'public/img/edit_screenshot.png',
+          'dist/public/img/show_screenshot.png': 'public/img/show_screenshot.png'
+        }
+      }
     }
   });
 
@@ -132,12 +162,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('usemin-patterns');
   grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
 
   
   grunt.registerTask('test', ['mochaTest']);
 
   grunt.registerTask('checkcode', ['jshint:src' , 'jshint:gruntfile', 'jshint:test']);
 
-  grunt.registerTask('default', ['clean:build','jshint:src','mochaTest','concat','uglify','cssmin','copy','usemin','jsdoc','clean:tmp']);
+  grunt.registerTask('default', ['clean:build','jshint:src','mochaTest','concat','uglify','cssmin','imagemin','copy','usemin','jsdoc','clean:tmp']);
 
 };

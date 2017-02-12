@@ -1,0 +1,34 @@
+<!-- build:js js/client/widgets/map-france.min.js -->
+script(src="/js/client/widgets/map-france.js", charset="UTF-8")
+<!-- endbuild -->
+<!-- build:js js/client/pages/home.min.js -->
+script(src="/js/client/pages/home.js", charset="UTF-8")
+<!-- endbuild -->
+div.container
+	div.carousel.slide(id="carousel" style="width: 100%; height:300px; margin: 0 auto;margin-top:0px")
+		ol.carousel-indicators.custom-carousel-indicators
+			li.active(data-target="#carousel",data-slide-to="0")
+			li(data-target="#carousel",data-slide-to="1")
+			li(data-target="#carousel",data-slide-to="2")
+		div.carousel-inner
+			div.item.active
+				div.row
+					div.col-lg-5.col-lg-offset-1
+						h2 Toutes les épreuves d'endurance rassemblées sur un même site
+						p Triathlon , Trail, VTT, Cyclo...
+					div.col-lg-6
+						div(id="map_france")
+			div.item
+				div.row
+					div.col-lg-5.col-lg-offset-1
+						h2 Trouver et préparer votre course
+						p Analyser le détail du parcours (dénivelé, altitude, distance...)
+					div.col-lg-6
+						img(src="/img/show_screenshot.png", style="width: 500px; height:320px;")
+			div.item
+				div.row
+					div.col-lg-5.col-lg-offset-1
+						h2 Promouvoir votre manifestation
+						p Détailler l'ensemble de votre manifestion (parcours, organisation, nombre de places...)
+					div.col-lg-6
+						img(src="/img/edit_screenshot.png", style="width: 500px; height:320px;")
