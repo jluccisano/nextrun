@@ -171,12 +171,14 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 								longitude: 2.43896484375,
 							},
 							options: {
-								mapTypeId: google.maps.MapTypeId.ROADMAP,
+								mapTypeId: google.maps.MapTypeId.TERRAIN,
 								mapTypeControlOptions: {
 									mapTypeIds: [google.maps.MapTypeId.ROADMAP,
 										google.maps.MapTypeId.HYBRID,
-										google.maps.MapTypeId.SATELLITE
-									]
+										google.maps.MapTypeId.SATELLITE,
+										google.maps.MapTypeId.TERRAIN
+									],
+									style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
 								},
 								disableDoubleClickZoom: true,
 								scrollwheel: true,
@@ -478,12 +480,14 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 						longitude: 2.43896484375,
 					},
 					options: {
-						mapTypeId: google.maps.MapTypeId.ROADMAP,
+						mapTypeId: google.maps.MapTypeId.TERRAIN,
 						mapTypeControlOptions: {
 							mapTypeIds: [google.maps.MapTypeId.ROADMAP,
 								google.maps.MapTypeId.HYBRID,
-								google.maps.MapTypeId.SATELLITE
-							]
+								google.maps.MapTypeId.SATELLITE,
+								google.maps.MapTypeId.TERRAIN
+							],
+							style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
 						},
 						disableDoubleClickZoom: true,
 						scrollwheel: true,
