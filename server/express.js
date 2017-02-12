@@ -25,7 +25,7 @@ module.exports = function(app, express, passport) {
 
     app.set("env", env);
 
-    app.use(favicon(app.config.root + "/client/favicon.ico"));
+    app.use(favicon(app.config.root + "/client/modules/main/images/logo_officiel.png"));
 
     app.use(logger("dev"));
 
