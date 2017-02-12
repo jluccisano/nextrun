@@ -3,7 +3,7 @@ angular.module('nextrunApp')
 
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles
-        , currentUser = $cookieStore.get('user') || { email: '', username: '', role: userRoles.public };
+        , currentUser = $cookieStore.get('user') || { id: '', email: '', username: '', role: userRoles.public };
 
     $cookieStore.remove('user');
 
@@ -39,6 +39,8 @@ angular.module('nextrunApp')
         logout: function(success, error) {
             $http.post('/users/logout').success(function(){
                 changeUser({
+                    id: '',
+                    email: '',
                     username: '',
                     role: userRoles.public
                 });
@@ -73,6 +75,7 @@ angular.module('nextrunApp')
         deleteAccount: function(id, success, error) {
             $http.delete('/users/'+id).success(function(){
                  changeUser({
+                    id: '',
                     email: '',
                     username: '',
                     role: userRoles.public

@@ -111,6 +111,17 @@ RaceSchema.methods = {
 
 RaceSchema.statics = {
 
+
+  findByCriteria: function(options,cb) {
+  
+   var criteria = options.criteria || {}
+
+    this.find(criteria)
+    .limit(options.perPage)
+    .skip(options.perPage * options.page)
+    .exec(cb);
+  },
+
   /**
    * Find races by id
    *

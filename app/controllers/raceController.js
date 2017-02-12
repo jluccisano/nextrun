@@ -15,10 +15,10 @@ var mongoose = require('mongoose')
 exports.load = function(req, res, next, id){  
   Race.load(id, function (err, race) {
     if (err) {
-      return res.json(400,  {message: "error.unknownId"}); 
+      return res.json(400,  {message: ["error.unknownId"]}); 
     } 
     if (!race) {
-      return res.json(400,  {message: "error.unknownId"});
+      return res.json(400,  {message: ["error.unknownId"]});
     }  
     req.race = race;
     next();
@@ -48,6 +48,38 @@ exports.create = function (req, res) {
 };
 
 /**
+ * @method find by user
+ * @param req
+ * @param res
+ * @returns success if OK
+ */
+exports.findByUser = function(req, res) {
+
+  var criteria =  {};
+  var page = 1;
+  var perPage = 10;
+
+  criteria =  {user_id: req.user._id};
+
+  if(req.params.page) {
+    page = req.params.page;
+  }
+
+  var options = {
+    perPage: perPage,
+    page: page - 1,
+    criteria: criteria
+  }
+
+  Race.findByCriteria(options, function(err, races) {
+    if (err) {
+      return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+    } 
+    return res.json(200,{races : races});
+  });
+};
+
+/**
  * @method update race
  * @param req
  * @param res
@@ -70,7 +102,7 @@ exports.update = function (req, res) {
           }
         });
   } else {
-      return res.json(400,  {message: "error.userNotOwner"}); 
+      return res.json(400,  {message: ["error.userNotOwner"]}); 
   }  
 };
 
@@ -90,6 +122,6 @@ exports.delete = function(req,res) {
       }
     });
    } else {
-      return res.json(400,  {message: "error.userNotOwner"}); 
+      return res.json(400,  {message: ["error.userNotOwner"]}); 
    }
 };

@@ -19,9 +19,7 @@ app.get('/defaultsite', function (req, res) {
 });
 
 app.get('/', mainController.index);
-app.get('/partials/:name', mainController.partials);
-app.get('/partials/race/:name', mainController.racePartials);
-app.get('/partials/user/:name', mainController.userPartials);
+app.get('/partials/(:type)?/:name', mainController.partials);
 
 
 /** JSON API **/
@@ -51,6 +49,9 @@ app.post('/users/check/email', auth.ensureAuthorized, userController.checkIfEmai
 
 app.del('/users/:userId', auth.ensureAuthorized, userController.deleteAccount);
 
+app.get('/users/:userId/races/(page/:page)?',  auth.ensureAuthorized, raceController.findByUser);
+
+
 app.param(':userId', userController.load);
 
 /** races **/
@@ -60,6 +61,7 @@ app.post('/races',  auth.ensureAuthorized, userController.checkUser, raceControl
 app.del('/races/:raceId',  auth.ensureAuthorized, userController.checkUser, raceController.delete);
 
 app.put('/races/:raceId',  auth.ensureAuthorized, userController.checkUser, raceController.update);
+
 
 app.param(':raceId', raceController.load);
 

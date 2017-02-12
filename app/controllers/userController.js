@@ -17,10 +17,10 @@ var mongoose = require('mongoose')
 exports.load = function(req, res, next, id){  
   User.load(id, function (err, user) {
     if (err) {
-      return res.json(400,  {message: "error.unknownId"}); 
+      return res.json(400,  {message: ["error.unknownId"]}); 
     } 
     if (!user) {
-      return res.json(400,  {message: "error.unknownId"});
+      return res.json(400,  {message: ["error.unknownId"]});
     }  
     req.user = user;
     next();
@@ -116,7 +116,7 @@ exports.forgotPassword = function (req, res) {
           });
 
         } else {          
-          return res.json(400, {message: "error.invalidEmail"});
+          return res.json(400, {message: ["error.invalidEmail"]});
         } 
     });
 };
@@ -144,7 +144,7 @@ exports.checkIfEmailAlreadyExists = function (req, res) {
         if (!user) {
           return res.json(200);
         }
-        return res.json(400, {message: "error.emailAlreadyExists"}); 
+        return res.json(400, {message: ["error.emailAlreadyExists"]}); 
      });
 }
 
@@ -155,7 +155,9 @@ exports.checkIfEmailAlreadyExists = function (req, res) {
  * @param next
  */
 exports.checkUser = function (req, res, next) {
-    User.findOne({ email: req.body.user.email }, function (err, user) {
+
+    if(req.body.user && req.body.user.email) {
+      User.findOne({ email: req.body.user.email }, function (err, user) {
         if (err) { 
           return res.json(400,  {message: errorUtils.errors(err.errors)}); 
         }
@@ -163,8 +165,11 @@ exports.checkUser = function (req, res, next) {
           req.user = user;
           return next();
         }
-        return res.json(400, {message: "error.unknownUser"}); 
+        return res.json(400, {message: ["error.unknownUser"]}); 
      });
+    } else {
+      return res.json(400, {message: ["error.invalidUser"]}); 
+    }
 }
 
 /**
@@ -221,11 +226,11 @@ exports.updatePassword = function (req, res) {
             return res.json(200);
 
           } else {
-            return res.json(400, { message: "error.occured" });
+            return res.json(400, { message: ["error.occured"] });
           }
         });
      } else {
-        return res.json(400,{ message: 'error.invalidPassword' });
+        return res.json(400,{ message: ['error.invalidPassword'] });
      }
 };
 

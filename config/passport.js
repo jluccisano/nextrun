@@ -26,10 +26,10 @@ module.exports = function (passport, config) {
       User.findOne({ email: email }, function (err, user) {
         if (err) { return done(err); }
         if (!user) {
-          return done(null, false, { message: 'error.invalidEmailOrPassword' });
+          return done(null, false, { message: ['error.invalidEmailOrPassword'] });
         }
         if (!user.authenticate(password)) {
-          return done(null, false, { message: 'error.invalidEmailOrPassword' });
+          return done(null, false, { message: ['error.invalidEmailOrPassword'] });
         }
         return done(null, user);
       });

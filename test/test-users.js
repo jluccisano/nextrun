@@ -147,7 +147,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.invalidEmailOrPassword");
+           res.body.message[0].should.equal("error.invalidEmailOrPassword");
            done();
         });
       });
@@ -201,7 +201,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.invalidEmail");
+           res.body.message[0].should.equal("error.invalidEmail");
            done();
         });
       });
@@ -213,7 +213,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.invalidEmail");
+           res.body.message[0].should.equal("error.invalidEmail");
            done();
         });
       });
@@ -225,7 +225,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.invalidEmail");
+           res.body.message[0].should.equal("error.invalidEmail");
            done();
         });
       });
@@ -378,7 +378,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.unknownId");
+           res.body.message[0].should.equal("error.unknownId");
            done();
         });
       });
@@ -390,7 +390,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.unknownId");
+           res.body.message[0].should.equal("error.unknownId");
            done();
         });
       });
@@ -402,7 +402,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.unknownId");
+           res.body.message[0].should.equal("error.unknownId");
            done();
         });
       });
@@ -414,7 +414,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.unknownId");
+           res.body.message[0].should.equal("error.unknownId");
            done();
         });
       });
@@ -456,7 +456,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.emailAlreadyExists");
+           res.body.message[0].should.equal("error.emailAlreadyExists");
            done();
         });
       });
@@ -533,7 +533,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.unknownId");
+           res.body.message[0].should.equal("error.unknownId");
            done();
         });
       });
@@ -545,7 +545,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.unknownId");
+           res.body.message[0].should.equal("error.unknownId");
            done();
         });
       });
@@ -557,7 +557,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.invalidEmailOrPassword");
+           res.body.message[0].should.equal("error.invalidEmailOrPassword");
            done();
         });
       });
@@ -610,7 +610,7 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.message.should.equal("error.invalidPassword");
+           res.body.message[0].should.equal("error.invalidPassword");
            done();
         });
       });

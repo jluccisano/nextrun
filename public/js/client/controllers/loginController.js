@@ -17,7 +17,9 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$roo
 				$location.path('/myraces');
 			},
 			function(error) {
-				Alert.add("danger", error.message, 3000);
+				_.each(error.message, function(message){
+					Alert.add("danger", message, 3000);
+				});
 			});
 		};
 
@@ -46,7 +48,9 @@ nextrunControllers.controller('ModalInstanceCtrl', ['$scope','$modalInstance', '
 				$location.path('/login');
 			},
 			function(error) {
-				Alert.add("danger", error.message, 3000);
+				_.each(error.message, function(message){
+					Alert.add("danger", message, 3000);
+				});
 				$modalInstance.close();
 			});
 		};

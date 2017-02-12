@@ -24,7 +24,9 @@ nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Au
 				$scope.reset();
 			},
 			function(error) {
-				Alert.add("danger", error.message, 3000);
+				_.each(error.message, function(message){
+					Alert.add("danger", message, 3000);
+				});
 			});
 		};
 
@@ -40,7 +42,9 @@ nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Au
 				$scope.reset();
             },
 			function(error) {
-				Alert.add("danger", error.message, 3000);
+				_.each(error.message, function(message){
+					Alert.add("danger", message, 3000);
+				});
 			});
 		};
 
@@ -52,7 +56,9 @@ nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Au
 					$location.path("/");
 				},
 				function(error) {
-					Alert.add("danger", error.message, 3000);
+					_.each(error.message, function(message){
+						Alert.add("danger", message, 3000);
+					});					
 			});
 		};		
 

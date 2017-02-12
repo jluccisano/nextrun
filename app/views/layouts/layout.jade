@@ -23,6 +23,10 @@ html(ng-app="nextrunApp")
 		link(rel="stylesheet", href="/css/animations.css")
 		<!-- endbuild -->
 
+		<!-- build:css css/datepicker.min.css -->
+		link(rel="stylesheet", href="/css/datepicker.css")
+		<!-- endbuild -->
+
 
 		
 		<!-- build:js js/libs/jquery-2.0.3.min.js -->
@@ -78,6 +82,7 @@ html(ng-app="nextrunApp")
 		script(src="/js/client/services/authServices.js", charset="UTF-8")
 		script(src="/js/client/services/alertServices.js", charset="UTF-8")
 		script(src="/js/client/services/contactServices.js", charset="UTF-8")
+		script(src="/js/client/services/raceServices.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js js/client/directives.min.js -->
@@ -94,14 +99,26 @@ html(ng-app="nextrunApp")
 		script(src="/js/client/controllers/myRacesController.js", charset="UTF-8")
 		script(src="/js/client/controllers/settingsController.js", charset="UTF-8")
 		script(src="/js/client/controllers/headerController.js", charset="UTF-8")
+		script(src="/js/client/controllers/createRaceController.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js js/libs/bootstrap.min.js -->
 		script(src="/js/libs/bootstrap.js", charset="UTF-8")
 		<!-- endbuild -->
 
+		<!-- build:js js/libs/bootstrap.min.js -->
+		script(src="/js/libs/bootstrap-datepicker.js", charset="UTF-8")
+		script(src="/js/libs/bootstrap-datepicker.fr.js", charset="UTF-8")
+		<!-- endbuild -->
+
 		<!-- build:js js/libs/raphael.min.js -->
 		script(src="/js/libs/raphael.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/enums.min.js -->
+		script(src="/js/libs/enum-0.2.5.js", charset="UTF-8")
+		script(src="/js/client/constants/departments.js", charset="UTF-8")
+		script(src="/js/client/constants/typeOfRaces.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js js/client/widgets/socialbuttons.min.js -->

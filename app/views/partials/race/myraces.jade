@@ -4,3 +4,31 @@ div.container(data-ng-controller='MyRacesCtrl')
 		button.btn.btn-primary(ng-click="addNewRace()") 
 			span.glyphicon.glyphicon-plus 
 			span  Ajouter
+	table.table.table-hover
+		thead
+			tr
+				th(style="width: 40%") Nom
+				th(style="width: 10%") Type
+				th(style="width: 15%") Distance type
+				th(style="width: 15%") Dernière mise à jour
+				th(style="width: 10%")
+				th(style="width: 10%")
+
+		tbody()
+			tr(ng-repeat="race in races")
+				td 
+					a(href='/races/{{race._id}}') {{race.name}}
+				td {{race.type}}
+				td {{race.distanceType}}
+				td(ng-if="race.last_update != null")  {{getDate(race.last_update)}}
+				td
+					a.btn.btn-link(ng-href='/races/edit/{{race._id}}') Editer
+				td
+					//a.btn.btn-link(ng-href='/races/delete/{{race._id}}') Supprimer
+					a(data-toggle="modal" data-id="{{race._id}}" title="Supprimer cette manifestation" ng-click="open()") Supprimer
+				td
+					a(data-toggle="modal" data-id="{{race._id}}" title="Publier cette manifestation" href="#publishModal") Publier
+
+	div.col-lg-8.col-lg-offset-4
+		pagination(boundary-links="true" on-select-page="onSelectPage(page)" total-items="totalItems" page="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
+				

@@ -16,7 +16,9 @@ nextrunControllers.controller('HomeCtrl', ['$scope','$http', '$location', 'Conta
 					Alert.add("success", "Merci à bientôt", 3000);
 				},
 				function(error) {
-				Alert.add("danger", error.message[0], 3000);
+					_.each(error.message, function(message){
+						Alert.add("danger", message, 3000);
+					});
 			});
 		};
 }]);

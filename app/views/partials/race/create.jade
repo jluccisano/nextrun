@@ -1,2 +1,37 @@
 div.container(data-ng-controller='CreateRaceCtrl')
-	h1 Ajouter une manifestation
+	h3 Création d'une manifestation
+		div.row
+			div.col-lg-12
+				tabset(horizontal="true" type="navType")
+					tab(heading="Informations")
+						div.row
+							div.col-lg-6.col-lg-offset-2
+								form.form-horizontal(role="form", name="form1", novalidate, style="margin-top:50px")
+									div.form-group(data-ng-class="{'has-error': !form1.name.$pristine && form1.name.$invalid, 'has-success': !form1.name.$invalid && !form1.name.$pristine}")
+										label.control-label(for="name") Nom
+										input.form-control(name="name", id="name", placeholder="ex: Triathlon de Paris",data-ng-model="race.name", required)
+									
+									div.form-group(data-ng-class="{'has-error': !form1.date.$pristine && form1.date.$invalid, 'has-success': !form1.date.$invalid && !form1.date.$pristine}")
+										label.control-label(for="date") Date
+										div.input-group.date(data-date-format="dd MM yyyy", data-language="fr")
+											input.form-control(id="date", data-provide="datepicker", type="text", name='date', placeholder="Date", data-ng-model="race.date", required)
+											span.input-group-addon
+												i.glyphicon.glyphicon-calendar
+									
+									div.form-group(data-ng-class="{'has-error': !form1.department.$pristine && form1.department.$invalid, 'has-success': !form1.department.$invalid && !form1.department.$pristine}")
+										label.control-label(for="department") Département
+										select.form-control(data-ng-model="race.department", name="department", data-ng-options="department.value.name for department in departments", required)
+											option(value="") Sélectionner...
+											
+									div.form-group(data-ng-class="{'has-error': !form1.type.$pristine && form1.type.$invalid, 'has-success': !form1.type.$invalid && !form1.type.$pristine}")
+										label.control-label(for="type") Type
+										select.form-control(data-ng-model="race.type", name="type", data-ng-options="type.value.name for type in types", required, data-ng-change="onChange()")
+											option(value="") Sélectionner...
+
+									div.form-group(data-ng-class="{'has-error': !form1.distanceType.$pristine && form1.distanceType.$invalid, 'has-success': !form1.distanceType.$invalid && !form1.distanceType.$pristine}")
+										label.control-label(for="distanceType") Distance
+										select.form-control(data-ng-model="race.distanceType", name="type", data-ng-options="distance.name for distance in distances", required)
+											option(value="") Sélectionner...
+
+									button.btn.btn-primary(data-ng-click="submit(race)", data-ng-disabled="form1.$invalid") Continuer
+					tab(heading="Confirmation", data-ng-hide="isLoggedIn()")
