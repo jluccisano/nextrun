@@ -2,7 +2,6 @@
  * Module dependencies.
  */
 
-var favicon = require("serve-favicon");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var logger = require("morgan");
@@ -119,7 +118,7 @@ module.exports = function(app, express, passport) {
         app.use(errorHandler());
     }
 
-    if (app.get("env") === "prod") {
+    if ("prod" === app.get("env")) {
         app.use(require("prerender-node").set("prerenderToken", "dzNULbJdLvZWcUyB8Su5"));
     }
 

@@ -24,8 +24,10 @@ exports.storeFile = function(path, originalName, cb) {
 	});
 
 	fs.unlink(path, function(error) {
-		if (error) throw error;
-		logger.info('successfully deleted'+path);
+		if (error) {
+			throw error;
+		}
+		logger.info("successfully deleted"+path);
 	});
 };
 
@@ -39,7 +41,7 @@ exports.getFile = function(id, res, cb) {
 		}
 		var bufs = [];
 		if (exist) {
-			logger.info("File exists")
+			logger.info("File exists");
 
 			var readstream = gridfs.createReadStream({
 				_id: id
@@ -67,7 +69,7 @@ exports.deleteFile = function(id, res, cb) {
 			return errorUtils.handleError(res, error);
 		}
 		if (exist) {
-			logger.info("File exists")
+			logger.info("File exists");
 
 			gridfs.remove(options, function(error) {
 				if (error) {

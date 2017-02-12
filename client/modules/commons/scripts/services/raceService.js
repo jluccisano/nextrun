@@ -51,6 +51,9 @@ angular.module("nextrunApp.commons").factory("RaceService",
             uploadImage: function(id, file) {
                 return HttpUtils.post("/api/races/" + id + "/upload/", file);
             },
+            addResult: function(id, result) {
+                return HttpUtils.post("/api/races/" + id + "/results/new", result);
+            },
             download: function(id) {
                 return HttpUtils.post("/api/races/" + id + "/download/");
             }

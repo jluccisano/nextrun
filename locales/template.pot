@@ -7,6 +7,12 @@ msgstr ""
 msgid "&nbsp; Départ: {{(race.schedule.events[0].date | date:'HH:mm') || 'non communiqué'}}"
 msgstr ""
 
+#: .tmp/generated/views/index.html
+#: .tmp/generated/views/layouts/body.html
+#: .tmp/generated/views/layouts/header.html
+msgid "&nbsp; Se connecter"
+msgstr ""
+
 #: .tmp/generated/views/partials/home/home.html
 msgid ""
 "- Analyser le détail du parcours:\n"
@@ -559,6 +565,10 @@ msgstr ""
 msgid "Fermeture"
 msgstr ""
 
+#: .tmp/generated/views/partials/race/templates/results.html
+msgid "Fichier"
+msgstr ""
+
 #: .tmp/generated/views/index.html
 #: .tmp/generated/views/layouts/body.html
 #: .tmp/generated/views/layouts/footer.html
@@ -946,9 +956,6 @@ msgstr ""
 msgid "S'insrire"
 msgstr ""
 
-#: .tmp/generated/views/index.html
-#: .tmp/generated/views/layouts/body.html
-#: .tmp/generated/views/layouts/header.html
 #: .tmp/generated/views/partials/auth/login.html
 msgid "Se connecter"
 msgstr ""
@@ -992,6 +999,10 @@ msgstr ""
 #: .tmp/generated/views/partials/race/templates/type.html
 #: .tmp/generated/views/partials/route/mapEditor.html
 msgid "Sélectionner..."
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/results.html
+msgid "Titre"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
@@ -1132,6 +1143,10 @@ msgstr ""
 
 #: client/modules/auth/scripts/controllers/settingsController.js
 msgid "Votre profil a bien été modifié"
+msgstr ""
+
+#: client/modules/race/scripts/directives/resultsDirective.js
+msgid "Votre résultat a bien été ajouté"
 msgstr ""
 
 #: client/modules/auth/scripts/controllers/usersController.js

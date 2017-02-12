@@ -87,7 +87,7 @@ UserSchema.path("email").validate(function(email, fn) {
 }, "error.emailAlreadyExists");
 
 
-UserSchema.path("username").validate(function(email, fn) {
+UserSchema.path("username").validate(function(username, fn) {
     var User = mongoose.model("User");
 
     // if you are authenticating by any of the oauth strategies, don"t validate

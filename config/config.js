@@ -13,10 +13,9 @@ module.exports = {
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
         gmail: {
-            user: "contact.nextrun@gmail.com",
-            password: "Henrigolant!"
-        },
-        racesidx: "racesidx_v1"
+            user: "user",
+            password: "pass"
+        }
     },
     dist: {
         logLevel: "info",
@@ -31,8 +30,7 @@ module.exports = {
         gmail: {
             user: "contact.nextrun@gmail.com",
             password: "Henrigolant!"
-        },
-        racesidx: "racesidx_v1"
+        }
     },
     test: {
         logLevel: "info",
@@ -47,8 +45,7 @@ module.exports = {
         gmail: {
             user: "user",
             password: "pass"
-        },
-        racesidx: "racesidx_test_v1"
+        }
     },
     prod: {
         logLevel: "error",
@@ -63,7 +60,6 @@ module.exports = {
         gmail: {
             user: "contact.nextrun@gmail.com",
             password: "Henrigolant!"
-        },
-        racesidx: "racesidx_v1"
+        }
     }
 };

@@ -31,33 +31,6 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 				return routeViewModel;
 
 			},
-			/*createRoutesViewModel: function(routes, chartConfig, gmapsConfig) {
-				var routesViewModel = [];
-
-				if (routes) {
-					var raceType = RaceTypeEnum.getRaceTypeByName(race.type);
-
-					angular.forEach(raceType.routes, function(routeType, index) {
-						var currentRoute;
-
-						if (!angular.isUndefined(routes[index])) {
-							currentRoute = routes[index];
-						} else {
-							currentRoute = {
-								type: routeType,
-								segments: [],
-								elevationPoints: []
-							};
-						}
-						var route = new routeBuilder.Route(currentRoute, angular.copy(chartConfig), angular.copy(gmapsConfig));
-						//route.setCenter(RouteUtilsService.getCenter(race));
-						routesViewModel.push(route);
-
-					});
-					routesViewModel[0].setVisible(true);
-				}
-				return routesViewModel;
-			},*/
 			createNewSegment: function(route, destinationLatlng, modeManu) {
 				var lastLatlngOfLastSegment;
 				var isFirstPoint = false;
@@ -72,10 +45,28 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 
 				if (!modeManu) {
 
+					var travelMode = google.maps.TravelMode.WALKING;
+
+					switch (route.data.type) {
+						case "Vélo":
+							travelMode = google.maps.TravelMode.BICYCLING;
+							break;
+						case "Natation":
+						case "Course à pied":
+						case "Trail":
+						case "Ski de Fond":
+						case "VTT":
+							travelMode = google.maps.TravelMode.WALKING;
+							break;
+						default:
+							travelMode = google.maps.TravelMode.WALKING;
+							break;
+					}
+
 					var directionsRequest = {
 						origin: lastLatlngOfLastSegment,
 						destination: destinationLatlng,
-						travelMode: google.maps.TravelMode.DRIVING,
+						travelMode: travelMode,
 						provideRouteAlternatives: false,
 						avoidHighways: true,
 						avoidTolls: true,

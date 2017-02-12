@@ -1,0 +1,27 @@
+div(ng-form="resultsForm" novalidate)
+	div(class="form-group")
+		label(for="resultTitle" class="control-label" translate) Titre
+		div(class="form-group" ng-class="{'has-error': resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine, 'has-success': !resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine}")
+			input(type="text" id="resultTitle" class="form-control" name="resultTitle" placeholder="{{'Titre' | translate}}" ng-model="result.title" ng-required="true")
+	div(class="form-group")
+		label(for="resultFile" class="control-label" translate) Fichier
+		div(class="form-group" ng-class="{'has-error': resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine, 'has-success': !resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine}")
+			input(type="file" nr-file-select ng-model="result.file" id="resultFile" class="form-control" name="resultFile" placeholder="{{'Fichier' | translate}}" ng-required="true")
+	div(class="form-group")
+		button(class="btn btn-default" ng-disabled="resultsForm.$invalid" ng-click="addResult(result)")
+			span(class="glyphicon glyphicon-plus")
+
+table(class="table table-hover")
+	thead
+		tr
+			th(translate) Titre
+			th(translate) Fichier
+			th
+	tbody
+		tr(ng-repeat="result in results")
+			td {{result.title}}
+			td {{result.filename}}
+			td
+				div(class="form-group")
+					button(type="button" class="btn btn-default btn-lg" ng-click="deleteResult(result)")
+						span(class="glyphicon glyphicon-trash")

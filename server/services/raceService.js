@@ -257,18 +257,18 @@ exports.search = function(criteria, res, cb) {
 				};
 				andArray.push(location);
 			}
-		} else if (criteria.place.place_type  === "administrative_area_level_1") {
+		} else if (criteria.place.place_type === "administrative_area_level_1") {
 			var administrative_area_level_1 = {
 				"place.administrative_area_level_1": criteria.place.administrative_area_level_1
 			};
 			andArray.push(administrative_area_level_1);
 
-		} else if (criteria.place.place_type  === "administrative_area_level_2") {
+		} else if (criteria.place.place_type === "administrative_area_level_2") {
 			var administrative_area_level_2 = {
 				"place.administrative_area_level_2": criteria.place.administrative_area_level_2
 			};
-			andArray.push(country);
-		} else if (criteria.place.place_type  === "country") {
+			andArray.push(administrative_area_level_2);
+		} else if (criteria.place.place_type === "country") {
 			var country = {
 				"place.country": criteria.place.country
 			};
@@ -281,7 +281,7 @@ exports.search = function(criteria, res, cb) {
 			$and: andArray
 		};
 	}
-	
+
 	var projection = {
 		routes: 0
 	};
@@ -465,11 +465,48 @@ exports.downloadPicture = function(race, res, cb) {
 	gridfsService.getFile(race.pictureId, res, function(bufs) {
 		var fbuf = Buffer.concat(bufs);
 		var base64 = (fbuf.toString("base64"));
-		if(base64) {
-			cb("data:image/png;base64,"+base64);
+		if (base64) {
+			cb("data:image/png;base64," + base64);
 		} else {
 			cb();
 		}
-		
+
 	});
+};
+
+exports.addResult = function(race, path, originalName, res, cb) {
+
+	gridfsService.storeFile(path, originalName, function(file) {
+
+		var query = {
+			_id: race._id
+		};
+
+		var update = {
+			$set: {
+				lastUpdate: new Date()
+			},
+			$addToSet: {
+				results: file._id
+			}
+		};
+
+		var options = {
+			upsert: true
+		};
+
+		Race.update(query, update, function(error) {
+			if (error) {
+				errorUtils.handleError(res, error);
+			} else {
+				cb();
+			}
+		}, options);
+	});
+};
+
+
+
+exports.getResult = function() {
+
 };

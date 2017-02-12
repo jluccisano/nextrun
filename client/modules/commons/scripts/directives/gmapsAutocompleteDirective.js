@@ -25,7 +25,7 @@
  *    }
  **/
 angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
-  function(GmapsApiService,DepartmentEnum,RegionEnum) {
+  function(GmapsApiService) {
 
     return {
       restrict: "A",

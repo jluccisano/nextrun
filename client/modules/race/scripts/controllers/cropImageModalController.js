@@ -3,8 +3,7 @@
 angular.module("nextrunApp.race").controller("CropImageModalController", function(
 	$scope,
 	$modalInstance,
-	image,
-	RaceService) {
+	image) {
 
 	$scope.croppedImage = "";
 

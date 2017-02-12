@@ -48,7 +48,7 @@ div(class="container view-race")
                     img(ng-if="image" ng-src="{{image}}" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
                     img(ng-if="!image" ng-src="client/modules/race/images/noImageAvailable.jpg" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
                   div(class="crop-image")
-                    a(class="btn btn-default btn-sm" nr-file-select)
+                    a(class="btn btn-default btn-sm" nr-image-select)
                       i(class="fa fa-pencil-square-o")
                     input(type="file" id="fileInput" ng-hide="true")                    
                 hr
@@ -63,7 +63,7 @@ div(class="container view-race")
 
               a(ng-if="editMode" class="btn btn-link" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate) Ajouter un parcours
               //a(ng-if="editMode" class="btn btn-link" type="button" ng-click="uploadImage()" translate) Ajouter une image
-              //input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)") Ajouter une image
+              //input(type="file" ng-model="$files" nr-image-select="onFileSelect($files, routeViewModel)") Ajouter une image
               //
 
       div(class="bs-docs-section")
@@ -137,7 +137,8 @@ div(class="container view-race")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
               h4(class="panel-title pull-left" translate) Résultats
-            div(class="panel-body") 
+            div(class="panel-body")
+              //nr-results(race="race" edit-mode="editMode")
         div(id="misc" ng-show="selection == 'misc'")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 

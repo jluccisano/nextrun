@@ -25,7 +25,7 @@ exports.getContacts = function(req, res, cb) {
 
 	var criteria = {};
 
-	var projection = {};	
+	var projection = {};
 
 	var limit = 10;
 	var skip = 0;

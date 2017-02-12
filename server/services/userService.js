@@ -1,6 +1,7 @@
 var errorUtils = require("../utils/errorUtils"),
 	mongoose = require("mongoose"),
-	User = mongoose.model("User");
+	User = mongoose.model("User"),
+	email = require("../middlewares/notification");
 
 
 exports.save = function(user, res, cb) {

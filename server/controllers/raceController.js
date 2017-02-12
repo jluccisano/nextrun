@@ -140,14 +140,14 @@ exports.uploadPicture = function(req, res) {
 			response = {};
 
 		if (matches.length !== 3) {
-			return new Error('Invalid input string');
+			return new Error("Invalid input string");
 		}
 
 		response.type = matches[1];
-		response.data = new Buffer(matches[2], 'base64');
+		response.data = new Buffer(matches[2], "base64");
 
 		return response;
-	}
+	};
 
 	//var path = req.files.file.path;
 	var race = req.race;
@@ -155,24 +155,12 @@ exports.uploadPicture = function(req, res) {
 
 	var imageBuffer = decodeBase64Image(req.body.base64);
 
-	fs.writeFile('./.tmp/tmpImg.jpg', imageBuffer.data, function(err) {
+	fs.writeFile("./.tmp/tmpImg.jpg", imageBuffer.data, function(err) {
 		console.log(err);
 	});
 
 
 	raceService.uploadPicture(race, "./.tmp/tmpImg.jpg", "test.jpg", res, function() {
-		res.status(200).json({
-			id: race._id
-		});
-	});
-};
-
-exports.uploadResult = function(req, res) {
-	var path = req.files.file.path;
-	var race = req.race;
-	var originalName = req.files.file.originalname;
-
-	raceService.uploadResult(race, path, originalName, res, function() {
 		res.status(200).json({
 			id: race._id
 		});
@@ -209,5 +197,40 @@ exports.deleteRightsFile = function(req, res, next) {
 	var race = req.race;
 	raceService.deleteRightsFile(race, res, function() {
 		next();
+	});
+};
+
+
+exports.addResult = function(req, res) {
+	var race = req.race;
+	var result = req.body;
+
+	var decodeBase64Image = function(dataString) {
+		var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+			response = {};
+
+		if (matches.length !== 3) {
+			return new Error("Invalid input string");
+		}
+
+		response.type = matches[1];
+		response.data = new Buffer(matches[2], "base64");
+
+		return response;
+	};
+
+	var imageBuffer = decodeBase64Image(result.file);
+
+	var path = "./.tmp/" + result.name;
+	var filename = result.name;
+
+	fs.writeFile(path, imageBuffer.data, function(err) {
+		console.log(err);
+	});
+
+	raceService.addResult(race, path, filename, res, function(race) {
+		res.status(200).json({
+			id: race._id
+		});
 	});
 };

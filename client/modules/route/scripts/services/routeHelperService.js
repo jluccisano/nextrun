@@ -145,7 +145,7 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
             },
             getGmapsConfig: function() {
                 return {
-                    mapTypeId: google.maps.MapTypeId.TERRAIN,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
                     mapTypeControlOptions: {
                         mapTypeIds: [google.maps.MapTypeId.ROADMAP,
                             google.maps.MapTypeId.HYBRID,
