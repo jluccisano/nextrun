@@ -411,5 +411,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		}
 
+		$scope.ready();
+
+
 	}
 ]);

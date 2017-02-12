@@ -16,5 +16,6 @@ angular.module('nextrunApp').controller('HeaderCtrl', ['$scope', '$location', '$
 		$scope.login = function() {
 			$location.path('/login');
 		};
+
 	}
 ]);

@@ -5,5 +5,8 @@ angular.module('nextrunApp').controller('RaceHomeCtrl', ['$scope', '$location',
 		$scope.createNewRace = function() {
 			$location.path('/races/create');
 		}
+
+		$scope.ready();
+
 	}
 ]);

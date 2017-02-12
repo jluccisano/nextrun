@@ -18,5 +18,8 @@ angular.module('nextrunApp').controller('SignupCtrl', ['$scope', '$http', '$loca
 					});
 				});
 		};
+
+		$scope.ready();
+
 	}
 ]);

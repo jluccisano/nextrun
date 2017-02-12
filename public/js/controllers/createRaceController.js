@@ -130,6 +130,8 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 				});
 		};
 
+		$scope.ready();
+
 
 	}
 ]);

@@ -30,7 +30,9 @@ exports.index = function(req, res) {
   console.log(ua);
   if (ua.match(/bot/i)) {
 
-    generateSnapShot(req, res);
+    console.log("new crawler");
+    
+    generateSnapshot(req, res);
 
   } else {
     res.render('index', {
@@ -61,7 +63,7 @@ exports.partials = function(req, res) {
 
 };
 
-var generateSnapShot = function(req, res) {
+var generateSnapshot = function(req, res) {
 
   console.log("generateSnapShot");
 

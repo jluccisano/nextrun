@@ -30,6 +30,9 @@ angular.module('nextrunApp').controller('LoginCtrl', ['$scope', '$http', '$locat
 				controller: 'ModalInstanceCtrl'
 			});
 		};
+
+		$scope.ready();
+
 	}
 ]);
 

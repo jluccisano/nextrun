@@ -71,5 +71,8 @@ angular.module('nextrunApp').controller('SettingsCtrl', ['$scope', '$location', 
 			$scope.newPassword = undefined;
 			$scope.confirmNewPassword = undefined;
 		};
+
+		$scope.ready();
+
 	}
 ]);

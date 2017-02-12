@@ -369,6 +369,9 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 					});
 
 					$scope.loading = false;
+
+					$scope.ready();
+
 				},
 				function(error) {
 

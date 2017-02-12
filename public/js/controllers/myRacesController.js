@@ -11,7 +11,9 @@ angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', '
 
 					$scope.races = response.races;
 
-					$scope.totalItems = $scope.races.length;					
+					$scope.totalItems = $scope.races.length;	
+
+					$scope.ready();				
 
 				},
 				function(error) {
