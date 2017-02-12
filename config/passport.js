@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
   LocalStrategy = require('passport-local').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy,
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  logger = require('./logger');
 
 
 module.exports = function(passport, config) {
@@ -69,6 +70,7 @@ module.exports = function(passport, config) {
           });
           user.save(function(err) {
             if (err) {
+              logger.error(err);
               return done(err, user);
             }
           });

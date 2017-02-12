@@ -1,7 +1,9 @@
 var _ = require('underscore'),
     userRoles = require('../../public/js/routingConfig').userRoles,
     util = require('util'),
-    accessLevels = require('../../public/js/routingConfig').accessLevels;
+    accessLevels = require('../../public/js/routingConfig').accessLevels,
+    logger = require('../logger.js');
+
 
 
 exports.ensureAuthorized = function(req, res, next, routes) {
@@ -17,7 +19,8 @@ exports.ensureAuthorized = function(req, res, next, routes) {
     }).accessLevel || accessLevels.public;
 
     if (!(accessLevel.bitMask & role.bitMask)) {
-        return res.send(403, {message: ['error.accessDenied']});
+        logger.error("error.accessDenied");
+        return res.send(403, {message: ["error.accessDenied"]});
     }
     return next();
 

@@ -1,6 +1,7 @@
 var gm = require('googlemaps'),
 	util = require('util'),
-	raceController = require('../../app/controllers/raceController')
+	raceController = require('../../app/controllers/raceController'),
+	logger = require('../logger.js');
 
 	exports.geocodeAddress = function(req, res, next) {
 
@@ -26,7 +27,7 @@ var gm = require('googlemaps'),
 							raceController.updateLatLng(actualRace._id, latlng);
 						}
 					} else {
-						console.log(err);
+						logger.error(err);
 					}
 				}, false);
 			}

@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
   util = require('util'),
   userRoles = require('../../public/js/routingConfig').userRoles,
   passport =  require('passport'),
-  email = require('../../config/middlewares/notification');
+  email = require('../../config/middlewares/notification'),
+  logger = require('../../config/logger.js');
 
 
 /**
@@ -26,6 +27,7 @@ exports.signup = function(req, res) {
 
   user.save(function(err) {
     if (err) {
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -33,6 +35,7 @@ exports.signup = function(req, res) {
 
     req.logIn(user, function(err) {
       if (err) {
+        logger.error(err);
         return res.json(400, {
           message: errorUtils.errors(err.errors)
         });
@@ -67,14 +70,17 @@ exports.logout = function(req, res) {
 exports.login = function(req, res) {
   passport.authenticate('local', function(err, user, message) {
     if (err) {
+      logger.error(message);
       return res.json(400, message);
     }
     if (!user) {
+      logger.error(message);
       return res.json(400, message);
     }
 
     req.logIn(user, function(err) {
       if (err) {
+        logger.error(err);
         return res.json(400, message);
       }
       return res.json(200, {
@@ -119,6 +125,7 @@ exports.forgotPassword = function(req, res) {
           email.sendEmailPasswordReinitialized(user.email, newPassword);
           return res.json(200);
         } else {
+          logger.error(err);
           return res.json(400, {
             message: errorUtils.errors(err.errors)
           });
@@ -126,6 +133,7 @@ exports.forgotPassword = function(req, res) {
       });
 
     } else {
+      logger.error("error.invalidEmail");
       return res.json(400, {
         message: ["error.invalidEmail"]
       });
@@ -159,6 +167,7 @@ exports.checkIfEmailAlreadyExists = function(req, res) {
     email: req.body.user.email
   }, function(err, user) {
     if (err) {
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -166,6 +175,7 @@ exports.checkIfEmailAlreadyExists = function(req, res) {
     if (!user) {
       return res.json(200);
     }
+    logger.error("error.emailAlreadyExists");
     return res.json(400, {
       message: ["error.emailAlreadyExists"]
     });
@@ -185,6 +195,7 @@ exports.updateProfile = function(req, res) {
 
   user.save(function(err) {
     if (err) {
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -233,14 +244,16 @@ exports.updatePassword = function(req, res) {
         return res.json(200);
 
       } else {
+        logger.error("error.occured");
         return res.json(400, {
           message: ["error.occured"]
         });
       }
     });
   } else {
+    logger.error("error.invalidPassword");
     return res.json(400, {
-      message: ['error.invalidPassword']
+      message: ["error.invalidPassword"]
     });
   }
 };
@@ -257,6 +270,7 @@ exports.deleteAccount = function(req, res) {
       req.logout();
       return res.json(200);
     } else {
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });

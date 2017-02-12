@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
   Contact = mongoose.model('Contact'),
   errorUtils = require('../utils/errorutils'),
-  email = require('../../config/middlewares/notification');
+  email = require('../../config/middlewares/notification'),
+  logger = require('../../config/logger.js');
 
 /**
  * Create
@@ -14,6 +15,7 @@ exports.create = function(req, res) {
       email.sendEmailNewContact(contact);
       return res.json(200);
     } else {
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -33,6 +35,7 @@ exports.feedback = function(req, res) {
     email.sendEmailNewFeedback(feedback);
     return res.json(200);
   } else {
+    logger.error("error.occured");
     return res.json(400, {
       message: ["error.occured"]
     });

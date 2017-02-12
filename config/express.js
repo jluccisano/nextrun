@@ -7,8 +7,10 @@ var express = require('express'),
 	helpers = require('view-helpers'),
 	i18n = require('i18next'),
 	flash = require('connect-flash'),
-	pkg = require('../package.json');
-	
+	pkg = require('../package.json'),
+	winston = require('winston'),
+	expressWinston = require('express-winston');
+
 i18n.init({
 	resGetPath: 'locales/__lng__/__ns__.json',
 	saveMissing: false,
@@ -65,13 +67,19 @@ module.exports = function(app, config, passport) {
 		app.use(express.cookieParser());
 
 		// bodyParser should be above methodOverride
-		app.use(express.bodyParser({limit: '50mb'}));
+		app.use(express.bodyParser({
+			limit: '50mb'
+		}));
 		app.use(express.methodOverride());
 
 		//http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
 		//fix bug limit request entity too large
-		app.use(express.json({limit: '50mb'}));
-		app.use(express.urlencoded({limit: '50mb'}));
+		app.use(express.json({
+			limit: '50mb'
+		}));
+		app.use(express.urlencoded({
+			limit: '50mb'
+		}));
 
 		// express/mongo session storage
 		app.use(express.session({
@@ -116,6 +124,16 @@ module.exports = function(app, config, passport) {
 		app.use(app.router);
 
 		app.use(express.logger('dev'));
+
+		// winston config
+		app.use(expressWinston.errorLogger({
+			transports: [
+				new winston.transports.Console({
+					json: true,
+					colorize: true
+				})
+			]
+		}));
 
 		// assume "not found" in the error msgs
 		// is a 404. this is somewhat silly, but
