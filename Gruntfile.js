@@ -164,7 +164,7 @@ module.exports = function(grunt) {
           // includes files within path and its sub-directories
           {
             expand: true,
-            src: ['app/**', 'config/**','locales/**','public/fonts/**'],
+            src: ['app/**', 'config/**', 'locales/**', 'public/fonts/**'],
             dest: 'dist/'
           },
 
@@ -236,6 +236,23 @@ module.exports = function(grunt) {
           'dist/public/img/logo.png': 'public/img/logo.png'
         }
       }
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.config.js',
+        background: true
+      }
+    },
+    travis: {
+      configFile: 'karma.config.js',
+      singleRun: true,
+      browsers: ['Chrome']
+    },
+    watch: {
+      karma: {
+        files: ['public/js/**/*.js', 'test/client/unit/*.js'],
+        tasks: ['karma:unit:run']
+      }
     }
   });
 
@@ -251,9 +268,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-karma');
 
 
   grunt.registerTask('test', ['mochaTest']);
+
+  grunt.registerTask('karmaTests', ['karma:unit', 'watch']);
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 

@@ -17,7 +17,8 @@ module.exports = function(config) {
             'public/js/libs/angular.js',
             'public/js/libs/angular-*.js',
             'public/js/client/app.js',
-            //'test/lib/angular/angular-mocks.js',
+            'test/lib/angular/angular-mocks.js',
+            'test/lib/jasmine/jasmine.js',
             'test/client/unit/*.js'
         ],
 
@@ -58,13 +59,17 @@ module.exports = function(config) {
         // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
         // - PhantomJS
         // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-        browsers: ['PhantomJS', 'Chrome'],
+        browsers: ['Chrome'],
+
 
         plugins: [
+            'karma-jasmine',
+            'karma-coverage',
             'karma-junit-reporter',
+            'karma-phantomjs-launcher',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-jasmine'
+            'karma-ie-launcher'
         ],
 
         junitReporter: {
