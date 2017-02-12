@@ -1,112 +1,20 @@
 @import 'compass';
-
 @import '../../commons/styles/commons.scss';
 @import '../../auth/styles/auth.scss';
 @import '../../home/styles/home.scss';
 @import '../../race/styles/race.scss';
-
 @import 'header.scss';
 @import 'animations.scss';
 @import 'footer.scss';
 
 
 html {
-
+    body {
+        height: 100%;
+        .view-container {
+            padding-top: 60px;
+            min-height: 100%;
+            height: auto !important;
+        }
+    }
 }
-
-
-//body {
-  //height: 100%;
-  /* The html and body elements cannot have any padding or margin. */
-//}
-
-/* Wrapper for page content to push down footer 
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;*/
-  /* Negative indent footer by its height 
-  margin: 0 auto -60px;*/
-  /* Pad bottom by footer height 
-  padding: 0 0 60px;
-}*/
-
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method.
-
-#wrap > .container {
-  padding: 60px 15px 0;
-}
-.container .credit {
-  margin: 20px 0;
-}*/
-
-/*
-code {
-  font-size: 80%;
-}
-
-*/
-
-/*
-.custom-bs-background {
-  text-shadow: 0 -1px 0 rgba(0,0,0,.15);
-  background-color: #545454;
-  border-color: #463265;
-}
-
-
-.table th, .table td {
-     border-top: none;
- }
-
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: blue;
-}
-
-
-.form-inline  {
-    text-align:center;
-}
-
-.form-inline .form-group {
-    padding-right: 10px;
-}
-
-.center {
-  display:inline-block;
-}
-
-.form-inline .form-group input {
-    width:250px;
-    padding-right: 10px;
-}
-
-
-
-
-
-
-
-
-.modal {
-    display: block;
-}
-*/
-
-
-/** Rich text editor 
-.ta-editor {
-  min-height: 300px;
-  height: auto;
-  overflow: auto;
-  font-family: inherit;
-  font-size: 100%;
-}
-
-.disabled {
-    color: grey;
-}**/
-

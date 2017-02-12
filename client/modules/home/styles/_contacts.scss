@@ -1,5 +1,17 @@
 .contacts {
-	form {
-		margin-top:50px;
-	}
+    padding-bottom: 30px;
+    padding-top: 20px;
+    h3,label {
+        color: white;
+        padding-top: 8px;
+    }
+    .form-inline {
+        text-align: center;
+    }
+    .form-inline .form-group {
+        padding-right: 10px;
+    }
+    .form-inline .form-group input {
+        width: 250px;
+    }
 }

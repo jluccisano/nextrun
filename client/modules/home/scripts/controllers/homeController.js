@@ -34,7 +34,9 @@ angular.module("nextrunApp.home").controller("HomeController",
         };
 
         var initContact = function() {
-            $scope.contact = {};
+            $scope.contact = {
+                type: "Organisateur"
+            };
         };
 
         var initAutocomplete = function() {
@@ -51,14 +53,6 @@ angular.module("nextrunApp.home").controller("HomeController",
         initContact();
 
         $scope.listOfTypes = RaceTypeEnum.values;
-
-        $scope.types = [{
-            name: "Athlète"
-        }, {
-            name: "Organisateur"
-        }, {
-            name: "Autre"
-        }];
 
         $scope.map = {
             isVisible: false,
@@ -159,39 +153,5 @@ angular.module("nextrunApp.home").controller("HomeController",
             }
         };
 
-        $scope.getRaces = function() {
-
-            RaceService.findAll().then(
-                function(response) {
-
-                    if (response.races && response.races.length > 0) {
-
-                        $scope.emptyResults = false;
-
-                        $scope.map.markers = RouteService.convertRacesLocationToMarkers(response.races);
-
-                        _.each($scope.map.markers, function(marker) {
-                            marker.closeClick = function() {
-                                marker.showWindow = false;
-                                $scope.$apply();
-                            };
-                            marker.onClicked = function() {
-                                $scope.onMarkerClicked(marker);
-                            };
-                        });
-                    } else {
-                        $scope.emptyResults = true;
-                    }
-                }).finally(function() {
-                    MetaService.ready(gettextCatalog.getString("Accueil"), $location.path(), gettextCatalog.getString("Accueil"));
-                });
-        };
-
-        $scope.onMarkerClicked = function(marker) {
-            marker.showWindow = true;
-            $scope.$apply();
-        };
-
-        $scope.getRaces();
-
+        MetaService.ready(gettextCatalog.getString("Accueil"), $location.path(), gettextCatalog.getString("Accueil"));
     });
