@@ -63,6 +63,7 @@ div.container
 									  data-ng-checked="departments.indexOf(facet.department.code) > -1"
 									  data-ng-click="toggleDepartmentSelection(facet.department.code)"
 									  data-true-value="true", 
+									  data-ng-disabled="facet.total === 0",
 									  data-ng-false-value="false")
 								div(data-ng-switch-when="true")
 									label <strong>{{facet.department.code}} - {{facet.department.name}}</strong>
@@ -72,6 +73,7 @@ div.container
 									  data-ng-checked="departments.indexOf(facet.department.code) > -1"
 									  data-ng-click="toggleDepartmentSelection(facet.department.code)"
 									  data-ng-true-value="true", 
+									  data-ng-disabled="facet.total === 0",
 									  data-ng-false-value="false")
 					div(data-ng-show="region.name==='Toute la France'")
 						h4 par Région

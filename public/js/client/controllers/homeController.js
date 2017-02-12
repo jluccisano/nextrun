@@ -7,6 +7,11 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 		$scope.contact = {};
 
+		$scope.region = REGIONS.ALL.value;
+		$scope.listOfRegions = REGIONS.enums;
+		$scope.listOfTypes = TYPE_OF_RACES.enums;
+		$scope.currentTypesSelected = [];
+
 
 		$scope.types = [{
 			name: 'Athlète'
@@ -33,11 +38,42 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 			$location.path("/races/home")
 		}
 
+		$scope.getRegion = function(region) {
+			return region.name;
+		};
+
+		$scope.getType = function(type) {
+			return type.i18n;
+		};
+
+		$scope.submit = function() {
+
+			$location.path("/races/search");
+
+			setTimeout(function() {
+				sharedService.prepForBroadcast($scope.fulltext, $scope.region, $scope.currentTypesSelected);
+			}, 1000);
+
+		};
+
+
 
 		$scope.autocomplete = function(query_string) {
+
+			var criteria = {
+				fulltext: (query_string !== undefined) ? query_string : "",
+				region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined
+			};
+
 			return $http({
-				method: 'GET',
-				url: '/api/races/autocomplete/' + query_string
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				method: 'POST',
+				url: '/api/races/autocomplete',
+				data: {
+					criteria: criteria
+				}
 			}).
 			then(function(response) {
 
@@ -76,7 +112,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				$location.path("/races/search");
 
 				setTimeout(function() {
-					sharedService.prepForBroadcast($scope.fulltext);
+					sharedService.prepForBroadcast($scope.fulltext, $scope.region, $scope.currentTypesSelected);
 				}, 1000);
 			}
 		};

@@ -8,8 +8,10 @@ angular.module('nextrunApp')
 
             sharedService.fulltext = '';
 
-            sharedService.prepForBroadcast = function(fulltext) {
+            sharedService.prepForBroadcast = function(fulltext, region, currentTypesSelected) {
                 this.fulltext = fulltext;
+                this.region = region;
+                this.currentTypesSelected = currentTypesSelected;
                 this.broadcastItem();
             };
 

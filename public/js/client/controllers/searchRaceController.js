@@ -29,8 +29,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.dateFacets = [];
 		$scope.typeFacets = [];
 
-		$scope.$on('handleBroadcast', function(fulltext) {
+		$scope.$on('handleBroadcast', function() {
 			$scope.fulltext = sharedService.fulltext;
+			$scope.region = sharedService.region;
+			$scope.currentTypeSelected = sharedService.currentTypesSelected;
 			$scope.search();
 		});
 
@@ -335,6 +337,6 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			return department.department.name + ' (' + department.total + ') ';
 		};
 
-		$scope.search();
+		//$scope.search();
 	}
 ]);

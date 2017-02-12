@@ -171,8 +171,9 @@
 }
 
 .custom-marketing label {
-  color: white;
+  color: black;
 }
+
 
 @media(max-width:767px){
 .carousel {
