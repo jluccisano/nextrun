@@ -24,7 +24,9 @@ nextrunControllers.controller('SignupCtrl', ['$scope','$http', '$location',
 			}).done(function(data) {
 				
 				if (data.response === 'success') {
-					$location.path('/myraces');
+					$scope.$apply(function() {
+						$location.path('/myraces');
+					});
 				} else {
 
 					jQuery('.errors').addClass('in').removeClass('hide');

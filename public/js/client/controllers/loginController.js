@@ -27,7 +27,11 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
 			}).done(function(data) {
 				
 				if (data.response === 'success') {
-					$location.path('/myraces');
+
+					$scope.$apply(function() {
+						$location.path('/myraces');
+					});
+					
 				} else {
 
 					jQuery('.errors').addClass('in').removeClass('hide');
@@ -39,34 +43,6 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
 			});
 		};
 
-		$scope.forgotPassword = function() {
-
-			$scope.email =  {
-					_csrf: jQuery('#_csrf').val(),
-					email: jQuery('#forgotEmail').val() 
-				};
-
-			jQuery.ajax({
-				type: "POST",
-				url: "/users/forgotpassword",
-				data: $scope.email,
-				dataType: 'json'
-			}).done(function(data) {
-				if (data.response === 'success') {
-
-					jQuery('#forgotPasswordModal').modal('hide');
-
-					$location.path('/login');
-				} else {
-
-					jQuery('.errors').addClass('in').removeClass('hide');
-					var error = jQuery.t(data.response);
-					if(error) {
-						jQuery('.errors').text(error);
-					}
-				}
-			});
-		};
 
 		jQuery('#loginForm').validate({
 			submitHandler: function(form) {
@@ -109,12 +85,50 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
 			}
 		});
 
+		
+
+}]);
+
+nextrunControllers.controller('ForgotPasswordCtrl', ['$scope','$location',
+	function($scope, $location) {
+
+		$scope.forgotPassword = function() {
+
+			$scope.email =  {
+					_csrf: jQuery('#_csrf').val(),
+					email: jQuery('#forgotEmail').val() 
+				};
+
+			jQuery.ajax({
+				type: "POST",
+				url: "/users/forgotpassword",
+				data: $scope.email,
+				dataType: 'json'
+			}).done(function(data) {
+				if (data.response === 'success') {
+
+					jQuery('#forgotPasswordModal').modal('hide');
+
+					$scope.$apply(function() {
+						$location.path('/login');
+					});
+				} else {
+
+					jQuery('.errors').addClass('in').removeClass('hide');
+					var error = jQuery.t(data.response);
+					if(error) {
+						jQuery('.errors').text(error);
+					}
+				}
+			});
+		};
+		
 		jQuery('#forgotPasswordForm').validate({
 			submitHandler: function(form) {
 				$scope.forgotPassword();
 			},
 			rules: {
-				email: {
+				forgotEmail: {
 					required: true,
 					email: true
 				}
@@ -141,5 +155,6 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
 				}
 			}
 		});
-
-}]);
+		
+	}
+]);

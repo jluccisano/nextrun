@@ -1,0 +1,55 @@
+div.container(ng-controller="SettingsCtrl")
+	div.row
+		h1 Paramètres
+	div.container.bs-docs-container
+		div.row
+			div.col-lg-4
+				div.bs-sidebar.hidden-print.affix-top(role="complementary" style)
+					ul.nav.bs-sidenav
+						li.active
+							a(href="#changeProfileTab") Profil
+						li
+							a(href="#changePasswordTab") Changer de mot de passe
+						li
+							a(href="#deleteAccountTab") Supprimer mon compte
+			div.col-lg-8(role="main")
+				div.bs-docs-section.active
+					div.page-header
+						h1(id="changeProfileTab") Changement de profil
+					form(id="settingsProfileForm", role="form",  style="margin-top:50px")
+						div.form-group
+							label(for="username") Nom complet
+							input.form-control(type="text", name="username", id="username", placeholder="ex: Nicolas Dupont", value="{{user.username}}")
+						div.form-group
+							label(for="email") Email
+							input.form-control(type="email", name="email", id="email", placeholder="votre@email.com", value="{{user.email}}")
+						div.alert.alert-danger.fade.hide(id="invalidEmail")
+						hr
+						div.form-group.text-right
+							button.btn.btn-primary(id="submitProfileSettings", type="submit") Enregistrer
+				div.bs-docs-section
+					div.page-header	
+						h1(id="changePasswordTab") Changement de mot de passe
+					form(id="settingsPasswordForm", role="form",  style="margin-top:50px")
+						div.form-group
+							label(type="password", for="inputActualPassword") Mot de passe actuel
+							input.form-control(type="password", name="actualPassword",  id="inputActualPassword", placeholder="Mot de passe actuel")
+						div.form-group
+							label(type="password", for="inputNewPassword") Nouveau mot de passe
+							input.form-control(type="password", name="newPassword",  id="inputNewPassword", placeholder="Nouveau mot de passe")
+						div.form-group
+							label(type="password", for="inputPassword") confirmer le mot de passe
+							input.form-control(type="password", name="confirmPassword",  id="inputConfirmNewPassword", placeholder="Confirmer le nouveau mot de passe")
+						div.alert.alert-danger.fade.hide(id="invalidPassword")
+						hr
+						div.form-group.text-right
+							button.btn.btn-primary(id="submitPasswordSettings", type="submit") Enregistrer
+				div.bs-docs-section
+					div.page-header	
+						h1(id="deleteAccountTab") Supprimer mon compte
+					form(role="form",  style="margin-top:50px", action="/users/deleteAccount", method="POST")
+						input(type='hidden', name='_csrf', value="#{csrf_token}")
+						div.bs-callout.bs-callout-danger
+							h4 Important:
+							p Si vous souhaitez supprimer votre compte, tous les parcours que vous avez créé seront supprimés
+						button.btn.btn-danger(type="submit") Supprimer mon compte

@@ -253,3 +253,12 @@ a {
 /** home page **/
 #contactType option { color: black; }
 .empty { color: #999999; }
+
+
+/** Drop down **/
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #3276b1;
+}

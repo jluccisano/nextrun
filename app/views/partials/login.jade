@@ -17,7 +17,7 @@ div.container(ng-controller='LoginCtrl', style="margin-top:50px")
 						button.btn.btn-link(id="signupLink", type="button", ng-click="signup()") S'inscrire
 						hr
 						button.btn.btn-link(id="forgotPasswordLink", type="button", data-toggle="modal", data-target="#forgotPasswordModal") Mot de passe oublié ?
-	div.container
+	div.container(ng-controller='ForgotPasswordCtrl')
 		div.modal.fade(id="forgotPasswordModal",tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
 			div.modal-dialog
 					div.modal-content
@@ -28,8 +28,7 @@ div.container(ng-controller='LoginCtrl', style="margin-top:50px")
 							div.row
 								div.col-lg-10
 									form(id="forgotPasswordForm", role="form", style="margin-top:50px")
-										input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}" ,ng-model="user._csrf")
-										div.form-group
+										div.form-group.test
 											label.control-label(for="forgotEmail") Email
 											input.form-control(type="email", name="forgotEmail", id="forgotEmail", placeholder="Email")
 										div.alert.alert-danger.fade.hide.errors

@@ -6,6 +6,7 @@ nextrunControllers.controller('FooterCtrl', ['$scope','$location','$timeout',
 		$scope.$on( '$routeChangeSuccess', function ( event, current, previous ) {
 			if ( $location.path() === '/' ) {
 
+
 				$timeout(function() {
 					$scope.hideFooter = true;
 				}, 1000);

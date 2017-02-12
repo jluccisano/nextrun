@@ -27,8 +27,24 @@ nextrunApp.config(['$routeProvider',
           templateUrl: 'partials/race/myraces',
           controller: 'MyRacesCtrl'
         }).
+      when('/users/settings', {
+          templateUrl: 'partials/user/settings',
+          controller: 'SettingsCtrl'
+        }).
       otherwise({
           redirectTo: '/'
         });
 
   }]);
+
+nextrunApp.run(['$rootScope','$templateCache', function($rootScope, $templateCache) {
+
+  $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+        //$rootScope.menuUrl = null;
+        //$rootScope.menuUrl = "partials/menu";
+        //$rootScope.refresh();
+        //$templateCache.put('partials/menu');
+
+    });
+
+}]);

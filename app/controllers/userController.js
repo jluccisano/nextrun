@@ -40,12 +40,11 @@ exports.create = function (req, res) {
  * @method Log out session
  * @param req
  * @param res
- * @returns redirect to login
+ * @returns redirect to /
  */
 exports.logout = function (req, res) {
   req.logout();
-  //res.redirect('/login');
-  res.render('partials/login');
+  res.redirect('/');
 };
 
 /**
@@ -108,4 +107,17 @@ exports.forgotPassword = function (req, res) {
           return res.send({response: "error.invalidEmail"});
         } 
     });
+};
+
+/**
+ * @method get user settings
+ * @param req
+ * @param res
+ */
+exports.settings = function (req, res) {
+   return res.send({user:  {
+                        username: req.user.username,
+                        email: req.user.email 
+                      }
+                    });
 };

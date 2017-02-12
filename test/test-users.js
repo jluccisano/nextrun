@@ -237,4 +237,56 @@ describe('Users', function () {
     });
   });
 
+  describe('GET /logout', function () {
+    describe('test logout', function () {
+
+      var currentUser;
+
+      before(function (done) {
+        User.create({ username: "foobar", email:"foobar@example.com", password:"foobar"} , function(err,user){
+          currentUser = user;
+          done();        
+        });
+      });
+
+      it('should save the user to the database', function (done) {
+        User.findOne({ email: 'foobar@example.com' }).exec(function (err, user) {
+          should.not.exist(err);
+          user.should.be.an.instanceOf(User);
+          user.email.should.equal('foobar@example.com');
+          done();
+        });
+      });
+
+      it('Authenticate should response success', function (done) {
+       superagent.post('http://localhost:3000/users/session')
+        .send({ email: 'foobar@example.com', password: 'foobar' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.body.response.should.equal("success");
+           done();
+        });
+      });
+
+      it('should logout successfully', function (done) {
+       superagent.get('http://localhost:3000/logout')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           console.log(res.req);
+           res.redirects.should.eql(["http://localhost:3000/"]);
+           done();
+        });
+      });
+    });
+
+    after(function(done){
+      User.remove({}, function(){
+        done();
+      });
+    });
+  });
+
 });
