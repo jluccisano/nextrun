@@ -124,10 +124,16 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			});
 		};
 
-		$scope.editMoreInformation = function(model) {
-			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal(model.moreInformation);
-			$scope.modalInstance.result.then(function(moreInformation) {
-				model.moreInformation = moreInformation;
+		$scope.editRichTextEditor = function(model, field) {
+			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal(model);
+			
+			$scope.modalInstance.result.then(function(data) {
+				if (!angular.equals(data, model)) {
+					var params = {};
+					params.fields = {};
+					params.fields[field] = data;
+					$scope.update(params);
+				}
 			});
 		};
 
@@ -153,7 +159,11 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				var fields = {};
 				fields["routes.$"] = route.data;
 
+				var query = {};
+				query = {"routes.type": route.type};
+
 				$scope.update({
+					query: query,
 					fields: fields
 				});
 				//}
@@ -186,6 +196,30 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 					$scope.update({
 						fields: {
 							"registration": data
+						}
+					});
+				}
+			});
+		};
+
+		$scope.editSchedule = function() {
+			$scope.modalInstance = $modal.open({
+				templateUrl: "partials/race/editScheduleModal",
+				controller: "EditScheduleModalController",
+				size: "lg",
+				backdrop: false,
+				resolve: {
+					schedule: function() {
+						return $scope.race.schedule;
+					}
+				}
+			});
+
+			$scope.modalInstance.result.then(function(data) {
+				if (!angular.equals(data, $scope.race.schedule)) {
+					$scope.update({
+						fields: {
+							"schedule": data
 						}
 					});
 				}

@@ -1,62 +1,26 @@
-div(class="container")
-	div(class="row")
-		div(class="col-md-6" ng-repeat="option in race.registration.options")
-			div(class="list-group")
-				a(class="list-group-item active")
-					h4(class="list-group-item-heading" translate) option.name
-				a(class="list-group-item") 
-					h2(class="list-group-item-heading" translate) option.price
-				a(class="list-group-item") Date limite: {{option.closingDate}}
-				a(class="list-group-item active")
-					button(class="btn btn-primary" disabled) S'inscrire
+div(class="row")
+	div(class="col-md-8")
+		div(class="list-group")
+			a(class="list-group-item" translate) Date d'ouverture: {{race.registration.openingDate | date: 'dd/MM/yyyy'}}
+			a(class="list-group-item" translate) Date de fermeture: {{race.registration.closingDate | date: 'dd/MM/yyyy'}}
+			a(class="list-group-item" translate) Nombre de dossards: {{race.registration.limitedPlaces}}
+			a(class="list-group-item" translate)
+				h4(class="list-group-item-heading" translate) Choisir une formule
+				div(class="example")
+					h2(class="example-title")
+					div(class="row")
+						div(class="col-md-12")
+							div(class="pricing")
+								ul
+									li(class="unit price-primary" ng-repeat="option in race.registration.options")
+										div(class="price-title")
+											h3 {{option.price}}
+												i(class="fa fa-eur")
+										div(class="price-body")
+											h4 {{option.name}}
+											p
+											ul
+												li(translate) {{option.description}}
+										div(class="price-foot")
+											button(type="button" class="btn btn-primary" translate) S'inscrire
 
-
-
-//div.container
-	div.row
-		div.col-lg-5
-			table.table.table-hover.table-condensed
-				thead
-					tr
-						th(style="width: 50%;" class="rowBasic")
-						th(style="width: 20%;" class="rowBasic")
-				tbody
-					tr
-						td(class="rowBold") {{'Ouverture' | translate}}
-							span :
-						td(ng-if="race.registration.registrationOpeningDate != null" class="rowBasic") {{race.registration.registrationOpeningDate | date:'dd MMMM yyyy'}}
-						td(ng-if="race.registration.registrationOpeningDate == null" class="rowItalic") {{'Non communiqué' | translate}}
-
-					tr
-						td(class="rowBold") {{'Date limite' | translate}}
-							span :
-						td(ng-if="race.registration.registrationLimitDate != null" class="rowBasic") {{race.registration.registrationLimitDate | date:'dd MMMM yyyy'}}
-						td(ng-if="race.registration.registrationLimitDate == null" class="rowItalic") {{'Non communiqué' | translate}}
-
-					tr
-						td(class="rowBold") {{'Site web' | translate}}
-
-						td(ng-if="race.registration.registrationWebSite != null" class="rowBasic") 
-							a(ng-href="http://{{race.registration.registrationWebSite}}" target="_blank")
-								span  {{race.registration.registrationWebSite}}
-						td(ng-if="race.registration.registrationWebSite == null" class="rowItalic") {{'Non communiqué' | translate}}
-
-					tr
-						td(class="rowBold") {{'Adresse' | translate}}
-							span :
-						td(ng-if="race.registration.registrationAddress != null" class="rowBasic") {{race.registration.registrationAddress}}
-						td(ng-if="race.registration.registrationAddress == null" class="rowItalic") {{'Non communiqué' | translate}}
-
-					tr
-						td(class="rowBold") {{'Inscription sur place' | translate}}
-							span :
-						td(ng-if="race.registration.registrationOnPlace != null" class="rowBasic") {{race.registration.registrationOnPlace}}
-						td(ng-if="race.registration.registrationOnPlace == null" class="rowItalic") {{'Non communiqué' | translate}}
-
-					tr
-						td(class="rowBold") {{'Nombre de places disponibles' | translate}}
-							span :
-						td(ng-if="race.registration.numberOfPlacesAvailable != null" class="rowBasic") {{race.registration.numberOfPlacesAvailable}}
-						td(ng-if="race.registration.numberOfPlacesAvailable == null" class="rowItalic") {{'Non communiqué' | translate}}
-
-	div.well(ng-if="race.registration.registrationMoreInformation" ng-bind-html="race.registration.registrationMoreInformation")

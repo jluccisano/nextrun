@@ -177,11 +177,13 @@ exports.updateField = function(req, res) {
 
                     fieldsToUpdate.lastUpdate = new Date();
 
-                    console.log(fieldsToUpdate);
+                    var query = req.body.query;
+                    query._id = race._id;
 
-                    Race.update({
-                        _id: race._id
-                    }, {
+                    console.log(fieldsToUpdate);
+                    console.log(query);
+
+                    Race.update(query , {
                         $set: fieldsToUpdate
                     }, {
                         upsert: true

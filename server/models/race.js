@@ -38,6 +38,12 @@ var OptionSchema = new Schema({
     description: String
 });
 
+var EventSchema = new Schema({
+    name: String,
+    date: Date,
+    description: String
+});
+
 var RaceSchema = new Schema({
     name: String,
     type: String,
@@ -55,42 +61,9 @@ var RaceSchema = new Schema({
         type: Boolean,
         default: false
     },
-    timing: {
-        startingTime: {
-            type: Date,
-            default: null
-        },
-        briefingTime: {
-            type: Date,
-            default: null
-        },
-        checkoutBibTime: {
-            type: Date,
-            default: null
-        },
-        rewardsTime: {
-            type: Date,
-            default: null
-        },
-        moreInformation: {
-            type: String,
-            default: ""
-        }
+    schedule: {
+        events: [EventSchema]
     },
-    /*pricing: {
-        memberFFPrice: {
-            type: Number,
-            default: null
-        },
-        notMemberFFPrice: {
-            type: Number,
-            default: null
-        },
-        moreInformation: {
-            type: String,
-            default: ""
-        }
-    },*/
     registration: {
         options: [OptionSchema],
         openingDate: {
@@ -152,18 +125,8 @@ var RaceSchema = new Schema({
             default: ""
         }
     },
-    rights: {
-        moreInformation: {
-            type: String,
-            default: ""
-        }
-    },
-    miscellaneous: {
-        moreInformation: {
-            type: String,
-            default: ""
-        }
-    },
+    rights: String,
+    misc: String,
     pin: {
         department: {
             code: String,

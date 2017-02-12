@@ -1,0 +1,44 @@
+div(class="modal-header")
+	h3(class="modal-title" translate) Programme
+div(class="modal-body")
+	form(role="form" name="scheduleForm" novalidate)
+		div(class="row")
+			div(class="col-md-12")
+				button(type="button" class="btn btn-default btn-lg" ng-click="addEvent()")
+					span(class="glyphicon glyphicon-plus")
+				table(class="table table-hover")
+					thead
+						tr
+							th(translate) Nom
+							th(translate) Heure
+							th(translate) Description
+					tbody
+						td
+							div(class="form-group")
+								input(type="text" disabled name="name" placeholder="{{'Nom' | translate }}" class="form-control" ng-model="schedule.events[0].name")
+						td
+							div(class="form-group" ng-class="{'has-error': !eventsForm.date.$pristine && eventsForm.date.$invalid, 'has-success': !eventsForm.date.$pristine && !eventsForm.date.$invalid}")
+								input(type="text" name="date" class="form-control" size="5" ng-model="schedule.events[0].date" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-datetime ng-required="true")
+
+						td
+							div(class="form-group" ng-class="{'has-error': !eventsForm.description.$pristine && eventsForm.description.$invalid, 'has-success': !eventsForm.description.$pristine && !eventsForm.description.$invalid}")
+								textarea(name="description" cols="100" rows="4" maxlength="250" placeholder="{{'Description' | translate }}"  class="form-control" ng-model="schedule.events[0].description" ng-required="true")
+						td
+						tr(ng-repeat="event in schedule.events" ng-form="eventsForm" ng-if="$index > 0")
+							td
+								div(class="form-group" ng-class="{'has-error': !eventsForm.name.$pristine && eventsForm.name.$invalid, 'has-success': !eventsForm.name.$pristine && !eventsForm.name.$invalid}")
+									input(type="text" name="name" placeholder="{{'Nom' | translate }}" class="form-control" ng-model="event.name" ng-required="true")
+							td
+								div(class="form-group" ng-class="{'has-error': !eventsForm.date.$pristine && eventsForm.date.$invalid, 'has-success': !eventsForm.date.$pristine && !eventsForm.date.$invalid}")
+									input(type="text" name="date" class="form-control" size="5" ng-model="event.date" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-datetime ng-required="true")
+
+							td
+								div(class="form-group" ng-class="{'has-error': !eventsForm.description.$pristine && eventsForm.description.$invalid, 'has-success': !eventsForm.description.$pristine && !eventsForm.description.$invalid}")
+									textarea(name="description" cols="100" rows="4" maxlength="250" placeholder="{{'Description' | translate }}"  class="form-control" ng-model="event.description" ng-required="true")
+							td
+								div(class="form-group")
+									button(type="button" class="btn btn-default btn-lg" ng-click="deleteEvent(event)")
+										span(class="glyphicon glyphicon-trash")
+div(class="modal-footer")
+	button(class="btn btn-primary" ng-click="submit()" ng-disabled="scheduleForm.$invalid" translate) Valider
+	button(class="btn btn-default" ng-click="cancel()" translate) Annuler

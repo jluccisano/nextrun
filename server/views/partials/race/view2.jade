@@ -11,6 +11,7 @@ div(class="container view-race")
           a(class="list-group-item")
             h4(class="list-group-item-heading" translate) Organisation
             a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="status.open = false;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Inscription
+            a(ng-class="{'active': active === 'schedule'}" bs-scrollspy ng-click="status.open = false;selection = 'schedule';active = 'schedule'" nr-scroll-to="schedule" class="list-group-item") Programme
           a(ng-class="{'active': active === 'rights'}" bs-scrollspy ng-click="status.open = false;selection = 'rights';active = 'rights'" nr-scroll-to="rights" class="list-group-item") 
             h4(class="list-group-item-heading" translate) Règlement
           a(ng-class="{'active': active === 'results'}" bs-scrollspy ng-click="status.open = false;selection = 'results';active = 'results'" nr-scroll-to="results" class="list-group-item")
@@ -40,7 +41,7 @@ div(class="container view-race")
                   div(class="col-md-12")
                     i(class="fa fa-clock-o fa-3")
                     span 
-                    span départ: {{race.timing.startingTime| date:'HH:mm'}}
+                    span Départ: {{race.schedule.events[0].date | date:'HH:mm'}}
               div(class="col-lg-6")
                 div(class="row text-center")
                   div(class="col-md-6")
@@ -63,7 +64,7 @@ div(class="container view-race")
         div(ng-repeat="route in routesViewModel" ng-if="selection === (route.getType() + $index) && route.isVisible()")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left") {{selection}}
+              h4(class="panel-title pull-left") {{route.getType()}}
               div(class="btn-group pull-right")
                 nr-download(ng-if="!editMode" id="content" get-data="exportGPX(route)" class="btn btn-default btn-sm")
                 a(ng-if="editMode" ng-click="editRoute(route, $index)" class="btn btn-default btn-sm")
@@ -96,32 +97,46 @@ div(class="container view-race")
         div(id="registration" ng-show="selection == 'registration'")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left") {{selection}}
+              h4(class="panel-title pull-left" translate) Inscription
               div(class="btn-group pull-right")
                 a(ng-if="editMode" ng-click="editRegistration()" class="btn btn-default btn-sm")
                   i(class="fa fa-pencil-square-o")
             div(class="panel-body")
-              include ./templates/viewPricing2
+              include ./templates/viewRegistration
+        div(id="schedule" ng-show="selection == 'schedule'")
+          div(class="panel panel-default")
+            div(class="panel-heading clearfix") 
+              h4(class="panel-title pull-left" translate) Programme
+              div(class="btn-group pull-right")
+                a(ng-if="editMode" ng-click="editSchedule()" class="btn btn-default btn-sm")
+                  i(class="fa fa-pencil-square-o")
+            div(class="panel-body")
+              include ./templates/viewSchedule
         div(id="rights" ng-show="selection == 'rights'")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left") {{selection}}
+              h4(class="panel-title pull-left" translate) Règlement
+              div(class="btn-group pull-right")
+                a(ng-if="editMode" ng-click="editRichTextEditor(race.rights, 'rights')" class="btn btn-default btn-sm")
+                  i(class="fa fa-pencil-square-o")
             div(class="panel-body")
-              div(ng-if="race.rights.moreInformation" class="well" ng-bind-html="race.rights.moreInformation")
-              div(ng-if="!race.rights.moreInformation" class="well" translate) Non communiqué
+              div(ng-if="race.rights" class="well" ng-bind-html="race.rights")
+              div(ng-if="!race.rights" class="well" translate) Non communiqué
         div(id="results" ng-show="selection == 'results'")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left") {{selection}}
+              h4(class="panel-title pull-left" translate) Résultats
             div(class="panel-body")
-              h1 Résultats
         div(id="misc" ng-show="selection == 'misc'")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left") {{selection}}
+              h4(class="panel-title pull-left" translate) Divers
+              div(class="btn-group pull-right")
+                a(ng-if="editMode" ng-click="editRichTextEditor(race.misc, 'misc')" class="btn btn-default btn-sm")
+                  i(class="fa fa-pencil-square-o")
             div(class="panel-body")
-              div(ng-if="race.miscellaneous.moreInformation" ng-bind-html="race.miscellaneous.moreInformation")
-              div(ng-if="!race.miscellaneous.moreInformation" translate) Non communiqué
+              div(ng-if="race.misc" ng-bind-html="race.misc")
+              div(ng-if="!race.misc" translate) Non communiqué
 
 
 
