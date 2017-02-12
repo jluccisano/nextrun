@@ -1,3 +1,4 @@
+var logger = require('../../config/logger.js');
 /**
  * Formats mongoose errors into proper array
  *
@@ -9,10 +10,10 @@ exports.errors = function(errors) {
   var errs = []
   if (errors instanceof Object) {
     var keys = Object.keys(errors);
-    
+
     // if there is no validation error, just display a generic error
     if (!keys) {
-      console.log(errors);
+      logger.error(errors);
       return ['Oops! There was an error']
     }
 
@@ -20,7 +21,7 @@ exports.errors = function(errors) {
       errs.push(errors[key].message);
     })
   } else {
-    console.log(errors);
+    logger.error(errors);
     return ['Oops! There was an error']
   }
 

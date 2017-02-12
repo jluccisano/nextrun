@@ -11,7 +11,8 @@ var mongoose = require('mongoose'),
   ElasticSearchClient = require('elasticsearchclient'),
   env = process.env.NODE_ENV || 'development',
   config = require('../../config/config')[env],
-  fs = require('fs');
+  fs = require('fs'),
+  logger = require('../../config/logger.js');
 
 var serverOptions = {
   host: 'localhost',
@@ -26,11 +27,13 @@ var elasticSearchClient = new ElasticSearchClient(serverOptions);
 exports.load = function(req, res, next, id) {
   Race.load(id, function(err, race) {
     if (err) {
+      logger.error(err);
       return res.json(400, {
         message: ["error.unknownId"]
       });
     }
     if (!race) {
+      logger.error("error.unknownId");
       return res.json(400, {
         message: ["error.unknownId"]
       });
@@ -54,7 +57,7 @@ exports.create = function(req, res) {
 
   race.save(function(err, race) {
     if (err) {
-      console.log(err);
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -95,6 +98,7 @@ exports.findByUser = function(req, res) {
 
   Race.findByCriteria(options, function(err, races) {
     if (err) {
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -104,6 +108,7 @@ exports.findByUser = function(req, res) {
         races: races
       });
     } else {
+      logger.error("error.occured");
       return res.json(400, {
         message: ["error.occured"]
       });
@@ -152,12 +157,14 @@ exports.update = function(req, res) {
       if (!err) {
         return res.json(200);
       } else {
+        logger.error(err);
         return res.json(400, {
           message: errorUtils.errors(err.errors)
         });
       }
     });
   } else {
+    logger.error("error.userNotOwner");
     return res.json(400, {
       message: ["error.userNotOwner"]
     });
@@ -175,12 +182,14 @@ exports.delete = function(req, res) {
       if (!err) {
         return res.json(200);
       } else {
+        logger.error(err)
         return res.json(400, {
           message: errorUtils.errors(err.errors)
         });
       }
     });
   } else {
+    logger.error("error.userNotOwner");
     return res.json(400, {
       message: ["error.userNotOwner"]
     });
@@ -203,9 +212,9 @@ exports.updateLatLng = function(raceId, latlng) {
     upsert: true
   }, function(err) {
     if (err) {
-      console.log("error during try to update latlng for: " + raceId + " , details: " + err);
+      logger.error("error during try to update latlng for: " + raceId + " , details: " + err);
     } else {
-      console.log("latlng updated for: " + raceId);
+      logger.info("latlng updated for: " + raceId);
     }
   });
 };
@@ -239,6 +248,7 @@ exports.publish = function(req, res) {
       if (!err) {
         return res.json(200);
       } else {
+        logger.error(err);
         return res.json(400, {
           message: errorUtils.errors(err.errors)
         });
@@ -246,6 +256,7 @@ exports.publish = function(req, res) {
     });
 
   } else {
+    logger.error("error.userNotOwner");
     return res.json(400, {
       message: ["error.userNotOwner"]
     });
@@ -265,6 +276,7 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
     if (!err) {
       next();
     } else {
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -282,8 +294,8 @@ exports.search = function(req, res) {
 
   var criteria = req.body.criteria;
 
-  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-    console.log(util.inspect(criteria, true, 7, true));
+  if (logger.isLevelEnabled('debug')) {
+    logger.debug(util.inspect(criteria, true, 7, true));
   }
 
   var operation = {
@@ -355,8 +367,8 @@ exports.search = function(req, res) {
     };
   }
 
-  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-    console.log(util.inspect(query, true, 7, true));
+  if (logger.isLevelEnabled('debug')) {
+    logger.debug(util.inspect(query, true, 7, true));
   }
 
 
@@ -409,9 +421,10 @@ exports.search = function(req, res) {
     operation.filter = filter;
   }
 
-  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-    console.log(util.inspect(filter, true, 7, true));
+  if (logger.isLevelEnabled('debug')) {
+    logger.debug(util.inspect(filter, true, 7, true));
   }
+
 
 
   //facets
@@ -489,9 +502,10 @@ exports.search = function(req, res) {
 
   operation.facets = facets;
 
-  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-    console.log(util.inspect(facets, true, 7, true));
+  if (logger.isLevelEnabled('debug')) {
+    logger.debug(util.inspect(facets, true, 7, true));
   }
+
 
   if (criteria.from) {
     operation.from = criteria.from;
@@ -514,12 +528,14 @@ exports.search = function(req, res) {
 
   elasticSearchClient.search(config.racesidx, 'race', operation)
     .on('data', function(data) {
-      console.log(JSON.parse(data));
+      if (logger.isLevelEnabled('debug')) {
+        logger.debug(JSON.parse(data));
+      }
       res.json(200, JSON.parse(data));
     })
     .on('done', function() {})
     .on('error', function(err) {
-      console.log(err)
+      logger.error(err);
       res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -601,14 +617,14 @@ exports.autocomplete = function(req, res) {
     });
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    console.log(util.inspect(query, true, 7, true));
+  if (logger.isLevelEnabled('debug')) {
+    logger.debug(util.inspect(query, true, 7, true));
   }
 
   elasticSearchClient.search(config.racesidx, 'race', query)
     .on('data', function(data) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(JSON.parse(data));
+      if (logger.isLevelEnabled('debug')) {
+        logger.debug(JSON.parse(data));
       }
       res.json(200, JSON.parse(data));
     })
@@ -616,7 +632,7 @@ exports.autocomplete = function(req, res) {
       //always returns 0 right now
     })
     .on('error', function(err) {
-      console.log(err);
+      logger.error(err);
       res.json(400, {
         message: errorUtils.errors(err.errors)
       });
@@ -635,7 +651,7 @@ exports.findAll = function(req, res) {
 
   Race.findAll(function(err, races) {
     if (err) {
-      console.log(err);
+      logger.error(err);
       return res.json(400, {
         message: errorUtils.errors(err.errors)
       });

@@ -1,5 +1,6 @@
 var userRoles = require('../../public/js/routingConfig').userRoles,
-  phantom = require('node-phantom-simple');
+  phantom = require('node-phantom-simple'),
+  logger = require('../../config/logger.js');
 /*
  * GET home page.
  */
@@ -52,24 +53,24 @@ exports.partials = function(req, res) {
 
 var generateSnapshot = function(req, res) {
 
-  console.log("new crawler request");
+  logger.info("new crawler request");
 
   phantom.create(function(err, ph) {
 
     if (err) {
-      console.log("error during create new phantom instance: " + err);
+      logger.error("error during create new phantom instance: " + err);
     }
 
     ph.createPage(function(err, page) {
 
       if (err) {
-        console.log("error during create new phantom page: " + err);
+        logger.error("error during create new phantom page: " + err);
       }
 
       page.open("http://127.0.0.1:3000" + req.path, function(err, status) {
 
         page.onConsoleMessage = function(msg) {
-          console.log(msg);
+          logger.info(msg);
         };
 
 

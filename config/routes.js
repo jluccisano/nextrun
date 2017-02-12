@@ -11,7 +11,8 @@ var mainController = require('../app/controllers/mainController'),
     _ = require('underscore'),
     util = require('util'),
     gmaps = require('./middlewares/gmaps'),
-    auth = require('./middlewares/authorization');
+    auth = require('./middlewares/authorization'),
+    logger = require('./logger');
 
 
 /** ROUTES **/
@@ -195,6 +196,7 @@ var ensureAuthorized = function(req, res, next) {
     }).accessLevel || accessLevels.public;
 
     if (!(accessLevel.bitMask & role.bitMask)) {
+        logger.error('error.accessDenied');
         return res.send(403, {
             message: ['error.accessDenied']
         });

@@ -3,6 +3,7 @@ var path = require('path'),
 
 module.exports = {
   development: {
+    logLevel: 'info',
     host: 'localhost',
     db: 'mongodb://localhost/nextrun',
     root: rootPath,
@@ -18,6 +19,7 @@ module.exports = {
     racesidx: "racesidx_v1"
   },
   test: {
+    logLevel: 'info',
     host: 'localhost',
     db: 'mongodb://localhost/nextrun_test',
     root: rootPath,
@@ -33,6 +35,7 @@ module.exports = {
     racesidx: "racesidx_test_v1"
   },
   prod: {
+    logLevel: 'error',
     host: '192.95.25.173',
     db: 'mongodb://192.95.25.173:27017/nextrun',
     root: rootPath,
