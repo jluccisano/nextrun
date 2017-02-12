@@ -31,7 +31,7 @@ exports.buildTermFilter = function(field, term) {
 
   if ('undefined' !== typeof(field) && 'undefined' !== typeof(term)) {
 
-    var term_filter = {};
+    term_filter = {};
     term_filter.term = {};
     term_filter.term[field] = term;
    
@@ -46,7 +46,7 @@ exports.buildTermsFilter = function(field, terms) {
 
   if ('undefined' !== typeof(field) && Array.isArray(terms) && terms.length > 0) {
 
-    var terms_filter = {};
+    terms_filter = {};
     terms_filter.terms = {};
     terms_filter.terms[field] = terms;
    
@@ -67,7 +67,7 @@ exports.buildDateRangeFilter = function(field, from, to) {
 
     if (Object.prototype.toString.call(fromDate) === "[object Date]" && Object.prototype.toString.call(toDate) === "[object Date]") {
 
-      var dateRange_filter = {};
+      dateRange_filter = {};
       dateRange_filter.range = {};
 
       dateRange_filter.range[field] = {
@@ -91,7 +91,7 @@ exports.buildDateRangeFacetFilter = function(field, from, to) {
     if (Object.prototype.toString.call(fromDate) === "[object Date]" && Object.prototype.toString.call(toDate) === "[object Date]") {
 
 
-      var dateRange_filter = {};
+      dateRange_filter = {};
       dateRange_filter.range = {};
 
       dateRange_filter.range[field] = {
@@ -109,7 +109,7 @@ exports.buildQueryString = function(field, query) {
 
   if ('undefined' !== typeof(field) && 'undefined' !== typeof(query)) {
 
-    var query_string = {
+    query_string = {
       "query_string": {
         "default_field": field,
         "query": query

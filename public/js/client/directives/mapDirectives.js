@@ -47,7 +47,7 @@ angular.module("google-maps")
                         var map = mapCtrl.getMap();
                         var bounds = new google.maps.LatLngBounds();
                         var pathPoints = [];
-                        var polyline = undefined;
+                        var polyline;
 
                         for (var p = 0; p < scope.polylines.length; p++) {
 

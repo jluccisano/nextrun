@@ -353,8 +353,7 @@ exports.search = function(req, res) {
 
   var filter = {};
   filter.and = [];
-  var type_filter = {};
-  var department_filter = {};
+
 
   var type_filter = elasticsearchUtils.buildTermsFilter("race.type.name", criteria.types);
   if (type_filter) {
@@ -373,7 +372,7 @@ exports.search = function(req, res) {
 
   var departmentOfRegion_filter;
   if (criteria.region) {
-    var departmentOfRegion_filter = elasticsearchUtils.buildTermsFilter("race.department.code", criteria.region.departments);
+    departmentOfRegion_filter = elasticsearchUtils.buildTermsFilter("race.department.code", criteria.region.departments);
     if (departmentOfRegion_filter) {
       filter.and.push(departmentOfRegion_filter);
     }
