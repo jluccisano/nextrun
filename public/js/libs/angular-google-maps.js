@@ -5177,10 +5177,6 @@ angular.module("google-maps")
         function extendMapBounds(map, points) {
             var bounds = new google.maps.LatLngBounds();
 
-            for (var i = 0; i < points.length; i++) {
-                bounds.extend(points.getAt(i));
-            }
-
             map.fitBounds(bounds);
         }
 
@@ -5232,7 +5228,7 @@ angular.module("google-maps")
 
 
 
-                    var pathPoints = convertPathPoints(scope.path);
+                    
 
                     function buildOpts (pathPoints){
 
@@ -5264,10 +5260,10 @@ angular.module("google-maps")
                         return opts;
                     }
 
-                    //var polyline = new google.maps.Polyline(buildOpts(convertPathPoints(scope.path)));
-                    var polyline = new google.maps.Polyline(buildOpts(pathPoints));
+                   var polyline = new google.maps.Polyline(buildOpts(convertPathPoints(scope.path)));
 
                     if (isTrue(attrs.fit)) {
+
                         extendMapBounds(map, pathPoints);
                     }
 
