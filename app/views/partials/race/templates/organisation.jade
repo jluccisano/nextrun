@@ -54,9 +54,6 @@ div.container
 						div.form-group
 							label.col-lg-4.control-label=t("race.moreInformation")
 						div.col-lg-12(text-angular text-angular-name="demo1" data-ng-model="race.timing.timingMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
-							//p(data-ng-bind="textAngularOpts.textAngularEditors.demo1.html")
-							//div.col-lg-12
-							//	textarea.form-control(name="timingMoreInformation" rows="10" data-ng-model="race.timing.timingMoreInformation" placeholder=t("race.timingMoreInformation"))
 		tab(heading=t("race.pricing"))
 			div.row
 				div.col-lg-8
@@ -75,8 +72,7 @@ div.container
 									i.fa.fa-eur
 						div.form-group
 							label.col-lg-4.control-label=t("race.moreInformation")
-							div.col-lg-6
-								textarea.form-control(name="pricingMoreInformation"  data-ng-model="race.pricing.pricingMoreInformation" rows="10", placeholder=t("race.pricingMoreInformation"))
+						div.col-lg-12(text-angular text-angular-name="demo1" data-ng-model="race.pricing.pricingMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
 		tab(heading=t("race.registration"))
 			div.row
 				div.col-lg-12
@@ -127,8 +123,7 @@ div.container
 								span.input-group-addon=t("race.places")
 						div.form-group
 							label.col-lg-4.control-label=t("race.moreInformation")
-							div.col-lg-6
-								textarea.form-control(name="registrationMoreInformation" data-ng-model="race.registration.registrationMoreInformation" rows="10"  placeholder=t("race.registrationMoreInformation"))
+						div.col-lg-8(text-angular text-angular-name="demo1" data-ng-model="race.registration.registrationMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
 		tab(heading=t("race.plan"))
 			div.row
 				div.col-lg-8
@@ -151,15 +146,13 @@ div.container
 								input.form-control(name="city" data-ng-model="race.plan.address.city" placeholder=t("race.city"))
 						div.form-group
 							label.col-lg-4.control-label=t("race.moreInformation")
-							div.col-lg-8
-								textarea.form-control(name="planMoreInformation" rows="10" data-ng-model="race.plan.planMoreInformation" placeholder=t("race.planMoreInformation"))
+						div.col-lg-12(text-angular text-angular-name="demo1" data-ng-model="race.plan.planMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
 		tab(heading=t("race.rights"))
 			div.row
 				div.col-lg-10
 					form.form-horizontal(name="form5" role="form" style="margin-top:10px")
 						div.form-group
-							div.col-lg-12
-								textarea.form-control(name="rightsMoreInformation" data-ng-model="race.rights.rightsMoreInformation" rows="20"  placeholder=t("race.rightsMoreInformation"))
+							div.col-lg-12(text-angular text-angular-name="demo1" data-ng-model="race.rights.rightsMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
 		tab(heading=t("race.therace"))
 			div.row
 				div.col-lg-8
@@ -170,8 +163,7 @@ div.container
 								input.form-control(name="numberOfProvisions" type="number" data-ng-model="race.therace.numberOfProvisions")
 						div.form-group
 							label.col-lg-4.control-label=t("race.moreInformation")
-							div.col-lg-8
-								textarea.form-control(name="theRaceMoreInformation" data-ng-model="race.therace.theRaceMoreInformation" rows="10" placeholder=t("race.theRaceMoreInformation"))
+						div.col-lg-12(text-angular text-angular-name="demo1" data-ng-model="race.therace.theRaceMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
 		tab(heading=t("race.miscellaneous"))
 			div.row
 				div.col-lg-8
@@ -182,5 +174,4 @@ div.container
 								input.form-control(name="organizerWebSite" data-ng-model="race.organizerWebSite" placeholder=t("race.organizerWebSite"))
 						div.form-group
 							label.col-lg-4.control-label=t("race.moreInformation")
-							div.col-lg-8
-								textarea.form-control(name="miscellaneousMoreInformation" data-ng-model="race.miscellaneous.miscellaneousMoreInformation" rows="10" placeholder=t("race.miscellaneousMoreInformation"))
+						div.col-lg-12(text-angular text-angular-name="demo1" data-ng-model="race.miscellaneous.miscellaneousMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")
