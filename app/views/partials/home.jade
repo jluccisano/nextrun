@@ -25,6 +25,10 @@ div.custom-bs-background
 						select(class="multiselect" data-placeholder="Sélectionner..." data-ng-model="currentTypesSelected" data-ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
 					div.col-lg-4
 						button.btn.btn-primary(type="button" data-ng-click="submit()") Rechercher
+			
+			div.row(style="margin-top:10px")
+				google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true"  draggable="true" mark-click="true" style="height: 600px" events="map.events")
+					markers(models="markers" coords="'self'" icon="'icon'")
 			div.container.marketing
 				div.row
 					div.col-lg-4

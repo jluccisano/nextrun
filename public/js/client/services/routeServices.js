@@ -643,6 +643,30 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			});
 			return polylines;
 		},
+		convertRacesLocationToMarkers: function(races) {
+
+			var markers = [];
+
+			_.each(races, function(race, index) {
+
+				var marker;
+
+				if (race.pin) {
+					marker = {
+						id: race._id,
+						latitude: race.pin.location.lat,
+						longitude: race.pin.location.lon,
+						icon: "../../../img/start.png",
+						title: "hello"
+					}
+				}
+
+				if (marker) {
+					markers.push(marker);
+				}
+			});
+			return markers;
+		},
 		rebuildMarkers: function(segments, showSegment) {
 
 			var markers = [];

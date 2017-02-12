@@ -298,6 +298,20 @@ RaceSchema.statics = {
   },
 
   /**
+   * autocomplete
+   *
+   * @param  query string
+   * @param {Function} cb
+   */
+  findAll: function(cb) {
+
+    this.find({}, {
+      name: 1,
+      pin: 1
+    }).exec(cb);
+  },
+
+  /**
    * Seach user by complex aggregation
    *
    * @param {User} user

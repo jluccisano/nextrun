@@ -152,6 +152,12 @@ var routes = [
         middleware: [raceController.autocomplete],
         accessLevel: accessLevels.public
     },
+    {
+        path: '/api/races',
+        httpMethod: 'GET',
+        middleware: [raceController.findAll],
+        accessLevel: accessLevels.public
+    },
 
 
     // redirect all others to the index (HTML5 history)

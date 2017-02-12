@@ -39,6 +39,11 @@ angular.module('nextrunApp')
                     }).success(function(races) {
                         success(races);
                     }).error(error);
+                },
+                findAll: function(success, error) {
+                    $http.get('/api/races/').success(function(races) {
+                        success(races);
+                    }).error(error);
                 }
             };
         }

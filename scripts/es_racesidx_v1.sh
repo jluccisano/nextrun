@@ -59,7 +59,7 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
           }
         }
       },
-      "latlng" : {
+      "pin" : {
         "properties" : {
             "location" : {
                 "type" : "geo_point",

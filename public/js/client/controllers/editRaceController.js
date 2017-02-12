@@ -349,6 +349,8 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 			var place = $scope.gPlace.getPlace();
 
+			$scope.race.pin = {};
+
 			$scope.race.pin.location = {
 				name: place.name,
 				lat: place.geometry.location.lat(),
