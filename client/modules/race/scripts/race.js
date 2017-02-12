@@ -22,7 +22,8 @@ var raceModule = angular.module("nextrunApp.race", [
   "mgcrea.ngStrap.helpers.dimensions",
   "nextrunApp.commons",
   "nextrunApp.route",
-  "ezfb"
+  "ezfb",
+  "jlareau.pnotify",
 ]);
 
 

@@ -10,7 +10,7 @@ describe('ViewRaceController', function() {
 		$modal,
 		mockRaceService,
 		mockRace,
-		mockAlertService,
+		mockNotificationService,
 		mockModal,
 		mockRaceTypeEnum,
 		mockRouteHelperService,
@@ -18,7 +18,7 @@ describe('ViewRaceController', function() {
 
 	beforeEach(module('nextrunApp.race', 'mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _AlertService_, _$modal_, _MockFactory_, _RaceTypeEnum_, _MetaService_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _notificationService_, _$modal_, _MockFactory_, _RaceTypeEnum_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
@@ -26,7 +26,7 @@ describe('ViewRaceController', function() {
 		MetaService = _MetaService_;
 		$timeout = _$timeout_;
 		$modal = _$modal_;
-		mockAlertService = _AlertService_;
+		mockNotificationService = _notificationService_;
 		mockRaceTypeEnum = _RaceTypeEnum_;
 		mockModal = _MockFactory_.getMockModalService();
 		mockRace = _MockFactory_.getMockRace();
@@ -38,7 +38,7 @@ describe('ViewRaceController', function() {
 		$controller('ViewRaceController', {
 			$scope: $scope,
 			RaceService: mockRaceService,
-			AlertService: mockAlertService,
+			notificationService: mockNotificationService,
 			RouteHelperService: mockRouteHelperService
 		});
 	}));

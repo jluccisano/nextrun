@@ -4,7 +4,6 @@ angular.module("nextrunApp").controller("MainController",
 	function(
 		$scope,
 		AuthService,
-		AlertService,
 		SharedMetaService) {
 
 		$scope.$on("handleBroadcastMeta", function() {
@@ -17,9 +16,5 @@ angular.module("nextrunApp").controller("MainController",
 
 		$scope.isLoggedIn = function() {
 			return AuthService.isLoggedIn();
-		};
-
-		$scope.closeAlert = function() {
-			AlertService.closeAlert();
 		};
 	});

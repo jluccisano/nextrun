@@ -6,7 +6,7 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 		$location,
 		$modal,
 		RaceService,
-		AlertService,
+		notificationService,
 		MetaService,
 		gettextCatalog) {
 
@@ -26,8 +26,8 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 						$scope.races = [];
 					}
 				}).finally(function() {
-					MetaService.ready(gettextCatalog.getString("Mes manifestations"), $location.path, gettextCatalog.getString("Mes manifestations"));
-				});
+				MetaService.ready(gettextCatalog.getString("Mes manifestations"), $location.path, gettextCatalog.getString("Mes manifestations"));
+			});
 		};
 
 		$scope.addNewRace = function() {
@@ -37,23 +37,32 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 		$scope.publish = function(race, value) {
 			RaceService.publish(race._id, value).then(
 				function() {
-					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été publiée"), 3000);
+					notificationService.success(gettextCatalog.getString("Votre manifestation a bien été publiée"));
 					$scope.init();
 				});
 		};
 
 		$scope.openDeleteConfirmation = function(race) {
-			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/race/deleteConfirmationModal",
-				controller: "DeleteConfirmationModalController",
-				resolve: {
-					race: function() {
-						return race;
-					}
+			notificationService.notify({
+				title: gettextCatalog.getString("Confirmation requise"),
+				text: gettextCatalog.getString("Etes-vous sûr de vouloir supprimer cette manifestation ?"),
+				hide: false,
+				confirm: {
+					confirm: true
+				},
+				buttons: {
+					closer: false,
+					sticker: false
+				},
+				history: {
+					history: false
 				}
-			});
-			$scope.modalInstance.result.then(function() {
-				$scope.init();
+			}).get().on('pnotify.confirm', function() {
+				RaceService.delete(race._id).then(
+					function() {
+						notificationService.success(gettextCatalog.getString("La manifestation a bien été supprimée"));
+						$scope.init();
+					});
 			});
 		};
 

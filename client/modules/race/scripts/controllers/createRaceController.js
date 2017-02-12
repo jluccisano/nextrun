@@ -6,7 +6,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		$location,
 		$modal,
 		RaceService,
-		AlertService,
+		notificationService,
 		AuthService,
 		RaceTypeEnum,
 		MetaService,
@@ -65,7 +65,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			if ($scope.isLoggedIn()) {
 				RaceService.create(data).then(
 					function(response) {
-						AlertService.add("success", gettextCatalog.getString("La manifestation a bien été créée"), 3000);
+						notificationService.success(gettextCatalog.getString("La manifestation a bien été créée"));
 						$scope.openRedirectionModal(response.data.raceId);
 					});
 			} else {

@@ -8,30 +8,27 @@ angular.module("nextrunApp.race").directive("nrTitle", function() {
     scope: {
       editMode: "=editMode",
       race: "=race"
-    },
-    link: function($scope) {
-
-
     }
   };
 });
 
 angular.module("nextrunApp.race").controller("TitleController",
-  function($scope, $modal, RaceService, gettextCatalog, AlertService, RaceTypeEnum, RouteHelperService, RouteService) {
+  function($scope, $modal, RaceService, gettextCatalog, notificationService, RaceTypeEnum) {
 
     $scope.edit = false;
     $scope.gettextCatalog = gettextCatalog;
     $scope.types = RaceTypeEnum.getValues();
     $scope.tmpRace = {};
 
-    $scope.$watch("race", function(newValue, oldValue) {
+    $scope.$watch("race", function(newValue) {
       if (newValue) {
         angular.copy(newValue, $scope.tmpRace);
       }
     });
 
     $scope.toggleEdit = function() {
-      return $scope.edit = !$scope.edit;
+      $scope.edit = !$scope.edit;
+      return $scope.edit;
     };
 
     $scope.cancel = function() {
@@ -49,7 +46,7 @@ angular.module("nextrunApp.race").controller("TitleController",
         }).then(
           function() {
             $scope.edit = false;
-            AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
+            notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));
           });
       }
     };

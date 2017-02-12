@@ -42,10 +42,19 @@ module.exports = function(config) {
             "client/bower_components/angular-x2js/dist/x2js.min.js",
             "client/bower_components/angular-loading-bar/build/loading-bar.js",
             "client/bower_components/angular-xeditable/dist/js/xeditable.js",
-            "client/bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js",
+            "client/bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js",
+            "client/bower_components/angular-easyfb/angular-easyfb.js",
+            "client/bower_components/pnotify/pnotify.core.js",
+            "client/bower_components/pnotify/pnotify.buttons.js",
+            "client/bower_components/pnotify/pnotify.callbacks.js",
+            "client/bower_components/pnotify/pnotify.confirm.js",
+            "client/bower_components/pnotify/pnotify.desktop.js",
+            "client/bower_components/pnotify/pnotify.history.js",
+            "client/bower_components/pnotify/pnotify.nonblock.js",
+            "client/bower_components/angular-pnotify/src/angular-pnotify.js",
 
             "client/bower_components/angular-mocks/angular-mocks.js",
-            
+
             "client/routingConfig.js",
 
             "client/modules/commons/scripts/commons.js",
@@ -63,7 +72,7 @@ module.exports = function(config) {
             "client/modules/race/scripts/race.js",
             "client/modules/race/scripts/**/*.js",
 
-            "client/modules/route/scripts/route.js",        
+            "client/modules/route/scripts/route.js",
             "client/modules/route/scripts/**/*.js",
 
             "test/client/spec/mock/mockModule.js",

@@ -2,15 +2,15 @@
 
 describe("SignupController", function() {
 
-	var $scope, $controller, $location, $q, mockAuthService, mockAlertService, mockMetaService;
+	var $scope, $controller, $location, $q, mockAuthService, mockNotificationService, mockMetaService;
 
 	beforeEach(module("nextrunApp.auth", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _AlertService_, _$location_, _MockFactory_, _MetaService_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _notificationService_, _$location_, _MockFactory_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
-		mockAlertService = _AlertService_;
+		mockNotificationService = _notificationService_;
 		$location = _$location_;
 		mockMetaService = _MetaService_;
 
@@ -21,7 +21,7 @@ describe("SignupController", function() {
 		$controller("SignupController", {
 			$scope: $scope,
 			AuthService: mockAuthService,
-			AlertService: mockAlertService
+			notificationService: mockNotificationService
 		});
 	}));
 
@@ -29,12 +29,12 @@ describe("SignupController", function() {
 		it("submit with success", function() {
 			mockAuthService.setPromiseResponse(true);
 			spyOn(mockAuthService, "register").and.callThrough();
-			spyOn(mockAlertService, "add");
+			spyOn(mockNotificationService, "success");
 			spyOn($location, "path");
 			$scope.submit();
 			$scope.$apply();
 			expect(mockAuthService.register).toHaveBeenCalled();
-			expect(mockAlertService.add).toHaveBeenCalled();
+			expect(mockNotificationService.success).toHaveBeenCalled();
 			expect($location.path).toHaveBeenCalledWith("/");
 			expect(mockMetaService.ready).toHaveBeenCalled();
 		});

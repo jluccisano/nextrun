@@ -10,13 +10,13 @@ describe("HomeController", function() {
 		mockContactService,
 		mockRaceService,
 		mockContact,
-		mockAlert,
+		mockNotificationService,
 		mockRouteService,
 		mockMetaService;
 
 	beforeEach(module("nextrunApp.home", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _AlertService_, _MockFactory_, _MetaService_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _notificationService_, _MockFactory_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
@@ -24,7 +24,7 @@ describe("HomeController", function() {
 		$timeout = _$timeout_;
 		mockMetaService = _MetaService_;
 
-		mockAlert = _AlertService_;
+		mockNotificationService = _notificationService_;
 		mockContact = _MockFactory_.getMockContact();
 		mockContactService = _MockFactory_.getMockContactService();
 		mockRaceService = _MockFactory_.getMockRaceService();
@@ -35,7 +35,7 @@ describe("HomeController", function() {
 			ContactService: mockContactService,
 			RaceService: mockRaceService,
 			RouteService: mockRouteService,
-			AlertService: mockAlert
+			notificationService: mockNotificationService
 		});
 	}));
 
@@ -44,10 +44,10 @@ describe("HomeController", function() {
 		it("add contact with success", function() {
 			mockContactService.setPromiseResponse(true);
 			spyOn(mockContactService, "addContact").and.callThrough();
-			spyOn(mockAlert, "add");
+			spyOn(mockNotificationService, "success");
 			$scope.submit(mockContact);
 			$scope.$apply();
-			expect(mockAlert.add).toHaveBeenCalled();
+			expect(mockNotificationService.success).toHaveBeenCalled();
 			expect(mockContactService.addContact).toHaveBeenCalledWith(mockContact);
 		});
 	});

@@ -5,7 +5,7 @@ angular.module("nextrunApp.auth").controller("ForgotPasswordModalController",
 		$scope, 
 		$modalInstance,
 		AuthService, 
-		AlertService,
+		notificationService,
 		gettextCatalog) {
 
 		$scope.user = {};
@@ -14,7 +14,7 @@ angular.module("nextrunApp.auth").controller("ForgotPasswordModalController",
 			AuthService.forgotPassword({
 				user: $scope.user
 			}).then(function() {
-				AlertService.add("success", gettextCatalog.getString("Un email vous a été envoyé"), 3000);
+				notificationService.success(gettextCatalog.getString("Un email vous a été envoyé"));
 				$modalInstance.close();
 			}, function() {
 				$modalInstance.close();

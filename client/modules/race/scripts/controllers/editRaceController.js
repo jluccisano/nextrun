@@ -8,7 +8,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$modal,
 		$filter,
 		RaceService,
-		AlertService,
+		notificationService,
 		AuthService,
 		RaceTypeEnum,
 		RouteService,
@@ -19,7 +19,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		RouteUtilsService,
 		RouteHelperService) {
 
-		$scope.selection;
+		$scope.selection ="";
 
 		$scope.isCollapsed = false;
 
@@ -65,26 +65,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.cancel = function() {
 			$location.path("/myraces");
 		};
-
-		/*$scope.submit = function() {
-
-			$scope.race.routes = [];
-
-			_.each($scope.routesViewModel, function(route) {
-				$scope.race.routes.push(route.data);
-			});
-
-			var data = {
-				race: $scope.race
-			};
-
-			RaceService.update($scope.raceId, data).then(
-				function() {
-					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
-					$location.path("/myraces");
-				});
-		};*/
-
 
 		$scope.editRichTextEditor = function(model, field) {
 			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal(model);
@@ -140,7 +120,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			RaceService.update($scope.raceId, data).then(
 				function() {
 					$scope.init();
-					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
+					notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));
 				});
 		};
 

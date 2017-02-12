@@ -9,21 +9,21 @@ describe('SearchRaceController', function() {
 		$timeout,
 		mockRaceService,
 		mockRace,
-		mockAlertService,
+		mockNotificationService,
 		mockSuggestResponse,
 		mockCriteria,
 		RegionEnum;
 
 	beforeEach(module('nextrunApp.race','mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _AlertService_, _RegionEnum_, _MockFactory_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _notificationService_, _RegionEnum_, _MockFactory_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
 		$timeout = _$timeout_;
 		RegionEnum = _RegionEnum_;
-		mockAlertService = _AlertService_;
+		mockNotificationService = _notificationService_;
 		mockSuggestResponse = _MockFactory_.getMockSuggestResponse();
 		mockRaceService = _MockFactory_.getMockRaceService();
 		mockCriteria = _MockFactory_.getMockCriteria();
@@ -31,7 +31,7 @@ describe('SearchRaceController', function() {
 		$controller('SearchRaceController', {
 			$scope: $scope,
 			RaceService: mockRaceService,
-			AlertService: mockAlertService
+			notificationService: mockNotificationService
 		});
 	}));
 

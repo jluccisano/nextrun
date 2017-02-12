@@ -8,15 +8,11 @@ angular.module("nextrunApp.race").directive("nrAddress", function() {
     scope: {
       editMode: "=editMode",
       race: "=race"
-    },
-    link: function($scope) {
-
-
     }
   };
 });
 
-angular.module("nextrunApp.race").controller("AddressController", function($scope, RaceService, gettextCatalog, AlertService) {
+angular.module("nextrunApp.race").controller("AddressController", function($scope, RaceService, gettextCatalog, notificationService) {
 
   $scope.edit = false;
   $scope.tmpRace = {};
@@ -41,14 +37,15 @@ angular.module("nextrunApp.race").controller("AddressController", function($scop
   };
 
   $scope.toggleEdit = function() {
-    return $scope.edit = !$scope.edit;
+    $scope.edit = !$scope.edit;
+    return $scope.edit;
   };
 
-  $scope.$watch("race", function(newValue, oldValue) {
+  $scope.$watch("race", function(newValue) {
     if (newValue) {
       angular.copy(newValue, $scope.tmpRace);
 
-      if(newValue.place && newValue.place.location) {
+      if (newValue.place && newValue.place.location) {
         $scope.placeMarker.coords = newValue.place.location;
       }
     }
@@ -69,7 +66,7 @@ angular.module("nextrunApp.race").controller("AddressController", function($scop
       function() {
         $scope.placeMarker.coords = $scope.race.place.location;
         $scope.edit = false;
-        AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
+        notificationService.success(gettextCatalog.getString("Votre manifestation a bien été mise à jour"));
       });
   };
 });

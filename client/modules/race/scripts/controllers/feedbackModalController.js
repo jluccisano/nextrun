@@ -4,7 +4,7 @@ angular.module("nextrunApp.race").controller("FeedbackModalController",
 	function(
 		$scope,
 		$modalInstance,
-		AlertService,
+		notificationService,
 		ContactService,
 		raceId,
 		gettextCatalog) {
@@ -27,7 +27,7 @@ angular.module("nextrunApp.race").controller("FeedbackModalController",
 			ContactService.sendFeedback({
 				feedback: feedback
 			}).then(function() {
-				AlertService.add("success", gettextCatalog.getString("Votre message nous a bien été transmis"), 3000);
+				notificationService.success(gettextCatalog.getString("Votre message nous a bien été transmis"));
 				$modalInstance.close();
 			});
 		};

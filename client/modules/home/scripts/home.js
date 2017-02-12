@@ -8,7 +8,8 @@ var homeModule = angular.module("nextrunApp.home", [
     "mgcrea.ngStrap.select",
     "gettext",
     "nextrunApp.commons",
-    "nextrunApp.route"
+    "nextrunApp.route",
+    "jlareau.pnotify",
 ]);
 
 homeModule.config(

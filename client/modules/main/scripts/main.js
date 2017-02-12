@@ -10,7 +10,8 @@ var nextrunApp = angular.module("nextrunApp", [
   "nextrunApp.auth",
   "nextrunApp.race",
   "nextrunApp.home",
-  "ezfb"
+  "ezfb",
+  "jlareau.pnotify",
 ]);
 
 nextrunApp.config(
@@ -65,7 +66,7 @@ nextrunApp.run(function(
   $routeParams,
   SharedMetaService,
   AuthService,
-  AlertService,
+  notificationService,
   MetaService,
   gettextCatalog) {
 
@@ -80,7 +81,7 @@ nextrunApp.run(function(
         $location.path("/login");
       }
 
-      AlertService.add(gettextCatalog.getString("danger"), gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"), 3000);
+      notificationService.success(gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"));
     }
   });
 

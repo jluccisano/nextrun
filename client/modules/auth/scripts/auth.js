@@ -8,7 +8,8 @@ var authModule = angular.module("nextrunApp.auth", [
     "mgcrea.ngStrap.helpers.dimensions",
     "mgcrea.ngStrap.scrollspy",
     "mgcrea.ngStrap.affix",
-    "nextrunApp.commons"
+    "nextrunApp.commons",
+    "jlareau.pnotify",
 ]);
 
 authModule.config(

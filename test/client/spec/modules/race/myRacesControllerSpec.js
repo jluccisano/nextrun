@@ -2,18 +2,18 @@
 
 describe('MyRacesController', function() {
 
-	var $scope, $controller, $location, $q, $modal, mockRaceService, mockRace, mockModal, mockAlertService, MetaService;
+	var $scope, $controller, $location, $q, $modal, mockRaceService, mockRace, mockModal, mockNotificationService, MetaService;
 
 	beforeEach(module('nextrunApp.race','mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$modal_, _AlertService_,_MockFactory_,_MetaService_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$modal_, _notificationService_,_MockFactory_,_MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
 		MetaService = _MetaService_;
 		$modal = _$modal_;
-		mockAlertService = _AlertService_;
+		mockNotificationService = _notificationService_;
 		mockRace = _MockFactory_.getMockRace();
 		mockModal = _MockFactory_.getMockModalService();
 		mockRaceService = _MockFactory_.getMockRaceService();
@@ -21,7 +21,7 @@ describe('MyRacesController', function() {
 		$controller('MyRacesController', {
 			$scope: $scope,
 			RaceService: mockRaceService,
-			AlertService: mockAlertService
+			notificationService: mockNotificationService
 		});
 
 	}));
@@ -30,7 +30,7 @@ describe('MyRacesController', function() {
 
 		it('init with success', function() {
 			mockRaceService.setPromiseResponse(true);
-			spyOn(mockAlertService, "add");
+			spyOn(mockNotificationService, "success");
 			spyOn(mockRaceService, "find").and.callThrough();
 			spyOn(MetaService, "ready");
 
@@ -62,26 +62,15 @@ describe('MyRacesController', function() {
 
 			spyOn(mockRaceService, "publish").and.callThrough();
 			spyOn($scope, "init");
-			spyOn(mockAlertService, "add");
+			spyOn(mockNotificationService, "success");
 
 			$scope.publish(mockRace, true);
 			$scope.$apply();
 
 			expect($scope.init).toHaveBeenCalled();
-			expect(mockAlertService.add).toHaveBeenCalled();
+			expect(mockNotificationService.success).toHaveBeenCalled();
 		});
 
-	});
-
-	describe('open modal()', function() {
-		it('should call init when the modal close is called', function() {
-			spyOn($modal, 'open').and.returnValue(mockModal);
-			spyOn($scope, 'init');
-
-			$scope.openDeleteConfirmation(mockRace);
-			$scope.modalInstance.close();
-			expect($scope.init).toHaveBeenCalled();
-		});
 	});
 
 });

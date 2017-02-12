@@ -2,25 +2,25 @@
 
 describe("ForgotPasswordModalController", function() {
 
-	var $scope, $controller, $q, mockAuthService, mockModal , mockAlertService;
+	var $scope, $controller, $q, mockAuthService, mockModal, mockNotificationService;
 
 	beforeEach(module("nextrunApp.auth", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _AlertService_,_MockFactory_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _notificationService_, _MockFactory_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
-		mockAlertService = _AlertService_;
+		mockNotificationService = _notificationService_;
 		mockModal = _MockFactory_.getMockModalService();
 		mockAuthService = _MockFactory_.getMockAuthService();
-		
+
 		spyOn(mockAuthService, "forgotPassword").and.callThrough();
 
 		$controller("ForgotPasswordModalController", {
 			$scope: $scope,
 			$modalInstance: mockModal,
 			AuthService: mockAuthService,
-			AlertService: mockAlertService,
+			notificationService: mockNotificationService,
 		});
 	}));
 
@@ -29,12 +29,12 @@ describe("ForgotPasswordModalController", function() {
 		it("submit with success", function() {
 			mockAuthService.setPromiseResponse(true);
 			spyOn(mockModal, "close");
-			spyOn(mockAlertService, "add");
+			spyOn(mockNotificationService, "success");
 			$scope.submit();
 			$scope.$apply();
 			expect(mockAuthService.forgotPassword).toHaveBeenCalled();
 			expect(mockModal.close).toHaveBeenCalledWith();
-			expect(mockAlertService.add).toHaveBeenCalled();
+			expect(mockNotificationService.success).toHaveBeenCalled();
 		});
 
 		it("submit with error", function() {

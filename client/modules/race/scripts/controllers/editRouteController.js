@@ -12,7 +12,7 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         race,
         RouteUtilsService,
         RouteHelperService,
-        AlertService) {
+        notificationService) {
 
 
         $scope.location = {
@@ -71,7 +71,7 @@ angular.module("nextrunApp.race").controller("EditRouteController",
                 try {
                     routeViewModel = GpxService.convertGPXtoRoute($scope, routeViewModel.getType(), result);
                 } catch (ex) {
-                    AlertService.add("danger", ex.message, 3000);
+                    notificationService.error(ex.message);
                 } finally {
 
                 }

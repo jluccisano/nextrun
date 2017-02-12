@@ -2,17 +2,17 @@
 
 describe("SettingsController", function() {
 
-	var $scope, $controller, $location, $q, mockAuthService, mockAlertService, mockUser, mockMetaService;
+	var $scope, $controller, $location, $q, mockAuthService, mockNotificationService, mockUser, mockMetaService;
 
 	beforeEach(module("nextrunApp.auth", "mockModule"));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _AlertService_, _MockFactory_, _MetaService_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _notificationService_, _MockFactory_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
 		mockMetaService = _MetaService_;
-		mockAlertService = _AlertService_;
+		mockNotificationService = _notificationService_;
 		mockAuthService = _MockFactory_.getMockAuthService();
 		mockUser = _MockFactory_.getMockUser();
 	}));
@@ -24,11 +24,11 @@ describe("SettingsController", function() {
 			$controller("SettingsController", {
 				$scope: $scope,
 				AuthService: mockAuthService,
-				AlertService: mockAlertService
+				notificationService: mockNotificationService
 			});
 
 			spyOn(mockAuthService, "getUserProfile").and.callThrough();
-			spyOn(mockAlertService, "add");
+			spyOn(mockNotificationService, "success");
 			spyOn($scope, "reset");
 
 			$scope.init();
@@ -46,17 +46,17 @@ describe("SettingsController", function() {
 			$controller("SettingsController", {
 				$scope: $scope,
 				AuthService: mockAuthService,
-				AlertService: mockAlertService
+				notificationService: mockNotificationService
 			});
 
 			spyOn($scope, "reset");
-			spyOn(mockAlertService, "add");
+			spyOn(mockNotificationService, "success");
 			spyOn(mockAuthService, "updateProfile").and.callThrough();
 
 			$scope.updateProfile();
 			$scope.$apply();
 
-			expect(mockAlertService.add).toHaveBeenCalled();
+			expect(mockNotificationService.success).toHaveBeenCalled();
 			expect($scope.reset).toHaveBeenCalled();
 		});
 	});
@@ -68,17 +68,17 @@ describe("SettingsController", function() {
 			$controller("SettingsController", {
 				$scope: $scope,
 				AuthService: mockAuthService,
-				AlertService: mockAlertService
+				notificationService: mockNotificationService
 			});
 
 			spyOn($scope, "reset");
-			spyOn(mockAlertService, "add");
+			spyOn(mockNotificationService, "success");
 			spyOn(mockAuthService, "updatePassword").and.callThrough();
 
 			$scope.updatePassword();
 			$scope.$apply();
 
-			expect(mockAlertService.add).toHaveBeenCalled();
+			expect(mockNotificationService.success).toHaveBeenCalled();
 			expect($scope.reset).toHaveBeenCalled();
 		});
 	});
@@ -90,17 +90,17 @@ describe("SettingsController", function() {
 			$controller("SettingsController", {
 				$scope: $scope,
 				AuthService: mockAuthService,
-				AlertService: mockAlertService
+				notificationService: mockNotificationService
 			});
 
-			spyOn(mockAlertService, "add");
+			spyOn(mockNotificationService, "success");
 			spyOn($location, "path");
 			spyOn(mockAuthService, "deleteAccount").and.callThrough();
 
 			$scope.deleteAccount();
 			$scope.$apply();
 
-			expect(mockAlertService.add).toHaveBeenCalled();
+			expect(mockNotificationService.success).toHaveBeenCalled();
 			expect($location.path).toHaveBeenCalledWith("/");
 		});
 	});
@@ -114,7 +114,7 @@ describe("SettingsController", function() {
 			$controller("SettingsController", {
 				$scope: $scope,
 				AuthService: mockAuthService,
-				AlertService: mockAlertService
+				notificationService: mockNotificationService
 			});
 
 			spyOn(angular, "equals").and.returnValue(true);
@@ -132,7 +132,7 @@ describe("SettingsController", function() {
 			$controller("SettingsController", {
 				$scope: $scope,
 				AuthService: mockAuthService,
-				AlertService: mockAlertService
+				notificationService: mockNotificationService
 			});
 
 			expect(mockMetaService.ready).toHaveBeenCalled();

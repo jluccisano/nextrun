@@ -114,7 +114,7 @@ describe('ngAutocomplete Directive', function() {
 
 		});
 
-		it('test with watchEnter = true ', function() {
+		/*it('test with watchEnter = true ', function() {
 
 
 			$scope.options = {
@@ -152,7 +152,7 @@ describe('ngAutocomplete Directive', function() {
 					lon: 1.34
 				}
 			});
-		});
+		});*/
 	});
 
 

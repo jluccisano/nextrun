@@ -5,7 +5,7 @@ angular.module("nextrunApp.home").controller("HomeController",
         $scope,
         $location,
         ContactService,
-        AlertService,
+        notificationService,
         SharedCriteriaService,
         RaceService,
         RouteService,
@@ -92,7 +92,7 @@ angular.module("nextrunApp.home").controller("HomeController",
         $scope.submit = function(contact) {
             ContactService.addContact(contact).then(
                 function() {
-                    AlertService.add("success", gettextCatalog.getString("Le contact a été ajouté"), 3000);
+                    notificationService.success(gettextCatalog.getString("Le contact a été ajouté"));
                 });
         };
 
