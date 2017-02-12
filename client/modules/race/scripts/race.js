@@ -7,10 +7,10 @@ var raceModule = angular.module("nextrunApp.race",
   "AngularGM",
   "textAngular",
   "gettext",
-  "ui.bootstrap",
-  "ui.bootstrap.datetimepicker",
-  "ui.dateTimeInput",
+  "ui.bootstrap.modal",
   "angularMoment",
+  "mgcrea.ngStrap.datepicker",
+  "mgcrea.ngStrap.timepicker",
   "nextrunApp.commons",
   "nextrunApp.route"
 ]);

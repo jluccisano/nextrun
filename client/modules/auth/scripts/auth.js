@@ -1,10 +1,11 @@
 "use strict";
 
 var authModule = angular.module("nextrunApp.auth", [
-    "ui.bootstrap",
+    "ui.bootstrap.modal",
     "ngRoute",
     "ngCookies",
     "gettext",
+    "mgcrea.ngStrap.affix",
     "nextrunApp.commons"
 ]);
 

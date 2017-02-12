@@ -2,7 +2,6 @@
 
 var nextrunApp = angular.module("nextrunApp", [
   "ngRoute",
-  "ui.bootstrap",
   "gettext",
   "nextrunApp.commons",
   "nextrunApp.auth",

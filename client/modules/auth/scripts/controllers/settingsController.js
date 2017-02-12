@@ -4,6 +4,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
     function(
         $scope,
         $location,
+        $anchorScroll,
         AuthService,
         AlertService,
         MetaService,
@@ -58,6 +59,14 @@ angular.module("nextrunApp.auth").controller("SettingsController",
             $scope.actualPassword = undefined;
             $scope.newPassword = undefined;
             $scope.confirmNewPassword = undefined;
+        };
+
+        $scope.scrolltoHref = function(id) {
+            // set the location.hash to the id of
+            // the element you wish to scroll to.
+            $location.hash(id);
+            // call $anchorScroll()
+            $anchorScroll();
         };
 
         $scope.init();

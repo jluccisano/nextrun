@@ -2,16 +2,16 @@ div.container
 	div.container.bs-docs-container
 		div.row
 			div.col-lg-4
-				div.bs-sidebar.hidden-print.affix(role="complementary" data-toggle="affix" data-spy="affix" data-offset-top="255" data-offset-bottom="200")
+				div(role="complementary" class="bs-sidebar hidden-print" data-offset-top="-100" bs-affix)
 					ul.nav.bs-sidenav
-						li.active
-							a(href="#/users/settings/#changeProfileTab" target="_self" translate) Modifier mon profil
-						li
-							a(href="#/users/settings/#changePasswordTab" target="_self" translate) Changer mon mot de passe
-						li
-							a(href="#/users/settings/#deleteAccountTab" target="_self" translate) Supprimer mon compte
+						li.active(bs-scrollspy data-target="#changeProfileTab")
+							a(href="" ng-click="scrolltoHref('changeProfileTab')" translate) Modifier mon profil
+						li(bs-scrollspy data-target="#changePasswordTab")
+							a(href="" ng-click="scrolltoHref('changePasswordTab')" translate) Changer mon mot de passe
+						li(bs-scrollspy data-target="#deleteAccountTab")
+							a(href="" ng-click="scrolltoHref('deleteAccountTab')" translate) Supprimer mon compte
 			div.col-lg-8(role="main")
-				div.bs-docs-section.active
+				div.bs-docs-section
 					div.page-header
 						h1(id="changeProfileTab" translate) Modifier mon profil
 					form(role="form" name="form1" ng-submit="updateProfile()" novalidate)
@@ -58,6 +58,6 @@ div.container
 						h1(id="deleteAccountTab" translate) Supprimer mon compte
 					form(role="form" name="form3" ng-submit="deleteAccount()")
 						div.bs-callout.bs-callout-danger
-							h4 {{'Attention !' | translate}}:
+							h4 {{'Attention !' | translate}}
 							p {{'Si vous souhaitez supprimer votre compte, tous les parcours que vous avez créé seront supprimés' | translate}}
 						button.btn.btn-danger(type="submit" name="submit" translate) Supprimer mon compte
