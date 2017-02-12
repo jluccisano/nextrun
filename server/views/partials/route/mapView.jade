@@ -1,4 +1,8 @@
 div(class="view-route")
+	nav(class="navbar navbar-default" role="navigation")
+		div(class="collapse navbar-collapse")
+			form(class="navbar-form navbar-right" ng-if="isLoggedIn()")
+				button(class="btn btn-primary" ng-click="createNewWorkout()" translate) Créer une sortie 
 	include map
 	div(class="inline-stats")
 		a(ng-click="isCollapsed = !isCollapsed")

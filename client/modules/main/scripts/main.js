@@ -10,6 +10,7 @@ var nextrunApp = angular.module("nextrunApp", [
   "nextrunApp.auth",
   "nextrunApp.race",
   "nextrunApp.home",
+  "nextrunApp.workout",
   "ezfb",
   "jlareau.pnotify",
   "services.config",

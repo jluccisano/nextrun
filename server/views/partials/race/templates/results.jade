@@ -3,6 +3,12 @@ div(ng-form="resultsForm" novalidate)
 		label(for="resultTitle" class="control-label" translate) Titre
 		div(class="form-group" ng-class="{'has-error': resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine, 'has-success': !resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine}")
 			input(type="text" id="resultTitle" class="form-control" name="resultTitle" placeholder="{{'Titre' | translate}}" ng-model="result.name" ng-required="true")
+	
+	div(class="form-group")
+		label(for="year" class="control-label" translate) Année
+		div(class="form-group" ng-class="{'has-error': resultsForm.year.$invalid && !resultsForm.year.$pristine, 'has-success': !resultsForm.year.$invalid && !resultsForm.year.$pristine}")
+			select(class="form-control" ng-model="result.year" name="year" ng-options="year for year in years")
+
 	div(class="form-group")
 		label(for="resultFile" class="control-label" translate) Fichier
 		div(class="form-group" ng-class="{'has-error': resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine, 'has-success': !resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine}")

@@ -2,5 +2,5 @@
 
 angular.module("services.config", [])
 	.constant("configuration", {
-		debugEnabled: "false"
+		debugEnabled: "true"
 	});

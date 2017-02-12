@@ -145,7 +145,6 @@ RaceSchema.pre("save", function(next, req, callback) {
     var userConnected = req.user;
     this.userId = userConnected._id;
 
-    //move to model
     if (this.place.location.latitude && this.place.location.longitude) {
         this.place.geo = {
             type: "Point",

@@ -202,32 +202,16 @@ angular.module("nextrunApp.race").controller("EditRaceController",
             $scope.isCollapsed = true;
         };
 
-        $scope.uploadImage = function() {
-            RaceService.uploadImage();
-        };
+        $scope.getFile = function(file) {
 
-        // App variable to show the uploaded response
-        $scope.responseData = undefined;
+            var image = {
+                base64: file
+            };
 
-        // Global handler for onSuccess that adds the uploaded files to the list
-        $scope.onGlobalSuccess = function(response) {
-            $scope.responseData = response.data;
-        };
-
-
-        // Valid mimetypes
-        $scope.acceptTypes = "image/*";
-        $scope.uploadData = {
-            myformdata: "hello world"
-        };
-
-        $scope.onUpload = function() {};
-
-        $scope.onError = function(response) {
-            $scope.responseData = response.data;
-        };
-        $scope.onComplete = function(response) {
-            $scope.responseData = response.data;
+            RaceService.uploadImage($scope.race._id, image).then(function() {
+                notificationService.success(gettextCatalog.getString("Votre image a bien été mise à jour"));
+                $scope.init();
+            });
         };
 
         $scope.init();

@@ -4,7 +4,7 @@ div(class="container login")
 			div(class="panel panel-default")
 				div(class="panel-heading") <strong>{{ 'Se connecter' | translate }}</strong>
 				div(class="panel-body")
-					div(ng-form="loginForm")
+					div(ng-form="loginForm" novalidate)
 						div(class="form-group" ng-class="{'has-error': !loginForm.email.$pristine && loginForm.email.$invalid, 'has-success': !loginForm.email.$invalid && !loginForm.email.$pristine}")
 							label(class="control-label" for="email" translate) Email
 							input(class="form-control" id="email" name="email" type="email" placeholder="{{'Email' | translate }}" ng-model="user.email")

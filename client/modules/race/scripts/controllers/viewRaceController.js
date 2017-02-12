@@ -49,7 +49,13 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
             RaceService.retrieve($scope.raceId).then(function(response) {
                 $scope.race = response.data;
                 $scope.retrieveRoutes();
-            }).finally(function() {
+
+                RaceService.download($scope.race._id).then(function(response) {
+                    $scope.image = response.data;
+                });
+
+            }).
+            finally(function() {
                 MetaService.ready($scope.race.name, $scope.generateRaceDescription());
             });
         };
@@ -82,6 +88,10 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
             $scope.selection = route.getType() + index;
             $scope.active = route.getType() + index;
             $scope.isCollapsed = true;
+        };
+
+        $scope.openLightboxModal = function($index) {
+            Lightbox.openModal($scope.images, $index);
         };
 
         $scope.init();

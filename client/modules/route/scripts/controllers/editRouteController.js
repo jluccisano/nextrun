@@ -17,7 +17,6 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         gettextCatalog,
         race,
         RaceService,
-        AuthService,
         RouteTypeEnum) {
 
         $scope.isCollapsed = false;

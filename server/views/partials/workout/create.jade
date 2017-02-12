@@ -1,0 +1,33 @@
+div(class="container create-workout")
+	div(class="row")
+		div(class="col-md-4 col-md-offset-4")
+			h3(class="text-center" translate) Création d'une sortie
+			form(class="form-horizontal" role="form" name="workoutEventForm" novalidate)
+				
+				div(class="form-group" ng-class="{'has-error':!workoutEventForm.name.$pristine && workoutEventForm.name.$invalid, 'has-success': !workoutEventForm.name.$invalid && !workoutEventForm.name.$pristine}")
+					label(class="control-label") {{'Titre de la sortie' | translate}}
+					input(class="form-control" type="text" name="name" placeholder="{{'ex: Sortie entre amis' | translate}}" ng-model="workout.name" ng-required="true")
+
+				div(class="form-group" ng-class="{'has-error':!workoutEventForm.guests.$pristine && workoutEventForm.guests.$invalid, 'has-success': !workoutEventForm.guests.$invalid && !workoutEventForm.guests.$pristine}")
+					label(class="control-label") {{'Inviter' | translate}}
+					//textarea(class="form-control" name="guests" ng-model="guests" ng-list="&#10;" ng-trim="false" placeholder="{{'martin@gmail.com,jean@yahoo.com' | translate}}" ng-required="true")
+					nr-email-list(class="form-control" ng-model="guests" name="guests" placeholder="{{'martin@gmail.com,jean@yahoo.com' | translate}}" ng-required="true")
+
+				div(class="form-group" ng-class="{'has-error':!workoutEventForm.date.$pristine && workoutEventForm.date.$invalid, 'has-success': !workoutEventForm.date.$invalid && !workoutEventForm.date.$pristine}")
+					label(class="control-label") {{'Date' | translate}}
+					input(type="text" class="form-control" ng-model="workout.date" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date" ng-required="true")
+
+				div(class="form-group" ng-class="{'has-error':!workoutEventForm.time.$pristine && workoutEventForm.time.$invalid, 'has-success': !workoutEventForm.time.$invalid && !workoutEventForm.time.$pristine}")
+					label(class="control-label") {{'Heure' | translate}}
+					input(type="text" class="form-control" name="time" size="8" ng-model="workout.time" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="1" data-arrow-behavior="picker" ng-required="true")
+			
+				div(class="form-group" ng-class="{'has-error': !workoutEventForm.place.$pristine && workoutEventForm.place.$error.validLocation && workoutEventForm.place.$invalid, 'has-success': !workoutEventForm.place.$error.validLocation && workoutEventForm.place.$valid  && !workoutEventForm.place.$pristine}")
+					label(class="control-label") {{'Adresse du départ' | translate}}
+					input(class="form-control" type="text" name="place" placeholder="{{'ex: 3 rue de la République 31000 Toulouse' | translate}}" ng-model="workout.place.name" nr-has-location gmaps-autocomplete options="options" details="workout.place" ng-required="true")
+
+				div(class="form-group")
+					label(class="control-label") Description
+					textarea(class="form-control" name="description" ng-model="workout.description" rows="3" placeholder="{{'description' | translate}}" ng-required="true")
+									
+				button(class="btn btn-primary pull-right" ng-click="submit()" ng-disabled="workoutEventForm.$invalid" translate) Continuer
+			

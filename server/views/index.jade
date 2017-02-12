@@ -111,6 +111,19 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
         script(src="/modules/route/scripts/controllers/routesController.js")
         <!-- endbuild -->
 
+        <!-- build:js(client) client/scripts/workout.min.js -->
+        script(src="/modules/workout/scripts/workout.js")
+
+        script(src="/modules/workout/scripts/directives/nrAddressDirective.js")
+        script(src="/modules/workout/scripts/directives/nrTitleDirective.js")
+        script(src="/modules/workout/scripts/directives/nrDateDirective.js")
+        
+        script(src="/modules/workout/scripts/controllers/viewWorkoutController.js")
+        script(src="/modules/workout/scripts/controllers/editWorkoutController.js")
+        script(src="/modules/workout/scripts/controllers/createWorkoutController.js")
+        script(src="/modules/workout/scripts/controllers/workoutsController.js")
+        <!-- endbuild -->
+
         <!-- build:js(client) client/scripts/auth.min.js -->
         script(src="/modules/auth/scripts/auth.js")
         script(src="/modules/auth/scripts/controllers/forgotPasswordModalController.js")
@@ -165,6 +178,7 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
         script(src="/modules/commons/scripts/services/gmapsApiService.js")
         script(src="/modules/commons/scripts/services/metaService.js")
         script(src="/modules/commons/scripts/services/raceService.js")
+        script(src="/modules/commons/scripts/services/workoutService.js")
         script(src="/modules/commons/scripts/services/routeService.js")
         script(src="/modules/commons/scripts/services/regionEnum.js")
         script(src="/modules/commons/scripts/services/httpUtils.js")
@@ -179,7 +193,9 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
         script(src="/modules/commons/scripts/directives/nrDownloadDirective.js")
         script(src="/modules/commons/scripts/directives/nrScrollToDirective.js")
         script(src="/modules/commons/scripts/directives/nrUniqueRaceDirective.js")
+        script(src="/modules/commons/scripts/directives/nrEmailListDirective.js")
         script(src="/modules/commons/scripts/directives/nrUniqueUserNameDirective.js")
+        script(src="/modules/commons/scripts/directives/nrUniqueParticipantDirective.js")
         script(src="/modules/commons/scripts/templates/angular-bootstrap-tpls-overrides.js")
         <!-- endbuild -->
 

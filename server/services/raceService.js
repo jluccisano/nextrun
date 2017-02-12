@@ -477,7 +477,7 @@ exports.downloadPicture = function(race, res, cb) {
 	});
 };
 
-exports.addResult = function(race, path, originalName, res, cb) {
+exports.addResult = function(race, path, originalName, year, res, cb) {
 
 	gridfsService.storeFile(path, originalName, function(file) {
 
@@ -487,7 +487,7 @@ exports.addResult = function(race, path, originalName, res, cb) {
 
 		var result = {
 			name: originalName,
-			year: 2012,
+			year: year,
 			fileId: file._id
 		};
 
@@ -549,7 +549,9 @@ exports.deleteResult = function(race, result, res, cb) {
 			lastUpdate: new Date()
 		},
 		$pull: {
-			results: result._id
+			results: {
+				_id: result._id
+			}
 		}
 	};
 
@@ -576,11 +578,16 @@ exports.findResult = function(id, res, cb) {
 		"results.$": 1
 	};
 
-	Race.findOneByCriteria(criteria, projection, function(error, result) {
+	Race.findOneByCriteria(criteria, projection, function(error, race) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
-			cb(result);
+			if (race && race.results && race.results.length > 0) {
+				cb(race.results[0]);
+			} else {
+				cb();
+			}
+
 		}
 	});
 };

@@ -4,13 +4,17 @@ angular.module("nextrunApp.route").controller("ViewRouteController",
     function(
         $scope,
         $stateParams,
+        $modal,
+        $state,
         RouteBuilderService,
         RouteService,
         RouteUtilsService,
         RouteHelperService,
-        MetaService) {
+        MetaService,
+        AuthService) {
 
         $scope.isCollapsed = false;
+
 
         $scope.status = {
             isopen: false
@@ -41,10 +45,21 @@ angular.module("nextrunApp.route").controller("ViewRouteController",
             }
         };
 
+        $scope.isLoggedIn = function() {
+            return AuthService.isLoggedIn();
+        };
+
         $scope.createRoute = function() {
             $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 180), RouteHelperService.getGmapsConfig(), false);
             $scope.routeViewModel.setCenter(RouteUtilsService.getCenter($scope.race));
             $scope.routeViewModel.setVisible(true);
+        };
+
+        $scope.createNewWorkout = function() {
+            $state.go("newWorkoutRoute", {
+                "routeId": $scope.routeViewModel.getId()
+            });
+
         };
 
         $scope.init();

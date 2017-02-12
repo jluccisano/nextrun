@@ -1,0 +1,33 @@
+div(class="container workouts")
+	h1(translate) Sortie
+	div(class="pull-right")
+		button(class="btn btn-primary" ng-click="addNewWorkout()") 
+			span(class="glyphicon glyphicon-plus") 
+			span(translate)  Ajouter
+	table(class="table table-hover")
+		thead
+			tr
+				th(style="width: 40%" translate) Nom
+				th(style="width: 10%" translate) Parcours
+				th(style="width: 15%" translate) Distance
+				th(style="width: 15%" translate) Dernière mise à jour
+				th(style="width: 10%" translate) Utilisateur
+				th(style="width: 5%")
+				th(style="width: 5%")
+		tbody
+			tr(ng-repeat="workout in workouts")
+				td 
+					a(ui-sref="viewWorkout({id: workout._id})") {{workout.name}}	
+				td {{workout.routeId | translate}}
+				td {{workout.distance | translate}}
+				td(ng-if="workout.lastUpdate != null")  {{workout.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
+				td {{workout.userId}}
+				td
+					a(ui-sref="editWorkout({id: workout._id})" translate)
+						span(class="glyphicon glyphicon-edit")
+				td
+					a(ng-click="openDeleteConfirmation(workout)")
+						span(class="glyphicon glyphicon-trash")
+	div(class="col-lg-8 col-lg-offset-4")
+		pagination(boundary-links="true" ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
+				

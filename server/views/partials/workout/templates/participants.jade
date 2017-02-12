@@ -1,0 +1,30 @@
+div(class="create-workout")
+	div(class="row")
+		h3(translate) Ajouter un participant
+		form(class="form-horizontal" role="form" name="participantForm" novalidate)
+			div(class="form-group" ng-class="{'has-error': !participantForm.email.$pristine && participantForm.email.$invalid, 'has-success': !participantForm.email.$invalid && !participantForm.email.$pristine}")
+				label(class="control-label" for="email" translate) Email
+				input(class="form-control" id="email" name="email" type="email" workout="workout" nr-unique-participant placeholder="{{'Email' | translate }}" ng-model="newParticipant.email")
+				span(class="help-block" ng-show="participantForm.email.$error.email" translate) Email invalide
+
+
+			button(class="btn btn-primary pull-right" ng-click="addNewParticipant(newParticipant)" ng-disabled="participantForm.$invalid" translate) Ajouter
+
+table(class="table table-hover")
+		thead
+			tr
+				th(style="width: 40%" translate) Email
+				th(style="width: 5%")
+				th(style="width: 5%" ng-if="editMode")
+		tbody
+			tr(ng-repeat="participant in workout.participants")
+				td 
+					a {{participant.email}}	
+				td
+					span(ng-if="participant.willBePresent" class="glyphicon glyphicon-ok")
+					span(ng-if="!participant.willBePresent" class="glyphicon glyphicon-remove")
+				td(ng-if="editMode")
+					a(ng-click="openDeleteParticipantConfirmation(participant)")
+						span(class="glyphicon glyphicon-trash")
+	div(class="col-lg-8 col-lg-offset-4")
+		pagination(boundary-links="true" ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")

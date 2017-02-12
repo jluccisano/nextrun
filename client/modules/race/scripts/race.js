@@ -23,9 +23,8 @@ var raceModule = angular.module("nextrunApp.race", [
   "ezfb",
   "jlareau.pnotify",
   "lr.upload",
-  "ngImgCrop"
+  "ngImgCrop",
 ]);
-
 
 raceModule.config(
   function(
@@ -102,7 +101,7 @@ raceModule.config(
       data: {
         access: access.public,
         fullscreen: false
-      }    
+      }
     });
 
     $locationProvider.html5Mode(true);
@@ -113,5 +112,7 @@ raceModule.config(
     });
 
     ezfbProvider.setLocale("fr_FR");
+
+   
 
   });

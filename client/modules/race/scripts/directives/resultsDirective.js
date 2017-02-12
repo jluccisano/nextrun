@@ -7,7 +7,8 @@ angular.module("nextrunApp.race").directive("nrResults", function() {
     controller: "ResultsController",
     scope: {
       editMode: "=editMode",
-      race: "=race"
+      race: "=race",
+      reload: "&"
     }
   };
 });
@@ -16,6 +17,8 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
 
   $scope.edit = false;
   $scope.tmpRace = {};
+
+  $scope.years = [2012, 2013, 2014];
 
   $scope.toggleEdit = function() {
     $scope.edit = !$scope.edit;
@@ -31,14 +34,14 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
 
   $scope.addResult = function(result) {
       RaceService.addResult($scope.race._id, result).then(function() {
-        $scope.init();
+        $scope.reload();
         notificationService.success(gettextCatalog.getString("Votre résultat a bien été ajouté"));
       });
   };
 
   $scope.deleteResult = function(result) {
     RaceService.deleteResult($scope.race._id, result._id).then(function() {
-        $scope.init();
+        $scope.reload();
         notificationService.success(gettextCatalog.getString("Votre résultat a bien été supprimé"));
       });
   };

@@ -10,14 +10,7 @@ div(class="container view-race")
             a(ng-class="{'active': active === (routeViewModel.getType() + $index)}" bs-scrollspy ng-click="setSelection(routeViewModel, $index);routeViewModel.setVisible(true)" ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" nr-scroll-to="route{{$index}}" class="list-group-item") {{routeViewModel.getName()}}
           a(class="list-group-item")
             h4(class="list-group-item-heading" translate) Organisation
-            a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Inscription
-            a(ng-class="{'active': active === 'schedule'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'schedule';active = 'schedule'" nr-scroll-to="schedule" class="list-group-item") Programme
-          a(ng-class="{'active': active === 'rights'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'rights';active = 'rights'" nr-scroll-to="rights" class="list-group-item") 
-            h4(class="list-group-item-heading" translate) Règlement
-          a(ng-class="{'active': active === 'results'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'results';active = 'results'" nr-scroll-to="results" class="list-group-item")
-            h4(class="list-group-item-heading" translate) Résultats
-          a(ng-class="{'active': active === 'misc'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'misc';active = 'misc'" nr-scroll-to="misc" class="list-group-item")
-            h4(class="list-group-item-heading" translate) Divers
+            a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="isCollapsed = true;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Participants
 
 
     div(class="col-md-10")
@@ -27,7 +20,7 @@ div(class="container view-race")
             div(class="container-fluid")
               div(class="collapse navbar-collapse")
                 div(class="nav navbar-nav navbar-left")
-                  nr-title(edit-mode="editMode" race="race")
+                  nr-workout-title(edit-mode="editMode" workout="workout")
                 ul(class="nav navbar-nav navbar-right")
                   li(ng-if="!editMode")
                     a
@@ -43,23 +36,24 @@ div(class="container view-race")
             div(class="row")
               div(class="col-md-6")
                 div(class="row")
-                  nr-date(edit-mode="editMode" race="race")
-                  div(class="col-md-12") 
-                    img(ng-if="image" ng-src="{{image}}" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
-                    img(ng-if="!images" ng-src="client/modules/race/images/noImageAvailable.jpg" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
-                  div(class="crop-image")
-                    a(class="btn btn-default btn-sm" nr-import-image)
-                      i(class="fa fa-pencil-square-o")
-                    input(type="file" id="fileInput" ng-hide="true")                    
+                  nr-workout-date(edit-mode="editMode" workout="workout")
+                  div(class="col-md-12" ng-if="participant && state === 'viewWorkoutParticipant'") 
+                    h5 Je participe ?             
+                    label(class="radio-inline")
+                      input(type="radio" ng-model="participant.willBePresent" ng-value="true" ng-change="updateParticipant(participant)") 
+                      | Oui
+                    label(class="radio-inline")
+                      input(type="radio" ng-model="participant.willBePresent" ng-value="false" ng-change="updateParticipant(participant)") 
+                      | Non
                 hr
                 div(class="row")
                   div(class="col-md-12")
                     i(class="fa fa-clock-o fa-3")
-                    span(translate) &nbsp; Départ: {{(race.schedule.events[0].date | date:'HH:mm') || 'non communiqué'}}
+                    span(translate) &nbsp; Départ: {{(workout.time | date:'HH:mm') || 'non communiqué'}}
               div(class="col-lg-6")
                 nr-type(edit-mode="editMode" race="race")
                 hr
-                nr-address(edit-mode="editMode" race="race")
+                nr-workout-address(edit-mode="editMode" workout="workout")
 
               a(ng-if="editMode" class="btn btn-link" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate) Ajouter un parcours
 
@@ -77,7 +71,7 @@ div(class="container view-race")
                   i(class="fa fa-trash")
             div(class="panel-body")
                 div(id="{{selection}}")
-                  include ./templates/map
+                  include ../race/templates/map
                   highchart(ng-hide="routeViewModel.getType() === 'Natation'" config="routeViewModel.getChartConfig()")
                     
                   div(class="row text-center")
@@ -104,47 +98,12 @@ div(class="container view-race")
         div(id="registration" ng-show="selection == 'registration'")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left" translate) Inscription
+              h4(class="panel-title pull-left" translate) Participants
               div(class="btn-group pull-right")
                 a(ng-if="editMode" ng-click="editRegistration()" class="btn btn-default btn-sm")
                   i(class="fa fa-pencil-square-o")
             div(class="panel-body")
-              include ./templates/viewRegistration
-        div(id="schedule" ng-show="selection == 'schedule'")
-          div(class="panel panel-default")
-            div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left" translate) Programme
-              div(class="btn-group pull-right")
-                a(ng-if="editMode" ng-click="editSchedule()" class="btn btn-default btn-sm")
-                  i(class="fa fa-pencil-square-o")
-            div(class="panel-body")
-              include ./templates/viewSchedule
-        div(id="rights" ng-show="selection == 'rights'")
-          div(class="panel panel-default")
-            div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left" translate) Règlement
-              div(class="btn-group pull-right")
-                a(ng-if="editMode" ng-click="editRichTextEditor(race.rights, 'rights')" class="btn btn-default btn-sm")
-                  i(class="fa fa-pencil-square-o")
-            div(class="panel-body")
-              div(ng-if="race.rights" class="well" ng-bind-html="race.rights")
-              div(ng-if="!race.rights" class="well" translate) Non communiqué
-        div(id="results" ng-show="selection == 'results'")
-          div(class="panel panel-default")
-            div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left" translate) Résultats
-            div(class="panel-body")
-              nr-results(race="race" reload="init() " edit-mode="editMode")
-        div(id="misc" ng-show="selection == 'misc'")
-          div(class="panel panel-default")
-            div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left" translate) Divers
-              div(class="btn-group pull-right")
-                a(ng-if="editMode" ng-click="editRichTextEditor(race.misc, 'misc')" class="btn btn-default btn-sm")
-                  i(class="fa fa-pencil-square-o")
-            div(class="panel-body")
-              div(ng-if="race.misc" ng-bind-html="race.misc")
-              div(ng-if="!race.misc" translate) Non communiqué
+              include ./templates/participants
 
 
 

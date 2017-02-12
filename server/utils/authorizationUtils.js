@@ -42,7 +42,7 @@ exports.checkRouteNotPublished = function(req, res, next) {
     var user = req.user;
 
     if (!underscore.isUndefined(route)) {
-        if ((!user && route.published === false) && (user && user._id !== route.userId.toString() && route.published === false)) {
+        if ((!user && route.published === false) || (user && user._id !== route.userId.toString() && route.published === false)) {
             errorUtils.handleRouteNotPublished(res);
         } else {
             next();

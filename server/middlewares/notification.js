@@ -73,7 +73,7 @@ exports.sendEmailNewFeedback = function(feedback) {
 
     var message = "Nouveau feedback par: " + feedback.email + " , type: " + feedback.type.name + " , message: " + feedback.message;
 
-    if(feedback.raceId) {
+    if (feedback.raceId) {
         message = message + " , race id: " + feedback.raceId;
     }
 
@@ -130,6 +130,42 @@ exports.sendNewRoute = function(route, user) {
         to: "contact.nextrun@gmail.com",
         subject: "Nouveau parcours",
         text: "Nouveau parcours: " + user.id + " , username: " + user.username + " , email: " + user.email + " , route: " + route._id + " , routeName: " + route.name
+    };
+
+    this.sendMail(mailOptions);
+};
+
+exports.sendNewWorkout = function(route, user) {
+
+    var mailOptions = {
+        from: user.email,
+        to: "contact.nextrun@gmail.com",
+        subject: "Nouvelle sortie",
+        text: "Nouvelle sortie: " + user.id + " , username: " + user.username + " , email: " + user.email + " , route: " + route._id + " , routeName: " + route.name
+    };
+
+    this.sendMail(mailOptions);
+};
+
+exports.sendNotificationToParticipant = function(workout, user, participant) {
+
+    var mailOptions = {
+        from: user.email,
+        to: participant.email,
+        subject: "Nouvelle sortie",
+        text: "http://localhost:3000/workouts/" + workout._id + "/participants/" + participant._id
+    };
+
+    this.sendMail(mailOptions);
+};
+
+exports.sendNotificationToOwner = function(workout, workoutOwner, participant) {
+
+    var mailOptions = {
+        from: "contact.nextrun@gmail.com",
+        to: user.email,
+        subject: "Modification de votre sortie",
+        text: "Votre sortie a été mis à jour http://localhost:3000/workouts/" + workout._id + " par le participant" + participant.email
     };
 
     this.sendMail(mailOptions);

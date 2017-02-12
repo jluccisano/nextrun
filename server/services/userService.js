@@ -124,3 +124,13 @@ exports.checkIfUserNameAvailable = function(name, user, res, cb) {
 		}
 	});
 };
+
+exports.findUserById = function(id, res, cb) {
+	User.findById(id, function(error, user) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else {
+			cb(user);
+		}
+	});
+};

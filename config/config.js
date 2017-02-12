@@ -13,8 +13,8 @@ module.exports = {
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
         gmail: {
-            user: "user",
-            password: "pass"
+            user: "contact.nextrun@gmail.com",
+            password: "Henrigolant!"
         }
     },
     dist: {

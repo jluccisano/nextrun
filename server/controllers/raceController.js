@@ -231,12 +231,13 @@ exports.addResult = function(req, res) {
 
 	var path = "./.tmp/" + result.name;
 	var filename = result.name;
+	var year = result.year;
 
 	fs.writeFile(path, imageBuffer.data, function(err) {
 		console.log(err);
 	});
 
-	raceService.addResult(race, path, filename, res, function() {
+	raceService.addResult(race, path, filename, year, res, function() {
 		res.status(200).json({
 			id: race._id
 		});

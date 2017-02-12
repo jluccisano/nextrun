@@ -90,6 +90,35 @@ angular.module("nextrunApp.commons").directive("nrImportGpx", function() {
 	};
 });
 
+angular.module("nextrunApp.commons").directive("nrImportImage", function() {
+	return {
+		link: function($scope, $element) {
+
+			var inputFile = angular.element(document.querySelector("#fileInput"));
+
+			$element.bind("click", function() {
+				inputFile.click();
+			});
+
+			inputFile.bind("change", function(e) {
+				handleFileSelect(e);
+			});
+
+			var handleFileSelect = function(evt) {
+				var file = evt.currentTarget.files[0];
+				var reader = new FileReader();
+				reader.onload = function(evt) {
+					$scope.$apply(function($scope) {
+						$scope.getFile(evt.target.result);
+						
+					});
+				};
+				reader.readAsDataURL(file);
+			};
+		}
+	};
+});
+
 angular.module("nextrunApp.commons").directive("nrFileSelect", function() {
 	return {
 		require: "ngModel",
