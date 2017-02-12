@@ -5,7 +5,6 @@ client/bower_components/
 dist/
 tmp/
 
-*.yml
 jshint.xml
 config/config.js
 .idea
