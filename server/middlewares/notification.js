@@ -3,6 +3,7 @@
  *
  */
 var nodemailer = require("nodemailer"),
+    mailgun = require('nodemailer-mailgun-transport');
     env = process.env.NODE_ENV || "development",
     config = require("../../config/config")[env],
     logger = require("../logger");
@@ -15,19 +16,15 @@ exports.sendMail = function(mailOptions) {
 
     var result = false;
 
-    var transporter = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-            user: config.gmail.user,
-            pass: config.gmail.password
-        }
-    });
+    var transporter = nodemailer.createTransport(mailgun({
+        auth: config.mailgun
+    }));
 
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
             logger.error(error);
         } else {
-            logger.info("send email to: " + mailOptions.to + " -> " + info.response);
+            logger.info("send email to: " + mailOptions.to + " -> " + info);
         }
     });
     return result;
@@ -92,7 +89,7 @@ exports.sendEmailNewFeedback = function(feedback) {
 exports.sendNewSession = function(user) {
 
     var mailOptions = {
-        from: "contact.nextrun@gmail.com",
+        from: "no-reply@nextrun.fr",
         to: "contact.nextrun@gmail.com",
         subject: "Nouvel session",
         text: "Nouvel session: " + user.id + " , username: " + user.username + " , email: " + user.email
@@ -104,7 +101,7 @@ exports.sendNewSession = function(user) {
 exports.sendNewUser = function(user) {
 
     var mailOptions = {
-        from: "contact.nextrun@gmail.com",
+        from: "no-reply@nextrun.fr",
         to: "contact.nextrun@gmail.com",
         subject: "Nouvel utilisateur",
         text: "Nouvel utilisateur: " + user.id + " , username: " + user.username + " , email: " + user.email
@@ -116,7 +113,7 @@ exports.sendNewUser = function(user) {
 exports.sendNewRace = function(race, user) {
 
     var mailOptions = {
-        from: "contact.nextrun@gmail.com",
+        from: "no-reply@nextrun.fr",
         to: "contact.nextrun@gmail.com",
         subject: "Nouvel course",
         text: "Nouvel course: " + user.id + " , username: " + user.username + " , email: " + user.email + " , race: " + race._id + " , raceName: " + race.name
@@ -128,7 +125,7 @@ exports.sendNewRace = function(race, user) {
 exports.sendNewRoute = function(route, user) {
 
     var mailOptions = {
-        from: "contact.nextrun@gmail.com",
+        from: "no-reply@nextrun.fr",
         to: "contact.nextrun@gmail.com",
         subject: "Nouveau parcours",
         text: "Nouveau parcours: " + user.id + " , username: " + user.username + " , email: " + user.email + " , route: " + route._id + " , routeName: " + route.name
@@ -151,7 +148,7 @@ exports.sendNewWorkout = function(user, workout) {
         "<small>Nextrun est un site qui permet d'organiser des sorties sportives avec des groupes de personnes. <a href=\"nextrun.fr\">en savoir plus sur Nextrun</a></small>";
 
     var mailOptions = {
-        from: "contact.nextrun@gmail.com",
+        from: "no-reply@nextrun.fr",
         to: user.email,
         subject: "Nouvelle sortie",
         text: "Nouvelle sortie: " + url,
@@ -163,7 +160,7 @@ exports.sendNewWorkout = function(user, workout) {
 
 exports.sendNotificationToParticipant = function(workout, user, participant) {
 
-    var url = "http://nextrun.fr/workouts/" + workout._id + "/participants/" + participant._id;
+    var url = "http://nextrun.fr/workouts/" + workout._id + "/view/participants/" + participant._id;
 
     var templateHtml = "<p>Bonjour,</p>" +
         "<p>" + user.username + " vous invite à participer à la sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +
@@ -172,7 +169,7 @@ exports.sendNotificationToParticipant = function(workout, user, participant) {
         "<small>Nextrun est un site qui permet d'organiser des sorties sportives avec des groupes de personnes. <a href=\"nextrun.fr\">en savoir plus sur Nextrun</a></small>";
 
     var mailOptions = {
-        from: user.username + " (via Nextrun) <contact.nextrun@gmail.com>",
+        from: user.username + " (via Nextrun) <no-reply@nextrun.fr>",
         to: participant.email,
         subject: "Nouvelle sortie",
         text: url,
@@ -185,7 +182,7 @@ exports.sendNotificationToParticipant = function(workout, user, participant) {
 
 exports.sendNotificationUpdateToParticipant = function(workout, user, participant) {
 
-    var url = "http://nextrun.fr/workouts/" + workout._id + "/participants/" + participant._id;
+    var url = "http://nextrun.fr/workouts/" + workout._id + "/view/participants/" + participant._id;
 
     var templateHtml = "<p>Bonjour,</p>" +
         "<p>" + user.username + " a mis à jour la sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +
@@ -194,7 +191,7 @@ exports.sendNotificationUpdateToParticipant = function(workout, user, participan
         "<small>Nextrun est un site qui permet d'organiser des sorties sportives avec des groupes de personnes. <a href=\"nextrun.fr\">en savoir plus sur Nextrun</a></small>";
 
     var mailOptions = {
-        from: user.username + " (via Nextrun) <contact.nextrun@gmail.com>",
+        from: user.username + " (via Nextrun) <no-reply@nextrun.fr>",
         to: participant.email,
         subject: "Mise à jour",
         text: url,
@@ -215,7 +212,7 @@ exports.sendNotificationToOwner = function(workout, workoutOwner, participant) {
         "<small>Nextrun est un site qui permet d'organiser des sorties sportives avec des groupes de personnes. <a href=\"nextrun.fr\">en savoir plus sur Nextrun</a></small>";
 
     var mailOptions = {
-        from: "contact.nextrun@gmail.com",
+        from: "no-reply@nextrun.fr",
         to: workoutOwner.email,
         subject: "Modification de votre sortie",
         text: "Votre sortie a été mis à jour http://localhost:3000/workouts/" + workout._id + " par le participant" + participant.pseudo,

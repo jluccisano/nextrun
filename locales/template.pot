@@ -222,6 +222,7 @@ msgstr ""
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/routes.html
 #: .tmp/generated/views/partials/workout/allworkouts.html
+#: .tmp/generated/views/partials/workout/workouts.html
 msgid "<span class=\"glyphicon glyphicon-edit\"></span>"
 msgstr ""
 
@@ -284,6 +285,7 @@ msgstr ""
 #: .tmp/generated/views/partials/workout/allworkouts.html
 #: .tmp/generated/views/partials/workout/templates/participants.html
 #: .tmp/generated/views/partials/workout/workout.html
+#: .tmp/generated/views/partials/workout/workouts.html
 msgid "Ajouter"
 msgstr ""
 
@@ -515,6 +517,7 @@ msgstr ""
 #: .tmp/generated/views/partials/workout/allworkouts.html
 #: .tmp/generated/views/partials/workout/templates/participants.html
 #: .tmp/generated/views/partials/workout/workout.html
+#: .tmp/generated/views/partials/workout/workouts.html
 msgid "Dernière mise à jour"
 msgstr ""
 
@@ -531,7 +534,6 @@ msgstr ""
 #: .tmp/generated/views/partials/route/mapEditor.html
 #: .tmp/generated/views/partials/route/mapView.html
 #: .tmp/generated/views/partials/route/routes.html
-#: .tmp/generated/views/partials/workout/allworkouts.html
 #: .tmp/generated/views/partials/workout/workout.html
 msgid "Distance"
 msgstr ""
@@ -877,6 +879,13 @@ msgstr ""
 msgid "Mes Parcours"
 msgstr ""
 
+#: .tmp/generated/views/index.html
+#: .tmp/generated/views/layouts/body.html
+#: .tmp/generated/views/layouts/header.html
+#: .tmp/generated/views/partials/workout/workouts.html
+msgid "Mes Sorties"
+msgstr ""
+
 #: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/workout/workout.html
 msgid "Mes parcours"
@@ -928,6 +937,7 @@ msgstr ""
 #: .tmp/generated/views/partials/route/mapEditor.html
 #: .tmp/generated/views/partials/route/routes.html
 #: .tmp/generated/views/partials/workout/allworkouts.html
+#: .tmp/generated/views/partials/workout/workouts.html
 msgid "Nom"
 msgstr ""
 
@@ -942,7 +952,7 @@ msgid "Nombre de dossards: {{race.registration.limitedPlaces}}"
 msgstr ""
 
 #: .tmp/generated/views/partials/workout/create.html
-msgid "Nombre de participant limité à 20"
+msgid "Nombre de participants limité à 20"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
@@ -1009,6 +1019,7 @@ msgstr ""
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/workout/allworkouts.html
 #: .tmp/generated/views/partials/workout/workout.html
+#: .tmp/generated/views/partials/workout/workouts.html
 msgid "Parcours"
 msgstr ""
 

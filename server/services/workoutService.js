@@ -21,7 +21,7 @@ exports.save = function(workout, req, res, cb) {
 exports.getWorkoutsByUser = function(req, res, cb) {
 
 	var criteria = {
-		userId: req.user._id
+		ownerId: req.user._id
 	};
 
 	var projection = {};

@@ -20,7 +20,7 @@ div(class="container create-workout")
 					span(class="help-block" ng-show="workoutEventForm.guests.$error.repeat && repeats.length === 1" translate) Cet email est incorrect {{repeats[0]}}
 					span(class="help-block" ng-show="workoutEventForm.guests.$error.repeat && repeats.length > 1" translate) Ces emails sont répétés {{repeats[0]}}
 
-					span(class="help-block" ng-show="workoutEventForm.guests.$error.repeat && repeats.length === 20" translate) Nombre de participant limité à 20
+					span(class="help-block" ng-show="workoutEventForm.guests.$error.repeat && repeats.length >= 20" translate) Nombre de participants limité à 20
 
 				div(class="form-group" ng-class="{'has-error':!workoutEventForm.date.$pristine && workoutEventForm.date.$invalid, 'has-success': !workoutEventForm.date.$invalid && !workoutEventForm.date.$pristine}")
 					label(class="control-label") {{'Date' | translate}}

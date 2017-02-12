@@ -12,9 +12,9 @@ module.exports = {
             clientSecret: "APP_SECRET",
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
-        gmail: {
-            user: "contact.nextrun@gmail.com",
-            password: "Henrigolant!"
+        mailgun: {
+            api_key: "key-9324f80c8afdf167552474844b7928b9",
+            domain: "sandboxe6d48d6ead0043d498f98491b04f22e6.mailgun.org"
         }
     },
     dist: {
@@ -27,9 +27,9 @@ module.exports = {
             clientSecret: "APP_SECRET",
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
-        gmail: {
-            user: "contact.nextrun@gmail.com",
-            password: "Henrigolant!"
+        mailgun: {
+            api_key: "key-9324f80c8afdf167552474844b7928b9",
+            domain: "sandboxe6d48d6ead0043d498f98491b04f22e6.mailgun.org"
         }
     },
     test: {
@@ -42,9 +42,9 @@ module.exports = {
             clientSecret: "APP_SECRET",
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
-        gmail: {
-            user: "user",
-            password: "pass"
+        mailgun: {
+            api_key: "key-9324f80c8afdf167552474844b7928b9",
+            domain: "sandboxe6d48d6ead0043d498f98491b04f22e6.mailgun.org"
         }
     },
     prod: {
@@ -57,9 +57,9 @@ module.exports = {
             clientSecret: "409c4b0d091efef8e7d03db2bce807e9",
             callbackURL: "http://nextrun.fr/auth/facebook/callback"
         },
-        gmail: {
-            user: "contact.nextrun@gmail.com",
-            password: "Henrigolant!"
+        mailgun: {
+            api_key: "key-9324f80c8afdf167552474844b7928b9",
+            domain: "sandboxe6d48d6ead0043d498f98491b04f22e6.mailgun.org"
         }
     }
 };

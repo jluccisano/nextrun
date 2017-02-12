@@ -22,7 +22,7 @@ exports.createWorkout = function(req, res) {
     var workout = req.body;
     var user = req.user;
     workoutService.save(workout, req, res, function(newWorkout) {
-        email.sendNewWorkout(user, workout);
+        email.sendNewWorkout(user, newWorkout);
         underscore.forEach(newWorkout.participants, function(participant) {
             email.sendNotificationToParticipant(newWorkout, user, participant);
         });
