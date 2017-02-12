@@ -26,7 +26,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		for (var k = startIndex; k < path.length; k++) {
 
 			var point = {
-				latlng: path[k],
+				latlng: {
+					mb: path[k].lat(),
+					nb: path[k].lng()
+				},
 				elevation: 0,
 				distanceFromStart: 0,
 				grade: 0,
@@ -96,7 +99,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		var samplesLatlng = [];
 
 		for (var k = 0; k < points.length; k++) {
-			samplesLatlng.push(points[k].latlng);
+			samplesLatlng.push(new google.maps.LatLng(points[k].latlng.mb, points[k].latlng.nb));
 		}
 
 		return samplesLatlng;
@@ -117,7 +120,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		var segmentPoints = [];
 
 		var point = {
-			latlng: destinationLatlng,
+			latlng: {
+				mb: destinationLatlng.lat(),
+				nb: destinationLatlng.lng()
+			},
 			elevation: 0,
 			distanceFromStart: 0,
 			grade: 0,
@@ -266,12 +272,11 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 	var createMarker = function(route, segment, path, _this) {
 
 		var marker = {};
-
 		if (route.segments.length === 1) {
 
 			marker = {
-				latitude: path[path.length - 1].mb,
-				longitude: path[path.length - 1].nb,
+				latitude: path[path.length - 1].lat(),
+				longitude: path[path.length - 1].lng(),
 				icon: "../../../img/start.png",
 				title: "hello"
 			}
@@ -280,8 +285,8 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			replaceLastMarkerBySegmentPoint(route);
 
 			marker = {
-				latitude: path[path.length - 1].mb,
-				longitude: path[path.length - 1].nb,
+				latitude: path[path.length - 1].lat(),
+				longitude: path[path.length - 1].lng(),
 				icon: "../../../img/end.png",
 				title: "hello"
 			}
@@ -311,8 +316,8 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		var pathArray = [];
 		_.each(path, function(point) {
 			pathArray.push({
-				latitude: point.mb,
-				longitude: point.nb
+				latitude: point.lat(),
+				longitude: point.lng()
 			})
 		});
 
@@ -482,7 +487,10 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			if (route.segments.length > 0) {
 				lastLatlngOfLastSegment = getLastPointOfLastSegment(route).latlng;
 			} else {
-				lastLatlngOfLastSegment = destinationLatlng;
+				lastLatlngOfLastSegment = {
+					mb: destinationLatlng.lat(),
+					nb: destinationLatlng.lng()
+				};
 				isFirstPoint = true;
 			}
 
@@ -490,7 +498,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 				var directionsRequest = {
 					origin: new google.maps.LatLng(lastLatlngOfLastSegment.mb, lastLatlngOfLastSegment.nb),
-					destination: new google.maps.LatLng(destinationLatlng.mb, destinationLatlng.nb),
+					destination: destinationLatlng,
 					travelMode: travelMode,
 					provideRouteAlternatives: false,
 					avoidHighways: true,
