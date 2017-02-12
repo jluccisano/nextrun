@@ -9,7 +9,8 @@ var nextrunApp = angular.module('nextrunApp', [
   'ui.dateTimeInput',
   'AngularGM',
   'textAngular',
-  'ngSanitize'
+  'ngSanitize',
+  'ezfb'
 ]);
 
 /** Initialize i18n **/
@@ -18,9 +19,17 @@ jQuery.i18n.init({
 });
 
 
-nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
-  function($routeProvider, $locationProvider, $httpProvider) {
+nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider', '$FBProvider',
+  function($routeProvider, $locationProvider, $httpProvider, $FBProvider) {
     'use strict';
+    
+    $FBProvider.setLocale('fr_FR');
+
+    $FBProvider.setInitParams({
+      appId: '195803770591615'
+    });
+
+
     var access = routingConfig.accessLevels;
 
     $routeProvider.

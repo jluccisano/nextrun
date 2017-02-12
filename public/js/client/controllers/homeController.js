@@ -113,7 +113,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 				setTimeout(function() {
 					sharedService.prepForBroadcast($scope.fulltext, $scope.region, $scope.currentTypesSelected);
-				}, 1000);
+				}, 2000);
 			}
 		};
 

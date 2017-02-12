@@ -2,8 +2,6 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 	function($scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window, $modal) {
 		'use strict';
 
-		reloadSocial();
-
 		google.maps.visualRefresh = true;
 
 		$scope.Math = window.Math;
