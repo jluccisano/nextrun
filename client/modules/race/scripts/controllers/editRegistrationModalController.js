@@ -36,7 +36,7 @@ angular.module("nextrunApp.race").controller("EditRegistrationModalController", 
 			}
 		};
 
-		$scope.continue = function() {
+		$scope.submit = function() {
 			$modalInstance.close();
 		};
 
