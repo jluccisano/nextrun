@@ -86,18 +86,23 @@ RaceSchema.pre('save', function(next) {
     return next();
 });
 
-RaceSchema.path('name').validate(function (name) {
+RaceSchema.path('name').validate(function (name, fn) {
   var Race = mongoose.model('Race');
 
-  //console.log("this: "+this);
-  
-  Race.findOne({ name: this.name, distanceType: this.distanceType }).exec(function (err, race) {
-    return false;
+  Race.find({ name: this.name, distanceType: this.distanceType }).exec(function (err, races) {
+    fn(!err && races.length === 0);
   });
 
-  return true;
-
 }, 'error.raceAlreadyExists');
+
+RaceSchema.path('user_id').validate(function (user_id, fn) {
+  var User = mongoose.model('User');
+
+  User.find({ _id: this.user_id }).exec(function (err, users) {
+    fn(!err && users.length === 1);  
+  });
+
+}, 'error.unknownUser');
 
 
 RaceSchema.methods = {

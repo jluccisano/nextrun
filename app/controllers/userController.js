@@ -41,16 +41,14 @@ exports.signup = function (req, res) {
 
 	user.save(function (err) {
 		if (err) {
-       console.log(err);
       return res.json(400,  {message: errorUtils.errors(err.errors)  } );
 		}
 		
 		req.logIn(user, function(err) {
 			if (err) {
-         console.log(err);
         return res.json(400,   {message: errorUtils.errors(err.errors)  } );
 			} 
-      return res.json(200, { "role": user.role, "username": user.username });
+      return res.json(200, { role: user.role, username: user.username, email: user.email });
 		});
 	});
 };
@@ -133,7 +131,7 @@ exports.settings = function (req, res) {
 };
 
 /**
- * @method update profile of user
+ * @method check if email already exists
  * @param req
  * @param res
  * @param next
@@ -147,6 +145,25 @@ exports.checkIfEmailAlreadyExists = function (req, res) {
           return res.json(200);
         }
         return res.json(400, {message: "error.emailAlreadyExists"}); 
+     });
+}
+
+/**
+ * @method check user
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkUser = function (req, res, next) {
+    User.findOne({ email: req.body.user.email }, function (err, user) {
+        if (err) { 
+          return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+        }
+        if (user) {
+          req.user = user;
+          return next();
+        }
+        return res.json(400, {message: "error.unknownUser"}); 
      });
 }
 

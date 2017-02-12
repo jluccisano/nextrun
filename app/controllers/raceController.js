@@ -35,7 +35,7 @@ exports.create = function (req, res) {
 	var race = new Race(req.body.race); 
 	race.last_update = new Date();
 	race.created_date = new Date();
-	//race.user_id = req.user._id;
+	race.user_id = req.user._id;
 
 	race.save(function (err) {
 		if (err) {
@@ -47,4 +47,22 @@ exports.create = function (req, res) {
 	});
 };
 
+/**
+ * @method delete race
+ * @param req
+ * @param res
+ */
+exports.delete = function(req,res) {
 
+   if(req.user._id.equals(req.race.user_id)) {
+
+   	   Race.destroy(req.race._id, function(err){
+	    if(!err) {
+	         return res.json(200);
+	    } else {
+	        return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+	    }
+	  });
+   }
+
+};

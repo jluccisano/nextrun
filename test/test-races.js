@@ -73,13 +73,18 @@ var count;
 
         it('should response success', function (done) {
          superagent.post('http://localhost:3000/races')
-          .send({race: { name:'Duatlon de Castelnaudary', 
+          .send({race: { name:'Duathlon de Castelnaudary', 
           			   type: 'duathlon',
           			   department: '11 - Aude',
           			   date: currentDate, 
           			   edition: '1',
           			   distanceType: 'S'
-          			 }
+          			 },
+                 user: {
+                    email: "foobar@example.com",
+                    username: "foobar",
+                    role: userRoles.user
+                 }
           })
           .set('Accept', 'application/json')
           .end(function(err,res){
@@ -90,20 +95,90 @@ var count;
         });
 
         it('should save the user to the database', function (done) {
-          Race.findOne({ name: 'Duatlon de Castelnaudary' }).exec(function (err, race) {
+          Race.findOne({ name: 'Duathlon de Castelnaudary' }).exec(function (err, race) {
             should.not.exist(err);
-            //console.log(race);
             race.should.be.an.instanceOf(Race);
-            race.name.should.equal('Duatlon de Castelnaudary');
+            race.name.should.equal('Duathlon de Castelnaudary');
             race.type.should.equal('duathlon');
             race.department.should.equal('11 - Aude');
             race.date.should.be.an.instanceOf(Date);
             //race.date.getTime().should.equal(new Date(currentDate).getTime());
             race.edition.should.equal(1);
             race.distanceType.should.equal('S');
-            //race.user_id.should.equal(currentUser._id);
+            race.user_id.should.eql(currentUser._id);
             race.published.should.equal(false);
             done();
+          });
+        });
+
+        it('should response raceAlreadyExists', function (done) {
+         superagent.post('http://localhost:3000/races')
+          .send({race: { name:'Duathlon de Castelnaudary', 
+                   type: 'duathlon',
+                   department: '11 - Aude',
+                   date: currentDate, 
+                   edition: '1',
+                   distanceType: 'S'
+                 },
+                 user: {
+                    email: "foobar@example.com",
+                    username: "foobar",
+                    role: userRoles.user
+                 }
+          })
+          .set('Accept', 'application/json')
+          .end(function(err,res){
+             should.not.exist(err);
+             res.should.have.status(400);
+             res.body.message[0].should.equal("error.raceAlreadyExists");
+             done();
+          });
+        });
+
+        it('create new race with distance type different should response success', function (done) {
+         superagent.post('http://localhost:3000/races')
+          .send({race: { name:'Duathlon de Castelnaudary', 
+                   type: 'duathlon',
+                   department: '11 - Aude',
+                   date: currentDate, 
+                   edition: '1',
+                   distanceType: 'M'
+                 },
+                 user: {
+                    email: "foobar@example.com",
+                    username: "foobar",
+                    role: userRoles.user
+                 }
+          })
+          .set('Accept', 'application/json')
+          .end(function(err,res){
+             should.not.exist(err);
+             res.should.have.status(200);
+             done();
+          });
+        });
+
+        it('create new race with unknown user should response error', function (done) {
+         superagent.post('http://localhost:3000/races')
+          .send({race: { name:'Duathlon de Castelnaudary', 
+                   type: 'duathlon',
+                   department: '11 - Aude',
+                   date: currentDate, 
+                   edition: '1',
+                   distanceType: 'M'
+                 },
+                 user: {
+                    email: "foobar2@example.com",
+                    username: "foobar2",
+                    role: userRoles.user
+                 }
+          })
+          .set('Accept', 'application/json')
+          .end(function(err,res){
+             should.not.exist(err);
+             res.should.have.status(400);
+             res.body.message.should.equal("error.unknownUser");
+             done();
           });
         });
 
@@ -121,5 +196,50 @@ var count;
       });
 
     });
+  });
+
+  describe('DELETE /races', function () {
+
+    describe('valid parameters', function () {
+
+        before(function (done) {
+          User.create({ username: "foobar", email:"foobar@example.com", password:"foobar", role: userRoles.user} , function(err,user){
+            currentUser = user;
+            done();        
+          });
+        });
+
+        before(function (done) {
+          Race.create({race: { name:'Duathlon de Castelnaudary', 
+                   type: 'duathlon',
+                   department: '11 - Aude',
+                   date: currentDate, 
+                   edition: '1',
+                   distanceType: 'S'
+                 },
+                 user: {
+                    email: "foobar@example.com",
+                    username: "foobar",
+                    role: userRoles.user
+                 }
+          } , function(err,user){
+            currentUser = user;
+            done();        
+          });
+        });
+        
+        before(function (done) {
+          Race.count(function (err, cnt) {
+            count = cnt;
+            done();
+          });
+        });
+
+        after(function(done){
+          Race.remove({}, function(){
+            done();
+          });
+        });
+      });
   });
 });
