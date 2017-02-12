@@ -231,6 +231,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			}
 		};
 
+
 		$scope.toggleDepartmentSelection = function(term) {
 			var idx = $scope.departments.indexOf(term);
 
