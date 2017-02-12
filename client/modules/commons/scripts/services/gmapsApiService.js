@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("GmapsApiService",
-    function() {
+    function($q) {
 
         return {
             Autocomplete: function(element, options) {
@@ -30,6 +30,40 @@ angular.module("nextrunApp.commons").factory("GmapsApiService",
             },
             LatLng: function(latitude, longitude) {
                 return new google.maps.LatLng(latitude, longitude);
+            },
+            getLocation: function(address) {
+                var deferred = $q.defer();
+
+                var result = {
+                    success: false,
+                    message: "",
+                    location: {
+                        latitude: "",
+                        longitude: ""
+                    }
+                };
+
+                var googleMap = new google.maps.Geocoder();
+                googleMap.geocode({
+                    'address': address
+                }, function(results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+
+                        result.success = true;
+                        result.location.latitude = results[0].geometry.location.lat();
+                        result.location.longitude = results[0].geometry.location.lng();
+
+                        deferred.resolve(result);
+
+                    } else {
+                        var error = new result();
+                        error.message = 'Une erreur est survenue: ' + status;
+
+                        deferred.reject(error);
+                    }
+
+                });
+                return deferred.promise;
             }
         };
     });

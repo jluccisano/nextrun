@@ -14,7 +14,10 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		FileReaderService,
 		MetaService,
 		GpxService,
-		gettextCatalog) {
+		gettextCatalog,
+		GmapsApiService,
+		RichTextEditorService) {
+
 
 		$scope.activePanel = 1;
 
@@ -47,6 +50,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		$scope.raceId = $routeParams.raceId;
 
+
 		$scope.init = function() {
 			RaceService.retrieve($scope.raceId).then(function(response) {
 
@@ -54,7 +58,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 				$scope.routesViewModel = RouteService.createRoutesViewModel($scope, $scope.race);
 
-			}).finally(function() {
+			}).
+			finally(function() {
 				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
 			});
 		};
@@ -101,7 +106,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.openChangeTypeConfirmation = function() {
 
 			$scope.modalInstance = $modal.open({
-				templateUrl: "partials/race/changetypeconfirmationModal",
+				templateUrl: "partials/race/changeTypeConfirmationModal",
 				controller: "ChangeTypeConfirmationController"
 			});
 
@@ -152,6 +157,27 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				route.setCenter(center);
 			}
 		};
+
+		$scope.computeLocation = function(address) {
+			GmapsApiService.getLocation(address).then(function(result) {
+				if (result.success) {
+					$scope.race.plan.location = result.location;
+				}
+			}, function(error) {
+				if (error.message) {
+					AlertService.add("danger", error.message, 3000);
+				}
+			});
+		};
+
+		$scope.editPlanMoreInformation = function() {
+			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal($scope.race.plan.moreInformation);
+
+			$scope.modalInstance.result.then(function(result) {
+                $scope.race.plan.moreInformation = result.text;
+            });
+		}
+
 
 		$scope.init();
 

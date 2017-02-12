@@ -2,9 +2,10 @@
 
 var raceModule = angular.module("nextrunApp.race", [
   "ngRoute",
+  "ngAnimate",
+  "toggle-switch",
   "google-maps",
   "highcharts-ng",
-  "AngularGM",
   "textAngular",
   "gettext",
   "ui.bootstrap.pagination",

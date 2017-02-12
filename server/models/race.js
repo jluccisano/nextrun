@@ -68,7 +68,7 @@ var RaceSchema = new Schema({
         },
         timingMoreInformation: {
             type: String,
-            default: null
+            default: ""
         }
     },
     pricing: {
@@ -117,36 +117,22 @@ var RaceSchema = new Schema({
     },
     plan: {
         address: {
-            address1: {
-                type: String,
-                default: null
+            type: String,
+            default: ""
+        },
+        location: {
+            latitude: {
+                type: Number,
+                default: 48.857221
             },
-            address2: {
-                type: String,
-                default: null
-            },
-            postcode: {
-                type: String,
-                default: null
-            },
-            city: {
-                type: String,
-                default: null
-            },
-            latlng: {
-                lat: {
-                    type: Number,
-                    default: null
-                },
-                lng: {
-                    type: Number,
-                    default: null
-                }
-            },
-            planMoreInformation: {
-                type: String,
-                default: null
-            },
+            longitude: {
+                type: Number,
+                default: 2.347060
+            }
+        },
+        moreInformation: {
+            type: String,
+            default: ""
         }
     },
     therace: {

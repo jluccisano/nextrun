@@ -780,66 +780,6 @@ describe("RaceController", function() {
 		});
 	});
 
-	describe("updateLatLng()", function() {
-
-		beforeEach(function() {
-			req = {
-				user: {
-					_id: mongoose.Types.ObjectId("52a7082cad21354c23000001"),
-					username: "user",
-					password: "pass",
-					role: 1
-				},
-				race: race
-			};
-		});
-
-		it("should return 400 raceId is not defined", function(done) {
-			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
-				cb(null);
-			});
-
-			RaceController.updateLatLng.bind(undefined, undefined).should.
-			throw(new Error("raceId is not defined"));
-			done();
-		});
-
-		it("should return 400 latlng is not defined", function(done) {
-			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
-				cb(null);
-			});
-
-			RaceController.updateLatLng.bind("98a7082cad21354c23000001", undefined).should.
-			throw(new Error("latlng is not defined"));
-			done();
-		});
-
-		it("should return 400 when the database crash", function(done) {
-			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
-				cb({
-					"errors": [{
-						"message": "error"
-					}]
-				});
-			});
-			expect(RaceController.updateLatLng("98a7082cad21354c23000001", "43.1;1.4")).to.be.false;
-			done();
-		});
-
-		it("should return 200", function(done) {
-			sandbox.stub(Race, "update", function(undefined, undefined, undefined, cb) {
-				cb(null);
-			});
-
-			var result = RaceController.updateLatLng("98a7082cad21354c23000001", "43.1;1.4");
-
-			expect(result).to.be.true;
-			done();
-		});
-
-
-	});
-
 	describe("publish()", function() {
 
 		beforeEach(function() {

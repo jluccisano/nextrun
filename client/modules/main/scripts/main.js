@@ -70,7 +70,7 @@ nextrunApp.run(function(
         $location.path("/login");
       }
 
-      AlertService.add(gettextCatalog.getString("Danger"), gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"), 3000);
+      AlertService.add(gettextCatalog.getString("danger"), gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"), 3000);
     }
   });
 

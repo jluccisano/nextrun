@@ -272,43 +272,6 @@ exports.delete = function(req, res) {
 };
 
 /**
- * @method update LatLng of event address
- * @param req
- * @param res
- */
-exports.updateLatLng = function(raceId, latlng) {
-
-    var result = false;
-
-    if (underscore.isUndefined(latlng)) {
-        throw new Error("latlng is not defined");
-    }
-
-    if (underscore.isUndefined(raceId)) {
-        throw new Error("raceId is not defined");
-    }
-
-    Race.update({
-        _id: raceId
-    }, {
-        $set: {
-            "plan.address.latlng": latlng
-        }
-    }, {
-        upsert: true
-    }, function(err) {
-        if (err) {
-            logger.error("error during try to update latlng for: " + raceId + " , details: " + err);
-            result = false;
-        } else {
-            logger.info("latlng updated for: " + raceId);
-            result = true;
-        }
-    });
-    return result;
-};
-
-/**
  * @method publish the race
  * @param req
  * @param res

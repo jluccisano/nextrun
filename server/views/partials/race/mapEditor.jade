@@ -9,10 +9,20 @@ div(ng-if="route.isVisible()")
 						span(class="input-group-btn")
 							button(class="btn btn-default" type="button" ng-click="centerToLocation(route, location.details)")
 								span(class="glyphicon glyphicon-search")
-				ul(class="nav navbar-nav")
-					li
-						span(class="glyphicon glyphicon-search")
-						span(class="glyphicon-class") Annuler
+				div(class="navbar-form navbar-right")
+					input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
+				
+				
+				toggle-switch(model="manualMode" html="true" class="switch-primary switch-small" on-label="<i class='fa fa-thumbs-up'></i>" off-label="<i class='fa fa-thumbs-down'></i>")
+
+				//div(class="btn-group btn-group-lg")
+				//	button(type="button" class="btn btn-default")
+				//		i(class="fa fa-undo")
+				//	button(type="button" class="btn btn-default")
+				//		span(class="glyphicon glyphicon-remove")
+				//	button(type="button" class="btn btn-default")
+				//		span(class="glyphicon glyphicon-star") Star
+
 	include map
 
 	div.mapControl(ng-show="route.isEditMode()")
@@ -49,6 +59,18 @@ div(ng-if="route.isVisible()")
 					span Min: {{route.getMinElevation() | number:0 }} m
 	highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
 
-	div.form-group
-		label.col-lg-4.control-label(translate) Ajouter une description à votre parcours
-	div.col-lg-12(text-angular ng-model="route.data.description")
+	div(class="row")
+		div(class="col-sm-12")
+			h5(translate) Ajouter une description à votre parcours
+
+		div(class="col-sm-12 animate-hide" ng-hide="editingInfo")
+			div(class="well" ng-bind-html="route.data.description")
+			button(class="btn btn-default" ng-click="editingInfo = !editingInfo" translate ) Editer
+
+		div(class="col-sm-12 animate-hide" ng-show="editingInfo")
+			div(text-angular ng-model="route.data.description")
+			button(class="btn btn-primary" ng-click="editingInfo = !editingInfo"  translate) Valider
+			button(class="btn btn-default" ng-click="editingInfo = !editingInfo" translate) Annuler
+
+
+

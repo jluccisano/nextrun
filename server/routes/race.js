@@ -1,5 +1,4 @@
 var raceController = require("../controllers/raceController"),
-    gmaps = require("../middlewares/gmaps"),
     routerService = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
@@ -32,7 +31,7 @@ var routes = [
     }, {
         path: "/:raceId/update",
         httpMethod: "PUT",
-        middleware: [gmaps.geocodeAddress, raceController.update],
+        middleware: [raceController.update],
         accessLevel: accessLevels.user
     }, {
         path: "/:raceId/publish/:value",
