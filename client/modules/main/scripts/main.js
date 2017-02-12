@@ -5,7 +5,6 @@ var nextrunApp = angular.module("nextrunApp", [
   "gettext",
   "angular-loading-bar",
   "ui.bootstrap.dropdown",
-  "ui.bootstrap.alert",
   "nextrunApp.commons",
   "nextrunApp.auth",
   "nextrunApp.race",
