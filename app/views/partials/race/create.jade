@@ -37,12 +37,6 @@ div.container
 										select.form-control(data-ng-model="race.distanceType", name="distanceType", data-ng-options="distance.i18n for distance in distances", required)
 											option(value="") Sélectionner...
 									button.btn.btn-primary(data-ng-click="submit()", data-ng-disabled="form.$invalid") Continuer
-									span invalid {{form.date.$invalid}}
-									span dirty {{form.date.$dirty}}
-									span pristine {{form.date.$pristine}}
-									span error {{form.date.$error}}
-									span valid {{form.date.$valid}}
-									span valid {{form.datetime.$valid}}
 				tab(heading="Confirmation" data-ng-hide="isLoggedIn()" active="tabs[1].active" disabled="tabs[1].disabled")
 					div(data-ng-show="accountExists")
 						div.container(style="margin-top:50px")

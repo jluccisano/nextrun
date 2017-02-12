@@ -9,6 +9,8 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 		$scope.raceId = $routeParams.raceId;
 		$scope.cursorMarker = {};
 
+		$scope.navType = "pills";
+
 		$scope.onChangeTab = function(route) {
 			route.isVisible = true;
 		};
@@ -99,6 +101,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 									},
 									plotOptions: {
 										series: {
+											turboThreshold : 0,
 											marker: {
 												enabled: false
 											},

@@ -7,6 +7,9 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 		/** init google maps service **/
 		google.maps.visualRefresh = true;
 
+		$scope.navType = "pills";
+		$scope.progress = 0;
+
 		$scope.types = TYPE_OF_RACES.enums;
 		$scope.distances = [];
 		$scope.cursorMarker = {};
@@ -191,6 +194,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 									},
 									plotOptions: {
 										series: {
+											turboThreshold : 0,
 											marker: {
 												enabled: false
 											},
@@ -465,6 +469,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							},
 							plotOptions: {
 								series: {
+									turboThreshold : 0,
 									marker: {
 										enabled: false
 									},
@@ -605,6 +610,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 		$scope.$on("fileProgress", function(e, progress) {
 			$scope.progress = (progress.loaded / progress.total) * 100;
+			$scope.$apply();
 		});
 
 
@@ -631,7 +637,8 @@ angular.module('nextrunApp').controller('ChangeTypeConfirmationCtrl', ['$scope',
 angular.module('nextrunApp').directive("ngFileSelect", function() {
 
 	return {
-		link: function($scope, el, $attributes) {
+		require: ['ngModel'],
+		link: function($scope, el, $attributes, ngModel) {
 
 			el.bind("change", function(e) {
 

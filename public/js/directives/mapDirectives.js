@@ -97,7 +97,7 @@ angular.module("google-maps")
 
                         // Remove polyline on scope $destroy
                         scope.$on("$destroy", function() {
-                            if ('undefined' !== polyline) {
+                            if (typeof polyline !== 'undefined') {
                                 polyline.setMap(null);
                             }
                         });

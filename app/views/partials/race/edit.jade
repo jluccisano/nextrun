@@ -9,7 +9,7 @@ div.container(style="padding-bottom: 50px;")
 							label.control-label(for="name") Nom
 							input.form-control(name="name", id="name", placeholder="ex: Triathlon de Paris",data-ng-model="race.name", required)
 						
-						div.form-group(data-ng-class="{'has-error':!form.datetime.$pristine && form.datetime.$invalid, 'has-success': !form.datetime.$pristine && !form.datetime.$invalid}")
+						div.form-group(data-ng-class="{'has-error':!form1.datetime.$pristine && form1.datetime.$invalid, 'has-success': !form1.datetime.$pristine && !form1.datetime.$invalid}")
 							label.control-label(for="date") Date
 							div(class="dropdown")
 								a(class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#")
@@ -20,7 +20,7 @@ div.container(style="padding-bottom: 50px;")
 								ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
 									datetimepicker(name="datetime" data-ng-model="race.date" required  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'day' }")
 								
-						div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation && form.location.$valid}")
+						div.form-group(data-ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$pristine  && !form1.location.$error.validLocation && form1.location.$valid}")
 							label.control-label(for="location") Lieu
 							input.form-control(name="location" id="location" placeholder="ex: Castelnaudary" data-ng-model="race.pin.name" has-location required ng-autocomplete options="options" details="details")
 									
@@ -36,14 +36,14 @@ div.container(style="padding-bottom: 50px;")
 			hr
 			div.row
 				div.col-lg-12
-					tabset(vertical="false" type="pills")
+					tabset(vertical="false" type="navType")
 						tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" data-ng-click="onChangeTab(route)")
 							div.bs-callout.bs-callout-info
 								h4 Infomations
 								p Vous pouvez soit dessiner votre parcours directement sur la carte soit importer un fichier au format .gpx
-							input(type="file" ng-file-select="onFileSelect($files, route)")
-							div.progress
-								div.progress-bar(role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;") {{progress}}%
+							input(type="file" ng-model="$files" ng-file-select="onFileSelect($files, route)")
+							progressbar(max="100" value="progress"  type="warning")
+								span(style="color:white; white-space:nowrap;") {{progress}}%
 							include map
 			h2 Organisation
 			hr

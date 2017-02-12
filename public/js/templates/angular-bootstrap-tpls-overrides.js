@@ -11,19 +11,3 @@ angular.module("template/typeahead/typeahead-popup.html", []).run(["$templateCac
     "    </li>\n" +
     "</ul>");
 }]);
-
-angular.module("template/tabs/tabset-titles.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/tabs/tabset-titles.html",
-    "<ul class=\"nav {{type && 'nav-' + type}}\" ng-class=\"{'nav-stacked': vertical, 'nav-pills': !vertical }\">\n" +
-    "</ul>\n" +
-    "");
-}]);
-
-angular.module("template/pagination/pagination.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/pagination/pagination.html",
-    "<div class=\"pagination\"><ul class=\"pagination pagination-sm\">\n" +
-    "  <li ng-repeat=\"page in pages\" ng-class=\"{active: page.active, disabled: page.disabled}\"><a ng-click=\"selectPage(page.number)\">{{page.text}}</a></li>\n" +
-    "  </ul>\n" +
-    "</div>\n" +
-    "");
-}]);

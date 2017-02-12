@@ -32,7 +32,7 @@ div.container(style="margin-top:50px",style="padding-bottom: 50px;")
 	hr
 	div.row
 		div.col-lg-12
-			tabset(vertical="false" type="pills")
+			tabset(vertical="false" type="navType")
 				tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" data-ng-click="onChangeTab(route)")
 					include showMap
 					div.row.text-center
