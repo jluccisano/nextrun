@@ -699,3 +699,24 @@ exports.findAll = function(req, res) {
     });
   });
 };
+
+/**
+ * @method Find all races
+ * @param req
+ * @param res
+ */
+exports.findAll = function(req, res) {
+
+  Race.findAll(function(err, races) {
+    if (err) {
+      console.log(err);
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+    req.races = races;
+    return res.json(200, {
+      races: req.races
+    });
+  });
+};
