@@ -1,17 +1,15 @@
 div.container(ng-controller="SettingsCtrl")
-	div.row
-		h1 Paramètres
 	div.container.bs-docs-container
 		div.row
 			div.col-lg-4
-				div.bs-sidebar.hidden-print.affix-top(role="complementary" style)
+				div.bs-sidebar.hidden-print.affix(role="complementary" style data-toggle="affix" data-spy="affix" data-offset-top="255" data-offset-bottom="200")
 					ul.nav.bs-sidenav
 						li.active
-							a(href="#changeProfileTab") Profil
+							a(href="#/users/settings/#changeProfileTab" target="_self") Profil
 						li
-							a(href="#changePasswordTab") Changer de mot de passe
+							a(href="#/users/settings/#changePasswordTab" target="_self") Changer de mot de passe
 						li
-							a(href="#deleteAccountTab") Supprimer mon compte
+							a(href="#/users/settings/#deleteAccountTab" target="_self") Supprimer mon compte
 			div.col-lg-8(role="main")
 				div.bs-docs-section.active
 					div.page-header

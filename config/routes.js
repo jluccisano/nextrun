@@ -20,7 +20,7 @@ app.get('/defaultsite', function (req, res) {
 app.get('/', mainController.index);
 app.get('/partials/:name', mainController.partials);
 app.get('/partials/race/:name', mainController.racePartials);
-app.get('/partials/user/:name', mainController.userPartials);
+app.get('/partials/user/:name', auth.requiresLogin, mainController.userPartials);
 
 
 /** JSON API **/
