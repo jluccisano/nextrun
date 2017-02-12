@@ -94,9 +94,9 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       access: access.public
     });
 
-    /*$routeProvider.otherwise({
+    $routeProvider.otherwise({
       redirectTo: '/404'
-    });*/
+    });
 
     $locationProvider.html5Mode(true);
 
