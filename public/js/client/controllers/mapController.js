@@ -65,8 +65,8 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 			var isFirstPoint = false;
 
-			if (LayerFactory.getSegments().length > 0) {
-				lastLatlngOfLastSegment = LayerFactory.getLastPointOfLastSegment($scope.layer).latlng;
+			if ($scope.layer.segments.length > 0) {
+				lastLatlngOfLastSegment = LayerFactory.getLastPointOfLastSegment($scope.layer.segments).latlng;
 			} else {
 				lastLatlngOfLastSegment = destinationLatlng;
 				isFirstPoint = true;
@@ -445,20 +445,20 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 				strokeWeight: 5
 			});*/
 			
-			/*
+			
 			var pathArray = [];
 			_.each(path, function(point) {
 				pathArray.push({latitude: point.lat(), longitude: point.lng()})
 			});
-*/
+
 			
 			var polyLine = {
-				path: path,
+				path: pathArray,
 				stroke: {
 					color: "red",
 					weight: 5
 				},
-			    editable:true,
+			    editable:false,
                 draggable:false,
                 geodesic:false,
                 visible:true
@@ -482,12 +482,8 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 angular.module('nextrunApp').factory('LayerFactory', function($http) {
 	'use strict';
 
-	var markers = [];
-	var polylines = [];
-	var segments = [];
-
 	return {
-		getLastPointOfLastSegment: function() {
+		getLastPointOfLastSegment: function(segments) {
 			var segmentIndex = 0;
 			var pointIndex = 0;
 
@@ -496,18 +492,15 @@ angular.module('nextrunApp').factory('LayerFactory', function($http) {
 			}
 
 			var lastSegment = segments[segmentIndex];
-			var pointsOfLastSegment = lastSegment.getPoints();
+			var pointsOfLastSegment = lastSegment.points;
 
 			if (pointsOfLastSegment.length > 0) {
 				pointIndex = pointsOfLastSegment.length - 1;
 			}
 
-			lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
+			var lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
 
 			return lastPointOfLastSegment;
-		},
-		getSegments: function() {
-			return segments;
 		}
 
 	};
@@ -536,7 +529,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 						pointIndex = pointsOfLastSegment.length - 1;
 					}
 
-					lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
+					var lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
 				}
 
 				return lastPointOfLastSegment;
@@ -579,7 +572,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 						}
 
 						if (route.elevationPoints[k - 1].elevation < route.minElevation) {
-							route.minElevation(route.elevationPoints[k - 1].elevation);
+							route.minElevation = (route.elevationPoints[k - 1].elevation);
 						}
 					}
 				}

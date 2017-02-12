@@ -233,10 +233,10 @@ exports.updateProfile = function(req, res) {
   user.email = req.body.user.email;
   user.username = req.body.user.username;
 
-  var userModel = new User(user);
-  console.log(userModel);
 
-  userModel.save(function(err) {
+  console.log(user);
+
+  user.save(function(err) {
     if (err) {
       return res.json(400, {
         message: errorUtils.errors(err.errors)

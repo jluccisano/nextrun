@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
   superagent = require('superagent'),
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   passportStub = require('passport-stub'),
+  sinon = require('sinon'),
   User = mongoose.model('User');
 
 passportStub.install(app);
@@ -84,6 +85,12 @@ describe('Update User: PUT /users/update', function() {
     describe('Valid Parameters', function() {
 
       it('should response success', function(done) {
+        var sandbox = sinon.sandbox.create();
+      //  var userController = require('../../app/helpers/email');
+        var userStub = sandbox.stub(User, 'authenticate').returns();
+
+        console.log(userStub);
+
         passportStub.login(user1);
         superagent.put('http://localhost:3000/users/update/profile')
           .send({

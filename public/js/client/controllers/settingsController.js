@@ -14,7 +14,7 @@ angular.module('nextrunApp').controller('SettingsCtrl', ['$scope', '$location', 
 
 		$scope.updateProfile = function() {
 
-			Auth.updateProfile($scope.user._id, {
+			Auth.updateProfile({
 					user: $scope.user
 				},
 				function(response) {
@@ -31,7 +31,7 @@ angular.module('nextrunApp').controller('SettingsCtrl', ['$scope', '$location', 
 
 		$scope.updatePassword = function() {
 
-			Auth.updatePassword($scope.user._id, {
+			Auth.updatePassword({
 					actual: $scope.actualPassword,
 					new: $scope.newPassword
 				},

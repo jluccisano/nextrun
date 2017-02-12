@@ -61,6 +61,7 @@
     "async": "latest",
     "travis-cov": "latest",
     "superagent": "latest",
-    "passport-stub": "latest"
+    "passport-stub": "latest",
+    "sinon": "latest"
   }
 }
