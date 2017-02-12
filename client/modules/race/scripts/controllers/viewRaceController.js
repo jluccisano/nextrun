@@ -43,7 +43,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                     $scope.routesViewModel[0].setVisible(true);
                 }
             });
-        }
+        };
 
         $scope.init = function() {
             RaceService.retrieve($scope.raceId).then(function(response) {
@@ -58,7 +58,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
             return $scope.race.name + " , date: " + $filter("date")($scope.race.date, "dd MMMM yyyy") + " , type: " + $scope.race.type.i18n + " , distance: " + $scope.race.distanceType.name;
         };
 
-        $scope.openFeedbackModal = function(raceId) {
+        $scope.openFeedbackModal = function() {
             $scope.modalInstance = $modal.open({
                 templateUrl: "partials/race/templates/feedbackModal",
                 controller: "FeedbackModalController",

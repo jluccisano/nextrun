@@ -67,7 +67,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                     $scope.routesViewModel[0].setVisible(true);
                 }
             });
-        }
+        };
 
         $scope.init = function() {
             RaceService.retrieve($scope.raceId).then(function(response) {
@@ -127,7 +127,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                 history: {
                     history: false
                 }
-            }).get().on('pnotify.confirm', function() {
+            }).get().on("pnotify.confirm", function() {
                 RouteService.delete(routeViewModel.data._id).then(function() {
                     notificationService.success(gettextCatalog.getString("Le parcours a bien été supprimé"));
                     $scope.init();
@@ -201,9 +201,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         };
 
         $scope.uploadImage = function() {
-            RaceService.uploadImage().then(function(response) {
-
-            });
+            RaceService.uploadImage();
         };
 
         // App variable to show the uploaded response
@@ -211,27 +209,22 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
         // Global handler for onSuccess that adds the uploaded files to the list
         $scope.onGlobalSuccess = function(response) {
-            console.log('AppCtrl.onSuccess', response);
             $scope.responseData = response.data;
-            //$scope.uploads = $scope.uploads.concat(response.data.files);
         };
 
 
         // Valid mimetypes
-        $scope.acceptTypes = 'image/*,application/pdf';
-        // Data to be sent to the server with the upload request
+        $scope.acceptTypes = "image/*";
         $scope.uploadData = {
-            myformdata: 'hello world'
+            myformdata: "hello world"
         };
-        $scope.onUpload = function(files) {
-            console.log('AdvancedMarkupCtrl.onUpload', files);
-        };
+
+        $scope.onUpload = function() {};
+
         $scope.onError = function(response) {
-            console.error('AdvancedMarkupCtrl.onError', response);
             $scope.responseData = response.data;
         };
         $scope.onComplete = function(response) {
-            console.log('AdvancedMarkupCtrl.onComplete', response);
             $scope.responseData = response.data;
         };
 

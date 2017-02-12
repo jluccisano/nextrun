@@ -24,7 +24,7 @@ routeModule.config(
 			},
 			resolve: {
 				race: function() {
-					return {}
+					return {};
 				}
 			}
 		}).state("editRaceRoute", {
@@ -50,7 +50,7 @@ routeModule.config(
 			},
 			resolve: {
 				race: function() {
-					return {}
+					return {};
 				}
 			}
 		}).state("newRaceRoute", {

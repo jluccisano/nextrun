@@ -1,4 +1,4 @@
-angular.module('ifApp.commons').directive('nrImportFile', function($rootScope) {
+/*angular.module('ifApp.commons').directive('nrImportFile', function($rootScope) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -22,7 +22,7 @@ angular.module('ifApp.commons').directive('nrImportFile', function($rootScope) {
             };
         }
     }
-});
+});*/
 
 /*angular.module('ifApp.commons').directive('ifDownload', ['ImportExportService', function(ImportExportService, $log) {
     return {

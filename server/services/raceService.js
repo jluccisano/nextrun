@@ -31,7 +31,7 @@ exports.getRacesByUser = function(req, res, cb) {
 	};
 
 	var limit = 10;
-	var skip = 0
+	var skip = 0;
 
 	skip = req.params.page ? (parseInt(req.params.page) - 1) * limit : skip;
 
@@ -53,7 +53,7 @@ exports.getRaces = function(req, res, cb) {
 	};
 
 	var limit = 10;
-	var skip = 0
+	var skip = 0;
 
 	skip = req.params.page ? (parseInt(req.params.page) - 1) * limit : skip;
 
@@ -78,8 +78,7 @@ exports.findRace = function(id, res, cb) {
 };
 
 exports.getRace = function(req, res, cb) {
-	var race = req.race
-	console.log("Race" + race);
+	var race = req.race;
 	if (!underscore.isUndefined(race)) {
 		cb(race);
 	} else {
@@ -207,7 +206,7 @@ exports.search = function(criteria, res, cb) {
 
 			var department = {
 				"place.department.code": criteria.location.department.code
-			}
+			};
 
 			andArray.push(department);
 
@@ -393,7 +392,7 @@ exports.deletePicture = function(race, res, cb) {
 exports.downloadPicture = function(race, res, cb) {
 	gridfsService.getFile(race.pictureId, res, function(bufs) {
 		var fbuf = Buffer.concat(bufs);
-		var base64 = (fbuf.toString('base64'));
+		var base64 = (fbuf.toString("base64"));
 		cb(base64);
 	});
 };

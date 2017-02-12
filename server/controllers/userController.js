@@ -2,8 +2,7 @@
  * @module User Controller
  * @author jluccisano
  */
-var errorUtils = require("../utils/errorUtils"),
-    email = require("../middlewares/notification"),
+var email = require("../middlewares/notification"),
     underscore = require("underscore"),
     passportService = require("../services/passportService"),
     userService = require("../services/userService"),
@@ -78,13 +77,6 @@ exports.settings = function(req, res) {
     var userConnected = req.user;
     userService.getUser(userConnected, function(user) {
         res.status(200).json(user);
-    });
-};
-
-exports.checkIfEmailAlreadyExists = function(req, res, next) {
-    var user = req.body.user
-    userService.getUserByEmail(user, res, function(item) {
-        res.sendStatus(200);
     });
 };
 

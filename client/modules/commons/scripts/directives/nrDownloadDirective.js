@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("nextrunApp.commons").directive("nrDownload", function($compile) {
+angular.module("nextrunApp.commons").directive("nrDownload", function() {
     return {
         restrict: "A",
         replace: true,
@@ -8,8 +8,8 @@ angular.module("nextrunApp.commons").directive("nrDownload", function($compile) 
             getUrlData: "&getData",
             nrFileName: "@nrFileName"
         },
-        link: function($scope, $element, $attrs) {
-            $element.bind('click', function(event) {
+        link: function($scope, $element) {
+            $element.bind("click", function() {
                 var name = $scope.nrFileName;
                 var href = URL.createObjectURL($scope.getUrlData());
                 $element.attr("href", href);

@@ -28,7 +28,7 @@ exports.getContacts = function(req, res, cb) {
 	var projection = {};	
 
 	var limit = 10;
-	var skip = 0
+	var skip = 0;
 
 	skip = req.params.page ? (parseInt(req.params.page) - 1) * limit : skip;
 
@@ -53,7 +53,7 @@ exports.findContact = function(id, res, cb) {
 };
 
 exports.getContact = function(req, res, cb) {
-	var contact = req.contact
+	var contact = req.contact;
 	if (!underscore.isUndefined(contact)) {
 		cb(contact);
 	} else {
@@ -71,7 +71,7 @@ exports.deleteContact = function(contact, res, cb) {
 	});
 };
 
-exports.updateContact = function(contact, fields, res, cb) {
+exports.updateContact = function(contact, req, res, cb) {
 	var fieldsToUpdate = req.body.fields;
 	fieldsToUpdate.lastUpdate = new Date();
 

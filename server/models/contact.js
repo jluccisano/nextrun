@@ -15,7 +15,6 @@ var ContactSchema = new Schema({
         type: Date,
         default: new Date()
     },
-    creationDate: Date,
     lastUpdate: Date
 });
 

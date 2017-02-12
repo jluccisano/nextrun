@@ -2,8 +2,6 @@
 
 module.exports = function(grunt) {
 
-  var config = require("./config/config");
-
   process.env.XUNIT_FILE = "test-unit-results.xml";
   process.env.JUNIT_REPORT_PATH = "test-integration-results.xml";
 
@@ -432,40 +430,40 @@ module.exports = function(grunt) {
       development: {
         options: {
           patterns: [{
-            json: grunt.file.readJSON('./config/environments/development.json')
+            json: grunt.file.readJSON("./config/environments/development.json")
           }]
         },
         files: [{
           expand: true,
           flatten: true,
-          src: ['./config/clientConfig.js'],
-          dest: '<%= yeoman.client %>/modules/main/scripts/services/'
+          src: ["./config/clientConfig.js"],
+          dest: "<%= yeoman.client %>/modules/main/scripts/services/"
         }]
       },
       production: {
         options: {
           patterns: [{
-            json: grunt.file.readJSON('./config/environments/production.json')
+            json: grunt.file.readJSON("./config/environments/production.json")
           }]
         },
         files: [{
           expand: true,
           flatten: true,
-          src: ['./config/clientConfig.js'],
-          dest: '<%= yeoman.client %>/modules/main/scripts/services/'
+          src: ["./config/clientConfig.js"],
+          dest: "<%= yeoman.client %>/modules/main/scripts/services/"
         }]
       },
       test: {
         options: {
           patterns: [{
-            json: grunt.file.readJSON('./config/environments/test.json')
+            json: grunt.file.readJSON("./config/environments/test.json")
           }]
         },
         files: [{
           expand: true,
           flatten: true,
-          src: ['./config/clientConfig.js'],
-          dest: '<%= yeoman.client %>/modules/main/scripts/services/'
+          src: ["./config/clientConfig.js"],
+          dest: "<%= yeoman.client %>/modules/main/scripts/services/"
         }]
       }
     },

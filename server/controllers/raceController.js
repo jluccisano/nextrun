@@ -49,14 +49,14 @@ exports.publishRace = function(req, res) {
 	var race = req.race;
 	raceService.publishRace(race, true, res, function() {
 		res.sendStatus(200);
-	})
+	});
 };
 
 exports.unpublishRace = function(req, res) {
 	var race = req.race;
 	raceService.publishRace(race, false, res, function() {
 		res.sendStatus(200);
-	})
+	});
 };
 
 exports.autocomplete = function(req, res) {

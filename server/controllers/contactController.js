@@ -26,12 +26,12 @@ exports.sendFeedback = function(req, res) {
     var feedback = req.body.feedback;
     contactService.sendFeedback(feedback, res, function() {
         res.sendStatus(200);  
-    })
+    });
 };
 
 exports.updateContact = function(req, res) {
     var contact = req.contact;
-    contactService.updateContact(contact, res, function() {
+    contactService.updateContact(contact, req, res, function() {
         res.status(200).json({
             id: contact._id
         });

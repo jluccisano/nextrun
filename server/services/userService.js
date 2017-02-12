@@ -1,6 +1,5 @@
 var errorUtils = require("../utils/errorUtils"),
 	mongoose = require("mongoose"),
-	underscore = require("underscore"),
 	User = mongoose.model("User");
 
 
@@ -92,7 +91,7 @@ exports.getUsers = function(req, res, cb) {
 	};
 
 	var limit = 10;
-	var skip = 0
+	var skip = 0;
 
 	skip = req.params.page ? (parseInt(req.params.page) - 1) * limit : skip;
 
