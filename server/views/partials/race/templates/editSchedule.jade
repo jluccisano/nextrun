@@ -1,30 +1,47 @@
 div.row
 	div.col-lg-8
-		form.form-horizontal(name="form1" role="form")
-			div.form-group
-				label.col-lg-4.control-label(translate) Départ
-				div.form-group
-					input.form-control(type="text" size="10" class="" ng-model="race.timing.startingTime" data-autoclose="1" placeholder="{{ 'Date' | translate }}" bs-datepicker)
-				div.form-group
-					input.form-control(type="text" size="8" class="form-control" ng-model="race.timing.startingTime" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-timepicker)
-			div.form-group
-				label.col-lg-4.control-label(translate) Briefing
-				div.form-group
-					input.form-control(type="text" size="10" class="" ng-model="race.timing.briefingTime" data-autoclose="1" placeholder="{{ 'Date' | translate }}" bs-datepicker)
-				div.form-group
-					input.form-control(type="text" size="8" class="form-control" ng-model="race.timing.briefingTime" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-timepicker)
-			div.form-group
-				label.col-lg-4.control-label(translate) Retrait des dossards
-				div.form-group
-					input.form-control(type="text" size="10" class="" ng-model="race.timing.checkoutBibTime" data-autoclose="1" placeholder="{{ 'Date' | translate }}" bs-datepicker)
-				div.form-group
-					input.form-control(type="text" size="8" class="form-control" ng-model="race.timing.checkoutBibTime" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-timepicker)
-			div.form-group
-				label.col-lg-4.control-label(translate) Récompenses
-				div.form-group
-					input.form-control(type="text" size="10" class="" ng-model="race.timing.rewardsTime" data-autoclose="1" placeholder="{{ 'Date' | translate }}" bs-datepicker)
-				div.form-group
-					input.form-control(type="text" size="8" class="form-control" ng-model="race.timing.rewardsTime" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-timepicker)
-			div.form-group
-				label.col-lg-4.control-label(translate) Plus d'informations
-	div.col-lg-12(text-angular ng-model="race.timing.timingMoreInformation")
+		div
+			span(class="title" e-translate) Départ: 
+			a(href="#" editable-bstime="race.timing.startingTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.startingTime | date:"HH:mm") || 'empty' }}
+
+		div
+			span(class="title" e-translate) Briefing: 
+			a(href="#" editable-bstime="race.timing.briefingTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.briefingTime | date:"HH:mm") || 'empty' }}
+
+		div
+			span(class="title" e-translate) Retrait des dossards: 
+			a(href="#" editable-bstime="race.timing.checkoutBibTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.checkoutBibTime | date:"HH:mm") || 'empty' }}
+
+		div
+			span(class="title" e-translate) Récompenses: 
+			a(href="#" editable-bstime="race.timing.rewardsTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.rewardsTime | date:"HH:mm") || 'empty' }}
+
+
+		//form.form-horizontal(name="form1" role="form")
+		//	div.form-group
+		//		label.col-lg-4.control-label(translate) Départ
+		//		div.form-group
+		//			input.form-control(type="text" size="10" class="" ng-model="race.timing.startingTime" data-autoclose="1" placeholder="{{ 'Date' | translate }}" bs-datepicker)
+		//		div.form-group
+		//			input.form-control(type="text" size="8" class="form-control" ng-model="race.timing.startingTime" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-timepicker)
+		//	div.form-group
+		//		label.col-lg-4.control-label(translate) Briefing
+		//		div.form-group
+		//			input.form-control(type="text" size="10" class="" ng-model="race.timing.briefingTime" data-autoclose="1" placeholder="{{ 'Date' | translate }}" bs-datepicker)
+		//		div.form-group
+		//			input.form-control(type="text" size="8" class="form-control" ng-model="race.timing.briefingTime" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-timepicker)
+		//	div.form-group
+		//		label.col-lg-4.control-label(translate) Retrait des dossards
+		//		div.form-group
+		//			input.form-control(type="text" size="10" class="" ng-model="race.timing.checkoutBibTime" data-autoclose="1" placeholder="{{ 'Date' | translate }}" bs-datepicker)
+		//		div.form-group
+		//			input.form-control(type="text" size="8" class="form-control" ng-model="race.timing.checkoutBibTime" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-timepicker)
+		//	div.form-group
+		//		label.col-lg-4.control-label(translate) Récompenses
+		//		div.form-group
+		//			input.form-control(type="text" size="10" class="" ng-model="race.timing.rewardsTime" data-autoclose="1" placeholder="{{ 'Date' | translate }}" bs-datepicker)
+		//		div.form-group
+		//			input.form-control(type="text" size="8" class="form-control" ng-model="race.timing.rewardsTime" data-autoclose="1" placeholder="{{ 'Heure' | translate }}" bs-timepicker)
+		//	div.form-group
+		//		label.col-lg-4.control-label(translate) Plus d'informations
+	//div.col-lg-12(text-angular ng-model="race.timing.timingMoreInformation")

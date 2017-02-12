@@ -1,6 +1,6 @@
 div(class="row")
 	div(class="col-sm-6" ng-show="editing")
-		form(class="form-horizontal" name="planForm" role="form" ng-submit="editing = false;computeLocation(race.plan.address)")
+		//form(class="form-horizontal" name="planForm" role="form" ng-submit="editing = false;computeLocation(race.plan.address)")
 			div(class="form-group")
 				label(class="col-sm-2 control-label" translate) Adresse
 				div(class="col-sm-10")
@@ -9,8 +9,8 @@ div(class="row")
 			button(class="btn btn-primary" type="submit" ng-disabled="planForm.$invalid" translate) Valider
 			button(class="btn btn-default" ng-click="editing = false" translate) Annuler
 	div(class="col-sm-12" ng-hide="editing")
-		div.row
-			div.col-lg-4
+		div(class="row")
+			div(class="col-lg-4")
 				span {{race.plan.address}}
 			
 			div(ng-if="race.plan.location" class="col-lg-4 address-map-container")

@@ -1,27 +1,26 @@
 div(ng-if="route.isVisible()")
 	nav(class="navbar navbar-default" role="navigation")
-		div(class="container")
-			div(class="collapse navbar-collapse")
-				form(class="navbar-form navbar-left" role="search")
-					div(class="input-group")
-						input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="options" details="location.details")
+		div(class="collapse navbar-collapse")
+			form(class="navbar-form navbar-left" role="search")
+				div(class="input-group")
+					input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="options" details="location.details")
 
-						span(class="input-group-btn")
-							button(class="btn btn-default" type="button" ng-click="centerToLocation(route, location.details)")
-								span(class="glyphicon glyphicon-search")
-				div(class="navbar-form navbar-right")
-					input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
-				
-				
-				toggle-switch(model="manualMode" html="true" class="switch-primary switch-small" on-label="<i class='fa fa-thumbs-up'></i>" off-label="<i class='fa fa-thumbs-down'></i>")
+					span(class="input-group-btn")
+						button(class="btn btn-default" type="button" ng-click="centerToLocation(route, location.details)")
+							span(class="glyphicon glyphicon-search")
+			div(class="navbar-form navbar-right")
+				input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
+			
+			
+			toggle-switch(model="manualMode" html="true" class="switch-primary switch-small" on-label="<i class='fa fa-thumbs-up'></i>" off-label="<i class='fa fa-thumbs-down'></i>")
 
-				//div(class="btn-group btn-group-lg")
-				//	button(type="button" class="btn btn-default")
-				//		i(class="fa fa-undo")
-				//	button(type="button" class="btn btn-default")
-				//		span(class="glyphicon glyphicon-remove")
-				//	button(type="button" class="btn btn-default")
-				//		span(class="glyphicon glyphicon-star") Star
+			//div(class="btn-group btn-group-lg")
+			//	button(type="button" class="btn btn-default")
+			//		i(class="fa fa-undo")
+			//	button(type="button" class="btn btn-default")
+			//		span(class="glyphicon glyphicon-remove")
+			//	button(type="button" class="btn btn-default")
+			//		span(class="glyphicon glyphicon-star") Star
 
 	include map
 

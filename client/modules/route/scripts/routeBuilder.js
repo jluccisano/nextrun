@@ -10,7 +10,7 @@ var routeBuilder = {};
 (function() {
 
 
-	routeBuilder.Route = function(dataModel, chartConfig, gmapsConfig, center) {
+	routeBuilder.Route = function(dataModel, chartConfig, gmapsConfig) {
 
 		this.data = dataModel;
 
@@ -508,6 +508,10 @@ var routeBuilder = {};
 			return lastLatLng;
 		};
 
+		this._getLastMarker = function() {
+			return this._markers[this._markers.length - 1];
+		};
+
 		this.addMarkerToRoute = function(path) {
 
 			try {
@@ -531,7 +535,7 @@ var routeBuilder = {};
 							new google.maps.Size(16, 16)
 						);
 
-						var lastMarker = this._getLastMarker(this.markers);
+						var lastMarker = this._getLastMarker();
 						lastMarker.icon = segmentIcon;
 
 					}
@@ -547,9 +551,7 @@ var routeBuilder = {};
 			}
 		};
 
-		this.getLastMarker = function() {
-			return this._markers[this._markers.length - 1];
-		};
+		
 
 		this.removeLastMarker = function() {
 			this.getMarkers().splice(this.getMarkers().length - 1, 1);
@@ -658,7 +660,6 @@ var routeBuilder = {};
 		this._events = null;
 		this._chartConfig = chartConfig;
 		this._type = null;
-		this._center = center;
 
 		this.segments = this._createSegmentsViewModel(this.data.segments);
 		this.elevationPoints = this._createElevationPointsViewModel(this.data.elevationPoints);

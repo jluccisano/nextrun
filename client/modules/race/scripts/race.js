@@ -11,18 +11,23 @@ var raceModule = angular.module("nextrunApp.race", [
   "ui.bootstrap.pagination",
   "ui.bootstrap.modal",
   "ui.bootstrap.accordion",
-  "mgcrea.ngStrap.tab",
+  "ui.bootstrap.datepicker",
+  "ui.bootstrap.timepicker",
+  //"mgcrea.ngStrap.tab",
   "ui.bootstrap.tabs",
-  "mgcrea.ngStrap.datepicker",
-  "mgcrea.ngStrap.timepicker",
+  //"mgcrea.ngStrap.datepicker",
+  //"mgcrea.ngStrap.timepicker",
   "xeditable",
   "nextrunApp.commons",
   "nextrunApp.route"
 ]);
 
-raceModule.run(function(editableOptions) {
-  editableOptions.theme = "bs3";
+raceModule.run(function(editableOptions, editableThemes) {
+  editableThemes.bs3.inputClass = 'input-sm';
+  editableThemes.bs3.buttonsClass = 'btn-sm';
+  editableOptions.theme = 'bs3';
 });
+
 
 raceModule.config(
   function(
@@ -53,7 +58,7 @@ raceModule.config(
       access: access.public
     }).
     when("/races/edit/:raceId", {
-      templateUrl: "/partials/race/edit",
+      templateUrl: "/partials/race/edit2",
       controller: "EditRaceController",
       access: access.user
     }).

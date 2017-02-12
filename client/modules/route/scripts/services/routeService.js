@@ -49,7 +49,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 			},
 
-			createRoutesViewModel: function($scope, race) {
+			createRoutesViewModel: function(race, chartConfig, gmapsConfig) {
 
 				var routesViewModel = [];
 
@@ -70,13 +70,9 @@ angular.module("nextrunApp.route").factory("RouteService",
 							};
 						}
 
-						var center = RouteUtilsService.setCenter($scope, currentRoute);
+						var route = new routeBuilder.Route(currentRoute, chartConfig, gmapsConfig);
 
-						var route = new routeBuilder.Route(currentRoute,
-							RouteHelperService.getChartConfig($scope),
-							RouteHelperService.getGmapsConfig(), center);
-
-						route.addClickListener($scope.onClickMap);
+						route.setCenter(RouteUtilsService.getCenter(race));
 
 						routesViewModel.push(route);
 

@@ -11,69 +11,39 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		AuthService,
 		RaceTypeEnum,
 		RouteService,
-		FileReaderService,
 		MetaService,
-		GpxService,
 		gettextCatalog,
 		GmapsApiService,
-		RichTextEditorService) {
+		RichTextEditorService,
+		RouteUtilsService,
+		RouteHelperService) {
 
 
 		$scope.activePanel = 1;
-
 		$scope.gettextCatalog = gettextCatalog;
 
 		/** init google maps service **/
-		google.maps.visualRefresh = true;
+		//google.maps.visualRefresh = true;
 
 		$scope.navType = "pills";
-
 		$scope.types = RaceTypeEnum.getValues();
-
 		$scope.routesViewModel = [];
-
 		$scope.cursorMarker = {
 			id: 1
 		};
 
-		$scope.location = {
-			details: {},
-			name: ""
-		};
-
 		$scope.currentRaceType = {};
-
-		$scope.options = {
-			country: "fr",
-			types: "(cities)"
-		};
 
 		$scope.raceId = $routeParams.raceId;
 
-
 		$scope.init = function() {
 			RaceService.retrieve($scope.raceId).then(function(response) {
-
 				$scope.race = response.data.race;
-
-				$scope.routesViewModel = RouteService.createRoutesViewModel($scope, $scope.race);
-
+				$scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
 			}).
 			finally(function() {
 				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
 			});
-		};
-
-		$scope.onClickMap = function(route, destinationLatlng) {
-			RouteService.createNewSegment(route, destinationLatlng);
-		};
-
-		$scope.delete = function(route) {
-			RouteService.resetRoute(route);
-		};
-
-		$scope.undo = function(route) {
-			RouteService.deleteLastSegment(route);
 		};
 
 		$scope.isLoggedIn = function() {
@@ -134,29 +104,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		};
 
-		$scope.getFile = function(route, file) {
-			FileReaderService.readAsDataUrl(file, $scope).then(function(result) {
-				try {
-					route = GpxService.convertGPXtoRoute($scope, route.routeType, result);
-				} catch (ex) {
-					AlertService.add("danger", ex.message, 3000);
-				} finally {
-
-				}
-			});
-		};
-
-		$scope.centerToLocation = function(route, details) {
-
-			if (details && details.location) {
-				var center = {
-					latitude: details.location.lat,
-					longitude: details.location.lon
-				};
-
-				route.setCenter(center);
-			}
-		};
+		
 
 		$scope.computeLocation = function(address) {
 			GmapsApiService.getLocation(address).then(function(result) {
@@ -174,11 +122,21 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal($scope.race.plan.moreInformation);
 
 			$scope.modalInstance.result.then(function(result) {
-                $scope.race.plan.moreInformation = result.text;
-            });
+				$scope.race.plan.moreInformation = result.text;
+			});
 		};
 
-
+		$scope.editRoute = function(routesViewModel) {
+			$scope.modalInstance = $modal.open({
+				templateUrl: "partials/race/editRoute",
+				controller: "EditRouteController",
+				windowClass: "modal-fullscreen",
+				resolve: {
+					route: function() {
+						return routesViewModel;
+					}
+				}
+			});
+		}
 		$scope.init();
-
 	});

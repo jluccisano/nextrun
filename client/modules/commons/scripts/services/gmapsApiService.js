@@ -13,7 +13,7 @@ angular.module("nextrunApp.commons").factory("GmapsApiService",
             AutocompleteService: function() {
                 return new google.maps.places.AutocompleteService();
             },
-            PlacesServices: function(attrContainer) {
+            PlacesService: function(attrContainer) {
                 return new google.maps.places.PlacesService(attrContainer);
             },
             DirectionsService: function() {

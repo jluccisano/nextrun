@@ -1,7 +1,7 @@
 div(class="row")
 	div(class="col-sm-8")
-		div.form-group
-			label.col-lg-4.control-label(translate) Nombre de ravitaillements
+		div(class="form-group")
+			label(class="col-lg-4 control-label" translate) Nombre de ravitaillements
 			a(href="#" editable-number="race.therace.numberOfProvisions" e-min="0" e-translate) {{ race.therace.numberOfProvisions || 'Non communiqué' }}
 
 

@@ -49,7 +49,7 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsAp
 			}
 			return distanceTotal;
 		},
-		setCenter: function(scope, currentRoute) {
+		getCenter: function(race) {
 
 			//default France center
 			var center = {
@@ -57,20 +57,16 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsAp
 				longitude: 2.43896484375,
 			};
 
-			if (currentRoute.segments.length === 0) {
-
-				if (!_.isUndefined(scope.race.pin)) {
-					if (!_.isUndefined(scope.race.pin.location)) {
-						center = {
-							latitude: scope.race.pin.location.lat,
-							longitude: scope.race.pin.location.lon
-						};
-					} else {
-						//set the department of location
-						center = scope.race.pin.department.center;
-					}
+			if (!_.isUndefined(race.pin)) {
+				if (!_.isUndefined(race.pin.location)) {
+					center = {
+						latitude: race.pin.location.lat,
+						longitude: race.pin.location.lon
+					};
+				} else {
+					//set the department of location
+					center = race.pin.department.center;
 				}
-
 			}
 			return center;
 		}
