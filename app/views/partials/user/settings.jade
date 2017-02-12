@@ -42,7 +42,7 @@ div.container(style="padding-bottom: 50px;")
 							span.help-block(data-ng-show="form.actualPassword.$dirty && form.actualPassword.$error.maxlength") Votre mot de passe doit contenir entre 4 et 8 caractères
 						
 						div.form-group(ng-class="{'has-error': !form.newPassword.$pristine && form.newPassword.$invalid, 'has-success': !form.newPassword.$invalid && !form.newPassword.$pristine}")
-							label.control-label(type="password", for="newPassword") Mot de passe
+							label.control-label(type="password", for="newPassword") Nouveau mot de passe
 							input.form-control(type="password", name="newPassword",  id="newPassword", placeholder="Nouveau mot de passe",data-ng-model="newPassword",  required, match="confirmNewPassword", ng-minlength="4", ng-maxlength="8")
 							span.help-block(ng-show="form.newPassword.$dirty && form.newPassword.$error.required") Please enter a password
 							span.help-block(data-ng-show="form.newPassword.$dirty && form.newPassword.$error.minlength") Votre mot de passe doit contenir entre 4 et 8 caractères

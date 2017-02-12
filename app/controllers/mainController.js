@@ -1,4 +1,4 @@
-var userRoles = require('../../public/js/client/routingConfig').userRoles
+var userRoles = require('../../public/js/routingConfig').userRoles
 /*
  * GET home page.
  */

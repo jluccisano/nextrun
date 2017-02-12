@@ -1,7 +1,7 @@
 # Project #
 ############
 node_modules/
-client_components/
+bower_components/
 dist/
 tmp/
 coverage.html

@@ -16,34 +16,34 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             "http://maps.googleapis.com/maps/api/js?sensor=false&language=en",
-            'client_components/jquery/dist/jquery.js',
-            'client_components/angular/angular.js',
-            'client_components/angular-mocks/angular-mocks.js',
-            'client_components/i18next/i18next.js',
-            'client_components/underscore/underscore.js',
-            'client_components/angular-cookies/angular-cookies.js',
-            'client_components/angular-route/angular-route.js',
-            'client_components/angular-animate/angular-animate.js',
-            'client_components/angular-sanitize/angular-sanitize.js',
-            'client_components/angular-bootstrap/ui-bootstrap-tpls.js',
-            'client_components/raphael/raphael.js',
-            'client_components/angular-google-maps/dist/angular-google-maps.js',
-            'client_components/highcharts-ng/dist/highcharts-ng.js',
-            'client_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
-            'client_components/angular-date-time-input/src/dateTimeInput.js',
-            'client_components/angular-gm-googlemaps/src/module.js',
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/angular/angular.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'bower_components/i18next/i18next.js',
+            'bower_components/underscore/underscore.js',
+            'bower_components/angular-cookies/angular-cookies.js',
+            'bower_components/angular-route/angular-route.js',
+            'bower_components/angular-animate/angular-animate.js',
+            'bower_components/angular-sanitize/angular-sanitize.js',
+            'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+            'bower_components/raphael/raphael.js',
+            'bower_components/angular-google-maps/dist/angular-google-maps.js',
+            'bower_components/highcharts-ng/dist/highcharts-ng.js',
+            'bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
+            'bower_components/angular-date-time-input/src/dateTimeInput.js',
+            'bower_components/angular-gm-googlemaps/src/module.js',
 
-            'public/js/libs/enum-0.2.5.js',
-            'public/js/libs/textAngular.js',
+            'public/lib/enum-0.2.5.js',
+            'public/lib/textAngular.js',
 
-            'public/js/client/**/*.js',
+            'public/js/**/*.js',
 
             'test/client/unit/**/*Spec.js'
         ],
 
 
         // list of files to exclude
-        exclude: ['public/js/client/widgets/map-france.js', 'public/js/client/pages/home.js'],
+        exclude: ['public/js/pages/home.js'],
 
 
         // preprocess matching files before serving them to the browser
@@ -52,7 +52,7 @@ module.exports = function(config) {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
-            '**/public/js/client/**/*.js': ['coverage']
+            '**/public/js/**/*.js': ['coverage']
         },
 
 

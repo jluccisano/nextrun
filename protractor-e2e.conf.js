@@ -44,7 +44,7 @@ exports.config = {
   //
   // Spec patterns are relative to the location of this config.
   specs: [
-    'test/client/e2e/**/*ProtractorScenario.js'
+    'test/client/e2e/**/*Scenario.js'
   ],
 
   // ----- Capabilities to be passed to the webdriver instance ----

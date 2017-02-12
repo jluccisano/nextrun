@@ -1,26 +1,41 @@
 'use strict';
 
-describe('Test Login scenario', function() {
+describe('Test login scenario', function() {
 
-	beforeEach(function() {
-		browser().navigateTo('/login');
-		
-	});
+  var loginURL = '/login';
 
-	it('ensures user can log in', function() { 
+  var email = element(by.name('email')); 
+  var password = element(by.name('password'));
+  var submitButton = element(by.buttonText('Se connecter'));
 
-		expect(browser().location().path()).toBe("/login");
+  beforeEach(function() {
+    browser.get(loginURL);
+    expect(browser.getCurrentUrl()).toEqual('http://localhost:3000/login');
+  });
 
-		// assuming inputs have ng-model specified, and this conbination will successfully login
-		//input('email').enter('test@test.com');
-		//input('password').enter('password');
-		//element('submit').click();
+  it('should keep invalid logins on this page', function() {
 
-		// logged in route
-		//expect(browser().location().path()).toBe("/myraces");
+    email.clear();
+    password.clear(); 
 
-		// my dashboard page has a label for the email address of the logged in user
-		//expect(element('#email').html()).toContain('test@test.com');
-	});
+    element(by.name('email')).sendKeys('toto');
+    expect(element(by.name('email-invalid')).getText()).toMatch('Email invalide');
+
+
+  });
+
+  it('ensures user can log in', function() { 
+
+    email.clear();
+    password.clear();
+
+    email.sendKeys('joseph.luccisano@gmail.com');
+    password.sendKeys('011004');
+    submitButton.click();
+
+    expect(browser.getCurrentUrl()).not.toEqual('/myraces');
+
+  });
+
 
 });

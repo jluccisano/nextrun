@@ -65,53 +65,45 @@ module.exports = function(grunt) {
       },
       basic_and_extras: {
         files: {
-          'tmp/public/js/client/app.js': ['public/js/client/app.js'],
-          'tmp/public/js/client/routingConfig.js': ['public/js/client/routingConfig.js'],
-          'tmp/public/js/client/controllers.js': [
-            'public/js/client/controllers.js',
-            'public/js/client/controllers/*.js'
+          'tmp/public/js/app.js': ['public/js/app.js'],
+          'tmp/public/js/routingConfig.js': ['public/js/routingConfig.js'],
+          'tmp/public/js/controllers.js': [
+            'public/js/controllers.js',
+            'public/js/controllers/*.js'
           ],
-          'tmp/public/js/client/directives.js': [
-            'public/js/client/directives/*.js',
+          'tmp/public/js/directives.js': [
+            'public/js/directives/*.js',
           ],
-          'tmp/public/js/client/services.js': [
-            'public/js/client/services/*.js',
+          'tmp/public/js/services.js': [
+            'public/js/services/*.js',
           ],
-          'tmp/public/js/client/animations.js': ['public/js/client/animations.js'],
-          'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
-          'tmp/public/js/client/widgets/map-france.js': ['public/js/client/widgets/map-france.js'],
-          'tmp/public/js/client/widgets/google-analytics.js': ['public/js/client/widgets/google-analytics.js'],
-          'tmp/public/js/client/constants/regions.js': ['public/js/client/constants/regions.js'],
-          'tmp/public/js/client/constants/departments.js': ['public/js/client/constants/departments.js'],
-          'tmp/public/js/client/constants/typeOfRaces.js': ['public/js/client/constants/typeOfRaces.js'],
-          'tmp/public/js/client/pages/home.js': ['public/js/client/pages/home.js'],
-          'tmp/public/js/libs/bootstrap.js': ['public/js/libs/bootstrap.js'],
-          'tmp/public/js/libs/jquery-2.0.3.js': ['public/js/libs/jquery-2.0.3.js'],
-          'tmp/public/js/libs/i18next-1.7.1.js': ['public/js/libs/i18next-1.7.1.js'],
-          'tmp/public/js/libs/angular.js': ['public/js/libs/angular.js'],
-          'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
-          'tmp/public/js/libs/angular-animate.js': ['public/js/libs/angular-animate.js'],
-          'tmp/public/js/libs/angular-cookies.js': ['public/js/libs/angular-cookies.js'],
-          'tmp/public/js/libs/angular-resource.js': ['public/js/libs/angular-resource.js'],
-          'tmp/public/js/libs/angular-sanitize.js': ['public/js/libs/angular-sanitize.js'],
-          'tmp/public/js/libs/angular-gm.js': ['public/js/libs/angular-gm.js'],
-          'tmp/public/js/libs/angular-google-maps.js': ['public/js/libs/angular-google-maps.js'],
-          'tmp/public/js/libs/dateTimeInput.js': ['public/js/libs/dateTimeInput.js'],
-          'tmp/public/js/libs/datetimepicker.js': ['public/js/libs/datetimepicker.js'],
-          'tmp/public/js/client/directives/gmAutocompleteDirectives.js': ['public/js/client/directives/gmAutocompleteDirectives.js'],
-          'tmp/public/js/libs/enum-0.2.5.js': ['public/js/libs/enum-0.2.5.js'],
-          'tmp/public/js/libs/raphael.js': ['public/js/libs/raphael.js'],
-          'tmp/public/js/libs/highcharts.js': ['public/js/libs/highcharts.js'],
-          'tmp/public/js/libs/highcharts-ng.js': ['public/js/libs/highcharts-ng.js'],
-          'tmp/public/js/libs/underscore.js': ['public/js/libs/underscore.js'],
-          'tmp/public/js/libs/moment-with-langs.js': ['public/js/libs/moment-with-langs.js'],
-          'tmp/public/js/libs/bindonce.js': ['public/js/libs/bindonce.js'],
-          'tmp/public/js/libs/textAngular.js': ['public/js/libs/textAngular.js'],
-          'tmp/public/js/libs/bootstrap-multiselect.js': ['public/js/libs/bootstrap-multiselect.js'],
-          'tmp/public/js/libs/daterangepicker.js': ['public/js/libs/daterangepicker.js'],
-          'tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js': ['public/js/libs/ui-bootstrap-tpls-0.7.0.js'],
-          'tmp/public/js/client/templates/angular-bootstrap-tpls-overrides.js': ['public/js/client/templates/angular-bootstrap-tpls-overrides.js'],
-          'tmp/public/js/libs/less-1.7.0.js': ['public/js/libs/less-1.7.0.js']
+          'tmp/public/js/animations.js': ['public/js/animations.js'],
+          'tmp/public/js/widgets/socialbuttons.js': ['public/js/widgets/socialbuttons.js'],
+          'tmp/public/js/widgets/map-france.js': ['public/js/widgets/map-france.js'],
+          'tmp/public/js/widgets/google-analytics.js': ['public/js/widgets/google-analytics.js'],
+          'tmp/public/js/constants/regions.js': ['public/js/constants/regions.js'],
+          'tmp/public/js/constants/departments.js': ['public/js/constants/departments.js'],
+          'tmp/public/js/constants/typeOfRaces.js': ['public/js/constants/typeOfRaces.js'],
+          'tmp/public/js/pages/home.js': ['public/js/pages/home.js'],
+          'tmp/public/js/templates/angular-bootstrap-tpls-overrides.js': ['public/js/templates/angular-bootstrap-tpls-overrides.js'],
+          'tmp/public/js/directives/gmAutocompleteDirectives.js': ['public/js/directives/gmAutocompleteDirectives.js'],
+
+
+          //To be minify
+          'tmp/public/lib/underscore.js': ['bower_components/underscore/underscore.js'],
+          'tmp/public/lib/bootstrap-multiselect.js': ['bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js'],
+          'tmp/public/lib/daterangepicker.js': ['bower_components/bootstrap-daterangepicker/daterangepicker.js'],
+          'tmp/public/lib/datetimepicker.js': ['bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js'],
+          'tmp/public/lib/dateTimeInput.js': ['bower_components/angular-date-time-input/src/dateTimeInput.js'],
+          'tmp/public/lib/highcharts.js': ['bower_components/highcharts.com/js/highcharts.src.js'],
+
+
+
+          'tmp/public/lib/textAngular.js': ['public/lib/textAngular.js'],
+          'tmp/public/lib/enum-0.2.5.js': ['public/lib/enum-0.2.5.js'],
+
+
+
         },
       },
     },
@@ -121,44 +113,36 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/public/js/client/app.min.js': ['tmp/public/js/client/app.js'],
-          'dist/public/js/client/routingConfig.js': ['tmp/public/js/client/routingConfig.js'],
-          'dist/public/js/client/controllers.min.js': ['tmp/public/js/client/controllers.js'],
-          'dist/public/js/client/directives.min.js': ['tmp/public/js/client/directives.js'],
-          'dist/public/js/client/services.min.js': ['tmp/public/js/client/services.js'],
-          'dist/public/js/client/animations.min.js': ['tmp/public/js/client/animations.js'],
-          'dist/public/js/client/widgets/socialbuttons.min.js': ['tmp/public/js/client/widgets/socialbuttons.js'],
-          'dist/public/js/client/widgets/map-france.min.js': ['tmp/public/js/client/widgets/map-france.js'],
-          'dist/public/js/client/widgets/google-analytics.min.js': ['tmp/public/js/client/widgets/google-analytics.js'],
-          'dist/public/js/client/pages/home.min.js': ['tmp/public/js/client/pages/home.js'],
-          'dist/public/js/libs/bootstrap.min.js': ['tmp/public/js/libs/bootstrap.js'],
-          'dist/public/js/libs/jquery-2.0.3.min.js': ['tmp/public/js/libs/jquery-2.0.3.js'],
-          'dist/public/js/libs/dateTimeInput.min.js': ['tmp/public/js/libs/dateTimeInput.js'],
-          'dist/public/js/libs/datetimepicker.min.js': ['tmp/public/js/libs/datetimepicker.js'],
-          'dist/public/js/client/directives/gmAutocompleteDirectives.min.js': ['tmp/public/js/client/directives/gmAutocompleteDirectives.js'],
-          'dist/public/js/libs/i18next-1.7.1.min.js': ['tmp/public/js/libs/i18next-1.7.1.js'],
-          'dist/public/js/libs/angular.min.js': ['tmp/public/js/libs/angular.js'],
-          'dist/public/js/libs/angular-route.min.js': ['tmp/public/js/libs/angular-route.js'],
-          'dist/public/js/libs/angular-animate.min.js': ['tmp/public/js/libs/angular-animate.js'],
-          'dist/public/js/libs/angular-cookies.min.js': ['tmp/public/js/libs/angular-cookies.js'],
-          'dist/public/js/libs/angular-resource.min.js': ['tmp/public/js/libs/angular-resource.js'],
-          'dist/public/js/libs/angular-sanitize.min.js': ['tmp/public/js/libs/angular-sanitize.js'],
-          'dist/public/js/libs/angular-google-maps.min.js': ['tmp/public/js/libs/angular-google-maps.js'],
-          'dist/public/js/libs/angular-gm.min.js': ['tmp/public/js/libs/angular-gm.js'],
-          'dist/public/js/libs/raphael.min.js': ['tmp/public/js/libs/raphael.js'],
-          'dist/public/js/libs/underscore.min.js': ['tmp/public/js/libs/underscore.js'],
-          'dist/public/js/libs/enums.min.js': ['tmp/public/js/libs/enum-0.2.5.js', 'tmp/public/js/client/constants/typeOfRaces.js', 'tmp/public/js/client/constants/departments.js'],
-          'dist/public/js/libs/moment-with-langs.min.js': ['tmp/public/js/libs/moment-with-langs.js'],
-          'dist/public/js/libs/highcharts.min.js': ['tmp/public/js/libs/highcharts.js'],
-          'dist/public/js/libs/highcharts-ng.min.js': ['tmp/public/js/libs/highcharts-ng.js'],
-          'dist/public/js/libs/bindonce.min.js': ['tmp/public/js/libs/bindonce.js'],
-          'dist/public/js/libs/textAngular.min.js': ['tmp/public/js/libs/textAngular.js'],
-          'dist/public/js/libs/bootstrap-multiselect.min.js': ['tmp/public/js/libs/bootstrap-multiselect.js'],
-          'dist/public/js/libs/daterangepicker.min.js': ['tmp/public/js/libs/daterangepicker.js'],
-          'dist/public/js/client/constants/regions.min.js': ['tmp/public/js/client/constants/regions.js'],
-          'dist/public/js/libs/ui-bootstrap-tpls-0.7.0.min.js': ['tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js'],
-          'dist/public/js/client/templates/angular-bootstrap-tpls-overrides.min.js': ['tmp/public/js/client/templates/angular-bootstrap-tpls-overrides.js'],
-          'dist/public/js/libs/less-1.7.0.min.js': ['tmp/public/js/libs/less-1.7.0.js']
+          'dist/public/js/app.min.js': ['tmp/public/js/app.js'],
+          'dist/public/js/routingConfig.js': ['tmp/public/js/routingConfig.js'],
+          'dist/public/js/controllers.min.js': ['tmp/public/js/controllers.js'],
+          'dist/public/js/directives.min.js': ['tmp/public/js/directives.js'],
+          'dist/public/js/services.min.js': ['tmp/public/js/services.js'],
+          'dist/public/js/animations.min.js': ['tmp/public/js/animations.js'],
+          'dist/public/js/widgets/socialbuttons.min.js': ['tmp/public/js/widgets/socialbuttons.js'],
+          'dist/public/js/widgets/map-france.min.js': ['tmp/public/js/widgets/map-france.js'],
+          'dist/public/js/widgets/google-analytics.min.js': ['tmp/public/js/widgets/google-analytics.js'],
+          'dist/public/js/pages/home.min.js': ['tmp/public/js/pages/home.js'],
+          'dist/public/js/directives/gmAutocompleteDirectives.min.js': ['tmp/public/js/directives/gmAutocompleteDirectives.js'],
+          'dist/public/js/constants/regions.min.js': ['tmp/public/js/constants/regions.js'],
+          'dist/public/js/templates/angular-bootstrap-tpls-overrides.min.js': ['tmp/public/js/templates/angular-bootstrap-tpls-overrides.js'],
+
+
+
+          'dist/public/lib/underscore.min.js': ['tmp/public/lib/underscore.js'],
+          'dist/public/lib/bootstrap-multiselect.min.js': ['tmp/public/lib/bootstrap-multiselect.js'],
+          'dist/public/lib/daterangepicker.min.js': ['tmp/public/lib/daterangepicker.js'],
+          'dist/public/lib/datetimepicker.min.js': ['tmp/public/lib/datetimepicker.js'],
+          'dist/public/lib/dateTimeInput.min.js': ['tmp/public/lib/dateTimeInput.js'],
+          'dist/public/lib/highcharts.min.js': ['tmp/public/lib/highcharts.js'],
+
+
+
+          'dist/public/lib/enums.min.js': ['tmp/public/lib/enum-0.2.5.js', 'tmp/public/js/constants/typeOfRaces.js', 'tmp/public/js/constants/departments.js'],
+
+          'dist/public/lib/textAngular.min.js': ['tmp/public/lib/textAngular.js'],
+
+
         }
       }
     },
@@ -172,6 +156,16 @@ module.exports = function(grunt) {
       }
     },
     copy: {
+      move_css: {
+        files: [{
+          expand: true,
+          src: [
+            'bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css',
+            'bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css'
+          ],
+          dest: 'public/css'
+        }]
+      },
       main: {
         files: [
           // includes files within path
@@ -192,8 +186,36 @@ module.exports = function(grunt) {
           // includes files within path and its sub-directories
           {
             expand: true,
-            src: ['public/css/font-awesome-4.0.3/**'],
-            dest: 'dist/'
+            src: [
+              'bower_components/font-awesome/css/font-awesome.min.css',
+              'bower_components/bootstrap/dist/css/bootstrap.min.css'
+
+            ],
+            dest: 'dist/public/css/'
+          },
+          //copy all minify libs to public/js/lib
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              'bower_components/angular/angular.min.js',
+              'bower_components/angular-route/angular-route.min.js',
+              'bower_components/angular-animate/angular-animate.min.js',
+              'bower_components/angular-cookies/angular-cookies.min.js',
+              'bower_components/angular-resource/angular-resource.min.js',
+              'bower_components/angular-sanitize/angular-sanitize.min.js',
+              'bower_components/angular-google-maps/dist/angular-google-maps.min.js',
+              'bower_components/highcharts-ng/dist/highcharts-ng.min.js',
+              'bower_components/jquery/dist/jquery.min.js',
+              'bower_components/bootstrap/dist/js/bootstrap.min.js',
+              'bower_components/i18next/i18next.min.js',
+              'bower_components/AngularGM/angular-gm.min.js',
+              'bower_components/moment/min/moment-with-langs.min.js',
+              'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+              'bower_components/x2js/xml2json.min.js',
+              'bower_components/font-awesome/css/font-awesome.min.css'
+            ],
+            dest: 'dist/public/lib/'
           },
 
         ]
@@ -226,7 +248,7 @@ module.exports = function(grunt) {
         },
         reporter: 'checkstyle',
         reporterOutput: 'jshint.xml',
-        ignores: ['public/js/libs/**/*.js', 'public/js/client/widgets/*.js']
+        ignores: ['public/lib/**/*.js', 'public/js/widgets/*.js']
       },
       gruntfile: {
         src: 'Gruntfile.js'
@@ -277,18 +299,18 @@ module.exports = function(grunt) {
     },
     watch: {
       express: {
-        files: ['public/js/client/**/*.js', 'test/client/e2e/**/*Scenario.js'],
+        files: ['public/js/**/*.js', 'test/client/e2e/**/*Scenario.js'],
         tasks: ['express:test'],
         options: {
           spawn: false
         }
       },
       karma: {
-        files: ['public/js/client/**/*.js', 'test/client/unit/**/*Spec.js'],
+        files: ['public/js/**/*.js', 'test/client/unit/**/*Spec.js'],
         tasks: ['karma:unit:run']
       },
       protractor: {
-        files: ['public/js/client/**/*.js', 'test/client/e2e/*ProtractorScenario.js'],
+        files: ['public/js/**/*.js', 'test/client/e2e/*Scenario.js'],
         tasks: ['protractor']
       }
     },
@@ -321,34 +343,26 @@ module.exports = function(grunt) {
         }
       }
     },
-    protractor_webdriver: {
-      options: {
-        // Task-specific options go here.
-      }
-    },
     shell: {
       options: {
         stdout: true
-      },
-      start_selenium: {
-        command: 'node ./node_modules/protractor/bin/webdriver-manager start',
-        options: {
-          stdout: true,
-          async: false
-        }
-      },
-      stop_selenium: {
-        command: 'node ./node_modules/protractor/bin/webdriver-manager stop',
-        options: {
-          stdout: true,
-          async: false
-        }
       },
       selenium_install: {
         command: 'node ./node_modules/protractor/bin/webdriver-manager update'
       },
       npm_install: {
         command: 'npm install'
+      },
+      bower_install: {
+        command: 'bower install'
+      }
+    },
+    bgShell: {
+      _defaults: {
+        bg: true
+      },
+      start_selenium: {
+        cmd: 'node ./node_modules/protractor/bin/webdriver-manager start'
       }
     }
   });
@@ -356,7 +370,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test-client', ['jshint:src', 'test-client:unit', 'test-client:e2e']);
   grunt.registerTask('test-client:unit', ['karma:unit']);
-  grunt.registerTask('test-client:e2e', ['protractor_webdriver', 'express:test', 'protractor:singleRun']);
+  grunt.registerTask('test-client:e2e', ['bgShell:start_selenium', 'express:test', 'protractor:singleRun']);
 
   grunt.registerTask('test-server', ['jshint:src', 'test-server:unit', 'test-server:integration', 'mochaTest:html-cov', 'mochaTest:travis-cov']);
   grunt.registerTask('test-server:unit', ['mochaTest:unit']);
@@ -366,12 +380,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask('minify', ['concat', 'uglify', 'cssmin', 'imagemin']);
 
-  grunt.registerTask('install', ['update', 'shell:selenium_install']);
+  grunt.registerTask('install', ['update', 'shell:selenium_install', 'copy:move_css']);
 
-  grunt.registerTask('update', ['shell:npm_install']);
+  grunt.registerTask('update', ['shell:npm_install', 'shell:bower_install']);
 
 
-  grunt.registerTask('build', ['clean:build', 'checkcode', 'test-server', 'test-client', 'minify', 'copy', 'usemin', 'jsdoc', 'clean:tmp']);
+  grunt.registerTask('build', ['clean:build', 'checkcode', 'test-server', 'test-client', 'minify', 'copy:main', 'usemin', 'jsdoc', 'clean:tmp']);
 
 
 

@@ -1,7 +1,7 @@
 var _ = require('underscore'),
-    userRoles = require('../../public/js/client/routingConfig').userRoles,
+    userRoles = require('../../public/js/routingConfig').userRoles,
     util = require('util'),
-    accessLevels = require('../../public/js/client/routingConfig').accessLevels;
+    accessLevels = require('../../public/js/routingConfig').accessLevels;
 
 
 exports.ensureAuthorized = function(req, res, next, routes) {

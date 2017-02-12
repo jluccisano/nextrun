@@ -6,9 +6,7 @@ div(data-ng-if="route.isVisible")
 		
 			marker(coords="cursorMarker" icon="cursorMarker.icon")
 				
-		//polyline(data-ng-repeat="p in route.polylines track by p.id" fit="true" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' editable="p.editable" draggable="p.draggable")
-
-		polylinecustom(ng-model="route.polylines")
+		polylinecustom(polylines="route.polylines")
 
 
 	div(data-ng-show="route.editMode" style="padding: 5px; z-index: 0; position: absolute; top: 300px; right: 20px;")

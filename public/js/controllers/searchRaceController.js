@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'mySharedService', '$rootScope',
-	function($scope, $location, $routeParams, RaceServices, $http, sharedService, $rootScope) {
+angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location', '$routeParams', 'RaceServices', '$http', 'mySharedService', '$rootScope', 'Alert',
+	function($scope, $location, $routeParams, RaceServices, $http, sharedService, $rootScope, Alert) {
 		'use strict';
 
 

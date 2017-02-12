@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
   User = mongoose.model('User'),
   errorUtils = require('../utils/errorutils'),
   util = require('util'),
-  userRoles = require('../../public/js/client/routingConfig').userRoles,
+  userRoles = require('../../public/js/routingConfig').userRoles,
   passport =  require('passport'),
   email = require('../../config/middlewares/notification');
 

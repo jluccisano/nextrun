@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
   app = require('../../../../server'),
   context = describe,
   request = require('superagent'),
-  userRoles = require('../../../../public/js/client/routingConfig').userRoles
+  userRoles = require('../../../../public/js/routingConfig').userRoles
   User = mongoose.model('User'),
   superagent = request.agent(app);
 
