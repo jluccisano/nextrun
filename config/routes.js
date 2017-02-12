@@ -42,4 +42,9 @@ app.post('/users/forgotpassword', auth.ensureAuthorized, userController.forgotPa
 
 app.get('/users/settings', auth.ensureAuthorized , userController.settings);
 
+app.post('/users/update/profile', auth.ensureAuthorized, userController.checkIfEmailAlreadyExists,  userController.updateProfile);
+
+app.post('/users/check/email', auth.ensureAuthorized, userController.checkIfEmailAlreadyExists);
+
+
 };

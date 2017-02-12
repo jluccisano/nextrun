@@ -17,7 +17,7 @@ var mongoose = require('mongoose')
  * @returns success if OK
  */
 exports.signup = function (req, res) {
-	var user = new User(req.body);
+	var user = new User(req.body.user);
 	user.provider = 'local';
 	user.role = userRoles.user;
 	user.last_update = new Date();
@@ -115,4 +115,45 @@ exports.settings = function (req, res) {
                         email: req.user.email 
                       }
                     });
+};
+
+/**
+ * @method update profile of user
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.checkIfEmailAlreadyExists = function (req, res) {
+    User.findOne({ email: req.body.email }, function (err, user) {
+        if (err) { 
+          return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+        }
+        if (!user) {
+          return res.json(200);
+        }
+        return res.json(400, {message: "error.emailAlreadyExists"}); 
+     });
+}
+/**
+ * @method update profile of user
+ * @param req
+ * @param res
+ */
+exports.updateProfile = function (req, res) {
+
+    var user = req.user;
+
+    var newEmail = req.body.newEmail;
+
+    if(newEmail != user.email) user.email = newEmail;
+
+    User.update({ _id: user._id }, {$set: {email: newEmail, last_update: new Date()} }, {upsert: true},  function(err){
+        if (!err) {
+          return res.json(200);
+
+        } else {
+          return res.json(400, { error: "Une erreur s'est produite" });
+        }
+      });
+
 };

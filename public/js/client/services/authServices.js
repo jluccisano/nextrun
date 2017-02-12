@@ -49,6 +49,16 @@ angular.module('nextrunApp')
                 success();
             }).error(error);
         },
+        checkEmail: function(user, success, error) {
+            $http.post('/users/check/email', email).success(function(){
+                success();
+            }).error(error);
+        },
+        changeProfile: function(user, success, error) {
+            $http.post('/users/update/profile', user).success(function(user){
+                success(user);
+            }).error(error);
+        },
         accessLevels: accessLevels,
         userRoles: userRoles,
         user: currentUser

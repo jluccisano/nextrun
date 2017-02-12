@@ -30,7 +30,7 @@ describe('Users', function () {
 
       it('no email - should respond with errors', function (done) {
        superagent.post('http://localhost:3000/users/signup')
-        .send({ username:'foobar', email: '', password: 'foobar' })
+        .send({user: { username:'foobar', email: '', password: 'foobar' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
@@ -58,7 +58,7 @@ describe('Users', function () {
 
       it('should response success', function (done) {
        superagent.post('http://localhost:3000/users/signup')
-        .send({ username:'foobar', email: 'foobar@example.com', password: 'foobar' })
+        .send({user: { username:'foobar', email: 'foobar@example.com', password: 'foobar' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
