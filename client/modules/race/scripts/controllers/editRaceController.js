@@ -14,7 +14,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		FileReaderService,
 		RouteHelperService,
 		RouteUtilsService,
-		TextAngularConfig,
 		MetaService,
 		GpxService,
 		gettextCatalog) {
@@ -39,8 +38,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		};
 
 		$scope.raceId = $routeParams.raceId;
-
-		$scope.textAngularOpts = TextAngularConfig;
 
 		$scope.getType = function(type) {
 			return type.i18n;
