@@ -16,16 +16,16 @@ angular.module("nextrunApp.route").controller("RoutesController",
 		$scope.routes = [];
 
 		$scope.init = function() {
-			RouteService.find($scope.currentPage).then(
-				function(response) {
-					if (response.data && response.data.routes && response.data.routes.length > 0) {
-						$scope.routes = response.data.routes;
-						$scope.totalItems = $scope.routes.length;
-					} else {
-						$scope.totalItems = 0;
-						$scope.routes = [];
-					}
-				}).finally(function() {
+			RouteService.find($scope.currentPage).then(function(response) {
+				if (response.data && response.data.items && response.data.items.length > 0) {
+					$scope.routes = response.data.items;
+					$scope.totalItems = $scope.routes.length;
+				} else {
+					$scope.totalItems = 0;
+					$scope.routes = [];
+				}
+			}).
+			finally(function() {
 				MetaService.ready("Mes parcours");
 			});
 		};
@@ -35,11 +35,10 @@ angular.module("nextrunApp.route").controller("RoutesController",
 		};
 
 		$scope.publish = function(route, value) {
-			RouteService.publish(route._id, value).then(
-				function() {
-					notificationService.success(gettextCatalog.getString("Votre manifestation a bien été publiée"));
-					$scope.init();
-				});
+			RouteService.publish(route._id, value).then(function() {
+				notificationService.success(gettextCatalog.getString("Votre manifestation a bien été publiée"));
+				$scope.init();
+			});
 		};
 
 		$scope.openDeleteConfirmation = function(route) {
@@ -58,11 +57,10 @@ angular.module("nextrunApp.route").controller("RoutesController",
 					history: false
 				}
 			}).get().on('pnotify.confirm', function() {
-				RouteService.delete(route._id).then(
-					function() {
-						notificationService.success(gettextCatalog.getString("Le parcours a bien été supprimé"));
-						$scope.init();
-					});
+				RouteService.delete(route._id).then(function() {
+					notificationService.success(gettextCatalog.getString("Le parcours a bien été supprimé"));
+					$scope.init();
+				});
 			});
 		};
 

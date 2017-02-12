@@ -131,13 +131,12 @@ var RaceSchema = new Schema({
     }
 });
 
-
-/**
- * Pre-save hook
- */
-
 RaceSchema.pre("save", function(next) {
-    return next();
+    this.lastUpdate = new Date();
+    if(this.isNew) {
+        this.creationDate = new Date();
+    }
+    next();
 });
 
 RaceSchema.path("name").validate(function(name, fn) {
@@ -163,10 +162,6 @@ RaceSchema.path("userId").validate(function(userId, fn) {
 }, "error.unknownUser");
 
 
-RaceSchema.methods = {
-
-};
-
 RaceSchema.statics = {
 
     autocomplete: function(text, cb) {
@@ -191,7 +186,9 @@ RaceSchema.statics = {
         var andArray = [];
         var location = {};
 
-        andArray.push({ "published" : true });
+        andArray.push({
+            "published": true
+        });
 
         if (criteria.location) {
 
@@ -255,7 +252,10 @@ RaceSchema.statics = {
         }).exec(cb);
     },
 
-
+    /**
+     *
+     *
+     */
     findByCriteria: function(options, cb) {
 
         var criteria = options.criteria || {};
@@ -286,7 +286,6 @@ RaceSchema.statics = {
      * @param {Function} cb
      */
     findAll: function(cb) {
-
         this.find({
             published: true
         }, {

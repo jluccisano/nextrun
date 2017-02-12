@@ -48,3 +48,10 @@ exports.handleUnknownId = function(res) {
         message: ["error.unknownId"]
     });
 };
+
+exports.handleUnknownData = function(res) {
+    logger.error("error.unknownData");
+    return res.status(400).json({
+        message: ["error.unknownData"]
+    });
+};

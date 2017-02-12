@@ -6,9 +6,6 @@ var mainController = require("../controllers/mainController"),
 /** ROUTES **/
 
 var routes = [
-
-    // Views
-
     {
         path: "/",
         httpMethod: "GET",
@@ -25,7 +22,6 @@ var routes = [
         middleware: [mainController.templates],
         accessLevel: accessLevels.public
     },
-
     // redirect all others to the index (HTML5 history)
     {
         path: "*",
@@ -33,11 +29,9 @@ var routes = [
         middleware: [mainController.index],
         accessLevel: accessLevels.public
     }
-
 ];
 
 module.exports = function(app, express) {
-
     var router = express.Router();
     routerService.register(app, router, routes, "");
 };

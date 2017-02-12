@@ -669,6 +669,10 @@ var routeBuilder = {};
 			return this.segments;
 		};
 
+		this.getData = function() {
+			return this.data;
+		};
+
 		//KEEP
 		this.reset = function() {
 			this.data.ascendant = 0;

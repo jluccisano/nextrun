@@ -2,21 +2,12 @@
 @import 'search.scss';
 @import 'view.scss';
 @import 'home.scss';
+@import 'create.scss';
+@import 'races.scss';
 
 .tab-content {
     padding-top: 20px;
 }
-
-
-/*.pac-container {
-    z-index: 1051;
-}*/
-
-/*accordion {
-    .panel-body {
-        padding: none;
-    }
-}*/
 
 textarea[name=description] {
     resize: none;

@@ -12,7 +12,9 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         gettextCatalog,
         RouteHelperService,
         RouteBuilderService,
-        underscore) {
+        underscore,
+        mapOptions
+        dateRanges) {
 
         $scope.setRange = function(index) {
             $scope.active = index;
@@ -20,36 +22,14 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.search();
         };
         
-        $scope.dateRanges = [{
-            label: "Les 7 Prochains jours",
-            startDate: moment(),
-            endDate: moment().add("days", 6)
-        }, {
-            label: "Les 30 Prochains jours",
-            startDate: moment(),
-            endDate: moment().add("days", 29)
-        }, {
-            label: "Les 3 mois à venir",
-            startDate: moment(),
-            endDate: moment().add("days", 89)
-        }, {
-            label: "Les 6 mois à venir",
-            startDate: moment(),
-            endDate: moment().add("days", 179)
-        }, {
-            label: "Personnalisée",
-            startDate: moment(),
-            endDate: undefined
-        }];
+        $scope.dateRanges = angular.copy(dateRanges);
 
         $scope.criteria = {
             radius: 60,
             dateRange: $scope.dateRanges[0],
         };
 
-
         $scope.listOfTypes = RaceTypeEnum.getValues();
-
         $scope.active = 0;
 
         $scope.location = {
@@ -64,49 +44,13 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             }
         };
 
-        $scope.map = {
-            isVisible: false,
-            editMode: true,
-            segments: [],
-            zoom: 6,
-            fit: true,
-            markers: [],
-            polylines: [],
-            center: {
-                latitude: 46.52863469527167,
-                longitude: 2.43896484375,
-            },
-            options: {
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                mapTypeControlOptions: {
-                    mapTypeIds: [google.maps.MapTypeId.ROADMAP,
-                        google.maps.MapTypeId.HYBRID,
-                        google.maps.MapTypeId.SATELLITE
-                    ]
-                },
-                disableDoubleClickZoom: true,
-                scrollwheel: true,
-                draggableCursor: "crosshair",
-                streetViewControl: false,
-                zoomControl: true
-            },
-            clusterOptions: {
-                gridSize: 60,
-                ignoreHidden: true,
-                minimumClusterSize: 2
-            },
-            doClusterMarkers: true
-        };
-
+        $scope.map = angular.copy(mapOptions);
 
         $scope.search = function() {
             RaceService.search($scope.criteria).then(function(response) {
                 if (response.data.items.length > 0) {
-
                     $scope.emptyResults = false;
-
                     $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
-
                     underscore.each($scope.map.markers, function(marker) {
                         marker.closeClick = function() {
                             marker.showWindow = false;

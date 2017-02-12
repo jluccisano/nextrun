@@ -3,12 +3,7 @@ var userController = require("../controllers/userController"),
     routerService = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
-
-/** ROUTES **/
-
 var routes = [
-
-    /** api users **/
     {
         path: "/signup",
         httpMethod: "POST",
@@ -54,12 +49,10 @@ var routes = [
         httpMethod: "POST",
         middleware: [userController.login],
         accessLevel: accessLevels.public
-    },
-
+    }
 ];
 
 module.exports = function(app, express) {
-
     var router = express.Router();
     routerService.register(app, router, routes, "/api/users");
 };

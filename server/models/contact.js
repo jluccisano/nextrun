@@ -1,7 +1,3 @@
-/**
- * Module dependencies.
- */
-
 var mongoose = require("mongoose"),
     Schema = mongoose.Schema;
 
@@ -19,7 +15,6 @@ var ContactSchema = new Schema({
         default: new Date()
     }
 });
-
 
 ContactSchema.path("email").validate(function(email) {
     return email.length;
@@ -40,15 +35,11 @@ ContactSchema.path("email").validate(function(email, fn) {
     return true;
 }, "error.emailAlreadyExists");
 
-/**
- * Pre-save
- */
 
 ContactSchema.pre("save", function(next) {
     if (this.isNew) {
         return next();
     }
-
 });
 
 mongoose.model("Contact", ContactSchema);

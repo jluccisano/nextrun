@@ -1,7 +1,3 @@
-/**
- * Module dependencies.
- */
-
 var mongoose = require("mongoose"),
     Schema = mongoose.Schema;
 
@@ -36,6 +32,14 @@ var RouteSchema = new Schema({
     description: String
 });
 
+RouteSchema.pre("save", function(next) {
+    this.lastUpdate = new Date();
+    if(this.isNew) {
+        this.creationDate = new Date();
+    }
+    next();
+});
+
 RouteSchema.statics = {
 
     /**
@@ -44,7 +48,6 @@ RouteSchema.statics = {
      * @param {ObjectId} id
      * @param {Function} cb
      */
-
     load: function(id, cb) {
         this.findOne({
             _id: id
@@ -63,8 +66,11 @@ RouteSchema.statics = {
         }).exec(cb);
     },
 
+    /**
+     *
+     *
+     */
     findByCriteria: function(options, cb) {
-
         var criteria = options.criteria || {};
         this.find(criteria, {
             segments: 0,

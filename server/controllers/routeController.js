@@ -14,29 +14,27 @@ var mongoose = require("mongoose"),
 exports.load = function(req, res, next, id) {
     Route.load(id, function(error, route) {
         if (error) {
-            errorUtils.handleError(error);
+            errorUtils.handleError(res, error);
+        } else if (!route) {
+            errorUtils.handleUnknownId(res);
+        } else {
+            req.routeData = route;
+            next();
         }
-        if (!route) {
-            errorUtils.handleUnknownId();
-        }
-        req.routeData = route;
-        next();
     });
 };
 
 exports.create = function(req, res) {
+    var route = new Route(req.body.route);
     var userConnected = req.user;
 
-    var route = new Route(req.body.route);
     route.userId = userConnected._id;
-    route.lastUpdate = new Date();
-    route.creationDate = new Date();
-
+    
     route.save(function(error, route) {
         if (error) {
-            errorUtils.handleError(error);
+            errorUtils.handleError(res, error);
         } else {
-            return res.status(200).json({
+            res.status(200).json({
                 routeId: route._id
             });
         }
@@ -45,31 +43,24 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
     var route = req.routeData;
-
-    var dataToUpdate = req.body.route;
-
-    if(dataToUpdate._id) {
+    var dataToUpdate = req.body;
+    
+    if (dataToUpdate._id) {
         delete dataToUpdate._id;
     }
-
     dataToUpdate.lastUpdate = new Date();
 
-    //var query = {};
-    //if (!underscore.isUndefined(data.query)) {
-     //   query = data.query;
-   // }
-
-    //query._id = route._id;
-
-    Route.update(route._id, {
+    Route.update({
+        id: route._id
+    }, {
         $set: dataToUpdate
     }, {
         upsert: true
     }, function(error) {
         if (error) {
-            errorUtils.handleError(error);
+            errorUtils.handleError(res, error);
         } else {
-            return res.sendStatus(200);
+            res.sendStatus(200);
         }
     });
 };
@@ -78,17 +69,14 @@ exports.update = function(req, res) {
  * @method find route
  * @param req
  * @param res
- * @returns route loaded by load parameter id
+ * @returns route loaded by parameter id
  */
 exports.find = function(req, res) {
     var route = req.routeData;
-
     if (!underscore.isUndefined(route)) {
-        return res.status(200).json(route);
+        res.status(200).json(route);
     } else {
-        return res.status(400).json({
-            message: ["error.unknownRoute"]
-        });
+        errorUtils.handleUnknownData(res);
     }
 };
 
@@ -99,16 +87,13 @@ exports.find = function(req, res) {
  * @returns success if OK
  */
 exports.findByUser = function(req, res) {
-
-    var criteria = {};
     var page = 1;
     var perPage = 10;
-
-    criteria = {
+    var criteria = {
         userId: req.user._id
     };
 
-    if (typeof req.params.page !== "undefined") {
+    if (req.params.page) {
         page = req.params.page;
     }
 
@@ -118,24 +103,14 @@ exports.findByUser = function(req, res) {
         criteria: criteria
     };
 
-    Route.findByCriteria(options, function(err, routes) {
-        if (err) {
-            logger.error(err);
-            return res.status(400).json({
-                message: errorUtils.errors(err.errors)
-            });
-        }
-        if (routes) {
-            return res.status(200).json({
-                routes: routes
-            });
+    Route.findByCriteria(options, function(error, routes) {
+        if (error) {
+            errorUtils.handleError(res, error);
         } else {
-            logger.error("error.occured");
-            return res.status(400).json({
-                message: ["error.occured"]
+            res.status(200).json({
+                items: routes
             });
         }
-
     });
 };
 
@@ -146,15 +121,11 @@ exports.findByUser = function(req, res) {
  */
 exports.delete = function(req, res) {
     var route = req.routeData;
-    console.log("route:" + route._id);
-    Route.destroy(route._id, function(err) {
-        if (!err) {
-            return res.sendStatus(200);
+    Route.destroy(route._id, function(error) {
+        if (error) {
+            errorUtils.handleError(res, error);
         } else {
-            logger.error(err);
-            return res.status(400).json({
-                message: errorUtils.errors(err.errors)
-            });
+            res.sendStatus(200);
         }
     });
 };

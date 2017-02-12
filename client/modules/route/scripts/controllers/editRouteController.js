@@ -3,7 +3,6 @@
 angular.module("nextrunApp.route").controller("EditRouteController",
     function(
         $scope,
-        $timeout,
         $stateParams,
         RouteBuilderService,
         RouteService,
@@ -38,7 +37,7 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         };
 
         $scope.tmpRoute = {};
-        $scope.route;
+        $scope.route = undefined;
         $scope.routeViewModel = {};
 
         $scope.init = function() {
@@ -47,26 +46,22 @@ angular.module("nextrunApp.route").controller("EditRouteController",
 
             if ($scope.routeId) {
                 RouteService.retrieve($scope.routeId).then(function(response) {
-
                     $scope.route = response.data;
-
                     angular.copy($scope.route, $scope.tmpRoute);
-
-                    $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
-                    $scope.routeViewModel.addClickListener($scope.onClickMap);
+                    $scope.createRoute();
                 }).
                 finally(function() {
                     MetaService.ready("Editer un parcours");
                 });
             } else {
-                $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
-                $scope.routeViewModel.addClickListener($scope.onClickMap);
+                $scope.createRoute();
             }
+        };
 
-
-            $timeout(function() {
-                $scope.routeViewModel.setVisible(true);
-            });
+        $scope.createRoute = function() {
+            $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
+            $scope.routeViewModel.addClickListener($scope.onClickMap);
+            $scope.routeViewModel.setVisible(true);
         };
 
         $scope.onClickMap = function(routeViewModel, destinationLatlng) {
@@ -104,31 +99,14 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         };
 
         $scope.submit = function() {
-
-            var data = {
-                route: $scope.routeViewModel.data
-            };
-
-            RouteService.saveOrUpdate(data).then(function(response) {
+            RouteService.saveOrUpdate($scope.routeViewModel.getData()).then(function() {
                 notificationService.success(gettextCatalog.getString("Le parcours a bien été créée"));
+                $scope.init();
             });
-
-            /*var fields = {};
-            fields["routes.$"] = routeDataModel;
-
-            var query = {};
-            query = {
-                "routes._id": routeDataModel._id
-            };
-
-            $scope.update({
-                query: query,
-                fields: fields
-            });*/
         };
 
         $scope.cancel = function() {
-            angular.copy($scope.tmpRoute, $scope.routeViewModel.data);
+            angular.copy($scope.tmpRoute, $scope.routeViewModel.getData());
         };
 
         $scope.init();

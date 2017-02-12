@@ -1,0 +1,51 @@
+.edit-route {
+    .navbar {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top:0px;
+        z-index: 1000;
+    }
+    .inline-stats {
+        z-index: 0;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 5px;
+        padding-left: 25px;
+        padding-bottom: 5px;
+        padding-right: 25px;
+        highcharts-container {
+            width: 100%;
+        }
+    }
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top:50px;
+    google-map {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        top:0px;
+        .angular-google-map {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            top:0px;
+            img {
+                max-width: inherit;
+            }
+            .angular-google-map-container {
+                position: absolute;
+                left: 0px;
+                right: 0px;
+                bottom: 0px;
+                top:0px;
+            }
+        }
+    }
+}

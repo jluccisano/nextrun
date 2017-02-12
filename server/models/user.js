@@ -1,15 +1,7 @@
-/**
- * Module dependencies.
- */
-
 var mongoose = require("mongoose"),
     Schema = mongoose.Schema,
     crypto = require("crypto"),
     authTypes = ["facebook"];
-
-/**
- * User Schema
- */
 
 var UserSchema = new Schema({
     username: {
@@ -49,11 +41,6 @@ var UserSchema = new Schema({
 });
 
 
-
-/**
- * Virtuals
- */
-
 UserSchema
     .virtual("password")
     .set(function(password) {
@@ -64,15 +51,10 @@ UserSchema
         return this._password;
     });
 
-/**
- * Validations
- */
-
 var validatePresenceOf = function(value) {
     return value && value.length;
 };
 
-// the below 4 validations only apply if you are signing up traditionally
 UserSchema.path("email").validate(function(email) {
     // if you are authenticating by any of the oauth strategies, don"t validate
     if (authTypes.indexOf(this.provider) !== -1) {
@@ -131,7 +113,6 @@ UserSchema.pre("save", function(next) {
  */
 
 UserSchema.statics = {
-
     /**
      * Remove user by id
      *
