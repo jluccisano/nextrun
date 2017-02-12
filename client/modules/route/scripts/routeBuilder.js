@@ -288,7 +288,7 @@ var routeBuilder = {};
 
 		this.addClickListener = function(callback) {
 			var _this = this;
-			this.events = {
+			this._events = {
 				click: function(mapModel, eventName, originalEventArgs) {
 					callback(_this, originalEventArgs[0].latLng);
 				}
@@ -596,14 +596,6 @@ var routeBuilder = {};
 			return this.data.elevationPoints;
 		};
 
-		this.getMarkers = function() {
-			return this._markers;
-		};
-
-		this.getPolylines = function() {
-			return this._polylines;
-		};
-
 		this.isVisible = function() {
 			return this._visible;
 		};
@@ -650,14 +642,6 @@ var routeBuilder = {};
 
 		this.getOptions = function() {
 			return this._options;
-		};
-
-		this.setEvents = function(events) {
-			this._events = events;
-		};
-
-		this.getEvents = function() {
-			return this._events;
 		};
 
 		this.setChartConfig = function(chartConfig) {

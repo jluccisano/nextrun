@@ -13,7 +13,8 @@ var nextrunApp = angular.module("nextrunApp", [
 nextrunApp.config(
   function(
     $routeProvider,
-    $locationProvider) {
+    $locationProvider,
+    $httpProvider) {
 
     var access = routingConfig.accessLevels;
 
@@ -43,6 +44,8 @@ nextrunApp.config(
     });
 
     $locationProvider.html5Mode(true);
+
+    $httpProvider.interceptors.push('ErrorHandlerInterceptor');
 
   });
 

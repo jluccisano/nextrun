@@ -19,7 +19,7 @@ div.container(style="padding-bottom: 50px;")
 			div.row
 				div.col-lg-12
 					tabset(vertical="false" type="navType")
-						tab(ng-repeat="route in race.routes" heading="{{route.type}}" ng-click="route.isVisible=true")
+						tab(ng-repeat="route in race.routes" heading="{{route.data.type.i18n}}" ng-click="route.setVisible(true)")
 							div.bs-callout.bs-callout-info
 								h4 {{'Informations' | translate}}
 								p  {{'Ajouter des informations concernant le parcours' | translate}}

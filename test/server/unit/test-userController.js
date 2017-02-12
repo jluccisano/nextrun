@@ -83,8 +83,12 @@ describe("UserController", function() {
 			};
 
 			res.status = function(httpStatus) {
-				expect(httpStatus).to.equal(200);
-				done();
+				return {
+					end: function() {
+						expect(httpStatus).to.equal(200);
+						done();
+					}
+				}
 			};
 
 			UserController.logout(req, res);
