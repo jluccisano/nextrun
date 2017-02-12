@@ -1,68 +1,66 @@
-div(class="container")
+div(class="container view-race")
   div(class="row")
-    nav.col-sm-2.bs-docs-sidebar
-      ul#sidebar.nav.nav-stacked.fixed
-        li(data-target="#general" bs-scrollspy)
-          a(href='' ng-click="scrolltoHref('general')") General
-        li(data-target="#GroupA" bs-scrollspy)
-          a(href='' ng-click="scrolltoHref('GroupA')") Group A
-          ul.nav.nav-stacked
-            li(data-target="#GroupASub1" bs-scrollspy)
-              a(href='' ng-click="scrolltoHref('GroupASub1')") Sub-Group 1
-            li(data-target="#GroupASub2" bs-scrollspy)
-              a(href='' ng-click="scrolltoHref('GroupASub2')" ) Sub-Group 2
-        li(data-target="#GroupB" bs-scrollspy)
-          a(href='' ng-click="scrolltoHref('GroupB')" ) Group B
-          ul.nav.nav-stacked
-            li(data-target="#GroupBSub1" bs-scrollspy)
-              a(href='' ng-click="scrolltoHref('GroupBSub1')") Sub-Group 1
-            li(data-target="#GroupBSub2" bs-scrollspy)
-              a(href='' ng-click="scrolltoHref('GroupBSub2')") Sub-Group 2
-        li(data-target="#GroupC" bs-scrollspy)
-          a(href='' ng-click="scrolltoHref('GroupC')" ) Group C
-          ul.nav.nav-stacked
-            li(data-target="#GroupCSub1" bs-scrollspy)
-              a(href='' ng-click="scrolltoHref('GroupCSub1')" ) Sub-Group 1
-            li(data-target="#GroupCSub2" bs-scrollspy)
-              a(href='' ng-click="scrolltoHref('GroupCSub2')") Sub-Group 2
+    div(class="col-md-2")
+      div(class="bs-sidebar hidden-print affix" role="complementary" data-offset-top="-120" data-offset-bottom="240" bs-affix bs-scrollspy-list)
+        ul(id="menu" class="list-group")
+          a(ng-click="status.open = true;" scroll-to="general" class="list-group-item")
+            h4(class="list-group-item-heading" translate) Général
+          a( ng-click="status.open = true" scroll-to="routes" class="list-group-item")
+            h4(class="list-group-item-heading" translate) Parcours
+            a(ng-class="{'active': selection === (route.getType() + $index)}" bs-scrollspy ng-click="status.open = false;setSelection(route, $index);route.setVisible(true)" ng-repeat="route in routesViewModel" scroll-to="route{{$index}}" class="list-group-item") {{route.getType()}}
+          a(ng-class="{'active': selection === 'organisation'}" bs-scrollspy ng-click="status.open = false;selection = 'organisation'" scroll-to="organisation" class="list-group-item")
+            h4(class="list-group-item-heading" translate) Organisation
+          a(ng-class="{'active': selection === 'rights'}" bs-scrollspy ng-click="status.open = false;selection = 'rights'" scroll-to="rights" class="list-group-item") 
+            h4(class="list-group-item-heading" translate) Règlement
+          a(ng-class="{'active': selection === 'misc'}" bs-scrollspy ng-click="status.open = false;selection = 'misc'" scroll-to="misc" class="list-group-item")
+            h4(class="list-group-item-heading" translate) Divers
 
-    div(class="col-sm-10")
-      section(id="general" class="group")
-         accordion
+    div(class="col-md-8")
+      div(class="bs-docs-section")
+        div(class="page-header")
+          div(id="general")
+          accordion
             accordion-group(is-open="status.open")
-              accordion-heading {{race.name | translate}}
-                  small ({{race.pin.department.code}})
-                  i(class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}")
-              
-              div(class="row text-center")
-                div(class="col-md-8")
-                  img(src="" alt="" class="img-thumbnail img-responsive" style="width: 380px; height: 440px;")
-                div(class="col-md-2")
-                  h3 {{race.type}}
-                  span(class"small" translate) type
-                div(class="col-md-2")
-                  h3 {{race.distanceType}}
-                  span(class"small" translate) distance
+              accordion-heading {{race.name}}
+                i(class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}")
+              h5(class="text-left") {{race.date | date:'dd MMMM yyyy'}}
 
-      section(id="GroupA" class="group")
-        h3 Group A
-        div(id="GroupASub1" class="subgroup")
-          h4 Group A Sub 1
-          div(id="GroupASub2" class="subgroup")
-            h4 Group A Sub 2
-
-      section(id="GroupB" class="group")
-        h3 Group B
-        div(id="GroupBSub1" class="subgroup")
-          h4 Group B Sub 1
-          div(id="GroupBSub2" class="subgroup")
-            h4 Group B Sub 2
-
-      section(id="GroupC" class="group")
-        h3 Group C
-        div(id="GroupCSub1" class="subgroup")
-          h4 Group C Sub 1
-          div(id="GroupCSub2" class="subgroup")
-            h4 Group C Sub 2
-
-
+      div(class="bs-docs-section")
+        div(class="page-header")
+          div(class="panel panel-default")
+            div(class="panel-body")
+              div(ng-repeat="route in routesViewModel")
+                div(ng-if="selection === (route.getType() + $index) && route.isVisible()")
+                  h3(id="{{selection}}") {{route.getType()}}
+                  include showMap
+                  div(class="row text-center")
+                    div(class="col-lg-4")
+                      h3 {{ route.getDistance() | number: 2}}
+                        small km
+                      span.small {{ 'Distance' | translate}}
+                    div(class="col-lg-4")
+                      h3 {{route.getAscendant() | number: 0 }}
+                        small m
+                      span.small {{ 'D+' | translate}}
+                    div(class="col-lg-4")
+                      h3 {{route.getDescendant() | number: 0 }}
+                        small m
+                      span.small {{ 'D-' | translate}}
+                    div(class="col-lg-4")
+                      h3 {{route.getMaxElevation() | number: 0 }}
+                        small m
+                      span.small {{ 'Max' | translate}}
+                    div(class="col-lg-4")
+                      h3 {{route.getMinElevation() | number: 0 }}
+                        small m
+                      span.small {{ 'Min' | translate}}
+              div(ng-show="selection == 'organisation'")
+                h1(id="organisation") organisation
+              div(ng-show="selection == 'rights'") 
+                h1(id="rights") règlement
+                div(ng-if="race.rights.moreInformation" class="well" ng-bind-html="race.rights.moreInformation")
+                div(ng-if="!race.rights.moreInformation" class="well" translate) Non communiqué
+              div(ng-show="selection == 'misc'")
+                h1(id="misc") divers
+                div(ng-if="race.miscellaneous.moreInformation" ng-bind-html="race.miscellaneous.moreInformation")
+                div(ng-if="!race.miscellaneous.moreInformation" translate) Non communiqué

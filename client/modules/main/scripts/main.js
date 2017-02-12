@@ -53,6 +53,8 @@ nextrunApp.config(
 nextrunApp.run(function(
   $rootScope,
   $location,
+  $anchorScroll,
+  $routeParams,
   SharedMetaService,
   AuthService,
   AlertService,
@@ -72,6 +74,11 @@ nextrunApp.run(function(
 
       AlertService.add(gettextCatalog.getString("danger"), gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"), 3000);
     }
+  });
+
+  $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+    $location.hash($routeParams.scrollTo);
+    $anchorScroll();
   });
 
   gettextCatalog.currentLanguage = 'en';

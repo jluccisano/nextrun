@@ -17,6 +17,8 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         google.maps.visualRefresh = true;
 
+        $scope.selection = "general";
+
         $scope.raceId = $routeParams.raceId;
         $scope.cursorMarker = {};
         $scope.navType = "pills";
@@ -41,9 +43,13 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
                 $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
 
+                $scope.selection = $scope.routesViewModel[0].getType() + 0;
+
             }).finally(function() {
                 MetaService.ready($scope.race.name, $location.path(), $scope.generateRaceDescription());
             });
+
+
         };
 
         //TODO create directive
@@ -73,13 +79,25 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
             return blob;
         };
 
-        $scope.scrolltoHref = function(id) {
-            // set the location.hash to the id of
-            // the element you wish to scroll to.
-            $location.hash(id);
-            // call $anchorScroll()
-            $anchorScroll();
+
+
+        $scope.setSelection = function(route, index) {
+            $scope.selection = route.getType() + index;
         };
 
         $scope.init();
     });
+
+angular.module("nextrunApp.race").directive('scrollTo', function($location, $anchorScroll) {
+    return function(scope, element, attrs) {
+        element.bind('click', function(event) {
+            event.stopPropagation();
+            scope.$on('$locationChangeStart', function(ev) {
+                ev.preventDefault();
+            });
+            var location = attrs.scrollTo;
+            $location.hash(location);
+            $anchorScroll();
+        });
+    }
+});
