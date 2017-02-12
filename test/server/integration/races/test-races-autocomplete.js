@@ -7,14 +7,23 @@ process.env.NODE_ENV = 'test';
 var mongoose = require('mongoose'),
   should = require('should'),
   request = require('superagent'),
-  app = require('../../../server'),
+  app = require('../../../../server'),
   context = describe,
-  userRoles = require('../../../public/js/client/routingConfig').userRoles,
+  userRoles = require('../../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
   User = mongoose.model('User'),
-  moment = require('moment'),
   superagent = request.agent(app);
 
+/**
+ * Retrieve race tests
+ *
+ * Non valide
+ * Aucun  utilisateur connecté
+ * l'utilisateur connecté n'est pas propriétaire de la manifestation
+ *
+ * Valide
+ * Le user connecté est propriétaire de la manifestation
+ */
 
 var user1 = {
   username: 'foobar1',
@@ -27,7 +36,8 @@ var user1 = {
   password: '123'
 };
 
-describe('Search races: POST /api/races/search', function() {
+/*
+describe('Search races with autocomplete: POST /api/races/autocomplete', function() {
 
   var currentRace;
   var currentDate = new Date();
@@ -105,51 +115,19 @@ describe('Search races: POST /api/races/search', function() {
   describe('valid parameters', function() {
 
     it('should return one race', function(done) {
-      superagent.post('http://localhost:3000/api/races/search')
+      superagent.post('http://localhost:3000/api/races/autocomplete')
         .send({
           criteria: {
             fulltext: "du",
-            page: 0,
-            size: 20,
-            sort: {
-              "date": 1
-            },
-            types: [],
-            departments: [],
-            dateRange: {}
+            region: undefined
           }
         })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
-          res.body.races[0].results.length.should.equal(1);
-          res.body.races[0].results[0].name.should.equal("Duathlon de Castelnaudary");
-          done();
-        });
-    });
-
-    it('should return one race', function(done) {
-      superagent.post('http://localhost:3000/api/races/search')
-        .send({
-          criteria: {
-            fulltext: "du",
-            page: 0,
-            size: 20,
-            sort: {
-              "date": 1
-            },
-            types: ['duathlon'],
-            departments: ['11'],
-            dateRange: {startDate: moment().subtract('days', 29) , endDate: moment().add('days', 29)}
-          }
-        })
-        .set('Accept', 'application/json')
-        .end(function(err, res) {
-          should.not.exist(err);
-          res.should.have.status(200);
-          res.body.races[0].results.length.should.equal(1);
-          res.body.races[0].results[0].name.should.equal("Duathlon de Castelnaudary");
+          res.body.races.length.should.equal(1);
+          res.body.races[0].name.should.equal("Duathlon de Castelnaudary");
           done();
         });
     });
@@ -168,3 +146,4 @@ describe('Search races: POST /api/races/search', function() {
 
 
 });
+*/

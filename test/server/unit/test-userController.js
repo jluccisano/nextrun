@@ -5,8 +5,8 @@ var mongoose = require('mongoose'),
 	expect = chai.expect,
 	sinon = require('sinon'),
 	sinonChai = require("sinon-chai"),
-	app = require('../../server'),
-	UserController = require('../../app/controllers/userController'),
+	app = require('../../../server'),
+	UserController = require('../../../app/controllers/userController'),
 	User = mongoose.model('User');
 
 chai.use(sinonChai);

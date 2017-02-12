@@ -6,10 +6,10 @@ process.env.NODE_ENV = 'test';
 
 var mongoose = require('mongoose'),
   should = require('should'),
-  app = require('../../../server'),
+  app = require('../../../../server'),
   context = describe,
   superagent = require('superagent'),
-  userRoles = require('../../../public/js/client/routingConfig').userRoles,
+  userRoles = require('../../../../public/js/client/routingConfig').userRoles,
   User = mongoose.model('User');
 
 /**

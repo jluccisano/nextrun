@@ -7,15 +7,17 @@ process.env.NODE_ENV = 'test';
 var mongoose = require('mongoose'),
   should = require('should'),
   request = require('superagent'),
-  app = require('../../../server'),
+  app = require('../../../../server'),
   context = describe,
-  userRoles = require('../../../public/js/client/routingConfig').userRoles,
+  userRoles = require('../../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
+  ObjectId = mongoose.Schema.Types.ObjectId,
   User = mongoose.model('User'),
   superagent = request.agent(app);
 
+
 /**
- * Update race tests
+ * Delete race tests
  *
  * Non valide
  * Aucun  utilisateur connecté
@@ -47,11 +49,11 @@ var user2 = {
   password: '123'
 };
 
-
-describe('Update Race: UPDATE /api/races', function() {
+describe('Delete race: DELETE /api/races', function() {
 
   var currentRace;
   var currentDate = new Date();
+
 
   before(function(done) {
     User.create(user1, function(err, user) {
@@ -79,6 +81,7 @@ describe('Update Race: UPDATE /api/races', function() {
   });
 
   before(function(done) {
+
     Race.create({
       name: 'Duathlon de Castelnaudary',
       type: {
@@ -104,6 +107,8 @@ describe('Update Race: UPDATE /api/races', function() {
     });
   });
 
+
+
   it('should save the race to the database', function(done) {
     Race.findOne({
       name: 'Duathlon de Castelnaudary'
@@ -124,10 +129,10 @@ describe('Update Race: UPDATE /api/races', function() {
     });
   });
 
-  describe('Access Denied', function() {
 
-    it('should not update because unknown user', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
+  describe('Access denied', function() {
+    it('should not delete because access denied', function(done) {
+      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -137,9 +142,10 @@ describe('Update Race: UPDATE /api/races', function() {
           done();
         });
     });
+
   });
 
-  describe('invalid parameters', function() {
+  describe('invvalid parameters', function() {
 
     before(function(done) {
       superagent.post('http://localhost:3000/api/users/session')
@@ -156,8 +162,9 @@ describe('Update Race: UPDATE /api/races', function() {
           done();
         });
     });
-    it('should not update because user not Owner', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
+
+    it('should not delete because user not Owner', function(done) {
+      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -167,6 +174,7 @@ describe('Update Race: UPDATE /api/races', function() {
           done();
         });
     });
+
     after(function(done) {
       superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
@@ -177,7 +185,8 @@ describe('Update Race: UPDATE /api/races', function() {
     });
   });
 
-  describe('invalid parameters', function() {
+  describe('invvalid parameters', function() {
+
     before(function(done) {
       superagent.post('http://localhost:3000/api/users/session')
         .send({
@@ -193,8 +202,9 @@ describe('Update Race: UPDATE /api/races', function() {
           done();
         });
     });
-    it('should not update because race id is unknown', function(done) {
-      superagent.put('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/update')
+
+    it('should not delete because race id is unknown', function(done) {
+      superagent.del('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -204,6 +214,7 @@ describe('Update Race: UPDATE /api/races', function() {
           done();
         });
     });
+
     after(function(done) {
       superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
@@ -215,9 +226,7 @@ describe('Update Race: UPDATE /api/races', function() {
 
   });
 
-
-
-  describe('Valid parameters', function() {
+  describe('valid parameters', function() {
 
     before(function(done) {
       superagent.post('http://localhost:3000/api/users/session')
@@ -234,36 +243,10 @@ describe('Update Race: UPDATE /api/races', function() {
           done();
         });
     });
-    it('should update success', function(done) {
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
-        .send({
-          race: {
-            name: 'Triathlon de Castelnaudary',
-            type: {
-              name: 'triathlon',
-              i18n: 'Triathlon'
-            },
-            department: {
-              code: '31',
-              name: 'Haute-Garonne',
-              region: 'Midi-Pyrénées'
-            },
-            date: currentDate,
-            edition: '2',
-            distanceType: {
-              name: 'M',
-              i18n: ''
-            },
-            plan: {
-              address: {
-                address1: '2 Place de la république',
-                address2: '',
-                postcode: '11400',
-                city: 'Castelnaudary'
-              }
-            }
-          }
-        })
+
+    it('should delete success', function(done) {
+      superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
+        .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
@@ -272,25 +255,16 @@ describe('Update Race: UPDATE /api/races', function() {
         });
     });
 
-    it('should update the user to the database', function(done) {
+    it('should not retrieve race to the database', function(done) {
       Race.findOne({
         _id: currentRace._id
       }).exec(function(err, race) {
         should.not.exist(err);
-        race.should.be.an.instanceOf(Race);
-        race.name.should.equal('Triathlon de Castelnaudary');
-        race.type.name.should.equal('triathlon');
-        race.department.name.should.equal('Haute-Garonne');
-        race.date.should.be.an.instanceOf(Date);
-        //race.date.getTime().should.equal(new Date(currentDate).getTime());
-        race.edition.should.equal(2);
-        race.distanceType.name.should.equal('M');
-        race.user_id.should.eql(user1._id);
-        race.published.should.equal(false);
-        currentRace = race;
+        (race == null).should.be.true;
         done();
       });
     });
+
     after(function(done) {
       superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
@@ -299,7 +273,6 @@ describe('Update Race: UPDATE /api/races', function() {
           done();
         });
     });
-
   });
 
   after(function(done) {
@@ -312,6 +285,5 @@ describe('Update Race: UPDATE /api/races', function() {
       done();
     });
   });
-
 
 });

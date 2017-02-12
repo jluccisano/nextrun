@@ -4,7 +4,7 @@ describe('Test login scenario', function() {
 
   var loginURL = '/login';
 
-  var email = element(by.name('email'));
+  var email = element(by.name('email')); 
   var password = element(by.name('password'));
   var submitButton = element(by.buttonText('Se connecter'));
 
@@ -16,7 +16,7 @@ describe('Test login scenario', function() {
   it('should keep invalid logins on this page', function() {
 
     email.clear();
-    password.clear();
+    password.clear(); 
 
     element(by.name('email')).sendKeys('toto');
     expect(element(by.name('email-invalid')).getText()).toMatch('Email invalide');
@@ -24,7 +24,7 @@ describe('Test login scenario', function() {
 
   });
 
-  it('ensures user can log in', function() {
+  it('ensures user can log in', function() { 
 
     email.clear();
     password.clear();

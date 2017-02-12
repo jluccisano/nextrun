@@ -1,4 +1,7 @@
 module.exports = function(grunt) {
+
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     clean: {
@@ -7,12 +10,30 @@ module.exports = function(grunt) {
       tmp: ['tmp']
     },
     mochaTest: {
-      test: {
+      unit: {
         options: {
           reporter: 'spec',
-          require: 'coverage/blanket'
+          require: 'blanket'
         },
-        src: ['test/**/test-*.js']
+        src: ['test/server/unit/**/test-*.js']
+      },
+      integration: {
+        options: {
+          reporter: 'spec',
+          require: 'blanket'
+        },
+        src: ['test/server/integration/**/test-*.js']
+      },
+      coverage: {
+        options: {
+          reporter: 'html-cov',
+          // use the quiet flag to suppress the mocha console output
+          quiet: true,
+          // specify a destination file to capture the mocha
+          // output (the quiet option does not suppress this)
+          captureFile: 'coverage.html'
+        },
+        src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
       },
       'html-cov': {
         options: {
@@ -20,13 +41,13 @@ module.exports = function(grunt) {
           quiet: true,
           captureFile: 'coverage.html'
         },
-        src: ['test/**/test-*.js']
+        src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
       },
       'travis-cov': {
         options: {
-          reporter: 'travis-cov'
+          reporter: 'travis-cov',
         },
-        src: ['test/**/test-*.js']
+        src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
       }
     },
     usemin: {
@@ -240,7 +261,9 @@ module.exports = function(grunt) {
     karma: {
       unit: {
         configFile: 'karma.conf.js',
-        background: true
+        background: false,
+        singleRun: true,
+        autoWatch: false
       },
       e2e: {
         configFile: 'karma-e2e.conf.js',
@@ -254,15 +277,19 @@ module.exports = function(grunt) {
     },
     watch: {
       express: {
-        files: ['public/js/client/**/*.js', 'test/client/**/*Scenario.js'],
+        files: ['public/js/client/**/*.js', 'test/client/e2e/**/*Scenario.js'],
         tasks: ['express:test'],
         options: {
           spawn: false
         }
       },
       karma: {
-        files: ['public/js/client/**/*.js', 'test/client/**/*Spec.js'],
+        files: ['public/js/client/**/*.js', 'test/client/unit/**/*Spec.js'],
         tasks: ['karma:unit:run']
+      },
+      protractor: {
+        files: ['public/js/client/**/*.js', 'test/client/e2e/*ProtractorScenario.js'],
+        tasks: ['protractor']
       }
     },
     express: {
@@ -286,20 +313,38 @@ module.exports = function(grunt) {
         args: {
           // Arguments passed to the command
         }
+      },
+      singleRun: {
+        options: {
+          configFile: "protractor-e2e.conf.js", // Target-specific config file
+          args: {} // Target-specific arguments
+        }
+      }
+    },
+    protractor_webdriver: {
+      options: {
+        // Task-specific options go here.
       }
     },
     shell: {
       options: {
         stdout: true
       },
-      selenium: {
-        command: ' node ./node_modules/protractor/bin/webdriver-manager start',
+      start_selenium: {
+        command: 'node ./node_modules/protractor/bin/webdriver-manager start',
         options: {
-          stdout: false,
-          async: true
+          stdout: true,
+          async: false
         }
       },
-      protractor_install: {
+      stop_selenium: {
+        command: 'node ./node_modules/protractor/bin/webdriver-manager stop',
+        options: {
+          stdout: true,
+          async: false
+        }
+      },
+      selenium_install: {
         command: 'node ./node_modules/protractor/bin/webdriver-manager update'
       },
       npm_install: {
@@ -308,35 +353,28 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-jade');
-  grunt.loadNpmTasks('grunt-usemin');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('usemin-patterns');
-  grunt.loadNpmTasks('grunt-jsdoc');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-imagemin');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-express-server');
-  grunt.loadNpmTasks('grunt-protractor-runner');
-  grunt.loadNpmTasks('grunt-shell');
 
+  grunt.registerTask('test-client', ['jshint:src', 'test-client:unit', 'test-client:e2e']);
+  grunt.registerTask('test-client:unit', ['karma:unit']);
+  grunt.registerTask('test-client:e2e', ['protractor_webdriver', 'express:test', 'protractor:singleRun']);
 
-  grunt.registerTask('test', ['mochaTest', 'karma:unit']);
-
-  grunt.registerTask('test-e2e', ['express:test', 'karma:e2e', 'watch', 'express:test:stop']);
-
-  grunt.registerTask('test-protractor-e2e', ['express:test', 'shell:selenium', 'protractor', 'express:test:stop']);
-
-  grunt.registerTask('karmaTests', ['karma:unit', 'watch']);
+  grunt.registerTask('test-server', ['jshint:src', 'test-server:unit', 'test-server:integration', 'mochaTest:html-cov', 'mochaTest:travis-cov']);
+  grunt.registerTask('test-server:unit', ['mochaTest:unit']);
+  grunt.registerTask('test-server:integration', ['mochaTest:integration']);
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 
-  grunt.registerTask('default', ['clean:build', 'jshint:src', 'mochaTest', 'concat', 'uglify', 'cssmin', 'imagemin', 'copy', 'usemin', 'jsdoc', 'clean:tmp']);
+  grunt.registerTask('minify', ['concat', 'uglify', 'cssmin', 'imagemin']);
+
+  grunt.registerTask('install', ['update', 'shell:selenium_install']);
+
+  grunt.registerTask('update', ['shell:npm_install']);
+
+
+  grunt.registerTask('build', ['clean:build', 'checkcode', 'test-server', 'test-client', 'minify', 'copy', 'usemin', 'jsdoc', 'clean:tmp']);
+
+
+
+  grunt.registerTask('default', ['build']);
 
 };

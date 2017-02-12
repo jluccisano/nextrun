@@ -7,7 +7,7 @@ process.env.NODE_ENV = 'test';
 var mongoose = require('mongoose'),
   should = require('should'),
   superagent = require('superagent'),
-  app = require('../../../server'),
+  app = require('../../../../server'),
   context = describe,
   Contact = mongoose.model('Contact');
 

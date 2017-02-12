@@ -38,7 +38,7 @@ module.exports = function(config) {
 
             'public/js/client/**/*.js',
 
-            'test/**/*Spec.js'
+            'test/client/unit/**/*Spec.js'
         ],
 
 

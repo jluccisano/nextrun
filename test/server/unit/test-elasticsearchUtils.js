@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'test';
  * Module dependencies.
  */
 
-var elasticsearchUtils = require('../../app/utils/elasticsearchUtils'),
+var elasticsearchUtils = require('../../../app/utils/elasticsearchUtils'),
   assert = require('chai').assert;
 
 describe('buildGeoDistanceFilter', function() {

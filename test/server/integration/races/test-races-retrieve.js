@@ -6,16 +6,23 @@ process.env.NODE_ENV = 'test';
 
 var mongoose = require('mongoose'),
   should = require('should'),
-  app = require('../../../server'),
-  context = describe,
   request = require('superagent'),
-  userRoles = require('../../../public/js/client/routingConfig').userRoles,
-  User = mongoose.model('User'),
+  app = require('../../../../server'),
+  context = describe,
+  userRoles = require('../../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
+  User = mongoose.model('User'),
   superagent = request.agent(app);
 
 /**
- * Delete user tests
+ * Retrieve race tests
+ *
+ * Non valide
+ * Aucun  utilisateur connecté
+ * l'utilisateur connecté n'est pas propriétaire de la manifestation
+ *
+ * Valide
+ * Le user connecté est propriétaire de la manifestation
  */
 
 var user1 = {
@@ -29,7 +36,18 @@ var user1 = {
   password: '123'
 };
 
-describe('Delete User: DELETE /api/users', function() {
+var user2 = {
+  username: 'foobar2',
+  email: "foobar2@example.com",
+  role: {
+    bitMask: 2,
+    title: 'user'
+  },
+  _id: '223726537a11c4aa8d789bbc',
+  password: '123'
+};
+
+describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function() {
 
   var currentRace;
   var currentDate = new Date();
@@ -41,6 +59,12 @@ describe('Delete User: DELETE /api/users', function() {
     });
   });
 
+  before(function(done) {
+    User.create(user2, function(err, user) {
+      user2._id = user._id;
+      done();
+    });
+  });
 
   it('should save the user 1 to the database', function(done) {
     User.findOne({
@@ -54,6 +78,7 @@ describe('Delete User: DELETE /api/users', function() {
   });
 
   before(function(done) {
+
     Race.create({
       name: 'Duathlon de Castelnaudary',
       type: {
@@ -99,10 +124,9 @@ describe('Delete User: DELETE /api/users', function() {
     });
   });
 
-  describe('Delete user failed', function() {
-
-    it('should response access denied', function(done) {
-      superagent.del('http://localhost:3000/api/users/delete')
+  describe('Access denied', function() {
+    it('should not retrieve because access denied', function(done) {
+      superagent.get('http://localhost:3000/api/races/find')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -112,11 +136,53 @@ describe('Delete User: DELETE /api/users', function() {
           done();
         });
     });
+  });
+
+  describe('invalid parameters', function() {
+
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar2@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar2");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
+
+    it('should not retrieve any race for this user', function(done) {
+
+      superagent.get('http://localhost:3000/api/races/find')
+        .send()
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.races.length.should.equal(0);
+          done();
+        });
+    });
+
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          done();
+        });
+    });
+
+
 
   });
 
-  describe('Delete user success', function() {
-
+  describe('valid parameters', function() {
 
     before(function(done) {
       superagent.post('http://localhost:3000/api/users/session')
@@ -134,10 +200,34 @@ describe('Delete User: DELETE /api/users', function() {
         });
     });
 
-    it('should response delete account success', function(done) {
-      superagent.del('http://localhost:3000/api/users/delete')
+    it('should return one race', function(done) {
+      superagent.get('http://localhost:3000/api/races/find')
         .send()
         .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.races.length.should.equal(1);
+          res.body.races[0].name.should.equal("Duathlon de Castelnaudary");
+          done();
+        });
+    });
+
+    it('test with page parameter should return one race', function(done) {
+      superagent.get('http://localhost:3000/api/races/find/page/1')
+        .send()
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.races.length.should.equal(1);
+          res.body.races[0].name.should.equal("Duathlon de Castelnaudary");
+          done();
+        });
+    });
+
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
@@ -145,25 +235,6 @@ describe('Delete User: DELETE /api/users', function() {
         });
     });
 
-    it('check if user not exits', function(done) {
-      User.findOne({
-        email: 'foobar1@example.com'
-      }).exec(function(err, user) {
-        should.not.exist(err);
-        (user == null).should.be.true;
-        done();
-      });
-    });
-
-    it('check if no race exists for this user_id', function(done) {
-      Race.findOne({
-        user_id: user1._id
-      }).exec(function(err, race) {
-        should.not.exist(err);
-        (race == null).should.be.true;
-        done();
-      });
-    });
   });
 
   after(function(done) {
@@ -171,11 +242,11 @@ describe('Delete User: DELETE /api/users', function() {
       done();
     });
   });
-
   after(function(done) {
     Race.remove({}, function() {
       done();
     });
   });
+
 
 });
