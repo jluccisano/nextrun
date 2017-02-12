@@ -44,11 +44,22 @@ angular.module("nextrunApp.route").controller("RoutesController",
 			$state.go("newRoute");
 		};
 
-		$scope.publish = function(route, value) {
-			RouteService.publish(route._id, value).then(function() {
-				notificationService.success(gettextCatalog.getString("Votre parcours a bien été publiée"));
-				$scope.init();
-			});
+		$scope.publish = function(route) {
+
+			if (!route.published) {
+				RouteService.unpublish(route._id).then(
+					function() {
+						notificationService.success(gettextCatalog.getString("Votre parcours a bien été retiré	"));
+						$scope.init();
+					});
+			} else {
+				RouteService.publish(route._id).then(
+					function() {
+						notificationService.success(gettextCatalog.getString("Votre parcours a bien été publiée"));
+						$scope.init();
+					});
+			}
+
 		};
 
 		$scope.openDeleteConfirmation = function(route) {

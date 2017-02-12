@@ -268,10 +268,12 @@ msgid "Ajouter une nouvelle manifestation"
 msgstr ""
 
 #: .tmp/generated/views/partials/route/mapEditor.html
+#: .tmp/generated/views/partials/route/mapView.html
 msgid "Altitude max"
 msgstr ""
 
 #: .tmp/generated/views/partials/route/mapEditor.html
+#: .tmp/generated/views/partials/route/mapView.html
 msgid "Altitude min"
 msgstr ""
 
@@ -443,6 +445,7 @@ msgstr ""
 #: .tmp/generated/views/partials/race/templates/type.html
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/mapEditor.html
+#: .tmp/generated/views/partials/route/mapView.html
 #: .tmp/generated/views/partials/route/routes.html
 msgid "Distance"
 msgstr ""
@@ -461,10 +464,12 @@ msgid "Dupliquer"
 msgstr ""
 
 #: .tmp/generated/views/partials/route/mapEditor.html
+#: .tmp/generated/views/partials/route/mapView.html
 msgid "Dénivelé négatif"
 msgstr ""
 
 #: .tmp/generated/views/partials/route/mapEditor.html
+#: .tmp/generated/views/partials/route/mapView.html
 msgid "Dénivelé positif"
 msgstr ""
 
@@ -1160,6 +1165,10 @@ msgstr ""
 
 #: client/modules/route/scripts/controllers/routesController.js
 msgid "Votre parcours a bien été publiée"
+msgstr ""
+
+#: client/modules/route/scripts/controllers/routesController.js
+msgid "Votre parcours a bien été retiré"
 msgstr ""
 
 #: client/modules/commons/scripts/directives/nrFileSelectDirective.js

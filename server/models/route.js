@@ -23,6 +23,10 @@ var RouteSchema = new Schema({
     userId: Schema.Types.ObjectId,
     lastUpdate: Date,
     publicationDate: Date,
+    published: {
+        type: Boolean,
+        default: false
+    },
     ascendant: Number,
     descendant: Number,
     minElevation: Number,
@@ -41,7 +45,7 @@ RouteSchema.pre("save", function(next, req, callback) {
     this.userId = userConnected._id;
 
     this.lastUpdate = new Date();
-    if(this.isNew) {
+    if (this.isNew) {
         this.creationDate = new Date();
     }
     next(callback);

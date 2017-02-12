@@ -1,12 +1,13 @@
 var routeController = require("../controllers/routeController"),
     raceController = require("../controllers/raceController"),
     routerService = require("../middlewares/router"),
+    authorizationUtils = require("../utils/authorizationUtils"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
 var routes = [{
     path: "/:id",
     httpMethod: "GET",
-    middleware: [routeController.getRoute],
+    middleware: [authorizationUtils.checkRouteNotPublished, routeController.getRoute],
     accessLevel: accessLevels.public
 }, {
     path: "/new",

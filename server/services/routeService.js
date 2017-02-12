@@ -1,11 +1,10 @@
-var	errorUtils = require("../utils/errorUtils"),
+var errorUtils = require("../utils/errorUtils"),
 	mongoose = require("mongoose"),
-	underscore = require("underscore"),
 	email = require("../middlewares/notification"),
 	Route = mongoose.model("Route");
 
 
-exports.save = function(route, req, res,  cb) {
+exports.save = function(route, req, res, cb) {
 
 	if (!route._id) {
 		route = new Route(route);
@@ -29,9 +28,9 @@ exports.getRoutesByUser = function(req, res, cb) {
 
 	var projection = {
 		segments: 0,
-		elevationPoints:0
+		elevationPoints: 0
 	};
-	
+
 	var limit = 10;
 	var skip = 0;
 
@@ -52,12 +51,12 @@ exports.getRoutes = function(req, res, cb) {
 
 	var projection = {
 		segments: 0,
-		elevationPoints:0
+		elevationPoints: 0
 	};
 
 	var limit = 10;
 	var skip = 0;
-	
+
 	skip = req.params.page ? (parseInt(req.params.page) - 1) * limit : skip;
 
 	Route.findByCriteria(criteria, function(error, routes) {
@@ -82,16 +81,7 @@ exports.findRoute = function(id, res, cb) {
 
 exports.getRoute = function(req, res, cb) {
 	var route = req.routeData;
-	var user = req.user;
-	if (!underscore.isUndefined(route)) {
-		if(route.published === false) {
-			errorUtils.handleRouteNotPublished(res);
-		} else {
-			cb(route);
-		}
-	} else {
-		errorUtils.handleUnknownData(res);
-	}
+	cb(route);
 };
 
 exports.deleteRoute = function(route, res, cb) {
@@ -104,14 +94,14 @@ exports.deleteRoute = function(route, res, cb) {
 	});
 };
 
-exports.updateRoute= function(route, req, res, cb) {
+exports.updateRoute = function(route, req, res, cb) {
 
 	var dataToUpdate = req.body;
 
-    if (dataToUpdate._id) {
-        delete dataToUpdate._id;
-    }
-    dataToUpdate.lastUpdate = new Date();
+	if (dataToUpdate._id) {
+		delete dataToUpdate._id;
+	}
+	dataToUpdate.lastUpdate = new Date();
 
 	var query = {
 		_id: route._id

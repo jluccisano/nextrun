@@ -1,4 +1,4 @@
-var errorUtils = require("../utils/errorUtils"),
+var errorUtils = require("./errorUtils"),
     underscore = require("underscore");
 
 

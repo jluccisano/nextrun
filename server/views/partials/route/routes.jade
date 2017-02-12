@@ -28,7 +28,7 @@ div(class="container routes")
 					a(ng-click="openDeleteConfirmation(route)")
 						span(class="glyphicon glyphicon-trash")
 				td
-					input(bs-switch type="checkbox" ng-model="route.published" ng-change="publish(route, route.published)" switch-on-color="success" switch-off-color="default" switch-on-text="On" switch-off-text="Off")
+					input(bs-switch type="checkbox" ng-model="route.published" ng-change="publish(route)" switch-on-color="success" switch-off-color="default" switch-on-text="On" switch-off-text="Off")
 	div(class="col-lg-8 col-lg-offset-4")
 		pagination(boundary-links="true" ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
 				

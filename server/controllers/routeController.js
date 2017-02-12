@@ -55,15 +55,15 @@ exports.deleteRoute = function(req, res) {
 };
 
 exports.publishRoute = function(req, res) {
-    var route = req.route;
+    var route = req.routeData;
     routeService.publishRoute(route, true, res, function() {
         res.sendStatus(200);
     });
 };
 
 exports.unpublishRoute = function(req, res) {
-    var route = req.route;
-    routeService.publishRace(route, false, res, function() {
+    var route = req.routeData;
+    routeService.publishRoute(route, false, res, function() {
         res.sendStatus(200);
     });
 };
