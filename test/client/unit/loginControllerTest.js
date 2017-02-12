@@ -1,6 +1,6 @@
 describe("app module", function () {
     
-    beforeEach(module("app"));
+   /* beforeEach(module("app"));
 
     describe("LoginCtrl", function () {
         var scope,
@@ -16,5 +16,5 @@ describe("app module", function () {
 
             //expect(scope.message).toBe("Hello World");
         });
-    });
+    });*/
 });

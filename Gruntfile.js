@@ -274,7 +274,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['mochaTest']);
 
-  grunt.registerTask('karmaTests', ['karma:unit', 'watch']);
+  grunt.registerTask('karmaTests', ['karma:unit']);
 
   grunt.registerTask('checkcode', ['jshint:src', 'jshint:gruntfile', 'jshint:test']);
 

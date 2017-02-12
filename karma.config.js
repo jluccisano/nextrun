@@ -5,7 +5,7 @@ module.exports = function(config) {
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: './',
+        basePath: '',
 
 
         // frameworks to use
@@ -14,12 +14,16 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
+            JASMINE, 
+            JASMINE_ADAPTER,
+
             'public/js/libs/angular.js',
             'public/js/libs/angular-*.js',
-            'public/js/client/app.js',
+           // 'public/js/libs/*.js',
+            'public/js/**/*.js',
+            //'public/js/client/**/*.js',
             'test/lib/angular/angular-mocks.js',
-            'test/lib/jasmine/jasmine.js',
-            'test/client/unit/*.js'
+            'test/client/unit/hello.js'
         ],
 
 
@@ -64,6 +68,12 @@ module.exports = function(config) {
 
         plugins: [
             'karma-jasmine',
+            'karma-chrome-launcher'
+        ],
+
+        /*
+        plugins: [
+            'karma-jasmine',
             'karma-coverage',
             'karma-junit-reporter',
             'karma-phantomjs-launcher',
@@ -76,7 +86,7 @@ module.exports = function(config) {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
         },
-
+        */
 
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
