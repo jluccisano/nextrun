@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="Test settings scenario" errors="0" tests="2" failures="0" time="9.424" timestamp="2014-04-30T10:13:45">
+  <testcase classname="Test settings scenario" name="should keep invalid change profile" time="5.306"></testcase>
+  <testcase classname="Test settings scenario" name="ensures change profile" time="4.117"></testcase>
+</testsuite>
+</testsuites>
