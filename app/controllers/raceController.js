@@ -200,7 +200,7 @@ exports.publish = function(req, res) {
   var race = req.race;
   var value = false;
 
-  if(req.params.value) {
+  if (req.params.value) {
     value = req.params.value
   }
 
@@ -234,8 +234,22 @@ exports.publish = function(req, res) {
 };
 
 /**
- * TODO
+ * @method Delete all race of user
+ * This function is used when a user delete his own account
+ * @param req
+ * @param res
+ * @param next
  */
 exports.destroyAllRaceOfUser = function(req, res, next) {
+
+  Race.destroyAllRaceOfUser(req.user, function(err) {
+    if (!err) {
+      next();
+    } else {
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+  });
 
 };

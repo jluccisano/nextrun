@@ -72,7 +72,7 @@ var routes = [
     }, {
         path: '/api/users/delete',
         httpMethod: 'DELETE',
-        middleware: [userController.deleteAccount],
+        middleware: [raceController.destroyAllRaceOfUser, userController.deleteAccount],
         accessLevel: accessLevels.user
     }, {
         path: '/api/users/update/profile',

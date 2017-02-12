@@ -255,7 +255,20 @@ RaceSchema.statics = {
     this.remove({
       _id: id
     }).exec(cb);
+  },
+
+  /**
+   * Remove all race by user_id
+   *
+   * @param {User} user
+   * @param {Function} cb
+   */
+  destroyAllRaceOfUser: function(user, cb) {
+    this.remove({
+      user_id: user._id
+    }).exec(cb);
   }
+
 
 }
 
