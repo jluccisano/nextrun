@@ -132,20 +132,7 @@ UserSchema.pre('save', function(next) {
  */
 
 UserSchema.statics = {
-
-  /**
-   * Find user by id
-   *
-   * @param {ObjectId} id
-   * @param {Function} cb
-   */
-
-  load: function(id, cb) {
-    this.findOne({
-      _id: id
-    }).exec(cb);
-  },
-
+  
   /**
    * Remove user by id
    *

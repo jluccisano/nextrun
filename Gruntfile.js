@@ -74,6 +74,8 @@ module.exports = function(grunt) {
           'tmp/public/js/libs/datetimepicker.js': ['public/js/libs/datetimepicker.js'],
           'tmp/public/js/libs/enum-0.2.5.js': ['public/js/libs/enum-0.2.5.js'],
           'tmp/public/js/libs/raphael.js': ['public/js/libs/raphael.js'],
+          'tmp/public/js/libs/highcharts.js': ['public/js/libs/highcharts.js'],
+          'tmp/public/js/libs/highcharts-ng.js': ['public/js/libs/highcharts-ng.js'],
           'tmp/public/js/libs/underscore.js': ['public/js/libs/underscore.js'],
           'tmp/public/js/libs/moment-with-langs.js': ['public/js/libs/moment-with-langs.js'],
           'tmp/public/js/libs/ui-boostrap-tpls-0.7.0.js': ['public/js/libs/ui-boostrap-tpls-0.7.0.js']
@@ -111,6 +113,8 @@ module.exports = function(grunt) {
           'dist/public/js/libs/underscore.min.js': ['tmp/public/js/libs/underscore.js'],
           'dist/public/js/libs/enum-0.2.5.min.js': ['tmp/public/js/libs/enum-0.2.5.js'],
           'dist/public/js/libs/moment-with-langs.min.js': ['tmp/public/js/libs/moment-with-langs.js'],
+          'dist/public/js/libs/highcharts.min.js': ['tmp/public/js/libs/highcharts.js'],
+          'dist/public/js/libs/highcharts-ng.min.js': ['tmp/public/js/libs/highcharts-ng.js'],
           'dist/public/js/libs/ui-boostrap-tpls-0.7.0.min.js': ['tmp/public/js/libs/ui-boostrap-tpls-0.7.0.js']
         }
       }

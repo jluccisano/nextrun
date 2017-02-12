@@ -49,7 +49,7 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
     when('/races/create', {
       templateUrl: '/partials/race/create',
       controller: 'CreateRaceCtrl',
-      access: access.user
+      access: access.public
     }).
     when('/races/home', {
       templateUrl: '/partials/race/home',
@@ -59,7 +59,7 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
     when('/races/view/:raceId', {
       templateUrl: '/partials/race/view',
       controller: 'ViewRaceCtrl',
-      access: access.user
+      access: access.public
     }).
     when('/races/edit/:raceId', {
       templateUrl: '/partials/race/edit',
@@ -120,10 +120,10 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
   }
 ]);
 
-nextrunApp.run(['$rootScope', '$location', 'Auth',
-  function($rootScope, $location, Auth) {
+nextrunApp.run(['$rootScope', '$location', 'Auth','Alert',
+  function($rootScope, $location, Auth,Alert) {
     'use strict';
-    /*$rootScope.$on("$routeChangeStart", function (event, next, current) {
+    $rootScope.$on("$routeChangeStart", function (event, next, current) {
         $rootScope.error = null;
         if (!Auth.authorize(next.access)) {
             if(Auth.isLoggedIn()) {
@@ -131,8 +131,10 @@ nextrunApp.run(['$rootScope', '$location', 'Auth',
             } else {
               $location.path('/login');
             }
+
+            Alert.add("danger", "Vous n'êtes pas autorisé à consulter cette page", 3000);
         }
-    });*/
+    });
 
   }
 ]);

@@ -133,7 +133,6 @@ exports.update = function(req, res) {
       if (!err) {
         return res.json(200);
       } else {
-        console.log(err);
         return res.json(400, {
           message: errorUtils.errors(err.errors)
         });
