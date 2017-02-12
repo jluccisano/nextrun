@@ -46,6 +46,7 @@ module.exports = function(grunt) {
         files: {
         'tmp/public/js/client/app.js': ['public/js/client/app.js'],
         'tmp/public/js/client/controllers.js': ['public/js/client/controllers.js'],
+        'tmp/public/js/client/animations.js': ['public/js/client/animations.js'],
         'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
         'tmp/public/js/client/widgets/map-france.js': ['public/js/client/widgets/map-france.js'],
         'tmp/public/js/client/widgets/google-analytics.js': ['public/js/client/widgets/google-analytics.js'],
@@ -55,6 +56,8 @@ module.exports = function(grunt) {
         'tmp/public/js/libs/jquery.validate.js': ['public/js/libs/jquery.validate.js'],
         'tmp/public/js/libs/angular.js': ['public/js/libs/angular.js'],
         'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
+        'tmp/public/js/libs/angular-animate.js': ['public/js/libs/angular-animate.js'],
+        'tmp/public/js/libs/angular-resource.js': ['public/js/libs/angular-resource.js'],
         'tmp/public/js/libs/raphael.js': ['public/js/libs/raphael.js']
       },
     },
@@ -67,6 +70,7 @@ module.exports = function(grunt) {
         files: {
           'dist/public/js/client/app.min.js': ['tmp/public/js/client/app.js'],
           'dist/public/js/client/controllers.min.js': ['tmp/public/js/client/controllers.js'],
+          'dist/public/js/client/animations.min.js': ['tmp/public/js/client/animations.js'],
           'dist/public/js/client/widgets/socialbuttons.min.js': ['tmp/public/js/client/widgets/socialbuttons.js'],
           'dist/public/js/client/widgets/map-france.min.js': ['tmp/public/js/client/widgets/map-france.js'],
           'dist/public/js/client/widgets/google-analytics.min.js': ['tmp/public/js/client/widgets/google-analytics.js'],
@@ -76,6 +80,8 @@ module.exports = function(grunt) {
           'dist/public/js/libs/jquery.validate.min.js': ['tmp/public/js/libs/jquery.validate.js'],
           'dist/public/js/libs/angular.min.js': ['tmp/public/js/libs/angular.js'],
           'dist/public/js/libs/angular-route.min.js': ['tmp/public/js/libs/angular-route.js'],
+          'dist/public/js/libs/angular-animate.min.js': ['tmp/public/js/libs/angular-animate.js'],
+          'dist/public/js/libs/angular-resource.min.js': ['tmp/public/js/libs/angular-resource.js'],
           'dist/public/js/libs/raphael.min.js': ['tmp/public/js/libs/raphael.js'],
         }
       }

@@ -16,6 +16,9 @@ block body
 	link(rel="stylesheet", href="/css/style.css")
 	<!-- endbuild -->
 
+	<!-- build:css css/animations.min.css -->
+	link(rel="stylesheet", href="/css/animations.css")
+	<!-- endbuild -->
 
 
 
@@ -66,7 +69,8 @@ block body
 
 	include ./layouts/header
 
-	include ./layouts/messages
-	div(ng-view)
+	div(class="view-container")
+		include ./layouts/messages
+		div(ng-view class="view-frame")
 
 	include ./layouts/footer

@@ -193,3 +193,7 @@ a {
 .footer span {
   color: white;
 }
+
+.ng-cloak {
+    display: none !important;
+}

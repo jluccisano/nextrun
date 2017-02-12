@@ -4,7 +4,6 @@ node_modules/
 dist/
 tmp/
 coverage.html
-config/config.js
 *.yml
 jshint.xml
 
