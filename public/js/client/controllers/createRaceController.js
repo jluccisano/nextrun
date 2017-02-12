@@ -41,8 +41,10 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 		$scope.submit = function() {
 
 			var place = $scope.gPlace.getPlace();
+
+			$scope.race.pin = {};
 			
-			$scope.race.location = {
+			$scope.race.pin.location = {
 				name: place.name,
 				lat: place.geometry.location.lat(),
 				lon: place.geometry.location.lng()
