@@ -177,22 +177,38 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 								series: [{
 									name: "< 5%",
 									data: [],
+									color: '#428bca',
+									enableMouseTracking: true,	
+									fillOpacity: 0.8,
+									lineColor: '#303030'
 								}, {
 									name: "< 7%",
 									data: [],
-									color: 'yellow'
+									color: '#feb63e',
+									enableMouseTracking: false,
+									fillOpacity: 0.8,
+									lineColor: '#303030'
 								}, {
 									name: "< 10% ",
 									data: [],
-									color: 'orange'
+									color: '#ff7638',
+									enableMouseTracking: false,
+									fillOpacity: 0.8,
+									lineColor: '#303030'
 								}, {
 									name: "< 15% ",
 									data: [],
-									color: 'red'
+									color: '#a81a10',
+									enableMouseTracking: false,
+									fillOpacity: 0.8,
+									lineColor: '#303030'
 								}, {
 									name: "> 15% ",
 									data: [],
-									color: 'brown'
+									color: '#451e0f ',
+									enableMouseTracking: false,
+									fillOpacity: 0.8,
+									lineColor: '#303030'
 								}],
 								xAxis: {
 									title: {

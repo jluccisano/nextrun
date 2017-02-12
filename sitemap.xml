@@ -5,31 +5,31 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>http://ns397827.ip-192-95-25.net/</loc>
+  <loc>nextrun.fr/</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://ns397827.ip-192-95-25.net/races/search</loc>
+  <loc>http://nextrun.fr/races/search</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://ns397827.ip-192-95-25.net/about</loc>
+  <loc>http://nextrun.fr/about</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://ns397827.ip-192-95-25.net/contacts</loc>
+  <loc>http://nextrun.fr/contacts</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://ns397827.ip-192-95-25.net/credits</loc>
+  <loc>http://nextrun.fr/credits</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://ns397827.ip-192-95-25.net/myraces</loc>
+  <loc>http://nextrun.fr/myraces</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://ns397827.ip-192-95-25.net/users/settings</loc>
+  <loc>http://nextrun.fr/users/settings</loc>
   <changefreq>daily</changefreq>
 </url>
 </urlset>

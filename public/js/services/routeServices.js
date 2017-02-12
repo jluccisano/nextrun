@@ -442,8 +442,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
 					y: previousElevationPoint.elevation,
 					grade: previousElevationPoint.grade,
-					color: 'red',
-					fillColor: 'red',
 					segmentId: previousElevationPoint.segmentId,
 					latlng: previousElevationPoint.latlng
 
@@ -455,8 +453,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
 				y: elevationPoints[index].elevation,
 				grade: elevationPoints[index].grade,
-				color: 'red',
-				fillColor: 'red',
 				segmentId: elevationPoints[index].segmentId,
 				latlng: elevationPoints[index].latlng
 
@@ -469,8 +465,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
 					y: previousElevationPoint.elevation,
 					grade: previousElevationPoint.grade,
-					color: 'orange',
-					fillColor: 'orange',
 					segmentId: previousElevationPoint.segmentId,
 					latlng: previousElevationPoint.latlng
 
@@ -482,8 +476,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
 				y: elevationPoints[index].elevation,
 				grade: elevationPoints[index].grade,
-				color: 'red',
-				fillColor: 'red',
 				segmentId: elevationPoints[index].segmentId,
 				latlng: elevationPoints[index].latlng
 
@@ -496,8 +488,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
 					y: previousElevationPoint.elevation,
 					grade: previousElevationPoint.grade,
-					color: 'orange',
-					fillColor: 'orange',
 					segmentId: previousElevationPoint.segmentId,
 					latlng: previousElevationPoint.latlng
 
@@ -509,8 +499,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
 				y: elevationPoints[index].elevation,
 				grade: elevationPoints[index].grade,
-				color: 'red',
-				fillColor: 'red',
 				segmentId: elevationPoints[index].segmentId,
 				latlng: elevationPoints[index].latlng
 
@@ -524,8 +512,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
 					y: previousElevationPoint.elevation,
 					grade: previousElevationPoint.grade,
-					color: 'orange',
-					fillColor: 'orange',
 					segmentId: previousElevationPoint.segmentId,
 					latlng: previousElevationPoint.latlng
 
@@ -537,8 +523,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
 				y: elevationPoints[index].elevation,
 				grade: elevationPoints[index].grade,
-				color: 'red',
-				fillColor: 'red',
 				segmentId: elevationPoints[index].segmentId,
 				latlng: elevationPoints[index].latlng
 
@@ -550,8 +534,6 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				x: parseFloat(elevationPoints[index].distanceFromStart.toFixed(2)),
 				y: null,
 				grade: elevationPoints[index].grade,
-				color: 'red',
-				fillColor: 'red',
 				segmentId: elevationPoints[index].segmentId,
 				latlng: elevationPoints[index].latlng
 
@@ -574,6 +556,12 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			'segmentId': segmentId
 		}));
 		route.chartConfig.series[2].data = _.difference(route.chartConfig.series[2].data, _.where(route.chartConfig.series[2].data, {
+			'segmentId': segmentId
+		}));
+		route.chartConfig.series[3].data = _.difference(route.chartConfig.series[3].data, _.where(route.chartConfig.series[3].data, {
+			'segmentId': segmentId
+		}));
+		route.chartConfig.series[4].data = _.difference(route.chartConfig.series[4].data, _.where(route.chartConfig.series[4].data, {
 			'segmentId': segmentId
 		}));
 	};
@@ -933,6 +921,9 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			route.chartConfig.series[0].data = [];
 			route.chartConfig.series[1].data = [];
 			route.chartConfig.series[2].data = [];
+			route.chartConfig.series[3].data = [];
+			route.chartConfig.series[4].data = [];
+
 		},
 		undo: function(route) {
 

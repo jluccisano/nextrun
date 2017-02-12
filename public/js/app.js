@@ -137,8 +137,11 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
 nextrunApp.run(['$rootScope', '$location', 'Auth', 'Alert',
   function($rootScope, $location, Auth, Alert) {
     'use strict';
+
     $rootScope.$on("$routeChangeStart", function(event, next, current) {
+      
       $rootScope.error = null;
+
       if (!Auth.authorize(next.access)) {
         if (Auth.isLoggedIn()) {
           $location.path('/');
