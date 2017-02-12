@@ -16,10 +16,8 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function() {
 			for (var k = startIndex; k < path.length; k++) {
 
 				points.push({
-					latlng: {
-						mb: path[k].lat(),
-						nb: path[k].lng()
-					},
+					lat: path[k].lat(),
+					lng: path[k].lng(),
 					elevation: 0,
 					distanceFromStart: 0,
 					grade: 0

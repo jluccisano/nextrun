@@ -73,6 +73,7 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
                                             );
 
                                             var cursorMarker = {
+                                                id: routeBuilder.generateUUID(),
                                                 latitude: this.latlng.mb,
                                                 longitude: this.latlng.nb,
                                                 icon: icon,

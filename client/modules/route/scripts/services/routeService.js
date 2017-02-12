@@ -51,7 +51,8 @@ angular.module("nextrunApp.route").factory("RouteService",
 				var isFirstPoint = false;
 
 				if (route.segments.length > 0) {
-					lastLatlngOfLastSegment = route.getLastPointOfLastSegment().data.latlng;
+					var lastPointOfLastSegment = route.getLastPointOfLastSegment();
+					lastLatlngOfLastSegment = GmapsApiService.LatLng(lastPointOfLastSegment.getLatitude(), lastPointOfLastSegment.getLongitude());
 				} else {
 					lastLatlngOfLastSegment = destinationLatlng;
 					isFirstPoint = true;
@@ -88,6 +89,8 @@ angular.module("nextrunApp.route").factory("RouteService",
 						//add point to chart
 
 						route.addElevationPoints(data.samplingPoints, data.elevations);
+
+						
 					});
 				}
 			},

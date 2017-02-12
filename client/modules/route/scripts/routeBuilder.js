@@ -14,6 +14,10 @@ var routeBuilder = {};
 
 		this.data = dataModel;
 
+		if (!this.data.distance) {
+			this.data.distance = 0;
+		}
+
 		this._calculateElevationDataAlongRoute = function() {
 
 			this.data.ascendant = 0;
@@ -85,16 +89,16 @@ var routeBuilder = {};
 					}
 
 					pathArray.push({
-						latitude: lastPointOfLastSegment.latlng.lat(),
-						longitude: lastPointOfLastSegment.latlng.lng()
+						latitude: lastPointOfLastSegment.latlng.getLatitude(),
+						longitude: lastPointOfLastSegment.latlng.getLongitude()
 					});
 
 				}
 
 				_.each(segment.points, function(point) {
 					pathArray.push({
-						latitude: point.latlng.lat(),
-						longitude: point.latlng.lng()
+						latitude: point.latlng.getLatitude(),
+						longitude: point.latlng.getLongitude()
 					});
 				});
 			});
@@ -144,8 +148,8 @@ var routeBuilder = {};
 
 				if (icon) {
 					marker = {
-						latitude: lastPointOfSegment.latlng.lat(),
-						longitude: lastPointOfSegment.latlng.lng(),
+						latitude: lastPointOfSegment.latlng.getLatitude(),
+						longitude: lastPointOfSegment.latlng.getLongitude(),
 						icon: icon,
 						title: "hello"
 					};
@@ -283,7 +287,49 @@ var routeBuilder = {};
 				this.data.elevationPoints.push(samplingPoints[k].data);
 
 				this.elevationPoints.push(samplingPoints[k]);
+
+				this._calculateElevationDataAlongRoute();
+
+				this._addPointsToElevationChart(samplingPoints[k]);
 			}
+		};
+
+		this._addPointsToElevationChart = function(elevationPointsDataModel) {
+
+			var datas = [];
+			var climbs = {
+				climbsInf7: [],
+				climbsInf10: [],
+				climbsInf15: [],
+				climbsSup15: []
+			};
+
+			var sortedElevationPoints = _.sortBy(elevationPointsDataModel, function(elevationPoint) {
+				return parseFloat(elevationPoint.distanceFromStart.toFixed(2));
+			});
+
+			for (var k = 0; k < sortedElevationPoints.length; k++) {
+
+				var data = {
+					x: parseFloat(sortedElevationPoints[k].distanceFromStart.toFixed(2)),
+					y: sortedElevationPoints[k].elevation,
+					grade: sortedElevationPoints[k].grade,
+					color: "blue",
+					fillColor: "blue",
+					segmentId: sortedElevationPoints[k].segmentId,
+					latlng: sortedElevationPoints[k].latlng
+				};
+
+				datas.push(data);
+			}
+
+			climbs = this._createClimbsDataModel(elevationPointsDataModel);
+
+			this._chartConfig.series[0].data = datas;
+			this._chartConfig.series[1].data = this._chartConfig.series[1].data.concat(climbs.climbsInf7);
+			this._chartConfig.series[2].data = this._chartConfig.series[2].data.concat(climbs.climbsInf10);
+			this._chartConfig.series[3].data = this._chartConfig.series[3].data.concat(climbs.climbsInf15);
+			this._chartConfig.series[4].data = this._chartConfig.series[4].data.concat(climbs.climbsSup15);
 		};
 
 		this.addClickListener = function(callback) {
@@ -303,11 +349,13 @@ var routeBuilder = {};
 
 			this.segments.push(newSegment);
 
-			//createPolyline
-
-			//createMarker
+			this._updateDistance();
 
 			return newSegment;
+		};
+
+		this._updateDistance = function() {
+			this.setDistance(this.getLastPointOfLastSegment().getDistanceFromStart());
 		};
 
 		this.createSimpleSegment = function(startLatlng, destinationLatlng) {
@@ -389,6 +437,7 @@ var routeBuilder = {};
 			}
 
 			var marker = {
+				id: routeBuilder.generateUUID(),
 				latitude: latLng.lat(),
 				longitude: latLng.lng(),
 				icon: icon,
@@ -455,7 +504,7 @@ var routeBuilder = {};
 		};
 
 		this._getLastMarker = function() {
-			return this.markers[this._markers.length - 1];
+			return this._markers[this._markers.length - 1];
 		};
 
 		this._removeLastMarker = function() {
@@ -548,7 +597,7 @@ var routeBuilder = {};
 					geodesic: (geodesic) ? geodesic : false,
 					visible: (visible) ? visible : true
 				};
-				this.polylines.push(polyline);
+				this._polylines.push(polyline);
 
 			} else {
 				throw new Error("polyline must contain at least two point");
@@ -753,14 +802,14 @@ var routeBuilder = {};
 
 			if (lastPointOfLastSegment) {
 
-				cumulatedDistance = this.getLastPointOfLastSegment().distanceFromStart;
+				cumulatedDistance = this.getLastPointOfLastSegment().getDistanceFromStart();
 
 				for (var k = 0, lk = pointsDataModel.length; k < lk; k++) {
 
 					if (k === 0) {
-						distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(lastPointOfLastSegment.latlng, pointsDataModel[k].latlng));
+						distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(lastPointOfLastSegment.data, pointsDataModel[k]));
 					} else {
-						distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(pointsDataModel[k - 1].latlng, pointsDataModel[k].latlng));
+						distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(pointsDataModel[k - 1], pointsDataModel[k]));
 					}
 
 					cumulatedDistance += distanceBetween2Points;
@@ -777,35 +826,37 @@ var routeBuilder = {};
 			return pointsViewModel;
 		};
 
-		this._createSamplingPointsViewModel = function(pointsDataModel) {
+
+		this._createSamplingPointsViewModel = function() {
 
 			var distanceBetween2Points = 0.0;
 			var samplingPointsViewModel = [];
-			var lastPoint = null;
+			var lastPoint = this.getLastPointOfLastSegment();
 			var samples = 0.1;
+
 
 			var cursor = lastPoint;
 
 			if (lastPoint) {
-				for (var k = 0, lk = pointsDataModel.length; k < lk; k++) {
+				for (var k = 0, lk = this.points.length; k < lk; k++) {
 
-					distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(cursor.latlng, pointsDataModel[k].latlng));
+					distanceBetween2Points = parseFloat(routeBuilder.calculateDistanceBetween2Points(cursor.data, this.points[k].data));
 
-					if (k === (pointsDataModel.length - 1) || distanceBetween2Points >= samples) {
-						samplingPointsViewModel.push(new routeBuilder.Point(pointsDataModel[k], this.getId()));
-						cursor = pointsDataModel[k];
+					if (k === (this.points.length - 1) || distanceBetween2Points >= samples) {
+						samplingPointsViewModel.push(this.points[k]);
+						cursor = this.points[k];
 					}
 				}
 			} else {
-				if (pointsDataModel.length === 1) {
-					samplingPointsViewModel.push(new routeBuilder.Point(pointsDataModel[0], this.getId()));
+				if (this.points.length === 1) {
+					samplingPointsViewModel.push(this.points[0]);
 				}
 			}
 			return samplingPointsViewModel;
 		};
 
 		this.points = this._createPointsViewModel(this.data.points);
-		this.samplingPoints = this._createSamplingPointsViewModel(this.data.points);
+		this.samplingPoints = this._createSamplingPointsViewModel();
 
 		this.getPoints = function() {
 			return this.points;
@@ -829,11 +880,11 @@ var routeBuilder = {};
 
 
 		this.getLatitude = function() {
-			return this.data.latlng.lat();
+			return this.data.lat;
 		};
 
 		this.getLongitude = function() {
-			return this.data.latlng.lng();
+			return this.data.lng;
 		};
 
 		this.getDistanceFromStart = function() {
@@ -861,20 +912,20 @@ var routeBuilder = {};
 
 	routeBuilder.calculateDistanceBetween2Points = function(p1, p2) {
 
-		if ((!p1 || (p1.lat() >= 180 || p1.lat() <= -180)) || (!p2 || (p2.lat() >= 180 || p2.lat() <= -180))) {
+		if ((!p1 || (p1.lat >= 180 || p1.lat <= -180)) || (!p2 || (p2.lat >= 180 || p2.lat <= -180))) {
 			throw new Error("invalid longitude");
 		}
 
-		if ((!p1 || (p1.lng() >= 90 || p1.lng() <= -90)) || (!p2 || (p2.lng() >= 90 || p2.lng() <= -90))) {
+		if ((!p1 || (p1.lng >= 90 || p1.lng <= -90)) || (!p2 || (p2.lng >= 90 || p2.lng <= -90))) {
 			throw new Error("invalid latitude");
 		}
 
 		var R = 6371; // earth"s mean radius in km
-		var dLat = routeBuilder.rad(p2.lat() - p1.lat());
-		var dLong = routeBuilder.rad(p2.lng() - p1.lng());
+		var dLat = routeBuilder.rad(p2.lat - p1.lat);
+		var dLong = routeBuilder.rad(p2.lng - p1.lng);
 
 		var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-			Math.cos(routeBuilder.rad(p1.mb)) * Math.cos(routeBuilder.rad(p2.mb)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+			Math.cos(routeBuilder.rad(p1.lat)) * Math.cos(routeBuilder.rad(p2.lat)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		var d = R * c;
 
