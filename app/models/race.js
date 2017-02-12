@@ -190,10 +190,11 @@ var RaceSchema = new Schema({
       default: null
     }
   },
-  location: {
-    name: String,
-    lat: Number,
-    lon: Number
+  pin: {
+    location: {
+      lat: Number,
+      lon: Number
+    }
   }
 });
 
