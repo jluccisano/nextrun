@@ -46,7 +46,6 @@ nextrunApp.config(
     $locationProvider.html5Mode(true);
 
     $httpProvider.interceptors.push('ErrorHandlerInterceptor');
-
   });
 
 nextrunApp.run(function(
@@ -60,7 +59,6 @@ nextrunApp.run(function(
 
   $rootScope.$on("$routeChangeStart", function(event, next) {
 
-    //loading state
     MetaService.loading();
 
     if (!AuthService.authorize(next.access)) {
@@ -76,5 +74,4 @@ nextrunApp.run(function(
 
   gettextCatalog.currentLanguage = 'en';
   gettextCatalog.debug = true;
-
 });

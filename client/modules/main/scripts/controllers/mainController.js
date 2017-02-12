@@ -22,5 +22,4 @@ angular.module("nextrunApp").controller("MainController",
 		$scope.closeAlert = function() {
 			AlertService.closeAlert();
 		};
-
 	});
