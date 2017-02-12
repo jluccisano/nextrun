@@ -12,268 +12,1104 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.6.4\n"
 
-#: .tmp/generated/views/partials/race/edit.html
-msgid "button.cancel"
-msgstr "Annuler"
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "button.save"
+#: .tmp/generated/views/partials/home/home.html
+msgid ""
+"- 'Donner votre avis sur les épreuves\n"
+"              et partager votre expérience."
 msgstr ""
 
-#: .tmp/generated/views/partials/auth/settings.html
-msgid "field.actualPassword"
-msgstr "Mot de passe actuel"
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.briefingTime"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.checkoutBibTime"
-msgstr ""
-
-#: .tmp/generated/views/partials/auth/settings.html
-#: .tmp/generated/views/partials/auth/signup.html
-msgid "field.confirmPassword"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.createIssue"
-msgstr ""
-
-#: .tmp/generated/views/partials/auth/forgotpassword.html
-#: .tmp/generated/views/partials/auth/login.html
-#: .tmp/generated/views/partials/auth/settings.html
-#: .tmp/generated/views/partials/auth/signup.html
-msgid "field.email"
-msgstr ""
-
-#: .tmp/generated/views/partials/auth/settings.html
-#: .tmp/generated/views/partials/auth/signup.html
-msgid "field.fullname"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.memberFFPrice"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.miscellaneous"
-msgstr ""
-
-#: .tmp/generated/views/partials/auth/settings.html
-msgid "field.newPassword"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.notCommunicated"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.notMemberFFPrice"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.numberOfPlacesAvailable"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.numberOfProvisions"
-msgstr ""
-
-#: .tmp/generated/views/partials/auth/login.html
-#: .tmp/generated/views/partials/auth/signup.html
-msgid "field.password"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.plan"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.pricing"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "field.race.date"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "field.race.distance"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "field.race.location"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "field.race.location.placeholder"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "field.race.name"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "field.race.type"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.registration"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.registrationAddress"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.registrationLimitDate"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.registrationOnPlace"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.registrationOpeningDate"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.registrationWebSite"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.rewardsTime"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.rights"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.startingTime"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.therace"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "field.timing"
-msgstr ""
-
-#: .tmp/generated/views/partials/auth/settings.html
-msgid "important"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-#: .tmp/generated/views/partials/race/view.html
-msgid "loading.pending"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "message.addRaceDescription.information"
-msgstr ""
-
-#: .tmp/generated/views/partials/auth/settings.html
-msgid "message.deleteAccount.confirmation"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "message.drawRoute.information"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "message.information"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/edit.html
-msgid "message.selectOne"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/view.html
-msgid "metric.ascendant"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/view.html
-msgid "metric.descendant"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/view.html
-msgid "metric.distance"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/view.html
-msgid "metric.kilometer"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/view.html
-msgid "metric.maxElevation"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/view.html
-msgid "metric.meter"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/view.html
-msgid "metric.minElevation"
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid ""
+"- 'Donner votre avis sur les épreuves\n"
+"      et partager votre expérience."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
-msgid "par critères"
+msgid ""
+"- Analyser le détail du parcours:\n"
+"              distance, <strong style=\"color:#428bca\">dénivelé</strong>, difficultés."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid ""
+"- Analyser le détail du parcours:\n"
+"      distance, <strong style=\"color:#428bca\">dénivelé</strong>, difficultés."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Difficile de trouver une manifestation."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Difficultés à obtenir les <strong style=\"color:#428bca\">résultats</strong>."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Détailler toutes les informations utiles: prix , nombre de places, horaires..."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+msgid ""
+"- Exporter le fichier <strong style=\"color:#428bca\">GPX</strong> et aller faire\n"
+"              une reconnaissance du parcours."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid ""
+"- Exporter le fichier <strong style=\"color:#428bca\">GPX</strong> et aller faire\n"
+"      une reconnaissance du parcours."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Inscription en ligne."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Ne pas être au courant d'une course près de chez soi."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Peu de retour d'expériences."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Promouvoir votre manifestation en quelques clics."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Publier les <strong style=\"color:#428bca\">résultats</strong>."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+msgid ""
+"- Rarement le <strong style=\"color:#428bca\">détail du parcours</strong> et \n"
+"              son <strong style=\"color:#428bca\">dénivelé</strong>."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid ""
+"- Rarement le <strong style=\"color:#428bca\">détail du parcours</strong> et \n"
+"      son <strong style=\"color:#428bca\">dénivelé</strong>."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+msgid ""
+"- Retrouver toutes les informations sur \n"
+"              l'épreuve: organisation, plan, règlements..."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid ""
+"- Retrouver toutes les informations sur \n"
+"      l'épreuve: organisation, plan, règlements..."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "- Tracer vos parcours avec <strong style=\"color:#428bca\">Google Maps</strong> ou importer un fichier .gpx."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+msgid ""
+"- Trouver l'épreuve qui correspond\n"
+"              à votre objectif."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid ""
+"- Trouver l'épreuve qui correspond\n"
+"      à votre objectif."
+msgstr ""
+
+#: .tmp/generated/views/partials/errors/404.html
+msgid "404 Une erreur s'est produite."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/contacts.html
+msgid "<strong>Email invalide</strong>"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/contacts.html
+msgid "<strong>Veuillez faire un choix</strong>"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/contacts.html
+msgid "<strong>Veuillez saisir votre email</strong>"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/footer.html
+msgid "A propos &nbsp; &nbsp;"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "A venir"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/edit.html
-msgid "saving.pending"
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editPlan.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Adresse"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Affiner la Recherche"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/home.html
+#: .tmp/generated/views/partials/race/myraces.html
+msgid "Ajouter"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/edit.html
-msgid "title.editRace"
+msgid "Ajouter des informations concernant le parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "Ajouter la description de votre manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/map.html
+msgid "Ajouter une description à votre parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/home.html
+msgid "Ajouter une nouvelle manifestation"
+msgstr ""
+
+#: .tmp/generated/views/layouts/carousel.html
+#: .tmp/generated/views/partials/home/home.html
+msgid "Analyser le détail du parcours (dénivelé, altitude, distance...)"
 msgstr ""
 
 #: .tmp/generated/views/partials/auth/forgotpassword.html
-msgid "title.forgotPassword"
+#: .tmp/generated/views/partials/race/changeTypeConfirmationModal.html
+#: .tmp/generated/views/partials/race/changetypeconfirmation.html
+#: .tmp/generated/views/partials/race/deleteConfirmatioModal.html
+#: .tmp/generated/views/partials/race/deleteconfirmation.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/feedback.html
+msgid "Annuler"
 msgstr ""
 
-#: .tmp/generated/views/partials/auth/login.html
-msgid "title.login"
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "Athlètes"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Attention !"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Aucun Résultats"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editSchedule.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewSchedule.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Briefing"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Changer mon mot de passe"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "Chargement en cours"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/edit.html
 #: .tmp/generated/views/partials/race/view.html
-msgid "title.organisation"
+msgid "Chargement..."
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editPlan.html
+msgid "Code postal"
+msgstr ""
+
+#: .tmp/generated/views/layouts/carousel.html
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "Commencer maintenant !"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editPlan.html
+msgid "Complément d'adresse"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/changeTypeConfirmationModal.html
+#: .tmp/generated/views/partials/race/changetypeconfirmation.html
+#: .tmp/generated/views/partials/race/deleteConfirmatioModal.html
+#: .tmp/generated/views/partials/race/deleteconfirmation.html
+msgid "Confirmation"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Confirmer le mot de passe"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Consulter les résultats"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Contacter nextrun"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/contacts.html
+msgid "Contacts"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/footer.html
+msgid "Contacts &nbsp; &nbsp;"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/changeTypeConfirmationModal.html
+#: .tmp/generated/views/partials/race/changetypeconfirmation.html
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/home.html
+msgid "Continuer"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/create.html
+msgid "Création d'une manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Créer un compte organisateur"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Créer un compte via Facebook"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Créer une manifestation"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/view.html
-msgid "title.presentation"
+msgid "D+"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/view.html
-msgid "title.routes"
+msgid "D-"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/raceForm.html
+msgid "Date"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Date limite"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/myraces.html
+msgid "Dernière mise à jour"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "Description"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/raceForm.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Distance"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Divers"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Donner son avis et partager son expérience"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Droits"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editSchedule.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewSchedule.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Départ"
+msgstr ""
+
+#: .tmp/generated/views/layouts/carousel.html
+#: .tmp/generated/views/partials/home/home.html
+msgid "Détailler l'ensemble de votre manifestion (parcours, organisation, nombre de places...)"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/home.html
+#: .tmp/generated/views/partials/race/myraces.html
+msgid "Editer"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "Editer la manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/home.html
+msgid "Editer le parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/redirection.html
+#: .tmp/generated/views/partials/race/redirectionModal.html
+msgid "Editer maintenant"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Editer une manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/map.html
+msgid "Effacer"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/race/search.html
+msgid "Elargir aux alentours"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/forgotpassword.html
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/main/contacts.html
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/feedback.html
+msgid "Email"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Email Invalide"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/forgotpassword.html
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/feedback.html
+msgid "Email invalide"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "En cours de développement"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Enregistrer"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/forgotpassword.html
+msgid "Entrez votre adresse email"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/forgotpassword.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/contacts.html
+#: .tmp/generated/views/partials/main/contacts.html
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/deleteConfirmatioModal.html
+#: .tmp/generated/views/partials/race/deleteconfirmation.html
+#: .tmp/generated/views/partials/race/feedback.html
+msgid "Envoyer"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/changeTypeConfirmationModal.html
+#: .tmp/generated/views/partials/race/changetypeconfirmation.html
+msgid "Etes-vous sûr de vouloir changer de type de manifestation, les parcours en cours seront réinitialisés ?"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/deleteConfirmatioModal.html
+#: .tmp/generated/views/partials/race/deleteconfirmation.html
+msgid "Etes-vous sûr de vouloir supprimer cette manifestation ?"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Exporter un parcours au format GPX"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+msgid "Fin des inscriptions"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/footer.html
+msgid "Follow @_nextrun"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Fonctionnalités"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Horaires"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Importer un fichier GPX"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+msgid "Infomations"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "Information"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/create.html
+msgid "Informations"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Inscription"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+msgid "Inscription en ligne"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Inscription sur place"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "La course"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Le mot de passe doit contenir au maximm 16 lettres."
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Le mot de passe doit contenir au maximum 16 lettres."
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Le mot de passe doit contenir au minium 4 lettres."
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Le mot de passe est différent"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editPricing.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewPricing.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Licencié"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/raceForm.html
+msgid "Lieu"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Like facebook"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "Max"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/myraces.html
+msgid "Mes Manifestations"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/header.html
+msgid "Mes manifestations"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/contacts.html
+msgid "Message"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Mettre à jour son profil"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "Min"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Modifier mon profil"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Modifier son mot de passe"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Mot de passe"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Mot de passe actuel"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Mot de passe oublié ?"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Moteur de recherche"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/myraces.html
+#: .tmp/generated/views/partials/race/templates/raceForm.html
+msgid "Nom"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Nom complet"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewRace.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Nom de ravitaillements"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Nombre de place disponibles"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+msgid "Nombre de places disponibles"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRace.html
+msgid "Nombre de ravitaillements"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+msgid "Non"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewMiscellaneous.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewPlan.html
+#: .tmp/generated/views/partials/race/templates/viewPricing.html
+#: .tmp/generated/views/partials/race/templates/viewRace.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
+#: .tmp/generated/views/partials/race/templates/viewRights.html
+#: .tmp/generated/views/partials/race/templates/viewSchedule.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Non communiqué"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editPricing.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewPricing.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Non licencié"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Nouveau mot de passe"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "Organisateurs"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Organisation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+msgid "Oui"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Ouverture"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+msgid "Ouverture des inscriptions"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Page: {{pagination.currentPage}} / {{pagination.numPages}}"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+msgid "Par critères"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/header.html
+msgid "Paramètres"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "Parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Plan"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editMiscellaneous.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editPricing.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+#: .tmp/generated/views/partials/race/templates/editSchedule.html
+msgid "Plus d'informations"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/redirection.html
+#: .tmp/generated/views/partials/race/redirectionModal.html
+msgid "Plus tard"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Possibilité de laisser son feedback"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/marketing.html
+msgid "Pourquoi ?"
+msgstr ""
+
+#: .tmp/generated/views/layouts/carousel.html
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/race/home.html
+msgid "Promouvoir votre manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "Présentation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/home.html
+#: .tmp/generated/views/partials/race/myraces.html
+msgid "Publier"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Publier les résultats"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Publier une manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Recevoir des newletters"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+msgid "Recherche directe"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/header.html
+#: .tmp/generated/views/partials/home/home.html
+msgid "Rechercher"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Rechercher par géolocalisation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Rechercher par mot-clés"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Rechercher un parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Rechercher un parcours par geolocalisation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Rechercher une manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/redirection.html
+#: .tmp/generated/views/partials/race/redirectionModal.html
+msgid "Redirection"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/footer.html
+#: .tmp/generated/views/partials/main/credits.html
+msgid "Remerciements"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/myraces.html
+msgid "Retirer"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/map.html
+msgid "Retour"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editSchedule.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewSchedule.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Retrait des dossards"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+msgid "Règlements"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editSchedule.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewSchedule.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Récompenses"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Réinitialiser son mot de passe"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "S'incrire"
 msgstr ""
 
 #: .tmp/generated/views/partials/auth/signup.html
-msgid "title.signup"
+#: .tmp/generated/views/partials/race/create.html
+msgid "S'insrire"
 msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "Sauvegarde en cours"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+msgid "Sauvegarder"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/header.html
+#: .tmp/generated/views/partials/auth/login.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Se connecter"
+msgstr ""
+
+#: .tmp/generated/views/index.html .tmp/generated/views/layouts/header.html
+msgid "Se déconnecter"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/map.html
+msgid "Segment direct"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Si vous souhaitez supprimer votre compte, tous les parcours que vous avez créé seront supprimés"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/feedback.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Signaler une erreur"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editMiscellaneous.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+msgid "Site web de L'organisateur"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editMiscellaneous.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Site web de l'organisateur"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/redirection.html
+#: .tmp/generated/views/partials/race/redirectionModal.html
+msgid "Souhaitez-vous éditer votre manifestation ?"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/map.html
+msgid "Suivre la route"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/map.html
+msgid "Suivre le chemin"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/myraces.html
+msgid "Supprimer"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/settings.html
+msgid "Supprimer mon compte"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Supprimer son compte"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Supprimer une manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/raceForm.html
+msgid "Sélectionner..."
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/race/search.html
+msgid "Tapez une ville"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/viewOrganisation.html
+#: .tmp/generated/views/partials/race/view.html
+msgid "Tarifs"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+msgid "Tous les champs  sont facultatifs. Tous les champs qui ne seront pas renseigné n'apparaitront pas dans la vue finale."
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Tout supprimer"
+msgstr ""
+
+#: .tmp/generated/views/layouts/carousel.html
+#: .tmp/generated/views/partials/home/home.html
+msgid "Toutes les épreuves d'endurance rassemblées sur un même site"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/home.html
+msgid "Tracer des parcours précis"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Tracer les parcours via Google Maps"
+msgstr ""
+
+#: .tmp/generated/views/layouts/carousel.html
+#: .tmp/generated/views/partials/home/home.html
+msgid "Triathlon , Trail, VTT, Cyclo..."
+msgstr ""
+
+#: .tmp/generated/views/layouts/carousel.html
+#: .tmp/generated/views/partials/home/home.html
+msgid "Trouver et préparer votre course"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/myraces.html
+#: .tmp/generated/views/partials/race/templates/raceForm.html
+msgid "Type"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/myraces.html
+msgid "Type de distance"
+msgstr ""
+
+#: .tmp/generated/views/partials/errors/500.html
+msgid "Une erreur s'est produite."
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Version actuelle: 1.0"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/race/search.html
+msgid "Veuillez saisir une ville correcte"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/feedback.html
+msgid "Veuillez saisir votre email"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editPlan.html
+msgid "Ville"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Visualiser une manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Votre nom doit contenir au maximum 16 lettres."
+msgstr ""
+
+#: .tmp/generated/views/partials/auth/signup.html
+#: .tmp/generated/views/partials/race/create.html
+msgid "Votre nom doit contenir au minium 4 lettres."
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "distance"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/create.html
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/raceForm.html
+msgid "ex: Paris"
+msgstr ""
+
+#: .tmp/generated/views/index.html
+msgid "manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, &amp;eacute;preuve, ironman, longue distance, course &amp;agrave; pied, parcours, d&amp;eacute;nivel&amp;eacute;, cross, marathon, duathlon, ski de fond, aquathlon"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "par Date"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "par Département"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "par Type"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/edit.html
+#: .tmp/generated/views/partials/race/templates/editOrganisation.html
+#: .tmp/generated/views/partials/race/templates/editRegistration.html
+msgid "places"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/view.html
+msgid "type"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/contacts.html
+#: .tmp/generated/views/partials/race/feedback.html
+msgid "votre message"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/contacts.html
+msgid "votre@email.com"
+msgstr ""
+
+#~ msgid "button.cancel"
+#~ msgstr "Annuler"
+#~ msgid "field.actualPassword"
+#~ msgstr "Mot de passe actuel"
 
