@@ -21,6 +21,7 @@ angular.module("nextrunApp.commons").directive("nrTaglistModel",
     }
 
     function postLinkFn(scope, elem, attrs) {
+      
       // getter / setter for original model
       var getter = $parse(attrs.taglistModel);
       var setter = getter.assign;

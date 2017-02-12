@@ -64,7 +64,7 @@ module.exports = function(config) {
             "client/modules/race/scripts/race.js",
             "client/modules/race/scripts/**/*.js",
 
-            "client/modules/route/scripts/route.js",
+            "client/modules/route/scripts/route.js",        
             "client/modules/route/scripts/**/*.js",
 
             "test/client/spec/mock/mockModule.js",

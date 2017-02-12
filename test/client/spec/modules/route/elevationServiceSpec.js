@@ -1,17 +1,17 @@
-'use strict';
+"use strict";
 
-describe('Elevation services', function() {
+describe("Elevation services", function() {
 
 	var $scope;
 
-	beforeEach(module('routeBuilder'));
+	beforeEach(module("nextrunApp.route"));
 
 	beforeEach(inject(function(_$rootScope_) {
 		$scope = _$rootScope_.$new();
 	}));
 
-	describe('todo', function() {
-		it('todo', function() {
+	describe("todo", function() {
+		it("todo", function() {
 
 		});
 	});

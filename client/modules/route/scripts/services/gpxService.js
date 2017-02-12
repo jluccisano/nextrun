@@ -25,7 +25,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 				var segments = [];
 
-				if (!trkpts || trkpts.length > 0) {
+				if (!trkpts || !trkpts.length > 0) {
 					throw new Error("trkpts must contain at least one element");
 				}
 

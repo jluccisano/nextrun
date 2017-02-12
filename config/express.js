@@ -5,24 +5,11 @@
 var express = require("express"),
 	mongoStore = require("connect-mongo")(express),
 	helpers = require("view-helpers"),
-	i18n = require("i18next"),
 	flash = require("connect-flash"),
 	pkg = require("../package.json"),
 	winston = require("winston"),
 	expressWinston = require("express-winston"),
 	logger = require("./logger");
-
-i18n.init({
-	resGetPath: "locales/__lng__/__ns__.json",
-	saveMissing: false,
-	debug: false,
-	supportedLngs: ["fr-Fr"],
-	fallbackLng: "fr-Fr",
-	detectLngFromPath: 0,
-	ignoreRoutes: ["img/", "js/", "css/"],
-	sendMissingTo: "fallback",
-});
-
 
 
 module.exports = function(app, config, passport) {
@@ -30,8 +17,6 @@ module.exports = function(app, config, passport) {
 	if (process.env.NODE_ENV === "prod") {
 		app.use(require("prerender-node").set("prerenderToken", "dzNULbJdLvZWcUyB8Su5"));
 	}
-
-	app.use(i18n.handle);
 
 	app.set("showStackError", true);
 
@@ -178,8 +163,6 @@ module.exports = function(app, config, passport) {
 		});
 
 	});
-
-	i18n.registerAppHelper(app);
 
 	// development env config
 	app.configure("development", function() {

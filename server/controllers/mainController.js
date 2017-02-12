@@ -1,5 +1,4 @@
 var userRoles = require("../../client/routingConfig").userRoles,
-  phantom = require("node-phantom-simple"),
   logger = require("../../config/logger.js");
 /*
  * GET home page.
