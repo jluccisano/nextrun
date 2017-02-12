@@ -55,14 +55,14 @@ describe('Users', function () {
         })
       })
 
-      it('should redirect to /', function (done) {
+      it('should response success', function (done) {
        superagent.post('http://localhost:3000/users')
         .send({ username:'foobar', email: 'foobar@example.com', password: 'foobar' })
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(200);
-           res.redirects.should.eql(['http://localhost:3000/']);
+           res.body.response.should.equal("success");
            done();
         });
       });
@@ -137,6 +137,97 @@ describe('Users', function () {
            done();
         });
       });
+    });
+
+    after(function(done){
+      User.remove({}, function(){
+        done();
+      });
+    });
+  });
+
+  describe('POST /users/forgotpassword', function () {
+
+    var currentUser;
+
+    before(function (done) {
+      User.create({ username: "foobar", email:"foobar@example.com", password:"foobar"} , function(err,user){
+        currentUser = user;
+        done();        
+      });
+    });
+
+    describe('Invalid Parameters', function () {
+
+      it('should save the user to the database', function (done) {
+        User.findOne({ email: 'foobar@example.com' }).exec(function (err, user) {
+          should.not.exist(err);
+          user.should.be.an.instanceOf(User);
+          user.email.should.equal('foobar@example.com');
+          done();
+        });
+      });
+
+      it('should failed cause email unknown', function (done) {
+       superagent.post('http://localhost:3000/users/forgotpassword')
+        .send({ email: 'toto@example.com' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.body.response.should.equal("error.invalidEmail");
+           done();
+        });
+      });
+
+      it('should failed cause email cannot be blank', function (done) {
+       superagent.post('http://localhost:3000/users/forgotpassword')
+        .send({ email: '' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.body.response.should.equal("error.invalidEmail");
+           done();
+        });
+      });
+
+      it('should failed cause email is required', function (done) {
+       superagent.post('http://localhost:3000/users/forgotpassword')
+        .send({})
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.body.response.should.equal("error.invalidEmail");
+           done();
+        });
+      });
+    });
+
+    describe('Valid Parameters', function () {
+
+      it('should save the user to the database', function (done) {
+        User.findOne({ email: 'foobar@example.com' }).exec(function (err, user) {
+          should.not.exist(err);
+          user.should.be.an.instanceOf(User);
+          user.email.should.equal('foobar@example.com');
+          done();
+        });
+      });
+
+      it('should response success', function (done) {
+       superagent.post('http://localhost:3000/users/forgotpassword')
+        .send({ email: 'foobar@example.com' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.body.response.should.equal("success");
+           done();
+        });
+      });
+
     });
 
     after(function(done){

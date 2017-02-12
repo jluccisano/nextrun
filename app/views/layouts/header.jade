@@ -8,3 +8,24 @@ header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner")
 					span.icon-bar
 				a.navbar-brand(href="/") NEXTRUN
 			div.navbar-collapse.collapse.bs-navbar-collapse
+				ul.nav.navbar-nav.navbar-right
+					if (req.isAuthenticated())
+						li.dropdown
+							a.dropdown-toggle(href="#", data-toggle="dropdown") #{req.user.username} 
+								b.caret
+							ul.dropdown-menu
+								li
+									a(ng-href="myraces") Mes manifestations
+								li
+									a(ng-href="/users/settings") Paramètres
+								if (req.isAuthenticated() && req.user.profile == "superadmin")
+									li
+										a(href="/users/admin") Administration
+								li
+									a(ng-href="/logout") Se déconnecter
+					else
+						li 
+						form(class="navbar-form navbar-left",role="search",action="/login")
+							button(type="submit", class="btn btn-primary") 
+								span.glyphicon.glyphicon-user 
+								span  Se connecter

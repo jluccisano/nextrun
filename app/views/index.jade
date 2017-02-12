@@ -4,7 +4,8 @@ block body
 
 	body
 
-		include ./layouts/header
+		div.ng-cloak(ng-cloak ng-controller="HeaderCtrl")
+			include ./layouts/header
 
 		include ./layouts/messages
 		div.ng-cloak(ng-cloak class="view-container")

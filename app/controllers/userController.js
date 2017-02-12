@@ -31,7 +31,7 @@ exports.create = function (req, res) {
 				return res.send({response: err});
 			} 
 			req.flash('success', 'Félicitation! votre inscription a été validé');
-			return res.redirect('/myraces');
+			return res.send({response: "success"});
 		});
 	});
 };
@@ -88,6 +88,7 @@ exports.forgotPassword = function (req, res) {
                 return res.send({ response: 'success' });
               } else {
                 req.flash('errors', utils.errors(err.errors));
+                res.send({ response: utils.errors(err.errors) });
               }
           });
 

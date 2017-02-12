@@ -28,7 +28,7 @@ describe('Contacts', function () {
         });
       });
 
-      /*
+      
       it('no email - should respond with errors', function (done) {
        superagent.post('http://localhost:3000/contacts')
         .send({ type: 'athlete' })
@@ -39,7 +39,7 @@ describe('Contacts', function () {
            done();
         });
       });
-      */
+      
 
       it('email blank - should respond with errors', function (done) {
        superagent.post('http://localhost:3000/contacts')

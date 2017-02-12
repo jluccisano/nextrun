@@ -48,10 +48,12 @@ module.exports = function(grunt) {
         'tmp/public/js/client/controllers.js': 
             [
               'public/js/client/controllers.js',
+              'public/js/client/controllers/headerController.js',
               'public/js/client/controllers/footerController.js',
               'public/js/client/controllers/homeController.js',
-              'public/js/client/controllers/logincontroller.js',
-              'public/js/client/controllers/signupcontroller.js'
+              'public/js/client/controllers/loginController.js',
+              'public/js/client/controllers/signupController.js',
+              'public/js/client/controllers/myRacesController.js'
             ],
         'tmp/public/js/client/animations.js': ['public/js/client/animations.js'],
         'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
