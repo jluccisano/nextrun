@@ -1,15 +1,43 @@
 div.container(style="margin-top:50px")
+	h1 {{race.name}}
+		small  ({{race.department}})
+	h4.text-right  {{getDate(race.date)}}
+	hr
+	div.row.text-center
+		div.col-md-4
+			h3 {{race.type}}
+			span.small type
+		div.col-md-4
+			h3 {{race.distanceType.name}}
+			span.small distance
+		div.col-md-4
+			a.btn.btn-link(data-toggle="modal" data-target="#myModal") 
+				i.glyphicon.glyphicon-thumbs-down Signaler une erreur		
+	h2 Parcours
 	hr
 	div.row
-		div.col-lg-4.col-lg-offset-4
+		div.col-lg-12
 			tabset(vertical="false" type="pills")
-				tab(heading="Vertical 1") Vertical content 1
-				tab(heading="Vertical 2") Vertical content 2
-	h2 Organisation
-	hr
-	include templates/organisation
-	hr
-	div.row
-		div.col-lg-offset-4.col-lg-8
-			button.btn.btn-primary(type="button" ng-click="submit()") Enregistrer
-			button.btn.btn-default(type="button") Annuler
+				tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" data-ng-click="onChangeTab(route)")
+					include map
+					div.row.text-center
+						div.col-lg-4
+							h3 {{route.distance.toFixed(2)}}
+								small km
+							span.small Distance
+						div.col-lg-4
+							h3 {{Math.floor(route.ascendant)}}
+								small m
+							span.small D+
+						div.col-lg-4
+							h3 {{Math.floor(route.descendant)}}
+								small m
+							span.small D-
+						div.col-lg-4
+							h3 {{Math.floor(route.maxElevation)}}
+								small m
+							span.small Max
+						div.col-lg-4
+							h3 {{Math.floor(route.minElevation)}}
+								small m
+							span.small Min

@@ -6,7 +6,8 @@ var nextrunApp = angular.module('nextrunApp', [
   'google-maps',
   'highcharts-ng',
   'ui.bootstrap.datetimepicker',
-  'ui.dateTimeInput'
+  'ui.dateTimeInput',
+  'ui.select2'
 ]);
 
 /** Initialize i18n **/
@@ -51,15 +52,15 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       controller: 'CreateRaceCtrl',
       access: access.user
     }).
+    when('/races/view/:raceId', {
+      templateUrl: '/partials/race/view',
+      controller: 'ViewRaceCtrl',
+      access: access.user
+    }).
     when('/races/edit/:raceId', {
       templateUrl: '/partials/race/edit',
       controller: 'EditRaceCtrl',
       access: access.user
-    }).
-    when('/view/map', {
-      templateUrl: '/partials/race/view',
-      controller: 'ViewRaceCtrl',
-      access: access.public
     }).
     when('/credits', {
       templateUrl: '/partials/credits',

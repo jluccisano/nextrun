@@ -22,7 +22,7 @@ angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', '
 
 
 		$scope.getDate = function(dateString) {
-			return moment(new Date(dateString)).format("DD/MM/YYYY HH:MM");
+			return moment(new Date(dateString)).format("DD/MM/YYYY HH:mm");
 		};
 
 		$scope.addNewRace = function() {

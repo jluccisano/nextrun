@@ -39,7 +39,10 @@ module.exports = function(app, config, passport) {
 
 	app.use(express.favicon());
 	app.use(express.static(config.root + '/public'));
-	app.use('/locales', express.static(config.root + '/locales'));
+
+	if (process.env.NODE_ENV !== 'production') {
+		app.use('/bower_components', express.static(config.root + '/bower_components'));
+	}
 
 	// don't use logger for test env
 	if (process.env.NODE_ENV !== 'test') {

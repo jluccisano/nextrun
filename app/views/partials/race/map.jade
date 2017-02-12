@@ -1,32 +1,33 @@
 div(data-ng-if="route.isVisible")
-	google-map(center="route.center" options="route.options" zoom="route.zoom"  draggable="true" mark-click="true" style="height: 400px" events="route.events")
-		markers(doCluster="doClusterRandomMarkers" clusterOptions="clusterOptions")
-			marker(ng-repeat="marker in route.markers" coords="marker" icon="marker.icon" dbclick="onMarkerClicked(marker)")
+	google-map(center="route.center" fit="true" options="route.options" zoom="route.zoom"  draggable="true" mark-click="true" style="height: 400px" events="route.events")
+		markers
+			marker(ng-repeat="marker in route.markers" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
 		
-		marker(coords="cursorMarker" icon="cursorMarker.icon")
+			marker(coords="cursorMarker" icon="cursorMarker.icon")
 				
 		polyline(ng-repeat="p in route.polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable")
 		
-	div(style="padding: 5px; z-index: 0; position: absolute; top: 32px; right: 0px;")
+	div(data-ng-show="route.editMode" style="padding: 5px; z-index: 0; position: absolute; top: 100px; right: 20px;")
 		div.well
-			div.checkbox
-				label Rester sur la route
-					input(type="checkbox" checked="checked" data-ng-model="stayOnTheRoad")
-			div.button-group
-				button.btn.btn-primary.btn-xs(ng-click="undo()")
-					i.fa.fa-reply
-					span Retour
-				button.btn.btn-danger.btn-xs(ng-click="delete()")
-					i.fa.fa-times
-					span Effacer
-			div
-				h3 {{route.distance.toFixed(2)}} km
-			div
-				span D+: {{Math.floor(route.ascendant)}} m
-			div
-				span D-: {{Math.floor(route.descendant)}} m
-			div
-				span Max: {{Math.floor(route.maxElevation)}} m
-			div
-				span Min: {{Math.floor(route.minElevation)}} m
+			form
+				div.checkbox
+					label Suivre la route
+						input(type="checkbox" checked="checked" data-ng-model="route.stayOnTheRoad")
+				div.button-group
+					button.btn.btn-primary.btn-xs(data-ng-click="undo(route)")
+						i.fa.fa-reply
+						span Retour
+					button.btn.btn-danger.btn-xs(data-ng-click="delete(route)")
+						i.fa.fa-times
+						span Effacer
+				div
+					h3 {{route.distance.toFixed(2)}} km
+				div
+					span D+: {{Math.floor(route.ascendant)}} m
+				div
+					span D-: {{Math.floor(route.descendant)}} m
+				div
+					span Max: {{Math.floor(route.maxElevation)}} m
+				div
+					span Min: {{Math.floor(route.minElevation)}} m
 	highchart(config="route.chartConfig")

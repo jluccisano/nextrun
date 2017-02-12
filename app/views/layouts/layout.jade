@@ -39,6 +39,9 @@ html(ng-app="nextrunApp")
 		link(rel="stylesheet", href="/css/datetimepicker.css")
 		<!-- endbuild -->
 
+		<!-- build:css css/select2.min.css -->
+		link(rel="stylesheet", href="/bower_components/select2/select2.css")
+		<!-- endbuild -->
 
 		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")	
 
@@ -46,9 +49,6 @@ html(ng-app="nextrunApp")
 		script(src="/js/libs/jquery-2.0.3.js", charset="UTF-8")
 		<!-- endbuild -->
 
-		<!-- build:js js/libs/jquery.validate.min.js -->
-		script(src="/js/libs/jquery.validate.js", charset="UTF-8")
-		<!-- endbuild -->
 
 		<!-- build:js js/libs/i18next-1.7.1.min.js -->
 		script(src="/js/libs/i18next-1.7.1.js", charset="UTF-8")
@@ -158,6 +158,13 @@ html(ng-app="nextrunApp")
 		<!-- build:js js/client/widgets/socialbuttons.min.js -->
 		script(src="/js/client/widgets/socialbuttons.js", charset="UTF-8")
 		<!-- endbuild -->
+
+		<!-- build:js js/libs/select2.min.js -->
+		script(src="/bower_components/select2/select2.js", charset="UTF-8")
+		script(src="/bower_components/angular-ui-select2/src/select2.js", charset="UTF-8")
+		<!-- endbuild -->
+
+
 
 		script.
 			moment.lang('fr');

@@ -13,6 +13,12 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 			return Auth.isLoggedIn();
 		};
 
+
+		$scope.getDepartment = function(department) {
+			return department.code + ' - ' + department.name;
+		};
+
+
 		$scope.submit = function(race) {
 
 			var data = {

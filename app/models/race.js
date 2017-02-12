@@ -40,10 +40,17 @@ var RouteSchema = new Schema({
 var RaceSchema = new Schema({
   name: String,
   type: String,
-  department: String,
+  department: {
+    code: String,
+    name: String,
+    region: String
+  },
   date: Date,
   edition: Number,
-  distanceType: String,
+  distanceType: {
+    name: String,
+    i18n: String
+  },
   routes: [RouteSchema],
   timing: {
     startingTime: {
@@ -184,10 +191,9 @@ RaceSchema.pre('save', function(next) {
 
 RaceSchema.path('name').validate(function(name, fn) {
   var Race = mongoose.model('Race');
-
   Race.find({
-    name: this.name,
-    distanceType: this.distanceType
+    'name': this.name,
+    'distanceType.name': this.distanceType.name
   }).exec(function(err, races) {
     fn(!err && races.length === 0);
   });

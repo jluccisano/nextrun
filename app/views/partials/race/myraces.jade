@@ -17,14 +17,13 @@ div.container
 		tbody()
 			tr(ng-repeat="race in races")
 				td 
-					a(href='/races/{{race._id}}') {{race.name}}
+					a(data-ng-href='/races/view/{{race._id}}') {{race.name}}
 				td {{race.type}}
-				td {{race.distanceType}}
+				td {{race.distanceType.name}}
 				td(ng-if="race.last_update != null")  {{getDate(race.last_update)}}
 				td
-					a.btn.btn-link(ng-href='/races/edit/{{race._id}}') Editer
+					a(data-ng-href='/races/edit/{{race._id}}') Editer
 				td
-					//a.btn.btn-link(ng-href='/races/delete/{{race._id}}') Supprimer
 					a(ng-click="openDeleteConfirmation(race)") Supprimer
 				td
 					a(data-toggle="modal" data-id="{{race._id}}" title="Publier cette manifestation" href="#publishModal") Publier

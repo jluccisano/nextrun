@@ -85,7 +85,7 @@ describe('Update Race: UPDATE /api/races', function() {
       department: '11 - Aude',
       date: currentDate,
       edition: '1',
-      distanceType: 'S',
+      distanceType: {name:'S',i18n:''},
       user_id: user1._id,
       last_update: new Date(),
       created_date: new Date()
@@ -106,7 +106,7 @@ describe('Update Race: UPDATE /api/races', function() {
       race.date.should.be.an.instanceOf(Date);
       //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
-      race.distanceType.should.equal('S');
+      race.distanceType.name.should.equal('S');
       race.user_id.should.eql(user1._id);
       race.published.should.equal(false);
       currentRace = race;
@@ -234,7 +234,7 @@ describe('Update Race: UPDATE /api/races', function() {
             department: '31 - Haute-Garonne',
             date: currentDate,
             edition: '2',
-            distanceType: 'M'
+            distanceType: {name:'M',i18n:''}
           }
         })
         .set('Accept', 'application/json')
@@ -257,7 +257,7 @@ describe('Update Race: UPDATE /api/races', function() {
         race.date.should.be.an.instanceOf(Date);
         //race.date.getTime().should.equal(new Date(currentDate).getTime());
         race.edition.should.equal(2);
-        race.distanceType.should.equal('M');
+        race.distanceType.name.should.equal('M');
         race.user_id.should.eql(user1._id);
         race.published.should.equal(false);
         currentRace = race;
