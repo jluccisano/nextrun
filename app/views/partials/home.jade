@@ -28,7 +28,9 @@ div.custom-bs-background
 			
 			div.row(style="margin-top:10px")
 				google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true"  draggable="true" mark-click="true" style="height: 600px" events="map.events")
-					markers(models="markers" coords="'self'" icon="'icon'")
+					markers(models="map.markers" click="'onClicked'" coords="'self'" icon="'icon'" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
+						windows(show="'showWindow'" closeClick="'closeClick'" data-ng-cloak)
+							a(ng-non-bindable href="#/races/view/{{raceId}}") {{raceName}}		
 			div.container.marketing
 				div.row
 					div.col-lg-4
