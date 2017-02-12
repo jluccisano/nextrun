@@ -256,7 +256,8 @@ module.exports = function(grunt) {
           src: [
             "*.{ico,png,txt}",
             "sitemap.xml",
-            "routingConfig.js"
+            "routingConfig.js",
+            "/modules/main/scripts/services/clientConfig.js"
           ]
         }, {
           expand: true,
