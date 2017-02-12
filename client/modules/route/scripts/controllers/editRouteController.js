@@ -114,17 +114,27 @@ angular.module("nextrunApp.route").controller("EditRouteController",
             }
         };
 
-        /*$scope.getFile = function(routeViewModel, file) {
-            FileReaderService.readAsDataUrl(file, $scope).then(function(result) {
-                try {
-                    routeViewModel = GpxService.convertGPXtoRoute($scope, routeViewModel.getType(), result);
-                } catch (ex) {
-                    notificationService.error(ex.message);
-                } finally {
+        $scope.getFile = function(file) {
 
+            notificationService.notify({
+                title: gettextCatalog.getString("Confirmation requise"),
+                text: gettextCatalog.getString("Etes-vous sûr de vouloir supprimer ce parcours ?"),
+                hide: false,
+                confirm: {
+                    confirm: true
+                },
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                history: {
+                    history: false
                 }
+            }).get().on("pnotify.confirm", function() {
+                $scope.createRoute();
+                GpxService.convertGPXtoRoute($scope.routeViewModel, file);
             });
-        };*/
+        };
 
 
         $scope.submit = function() {

@@ -55,6 +55,41 @@ angular.module("nextrunApp.commons").directive("nrImageSelect", function($modal,
 	};
 });
 
+angular.module("nextrunApp.commons").directive("nrImportGpx", function($modal, RaceService, notificationService, gettextCatalog) {
+	return {
+		link: function($scope, $element) {
+
+			//var inputFile = $element.parent().find('input[type="file"]');
+
+			var inputFile = angular.element(document.querySelector("#fileInput"));
+
+			$element.bind("click", function() {
+				//inputFile.trigger("click");
+				inputFile.click();
+			});
+
+			inputFile.bind("change", function(e) {
+				//$scope.file = (e.srcElement || e.target).files[0];
+				//$scope.getFile($scope.file);
+				handleFileSelect(e);
+			});
+
+			var handleFileSelect = function(evt) {
+				var file = evt.currentTarget.files[0];
+				var reader = new FileReader();
+				reader.onload = function(evt) {
+					$scope.$apply(function($scope) {
+						//$scope.myImage = evt.target.result;
+						$scope.getFile(evt.target.result;);
+						
+					});
+				};
+				reader.readAsDataURL(file);
+			};
+		}
+	};
+});
+
 angular.module("nextrunApp.commons").directive("nrFileSelect", function() {
 	return {
 		require: "ngModel",

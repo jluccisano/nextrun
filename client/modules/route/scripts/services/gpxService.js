@@ -114,22 +114,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 				return content + gpxToXML;
 			},
 
-			convertGPXtoRoute: function($scope, routeType, gpx) {
-				var routeViewModel = {};
-
-				var routeDataModel = {
-					type: routeType,
-					segments: [],
-					elevationPoints: []
-				};
-
-				var center = RouteUtilsService.setCenter($scope, routeDataModel);
-
-				routeViewModel = new routeBuilder.Route(routeDataModel,
-					RouteHelperService.getChartConfig($scope),
-					RouteHelperService.getGmapsConfig(), center);
-
-				routeViewModel.addClickListener($scope.onClickMap);
+			convertGPXtoRoute: function(routeViewModel, gpx) {
 
 				try {
 
@@ -141,23 +126,18 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 					angular.forEach(segmentsDataModel, function(segmentDataModel) {
 
-						//segmentDataModel.distance = RouteUtilsService.calculateDistanceOfSegment(segmentDataModel);
-
 						var segmentViewModel = routeViewModel.addSegment(segmentDataModel);
 
 						var segmentPath = RouteUtilsService.convertPointsToPath(segmentViewModel.data.points);
 
-						routeViewModel.addMarkerToRoute(segmentPath);
-						routeViewModel.addPolyline(segmentPath, false, false, false, true, "red", 5);
+						MarkerService.addMarkerToRoute(routeViewModel, segmentPath);
+
+						PolylineService.createPolyline(routeViewModel, segmentPath, false, false, false, true, "red", 5);
 
 						RouteService.getElevation(segmentViewModel).then(function(data) {
 							routeViewModel.addElevationPoints(data.samplingPoints, data.elevations);
 						});
 					});
-
-					//var sample = parseInt(trkpts.length * 0.05) * 0.001;
-
-
 
 				} catch (ex) {
 					throw new Error(ex);

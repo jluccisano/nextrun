@@ -46,7 +46,8 @@ div(class="edit-route")
 								a(ng-click="submit()" translate) Enregistrer
 							li(class="divider")
 							li
-								a(ng-click="import()" translate) Importer GPX
+								a(nr-import-gpx translate) Importer GPX
+								input(type="file" id="fileInput" ng-hide="true")  
 							li
 								a(ng-click="cancel()" translate) Fermer
 
