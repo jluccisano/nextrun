@@ -100,6 +100,7 @@
     "time-grunt": "*",
     "travis-cov": "*",
     "usemin-patterns": "*",
-    "xunit-file": "^1.0.0"
+    "xunit-file": "^1.0.0",
+    "jshint-stylish": "^2.2.1"
   }
 }
