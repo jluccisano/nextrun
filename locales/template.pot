@@ -9,6 +9,11 @@ msgid "&nbsp; Ajouter un parcours"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
+msgid "&nbsp; Créer un nouveau parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/race.html
 msgid "&nbsp; Départ: {{(race.schedule.events[0].date | date:'HH:mm') || 'non communiqué'}}"
 msgstr ""
 
@@ -272,6 +277,7 @@ msgstr ""
 #: .tmp/generated/views/partials/home/contacts.html
 #: .tmp/generated/views/partials/race/allraces.html
 #: .tmp/generated/views/partials/race/home.html
+#: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/race/races.html
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/routes.html
@@ -368,14 +374,26 @@ msgstr ""
 msgid "Changer mon mot de passe"
 msgstr ""
 
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/search.html
+msgid "Chercher"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Chercher un parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/main/about.html
+msgid "Chercher un parcours par geolocalisation"
+msgstr ""
+
 #: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/race/templates/viewRegistration.html
 msgid "Choisir une formule"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/carousel.html
-#: .tmp/generated/views/partials/home/templates/marketing.html
+#: .tmp/generated/views/partials/home/templates/actions.html
 msgid "Commencer maintenant !"
 msgstr ""
 
@@ -432,16 +450,17 @@ msgstr ""
 msgid "Création d'une manifestation"
 msgstr ""
 
-#: .tmp/generated/views/partials/workout/create.html
-msgid "Création d'une sortie"
-msgstr ""
-
 #: .tmp/generated/views/partials/main/about.html
 msgid "Créer un compte organisateur"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
 msgid "Créer un compte via Facebook"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/actions.html
+msgid "Créer un parcours"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
@@ -494,6 +513,8 @@ msgstr ""
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/routes.html
 #: .tmp/generated/views/partials/workout/allworkouts.html
+#: .tmp/generated/views/partials/workout/templates/participants.html
+#: .tmp/generated/views/partials/workout/workout.html
 msgid "Dernière mise à jour"
 msgstr ""
 
@@ -793,7 +814,7 @@ msgid "Le parcours a bien été supprimé"
 msgstr ""
 
 #: client/modules/workout/scripts/controllers/editWorkoutController.js
-msgid "Le sortie a bien été supprimée"
+msgid "Le sortie a bien été retiré de votre sortie"
 msgstr ""
 
 #: client/modules/auth/scripts/controllers/usersController.js
@@ -854,6 +875,11 @@ msgstr ""
 #: .tmp/generated/views/layouts/header.html
 #: .tmp/generated/views/partials/route/routes.html
 msgid "Mes Parcours"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/race.html
+#: .tmp/generated/views/partials/workout/workout.html
+msgid "Mes parcours"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
@@ -944,8 +970,14 @@ msgid "Organisation"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/carousel.html
-msgid "Organiser une sortie entre amis"
+#: .tmp/generated/views/partials/home/templates/actions.html
+msgid "Organisation une manifestation"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/actions.html
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Organiser une sortie"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
@@ -1040,20 +1072,13 @@ msgstr ""
 #: .tmp/generated/views/index.html
 #: .tmp/generated/views/layouts/body.html
 #: .tmp/generated/views/layouts/header.html
+msgid "Recherche avancée"
+msgstr ""
+
+#: .tmp/generated/views/index.html
+#: .tmp/generated/views/layouts/body.html
+#: .tmp/generated/views/layouts/header.html
 msgid "Recherche directe"
-msgstr ""
-
-#: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/search.html
-msgid "Rechercher"
-msgstr ""
-
-#: .tmp/generated/views/partials/main/about.html
-msgid "Rechercher un parcours"
-msgstr ""
-
-#: .tmp/generated/views/partials/main/about.html
-msgid "Rechercher un parcours par geolocalisation"
 msgstr ""
 
 #: .tmp/generated/views/index.html
@@ -1157,6 +1182,7 @@ msgstr ""
 #: .tmp/generated/views/partials/main/templates/feedback.html
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
+#: .tmp/generated/views/partials/race/templates/results.html
 #: .tmp/generated/views/partials/race/templates/type.html
 #: .tmp/generated/views/partials/route/mapEditor.html
 #: .tmp/generated/views/partials/workout/templates/feedbackModal.html
@@ -1284,6 +1310,7 @@ msgstr ""
 #: client/modules/race/scripts/directives/dateDirective.js
 #: client/modules/race/scripts/directives/titleDirective.js
 #: client/modules/race/scripts/directives/typeDirective.js
+#: client/modules/workout/scripts/directives/nrDescriptionDirective.js
 #: client/modules/workout/scripts/directives/nrTitleDirective.js
 msgid "Votre manifestation a bien été mise à jour"
 msgstr ""
@@ -1314,11 +1341,13 @@ msgstr ""
 msgid "Votre nom doit contenir au minium 4 lettres."
 msgstr ""
 
+#: client/modules/race/scripts/controllers/editRaceController.js
 #: client/modules/route/scripts/controllers/editRouteController.js
 msgid "Votre parcours a bien été ajouté à votre manifestation"
 msgstr ""
 
 #: client/modules/route/scripts/controllers/editRouteController.js
+#: client/modules/workout/scripts/controllers/editWorkoutController.js
 msgid "Votre parcours a bien été ajouté à votre sortie"
 msgstr ""
 
@@ -1368,6 +1397,7 @@ msgid "Votre utilisateur a bien été publiée"
 msgstr ""
 
 #: .tmp/generated/views/partials/workout/create.html
+#: .tmp/generated/views/partials/workout/templates/description.html
 msgid "description"
 msgstr ""
 

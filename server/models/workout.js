@@ -10,7 +10,8 @@ var ParticipantSchema = new Schema({
         enum: ["yes", "no", "maybe"],
         default: "no"
     },
-    pseudo: String
+    pseudo: String,
+    lastUpdate: Date
 });
 
 var WorkoutEventSchema = new Schema({

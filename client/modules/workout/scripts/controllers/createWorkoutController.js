@@ -8,7 +8,7 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 		WorkoutService,
 		notificationService,
 		MetaService,
-		gettextCatalog, 
+		gettextCatalog,
 		routeId) {
 
 		$scope.gettextCatalog = gettextCatalog;
@@ -30,7 +30,7 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 		};
 
 		$scope.init = function() {
-			if(routeId) {
+			if (routeId) {
 				$scope.workout.routeId = routeId;
 			}
 			MetaService.ready("Ajouter une sortie");
@@ -41,7 +41,7 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 
 			$scope.workout.participants = [];
 
-			angular.forEach($scope.guests, function(guest) {
+			angular.forEach($scope.workout.guests, function(guest) {
 				var participant = {
 					email: guest
 				};
@@ -49,6 +49,10 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 
 			});
 
+			if($scope.workout.hasOwnProperty($scope.workout.guests)) {
+				delete $scope.workout.guests;
+			}
+			
 			WorkoutService.saveOrUpdate($scope.workout).then(
 				function(response) {
 					$scope.openRedirectionModal(response.data.id);

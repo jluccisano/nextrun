@@ -140,7 +140,7 @@ exports.sendNewRoute = function(route, user) {
 
 /** workout management **/
 
-exports.sendNewWorkout = function(route, user) {
+exports.sendNewWorkout = function(user, workout) {
 
     var url = "http://nextrun.fr/workouts/" + workout._id;
 
@@ -154,7 +154,7 @@ exports.sendNewWorkout = function(route, user) {
         from: "contact.nextrun@gmail.com",
         to: user.email,
         subject: "Nouvelle sortie",
-        text: "Nouvelle sortie: " + user.id + " , username: " + user.username + " , email: " + user.email + " , route: " + route._id + " , routeName: " + route.name,
+        text: "Nouvelle sortie: " + url,
         html: templateHtml
     };
 
@@ -196,7 +196,7 @@ exports.sendNotificationUpdateToParticipant = function(workout, user, participan
     var mailOptions = {
         from: user.username + " (via Nextrun) <contact.nextrun@gmail.com>",
         to: participant.email,
-        subject: "Nouvelle sortie",
+        subject: "Mise à jour",
         text: url,
         html: templateHtml
     };

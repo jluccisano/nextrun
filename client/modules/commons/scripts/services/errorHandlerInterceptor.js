@@ -10,7 +10,7 @@ angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
 
 					if (response.status === 403) {
 						$cookieStore.remove("user");
-						AuthService.saveAttemptUrl();
+						AuthService.saveAttemptUrl($state.current);
 						$state.go("login");
 					} else if (response.data && response.data.message) {
 						angular.forEach(response.data.message, function(message) {

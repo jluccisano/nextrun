@@ -13,7 +13,7 @@ workoutModule.config(
 		var access = routingConfig.accessLevels;
 
 		$stateProvider.state("viewWorkout", {
-			url: "/workouts/:id",
+			url: "/workouts/:id/view",
 			templateUrl: "/partials/workout/workout",
 			controller: "ViewWorkoutController",
 			data: {
@@ -28,7 +28,7 @@ workoutModule.config(
 				]
 			}
 		}).state("viewWorkoutWithSelection", {
-			url: "/workouts/:id?selection",
+			url: "/workouts/:id/view?selection",
 			templateUrl: "/partials/workout/workout",
 			controller: "ViewWorkoutController",
 			data: {
@@ -43,7 +43,7 @@ workoutModule.config(
 				]
 			}
 		}).state("viewWorkoutParticipant", {
-			url: "/workouts/:id/participants/:participantId",
+			url: "/workouts/:id/view/participants/:participantId",
 			templateUrl: "/partials/workout/workout",
 			controller: "ViewWorkoutController",
 			data: {
@@ -58,7 +58,7 @@ workoutModule.config(
 				]
 			}
 		}).state("viewWorkoutParticipantWithSelection", {
-			url: "/workouts/:id/participants/:participantId?selection",
+			url: "/workouts/:id/view/participants/:participantId?selection",
 			templateUrl: "/partials/workout/workout",
 			controller: "ViewWorkoutController",
 			data: {
@@ -132,7 +132,7 @@ workoutModule.config(
 				fullscreen: false
 			}
 		}).state("newWorkout", {
-			url: "/workouts/new",
+			url: "/workouts/create",
 			templateUrl: "/partials/workout/create",
 			controller: "CreateWorkoutController",
 			data: {

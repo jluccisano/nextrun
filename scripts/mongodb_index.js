@@ -60,5 +60,5 @@ db.races.find( { "place.geo" :{ $geoWithin :{ $centerSphere :[ [ 47.322047, 5.09
 
 db.users.update({ email: "joseph.luccisano@gmail.com"}, { $set: { "role" : { "bitMask" : 4, "title" : "admin" } }}, {upsert: false});
 
-
+sudo mongofiles --host 192.95.25.173 --port 27017 -d nextrun get reward.sql --local .
 

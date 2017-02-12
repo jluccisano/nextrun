@@ -62,8 +62,18 @@ div(class="container view-race")
                 hr
                 nr-address(edit-mode="editMode" race="race")
 
-              a(ng-if="editMode" class="btn btn-primary" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate)
-                i(class="fa fa-plus" translate) &nbsp; Ajouter un parcours
+              div(ng-if="editMode")
+                button(class="btn btn-primary" type="button" ng-click="onChangeRouteMode()" translate)
+                  i(class="fa fa-plus" translate) &nbsp; Ajouter un parcours
+                div(collapse="isAddRouteMode")
+                  div(ng-form="addRouteForm" novalidate)
+                    div(class="row")
+                      div(class="form-group col-lg-4" ng-class="{'has-error': !addRouteForm.myRoutes.$pristine && addRouteForm.myRoutes.$error.validLocation && addRouteForm.myRoutes.$invalid, 'has-success': !addRouteForm.myRoutes.$pristine}")
+                        select(class="form-control" class="form-control" name="myRoutes" ng-model="selectedRoute" ng-options="route as route.name for route in myRoutes" ng-required="true")
+                          option(value="") {{'Mes parcours' | translate}}
+                      button(ng-disabled="addRouteForm.$invalid" class="btn btn-primary" ng-click="addRoute(selectedRoute)" translate) Ajouter
+                    a(ui-sref="newRaceRoute({raceId: race._id})")
+                      i(class="fa fa-plus" translate) &nbsp; Créer un nouveau parcours
 
       div(class="bs-docs-section")
         div(ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )

@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("PolylineService",
-	function() {
+	function($log) {
 
 		return {
 			createPolyline: function(route, path, editable, draggable, geodesic, visible, color, weight) {
@@ -11,7 +11,8 @@ angular.module("nextrunApp.route").factory("PolylineService",
 				angular.forEach(path, function(point) {
 
 					if (!(point instanceof google.maps.LatLng)) {
-						throw new Error("point is not instance of google.maps.Latlng");
+						$log.error("point is not instance of google.maps.Latlng");
+						return;
 					}
 
 					pathArray.push({
@@ -37,7 +38,7 @@ angular.module("nextrunApp.route").factory("PolylineService",
 					route.addPolyline(polyline);
 
 				} else {
-					throw new Error("polyline must contain at least two point");
+					$log.error("polyline must contain at least two point");
 				}
 			}
 		};

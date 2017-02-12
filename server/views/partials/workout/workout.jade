@@ -58,12 +58,24 @@ div(class="container view-workout")
                 hr
                 div(class="row")
                   div(class="col-md-12")
-                    p {{workout.description}}
+                    nr-workout-description(edit-mode="editMode" workout="workout")
               div(class="col-lg-6")
                 nr-workout-address(edit-mode="editMode" workout="workout")
 
-              a(ng-if="editMode && (!workout.routes || workout.routes.length === 0)" class="btn btn-primary" type="button" ui-sref="newWorkoutRoute({workoutId: workoutId})" translate)
-                i(class="fa fa-plus" translate) &nbsp; Ajouter un parcours
+              div(ng-if="editMode && (!workout.routes || workout.routes.length === 0)")
+                button(class="btn btn-primary" type="button" ng-click="isAddRouteMode = !isAddRouteMode" translate)
+                  i(class="fa fa-plus" translate) &nbsp; Ajouter un parcours
+                div(collapse="isAddRouteMode")
+                  div(ng-form="addRouteForm" novalidate)
+                    div(class="row")
+                      div(class="form-group col-lg-4" ng-class="{'has-error': !addRouteForm.myRoutes.$pristine && addRouteForm.myRoutes.$error.validLocation && addRouteForm.myRoutes.$invalid, 'has-success': !addRouteForm.myRoutes.$pristine}")
+                        select(class="form-control" class="form-control" name="myRoutes" ng-model="selectedRoute" ng-options="route as route.name for route in myRoutes" ng-required="true")
+                          option(value="") {{'Mes parcours' | translate}}
+                      button(ng-disabled="addRouteForm.$invalid" class="btn btn-primary" ng-click="addRoute(selectedRoute)" translate) Ajouter
+                    a(ui-sref="newWorkoutRoute({workoutId: workoutId})")
+                      i(class="fa fa-plus" translate) &nbsp; Créer un nouveau parcours
+
+
 
       div(class="bs-docs-section")
         div(ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )

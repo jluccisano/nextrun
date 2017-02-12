@@ -9,11 +9,11 @@ var authorizedFileTypes = ["application/pdf", "application/vnd.openxmlformats-of
 var authorizedImageTypes = ["image/jpeg", "image/png"];
 
 exports.checkIfAuthorizedFileType = function(type) {
-    return underscore.indexOf(authorizedFileTypes, type);
+    return (underscore.indexOf(authorizedFileTypes, type) > -1);
 };
 
 exports.checkIfAuthorizedImageType = function(type) {
-    return underscore.indexOf(authorizedImageTypes, type);
+    return (underscore.indexOf(authorizedImageTypes, type) > -1);
 };
 
 exports.decodeBase64 = function(dataString) {

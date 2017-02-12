@@ -7,7 +7,7 @@ angular.module("nextrunApp.commons").factory("MetaService",
         SharedMetaService) {
 
         return {
-            ready: function(title, description) {
+            ready: function(title, description, image) {
 
                 setTimeout(function() {
 
@@ -15,7 +15,7 @@ angular.module("nextrunApp.commons").factory("MetaService",
                         description = title;
                     }
                     
-                    SharedMetaService.prepForMetaBroadcast(title, $state.current.url , description);
+                    SharedMetaService.prepForMetaBroadcast(title, $state.current.url , description, image);
                 }, 1000);
 
                 $rootScope.status = "ready";

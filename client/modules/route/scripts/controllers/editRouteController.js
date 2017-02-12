@@ -19,9 +19,16 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         workout,
         RaceService,
         WorkoutService,
-        RouteTypeEnum) {
+        RouteTypeEnum,
+        GmapsApiService,
+        $cookieStore) {
 
-        $scope.isCollapsed = false;
+        var currentRoute = RouteBuilderService.getCurrentRoute();
+
+
+
+        $scope.isCollapsed = true;
+        $scope.isLoaded = false;
 
         $scope.location = {
             details: {},
@@ -69,28 +76,36 @@ angular.module("nextrunApp.route").controller("EditRouteController",
 
         $scope.init = function() {
 
+            if (currentRoute) {
+                $scope.route = currentRoute;
+                angular.copy($scope.route, $scope.tmpRoute);
+                $scope.createRoute();
+                $scope.isLoaded = true;
+            }
+
             $scope.routeId = $stateParams.id;
 
-            if(race && race.data) {
+            if (race && race.data) {
                 $scope.race = race.data;
             }
-           
-            if(workout && workout.data) {
+
+            if (workout && workout.data) {
                 $scope.workout = workout.data;
             }
-            
+
             if ($scope.routeId) {
                 RouteService.retrieve($scope.routeId).then(function(response) {
                     $scope.route = response.data;
                     angular.copy($scope.route, $scope.tmpRoute);
                     $scope.createRoute();
-                    $scope.isCollapsed = true;
+                    $scope.isLoaded = true;
                 }).
                 finally(function() {
                     MetaService.ready("Editer un parcours");
                 });
             } else {
                 $scope.createRoute();
+                $scope.isLoaded = true;
             }
         };
 
@@ -100,6 +115,8 @@ angular.module("nextrunApp.route").controller("EditRouteController",
             $scope.routeViewModel.addClickListener($scope.onClickMap);
             $scope.routeViewModel.setVisible(true);
         };
+
+
 
         $scope.onClickMap = function(routeViewModel, destinationLatlng) {
             RouteBuilderService.createNewSegment(routeViewModel, destinationLatlng, $scope.modeManu);
@@ -143,36 +160,64 @@ angular.module("nextrunApp.route").controller("EditRouteController",
             });
         };
 
-
         $scope.submit = function() {
-            RouteService.saveOrUpdate($scope.routeViewModel.getData()).then(function(response) {
-                notificationService.success(gettextCatalog.getString("Le parcours a bien été créée"));
-                //$scope.init();
+            if ($scope.routeViewModel.data.segments.length > 0 && $scope.routeViewModel.data.segments[0].points.length > 0) {
 
-                if ($scope.race) {
-                    RaceService.updateRoute($scope.race._id, response.data.id).then(
-                        function() {
-                            notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre manifestation"));
-                            $state.go("edit", {
-                                id: $scope.race._id
-                            });
-                        });
-                } else {
-                     WorkoutService.updateRoute($scope.workout._id, response.data.id).then(
-                        function() {
-                            notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre sortie"));
-                            $state.go("editWorkout", {
-                                id: $scope.workout._id
-                            });
-                        });
-                }
+                RouteBuilderService.setCurrentRoute($scope.routeViewModel.data);
 
-            });
+                var firstPoint = $scope.routeViewModel.data.segments[0].points[0];
+
+                var latlng = GmapsApiService.LatLng(firstPoint.lat, firstPoint.lng);
+
+                GmapsApiService.getPlace(latlng).then(function(result) {
+                    $scope.routeViewModel.data.startPlace = result;
+
+                    RouteService.saveOrUpdate($scope.routeViewModel.getData()).then(function(response) {
+                        notificationService.success(gettextCatalog.getString("Le parcours a bien été créée"));
+
+                        if ($scope.race) {
+                            RaceService.updateRoute($scope.race._id, response.data.id).then(
+                                function() {
+                                    notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre manifestation"));
+                                    $state.go("edit", {
+                                        id: $scope.race._id
+                                    }, {
+                                        reload: true
+                                    });
+                                });
+                        } else if ($scope.workout) {
+                            WorkoutService.updateRoute($scope.workout._id, response.data.id).then(
+                                function() {
+                                    notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre sortie"));
+                                    $state.go("editWorkout", {
+                                        id: $scope.workout._id
+                                    }, {
+                                        reload: true
+                                    });
+                                });
+                        } else {
+                            $scope.init();
+                        }
+
+                        RouteBuilderService.removeCurrentRoute();
+
+                    });
+
+                });
+            }
         };
 
         $scope.cancel = function() {
             angular.copy($scope.tmpRoute, $scope.routeViewModel.getData());
             $previousState.go("previousState");
+        };
+
+        $scope.exportGPX = function(route) {
+            var gpx = GpxService.convertRouteToGPX(route, "export");
+            var blob = new Blob([gpx], {
+                type: "text/xml"
+            });
+            return blob;
         };
 
         $scope.init();

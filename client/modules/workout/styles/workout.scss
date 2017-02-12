@@ -1,3 +1,7 @@
 @import 'create.scss';
 @import 'workouts.scss';
 @import 'view.scss';
+
+textarea[name=description] {
+    resize: none;
+}

@@ -9,7 +9,7 @@ var routes = [{
     middleware: [workoutController.getWorkout],
     accessLevel: accessLevels.public
 }, {
-    path: "/create",
+    path: "/new",
     httpMethod: "POST",
     middleware: [workoutController.createWorkout],
     accessLevel: accessLevels.user
@@ -61,7 +61,13 @@ var routes = [{
     httpMethod: "PUT",
     middleware: [workoutController.addRouteRef],
     accessLevel: accessLevels.user
-}, ];
+}, {
+    path: "/:id/route/:routeId/unlink",
+    httpMethod: "PUT",
+    middleware: [workoutController.unlinkRouteRef],
+    accessLevel: accessLevels.user
+},];
+
 
 module.exports = function(app, express) {
     var router = express.Router();

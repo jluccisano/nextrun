@@ -11,6 +11,7 @@ angular.module("nextrunApp").controller("MainController",
 			$scope.ogTitle = SharedMetaService.pageTitle;
 			$scope.ogUrl = SharedMetaService.url;
 			$scope.ogDescription = SharedMetaService.description;
+			$scope.ogImage = SharedMetaService.image;
 			$scope.$apply();
 		});
 

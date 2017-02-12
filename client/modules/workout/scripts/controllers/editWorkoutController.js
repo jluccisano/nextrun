@@ -20,11 +20,13 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
         RouteUtilsService,
         RouteHelperService,
         workoutId,
-        RouteService) {
+        RouteService,
+        GpxService) {
 
         $scope.selection = "";
 
         $scope.isCollapsed = false;
+        $scope.isAddRouteMode = true;
 
         $scope.editMode = true;
         $scope.active = "general";
@@ -80,7 +82,9 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                 MetaService.ready($scope.workout.name, $scope.generateWorkoutDescription());
             });
 
-
+            RouteService.find(AuthService.user.id, 1).then(function(response) {
+                $scope.myRoutes = response.data.items;
+            });
         };
 
         $scope.isLoggedIn = function() {
@@ -115,12 +119,11 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                     history: false
                 }
             }).get().on("pnotify.confirm", function() {
-                RouteService.delete(routeViewModel.data._id).then(function() {
-                    notificationService.success(gettextCatalog.getString("Le sortie a bien été supprimée"));
-                    $state.go("editWorkoutWithSelection", {
-                        id: $scope.workoutId,
-                        selection: "general"
-                    },true);
+                WorkoutService.unlinkRoute($scope.workoutId, routeViewModel.data._id).then(function() {
+                    notificationService.success(gettextCatalog.getString("Le sortie a bien été retiré de votre sortie"));
+                    $state.go("editWorkout", {
+                        id: $scope.workoutId
+                    }, { reload: true });
                 });
             });
         };
@@ -132,7 +135,7 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                     $state.go("editWorkoutWithSelection", {
                         id: $scope.workoutId,
                         selection: "general"
-                    }, true);
+                    }, { reload: true });
                 });
         };
 
@@ -160,7 +163,17 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                     $state.go("editWorkoutWithSelection", {
                         id: $scope.workoutId,
                         selection: "participants"
-                    }, true);
+                    }, { reload: true });
+                });
+        };
+
+        $scope.addRoute = function(selectedRoute) {
+            WorkoutService.updateRoute($scope.workoutId, selectedRoute._id).then(
+                function() {
+                    notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre sortie"));
+                    $state.go("editWorkout", {
+                        id: $scope.workoutId
+                    }, { reload: true });
                 });
         };
 
@@ -186,9 +199,17 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                         $state.go("editWorkoutWithSelection", {
                             id: $scope.workoutId,
                             selection: "participants"
-                        }, true);
+                        }, { reload: true });
                     });
             });
+        };
+
+        $scope.exportGPX = function(route) {
+            var gpx = GpxService.convertRouteToGPX(route, "export");
+            var blob = new Blob([gpx], {
+                type: "text/xml"
+            });
+            return blob;
         };
 
         $scope.init();

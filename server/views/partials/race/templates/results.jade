@@ -7,8 +7,8 @@ div(ng-if="editMode" ng-form="resultsForm" novalidate)
 	div(class="form-group")
 		label(for="year" class="control-label" translate) Année
 		div(class="form-group" ng-class="{'has-error': resultsForm.year.$invalid && !resultsForm.year.$pristine, 'has-success': !resultsForm.year.$invalid && !resultsForm.year.$pristine}")
-			select(class="form-control" ng-model="result.year" name="year" ng-options="year for year in years")
-
+			select(class="form-control" ng-model="result.year" name="year" ng-options="year for year in years" ng-required="true")
+				option(value="") {{'Sélectionner...' | translate}}
 	div(class="form-group")
 		label(for="resultFile" class="control-label" translate) Fichier
 		div(class="form-group" ng-class="{'has-error': resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine, 'has-success': !resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine}")
@@ -27,7 +27,7 @@ table(class="table table-hover")
 		tr(ng-repeat="result in race.results")
 			td {{result.year}}
 			td 
-				a(nr-async-download nr-file-name="{{result.filename}}" get-data="downloadResult(result)") {{result.name}}
+				a(nr-async-download nr-file-name="{{result.fileName}}" get-data="downloadResult(result)") {{result.name}}
 			td
 				div(class="form-group")
 					button(type="button" class="btn btn-default btn-lg" ng-click="deleteResult(result)")

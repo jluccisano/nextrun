@@ -55,7 +55,7 @@ raceModule.config(
       data: {
         access: access.admin
       },
-    }).state("create", {
+    }).state("newRace", {
       url: "/races/create",
       templateUrl: "/partials/race/create",
       controller: "CreateRaceController",

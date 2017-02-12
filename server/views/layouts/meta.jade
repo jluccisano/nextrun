@@ -8,7 +8,8 @@ meta(name='keywords' ng-cloak content="{{'manifestation sportive, endurance, tra
 
 meta(property="og:title" content="{{ogTitle}}" ng-cloak)
 meta(property="og:type" content="website")
-meta(property="og:image" content="http://www.nextrun.fr/img/logo_officiel.png")
+meta(ng-if="!ogImage" property="og:image" content="http://www.nextrun.fr/client/modules/main/images/logo_officiel.png")
+meta(ng-if="ogImage" property="og:image" content="{{ogImage}}")
 meta(property="og:url" content="{{ogUrl}}" ng-cloak)
 meta(property="og:description" content="{{ogDescription}}" ng-cloak)
 meta(name="fragment" content="!")

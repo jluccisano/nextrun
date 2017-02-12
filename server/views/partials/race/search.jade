@@ -23,4 +23,4 @@ div(class="search-race")
 	google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true" draggable="true" mark-click="true" events="map.events")
 		markers(models="map.markers" coords="'self'" icon="'icon'" fit="'fit'" click="'onClicked'" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
 			windows(show="'showWindow'" closeClick="'closeClick'")
-				a(ng-non-bindable href="#/races/view/{{raceId}}") {{raceName}}
+				a(ng-non-bindable href="#{{ref}}") {{name}}

@@ -24,8 +24,6 @@ div(class="edit-route")
 			form(class="navbar-form navbar-left")
 				input(bs-switch type="checkbox" ng-model="modeManu" switch-label="manu" switch-on-color="success" switch-off-color="default" switch-on-text="On" switch-off-text="Off")
 
-			//div(class="navbar-form navbar-right")
-			//	input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)")
 			form(class="navbar-form navbar-right" name="routeForm" novalidate role="form")
 				div(class="form-group"  ng-class="{'has-error': !routeForm.name.$pristine && routeForm.name.$invalid, 'has-success': !routeForm.name.$invalid && !routeForm.name.$pristine}")
 					label(class="control-label" for="name" translate) Nom
@@ -47,12 +45,15 @@ div(class="edit-route")
 							li(class="divider")
 							li
 								a(nr-import-gpx translate) Importer GPX
-								input(type="file" id="fileInput" ng-hide="true")  
+								input(type="file" id="fileInput" ng-hide="true")
+							li(ng-class="{'disabled' : !routeViewModel.data._id}")
+								a(nr-download nr-file-name="{{routeViewModel.data.name}}" get-data="exportGPX(routeViewModel)") Exporter GPX
 							li
 								a(ng-click="cancel()" translate) Fermer
+                
 
 	include map
-	div(class="inline-stats")
+	div(class="inline-stats" ng-if="isLoaded")
 		a(ng-click="isCollapsed = !isCollapsed")
 			span(class="hyperspan")
 		div(class="well")

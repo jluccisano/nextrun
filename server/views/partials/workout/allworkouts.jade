@@ -19,7 +19,7 @@ div(class="container workouts")
 				td 
 					a(ui-sref="viewWorkout({id: workout._id})") {{workout.name}}	
 				td {{workout.routeId | translate}}
-				td {{workout.distance | translate}}
+				td {{ workout.distance  | number: 2}} km
 				td(ng-if="workout.lastUpdate != null")  {{workout.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
 				td {{workout.userId}}
 				td

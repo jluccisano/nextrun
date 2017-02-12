@@ -31,7 +31,7 @@ routeModule.config(
 				}
 			}
 		}).state("viewRoute", {
-			url: "/routes/:id",
+			url: "/routes/:id/view",
 			templateUrl: "/partials/route/mapView",
 			controller: "ViewRouteController",
 			data: {
@@ -39,7 +39,7 @@ routeModule.config(
 				fullscreen: true
 			}
 		}).state("editRaceRoute", {
-			url: "/routes/:id/race/:raceId/edit",
+			url: "/routes/:id/edit/race/:raceId/edit",
 			templateUrl: "/partials/route/mapEditor",
 			controller: "EditRouteController",
 			data: {
@@ -55,7 +55,7 @@ routeModule.config(
 				}
 			}
 		}).state("editWorkoutRoute", {
-			url: "/routes/:id/workout/:workoutId/edit",
+			url: "/routes/:id/edit/workout/:workoutId/edit",
 			templateUrl: "/partials/route/mapEditor",
 			controller: "EditRouteController",
 			data: {
@@ -71,11 +71,11 @@ routeModule.config(
 				}
 			}
 		}).state("newRoute", {
-			url: "/routes/new",
+			url: "/routes/create",
 			templateUrl: "/partials/route/mapEditor",
 			controller: "EditRouteController",
 			data: {
-				access: access.user,
+				access: access.public,
 				fullscreen: true
 			},
 			resolve: {

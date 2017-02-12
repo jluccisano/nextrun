@@ -4,7 +4,7 @@ angular.module("nextrunApp.commons").factory("RaceService",
     function(HttpUtils) {
         return {
             create: function(data) {
-                return HttpUtils.post("/api/races/create", data);
+                return HttpUtils.post("/api/races/new", data);
             },
             checkIfRaceNameAvailable: function(id, data) {
                 return HttpUtils.post("/api/races/" + id + "/name/available/", data);
@@ -62,7 +62,9 @@ angular.module("nextrunApp.commons").factory("RaceService",
             },
             downloadResult: function(id, resultId) {
                 return HttpUtils.get("/api/races/" + id + "/results/" + resultId + "/download/");
+            },
+            unlinkRoute: function(id, routeId) {
+                return HttpUtils.put("/api/races/" + id + "/route/" + routeId + "/unlink");
             }
-
         };
     });

@@ -20,12 +20,17 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         RouteUtilsService,
         RouteHelperService,
         raceId,
-        RouteService) {
+        RouteService,
+        GpxService) {
 
         $scope.selection = "";
 
         $scope.isCollapsed = false;
+        $scope.isAddRouteMode = true;
 
+        $scope.onChangeRouteMode = function() {
+            $scope.isAddRouteMode = !$scope.isAddRouteMode;
+        };
         $scope.editMode = true;
         $scope.active = "general";
 
@@ -83,7 +88,9 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                 MetaService.ready($scope.race.name, $scope.generateRaceDescription());
             });
 
-
+            RouteService.find(AuthService.user.id, 1).then(function(response) {
+                $scope.myRoutes = response.data.items;
+            });
         };
 
         $scope.isLoggedIn = function() {
@@ -130,7 +137,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                     history: false
                 }
             }).get().on("pnotify.confirm", function() {
-                RouteService.delete(routeViewModel.data._id).then(function() {
+                RaceService.unlinkRoute($scope.raceId, routeViewModel.data._id).then(function() {
                     notificationService.success(gettextCatalog.getString("Le parcours a bien été supprimé"));
                     $scope.init();
                 });
@@ -237,6 +244,27 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                     }
                 }
             });
+        };
+
+        $scope.addRoute = function(selectedRoute) {
+            RaceService.updateRoute($scope.raceId, selectedRoute._id).then(
+                function() {
+                    notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre manifestation"));
+                    $state.go("edit", {
+                        id: $scope.raceId
+                    }, {
+                        reload: true
+                    });
+                });
+        };
+
+
+        $scope.exportGPX = function(route) {
+            var gpx = GpxService.convertRouteToGPX(route, "export");
+            var blob = new Blob([gpx], {
+                type: "text/xml"
+            });
+            return blob;
         };
 
         $scope.init();

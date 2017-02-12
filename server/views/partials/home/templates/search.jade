@@ -1,6 +1,10 @@
 div(class="container search")
 	div(ng-form="searchForm" class="text-center" novalidate)
 		div(class="form-group")
+			div(class="row search-type")
+				label(class="radio-inline" ng-repeat="raceType in raceTypes")
+					input(type="radio" value="{{raceType.value}}" ng-model="searchType.raceType")
+					| {{raceType.label | translate}}
 			div(class="row")
 				div(class="col-lg-4 col-lg-offset-2")
 					div(class="row")
@@ -12,7 +16,9 @@ div(class="container search")
 							input(type="radio" value="{{rad.value}}" ng-change="search()" ng-model="criteria.radius")
 							| {{rad.label | translate}}
 				div(class="col-lg-2")
-					select(class="form-control input-lg" name="type" ng-model="criteria.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in listOfTypes" ng-required="true")
-						option(value="") {{'Type' | translate}}	
+					select(ng-if="searchType.raceType === 'official'" class="form-control input-lg" name="type" ng-model="criteria.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in listOfTypes" ng-required="true")
+						option(value="") {{'Type' | translate}}
+					select(ng-if="searchType.raceType !== 'official'" class="form-control input-lg"  id="routeType" class="form-control" name="type" ng-model="criteria.type" ng-options="routeType as gettextCatalog.getString(routeType) for routeType in types" ng-required="true")
+						option(value="") {{'Type' | translate}}
 				div(class="col-lg-1")
-					button(type="button" ng-click="submitSearchWithCriteria()" class="btn btn-primary btn-lg" ng-disabled="searchForm.$invalid" translate) Rechercher
+					button(type="button" ng-click="submitSearchWithCriteria()" class="btn btn-primary btn-lg" ng-disabled="searchForm.$invalid" translate) Chercher

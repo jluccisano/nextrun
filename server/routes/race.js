@@ -10,7 +10,7 @@ var routes = [{
     middleware: [raceController.getRace],
     accessLevel: accessLevels.public
 }, {
-    path: "/create",
+    path: "/new",
     httpMethod: "POST",
     middleware: [raceController.createRace],
     accessLevel: accessLevels.user
@@ -96,7 +96,12 @@ var routes = [{
     httpMethod: "DELETE",
     middleware: [raceController.deleteResultFile, raceController.deleteResult],
     accessLevel: accessLevels.user
-}];
+},{
+    path: "/:id/route/:routeId/unlink",
+    httpMethod: "PUT",
+    middleware: [raceController.unlinkRouteRef],
+    accessLevel: accessLevels.user
+},];
 
 
 module.exports = function(app, express) {

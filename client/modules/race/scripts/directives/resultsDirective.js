@@ -18,12 +18,25 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
   $scope.edit = false;
   $scope.tmpRace = {};
 
-  $scope.years = [2012, 2013, 2014];
+  
 
   $scope.toggleEdit = function() {
     $scope.edit = !$scope.edit;
     return $scope.edit;
   };
+
+  $scope.createYearList = function() {
+      var years = [];
+      var date = new Date();
+      var currentYear = date.getFullYear();
+
+      for(var i = currentYear ; i > (currentYear - 10) ; i--) {
+          years.push(i);
+      }
+      return years;
+  };
+
+  $scope.years = $scope.createYearList();
 
 
   $scope.$watch("race", function(newValue) {
@@ -62,7 +75,4 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
     return defer.promise;
   };
 
-  $scope.update = function() {
-
-  };
 });

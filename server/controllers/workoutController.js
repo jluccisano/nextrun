@@ -34,10 +34,11 @@ exports.createWorkout = function(req, res) {
 
 exports.updateWorkout = function(req, res) {
     var workout = req.workout;
+    var user = req.user;
     workoutService.updateWorkout(workout, req, res, function() {
 
-        underscore.forEach(newWorkout.participants, function(participant) {
-            email.sendNotificationUpdateToParticipant(newWorkout, user, participant);
+        underscore.forEach(workout.participants, function(participant) {
+            email.sendNotificationUpdateToParticipant(workout, user, participant);
         });
 
         res.status(200).json({
@@ -140,6 +141,20 @@ exports.addRouteRef = function(req, res) {
     var workout = req.workout;
     var route = req.routeData;
     workoutService.addRouteRef(workout, route, res, function() {
+        res.sendStatus(200);
+    });
+};
+
+exports.updateRouteRef = function(req, res, next) {
+    var route = req.routeData;
+    workoutService.updateRouteRef(route, res, function() {
+        next();
+    });
+};
+
+exports.unlinkRouteRef = function(req, res, next) {
+    var route = req.routeData;
+    workoutService.updateRouteRef(route, res, function() {
         res.sendStatus(200);
     });
 };

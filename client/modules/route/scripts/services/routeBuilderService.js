@@ -12,7 +12,19 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 		MarkerService,
 		PolylineService,
 		underscore) {
+
+		var currentRoute = null;
+
 		return {
+			setCurrentRoute: function(route) {
+				currentRoute = route;
+			},
+			getCurrentRoute: function() {
+				return currentRoute;
+			},
+			removeCurrentRoute: function() {
+				currentRoute = null;
+			},
 			createRouteViewModel: function(route, chartConfig, gmapsConfig, showSegment) {
 				var routeDataModel;
 
@@ -148,10 +160,37 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 					if (race.place) {
 						marker = {
 							id: routeBuilder.generateUUID(),
-							raceId: race._id,
-							raceName: race.name,
+							name: race.name,
+							ref: "/races/view/" + race._id,
 							latitude: race.place.location.latitude + (Math.random() - 0.5) / 1500,
 							longitude: race.place.location.longitude + (Math.random() - 0.5) / 1500,
+							icon: "client/modules/route/images/start.png",
+							showWindow: false,
+							title: "hello"
+						};
+					}
+
+					if (marker) {
+						markers.push(marker);
+					}
+				});
+				return markers;
+			},
+			convertRoutesLocationToMarkers: function(routes) {
+
+				var markers = [];
+
+				angular.forEach(routes, function(route) {
+
+					var marker;
+
+					if (route.startPlace) {
+						marker = {
+							id: routeBuilder.generateUUID(),
+							name: route.name,
+							ref: "/routes/" + route._id + "/view",
+							latitude: route.startPlace.location.latitude + (Math.random() - 0.5) / 1500,
+							longitude: route.startPlace.location.longitude + (Math.random() - 0.5) / 1500,
 							icon: "client/modules/route/images/start.png",
 							showWindow: false,
 							title: "hello"

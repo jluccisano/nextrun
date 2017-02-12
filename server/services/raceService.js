@@ -213,6 +213,10 @@ exports.search = function(criteria, res, cb) {
 
 	if (criteria) {
 
+		andArray.push({
+			published: true
+		});
+
 		if (criteria.dateRange && criteria.dateRange.startDate && criteria.dateRange.endDate) {
 			dateRange = {
 				"date": {
@@ -514,7 +518,6 @@ exports.addResult = function(race, path, name, originalName, year, res, cb) {
 		}, options);
 	});
 };
-
 
 
 

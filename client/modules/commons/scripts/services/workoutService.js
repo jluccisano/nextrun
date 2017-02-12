@@ -19,7 +19,7 @@ angular.module("nextrunApp.commons").factory("WorkoutService",
                 if (data._id) {
                     return HttpUtils.put("/api/workouts/" + data._id + "/update", data);
                 } else {
-                    return HttpUtils.post("/api/workouts/create", data);
+                    return HttpUtils.post("/api/workouts/new", data);
                 }
             },
             updateParticipant: function(id, participant) {
@@ -36,6 +36,9 @@ angular.module("nextrunApp.commons").factory("WorkoutService",
             },
             updateRoute: function(workoutId, routeId) {
                 return HttpUtils.put("/api/workouts/" + workoutId + "/route/" + routeId + "/update");
+            },
+            unlinkRoute: function(workoutId, routeId) {
+                return HttpUtils.put("/api/workouts/" + workoutId + "/route/" + routeId + "/unlink");
             },
         };
     });

@@ -1,7 +1,7 @@
 div(class="container create-workout")
 	div(class="row")
 		div(class="col-md-4 col-md-offset-4")
-			h3(class="text-center" translate) Création d'une sortie
+			h3(class="text-center" translate) Organiser une sortie
 			form(class="form-horizontal" role="form" name="workoutEventForm" novalidate)
 				
 				div(class="form-group" ng-class="{'has-error':!workoutEventForm.name.$pristine && workoutEventForm.name.$invalid, 'has-success': !workoutEventForm.name.$invalid && !workoutEventForm.name.$pristine}")
@@ -10,7 +10,7 @@ div(class="container create-workout")
 
 				div(class="form-group" ng-class="{'has-error':!workoutEventForm.guests.$pristine && workoutEventForm.guests.$invalid, 'has-success': !workoutEventForm.guests.$invalid && !workoutEventForm.guests.$pristine}")
 					label(class="control-label") {{'Inviter' | translate}}
-					nr-email-list(class="form-control" ng-model="guests" rejected="rejects" repeat="repeats" name="guests" placeholder="{{'martin@gmail.com,jean@yahoo.com' | translate}}" ng-required="true")
+					nr-email-list(class="form-control" ng-model="workout.guests" rejected="rejects" repeat="repeats" name="guests" placeholder="{{'martin@gmail.com,jean@yahoo.com' | translate}}" ng-required="true")
 					
 					span(class="help-block" ng-show="workoutEventForm.guests.$error.emailList" translate) Email invalide
 

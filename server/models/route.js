@@ -35,7 +35,32 @@ var RouteSchema = new Schema({
     elevationPoints: [PointSchema],
     segments: [SegmentSchema],
     type: String,
-    description: String
+    description: String,
+    startPlace: {
+        name: String,
+        location: {
+            latitude: Number,
+            longitude: Number
+        },
+        place_type: String,
+        locality: String,
+        administrative_area_level_1: String,
+        administrative_area_level_2: String,
+        country: String,
+        geo: {
+            type: {
+                type: "String",
+                required: true,
+                enum: ["Point", "LineString", "Polygon"],
+                default: "Point"
+            },
+            coordinates: {
+                type: Schema.Types.Mixed,
+                index: "2dsphere",
+                default: [0, 0]
+            }
+        }
+    }
 });
 
 RouteSchema.pre("save", function(next, req, callback) {
@@ -43,6 +68,13 @@ RouteSchema.pre("save", function(next, req, callback) {
     var userConnected = req.user;
 
     this.userId = userConnected._id;
+
+     if (this.startPlace.location.latitude && this.startPlace.location.longitude) {
+        this.startPlace.geo = {
+            type: "Point",
+            coordinates: [this.startPlace.location.latitude, this.startPlace.location.longitude]
+        };
+    }
 
     this.lastUpdate = new Date();
     if (this.isNew) {

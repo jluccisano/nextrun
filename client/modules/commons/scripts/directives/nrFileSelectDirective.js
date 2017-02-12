@@ -84,7 +84,7 @@ angular.module("nextrunApp.commons").directive("nrImportGpx", function() {
 						
 					});
 				};
-				reader.readAsDataURL(file);
+				reader.readAsText(file);
 			};
 		}
 	};

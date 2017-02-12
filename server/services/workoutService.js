@@ -136,6 +136,8 @@ exports.updateParticipant = function(workout, participant, req, res, cb) {
 		"participants._id": participantId
 	};
 
+	participant.lastUpdate = new Date();
+
 	var update = {
 		$set: {
 			"participants.$": participant
@@ -286,6 +288,29 @@ exports.addRouteRef = function(workout, route, res, cb) {
 		$set: {
 			lastUpdate: new Date(),
 			routeId: route._id
+		}
+	};
+
+	var options = {};
+
+	Workout.update(query, update, function(error) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else {
+			cb();
+		}
+	}, options);
+};
+
+exports.updateRouteRef = function(route, res, cb) {
+	var query = {
+		routeId: route._id
+	};
+
+	var update = {
+		$set: {
+			lastUpdate: new Date(),
+			routeId: null
 		}
 	};
 

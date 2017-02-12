@@ -13,7 +13,10 @@ angular.module("nextrunApp.home").controller("HomeController",
         RegionEnum,
         RaceTypeEnum,
         MetaService,
-        gettextCatalog) {
+        gettextCatalog,
+        RouteTypeEnum) {
+
+        $scope.types = RouteTypeEnum;
 
         $scope.gettextCatalog = gettextCatalog;
 
@@ -31,6 +34,18 @@ angular.module("nextrunApp.home").controller("HomeController",
             value: 120,
             label: "120km"
         }];
+
+        $scope.raceTypes = [{
+            value: "official",
+            label: "Epreuves officielles"
+        }, {
+            value: "routes",
+            label: "Parcours partagés"
+        }];
+
+        $scope.searchType = {
+            raceType: "official"
+        };
 
         var initContact = function() {
             $scope.contact = {
@@ -55,14 +70,10 @@ angular.module("nextrunApp.home").controller("HomeController",
                 });
         };
 
-        $scope.goToNewRace = function() {
-            $state.go("races");
-        };
-
         $scope.submitSearchWithCriteria = function() {
+            $state.go("search");
             $timeout(function() {
-                SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria);
-                $state.go("search");
+                SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria, $scope.searchType.raceType);
             }, 1000);
 
         };

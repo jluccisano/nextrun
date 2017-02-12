@@ -1,5 +1,6 @@
 var routeController = require("../controllers/routeController"),
     raceController = require("../controllers/raceController"),
+    workoutController = require("../controllers/workoutController"),
     routerService = require("../middlewares/router"),
     authorizationUtils = require("../utils/authorizationUtils"),
     accessLevels = require("../../client/routingConfig").accessLevels;
@@ -7,7 +8,7 @@ var routeController = require("../controllers/routeController"),
 var routes = [{
     path: "/:id",
     httpMethod: "GET",
-    middleware: [authorizationUtils.checkRouteNotPublished, routeController.getRoute],
+    middleware: [routeController.getRoute],
     accessLevel: accessLevels.public
 }, {
     path: "/new",
@@ -27,7 +28,7 @@ var routes = [{
 }, {
     path: "/:id/delete",
     httpMethod: "DELETE",
-    middleware: [raceController.updateRouteRef, routeController.deleteRoute],
+    middleware: [raceController.updateRouteRef, workoutController.updateRouteRef, routeController.deleteRoute],
     accessLevel: accessLevels.user
 }, {
     path: "/:id/update",
@@ -45,7 +46,12 @@ var routes = [{
     httpMethod: "PUT",
     middleware: [routeController.unpublishRoute],
     accessLevel: accessLevels.user
-}, ];
+}, {
+    path: "/search",
+    httpMethod: "POST",
+    middleware: [routeController.search],
+    accessLevel: accessLevels.public
+}];
 
 module.exports = function(app, express) {
     var router = express.Router();

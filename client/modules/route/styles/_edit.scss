@@ -10,6 +10,26 @@
     .navbar-default {
         background-color: white;
         border-color: white;
+
+        .navbar-nav {
+            li {
+                a {
+                    color: $bgDefault;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                }
+            } 
+        }
+
+        .navbar-form {
+            .form-group {
+                padding-right: 15px;
+            }
+        }
+    }
+
+    .bootstrap-switch.bootstrap-switch-focused {
+        border-color: $bgDefault;
     }
 
     .hyperspan {

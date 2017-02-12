@@ -13,19 +13,26 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         gettextCatalog,
         RouteHelperService,
         RouteBuilderService,
+        RouteService,
         mapOptions,
-        dateRanges) {
+        dateRanges,
+        RouteTypeEnum) {
 
         $scope.distanceSelection = {};
+
+        $scope.types = RouteTypeEnum;
 
         $scope.isFiltered = false;
         $scope.isCollapsed = true;
 
         $scope.gettextCatalog = gettextCatalog;
 
-        $rootScope.$on("handleCriteriaBroadcast", function(evt, criteria) {
+        $rootScope.$on("handleCriteriaBroadcast", function(evt, criteria, type) {
             if (criteria) {
                 $scope.criteria = criteria;
+            }
+            if (type) {
+                $scope.searchType.raceType = type;
             }
             $scope.search();
         });
@@ -42,6 +49,18 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             value: 120,
             label: "120km"
         }];
+
+        $scope.raceTypes = [{
+            value: "official",
+            label: "Epreuves officielles"
+        }, {
+            value: "routes",
+            label: "Parcours partagés"
+        }];
+
+        $scope.searchType = {
+            raceType: "official"
+        };
 
         $scope.listOfTypes = RaceTypeEnum.getValues();
 
@@ -81,30 +100,58 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
         $scope.search = function() {
             if ($scope.criteria) {
-                RaceService.search($scope.criteria).then(function(response) {
-                    if (response.data.items.length > 0) {
-                        $scope.isFiltered = true;
-                        $scope.emptyResults = false;
-                        $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
-                        angular.forEach($scope.map.markers, function(marker) {
-                            marker.showWindow = false;
-                            marker.closeClick = function() {
-                                marker.showWindow = false;
-                                $scope.$apply();
-                            };
-                            marker.onClicked = function() {
-                                $scope.onMarkerClicked(marker);
-                            };
-                        });
 
-                    } else {
-                        $scope.emptyResults = true;
-                        $scope.map.markers = [];
-                    }
-                }).
-                finally(function() {
-                    MetaService.ready("Manifestations");
-                });
+                if ($scope.searchType.raceType === "official") {
+                    RaceService.search($scope.criteria).then(function(response) {
+                        if (response.data.items.length > 0) {
+                            $scope.isFiltered = true;
+                            $scope.emptyResults = false;
+                            $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
+                            angular.forEach($scope.map.markers, function(marker) {
+                                marker.showWindow = false;
+                                marker.closeClick = function() {
+                                    marker.showWindow = false;
+                                    $scope.$apply();
+                                };
+                                marker.onClicked = function() {
+                                    $scope.onMarkerClicked(marker);
+                                };
+                            });
+
+                        } else {
+                            $scope.emptyResults = true;
+                            $scope.map.markers = [];
+                        }
+                    }).
+                    finally(function() {
+                        MetaService.ready("Manifestations");
+                    });
+                } else {
+                    RouteService.search($scope.criteria).then(function(response) {
+                        if (response.data.items.length > 0) {
+                            $scope.isFiltered = false;
+                            $scope.emptyResults = false;
+                            $scope.map.markers = RouteBuilderService.convertRoutesLocationToMarkers(response.data.items);
+                            angular.forEach($scope.map.markers, function(marker) {
+                                marker.showWindow = false;
+                                marker.closeClick = function() {
+                                    marker.showWindow = false;
+                                    $scope.$apply();
+                                };
+                                marker.onClicked = function() {
+                                    $scope.onMarkerClicked(marker);
+                                };
+                            });
+
+                        } else {
+                            $scope.emptyResults = true;
+                            $scope.map.markers = [];
+                        }
+                    }).
+                    finally(function() {
+                        MetaService.ready("Manifestations");
+                    });
+                }
             }
         };
 

@@ -67,3 +67,12 @@ exports.unpublishRoute = function(req, res) {
         res.sendStatus(200);
     });
 };
+
+exports.search = function(req, res) {
+    var criteria = req.body.criteria;
+    routeService.search(criteria, res, function(items) {
+        res.status(200).json({
+            items: items
+        });
+    });
+};

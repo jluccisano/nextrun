@@ -109,6 +109,13 @@ exports.updateRouteRef = function(req, res, next) {
 	});
 };
 
+exports.unlinkRouteRef = function(req, res, next) {
+	var route = req.routeData;
+	raceService.updateRouteRef(route, res, function() {
+		res.sendStatus(200);
+	});
+};
+
 exports.addRouteRef = function(req, res) {
 	var race = req.race;
 	var route = req.routeData;

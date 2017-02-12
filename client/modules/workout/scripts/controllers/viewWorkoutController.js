@@ -20,7 +20,8 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 		RouteUtilsService,
 		RouteHelperService,
 		workoutId,
-		RouteService) {
+		RouteService,
+		GpxService) {
 
 		$scope.selection = "";
 
@@ -61,7 +62,7 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 					}
 				});
 
-				if ($scope.routesViewModel.length > 0  && !$scope.selection) {
+				if ($scope.routesViewModel.length > 0 && !$scope.selection) {
 					$scope.selection = $scope.routesViewModel[0].getType() + 0;
 					$scope.routesViewModel[0].setVisible(true);
 				}
@@ -84,10 +85,10 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 				function() {
 					notificationService.success(gettextCatalog.getString("Votre réponse a bien été prise en compte"));
 					$state.go("viewWorkoutParticipantWithSelection", {
-                        id: $scope.workout._id,
-                        participantId: participant._id,
-                        selection: "general"
-                    }, true);
+						id: $scope.workout._id,
+						participantId: participant._id,
+						selection: "general"
+					}, true);
 				});
 		};
 
@@ -122,33 +123,41 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 			$scope.isCollapsed = true;
 		};
 
-		 $scope.initSelection = function(selection) {
-            if (selection) {
-                $scope.selection = selection;
-                $scope.active = selection;
-                if (selection !== "general") {
-                    $scope.isCollapsed = false;
-                } else {
-                    $scope.isCollapsed = true;
+		$scope.initSelection = function(selection) {
+			if (selection) {
+				$scope.selection = selection;
+				$scope.active = selection;
+				if (selection !== "general") {
+					$scope.isCollapsed = false;
+				} else {
+					$scope.isCollapsed = true;
 
-                }
-            } else {
-                $scope.selection = undefined;
-                $scope.isCollapsed = false;
-            }
-        };
+				}
+			} else {
+				$scope.selection = undefined;
+				$scope.isCollapsed = false;
+			}
+		};
 
-        $scope.openFeedbackModal = function() {
-            $scope.modalInstance = $modal.open({
-                templateUrl: "partials/workout/templates/feedbackModal",
-                controller: "WorkoutFeedbackModalController",
-                resolve: {
-                    workoutId: function() {
-                        return $scope.workoutId;
-                    }
-                }
-            });
-        };
+		$scope.openFeedbackModal = function() {
+			$scope.modalInstance = $modal.open({
+				templateUrl: "partials/workout/templates/feedbackModal",
+				controller: "WorkoutFeedbackModalController",
+				resolve: {
+					workoutId: function() {
+						return $scope.workoutId;
+					}
+				}
+			});
+		};
+
+		$scope.exportGPX = function(route) {
+			var gpx = GpxService.convertRouteToGPX(route, "export");
+			var blob = new Blob([gpx], {
+				type: "text/xml"
+			});
+			return blob;
+		};
 
 		$scope.init();
 	});

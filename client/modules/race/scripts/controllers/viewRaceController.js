@@ -6,7 +6,6 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         $modal,
         $filter,
         $q,
-        $base64,
         RaceService,
         RouteBuilderService,
         RouteService,
@@ -57,7 +56,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
             }).
             finally(function() {
-                MetaService.ready($scope.race.name, $scope.generateRaceDescription());
+                MetaService.ready($scope.race.name, $scope.generateRaceDescription(), $scope.image);
             });
         };
 

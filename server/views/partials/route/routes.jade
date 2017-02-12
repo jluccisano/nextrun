@@ -19,7 +19,7 @@ div(class="container routes")
 				td 
 					a(ui-sref="viewRoute({id: route._id})") {{route.name}}	
 				td {{route.type | translate}}
-				td {{route.distance | translate}}
+				td {{ route.distance  | number: 2}} km
 				td(ng-if="route.lastUpdate != null")  {{route.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
 				td
 					a(ui-sref="editRoute({id: route._id})" translate)

@@ -28,5 +28,10 @@ angular.module("nextrunApp.commons").factory("RouteService",
             unpublish: function(id) {
                 return HttpUtils.put("/api/routes/" + id + "/unpublish/", undefined);
             },
+            search: function(criteria) {
+                return HttpUtils.post("/api/routes/search/", {
+                    "criteria": criteria
+                });
+            },
         };
     });

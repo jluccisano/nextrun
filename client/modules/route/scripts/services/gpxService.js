@@ -1,13 +1,13 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("GpxService",
-	function(x2js, RouteService, RouteUtilsService, MarkerService, PolylineService) {
+	function(x2js, RouteService, RouteUtilsService, MarkerService, PolylineService, ElevationService) {
 
 		return {
 
 			getTrkpts: function(gpxToJson) {
 
-				if (angular.isObject(gpxToJson) || angular.isUndefined(gpxToJson.gpx) || angular.isUndefined(gpxToJson.gpx.trk) || angular.isUndefined(gpxToJson.gpx.trk.trkseg) || angular.isUndefined(gpxToJson.gpx.trk.trkseg.trkpt)) {
+				if (!angular.isObject(gpxToJson) || angular.isUndefined(gpxToJson.gpx) || angular.isUndefined(gpxToJson.gpx.trk) || angular.isUndefined(gpxToJson.gpx.trk.trkseg) || angular.isUndefined(gpxToJson.gpx.trk.trkseg.trkpt)) {
 					throw new Error("parse.gpx.error");
 				}
 
@@ -134,7 +134,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 						PolylineService.createPolyline(routeViewModel, segmentPath, false, false, false, true, "red", 5);
 
-						RouteService.getElevation(segmentViewModel).then(function(data) {
+						ElevationService.getElevation(segmentViewModel).then(function(data) {
 							routeViewModel.addElevationPoints(data.samplingPoints, data.elevations);
 						});
 					});
