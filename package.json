@@ -38,7 +38,8 @@
     "forever": "latest",
     "nodemailer": "latest",
     "googlemaps": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "elasticsearchclient": "latest"
   },
   "devDependencies": {
     "mocha": "latest",

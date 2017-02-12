@@ -79,7 +79,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 				$scope.names = [];
 
-				var races = response.data.races;
+				var races = response.data.hits.hits;
 				//push the current query at first
 
 				var query_fulltext = {
@@ -92,8 +92,8 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				for (var i = 0; i < races.length; i++) {
 
 					var name = {
-						fullname: races[i].name,
-						id: races[i]._id
+						fullname: races[i].fields.name,
+						id: races[i].fields._id
 					}
 					$scope.names.push(name);
 				}

@@ -6,8 +6,15 @@
 var mongoose = require('mongoose'),
   Race = mongoose.model('Race'),
   errorUtils = require('../utils/errorutils'),
-  util = require('util');
+  util = require('util'),
+  ElasticSearchClient = require('elasticsearchclient');
 
+var serverOptions = {
+  host: 'localhost',
+  port: 9200
+};
+
+var elasticSearchClient = new ElasticSearchClient(serverOptions);
 
 /**
  * Load By Id
@@ -424,49 +431,86 @@ exports.search = function(req, res, next) {
  */
 exports.autocomplete = function(req, res) {
 
-  var operation = {
-    name: "",
-    published: true
-  }
-
   var criteria = req.body.criteria;
 
+  var query = {
+    "fields": [
+      "name",
+      "distanceType",
+      "type",
+      "department",
+      "_id"
+    ],
+    "query": {
+      "bool": {
+        "should": [{
+            "query_string": {
+              "default_field": "race.name.autocomplete",
+              "query": criteria.fulltext
+            }
+          }, {
+            "query_string": {
+              "default_field": "race.department.name.autocomplete",
+              "query": criteria.fulltext
+            }
+          }, {
+            "query_string": {
+              "default_field": "race.department.region.autocomplete",
+              "query": criteria.fulltext
+            }
+          }, {
+            "query_string": {
+              "default_field": "race.department.code.autocomplete",
+              "query": criteria.fulltext
+            }
+          }, {
+            "query_string": {
+              "default_field": "race.distanceType.i18n.autocomplete",
+              "query": criteria.fulltext
+            }
+          }, {
+            "query_string": {
+              "default_field": "race.type.name.autocomplete",
+              "query": criteria.fulltext
+            }
+          },
 
-
-  if (criteria) {
-
-
-
-    if (criteria.fulltext) {
-      var regex = new RegExp('\\b' + criteria.fulltext, 'i');
-      operation.name = regex;
-    }
-
-    if (criteria.region !== undefined) {
-
-      operation = {
-        name: operation.name,
-        "department.code": {
-          '$in': criteria.region.departments
-        },
-        published: true
+        ],
+        "must_not": [],
+        "must": [{
+          "term": {
+            "race.published": true
+          }
+        }]
       }
+    },
+    "from": 0,
+    "size": 8,
+    "sort": [],
+    "facets": {}
+  };
 
-    }
+  if (criteria.region !== undefined) {
 
+    query.query.bool.must.push({
+      "terms": {
+        "race.department.code": criteria.region.departments
+      }
+    });
   }
 
-  console.log(util.inspect(operation));
-  Race.autocomplete(operation, function(err, races) {
-    if (err) {
-      console.log(err);
-      return res.json(400, {
-        message: errorUtils.errors(err)
-      });
-    }
-    req.races = races;
-    return res.json(200, {
-      races: req.races
-    });
-  });
+  console.log("JSON.parse(data)");
+
+  elasticSearchClient.search('racesidx_v1', 'race', query)
+    .on('data', function(data) {
+      console.log(JSON.parse(data));
+      res.send(JSON.parse(data));
+    })
+    .on('done', function() {
+      //always returns 0 right now
+    })
+    .on('error', function(error) {
+      console.log(error)
+    })
+    .exec();
 };

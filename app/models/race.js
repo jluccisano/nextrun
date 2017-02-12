@@ -277,20 +277,6 @@ RaceSchema.statics = {
     }).exec(cb);
   },
 
-
-  /**
-   * autocomplete
-   *
-   * @param  query string
-   * @param {Function} cb
-   */
-  autocomplete: function(operation, cb) {
-
-    this.find(operation, {
-      name: 1
-    }).limit(8).exec(cb);
-  },
-
   /**
    * Seach user by complex aggregation
    *

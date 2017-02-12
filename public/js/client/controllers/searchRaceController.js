@@ -123,7 +123,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 				$scope.names = [];
 
-				var races = response.data.races;
+				var races = response.data.hits.hits;
 
 				var query_fulltext = {
 					fullname: query_string,
@@ -135,8 +135,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				for (var i = 0; i < races.length; i++) {
 
 					var name = {
-						fullname: races[i].name,
-						id: races[i]._id
+						fullname: races[i].fields.name,
+						id: races[i].fields._id
 					}
 					$scope.names.push(name);
 				}
