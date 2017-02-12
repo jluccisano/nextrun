@@ -14,5 +14,5 @@
 	m.parentNode.insertBefore(a, m);
 })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-ga('create', 'UA-45775595-1', 'nextrun.eu01.aws.af.cm');
+ga('create', 'UA-45775595-1', 'ns397827.ip-192-95-25.net');
 ga('send', 'pageview');

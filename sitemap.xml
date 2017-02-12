@@ -5,31 +5,31 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>http://nextrun.eu01.aws.af.cm/</loc>
+  <loc>http://ns397827.ip-192-95-25.net/</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://nextrun.eu01.aws.af.cm/races/search</loc>
+  <loc>http://ns397827.ip-192-95-25.net/races/search</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://nextrun.eu01.aws.af.cm/about</loc>
+  <loc>http://ns397827.ip-192-95-25.net/about</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://nextrun.eu01.aws.af.cm/contacts</loc>
+  <loc>http://ns397827.ip-192-95-25.net/contacts</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://nextrun.eu01.aws.af.cm/credits</loc>
+  <loc>http://ns397827.ip-192-95-25.net/credits</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://nextrun.eu01.aws.af.cm/myraces</loc>
+  <loc>http://ns397827.ip-192-95-25.net/myraces</loc>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://nextrun.eu01.aws.af.cm/users/settings</loc>
+  <loc>http://ns397827.ip-192-95-25.net/users/settings</loc>
   <changefreq>daily</changefreq>
 </url>
 </urlset>

@@ -27,6 +27,3 @@ mongoexport -h ds057568.mongolab.com:57568 -d af_nextrun-joseph_luccisano -c <co
 
 
 
-
-
-
