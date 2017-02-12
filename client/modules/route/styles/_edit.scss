@@ -1,4 +1,4 @@
-.edit-route {
+.edit-route, .view-route {
     .navbar {
         position: absolute;
         left: 0px;
@@ -65,4 +65,8 @@
             }
         }
     }
+}
+
+.view-route {
+    top:0px;
 }

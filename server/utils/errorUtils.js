@@ -70,5 +70,11 @@ exports.handleEmailAlreadyExists = function(res) {
     });
 };
 
+exports.handleRouteNotPublished = function(res) {
+    logger.error("error.routeNotPublished");
+    return res.status(400).json({
+        message: ["error.routeNotPublished"]
+    });
+};
 
 

@@ -53,3 +53,17 @@ exports.deleteRoute = function(req, res) {
         res.sendStatus(200);
     });
 };
+
+exports.publishRoute = function(req, res) {
+    var route = req.route;
+    routeService.publishRoute(route, true, res, function() {
+        res.sendStatus(200);
+    });
+};
+
+exports.unpublishRoute = function(req, res) {
+    var route = req.route;
+    routeService.publishRace(route, false, res, function() {
+        res.sendStatus(200);
+    });
+};

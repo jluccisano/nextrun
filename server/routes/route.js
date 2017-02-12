@@ -33,7 +33,19 @@ var routes = [{
     httpMethod: "PUT",
     middleware: [routeController.updateRoute],
     accessLevel: accessLevels.user
-}];
+}, {
+    path: "/:id/publish",
+    httpMethod: "PUT",
+    middleware: [routeController.publishRoute],
+    accessLevel: accessLevels.user
+
+}, {
+    path: "/:id/unpublish",
+    httpMethod: "PUT",
+    middleware: [routeController.unpublishRoute],
+    accessLevel: accessLevels.user
+
+}, ];
 
 module.exports = function(app, express) {
     var router = express.Router();

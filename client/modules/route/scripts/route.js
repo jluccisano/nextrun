@@ -27,6 +27,14 @@ routeModule.config(
 					return {};
 				}
 			}
+		}).state("viewRoute", {
+			url: "/routes/:id",
+			templateUrl: "/partials/route/mapView",
+			controller: "ViewRouteController",
+			data: {
+				access: access.public,
+				fullscreen: true
+			}
 		}).state("editRaceRoute", {
 			url: "/routes/:id/race/:raceId/edit",
 			templateUrl: "/partials/route/mapEditor",

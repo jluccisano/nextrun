@@ -18,7 +18,7 @@ div(class="container routes")
 		tbody
 			tr(ng-repeat="route in routes")
 				td 
-					a(ui-sref="editRoute({id: route._id})") {{route.name}}	
+					a(ui-sref="viewRoute({id: route._id})") {{route.name}}	
 				td {{route.type | translate}}
 				td {{route.distance | translate}}
 				td(ng-if="route.lastUpdate != null")  {{route.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}

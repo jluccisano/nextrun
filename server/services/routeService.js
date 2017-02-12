@@ -82,8 +82,13 @@ exports.findRoute = function(id, res, cb) {
 
 exports.getRoute = function(req, res, cb) {
 	var route = req.routeData;
+	var user = req.user;
 	if (!underscore.isUndefined(route)) {
-		cb(route);
+		if(route.published === false) {
+			errorUtils.handleRouteNotPublished(res);
+		} else {
+			cb(route);
+		}
 	} else {
 		errorUtils.handleUnknownData(res);
 	}
@@ -114,6 +119,33 @@ exports.updateRoute= function(route, req, res, cb) {
 
 	var update = {
 		$set: dataToUpdate
+	};
+
+	var options = {
+		upsert: true
+	};
+
+	Route.update(query, update, function(error) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else {
+			cb();
+		}
+	}, options);
+};
+
+exports.publishRoute = function(route, value, res, cb) {
+
+	var query = {
+		_id: route._id
+	};
+
+	var update = {
+		$set: {
+			lastUpdate: new Date(),
+			published: value,
+			publicationDate: new Date()
+		}
 	};
 
 	var options = {

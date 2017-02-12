@@ -21,6 +21,12 @@ angular.module("nextrunApp.commons").factory("RouteService",
                 } else {
                     return HttpUtils.post("/api/routes/new", data);
                 }
-            }
+            },
+            publish: function(id) {
+                return HttpUtils.put("/api/routes/" + id + "/publish/", undefined);
+            },
+            unpublish: function(id) {
+                return HttpUtils.put("/api/routes/" + id + "/unpublish/", undefined);
+            },
         };
     });

@@ -1,0 +1,32 @@
+div(class="view-route")
+	include map
+	div(class="inline-stats")
+		a(ng-click="isCollapsed = !isCollapsed")
+			span(class="hyperspan")
+		div(class="well")
+			ul(class="list-inline")
+				li(class="text-center")
+					strong {{routeViewModel.getDistance() | number:2 }} km
+					br
+					span(class="small" translate) Distance
+				li(class="text-center")
+					strong {{routeViewModel.getAscendant() | number:0 }} m
+					br
+					span(class="small" translate) Dénivelé positif
+				li(class="text-center")
+					strong {{routeViewModel.getDescendant() | number:0 }} m
+					br
+					span(class="small" translate) Dénivelé négatif
+				li(class="text-center")
+					strong {{routeViewModel.getMaxElevation() | number:0 }} m
+					br
+					span(class="small" translate) Altitude max
+				li(class="text-center")
+					strong {{routeViewModel.getMinElevation() | number:0 }} m
+					br
+					span(class="small" translate) Altitude min
+			div(class="row" collapse="isCollapsed")
+				div(class="col-md-12")
+					highchart(ng-if="routeViewModel.isVisible()" id="{{routeViewModel.getType()}}" ng-hide="routeViewModel.getType() === 'Natation'" config="routeViewModel.getChartConfig()")
+
+
