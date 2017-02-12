@@ -945,7 +945,11 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				removePointsToElevationChartBySegmentId(route, lastSegment.segmentId);
 			}
 		},
-		convertRouteToGPX: function(route) {
+		convertRouteToGPX: function(route, name) {
+
+			var x2js = new X2JS();
+
+			var gpxToXML;
 
 			var content = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>';
 
@@ -957,7 +961,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					'_xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
 					'_xsi:schemaLocation': "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd",
 					'trk': {
-						'name': "toto",
+						'name': name,
 						'trkseg': {}
 					}
 				}
@@ -983,9 +987,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 
 			json.gpx.trk.trkseg.trkpt = arrayOfTrkpt;
 
-			var x2js = new X2JS();
-
-			var gpxToXML = x2js.json2xml_str(json);
+			gpxToXML = x2js.json2xml_str(json);
 
 			return content + gpxToXML;
 		},

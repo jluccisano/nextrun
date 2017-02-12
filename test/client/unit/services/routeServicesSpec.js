@@ -71,4 +71,11 @@ describe('routeServices', function() {
 
 	});
 
+	describe('convertRouteToGPX', function() {
+
+		it('should return a gpx', function() {
+
+		});
+	});
+
 });
