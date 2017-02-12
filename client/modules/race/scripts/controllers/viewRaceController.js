@@ -11,7 +11,8 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         RaceService,
         RouteService,
         GpxService,
-        MetaService) {
+        MetaService,
+        RouteHelperService) {
 
         google.maps.visualRefresh = true;
 
@@ -33,7 +34,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
                 $scope.race = response.data.race;
 
-                $scope.routesViewModel = RouteService.createRoutesViewModel($scope, $scope.race);
+                $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
 
             }).finally(function() {
                 MetaService.ready($scope.race.name, $location.path(), $scope.generateRaceDescription());

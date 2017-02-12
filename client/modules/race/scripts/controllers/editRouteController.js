@@ -4,10 +4,15 @@ angular.module("nextrunApp.race").controller("EditRouteController",
     function(
         $scope,
         $modalInstance,
+        $timeout,
         RouteService,
         GpxService,
         FileReaderService,
-        route) {
+        routeDataModel,
+        race,
+        RouteUtilsService,
+        RouteHelperService) {
+
 
         $scope.location = {
             details: {},
@@ -26,9 +31,15 @@ angular.module("nextrunApp.race").controller("EditRouteController",
         };
 
         $scope.init = function() {
-            $scope.route = route;
+            $scope.route = new routeBuilder.Route(routeDataModel, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
+            $scope.route.setCenter(RouteUtilsService.getCenter(race));
             $scope.route.addClickListener($scope.onClickMap);
-            $scope.route.setVisible(true);
+            
+            $timeout(function() {
+                $scope.route.setVisible(true);
+            });
+
+
         };
 
         $scope.onClickMap = function(route, destinationLatlng) {

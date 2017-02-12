@@ -2,73 +2,76 @@ nav(class="navbar navbar-default" role="navigation")
 	div(class="collapse navbar-collapse")
 		form(class="navbar-form navbar-left" role="search")
 			div(class="input-group")
-				input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" nr-has-location gmaps-autocomplete options="map.options" details="location.details")
-
+				input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="map.options" details="location.details")
 				span(class="input-group-btn")
 					button(class="btn btn-default" type="button" ng-click="centerToLocation(route, location.details)")
 						span(class="glyphicon glyphicon-search")
+		
+		ul(class="nav navbar-nav")
+			li
+				a(href ng-click="undo(route)" class="text-center")
+					i(class="fa fa-undo fa-3")
+					br
+					span(translate) Retour
+			li
+				a(href ng-click="delete(route)" class="text-center")
+					i(class="fa fa-remove fa-3")
+					br
+					span(translate) Effacer
+
+
+		div(class="navbar-nav navbar-right")
+			toggle-switch(model="manualMode" html="true" class="switch-primary switch-small navbar-btn" on-label="On" off-label="Off")
+			br
+			span(translate) Mode manuel
+
 		div(class="navbar-form navbar-right")
 			input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
-		
-		
-		toggle-switch(model="manualMode" html="true" class="switch-primary switch-small" on-label="<i class='fa fa-thumbs-up'></i>" off-label="<i class='fa fa-thumbs-down'></i>")
 
-		//div(class="btn-group btn-group-lg")
-		//	button(type="button" class="btn btn-default")
-		//		i(class="fa fa-undo")
-		//	button(type="button" class="btn btn-default")
-		//		span(class="glyphicon glyphicon-remove")
-		//	button(type="button" class="btn btn-default")
-		//		span(class="glyphicon glyphicon-star") Star
+		div(class="navbar-form navbar-right")
+			button(type="button" class="btn btn-primary" ng-click="submit()" translate) Enregistrer
+
 div(ng-if="route.isVisible()")
 	include map
 
-	div.mapControl(ng-show="route.isEditMode()")
-		div.well
-			form
-				div(class="radio")
-					label
-						input(type="radio" ng-model="route._travelMode" ng-value="'DRIVING'" ) 
-						span(translate) Suivre la route
-				div(class="radio")
-					label
-						input(type="radio"  ng-model="route._travelMode" ng-value="'WALKING'") 
-						span(translate) Suivre le chemin
-				div(class="radio")
-					label
-						input(type="radio" ng-model="route._travelMode" ng-value="'NONE'") 
-						span(translate) Segment direct
-				div.button-group
-					button.btn.btn-primary.btn-xs(ng-click="undo(route)")
-						i.fa.fa-reply
-						span(translate) Retour
-					button.btn.btn-danger.btn-xs(ng-click="delete(route)")
-						i.fa.fa-times
-						span(translate) Effacer
-				div
-					h3 {{route.getDistance() | number:2 }} km
-				div
-					span D+: {{route.getAscendant() | number:0 }} m
-				div
-					span D-: {{route.getDescendant() | number:0 }} m
-				div
-					span Max: {{route.getMaxElevation() | number:0 }} m
-				div
-					span Min: {{route.getMinElevation() | number:0 }} m
-	highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
+	div(class="inline-stats")
+		div(class="well")
+			ul(class="list-inline")
+				li(class="text-center")
+					strong {{route.getDistance() | number:2 }} km
+					br
+					span(class="small" translate) Distance
+				li(class="text-center")
+					strong {{route.getAscendant() | number:0 }} m
+					br
+					span(class="small" translate) Dénivelé positif
+				li(class="text-center")
+					strong {{route.getDescendant() | number:0 }} m
+					br
+					span(class="small" translate) Dénivelé négatif
+				li(class="text-center")
+					strong {{route.getMaxElevation() | number:0 }} m
+					br
+					span(class="small" translate) Altitude max
+				li(class="text-center")
+					strong {{route.getMinElevation() | number:0 }} m
+					br
+					span(class="small" translate) Altitude min
+			div(class="row")
+				highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
 
-	div(class="row")
-		div(class="col-sm-12")
-			h5(translate) Ajouter une description à votre parcours
+//div(class="row")
+	div(class="col-sm-12")
+		h5(translate) Ajouter une description à votre parcours
 
-		div(class="col-sm-12 animate-hide" ng-hide="editingInfo")
-			div(class="well" ng-bind-html="route.data.description")
-			button(class="btn btn-default" ng-click="editingInfo = !editingInfo" translate ) Editer
+	div(class="col-sm-12 animate-hide" ng-hide="editingInfo")
+		div(class="well" ng-bind-html="route.data.description")
+		button(class="btn btn-default" ng-click="editingInfo = !editingInfo" translate ) Editer
 
-		div(class="col-sm-12 animate-hide" ng-show="editingInfo")
-			div(text-angular ng-model="route.data.description")
-			button(class="btn btn-primary" ng-click="editingInfo = !editingInfo"  translate) Valider
-			button(class="btn btn-default" ng-click="editingInfo = !editingInfo" translate) Annuler
+	div(class="col-sm-12 animate-hide" ng-show="editingInfo")
+		div(text-angular ng-model="route.data.description")
+		button(class="btn btn-primary" ng-click="editingInfo = !editingInfo"  translate) Valider
+		button(class="btn btn-default" ng-click="editingInfo = !editingInfo" translate) Annuler
 
 
 

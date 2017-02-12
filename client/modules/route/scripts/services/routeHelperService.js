@@ -53,7 +53,7 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
                     options: {
                         chart: {
                             zoomType: "xy",
-                            height: 300,
+                            height: 150,
                             type: "area"
                         },
                         plotOptions: {

@@ -38,6 +38,8 @@ angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
 
       link: function(scope, element, attrs, controller) {
 
+        scope.gPlace = undefined;
+
         //options for autocomplete
         var opts;
         //convert options provided to opts

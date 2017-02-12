@@ -1,104 +1,64 @@
 @import 'text-angular.scss';
+
 /*@import 'animation.scss';*/
 
 .tab-content {
-	padding-top: 20px;
+    padding-top: 20px;
 }
-
 .address-map-container {
-
-	.angular-google-map-container {
-	    width: 100%;
-	    height: 300px;
-	}
-
+    .angular-google-map-container {
+        width: 100%;
+        height: 300px;
+    }
 }
-
 .modal-fullscreen .modal-dialog {
-  width: 98%;
-  height: 98%;
+    width: 98%;
+    height: 98%;
 }
-
-
+.pac-container {
+    z-index: 1051;
+}
 accordion {
-	.panel-body {
-		padding: none;
-	}
+    .panel-body {
+        padding: none;
+    }
 }
-
-
-
-div[ng-app] { margin: 10px; }
+div[ng-app] {
+    margin: 10px;
+}
 form[name="editableForm"] > div {
-  height: auto;
-  padding: 5px 0;
+    height: auto;
+    padding: 5px 0;
 }
-
 form[name="editableForm"] .title {
-  display: inline-block;
-  font-weight: bold;
-  padding-top: 5px;
-  vertical-align: top;
-  min-width: 90px;
+    display: inline-block;
+    font-weight: bold;
+    padding-top: 5px;
+    vertical-align: top;
+    min-width: 90px;
 }
-
 form[name="editableForm"] .editable {
-  display: inline-block;
-  padding-top: 5px;
-  vertical-align: top;
+    display: inline-block;
+    padding-top: 5px;
+    vertical-align: top;
 }
-
 form[name="editableForm"] select {
-  width: 120px;
+    width: 120px;
 }
 
-
-
-
-.nrEditTab {
-	form {
-		.form-horizontal {
-			margin-top:10px;
-		}
-	}
-}
-
-.mapControl {
-	z-index: 0; 
-	position: absolute; 
-	top: 680px; 
-	right: 170px;
-}
-
-
-.rowBasic {
-	border:0; 
-	border-top: none;
-	text-align: left;
-}
-
-.rowItalic {
-	border:0; 
-	border-top: none;
-	font-style:italic;
-	text-align: left;
-}
-
-.rowBold {
-	border:0; 
-	border-top: 
-	none; 
-	font-weight:bold;
-	text-align: left;
+.inline-stats {
+    z-index: 0;
+    position: absolute;
+    top: 55%;
+    left: 0px;
+    right: 0px;
+    padding: 25px;
 }
 
 .workflowImage {
-	width: 100%; 
-	height:30%;
+    width: 100%;
+    height: 30%;
 }
-
-
-
 span.glyphicon.glyphicon-remove {
-	cursor:pointer;
+    cursor: pointer;
 }

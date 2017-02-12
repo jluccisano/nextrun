@@ -4,18 +4,14 @@ angular.module("nextrunApp.race").controller("RichTextEditorModalController",
     function(
         $scope,
         $modalInstance,
-        model) {
-
-        $scope.model = {
-            text: ""
-        };
+        content) {
 
         $scope.init = function() {
-            $scope.model.text = model;
+            $scope.content = content;
         };
 
         $scope.submit = function() {
-            $modalInstance.close($scope.model);
+            $modalInstance.close($scope.content);
         };
 
         $scope.cancel = function() {
@@ -23,5 +19,4 @@ angular.module("nextrunApp.race").controller("RichTextEditorModalController",
         };
 
         $scope.init();
-
     });

@@ -1,17 +1,26 @@
 div(class="row")
 	div(class="col-lg-8")
 		div
-			span(class="title" e-translate) Départ: 
-			a(href="#" editable-bstime="race.timing.startingTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.startingTime | date:"HH:mm") || 'empty' }}
+			span(class="title" e-translate) Départ:
+			a(href="#" nr-editable-bstime="race.timing.startingTime" e-class="form-control" e-size="8" name="time" e-data-time-format="HH:mm" e-data-length="1" e-data-minute-step="1" e-data-arrow-behavior="picker") {{ (race.timing.startingTime | date:"HH:mm") || 'Non communiqué' }}
 
 		div
 			span(class="title" e-translate) Briefing: 
-			a(href="#" editable-bstime="race.timing.briefingTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.briefingTime | date:"HH:mm") || 'empty' }}
+			a(href="#" editable-bstime="race.timing.briefingTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.briefingTime | date:"HH:mm") || 'Non communiqué' }}
 
 		div
 			span(class="title" e-translate) Retrait des dossards: 
-			a(href="#" editable-bstime="race.timing.checkoutBibTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.checkoutBibTime | date:"HH:mm") || 'empty' }}
+			a(href="#" editable-bstime="race.timing.checkoutBibTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.checkoutBibTime | date:"HH:mm") || 'Non communiqué' }}
 
 		div
 			span(class="title" e-translate) Récompenses: 
-			a(href="#" editable-bstime="race.timing.rewardsTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.rewardsTime | date:"HH:mm") || 'empty' }}
+			a(href="#" editable-bstime="race.timing.rewardsTime" e-show-meridian="false" e-minute-step="10") {{ (race.timing.rewardsTime | date:"HH:mm") || 'Non communiqué' }}
+div(class="row")
+	div(class="col-sm-12")
+		div(class="panel panel-default")
+			div(class="panel-heading" translate) Plus d'informations
+				a(class="pull-right" ng-click="editMoreInformation(race.timing)")
+					span(class="glyphicon glyphicon-pencil")
+
+			div(ng-if="race.timing.moreInformation" class="panel-body" ng-bind-html="race.timing.moreInformation")
+			div(ng-if="!race.timing.moreInformation" class="panel-body" translate) Non communiqué

@@ -28,6 +28,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.navType = "pills";
 		$scope.types = RaceTypeEnum.getValues();
 		$scope.routesViewModel = [];
+		$scope.choices = ["oui", "non"];
 		$scope.cursorMarker = {
 			id: 1
 		};
@@ -104,7 +105,17 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		};
 
-		
+		/* $scope.exportGPX = function(route) {
+
+            var gpx = GpxService.convertRouteToGPX(route, "export");
+
+            var blob = new Blob([gpx], {
+                type: "text/xml"
+            });
+            return blob;
+        };*/
+
+
 
 		$scope.computeLocation = function(address) {
 			GmapsApiService.getLocation(address).then(function(result) {
@@ -118,24 +129,31 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			});
 		};
 
-		$scope.editPlanMoreInformation = function() {
-			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal($scope.race.plan.moreInformation);
-
-			$scope.modalInstance.result.then(function(result) {
-				$scope.race.plan.moreInformation = result.text;
+		$scope.editMoreInformation = function(model) {
+			$scope.modalInstance = RichTextEditorService.openRichTextEditorModal(model.moreInformation);
+			$scope.modalInstance.result.then(function(moreInformation) {
+				model.moreInformation = moreInformation;	
 			});
 		};
 
-		$scope.editRoute = function(routesViewModel) {
+		$scope.editRoute = function(routeViewModel, $index) {
 			$scope.modalInstance = $modal.open({
 				templateUrl: "partials/race/editRoute",
 				controller: "EditRouteController",
 				windowClass: "modal-fullscreen",
+				backdrop: false,
 				resolve: {
-					route: function() {
-						return routesViewModel;
+					race: function() {
+						return $scope.race;
+					},
+					routeDataModel: function() {
+						return $scope.routesViewModel[$index].data;
 					}
 				}
+			});
+
+			$scope.modalInstance.result.then(function(result) {
+				$scope.routesViewModel[$index] = result;
 			});
 		}
 		$scope.init();
