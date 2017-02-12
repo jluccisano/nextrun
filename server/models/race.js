@@ -182,6 +182,20 @@ RaceSchema.methods = {
 
 RaceSchema.statics = {
 
+    autocomplete: function(text, cb) {
+
+        var pattern = new RegExp("^"+text, "i");
+
+        this.find({
+            name: {
+                $regex: pattern
+            }
+        }, {
+            name: 1,
+            id: 1
+        }).limit(8).exec(cb);
+    },
+
 
     findByCriteria: function(options, cb) {
 

@@ -5,6 +5,11 @@ nav(class="navbar navbar-default navbar-fixed-top" role="navigation" ng-Controll
 				img(class="img-responsive" src="client/modules/main/images/logo_officiel.png" width="25" height="25" alt="Brand")
 			a(class="navbar-brand" ng-href="/") NEXTRUN
 		div(class="collapse navbar-collapse")
+			form(class="navbar-form navbar-left" role="search")
+				div(class="form-group input-group")
+					input(class="form-control twitter-typeahead" type="text" placeholder="{{'Recherche directe' | translate}}" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="selectedItem" typeahead="item as item.name for item in autocomplete($viewValue) | filter:{name:$viewValue} | limitTo:8")
+					span(class="input-group-addon")
+						span(class="glyphicon glyphicon-search")
 			ul(class="nav navbar-nav")
 				li
 					a(ng-href="/races/search" translate) Rechercher

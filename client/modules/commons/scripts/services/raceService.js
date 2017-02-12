@@ -33,6 +33,11 @@ angular.module("nextrunApp.commons").factory("RaceService",
                 return HttpUtils.post("/api/races/autocomplete/", {
                     "criteria": criteria
                 });
-            }
+            },
+            autocomplete: function(text) {
+                return HttpUtils.post("/api/races/autocomplete/", {
+                    "text": text
+                });
+            },
         };
     });

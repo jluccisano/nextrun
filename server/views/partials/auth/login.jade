@@ -1,23 +1,23 @@
-div.container
-	div.row
-		div.col-lg-4.col-lg-offset-4
-			div.panel.panel-default
-				div.panel-heading <strong>{{ 'Se connecter' | translate }}</strong>
-				div.panel-body
-					form(role="form" name="form" ng-submit="submit()" novalidate)
+div(class="container")
+	div(class="row")
+		div(class="col-lg-4 col-lg-offset-4")
+			div(class="panel panel-default")
+				div(class="panel-heading") <strong>{{ 'Se connecter' | translate }}</strong>
+				div(class="panel-body")
+					form(role="form" name="loginForm" ng-submit="submit()" novalidate)
 						
-						div.form-group(ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
-							label.control-label(for="email" translate) Email
-							input.form-control(type="email" name="email" placeholder="{{'Email' | translate }}" ng-model="user.email")
-							span.help-block(name='email-invalid' ng-show="form.email.$error.email" translate) Email invalide
+						div(class="form-group" ng-class="{'has-error': !loginForm.email.$pristine && loginForm.email.$invalid, 'has-success': !loginForm.email.$invalid && !loginForm.email.$pristine}")
+							label(class="control-label" for="email" translate) Email
+							input(class="form-control" id="email" type="email" placeholder="{{'Email' | translate }}" ng-model="user.email")
+							span(class="help-block" ng-show="loginForm.email.$error.email" translate) Email invalide
 						
-						div.form-group(ng-class="{'has-error': !form.password.$pristine && form.password.$invalid, 'has-success': !form.password.$invalid && !form.password.$pristine}")
-							label.control-label(type="password" for="password"  translate) Mot de passe
-							input.form-control(type="password" name="password" placeholder="{{'Mot de passe' | translate }}" ng-model="user.password" ng-minlength="4" ng-maxlength="16" ng-required="true")
-							span.help-block(ng-show="form.password.$dirty && form.password.$error.minlength" translate) Le mot de passe doit contenir au minium 4 lettres.
-							span.help-block(ng-show="form.password.$dirty && form.password.$error.maxlength" translate) Le mot de passe doit contenir au maximum 16 lettres.
+						div(class="form-group" ng-class="{'has-error': !loginForm.password.$pristine && loginForm.password.$invalid, 'has-success': !loginForm.password.$invalid && !loginForm.password.$pristine}")
+							label(class="control-label" type="password" for="password"  translate) Mot de passe
+							input(class="form-control" id="password" type="password" placeholder="{{'Mot de passe' | translate }}" ng-model="user.password" ng-minlength="4" ng-maxlength="16" ng-required="true")
+							span(class="help-block" ng-show="loginForm.password.$dirty && loginForm.password.$error.minlength" translate) Le mot de passe doit contenir au minium 4 lettres.
+							span(class="help-block" ng-show="loginForm.password.$dirty && loginForm.password.$error.maxlength" translate) Le mot de passe doit contenir au maximum 16 lettres.
 						
-						button.btn.btn-primary(type="submit" name="submit" ng-disabled="form.$invalid" translate) Se connecter
-						button.btn.btn-link(type="button" name="signup" ng-click="signup()" translate) S'incrire
+						button(class="btn btn-primary" type="submit" ng-disabled="loginForm.$invalid" translate) Se connecter
+						button(class="btn btn-link" type="button" ng-click="signup()" translate) S'incrire
 						hr
-						button.btn.btn-link(type="button" name="forgotPassword" ng-click="open()" translate) Mot de passe oublié ?
+						button(class="btn btn-link" type="button" ng-click="open()" translate) Mot de passe oublié ?

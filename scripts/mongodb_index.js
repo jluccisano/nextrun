@@ -23,4 +23,4 @@ db.races.find( { $text: { $search: "duathlon" } } )
 db.races.dropIndex("FullTextIndex")
 
 
-db.races.find( { name: { $regex: /^ds/ } }, {name: 1} ).count()
+db.races.find( { name: { $regex: /^ds/ } }, {name: 1, id: 1} ).count()

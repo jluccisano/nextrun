@@ -570,7 +570,7 @@ exports.search = function(req, res) {
             console.log(err);
 
             console.log(data);
-            
+
             if (err) {
                 logger.error(err);
                 return res.status(400).json({
@@ -596,12 +596,43 @@ exports.search = function(req, res) {
     }
 };
 
+exports.autocomplete = function(req, res) {
+
+    if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.text)) {
+
+        Race.autocomplete(req.body.text, function(err, items) {
+            if (err) {
+                logger.error(err);
+                return res.status(400).json({
+                    message: errorUtils.errors(err.errors)
+                });
+            }
+            if (items) {
+                return res.status(200).json({
+                    items: items
+                });
+            } else {
+                logger.error("error.occured");
+                return res.status(400).json({
+                    message: ["error.occured"]
+                });
+            }
+        });
+
+    } else {
+        return res.status(400).json({
+            message: ["error.noText"]
+        });
+    }
+
+};
+
 /**
  * @method Autocomplete
  * @param req
  * @param res
  */
-exports.autocomplete = function(req, res) {
+exports.suggest = function(req, res) {
 
     var criteria;
     var query;
