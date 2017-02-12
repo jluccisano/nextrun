@@ -49,6 +49,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 						}
 
 						var route = {
+							id: index,
 							isVisible: false,
 							editMode: false,
 							segments: (currentRoute && currentRoute.segments.length > 0) ? currentRoute.segments : [],
