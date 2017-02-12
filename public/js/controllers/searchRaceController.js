@@ -312,11 +312,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					sort: $scope.sort,
 					departments: $scope.departments,
 					dateRange: $scope.dateRange,
-					location: {
-						name: $scope.race.pin.name,
-						lat: $scope.race.pin.location.lat,
-						lon: $scope.race.pin.location.lon
-					}
+					location: $scope.details.location
 				}
 
 			} else {

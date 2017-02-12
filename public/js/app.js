@@ -10,8 +10,7 @@ var nextrunApp = angular.module('nextrunApp', [
   'AngularGM',
   'textAngular',
   'ngSanitize',
-  'ngAutocomplete',
-  'angularSpinner'
+  'ngAutocomplete'
 ]);
 
 /** Initialize i18n **/

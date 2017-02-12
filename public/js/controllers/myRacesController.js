@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal', 'usSpinnerService',
-	function($scope, $location, RaceServices, Alert, Auth, $modal, usSpinnerService) {
+angular.module('nextrunApp').controller('MyRacesCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$modal',
+	function($scope, $location, RaceServices, Alert, Auth, $modal) {
 		'use strict';
 		$scope.currentPage = 1;
 		$scope.maxSize = 5;

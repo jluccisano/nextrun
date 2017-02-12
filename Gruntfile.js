@@ -179,17 +179,17 @@ module.exports = function(grunt) {
           // includes files within path and its sub-directories
           {
             expand: true,
-            src: ['app/**', 'config/**', 'locales/**', 'public/fonts/**'],
+            src: ['app/**', 'config/**', 'locales/**'],
             dest: 'dist/'
           },
 
           // includes files within path and its sub-directories
           {
             expand: true,
+            flatten: true,
             src: [
               'bower_components/font-awesome/css/font-awesome.min.css',
               'bower_components/bootstrap/dist/css/bootstrap.min.css'
-
             ],
             dest: 'dist/public/css/'
           },
@@ -216,6 +216,16 @@ module.exports = function(grunt) {
               'bower_components/font-awesome/css/font-awesome.min.css'
             ],
             dest: 'dist/public/lib/'
+          }, 
+          //copy fonts of fonts
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              'public/fonts/*',
+              'bower_components/font-awesome/fonts/*'
+            ],
+            dest: 'dist/public/fonts/'
           },
 
         ]
@@ -276,7 +286,8 @@ module.exports = function(grunt) {
           'dist/public/img/end.png': 'public/img/end.png',
           'dist/public/img/start.png': 'public/img/start.png',
           'dist/public/img/segment.png': 'public/img/segment.png',
-          'dist/public/img/logo.png': 'public/img/logo.png'
+          'dist/public/img/logo.png': 'public/img/logo.png',
+          'dist/public/img/logo.png': 'public/img/logo_officiel.png'
         }
       }
     },
@@ -396,6 +407,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['clean:build', 'checkcode', 'test-server', 'test-client', 'minify', 'copy:main', 'usemin', 'jsdoc', 'clean:tmp']);
 
+  grunt.registerTask('build-skipTests', ['clean:build', 'checkcode', 'minify', 'copy:main', 'usemin', 'jsdoc', 'clean:tmp']);
 
 
   grunt.registerTask('default', ['build']);
