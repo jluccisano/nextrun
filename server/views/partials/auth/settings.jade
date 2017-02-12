@@ -38,7 +38,7 @@ div.container
 							label.control-label(type="password" for="actualPassword" translate) Mot de passe actuel
 							input.form-control(type="password" name="actualPassword" placeholder="{{'Mot de passe actuel' | translate}}" ng-model="actualPassword" ng-minlength="4" ng-maxlength="8" required)
 							span.help-block(name="actualPassword-minLength" ng-show="form.actualPassword.$dirty && form.actualPassword.$error.minlength" translate) Le mot de passe doit contenir au minium 4 lettres.
-							span.help-block(name="actualPassword-maxLength" ng-show="form.actualPassword.$dirty && form.actualPassword.$error.maxlength" translate) Le mot de passe doit contenir au maximm 16 lettres.
+							span.help-block(name="actualPassword-maxLength" ng-show="form.actualPassword.$dirty && form.actualPassword.$error.maxlength" translate) Le mot de passe doit contenir au maximum 16 lettres.
 						
 						div.form-group(ng-class="{'has-error': !form.newPassword.$pristine && form.newPassword.$invalid, 'has-success': !form.newPassword.$invalid && !form.newPassword.$pristine}")
 							label.control-label(type="password" for="newPassword" translate) Nouveau mot de passe

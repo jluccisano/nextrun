@@ -43,6 +43,7 @@ module.exports = function(config) {
             "client/bower_components/angular-translate/angular-translate.js",
             "client/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js",
             "client/bower_components/angular-moment/angular-moment.js",
+            "client/bower_components/angular-gettext/dist/angular-gettext.js",
 
             "client/lib/enum-0.2.5.js",
             "client/lib/textAngular.js",

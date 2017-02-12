@@ -9,7 +9,7 @@ div.container
 						div.form-group(ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
 							label.control-label(for="email" translate) Email
 							input.form-control(type="email" name="email" placeholder="{{'Email' | translate }}" ng-model="user.email")
-							span.help-block(name='email-invalid' ng-show="form.email.$error.email" translate) Email Invalide
+							span.help-block(name='email-invalid' ng-show="form.email.$error.email" translate) Email invalide
 						
 						div.form-group(ng-class="{'has-error': !form.password.$pristine && form.password.$invalid, 'has-success': !form.password.$invalid && !form.password.$pristine}")
 							label.control-label(type="password" for="password"  translate) Mot de passe
