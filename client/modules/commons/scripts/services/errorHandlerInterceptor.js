@@ -4,10 +4,10 @@ angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
 	function($injector, $q, $cookieStore, $log, notificationService) {
 
 		var interceptor = {
-			/*request: function(config) {
-				$log.info(config);
+			request: function(config) {
+				$log.debug(config);
 				return config;
-			},*/
+			},
 			"responseError": function(response) {
 
 				$injector.invoke(function($state, AuthService) {

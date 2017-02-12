@@ -30,5 +30,5 @@ angular.module("nextrunApp.home").controller("ContactController",
 			});
 		};
 
-		MetaService.ready("Contact");
+		MetaService.ready("Contact", "Un bug, une idée, une amélioration, n'hésitez pas à nous en faire part.");
 	});

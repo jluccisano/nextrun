@@ -43,7 +43,7 @@ angular.module("nextrunApp.race").controller("RacesController",
 
 		$scope.addNewRace = function() {
 			$cookieStore.remove("race");
-			$state.go("create");
+			$state.go("newRace");
 		};
 
 		$scope.publish = function(race) {

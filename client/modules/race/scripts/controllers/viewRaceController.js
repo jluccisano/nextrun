@@ -38,7 +38,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                     $scope.routesViewModel.push(routeViewModel);
                 });
 
-                if ($scope.routesViewModel.length > 0  && !$scope.selection) {
+                if ($scope.routesViewModel.length > 0 && !$scope.selection) {
                     $scope.selection = $scope.routesViewModel[0].getType() + 0;
                     $scope.routesViewModel[0].setVisible(true);
                 }
@@ -52,11 +52,11 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
                 RaceService.download($scope.race._id).then(function(response) {
                     $scope.image = response.data;
+                }).
+                finally(function() {
+                    MetaService.ready($scope.race.name, $scope.generateRaceDescription(), $scope.image);
                 });
 
-            }).
-            finally(function() {
-                MetaService.ready($scope.race.name, $scope.generateRaceDescription(), $scope.image);
             });
         };
 
@@ -74,7 +74,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         };
 
         $scope.generateRaceDescription = function() {
-            return $scope.race.name + " , date: " + $filter("date")($scope.race.date, "dd MMMM yyyy") + " , type: " + $scope.race.type.i18n + " , distance: " + $scope.race.distanceType.name;
+            return $scope.race.name + " , date: " + $filter("date")($scope.race.date, "dd MMMM yyyy") + " , type: " + $scope.race.type + " , distance: " + $scope.race.distanceType;
         };
 
         $scope.openFeedbackModal = function() {

@@ -11,7 +11,8 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		notificationService,
 		RaceTypeEnum,
 		MetaService,
-		gettextCatalog) {
+		gettextCatalog,
+		AuthService) {
 
 		$scope.gettextCatalog = gettextCatalog;
 
@@ -55,11 +56,19 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 					history: false
 				}
 			}).get().on('pnotify.confirm', function() {
-				$state.go("edit", {id: raceId});
+				$state.go("edit", {
+					id: raceId
+				});
 			}).on('pnotify.cancel', function() {
-				$state.go("myraces");
+				if (AuthService.isLoggedIn()) {
+					$state.go("myraces", {
+						id: AuthService.user.id
+					});
+				} else {
+					$state.go("login");
+				}
 			});
 		};
 
-		MetaService.ready("Ajouter une manifestation");
+		MetaService.ready("Manifestation", "Publiez votre manifestation officielle");
 	});

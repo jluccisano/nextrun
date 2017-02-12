@@ -35,6 +35,6 @@ angular.module("nextrunApp.auth").controller("LoginController",
 			});
 		};
 
-		MetaService.ready("Se connecter");
+		MetaService.ready("Se connecter", "Consultez vos parcours, vos manifestations...");
 
 	});

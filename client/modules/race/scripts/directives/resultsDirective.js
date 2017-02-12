@@ -17,8 +17,11 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
 
   $scope.edit = false;
   $scope.tmpRace = {};
+  $scope.formContainer = {};
+  $scope.masterResult = {};
+  $scope.result = {};
 
-  
+
 
   $scope.toggleEdit = function() {
     $scope.edit = !$scope.edit;
@@ -26,14 +29,14 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
   };
 
   $scope.createYearList = function() {
-      var years = [];
-      var date = new Date();
-      var currentYear = date.getFullYear();
+    var years = [];
+    var date = new Date();
+    var currentYear = date.getFullYear();
 
-      for(var i = currentYear ; i > (currentYear - 10) ; i--) {
-          years.push(i);
-      }
-      return years;
+    for (var i = currentYear; i > (currentYear - 10); i--) {
+      years.push(i);
+    }
+    return years;
   };
 
   $scope.years = $scope.createYearList();
@@ -49,7 +52,13 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
     RaceService.addResult($scope.race._id, result).then(function() {
       $scope.reload();
       notificationService.success(gettextCatalog.getString("Votre résultat a bien été ajouté"));
-      $scope.resultsForm.$setPristine();
+      $scope.formContainer.resultsForm.$setPristine();
+      angular.copy($scope.masterResult, $scope.result);
+      angular.forEach(
+        angular.element("input[type='file']"),
+        function(inputElem) {
+          angular.element(inputElem).val(null);
+        });
     });
   };
 

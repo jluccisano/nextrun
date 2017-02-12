@@ -20,6 +20,6 @@ angular.module("nextrunApp.auth").controller("SignupController",
 			});
 		};
 
-		MetaService.ready("S'inscrire");
+		MetaService.ready("S'inscrire", "Inscrivez-vous c'est totalement gratuit !");
 
 	});

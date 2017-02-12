@@ -101,11 +101,13 @@ angular.module("nextrunApp.route").controller("EditRouteController",
                     $scope.isLoaded = true;
                 }).
                 finally(function() {
-                    MetaService.ready("Editer un parcours");
+                    MetaService.ready("Parcours", "Tracez et partagez vos parcours");
                 });
             } else {
                 $scope.createRoute();
                 $scope.isLoaded = true;
+                $scope.isCollapsed = false;
+                MetaService.ready("Editer un parcours");
             }
         };
 
@@ -155,8 +157,14 @@ angular.module("nextrunApp.route").controller("EditRouteController",
                     history: false
                 }
             }).get().on("pnotify.confirm", function() {
+                $scope.route = undefined;
                 $scope.createRoute();
                 GpxService.convertGPXtoRoute($scope.routeViewModel, file);
+                angular.forEach(
+                    angular.element("input[type='file']"),
+                    function(inputElem) {
+                        angular.element(inputElem).val(null);
+                    });
             });
         };
 
@@ -196,7 +204,11 @@ angular.module("nextrunApp.route").controller("EditRouteController",
                                     });
                                 });
                         } else {
-                            $scope.init();
+                            $state.go("editRoute", {
+                                id: response.data.id
+                            }, {
+                                reload: true
+                            });
                         }
 
                         RouteBuilderService.removeCurrentRoute();

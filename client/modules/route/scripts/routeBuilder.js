@@ -8,15 +8,15 @@
 var routeBuilder = {};
 
 (function() {
-	
+
 	routeBuilder.Route = function(dataModel, chartConfig, gmapsConfig, showSegment) {
 
-		if(!dataModel) {
+		if (!dataModel) {
 			return;
 		}
 
 		this.data = dataModel;
-		
+
 		if (!this.data.distance) {
 			this.data.distance = 0;
 		}
@@ -75,13 +75,18 @@ var routeBuilder = {};
 
 		this._createSegmentsViewModel = function(segmentsDataModel) {
 			var segmentsViewModel = [];
+			var lastPointOfLastSegmentDataModel;
 
-			var _this = this;
+			for(var i = 0 ; i < segmentsDataModel.length ; i++) {
+				var segmentViewModel = new routeBuilder.Segment(segmentsDataModel[i], lastPointOfLastSegmentDataModel);
 
+				segmentsViewModel.push(segmentViewModel);
 
-			_.each(segmentsDataModel, function(segmentDataModel) {
-				segmentsViewModel.push(new routeBuilder.Segment(segmentDataModel, _this.getLastPointOfLastSegmentDataModel()));
-			});
+				if (segmentViewModel.data.points.length > 0) {
+					var lastPointIndex = segmentViewModel.data.points.length - 1;
+					lastPointOfLastSegmentDataModel = segmentViewModel.data.points[lastPointIndex];
+				}
+			}
 
 			return segmentsViewModel;
 		};
@@ -184,7 +189,7 @@ var routeBuilder = {};
 			var elevationPointsViewModel = [];
 
 			_.each(elevationPointsDataModel, function(elevationPointDataModel) {
-				elevationPointsViewModel.push(new routeBuilder.Point(elevationPointDataModel));
+				elevationPointsViewModel.push(new routeBuilder.Point(elevationPointDataModel, elevationPointDataModel.segmentId));
 			});
 
 			return elevationPointsViewModel;
@@ -248,9 +253,10 @@ var routeBuilder = {};
 
 		this._createPolylinesDataModel = function(segmentsViewModel) {
 			var polylinesDataModel = [];
-			var pathArray = [];
 
 			_.each(segmentsViewModel, function(segment, index) {
+
+				var pathArray = [];
 
 				var lastPointOfLastSegment;
 
@@ -275,24 +281,24 @@ var routeBuilder = {};
 						longitude: point.getLongitude()
 					});
 				});
+
+
+				if (pathArray.length > 0) {
+					var polyline = {
+						path: pathArray,
+						stroke: {
+							color: "red",
+							weight: 5
+						},
+						editable: false,
+						draggable: false,
+						geodesic: false,
+						visible: true
+					};
+
+					polylinesDataModel.push(polyline);
+				}
 			});
-
-			if (pathArray.length > 0) {
-				var polyline = {
-					path: pathArray,
-					stroke: {
-						color: "red",
-						weight: 5
-					},
-					editable: false,
-					draggable: false,
-					geodesic: false,
-					visible: true
-				};
-
-				polylinesDataModel.push(polyline);
-			}
-
 			return polylinesDataModel;
 		};
 
@@ -541,7 +547,7 @@ var routeBuilder = {};
 
 		this._chartConfig.title = this.data.type;
 
-		if(this.data.minElevation) {
+		if (this.data.minElevation) {
 			this._chartConfig.yAxis.min = this.data.minElevation;
 			this._chartConfig.yAxis.max = this.data.maxElevation;
 		}
@@ -761,7 +767,9 @@ var routeBuilder = {};
 				}
 
 			} else {
+
 				pointsViewModel.push(new routeBuilder.Point(pointsDataModel[0], this.getId()));
+
 			}
 
 			return pointsViewModel;

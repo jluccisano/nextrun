@@ -6,13 +6,15 @@ angular.module("nextrunApp").controller("MainController",
 		AuthService,
 		SharedMetaService) {
 
+		$scope.meta = {};
+
 		$scope.$on("handleBroadcastMeta", function() {
-			$scope.pageTitle = SharedMetaService.pageTitle;
-			$scope.ogTitle = SharedMetaService.pageTitle;
-			$scope.ogUrl = SharedMetaService.url;
-			$scope.ogDescription = SharedMetaService.description;
-			$scope.ogImage = SharedMetaService.image;
-			$scope.$apply();
+			
+			$scope.meta.ogTitle = SharedMetaService.pageTitle;
+			$scope.meta.pageTitle = SharedMetaService.pageTitle;
+			$scope.meta.ogUrl = SharedMetaService.url;
+			$scope.meta.ogDescription = SharedMetaService.description;
+			$scope.meta.ogImage = SharedMetaService.image;
 		});
 
 		$scope.isLoggedIn = function() {

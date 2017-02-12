@@ -82,10 +82,9 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
                 RaceService.download($scope.race._id).then(function(response) {
                     $scope.image = response.data;
+                }).finally(function() {
+                    MetaService.ready("Editer une manifestation");
                 });
-            }).
-            finally(function() {
-                MetaService.ready($scope.race.name, $scope.generateRaceDescription());
             });
 
             RouteService.find(AuthService.user.id, 1).then(function(response) {

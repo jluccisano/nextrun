@@ -5,6 +5,7 @@ angular.module("nextrunApp.home").controller("HomeController",
         $scope,
         $state,
         $timeout,
+        $cookieStore,
         ContactService,
         notificationService,
         SharedCriteriaService,
@@ -14,7 +15,8 @@ angular.module("nextrunApp.home").controller("HomeController",
         RaceTypeEnum,
         MetaService,
         gettextCatalog,
-        RouteTypeEnum) {
+        RouteTypeEnum,
+        RouteBuilderService) {
 
         $scope.types = RouteTypeEnum;
 
@@ -75,8 +77,22 @@ angular.module("nextrunApp.home").controller("HomeController",
             $timeout(function() {
                 SharedCriteriaService.prepForCriteriaBroadcast($scope.criteria, $scope.searchType.raceType);
             }, 1000);
-
         };
 
-        MetaService.ready("Accueil");
+        $scope.goToNewRace = function() {
+            $state.go("newRace");
+            $cookieStore.remove("race");
+        };
+
+        $scope.goToNewWorkout = function() {
+            $state.go("newWorkout");
+            $cookieStore.remove("workout");
+        };
+
+        $scope.goToNewRoute = function() {
+            $state.go("newRoute");
+            RouteBuilderService.removeCurrentRoute();
+        };
+
+        MetaService.ready("Accueil", "Athlètes: Organisez vos sorties entre amis, créez vos parcours, recherchez une épreuve officielle: duathlon, course à pied, triathlon, trail, cyclo... Organisateurs: Faites la promotion de votre manifestation en quelques clics !");
     });

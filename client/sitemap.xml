@@ -32,4 +32,19 @@
   <loc>http://nextrun.fr/signup</loc>
   <changefreq>daily</changefreq>
 </url>
+<url>
+  <loc>http://nextrun.fr/workouts/create</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://nextrun.fr/routes/create</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://nextrun.fr/races/create</loc>
+  <changefreq>daily</changefreq>
+</url>
 </urlset>
+
+
+

@@ -45,7 +45,7 @@ div(class="edit-route")
 							li(class="divider")
 							li
 								a(nr-import-gpx translate) Importer GPX
-								input(type="file" id="fileInput" ng-hide="true")
+								input(type="file" id="fileInput" ng-hide="true" accept=".gpx")
 							li(ng-class="{'disabled' : !routeViewModel.data._id}")
 								a(nr-download nr-file-name="{{routeViewModel.data.name}}" get-data="exportGPX(routeViewModel)") Exporter GPX
 							li

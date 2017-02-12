@@ -5,5 +5,5 @@ angular.module("nextrunApp").controller("AboutController",
 		$location,
 		MetaService) {
 
-		MetaService.ready("A propos");
+		MetaService.ready("A propos", "Plus d'informations à propos de Nextrun");
 	});

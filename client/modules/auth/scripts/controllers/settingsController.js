@@ -71,6 +71,6 @@ angular.module("nextrunApp.auth").controller("SettingsController",
 
         $scope.init();
 
-        MetaService.ready("Paramètres");
+        MetaService.ready("Paramètres", "Modifiez les paramètres de votre compte");
 
     });

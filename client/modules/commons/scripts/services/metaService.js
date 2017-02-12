@@ -3,7 +3,6 @@
 angular.module("nextrunApp.commons").factory("MetaService",
     function(
         $rootScope,
-        $state,
         SharedMetaService) {
 
         return {
@@ -14,8 +13,8 @@ angular.module("nextrunApp.commons").factory("MetaService",
                     if(!description) {
                         description = title;
                     }
-                    
-                    SharedMetaService.prepForMetaBroadcast(title, $state.current.url , description, image);
+
+                    SharedMetaService.prepForMetaBroadcast(title, window.location.href , description, image);
                 }, 1000);
 
                 $rootScope.status = "ready";

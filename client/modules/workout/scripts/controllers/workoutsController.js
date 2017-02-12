@@ -36,11 +36,12 @@ angular.module("nextrunApp.workout").controller("WorkoutsController",
 				}
 			}).
 			finally(function() {
-				MetaService.ready("Mes sorties");
+				MetaService.ready("Mes sorties", "Retrouvez la liste de vos sorties");
 			});
 		};
 
 		$scope.addNewWorkout = function() {
+			$cookieStore.remove("workout");
 			$state.go("newWorkout");
 		};
 

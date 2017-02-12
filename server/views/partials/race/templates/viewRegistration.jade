@@ -1,10 +1,10 @@
 div(class="row")
-	div(class="col-md-8")
+	div(class="col-md-12")
 		div(class="list-group")
 			a(class="list-group-item" translate) Date d'ouverture: {{race.registration.openingDate | date: 'dd/MM/yyyy'}}
 			a(class="list-group-item" translate) Date de fermeture: {{race.registration.closingDate | date: 'dd/MM/yyyy'}}
 			a(class="list-group-item" translate) Nombre de dossards: {{race.registration.limitedPlaces}}
-			a(class="list-group-item" translate)
+			//a(class="list-group-item" translate)
 				h4(class="list-group-item-heading" translate) Choisir une formule
 				div(class="example")
 					h2(class="example-title")
@@ -23,4 +23,17 @@ div(class="row")
 												li(translate) {{option.description}}
 										div(class="price-foot")
 											button(type="button" class="btn btn-primary" translate) S'inscrire
+		table(class="table table-hover")
+			thead
+				tr
+					th(style="width: 40%" translate) Formule
+					th(style="width: 10%" translate) Description
+					th(style="width: 15%" translate) Prix
+			tbody
+				tr(ng-repeat="option in race.registration.options")
+					td {{option.name | translate}}
+					td {{option.description | translate}}
+					td {{option.price | translate}} €
+		div(class="pull-right")
+			a(ng-if="race.registration.webSite" type="button" class="btn btn-primary btn-lg" translate href="{{race.registration.webSite}}" target="_blank") S'inscrire
 

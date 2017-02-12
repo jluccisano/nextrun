@@ -17,7 +17,7 @@ exports.checkIfAuthorizedImageType = function(type) {
 };
 
 exports.decodeBase64 = function(dataString) {
-    var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+    var matches = dataString.match(/^data:([A-Za-z-+.   \/]+);base64,(.+)$/),
         response = {};
 
     if (matches.length !== 3) {

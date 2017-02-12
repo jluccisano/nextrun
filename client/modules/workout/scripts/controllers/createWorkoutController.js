@@ -9,7 +9,8 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 		notificationService,
 		MetaService,
 		gettextCatalog,
-		routeId) {
+		routeId,
+		AuthService) {
 
 		$scope.gettextCatalog = gettextCatalog;
 
@@ -33,7 +34,7 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 			if (routeId) {
 				$scope.workout.routeId = routeId;
 			}
-			MetaService.ready("Ajouter une sortie");
+			MetaService.ready("Sortie sportive", "Organisez une sortie entre amis");
 		};
 
 		$scope.submit = function() {
@@ -58,7 +59,6 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 					$scope.openRedirectionModal(response.data.id);
 					notificationService.success(gettextCatalog.getString("Votre sortie a bien été créée"));
 					$cookieStore.remove("workout");
-
 				});
 		};
 
@@ -82,7 +82,12 @@ angular.module("nextrunApp.workout").controller("CreateWorkoutController",
 					id: workoutId
 				});
 			}).on("pnotify.cancel", function() {
-				$state.go("myworkouts");
+				if(AuthService.isLoggedIn()) {
+					$state.go("workouts", { id: AuthService.user.id});
+				} else {
+					$state.go("login");
+				}
+				
 			});
 		};
 

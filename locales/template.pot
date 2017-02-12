@@ -149,68 +149,6 @@ msgid "404 Une erreur s'est produite."
 msgstr ""
 
 #: .tmp/generated/views/partials/race/race.html
-msgid ""
-"<h4 translate=\"translate\" class=\"list-group-item-heading\">Choisir une formule</h4>\n"
-"                      <div class=\"example\">\n"
-"                        <h2 class=\"example-title\"></h2>\n"
-"                        <div class=\"row\">\n"
-"                          <div class=\"col-md-12\">\n"
-"                            <div class=\"pricing\">\n"
-"                              <ul>\n"
-"                                <li ng-repeat=\"option in race.registration.options\" class=\"unit price-primary\">\n"
-"                                  <div class=\"price-title\">\n"
-"                                    <h3>{{option.price}}<i class=\"fa fa-eur\"></i></h3>\n"
-"                                  </div>\n"
-"                                  <div class=\"price-body\">\n"
-"                                    <h4>{{option.name}}</h4>\n"
-"                                    <p></p>\n"
-"                                    <ul>\n"
-"                                      <li translate=\"translate\">{{option.description}}</li>\n"
-"                                    </ul>\n"
-"                                  </div>\n"
-"                                  <div class=\"price-foot\">\n"
-"                                    <button type=\"button\" translate=\"translate\" class=\"btn btn-primary\">S'inscrire</button>\n"
-"                                  </div>\n"
-"                                </li>\n"
-"                              </ul>\n"
-"                            </div>\n"
-"                          </div>\n"
-"                        </div>\n"
-"                      </div>"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/templates/viewRegistration.html
-msgid ""
-"<h4 translate=\"translate\" class=\"list-group-item-heading\">Choisir une formule</h4>\n"
-"        <div class=\"example\">\n"
-"          <h2 class=\"example-title\"></h2>\n"
-"          <div class=\"row\">\n"
-"            <div class=\"col-md-12\">\n"
-"              <div class=\"pricing\">\n"
-"                <ul>\n"
-"                  <li ng-repeat=\"option in race.registration.options\" class=\"unit price-primary\">\n"
-"                    <div class=\"price-title\">\n"
-"                      <h3>{{option.price}}<i class=\"fa fa-eur\"></i></h3>\n"
-"                    </div>\n"
-"                    <div class=\"price-body\">\n"
-"                      <h4>{{option.name}}</h4>\n"
-"                      <p></p>\n"
-"                      <ul>\n"
-"                        <li translate=\"translate\">{{option.description}}</li>\n"
-"                      </ul>\n"
-"                    </div>\n"
-"                    <div class=\"price-foot\">\n"
-"                      <button type=\"button\" translate=\"translate\" class=\"btn btn-primary\">S'inscrire</button>\n"
-"                    </div>\n"
-"                  </li>\n"
-"                </ul>\n"
-"              </div>\n"
-"            </div>\n"
-"          </div>\n"
-"        </div>"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/workout/workout.html
 msgid "<i translate=\"translate\" class=\"fa fa-plus\">&nbsp; Ajouter un parcours</i>"
 msgstr ""
@@ -310,7 +248,7 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/carousel.html
-msgid "Analyser le détail du parcours (dénivelé, altitude, distance...)"
+msgid "Analyser le détail de vos parcours (dénivelé, altitude, distance...)"
 msgstr ""
 
 #: .tmp/generated/views/partials/auth/forgotpasswordModal.html
@@ -389,11 +327,6 @@ msgstr ""
 msgid "Chercher un parcours par geolocalisation"
 msgstr ""
 
-#: .tmp/generated/views/partials/race/race.html
-#: .tmp/generated/views/partials/race/templates/viewRegistration.html
-msgid "Choisir une formule"
-msgstr ""
-
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/actions.html
 msgid "Commencer maintenant !"
@@ -461,7 +394,7 @@ msgid "Créer un compte via Facebook"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/actions.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
 msgid "Créer un parcours"
 msgstr ""
 
@@ -470,6 +403,7 @@ msgid "Créer une manifestation"
 msgstr ""
 
 #: .tmp/generated/views/partials/route/mapView.html
+#: .tmp/generated/views/partials/workout/workouts.html
 msgid "Créer une sortie"
 msgstr ""
 
@@ -485,8 +419,10 @@ msgstr ""
 
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/templates/date.html
+#: .tmp/generated/views/partials/workout/allworkouts.html
 #: .tmp/generated/views/partials/workout/create.html
 #: .tmp/generated/views/partials/workout/templates/date.html
+#: .tmp/generated/views/partials/workout/workouts.html
 msgid "Date"
 msgstr ""
 
@@ -521,9 +457,11 @@ msgstr ""
 msgid "Dernière mise à jour"
 msgstr ""
 
+#: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
 #: .tmp/generated/views/partials/race/templates/editScheduleModal.html
 #: .tmp/generated/views/partials/race/templates/richTextEditorModal.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
 msgid "Description"
 msgstr ""
 
@@ -560,11 +498,6 @@ msgstr ""
 #: .tmp/generated/views/partials/route/mapEditor.html
 #: .tmp/generated/views/partials/route/mapView.html
 msgid "Dénivelé positif"
-msgstr ""
-
-#: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/carousel.html
-msgid "Détailler l'ensemble de votre manifestion (parcours, organisation, nombre de places...)"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/home.html
@@ -623,10 +556,6 @@ msgstr ""
 msgid "Enregistrer"
 msgstr ""
 
-#: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/search.html
-#: .tmp/generated/views/partials/race/search.html
-#: .tmp/generated/views/partials/race/templates/search.html
 #: .tmp/generated/views/partials/route/mapEditor.html
 msgid "Entrer un lieu"
 msgstr ""
@@ -710,7 +639,9 @@ msgstr ""
 msgid "Fonctionnalités"
 msgstr ""
 
+#: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
 msgid "Formule"
 msgstr ""
 
@@ -763,6 +694,11 @@ msgstr ""
 
 #: .tmp/generated/views/partials/workout/create.html
 msgid "Inviter"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
+msgid "Inviter vos amis pour une sortie vélo, trail, vtt..."
 msgstr ""
 
 #: client/modules/race/scripts/controllers/createRaceController.js
@@ -985,13 +921,19 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/actions.html
-msgid "Organisation une manifestation"
+#: .tmp/generated/views/partials/home/templates/carousel.html
+msgid "Organiser une manifestation officielle"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
+#: .tmp/generated/views/partials/workout/create.html
+msgid "Organiser une sortie"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/actions.html
-#: .tmp/generated/views/partials/workout/create.html
-msgid "Organiser une sortie"
+msgid "Organiser une sortie entre amis"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
@@ -1019,12 +961,18 @@ msgstr ""
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/workout/allworkouts.html
 #: .tmp/generated/views/partials/workout/workout.html
-#: .tmp/generated/views/partials/workout/workouts.html
 msgid "Parcours"
 msgstr ""
 
 #: .tmp/generated/views/partials/workout/workout.html
 msgid "Participants"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/search.html
+#: .tmp/generated/views/partials/race/search.html
+#: .tmp/generated/views/partials/race/templates/search.html
+msgid "Pays, région, département, ville..."
 msgstr ""
 
 #: client/modules/race/scripts/services/dateRanges.js
@@ -1044,7 +992,9 @@ msgstr ""
 msgid "Pourquoi ?"
 msgstr ""
 
+#: .tmp/generated/views/partials/race/race.html
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
+#: .tmp/generated/views/partials/race/templates/viewRegistration.html
 msgid "Prix"
 msgstr ""
 
@@ -1055,6 +1005,9 @@ msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/carousel.html
+msgid "Promouvoir une épreuve officielle en quelques clics."
+msgstr ""
+
 #: .tmp/generated/views/partials/race/home.html
 msgid "Promouvoir votre manifestation"
 msgstr ""
@@ -1094,6 +1047,11 @@ msgstr ""
 #: .tmp/generated/views/layouts/body.html
 #: .tmp/generated/views/layouts/header.html
 msgid "Recherche directe"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/search.html
+msgid "Rechercher"
 msgstr ""
 
 #: .tmp/generated/views/index.html
@@ -1226,13 +1184,13 @@ msgid "Tracer les parcours via Google Maps"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/carousel.html
-msgid "Triathlon , Trail, VTT, Cyclo..."
+#: .tmp/generated/views/partials/home/templates/actions.html
+msgid "Tracer un parcours &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/carousel.html
-msgid "Trouver et préparer votre course"
+msgid "Triathlon , Trail, VTT, Cyclo..."
 msgstr ""
 
 #: .tmp/generated/views/partials/home/contacts.html
@@ -1461,9 +1419,4 @@ msgstr ""
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/contact.html
 msgid "votre@email.com"
-msgstr ""
-
-#: .tmp/generated/views/partials/race/race.html
-#: .tmp/generated/views/partials/race/templates/viewRegistration.html
-msgid "{{option.description}}"
 msgstr ""

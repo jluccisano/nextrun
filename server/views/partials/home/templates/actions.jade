@@ -2,18 +2,18 @@ div(class="container actions")
 	div(class="row")
 		div(class="col-lg-4")
 			div(class="text-center")
-				h4(translate) Organiser une sortie
+				h3(translate) Organiser une sortie entre amis
 
-				button(class="btn btn-primary btn-lg" ui-sref="newWorkout" translate) Commencer maintenant !
+				button(class="btn btn-primary btn-lg" ng-click="goToNewWorkout()" translate) Commencer maintenant !
 			
 		div(class="col-lg-4")
 			div(class="text-center")
-				h4(translate) Créer un parcours
+				h3(translate) Tracer un parcours &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-				button(class="btn btn-primary btn-lg" ui-sref="newRoute" translate) Commencer maintenant !
+				button(class="btn btn-primary btn-lg" ng-click="goToNewRoute()" translate) Commencer maintenant !
 			
 		div(class="col-lg-4")
 			div(class="text-center")
-				h4(translate) Organisation une manifestation
+				h3(translate) Organiser une manifestation officielle
 				
-				button(class="btn btn-primary btn-lg" ui-sref="newRace" translate) Commencer maintenant !
+				button(class="btn btn-primary btn-lg" ng-click="goToNewRace()" translate) Commencer maintenant !

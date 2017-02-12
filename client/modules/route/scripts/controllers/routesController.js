@@ -36,7 +36,7 @@ angular.module("nextrunApp.route").controller("RoutesController",
 				}
 			}).
 			finally(function() {
-				MetaService.ready("Mes parcours");
+				MetaService.ready("Mes parcours", "Consultez la liste de vos parcours");
 			});
 		};
 

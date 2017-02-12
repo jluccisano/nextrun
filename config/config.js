@@ -7,6 +7,8 @@ module.exports = {
         host: "localhost",
         db: "mongodb://localhost/nextrun",
         root: rootPath,
+        tmpFolder: "./.tmp/",
+        domain: "localhost",
         facebook: {
             clientID: "APP_ID",
             clientSecret: "APP_SECRET",
@@ -22,6 +24,8 @@ module.exports = {
         host: "localhost",
         db: "mongodb://localhost/nextrun",
         root: rootPath,
+        tmpFolder: "./.tmp/",
+        domain: "localhost",
         facebook: {
             clientID: "APP_ID",
             clientSecret: "APP_SECRET",
@@ -37,6 +41,8 @@ module.exports = {
         host: "localhost",
         db: "mongodb://localhost:27017/nextrun_test",
         root: rootPath,
+        tmpFolder: "./.tmp/",
+        domain: "localhost",
         facebook: {
             clientID: "APP_ID",
             clientSecret: "APP_SECRET",
@@ -52,6 +58,8 @@ module.exports = {
         host: "192.95.25.173",
         db: "mongodb://192.95.25.173:27017/nextrun",
         root: rootPath,
+        tmpFolder: "/tmp/",
+        domain: "nextrun.fr",
         facebook: {
             clientID: "195803770591615",
             clientSecret: "409c4b0d091efef8e7d03db2bce807e9",

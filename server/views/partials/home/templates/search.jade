@@ -1,5 +1,6 @@
 div(class="container search")
 	div(ng-form="searchForm" class="text-center" novalidate)
+		h3(translate) Rechercher
 		div(class="form-group")
 			div(class="row search-type")
 				label(class="radio-inline" ng-repeat="raceType in raceTypes")
@@ -9,7 +10,7 @@ div(class="container search")
 				div(class="col-lg-4 col-lg-offset-2")
 					div(class="row")
 						div(class="form-group" ng-class="{'has-error': !searchForm.location.$pristine && searchForm.location.$error.validLocation && searchForm.location.$invalid, 'has-success': !searchForm.location.$pristine  && !searchForm.location.$error.validLocation}")
-							input(type="text" id="search" class="form-control input-lg" name="location" nr-has-location placeholder="{{'Entrer un lieu' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location" ng-required="true")
+							input(type="text" id="search" class="form-control input-lg" name="location" nr-has-location placeholder="{{'Pays, région, département, ville...' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location" ng-required="true")
 					div(class="row" collapse="!criteria.location.locality")
 						label Elargir à &nbsp; 
 						label(class="radio-inline" ng-repeat="rad in radius")

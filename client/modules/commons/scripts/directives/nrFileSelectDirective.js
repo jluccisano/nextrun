@@ -43,7 +43,7 @@ angular.module("nextrunApp.commons").directive("nrImageSelect", function($modal,
 								base64: croppedImage
 							};
 
-							RaceService.uploadImage($scope.race._id, image).then(function(){
+							RaceService.uploadImage($scope.race._id, image).then(function() {
 								notificationService.success(gettextCatalog.getString("Votre photo a bien été mise à jour"));
 							});
 						});
@@ -81,7 +81,7 @@ angular.module("nextrunApp.commons").directive("nrImportGpx", function() {
 					$scope.$apply(function($scope) {
 						//$scope.myImage = evt.target.result;
 						$scope.getFile(evt.target.result);
-						
+
 					});
 				};
 				reader.readAsText(file);
@@ -117,7 +117,7 @@ angular.module("nextrunApp.commons").directive("nrImportImage", function() {
 					$scope.$apply(function($scope) {
 						imageFile.data = evt.target.result;
 						$scope.getFile(imageFile);
-						
+
 					});
 				};
 				reader.readAsDataURL(file);
@@ -140,13 +140,29 @@ angular.module("nextrunApp.commons").directive("nrFileSelect", function() {
 				var file = evt.currentTarget.files[0];
 				var reader = new FileReader();
 
+				var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
+
+				if (ext === "xls") {
+					resultFile.type = "application/vnd.ms-excel";
+				} else {
+					resultFile.type = file.type;
+				}
+
 				resultFile.size = file.size;
-				resultFile.type = file.type;
 				resultFile.name = file.name;
 
 				reader.onload = function(evt) {
 					$scope.$apply(function() {
 						resultFile.data = evt.target.result;
+
+						var spliceType = function(string, idx, rem, s) {
+							return (string.slice(0, idx) + s + string.slice(idx + Math.abs(rem)));
+						};
+
+						if (ext === "xls") {
+							resultFile.data = spliceType(resultFile.data, 5, 0, resultFile.type );
+						}
+
 						controller.$setViewValue(resultFile);
 					});
 				};

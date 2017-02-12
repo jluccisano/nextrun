@@ -5,5 +5,5 @@ angular.module("nextrunApp").controller("CreditController",
         $location,
         MetaService) {
 
-        MetaService.ready("Remerciements");
+        MetaService.ready("Remerciements", "Liste des frameworks open source utilisés pour développer le site Nextrun");
     });

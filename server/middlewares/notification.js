@@ -4,9 +4,9 @@
  */
 var nodemailer = require("nodemailer"),
     mailgun = require('nodemailer-mailgun-transport');
-    env = process.env.NODE_ENV || "development",
-    config = require("../../config/config")[env],
-    logger = require("../logger");
+env = process.env.NODE_ENV || "development",
+config = require("../../config/config")[env],
+logger = require("../logger");
 
 /**
  * Cette fonction permet d"envoyer un mail via Mailgun SMTP
@@ -139,7 +139,7 @@ exports.sendNewRoute = function(route, user) {
 
 exports.sendNewWorkout = function(user, workout) {
 
-    var url = "http://nextrun.fr/workouts/" + workout._id + "/view";
+    var url = "http://" + config.domain + "/workouts/" + workout._id + "/view";
 
     var templateHtml = "<p>Félicitation " + user.username + " !</p>" +
         "<p>Vous venez de créer la sortie Nextrun \"<b>" + workout.name + "</b>\". Un email a été envoyé à toutes les personnes que vous avez invité</p>" +
@@ -160,7 +160,7 @@ exports.sendNewWorkout = function(user, workout) {
 
 exports.sendNotificationToParticipant = function(workout, user, participant) {
 
-    var url = "http://nextrun.fr/workouts/" + workout._id + "/view/participants/" + participant._id;
+    var url = "http://" + config.domain + "/workouts/" + workout._id + "/view/participants/" + participant._id;
 
     var templateHtml = "<p>Bonjour,</p>" +
         "<p>" + user.username + " vous invite à participer à la sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +
@@ -182,7 +182,7 @@ exports.sendNotificationToParticipant = function(workout, user, participant) {
 
 exports.sendNotificationUpdateToParticipant = function(workout, user, participant) {
 
-    var url = "http://nextrun.fr/workouts/" + workout._id + "/view/participants/" + participant._id;
+    var url = "http://" + config.domain + "/workouts/" + workout._id + "/view/participants/" + participant._id;
 
     var templateHtml = "<p>Bonjour,</p>" +
         "<p>" + user.username + " a mis à jour la sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +
@@ -203,7 +203,7 @@ exports.sendNotificationUpdateToParticipant = function(workout, user, participan
 
 exports.sendNotificationToOwner = function(workout, workoutOwner, participant) {
 
-    var url = "http://nextrun.fr/workouts/" + workout._id + "/view";
+    var url = "http://" + config.domain + "/workouts/" + workout._id + "/view";
 
     var templateHtml = "<p>Bonjour,</p>" +
         "<p>" + participant.pseudo + " a répondu à votre sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +

@@ -41,7 +41,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 				angular.forEach(trkpts, function(trkpt, i) {
 
-					if (pointer === offset || i === (trkpts.length - 1)) {
+					if (i === 1 || pointer === offset || i === (trkpts.length - 1)) {
 
 						segmentDataModel = {
 							id: routeBuilder.generateUUID(),
@@ -123,8 +123,19 @@ angular.module("nextrunApp.route").factory("GpxService",
 					var trkpts = this.getTrkpts(gpxToJson);
 
 					var segmentsDataModel = this.splitTrkptsToSegments(trkpts);
+					var isFirstPoint = false;
 
-					angular.forEach(segmentsDataModel, function(segmentDataModel) {
+					angular.forEach(segmentsDataModel, function(segmentDataModel, index) {
+
+						if (routeViewModel.segments.length > 0) {
+							var lastPointOfLastSegment = routeViewModel.getLastPointOfLastSegment();
+
+							segmentDataModel.points.unshift(lastPointOfLastSegment.data);
+							isFirstPoint = false;
+						} else {
+							//lastLatlngOfLastSegment = destinationLatlng;
+							isFirstPoint = true;
+						}
 
 						var segmentViewModel = routeViewModel.addSegment(segmentDataModel);
 
@@ -132,7 +143,9 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 						MarkerService.addMarkerToRoute(routeViewModel, segmentPath);
 
-						PolylineService.createPolyline(routeViewModel, segmentPath, false, false, false, true, "red", 5);
+						if (!isFirstPoint) {
+							PolylineService.createPolyline(routeViewModel, segmentPath, false, false, false, true, "red", 5);
+						}
 
 						ElevationService.getElevation(segmentViewModel).then(function(data) {
 							routeViewModel.addElevationPoints(data.samplingPoints, data.elevations);

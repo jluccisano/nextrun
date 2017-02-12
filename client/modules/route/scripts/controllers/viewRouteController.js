@@ -38,7 +38,7 @@ angular.module("nextrunApp.route").controller("ViewRouteController",
                     $scope.isCollapsed = true;
                 }).
                 finally(function() {
-                    MetaService.ready("Voir un parcours");
+                    MetaService.ready("Voir un parcours", "Consultez un parcours");
                 });
             } else {
                 $scope.createRoute();

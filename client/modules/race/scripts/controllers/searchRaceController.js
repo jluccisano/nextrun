@@ -124,7 +124,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
                         }
                     }).
                     finally(function() {
-                        MetaService.ready("Manifestations");
+                        MetaService.ready("Rechercher", "Cherchez un parcours ou une épreuve officielle");
                     });
                 } else {
                     RouteService.search($scope.criteria).then(function(response) {
@@ -149,7 +149,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
                         }
                     }).
                     finally(function() {
-                        MetaService.ready("Manifestations");
+                        MetaService.ready("Rechercher", "Cherchez un parcours ou une épreuve officielle");
                     });
                 }
             }

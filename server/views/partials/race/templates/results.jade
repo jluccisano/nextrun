@@ -1,20 +1,20 @@
-div(ng-if="editMode" ng-form="resultsForm" novalidate)
+div(ng-if="editMode" ng-form="formContainer.resultsForm" novalidate)
 	div(class="form-group")
 		label(for="resultTitle" class="control-label" translate) Titre
-		div(class="form-group" ng-class="{'has-error': resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine, 'has-success': !resultsForm.resultTitle.$invalid && !resultsForm.resultTitle.$pristine}")
+		div(class="form-group" ng-class="{'has-error': formContainer.resultsForm.resultTitle.$invalid && !formContainer.resultsForm.resultTitle.$pristine, 'has-success': !formContainer.resultsForm.resultTitle.$invalid && !formContainer.resultsForm.resultTitle.$pristine}")
 			input(type="text" id="resultTitle" class="form-control" name="resultTitle" placeholder="{{'Titre' | translate}}" ng-model="result.name" ng-required="true")
 	
 	div(class="form-group")
 		label(for="year" class="control-label" translate) Année
-		div(class="form-group" ng-class="{'has-error': resultsForm.year.$invalid && !resultsForm.year.$pristine, 'has-success': !resultsForm.year.$invalid && !resultsForm.year.$pristine}")
+		div(class="form-group" ng-class="{'has-error': formContainer.resultsForm.year.$invalid && !formContainer.resultsForm.year.$pristine, 'has-success': !formContainer.resultsForm.year.$invalid && !formContainer.resultsForm.year.$pristine}")
 			select(class="form-control" ng-model="result.year" name="year" ng-options="year for year in years" ng-required="true")
 				option(value="") {{'Sélectionner...' | translate}}
 	div(class="form-group")
 		label(for="resultFile" class="control-label" translate) Fichier
-		div(class="form-group" ng-class="{'has-error': resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine, 'has-success': !resultsForm.resultFile.$invalid && !resultsForm.resultFile.$pristine}")
+		div(class="form-group" ng-class="{'has-error': formContainer.resultsForm.resultFile.$invalid && !formContainer.resultsForm.resultFile.$pristine, 'has-success': !formContainer.resultsForm.resultFile.$invalid && !formContainer.resultsForm.resultFile.$pristine}")
 			input(type="file" accept="application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv, text/plain, text/html" nr-file-select ng-model="result.file" id="resultFile" class="form-control" name="resultFile" placeholder="{{'Fichier' | translate}}" ng-required="true")
 	div(class="form-group")
-		button(class="btn btn-default" ng-disabled="resultsForm.$invalid" ng-click="addResult(result)")
+		button(class="btn btn-default" ng-disabled="formContainer.resultsForm.$invalid" ng-click="addResult(result)")
 			span(class="glyphicon glyphicon-plus")
 
 table(class="table table-hover")

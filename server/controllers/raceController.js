@@ -1,6 +1,8 @@
 var raceService = require("../services/raceService"),
 	fileUtils = require("../utils/fileUtils"),
 	errorUtils = require("../utils/errorUtils"),
+	env = process.env.NODE_ENV || "development",
+	config = require("../../config/config")[env],
 	crypto = require("crypto");
 
 exports.createRace = function(req, res) {
@@ -151,7 +153,7 @@ exports.uploadPicture = function(req, res) {
 		var imageBuffer = fileUtils.decodeBase64(imageFile.data);
 
 		var tmpFileName = crypto.randomBytes(4).readUInt32LE(0) + "_" + imageFile.name;
-		var tmpFilePath = "./.tmp/" + tmpFileName;
+		var tmpFilePath = config.tmpFolder + tmpFileName;
 
 		fileUtils.createTemporaryFile(tmpFilePath, imageBuffer.data);
 
@@ -217,7 +219,7 @@ exports.addResult = function(req, res) {
 		var imageBuffer = fileUtils.decodeBase64(result.file.data);
 
 		var tmpFileName = crypto.randomBytes(4).readUInt32LE(0) + "_" + result.file.name;
-		var tmpFilePath = "./.tmp/" + tmpFileName;
+		var tmpFilePath = config.tmpFolder + tmpFileName;
 
 		var name = result.name;
 		var filename = result.file.name;

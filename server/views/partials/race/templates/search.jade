@@ -10,7 +10,7 @@ div(class="search")
 					div(class="col-lg-3")
 						div(class="row")
 							div(class="form-group" ng-class="{'has-error': !searchForm.location.$pristine && searchForm.location.$error.validLocation && searchForm.location.$invalid, 'has-success': !searchForm.location.$pristine  && !searchForm.location.$error.validLocation}")
-								input(type="text" id="search" class="form-control" name="location" nr-has-location placeholder="{{'Entrer un lieu' | translate}}" ng-model="place" gmaps-autocomplete options="autocomplete.options" details="criteria.place" ng-required="true")
+								input(type="text" id="search" class="form-control" name="location" nr-has-location placeholder="{{'Pays, région, département, ville...' | translate}}" ng-model="place" gmaps-autocomplete options="autocomplete.options" details="criteria.place" ng-required="true")
 						div(class="row" collapse="!criteria.place.locality")
 							label Elargir à &nbsp; 
 							label(class="radio-inline" ng-repeat="rad in radius")
