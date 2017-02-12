@@ -12,7 +12,7 @@ angular.module("nextrunApp.commons").directive("nrHasLocation", function() {
       }
 
       scope.$watch(attrs.details, function(newValue) {
-        if (newValue !== undefined && newValue.location !== undefined && newValue.department !== undefined && newValue.name !== undefined) {
+        if (newValue && newValue.location) {
           ctrl.$setValidity("validLocation", true);
         } else {
           ctrl.$setValidity("validLocation", false);

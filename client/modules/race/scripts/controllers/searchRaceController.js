@@ -18,17 +18,11 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
         $scope.distanceSelection = {};
 
-        $scope.criteria = {};
-
-        $rootScope.$on("handleCriteriaBroadcast", function(evt, criteria){
+        $rootScope.$on("handleCriteriaBroadcast", function(evt, criteria) {
             if (criteria) {
                 $scope.criteria = criteria;
-            } else {
-                $scope.criteria = {
-                    radius: 60,
-                    dateRange: $scope.dateRanges[0]
-                };
             }
+
             $scope.search();
         });
 
@@ -40,12 +34,17 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
         $scope.dateRanges = angular.copy(dateRanges.getValues());
 
+        $scope.criteria = {
+            published: true,
+            radius: 60,
+            dateRange: $scope.dateRanges[0]
+        };
+
         $scope.listOfTypes = RaceTypeEnum.getValues();
         $scope.active = 0;
 
         $scope.autocomplete = {
             options: {
-                country: "fr",
                 types: "(regions)"
             }
         };

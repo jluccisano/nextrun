@@ -30,6 +30,6 @@ div(class="container search-race")
 					input(type="radio" value="120" ng-change="search()" ng-model="criteria.radius" ng-disabled="!criteria.location.locality")
 					span  120km 
 			google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true" draggable="true" mark-click="true" events="map.events")
-				marker(ng-repeat="marker in map.markers" idkey="marker.id" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
+				marker(ng-repeat="marker in map.markers" idkey="marker.id" coords="marker" fit="map.fit" icon="marker.icon" click="onMarkerClicked(marker)" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
 					windows(show="'showWindow'" closeClick="'closeClick'" data-ng-cloak)
 						a(ng-non-bindable ui-sref="view({id: raceId})") {{raceName}}

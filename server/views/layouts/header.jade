@@ -19,7 +19,7 @@ nav(class="navbar navbar-default navbar-fixed-top" role="navigation" ng-Controll
 						span(class="caret")
 					ul(class="dropdown-menu" role="menu")
 						li
-							a(ui-sref="myraces({id: user.id})" translate) Mes Manifestations
+							a(ng-click="goToMyRaces()" translate) Mes Manifestations
 						li
 							a(ui-sref="routes({id: user.id})" translate) Mes Parcours
 						li(ng-if="isAdmin()")

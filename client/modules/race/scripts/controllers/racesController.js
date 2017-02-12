@@ -6,6 +6,7 @@ angular.module("nextrunApp.race").controller("RacesController",
 		$state,
 		$modal,
 		$stateParams,
+		$cookieStore,
 		RaceService,
 		notificationService,
 		MetaService,
@@ -41,6 +42,7 @@ angular.module("nextrunApp.race").controller("RacesController",
 		};
 
 		$scope.addNewRace = function() {
+			$cookieStore.remove("race");
 			$state.go("create");
 		};
 

@@ -2,7 +2,7 @@ form(role="form" class="navbar-form navbar-left" name="titleForm" novalidate)
 	div(class="form-group")
 		h4(ng-if="!editMode || !edit" class="text-left") {{race.name}}
 	div(ng-if="editMode && edit" class="form-group" ng-class="{'has-error':!titleForm.title.$pristine && titleForm.title.$invalid, 'has-success': !titleForm.title.$invalid && !titleForm.title.$pristine}")
-		input(type="text" class="form-control" ng-model="race.name" name="title")
+		input(type="text" class="form-control" ng-model="race.name" race="race" name="title" ng-required="true" nr-unique-race)
 	div(class="form-group" ng-if="editMode && !edit")
 		button(ng-click="toggleEdit()" class="btn btn-default btn-sm")
 			i(class="fa fa-pencil-square-o")

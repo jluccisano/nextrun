@@ -22,7 +22,6 @@ angular.module("nextrunApp.race").controller("AddressController", function($scop
   };
 
   $scope.options = {
-    country: "fr",
     types: "(cities)",
     watchEnter: true
   };

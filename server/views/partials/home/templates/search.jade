@@ -1,18 +1,17 @@
 div(class="container search")
-	div(class="row")
-		div(class="col-lg-6 col-lg-offset-3")
-			form(role="form" name="searchForm" novalidate)
-				div(class="row")
-					div(class="col-lg-8")
+	div(ng-form="searchForm" class="text-center" novalidate)
+		div(class="form-group")
+			div(class="row")
+				div(class="col-lg-4 col-lg-offset-2")
+					div(class="row")
 						div(class="form-group" ng-class="{'has-error': !searchForm.location.$pristine && searchForm.location.$error.validLocation && searchForm.location.$invalid, 'has-success': !searchForm.location.$pristine  && !searchForm.location.$error.validLocation}")
-							input(type="text" class="form-control" name="location"  placeholder="{{'Entrer un lieu' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location")
-
-							span(class="help-block" ng-show="searchForm.location.$dirty && searchForm.location.$error.validLocation" translate)  Veuillez saisir une ville correcte
-					//div(class="col-lg-4")
-						div(class="form-group")
-							button(type="button" class="btn btn-default" ng-model="criteria.types" data-html="1" data-multiple="1" max-length-html="{{'Sélectionnés' | translate}}" ng-options="type.name as type.name for type in listOfTypes" placeholder="{{'Sélectionner...' | translate}}" bs-select)
-								span(class="caret")
-				//div(class="row")
-					div(class="col-lg-3 col-lg-offset-9")
-						div(class="form-group")
-							button(class="btn btn-primary" type="submit" ng-click="submitSearchWithCriteria()" ng-disabled="searchForm.$invalid" translate) Rechercher	
+							input(type="text" id="search" class="form-control input-lg" name="location" nr-has-location placeholder="{{'Entrer un lieu' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location" ng-required="true")
+					div(class="row" collapse="!criteria.location.locality")
+						label Elargir à &nbsp; 
+						label(class="radio-inline" ng-repeat="rad in radius")
+							input(type="radio" value="{{rad.value}}" ng-change="search()" ng-model="criteria.radius")
+							| {{rad.label | translate}}
+				div(class="col-lg-2")
+					button(type="button" class="btn btn-default btn-lg" id="type" ng-model="criteria.types" max-length="0" data-html="1" data-multiple="1" max-length-html="{{'Sélectionnés' | translate}}" ng-options="type.name as type.name for type in listOfTypes" placeholder="{{'Sélectionner...' | translate}}" bs-select)
+				div(class="col-lg-1")
+					button(type="button" ng-click="submitSearchWithCriteria()" class="btn btn-primary btn-lg" ng-disabled="searchForm.$invalid" translate) Rechercher

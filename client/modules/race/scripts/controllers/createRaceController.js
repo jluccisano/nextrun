@@ -24,7 +24,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		}
 
 		$scope.options = {
-			country: "fr",
 			types: "(cities)"
 		};
 

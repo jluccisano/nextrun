@@ -20,6 +20,10 @@ angular.module("nextrunApp").controller("HeaderController",
 			$scope.selectedItem = "";
 		};
 
+		$scope.goToMyRaces = function() {
+			$state.go("myraces", { id: $scope.user.id });
+		};
+
 		$scope.logout = function() {
 			AuthService.logout().then(function() {
 				$state.go("login");

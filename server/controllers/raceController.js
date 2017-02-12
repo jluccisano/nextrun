@@ -77,6 +77,29 @@ exports.search = function(req, res) {
 	});
 };
 
+exports.checkIfRaceNameAvailable = function(req, res) {
+	var name = req.body.name;
+	var race = req.race;
+	raceService.checkIfRaceNameAvailable(name, race, res, function(items) {
+		res.status(200).json({
+			items: items
+		});
+	});
+};
+
+exports.checkIfRaceNameAlreadyExists = function(req, res, next) {
+	var name = req.body.fields.name;
+	var race = req.race;
+	if (name) {
+		raceService.checkIfRaceNameAlreadyExists(name, race, res, function() {
+			next();
+		});
+	} else {
+		next();
+	}
+
+};
+
 exports.updateRouteRef = function(req, res, next) {
 	var route = req.routeData;
 	raceService.updateRouteRef(route, res, function() {
@@ -93,10 +116,10 @@ exports.addRouteRef = function(req, res) {
 };
 
 exports.deleteRacesOfUser = function(req, res, next) {
-    var user = req.user;
-    raceService.deleteRacesOfUser(user, res, function() {
-        next();
-    });
+	var user = req.user;
+	raceService.deleteRacesOfUser(user, res, function() {
+		next();
+	});
 };
 
 exports.updateRace = function(req, res) {

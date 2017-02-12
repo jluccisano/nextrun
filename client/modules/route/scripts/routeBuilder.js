@@ -848,11 +848,11 @@ var routeBuilder = {};
 
 	routeBuilder.calculateDistanceBetween2Points = function(p1, p2) {
 
-		if ((!p1 || (p1.lat >= 180 || p1.lat <= -180)) || (!p2 || (p2.lat >= 180 || p2.lat <= -180))) {
+		if ((!p1 || (p1.lng >= 180 || p1.lng <= -180)) || (!p2 || (p2.lng >= 180 || p2.lng <= -180))) {
 			throw new Error("invalid longitude");
 		}
 
-		if ((!p1 || (p1.lng >= 90 || p1.lng <= -90)) || (!p2 || (p2.lng >= 90 || p2.lng <= -90))) {
+		if ((!p1 || (p1.lat >= 90 || p1.lat <= -90)) || (!p2 || (p2.lat >= 90 || p2.lat <= -90))) {
 			throw new Error("invalid latitude");
 		}
 

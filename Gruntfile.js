@@ -323,6 +323,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           node_env: "dist",
+          background: false,
           script: "<%= yeoman.dist %>/server.js",
         }
       },

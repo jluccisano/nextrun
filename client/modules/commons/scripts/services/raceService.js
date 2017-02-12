@@ -6,8 +6,11 @@ angular.module("nextrunApp.commons").factory("RaceService",
             create: function(data) {
                 return HttpUtils.post("/api/races/create", data);
             },
+            checkIfRaceNameAvailable: function(id, data) {
+                return HttpUtils.post("/api/races/" + id + "/name/available/", data);
+            },
             find: function(id, page) {
-                return HttpUtils.get("/api/races/"+ id +"/find/page/" + page);
+                return HttpUtils.get("/api/races/" + id + "/find/page/" + page);
             },
             findAll: function(page) {
                 return HttpUtils.get("/api/races/find/page/" + page);

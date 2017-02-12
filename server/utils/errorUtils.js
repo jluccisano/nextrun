@@ -55,3 +55,13 @@ exports.handleUnknownData = function(res) {
         message: ["error.unknownData"]
     });
 };
+
+exports.handleRaceAlreadyExists = function(res) {
+    logger.error("error.raceAlreadyExists");
+    return res.status(400).json({
+        message: ["error.raceAlreadyExists"]
+    });
+};
+
+
+

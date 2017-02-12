@@ -23,11 +23,11 @@ var routes = [{
     path: "/find/page/(:page)?",
     httpMethod: "GET",
     middleware: [raceController.getRaces],
-    accessLevel: accessLevels.user
+    accessLevel: accessLevels.admin
 }, {
     path: "/:id/update",
     httpMethod: "PUT",
-    middleware: [raceController.updateRace],
+    middleware: [raceController.checkIfRaceNameAlreadyExists, raceController.updateRace],
     accessLevel: accessLevels.user
 }, {
     path: "/:id/route/:routeId/update",
@@ -71,7 +71,14 @@ var routes = [{
     httpMethod: "POST",
     middleware: [raceController.downloadPicture],
     accessLevel: accessLevels.public
+},{
+    path: "/:id/name/available",
+    httpMethod: "POST",
+    middleware: [raceController.checkIfRaceNameAvailable],
+    accessLevel: accessLevels.public
 }];
+
+
 
 module.exports = function(app, express) {
     var router = express.Router();

@@ -44,6 +44,44 @@ exports.getRacesByUser = function(req, res, cb) {
 	}, projection, limit, skip);
 };
 
+exports.checkIfRaceNameAvailable = function(name, race, res, cb) {
+
+	var criteria = {
+		name: name,
+		_id: {
+			$ne: race._id
+		}
+	};
+
+	Race.findByCriteria(criteria, function(error, races) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else {
+			cb(races);
+		}
+	});
+};
+
+exports.checkIfRaceNameAlreadyExists = function(name, race, res, cb) {
+
+	var criteria = {
+		name: name,
+		_id: {
+			$ne: race._id
+		}
+	};
+
+	Race.findByCriteria(criteria, function(error, races) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else if (races && races.length > 0) {
+			errorUtils.handleRaceAlreadyExists(res, error);
+		} else {
+			cb();
+		}
+	});
+};
+
 exports.getRaces = function(req, res, cb) {
 
 	var criteria = {};
@@ -144,7 +182,8 @@ exports.autocomplete = function(text, res, cb) {
 	var criteria = {
 		name: {
 			$regex: pattern
-		}
+		},
+		published: true
 	};
 
 	var projection = {
@@ -169,10 +208,6 @@ exports.search = function(criteria, res, cb) {
 	var type = {};
 	var andArray = [];
 	var location = {};
-
-	andArray.push({
-		"published": true
-	});
 
 	if (criteria.dateRange && criteria.dateRange.startDate && criteria.dateRange.endDate) {
 		dateRange = {

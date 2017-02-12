@@ -14,7 +14,20 @@ angular.module("nextrunApp.home").controller("HomeController",
         MetaService,
         gettextCatalog) {
 
-        $scope.criteria = {};
+        $scope.criteria = {
+            radius: 30
+        };
+
+        $scope.radius = [{
+            value: 30,
+            label: "30km"
+        }, {
+            value: 60,
+            label: "60km"
+        }, {
+            value: 120,
+            label: "120km"
+        }];
 
         var initContact = function() {
             $scope.contact = {
@@ -24,7 +37,6 @@ angular.module("nextrunApp.home").controller("HomeController",
 
         $scope.autocomplete = {
             options: {
-                country: "fr",
                 types: "(regions)"
             }
         };
@@ -43,14 +55,6 @@ angular.module("nextrunApp.home").controller("HomeController",
         $scope.goToNewRace = function() {
             $state.go("races");
         };
-
-        $scope.$watch("criteria.location", function(newValue, oldValue) {
-            if (newValue === oldValue) {
-                return;
-            }
-            $scope.submitSearchWithCriteria();
-        }, true);
-
 
         $scope.submitSearchWithCriteria = function() {
             setTimeout(function() {

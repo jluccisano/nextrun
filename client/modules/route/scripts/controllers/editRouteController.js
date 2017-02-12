@@ -35,7 +35,6 @@ angular.module("nextrunApp.route").controller("EditRouteController",
 
         $scope.map = {
             options: {
-                country: "fr",
                 types: "(cities)"
             }
         };
@@ -43,6 +42,22 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         $scope.cursorMarker = {
             id: 1
         };
+
+        $scope.$watch("location.details", function(newValue, oldValue) {
+
+            if (newValue === oldValue) {
+                return;
+            }
+
+            if (newValue && newValue.location) {
+                var center = {
+                    latitude: newValue.location.latitude,
+                    longitude: newValue.location.longitude
+                };
+                $scope.routeViewModel.setCenter(center);
+            }
+
+        }, true);
 
         $scope.types = RouteTypeEnum;
         $scope.gettextCatalog = gettextCatalog;
@@ -111,15 +126,6 @@ angular.module("nextrunApp.route").controller("EditRouteController",
             });
         };*/
 
-        $scope.centerToLocation = function(routeViewModel, details) {
-            if (details && details.location) {
-                var center = {
-                    latitude: details.location.latitude,
-                    longitude: details.location.longitude
-                };
-                routeViewModel.setCenter(center);
-            }
-        };
 
         $scope.submit = function() {
             RouteService.saveOrUpdate($scope.routeViewModel.getData()).then(function(response) {
