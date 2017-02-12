@@ -28,13 +28,13 @@ div.custom-bs-background
 									input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="race.pin.name" has-location required  ng-autocomplete options="options" details="race.pin")
 									span.help-block(data-ng-show="form1.location.$dirty && ( form1.location.$error.required || form1.location.$error.validLocation)")  Veuillez saisir une ville correcte
 								div.row
-									div.col-lg-6
+									div.col-lg-6.col-xs-4.col-sm-4.col-md-4
 										div.form-group
 											div.checkbox
 												label
 													em Elargir aux alentours
 													input(type="checkbox" ng-model="searchAround")
-									div.col-lg-4
+									div.col-lg-4.col-xs-4.col-sm-4.col-md-4
 										div.form-group
 											select(class="form-control" style="width:100px" ng-model="distance" ng-change="onChangeDistance()")
 												option(value="15") 15km
@@ -45,7 +45,7 @@ div.custom-bs-background
 								div.form-group
 									select(class="multiselect" data-placeholder="Sélectionner..." data-ng-model="currentTypesSelected" data-ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
 						div.row
-							div.col-lg-2.col-lg-offset-8(style="margin-top:-40px")
+							div.col-lg-2.col-lg-offset-8
 								div.form-group
 									button.btn.btn-primary(type="submit" data-ng-click="submitSearchWithCriteria()" data-ng-disabled="form1.$invalid") Rechercher	
 						
