@@ -20,6 +20,11 @@ var mongoose = require('mongoose'),
 describe('Create User: POST /api/users', function() {
 
 
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
 
   describe('Invalid parameters', function() {
 

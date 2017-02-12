@@ -18,6 +18,13 @@ var mongoose = require('mongoose'),
 
 describe('Forgot Password: POST /api/users/forgotpassword', function() {
 
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
+
+
   var currentUser;
 
   before(function(done) {

@@ -50,6 +50,18 @@ var user2 = {
 
 describe('Update Race: UPDATE /api/races', function() {
 
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
+
+  before(function(done) {
+    Race.remove({}, function() {
+      done();
+    });
+  });
+
   var currentRace;
   var currentDate = new Date();
 
@@ -85,10 +97,17 @@ describe('Update Race: UPDATE /api/races', function() {
         name: 'duathlon',
         i18n: 'Duathlon'
       },
-      department: {
-        code: '11',
-        name: 'Aude',
-        region: 'Languedoc-Roussillon'
+      pin: {
+        location: {
+          lat: 45.34,
+          lon: 1.7
+        },
+        name: 'Castelnaudary',
+        department: {
+          code: '11',
+          name: 'Aude',
+          region: 'Languedoc-Roussillon'
+        }
       },
       date: currentDate,
       edition: '1',
@@ -112,7 +131,7 @@ describe('Update Race: UPDATE /api/races', function() {
       race.should.be.an.instanceOf(Race);
       race.name.should.equal('Duathlon de Castelnaudary');
       race.type.name.should.equal('duathlon');
-      race.department.name.should.equal('Aude');
+      race.pin.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
       //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
@@ -243,10 +262,17 @@ describe('Update Race: UPDATE /api/races', function() {
               name: 'triathlon',
               i18n: 'Triathlon'
             },
-            department: {
-              code: '31',
-              name: 'Haute-Garonne',
-              region: 'Midi-Pyrénées'
+            pin: {
+              location: {
+                lat: 45.34,
+                lon: 1.7
+              },
+              name: 'Toulouse',
+              department: {
+                code: '31',
+                name: 'Haute-Garonne',
+                region: 'Midi-Pyrénées'
+              }
             },
             date: currentDate,
             edition: '2',
@@ -280,7 +306,7 @@ describe('Update Race: UPDATE /api/races', function() {
         race.should.be.an.instanceOf(Race);
         race.name.should.equal('Triathlon de Castelnaudary');
         race.type.name.should.equal('triathlon');
-        race.department.name.should.equal('Haute-Garonne');
+        race.pin.department.name.should.equal('Haute-Garonne');
         race.date.should.be.an.instanceOf(Date);
         //race.date.getTime().should.equal(new Date(currentDate).getTime());
         race.edition.should.equal(2);
@@ -307,11 +333,11 @@ describe('Update Race: UPDATE /api/races', function() {
       done();
     });
   });
+
   after(function(done) {
     Race.remove({}, function() {
       done();
     });
   });
-
 
 });

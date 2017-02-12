@@ -96,6 +96,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 								loading: false,
 								options: {
 									chart: {
+										zoomType: 'xy',
 										height: 300,
 										type: 'area'
 									},
@@ -148,7 +149,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 										}
 									},
 									tooltip: {
-										shared: true,
+										shared: false,
 										useHTML: true,
 										headerFormat: '<table>',
 										pointFormat: '<tr>' +

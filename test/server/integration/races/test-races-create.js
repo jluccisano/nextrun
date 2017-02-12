@@ -37,6 +37,18 @@ var user1 = {
 
 describe('Create race: POST /api/races', function() {
 
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
+
+  before(function(done) {
+    Race.remove({}, function() {
+      done();
+    });
+  });
+
   var currentDate = new Date();
 
   before(function(done) {
@@ -86,10 +98,17 @@ describe('Create race: POST /api/races', function() {
               name: 'duathlon',
               i18n: 'Duathlon'
             },
-            department: {
-              code: '11',
-              name: 'Aude',
-              region: 'Languedoc-Roussillon'
+            pin: {
+              location: {
+                lat: 45.34,
+                lon: 1.7
+              },
+              name: 'Castelnaudary',
+              department: {
+                code: '11',
+                name: 'Aude',
+                region: 'Languedoc-Roussillon'
+              }
             },
             date: currentDate,
             edition: '1',
@@ -115,9 +134,8 @@ describe('Create race: POST /api/races', function() {
         race.should.be.an.instanceOf(Race);
         race.name.should.equal('Duathlon de Castelnaudary');
         race.type.name.should.equal('duathlon');
-        race.department.name.should.equal('Aude');
+        race.pin.department.name.should.equal('Aude');
         race.date.should.be.an.instanceOf(Date);
-        //race.date.getTime().should.equal(new Date(currentDate).getTime());
         race.edition.should.equal(1);
         race.distanceType.name.should.equal('S');
         race.user_id.should.eql(user1._id);
@@ -135,10 +153,17 @@ describe('Create race: POST /api/races', function() {
               name: 'duathlon',
               i18n: 'Duathlon'
             },
-            department: {
-              code: '11',
-              name: 'Aude',
-              region: 'Languedoc-Roussillon'
+            pin: {
+              location: {
+                lat: 45.34,
+                lon: 1.7
+              },
+              name: 'Castelnaudary',
+              department: {
+                code: '11',
+                name: 'Aude',
+                region: 'Languedoc-Roussillon'
+              }
             },
             date: currentDate,
             edition: '1',
@@ -177,10 +202,17 @@ describe('Create race: POST /api/races', function() {
               name: 'duathlon',
               i18n: 'Duathlon'
             },
-            department: {
-              code: '11',
-              name: 'Aude',
-              region: 'Languedoc-Roussillon'
+            pin: {
+              location: {
+                lat: 45.34,
+                lon: 1.7
+              },
+              name: 'Castelnaudary',
+              department: {
+                code: '11',
+                name: 'Aude',
+                region: 'Languedoc-Roussillon'
+              }
             },
             date: currentDate,
             edition: '1',
@@ -228,10 +260,17 @@ describe('Create race: POST /api/races', function() {
               name: 'duathlon',
               i18n: 'Duathlon'
             },
-            department: {
-              code: '11',
-              name: 'Aude',
-              region: 'Languedoc-Roussillon'
+            pin: {
+              location: {
+                lat: 45.34,
+                lon: 1.7
+              },
+              name: 'Castelnaudary',
+              department: {
+                code: '11',
+                name: 'Aude',
+                region: 'Languedoc-Roussillon'
+              }
             },
             date: currentDate,
             edition: '1',

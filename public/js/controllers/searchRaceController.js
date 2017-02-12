@@ -10,6 +10,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.distance = undefined;
 		$scope.location = undefined;
 
+		$scope.race = {};
+
 		$scope.options = {
 			country: "fr",
 			types: "(cities)"
@@ -311,9 +313,9 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					departments: $scope.departments,
 					dateRange: $scope.dateRange,
 					location: {
-						name: $scope.details.name,
-						lat: $scope.details.geometry.location.lat(),
-						lon: $scope.details.geometry.location.lng()
+						name: $scope.race.pin.name,
+						lat: $scope.race.pin.location.lat,
+						lon: $scope.race.pin.location.lon
 					}
 				}
 

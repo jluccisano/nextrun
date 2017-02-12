@@ -25,7 +25,7 @@ div.custom-bs-background
 						div.row
 							div.col-lg-6
 								div.form-group(data-ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$pristine  && !form1.location.$error.validLocation && form1.location.$valid}")
-									input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="pin.name" has-location required  ng-autocomplete options="options" details="details")
+									input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="race.pin.name" has-location required  ng-autocomplete options="options" details="race.pin")
 									span.help-block(data-ng-show="form1.location.$dirty && ( form1.location.$error.required || form1.location.$error.validLocation)")  Veuillez saisir une ville correcte
 								div.row
 									div.col-lg-6

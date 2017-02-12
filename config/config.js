@@ -13,7 +13,8 @@ module.exports = {
     mailgun: {
       user: "devmaster@nextrunjosephluccisano.mailgun.org",
       password: "devmaster"
-    }
+    },
+    racesidx: "racesidx_v1"
   },
   test: {
     db: 'mongodb://localhost/nextrun_test',
@@ -26,7 +27,8 @@ module.exports = {
     mailgun: {
       user: "user",
       password: "pass"
-    }
+    },
+    racesidx: "racesidx_test_v1"
   },
   production: {
     db: 'mongodb://af_nextrun-joseph_luccisano:c1dhahkj7oo021g9tfaslq3cr1@ds057568.mongolab.com:57568/af_nextrun-joseph_luccisano',
@@ -39,7 +41,8 @@ module.exports = {
     mailgun: {
       user: "postmaster@nextrunjosephluccisano.mailgun.org",
       password: "1jo8rmgvkpe6"
-    }
+    },
+    racesidx: "racesidx_v1"
   },
   prod: {
     db: 'mongodb://localhost:nextrun_adm:malili011004/nextrun',
@@ -52,7 +55,8 @@ module.exports = {
     mailgun: {
       user: "postmaster@nextrunjosephluccisano.mailgun.org",
       password: "1jo8rmgvkpe6"
-    }
+    },
+    racesidx: "racesidx_v1"
   },
   valid: {
     db: 'mongodb://af_nextrun-valid-joseph_luccisano:n7udg9kmgpt0lrnt6hv2ahke0i@ds029979.mongolab.com:29979/af_nextrun-valid-joseph_luccisano',
@@ -65,6 +69,7 @@ module.exports = {
     mailgun: {
       user: "postmaster@nextrunjosephluccisano.mailgun.org",
       password: "1jo8rmgvkpe6"
-    }
+    },
+    racesidx: "racesidx_v1"
   }
 };

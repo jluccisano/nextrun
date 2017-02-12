@@ -1,9 +1,17 @@
 #!/bin/bash
 
-curl -XDELETE "localhost:9200/_river"
-curl -XDELETE "localhost:9200/racesidx_v1"
+echo index name $1
 
-curl -XPOST "http://localhost:9200/racesidx_v1/" -d '{
+
+if [ $1 == "" || $2 == "" ]; then
+  echo "no argument supplied"
+  exit 1
+fi
+
+curl -XDELETE "localhost:9200/_river"
+curl -XDELETE "localhost:9200/$1"
+
+curl -XPOST "http://localhost:9200/$1" -d '{
   "settings": {
     "analysis": {
       "analyzer": {
@@ -44,7 +52,7 @@ curl -XPOST "http://localhost:9200/racesidx_v1/" -d '{
   }
 }'
 
-curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
+curl -XPUT "http://localhost:9200/$1/race/_mapping" -d '{
   "race": {
     "properties": {
       "name": {
@@ -103,46 +111,6 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
           }
         }
       },
-      "department": {
-        "properties": {
-          "code": {
-            "type": "multi_field",
-            "fields": {
-              "code": {
-                "type": "string"
-              },
-              "autocomplete": {
-                "type": "string",
-                "analyzer": "autocomplete"
-              }
-            }
-          },
-          "name": {
-            "type": "multi_field",
-            "fields": {
-              "name": {
-                "type": "string"
-              },
-              "autocomplete": {
-                "type": "string",
-                "analyzer": "autocomplete"
-              }
-            }
-          },
-          "region": {
-            "type": "multi_field",
-            "fields": {
-              "region": {
-                "type": "string"
-              },
-              "autocomplete": {
-                "type": "string",
-                "analyzer": "autocomplete"
-              }
-            }
-          }
-        }
-      },
       "pin": {
         "properties": {
           "location": {
@@ -150,6 +118,46 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
             "fielddata": {
               "format": "compressed",
               "precision": "1cm"
+            }
+          },
+          "department": {
+            "properties": {
+              "code": {
+                "type": "multi_field",
+                "fields": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "autocomplete": {
+                    "type": "string",
+                    "analyzer": "autocomplete"
+                  }
+                }
+              },
+              "name": {
+                "type": "multi_field",
+                "fields": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "autocomplete": {
+                    "type": "string",
+                    "analyzer": "autocomplete"
+                  }
+                }
+              },
+              "region": {
+                "type": "multi_field",
+                "fields": {
+                  "region": {
+                    "type": "string"
+                  },
+                  "autocomplete": {
+                    "type": "string",
+                    "analyzer": "autocomplete"
+                  }
+                }
+              }
             }
           }
         }
@@ -167,11 +175,11 @@ curl -XPUT "http://localhost:9200/_river/race/_meta" -d '{
         "port": 27017
       }
     ],
-    "db": "nextrun",
+    "db": "'"$2"'",
     "collection": "races"
   },
   "index": {
-    "name": "racesidx_v1",
+    "name": "'"$1"'",
     "type": "race"
   }
 }'

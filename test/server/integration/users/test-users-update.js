@@ -43,6 +43,11 @@ var user2 = {
 
 describe('Update User: PUT /api/users/update', function() {
 
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
 
 
   describe('PUT /api/users/update/profile', function() {

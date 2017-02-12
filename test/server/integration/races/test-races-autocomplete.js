@@ -36,9 +36,21 @@ var user1 = {
   password: '123'
 };
 
-/*
+
 describe('Search races with autocomplete: POST /api/races/autocomplete', function() {
 
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
+
+  before(function(done) {
+    Race.remove({}, function() {
+      done();
+    });
+  });
+  
   var currentRace;
   var currentDate = new Date();
 
@@ -68,10 +80,17 @@ describe('Search races with autocomplete: POST /api/races/autocomplete', functio
         name: 'duathlon',
         i18n: 'Duathlon'
       },
-      department: {
-        code: '11',
-        name: 'Aude',
-        region: 'Languedoc-Roussillon'
+      pin: {
+        location: {
+          lat: 45.34,
+          lon: 1.7
+        },
+        name: 'Castelnaudary',
+        department: {
+          code: '11',
+          name: 'Aude',
+          region: 'Languedoc-Roussillon'
+        }
       },
       date: currentDate,
       edition: '1',
@@ -96,9 +115,8 @@ describe('Search races with autocomplete: POST /api/races/autocomplete', functio
       race.should.be.an.instanceOf(Race);
       race.name.should.equal('Duathlon de Castelnaudary');
       race.type.name.should.equal('duathlon');
-      race.department.name.should.equal('Aude');
+      race.pin.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
-      //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
       race.distanceType.name.should.equal('S');
       race.user_id.should.eql(user1._id);
@@ -114,11 +132,18 @@ describe('Search races with autocomplete: POST /api/races/autocomplete', functio
 
   describe('valid parameters', function() {
 
+    beforeEach(function(done) {
+      setTimeout(function() {
+        //waiting for elasticsearch update index
+        done();
+      }, 1500);
+    });
+
     it('should return one race', function(done) {
       superagent.post('http://localhost:3000/api/races/autocomplete')
         .send({
           criteria: {
-            fulltext: "du",
+            fulltext: "dua",
             region: undefined
           }
         })
@@ -126,8 +151,8 @@ describe('Search races with autocomplete: POST /api/races/autocomplete', functio
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
-          res.body.races.length.should.equal(1);
-          res.body.races[0].name.should.equal("Duathlon de Castelnaudary");
+          res.body.hits.hits.length.should.equal(1);
+          res.body.hits.hits[0].fields.partial1[0].name.should.equal("Duathlon de Castelnaudary");
           done();
         });
     });
@@ -138,12 +163,10 @@ describe('Search races with autocomplete: POST /api/races/autocomplete', functio
       done();
     });
   });
+
   after(function(done) {
     Race.remove({}, function() {
       done();
     });
   });
-
-
 });
-*/

@@ -18,6 +18,11 @@ var mongoose = require('mongoose'),
 
 describe('Check user: POST /api/users/check/email', function() {
 
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
 
   var currentUser;
 

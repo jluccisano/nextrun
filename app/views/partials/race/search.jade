@@ -21,7 +21,7 @@ div.container
 				div.row
 					div.col-lg-8
 						div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation && form.location.$valid}")
-							input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="details.name" has-location required ng-autocomplete options="options" details="details")
+							input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="race.pin.name" has-location required ng-autocomplete options="options" details="race.pin")
 							span.help-block(data-ng-show="form.location.$dirty && ( form.location.$error.required || form.location.$error.validLocation)")  Veuillez saisir une ville correcte
 						div.row
 							div.col-lg-6

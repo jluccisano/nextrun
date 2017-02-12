@@ -2,6 +2,8 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 	function($scope, $location, RaceServices, Alert, Auth, $modal) {
 		'use strict';
 
+		$scope.race = {};
+
 		$scope.tabs = [{
 			active: true,
 			disabled: false

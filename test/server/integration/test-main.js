@@ -30,6 +30,13 @@ var user1 = {
 describe('Test partials view: GET /partials/*', function() {
 
   before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
+
+
+  before(function(done) {
     User.create(user1, function(err, user) {
       user1._id = user._id;
       done();

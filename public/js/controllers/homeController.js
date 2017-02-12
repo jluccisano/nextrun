@@ -4,6 +4,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 		$scope.fulltext = undefined;
 		$scope.names = [];
+		$scope.race = {};
 
 		$scope.contact = {};
 
@@ -103,7 +104,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				distance: $scope.distance,
 				searchAround: $scope.searchAround,
 				types: $scope.currentTypesSelected,
-				details: $scope.details
+				details: $scope.race.pin
 			}
 
 			setTimeout(function() {

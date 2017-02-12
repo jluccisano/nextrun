@@ -31,6 +31,13 @@ var user1 = {
 describe('Log Out User: GET /api/users/logout', function() {
 
   before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
+
+
+  before(function(done) {
     User.create(user1, function(err, user) {
       user1._id = user._id;
       done();

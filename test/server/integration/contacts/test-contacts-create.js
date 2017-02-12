@@ -18,6 +18,12 @@ var mongoose = require('mongoose'),
 
 describe('Create Contact: POST /api/contacts', function() {
 
+  before(function(done) {
+    Contact.remove({}, function() {
+      done();
+    });
+  });
+
   var count;
 
   before(function(done) {

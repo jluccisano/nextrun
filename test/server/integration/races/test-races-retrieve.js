@@ -49,6 +49,18 @@ var user2 = {
 
 describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function() {
 
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
+
+  before(function(done) {
+    Race.remove({}, function() {
+      done();
+    });
+  });
+
   var currentRace;
   var currentDate = new Date();
 
@@ -85,10 +97,17 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
         name: 'duathlon',
         i18n: 'Duathlon'
       },
-      department: {
-        code: '11',
-        name: 'Aude',
-        region: 'Languedoc-Roussillon'
+      pin: {
+        location: {
+          lat: 45.34,
+          lon: 1.7
+        },
+        name: 'Castelnaudary',
+        department: {
+          code: '11',
+          name: 'Aude',
+          region: 'Languedoc-Roussillon'
+        }
       },
       date: currentDate,
       edition: '1',
@@ -112,7 +131,7 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
       race.should.be.an.instanceOf(Race);
       race.name.should.equal('Duathlon de Castelnaudary');
       race.type.name.should.equal('duathlon');
-      race.department.name.should.equal('Aude');
+      race.pin.department.name.should.equal('Aude');
       race.date.should.be.an.instanceOf(Date);
       //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
@@ -242,11 +261,10 @@ describe('Retrieve races: GET /api/users/:userId/races/(page/:page)?', function(
       done();
     });
   });
+
   after(function(done) {
     Race.remove({}, function() {
       done();
     });
   });
-
-
 });

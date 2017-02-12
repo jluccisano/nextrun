@@ -240,7 +240,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 										}
 									},
 									tooltip: {
-										shared: true,
+										shared: false,
 										useHTML: true,
 										headerFormat: '<table>',
 										pointFormat: '<tr>' +

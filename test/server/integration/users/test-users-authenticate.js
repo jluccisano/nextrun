@@ -29,6 +29,12 @@ var user1 = {
 
 
 describe('Authenticate user: POST /api/users/session', function() {
+  
+  before(function(done) {
+    User.remove({}, function() {
+      done();
+    });
+  });
 
 
   before(function(done) {

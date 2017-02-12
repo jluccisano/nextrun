@@ -430,7 +430,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		var previousElevationPoint;
 		var previousData;
 
-		if (elevationPoints[index].grade > 5) {
+		if (elevationPoints[index].grade >= 7) {
 			
 			//get previous point
 			if (index > 0) {
@@ -458,7 +458,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 				latlng: elevationPoints[index].latlng
 
 			});
-		} else if (elevationPoints[index].grade >= 2) {
+		} else if (elevationPoints[index].grade >= 5) {
 			//get previous point
 			if (index > 0) {
 				previousElevationPoint = elevationPoints[index - 1];

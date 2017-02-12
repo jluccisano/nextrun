@@ -9,6 +9,8 @@ var mongoose = require('mongoose'),
   util = require('util'),
   elasticsearchUtils = require('../utils/elasticsearchUtils'),
   ElasticSearchClient = require('elasticsearchclient'),
+  env = process.env.NODE_ENV || 'development',
+  config = require('../../config/config')[env],
   fs = require('fs');
 
 var serverOptions = {
@@ -273,7 +275,7 @@ exports.search = function(req, res) {
 
   var criteria = req.body.criteria;
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     console.log(util.inspect(criteria, true, 7, true));
   }
 
@@ -291,10 +293,11 @@ exports.search = function(req, res) {
 
   //query
 
-  var query = {};
-
-  query.bool = {};
-  query.bool.should = [];
+  var query = {
+    bool: {
+      should: []
+    }
+  };
 
   if ('undefined' !== typeof(criteria.fulltext) && criteria.fulltext.length > 2) {
 
@@ -304,20 +307,20 @@ exports.search = function(req, res) {
       query.bool.should.push(raceName_query);
     }
 
-    var departmentName_query = elasticsearchUtils.buildQueryString("race.department.name.autocomplete", criteria.fulltext);
+    var departmentName_query = elasticsearchUtils.buildQueryString("race.pin.department.name.autocomplete", criteria.fulltext);
 
     if (departmentName_query) {
       query.bool.should.push(departmentName_query);
     }
 
-    var departmentRegion_query = elasticsearchUtils.buildQueryString("race.department.region.autocomplete", criteria.fulltext);
+    var departmentRegion_query = elasticsearchUtils.buildQueryString("race.pin.department.region.autocomplete", criteria.fulltext);
 
     if (departmentRegion_query) {
       query.bool.should.push(departmentRegion_query);
 
     }
 
-    var departmentCode_query = elasticsearchUtils.buildQueryString("race.department.code.autocomplete", criteria.fulltext);
+    var departmentCode_query = elasticsearchUtils.buildQueryString("race.pin.department.code.autocomplete", criteria.fulltext);
 
     if (departmentCode_query) {
       query.bool.should.push(departmentCode_query);
@@ -345,7 +348,7 @@ exports.search = function(req, res) {
     };
   }
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     console.log(util.inspect(query, true, 7, true));
   }
 
@@ -362,7 +365,7 @@ exports.search = function(req, res) {
     filter.and.push(type_filter);
   }
 
-  var department_filter = elasticsearchUtils.buildTermsFilter("race.department.code", criteria.departments);
+  var department_filter = elasticsearchUtils.buildTermsFilter("race.pin.department.code", criteria.departments);
   if (department_filter) {
     filter.and.push(department_filter);
   }
@@ -374,7 +377,7 @@ exports.search = function(req, res) {
 
   var departmentOfRegion_filter;
   if (criteria.region) {
-    departmentOfRegion_filter = elasticsearchUtils.buildTermsFilter("race.department.code", criteria.region.departments);
+    departmentOfRegion_filter = elasticsearchUtils.buildTermsFilter("race.pin.department.code", criteria.region.departments);
     if (departmentOfRegion_filter) {
       filter.and.push(departmentOfRegion_filter);
     }
@@ -399,7 +402,7 @@ exports.search = function(req, res) {
     operation.filter = filter;
   }
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     console.log(util.inspect(filter, true, 7, true));
   }
 
@@ -409,7 +412,7 @@ exports.search = function(req, res) {
   var facets = {
     "departmentFacets": {
       "terms": {
-        "field": "race.department.code",
+        "field": "race.pin.department.code",
         "order": "term",
         "all_terms": false
       }
@@ -479,16 +482,30 @@ exports.search = function(req, res) {
 
   operation.facets = facets;
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     console.log(util.inspect(facets, true, 7, true));
   }
 
-  operation.from = criteria.page;
-  operation.size = criteria.size;
-  operation.partial_fields = partial_fields;
-  operation.sort = [criteria.sort];
+  if (criteria.from) {
+    operation.from = criteria.from;
+  }
 
-  elasticSearchClient.search('racesidx_v1', 'race', operation)
+  if (criteria.page) {
+    operation.page = criteria.page;
+  }
+
+  if (criteria.size) {
+    operation.size = criteria.size;
+
+  }
+
+  if (criteria.sort) {
+    operation.sort = [criteria.sort];
+  }
+
+  operation.partial_fields = partial_fields;
+
+  elasticSearchClient.search(config.racesidx, 'race', operation)
     .on('data', function(data) {
       console.log(JSON.parse(data));
       res.json(200, JSON.parse(data));
@@ -527,17 +544,17 @@ exports.autocomplete = function(req, res) {
             }
           }, {
             "query_string": {
-              "default_field": "race.department.name.autocomplete",
+              "default_field": "race.pin.department.name.autocomplete",
               "query": criteria.fulltext
             }
           }, {
             "query_string": {
-              "default_field": "race.department.region.autocomplete",
+              "default_field": "race.pin.department.region.autocomplete",
               "query": criteria.fulltext
             }
           }, {
             "query_string": {
-              "default_field": "race.department.code.autocomplete",
+              "default_field": "race.pin.department.code.autocomplete",
               "query": criteria.fulltext
             }
           }, {
@@ -572,14 +589,20 @@ exports.autocomplete = function(req, res) {
 
     query.filter.and.push({
       "terms": {
-        "race.department.code": criteria.region.departments
+        "race.pin.department.code": criteria.region.departments
       }
     });
   }
 
-  elasticSearchClient.search('racesidx_v1', 'race', query)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(util.inspect(query, true, 7, true));
+  }
+
+  elasticSearchClient.search(config.racesidx, 'race', query)
     .on('data', function(data) {
-      console.log(JSON.parse(data));
+      if (process.env.NODE_ENV === 'development') {
+        console.log(JSON.parse(data));
+      }
       res.json(200, JSON.parse(data));
     })
     .on('done', function() {
