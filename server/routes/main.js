@@ -1,5 +1,5 @@
 var mainController = require("../controllers/mainController"),
-    router = require("../middlewares/router"),
+    routerService = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
 
@@ -32,5 +32,7 @@ var routes = [
 ];
 
 module.exports = function(app, express) {
-    router.register(app, express, routes, "");
+
+    var router = express.Router();
+    routerService.register(app, router, routes, "");
 };

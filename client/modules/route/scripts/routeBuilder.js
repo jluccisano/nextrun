@@ -10,7 +10,7 @@ var routeBuilder = {};
 (function() {
 
 
-	routeBuilder.Route = function(dataModel) {
+	routeBuilder.Route = function(dataModel, chartConfig, gmapsConfig, center) {
 
 		this.data = dataModel;
 
@@ -18,10 +18,13 @@ var routeBuilder = {};
 
 			this.data.ascendant = 0;
 			this.data.descendant = 0;
-			this.data.minElevation = this.data.elevationPoints[0].elevation;
-			this.data.maxElevation = this.data.elevationPoints[0].elevation;
+			this.data.minElevation = 0;
+			this.data.maxElevation = 0;
 
 			if (this.data.elevationPoints.length > 0) {
+			
+				this.data.minElevation = this.data.elevationPoints[0].elevation;
+				this.data.maxElevation = this.data.elevationPoints[0].elevation;
 
 				for (var k = 1, lk = this.data.elevationPoints.length; k < lk; ++k) {
 
@@ -562,10 +565,11 @@ var routeBuilder = {};
 		this._editMode = true;
 		this._travelMode = google.maps.TravelMode.DRIVING;
 		this._fit = true;
-		this._options = null;
+		this._options = gmapsConfig;
 		this._events = null;
-		this._chartConfig = null;
+		this._chartConfig = chartConfig;
 		this._type = null;
+		this._center = center;
 
 		this.segments = this._createSegmentsViewModel(this.data.segments);
 		this.elevationPoints = this._createElevationPointsViewModel(this.data.elevationPoints);
@@ -599,7 +603,6 @@ var routeBuilder = {};
 		this.getPolylines = function() {
 			return this._polylines;
 		};
-
 
 		this.isVisible = function() {
 			return this._visible;

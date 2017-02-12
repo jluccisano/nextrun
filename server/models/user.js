@@ -24,7 +24,7 @@ var UserSchema = new Schema({
         type: String,
         default: ""
     },
-    hashed_password: {
+    hashedPassword: {
         type: String,
         default: ""
     },
@@ -44,7 +44,7 @@ var UserSchema = new Schema({
             type: String
         },
     },
-    last_update: Date,
+    lastUpdate: Date,
     facebook: {}
 });
 
@@ -59,7 +59,7 @@ UserSchema
     .set(function(password) {
         this._password = password;
         this.salt = this.makeSalt();
-        this.hashed_password = this.encryptPassword(password, this.salt);
+        this.hashedPassword = this.encryptPassword(password, this.salt);
     }).get(function() {
         return this._password;
     });
@@ -101,12 +101,12 @@ UserSchema.path("email").validate(function(email, fn) {
     }
 }, "error.emailAlreadyExists");
 
-UserSchema.path("hashed_password").validate(function(hashed_password) {
+UserSchema.path("hashedPassword").validate(function(hashedPassword) {
     // if you are authenticating by any of the oauth strategies, don"t validate
     if (authTypes.indexOf(this.provider) !== -1) {
         return true;
     }
-    return hashed_password.length;
+    return hashedPassword.length;
 }, "error.passwordCannotBeBlank");
 
 
@@ -162,7 +162,7 @@ UserSchema.methods = {
      */
 
     authenticate: function(plainText) {
-        return this.encryptPassword(plainText, this.salt) === this.hashed_password;
+        return this.encryptPassword(plainText, this.salt) === this.hashedPassword;
     },
 
     /**

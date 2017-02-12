@@ -12,9 +12,7 @@ var underscore = require("underscore"),
  *  Register every routes
  */
 
-module.exports.register = function(app, express, routes, routerPath) {
-
-    var router = express.Router();
+module.exports.register = function(app, router, routes, routerPath) {
 
     var ensureAuthorized = function(req, res, next) {
 

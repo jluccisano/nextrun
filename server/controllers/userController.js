@@ -131,7 +131,7 @@ exports.forgotPassword = function(req, res) {
                     _id: user._id
                 }, {
                     $set: {
-                        hashed_password: hashedPassword,
+                        hashedPassword: hashedPassword,
                         salt: salt,
                         lastUpdate: new Date()
                     }
@@ -287,7 +287,7 @@ exports.updatePassword = function(req, res) {
                     _id: userConnected._id
                 }, {
                     $set: {
-                        hashed_password: hashedNewPassword,
+                        hashedPassword: hashedNewPassword,
                         salt: salt,
                         lastUpdate: new Date()
                     }

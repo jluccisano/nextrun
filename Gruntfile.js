@@ -41,10 +41,10 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      js: {
-        files: ["<%= yeoman.client %>/**/*", "<%= yeoman.server %>/**/*", ".tmp/styles/{,*/}*.css"],
-        tasks: ["newer:jshint:all", "express:development"]
-      },
+      //js: {
+      //  files: ["<%= yeoman.client %>/**/*", "<%= yeoman.server %>/**/*", ".tmp/styles/{,*/}*.css"],
+      //  tasks: ["newer:jshint:all", "express:development"]
+      //},
       compass: {
         files: ["<%= yeoman.client %>/modules/**/styles/{,*/}*.{scss,sass}"],
         tasks: ["compass:server", "autoprefixer"]
@@ -486,8 +486,6 @@ module.exports = function(grunt) {
   grunt.registerTask("update", ["shell:npmInstall", "shell:bowerInstall"]);
 
   grunt.registerTask("test", ["test-server", "test-client"]);
-
-  grunt.registerTask("default", ["build"]);
 
 
   grunt.registerTask("generate-css", [

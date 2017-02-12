@@ -9,6 +9,18 @@
     height: 600px;
 }
 
+#map_canvas {
+    position: relative;
+}
+
+.angular-google-map-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
 /* fix for Twitter Bootstrap handling of responsive images */
 .angular-google-map img {
     max-width: inherit;

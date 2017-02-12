@@ -71,14 +71,14 @@ var RaceSchema = new Schema({
             default: null
         }
     },
-    last_update: Date,
-    publication_date: Date,
+    lastUpdate: Date,
+    publicationDate: Date,
     published: {
         type: Boolean,
         default: false
     },
-    created_date: Date,
-    user_id: Schema.Types.ObjectId,
+    creationDate: Date,
+    userId: Schema.Types.ObjectId,
     organizerWebSite: String,
     pricing: {
         memberFFPrice: {
@@ -217,11 +217,11 @@ RaceSchema.path("name").validate(function(name, fn) {
 
 }, "error.raceAlreadyExists");
 
-RaceSchema.path("user_id").validate(function(user_id, fn) {
+RaceSchema.path("userId").validate(function(userId, fn) {
     var User = mongoose.model("User");
 
     User.find({
-        _id: this.user_id
+        _id: this.userId
     }).exec(function(err, users) {
         fn(!err && users.length === 1);
     });
@@ -239,7 +239,6 @@ RaceSchema.statics = {
     findByCriteria: function(options, cb) {
 
         var criteria = options.criteria || {};
-
         this.find(criteria, {
             routes: 0
         })
@@ -296,7 +295,7 @@ RaceSchema.statics = {
      */
     destroyAllRaceOfUser: function(user, cb) {
         this.remove({
-            user_id: user._id
+            userId: user._id
         }).exec(cb);
     }
 };

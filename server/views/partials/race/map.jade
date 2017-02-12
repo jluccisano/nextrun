@@ -1,15 +1,14 @@
-div(ng-if="route.isVisible")
-	google-map(center="route.center" options="route.options" zoom="route.zoom" refresh="true"  draggable="true" mark-click="true" class="gmapsEditor" events="route.events")
+div(ng-if="route.isVisible()" id="map_canvas")
+	ui-gmap-google-map(center="{latitude: 51.219053, longitude: 4.404418 }" options="{scrollwheel: false}" zoom="13" refresh="true" draggable="true" mark-click="true")
 		
-		markers(models="route.markers" coords="'self'" icon="'icon'" click="onMarkerClicked(marker)")
-			marker(ng-repeat="marker in route.markers" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
+		//ui-gmap-markers(models="route.getMarkers()" coords="'self'" icon="'icon'" click="onMarkerClicked(marker)")
+		//	ui-gmap-marker(ng-repeat="marker in route.markers" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
 		
-			marker(coords="cursorMarker" icon="cursorMarker.icon")
+		//	ui-gmap-marker(coords="cursorMarker" icon="cursorMarker.icon")
 				
-		nr-polyline(polylines="route.polylines")
+		//nr-polyline(polylines="route.getPolylines()")
 
-
-	div(ng-show="route.editMode" class="mapPanel")
+	div(ng-show="route.isEditMode()" class="mapPanel")
 		div.well
 			form
 				div(class="radio")
@@ -41,7 +40,7 @@ div(ng-if="route.isVisible")
 					span Max: {{route.maxElevation | number:0 }} m
 				div
 					span Min: {{route.minElevation | number:0 }} m
-	highchart(ng-hide="route.type === 'Natation'" config="route.chartConfig")
+	highchart(ng-hide="route.type === 'Natation'" config="route.getChartConfig()")
 
 	div.form-group
 		label.col-lg-4.control-label(translate) Ajouter une description à votre parcours

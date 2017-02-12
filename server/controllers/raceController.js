@@ -1,4 +1,4 @@
-/**
+    /**
  * @module Race Controller
  * @author jluccisano
  */
@@ -61,7 +61,7 @@ exports.create = function(req, res) {
 
             var race = new Race(req.body.race);
             race.lastUpdate = new Date();
-            race.createdDate = new Date();
+            race.creationDate = new Date();
             race.userId = userConnected._id;
 
             race.save(function(err, race) {
@@ -117,6 +117,8 @@ exports.findByUser = function(req, res) {
     };
 
     Race.findByCriteria(options, function(err, races) {
+        console.log(err);
+        console.log(races);
         if (err) {
             logger.error(err);
             return res.status(400).json({

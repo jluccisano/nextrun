@@ -1,6 +1,6 @@
 var raceController = require("../controllers/raceController"),
     gmaps = require("../middlewares/gmaps"),
-    router = require("../middlewares/router"),
+    routerService = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
 
@@ -9,27 +9,26 @@ var raceController = require("../controllers/raceController"),
 var routes = [
 
     /** api races **/
-
     {
-        path: "/create",
-        httpMethod: "POST",
-        middleware: [raceController.create],
-        accessLevel: accessLevels.user
-    },{
-        path: "/find",
-        httpMethod: "GET",
-        middleware: [raceController.findByUser],
-        accessLevel: accessLevels.user
-    },{
-        path: "/find/page/(:page)?",
-        httpMethod: "GET",
-        middleware: [raceController.findByUser],
-        accessLevel: accessLevels.user
-    }, {
         path: "/:raceId",
         httpMethod: "GET",
         middleware: [raceController.find],
         accessLevel: accessLevels.public
+    }, {
+        path: "/create",
+        httpMethod: "POST",
+        middleware: [raceController.create],
+        accessLevel: accessLevels.user
+    }, {
+        path: "/find",
+        httpMethod: "GET",
+        middleware: [raceController.findByUser],
+        accessLevel: accessLevels.user
+    }, {
+        path: "/find/page/(:page)?",
+        httpMethod: "GET",
+        middleware: [raceController.findByUser],
+        accessLevel: accessLevels.user
     }, {
         path: "/:raceId/update",
         httpMethod: "PUT",
@@ -67,7 +66,9 @@ var routes = [
 
 module.exports = function(app, express) {
 
-    app.param(":raceId", raceController.load);
+    var router = express.Router();
 
-    router.register(app, express, routes, "/api/races");
+    router.param("raceId", raceController.load);
+
+    routerService.register(app, router, routes, "/api/races");
 };

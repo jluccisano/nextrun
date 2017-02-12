@@ -1,5 +1,5 @@
 var contactController = require("../controllers/contactController"),
-    router = require("../middlewares/router"),
+    routerService = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
 
@@ -25,5 +25,8 @@ var routes = [
 ];
 
 module.exports = function(app, express) {
-    router.register(app, express, routes, "/api/contacts");
+
+     var router = express.Router();
+
+    routerService.register(app, router, routes, "/api/contacts");
 };

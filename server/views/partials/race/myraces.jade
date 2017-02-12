@@ -17,10 +17,10 @@ div.container
 		tbody
 			tr(ng-repeat="race in races")
 				td 
-					a(ng-href='/races/view/{{race._id}}' translate) Nom
-				td(translate) Type
-				td(translate) Type de distance
-				td(ng-if="race.last_update != null")  {{race.last_update | amDateFormat:'DD/MM/YYYY HH:mm'}}
+					a(ng-href='/races/view/{{race._id}}') {{race.name}}	
+				td {{race.type.i18n}}
+				td {{race.distanceType.name}}
+				td(ng-if="race.last_update != null")  {{race.lastUpdate | amDateFormat:'DD/MM/YYYY HH:mm'}}
 				td
 					a(ng-href='/races/edit/{{race._id}}' translate) Editer
 				td

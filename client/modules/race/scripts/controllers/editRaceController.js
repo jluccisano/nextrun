@@ -13,6 +13,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		RouteService,
 		FileReaderService,
 		RouteHelperService,
+		RouteUtilsService,
 		TextAngularConfig,
 		MetaService,
 		GpxService,
@@ -67,12 +68,26 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 						currentRoute = $scope.race.routes[index];
 					}
 
+					if(!currentRoute) {
+						currentRoute = {
+							segments: [],
+							markers: [],
+							polylines: []
+						}
+					}
+					var center = RouteUtilsService.setCenter($scope, currentRoute);
+
 					//var route = RouteHelperService.generateRoute($scope, currentRoute, routeType);
-					var route = new routeBuilder.Route(currentRoute);
+					var route = new routeBuilder.Route(currentRoute, 
+						RouteHelperService.getChartConfig($scope), 
+						RouteHelperService.getGmapsConfig(), center);
+
+
+
 					route.addClickListener($scope.onClickMap);
 
 					$scope.race.routes[index] = route;
-					$scope.race.routes[0].isVisible = true;
+					$scope.race.routes[0].setVisible(true);
 				});
 
 				$scope.race.type = raceType;
