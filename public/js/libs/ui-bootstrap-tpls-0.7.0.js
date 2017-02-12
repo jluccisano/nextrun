@@ -3454,23 +3454,15 @@ angular.module("template/pagination/pager.html", []).run(["$templateCache", func
     "");
 }]);
 
-/* BS3 version */
+
 angular.module("template/pagination/pagination.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/pagination/pagination.html",
-    "<div class=\"pagination\"><ul class=\"pagination pagination-sm\">\n" +
-    "  <li ng-repeat=\"page in pages\" ng-class=\"{active: page.active, disabled: page.disabled}\"><a ng-click=\"selectPage(page.number)\">{{page.text}}</a></li>\n" +
-    "  </ul>\n" +
-    "</div>\n" +
-    "");
-}]);
-/*angular.module("template/pagination/pagination.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/pagination/pagination.html",
     "<div class=\"pagination\"><ul>\n" +
     "  <li ng-repeat=\"page in pages\" ng-class=\"{active: page.active, disabled: page.disabled}\"><a ng-click=\"selectPage(page.number)\">{{page.text}}</a></li>\n" +
     "  </ul>\n" +
     "</div>\n" +
     "");
-}]);*/
+}]);
 
 angular.module("template/tooltip/tooltip-html-unsafe-popup.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/tooltip/tooltip-html-unsafe-popup.html",
@@ -3528,18 +3520,10 @@ angular.module("template/tabs/tab.html", []).run(["$templateCache", function($te
     "");
 }]);
 
-/*
-angular.module("template/tabs/tabset-titles.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/tabs/tabset-titles.html",
-    "<ul class=\"nav {{type && 'nav-' + type}}\" ng-class=\"{'nav-stacked': vertical}\">\n" +
-    "</ul>\n" +
-    "");
-}]);
-*/
 
 angular.module("template/tabs/tabset-titles.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/tabs/tabset-titles.html",
-    "<ul class=\"nav {{type && 'nav-' + type}}\" ng-class=\"{'nav-stacked': vertical, 'nav-pills': !vertical }\">\n" +
+    "<ul class=\"nav {{type && 'nav-' + type}}\" ng-class=\"{'nav-stacked': vertical}\">\n" +
     "</ul>\n" +
     "");
 }]);

@@ -7,7 +7,7 @@ div.custom-bs-background
 				div.col-lg-7.col-lg-offset-2
 					div.input-group.input-group-lg(style="margin-top:20px")
 						
-						input.form-control(type="text" placeholder="Recherche directe" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in autocomplete($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
+						input.form-control.twitter-typeahead(type="text" placeholder="Recherche directe" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in autocomplete($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
 
 						span.input-group-addon
 							span.glyphicon.glyphicon-search						

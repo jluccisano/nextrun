@@ -88,7 +88,9 @@ module.exports = function(grunt) {
           'tmp/public/js/libs/textAngular.js': ['public/js/libs/textAngular.js'],
           'tmp/public/js/libs/bootstrap-multiselect.js': ['public/js/libs/bootstrap-multiselect.js'],
           'tmp/public/js/libs/daterangepicker.js': ['public/js/libs/daterangepicker.js'],
-          'tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js': ['public/js/libs/ui-bootstrap-tpls-0.7.0.js']
+          'tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js': ['public/js/libs/ui-bootstrap-tpls-0.7.0.js'],
+          'tmp/public/js/client/templates/angular-bootstrap-tpls-overrides.js': ['public/js/client/templates/angular-bootstrap-tpls-overrides.js'],
+          'tmp/public/js/libs/less-1.7.0.js': ['public/js/libs/less-1.7.0.js']
         },
       },
     },
@@ -133,7 +135,9 @@ module.exports = function(grunt) {
           'dist/public/js/libs/bootstrap-multiselect.min.js': ['tmp/public/js/libs/bootstrap-multiselect.js'],
           'dist/public/js/libs/daterangepicker.min.js': ['tmp/public/js/libs/daterangepicker.js'],
           'dist/public/js/client/constants/regions.min.js': ['tmp/public/js/client/constants/regions.js'],
-          'dist/public/js/libs/ui-bootstrap-tpls-0.7.0.min.js': ['tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js']
+          'dist/public/js/libs/ui-bootstrap-tpls-0.7.0.min.js': ['tmp/public/js/libs/ui-bootstrap-tpls-0.7.0.js'],
+          'dist/public/js/client/templates/angular-bootstrap-tpls-overrides.min.js': ['tmp/public/js/client/templates/angular-bootstrap-tpls-overrides.js'],
+          'dist/public/js/libs/less-1.7.0.min.js': ['tmp/public/js/libs/less-1.7.0.js']
         }
       }
     },
