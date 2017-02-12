@@ -2,7 +2,7 @@ describe('RestAPIHelper', function() {
 
 	var $httpBackend, RestAPIHelper, response, mockResult, mockData, mockError;
 
-	beforeEach(module('restAPI'));
+	beforeEach(module('nextrunApp.commons'));
 
 	beforeEach(inject(function(_$httpBackend_, _RestAPIHelper_) {
 		$httpBackend = _$httpBackend_;

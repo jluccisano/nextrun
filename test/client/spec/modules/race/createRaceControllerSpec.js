@@ -2,54 +2,54 @@
 
 describe('MyRacesController', function() {
 
-	var $scope, $controller, $location, $q, $modal, mockRaceServices, mockRace, mockModal, mockAlert, mockAuthServices, mockUser, metaBuilder;
+	var $scope, $controller, $location, $q, $modal, mockRaceService, mockRace, mockModal, mockAlertService, mockAuthService, mockUser, MetaService;
 
 	beforeEach(module('nextrunApp.race', 'mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$modal_, _Alert_,_MockFactory_, _metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$modal_, _AlertService_,_MockFactory_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
-		metaBuilder = _metaBuilder_;
+		MetaService = _MetaService_;
 		$modal = _$modal_;
-		mockAlert = _Alert_;
+		mockAlertService = _AlertService_;
 		mockUser = _MockFactory_.getMockUser();
 		mockRace = _MockFactory_.getMockRace();
-		mockModal = _MockFactory_.getMockModalServices();
-		mockRaceServices = _MockFactory_.getMockRaceServices();
-		mockAuthServices = _MockFactory_.getMockAuthServices();
+		mockModal = _MockFactory_.getMockModalService();
+		mockRaceService = _MockFactory_.getMockRaceService();
+		mockAuthService = _MockFactory_.getMockAuthService();
 
-		spyOn(metaBuilder, "ready");
+		spyOn(MetaService, "ready");
 
 		$controller('CreateRaceController', {
 			$scope: $scope,
-			RaceServices: mockRaceServices,
-			AuthServices: mockAuthServices,
-			Alert: mockAlert
+			RaceService: mockRaceService,
+			AuthService: mockAuthService,
+			AlertService: mockAlertService
 		});
 
 
-		expect(metaBuilder.ready).toHaveBeenCalled();
+		expect(MetaService.ready).toHaveBeenCalled();
 
 	}));
 
 	describe('submit()', function() {
 
 		it('submit with success when user isLoggedIn', function() {
-			mockRaceServices.setPromiseResponse(true);
+			mockRaceService.setPromiseResponse(true);
 
 			$scope.race = mockRace;
 
 			spyOn($scope, "isLoggedIn").and.returnValue(true);
-			spyOn(mockAlert, "add");
+			spyOn(mockAlertService, "add");
 			spyOn($scope, "openRedirectionModal");
-			spyOn(mockRaceServices, "create").and.callThrough();
+			spyOn(mockRaceService, "create").and.callThrough();
 
 			$scope.submit();
 			$scope.$apply();
 
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.create.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.create.successfully", 3000);
 			expect($scope.openRedirectionModal).toHaveBeenCalledWith(mockRace._id);
 
 		});
@@ -66,10 +66,10 @@ describe('MyRacesController', function() {
 	describe('signup()', function() {
 
 		it('signup with success', function() {
-			mockAuthServices.setPromiseResponse(true);
+			mockAuthService.setPromiseResponse(true);
 
 
-			spyOn(mockAuthServices, "register").and.callThrough();
+			spyOn(mockAuthService, "register").and.callThrough();
 			spyOn($scope, "submit");
 
 			$scope.signup();
@@ -83,10 +83,10 @@ describe('MyRacesController', function() {
 	describe('login()', function() {
 
 		it('signup with success', function() {
-			mockAuthServices.setPromiseResponse(true);
+			mockAuthService.setPromiseResponse(true);
 			$scope.user = mockUser;
 
-			spyOn(mockAuthServices, "login").and.callThrough();
+			spyOn(mockAuthService, "login").and.callThrough();
 			spyOn($scope, "submit");
 
 			$scope.login();
@@ -115,10 +115,10 @@ describe('MyRacesController', function() {
 
 	describe('isLoggedIn()', function() {
 		it('isLoggedIn with success', function() {
-			spyOn(mockAuthServices, "isLoggedIn").and.callThrough();
+			spyOn(mockAuthService, "isLoggedIn").and.callThrough();
 			$scope.isLoggedIn();
-			expect(mockAuthServices.isLoggedIn()).toEqual(true);
-			expect(mockAuthServices.isLoggedIn).toHaveBeenCalled();
+			expect(mockAuthService.isLoggedIn()).toEqual(true);
+			expect(mockAuthService.isLoggedIn).toHaveBeenCalled();
 		});
 	});
 

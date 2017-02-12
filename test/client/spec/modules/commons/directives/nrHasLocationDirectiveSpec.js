@@ -2,7 +2,7 @@ describe('hasLocation', function() {
 
 	var $scope, $compile, element, form,mockRace;
 
-	beforeEach(module('hasLocation', 'mockModule'));
+	beforeEach(module('nextrunApp.commons', 'mockModule'));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_, _MockFactory_) {
 		$compile = _$compile_;
@@ -11,7 +11,7 @@ describe('hasLocation', function() {
 	}));
 
 	var template = '<form name="form">' +
-		'<input class="form-control" name="location" ng-model="race.pin.name" has-location details="race.pin">' +
+		'<input class="form-control" name="location" ng-model="race.pin.name" nr-has-location details="race.pin">' +
 		'</form>';
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {

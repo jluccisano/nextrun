@@ -11,7 +11,7 @@ describe("ForgotPasswordModalController", function() {
 		$controller = _$controller_;
 		$q = _$q_;
 		mockAlertService = _AlertService_;
-		mockModal = _MockFactory_.getMockModalServices();
+		mockModal = _MockFactory_.getMockModalService();
 		mockAuthService = _MockFactory_.getMockAuthService();
 		
 		spyOn(mockAuthService, "forgotPassword").and.callThrough();

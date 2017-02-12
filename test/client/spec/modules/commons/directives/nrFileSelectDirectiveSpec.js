@@ -2,14 +2,14 @@ describe('file select directive', function() {
 
 	var $scope, $compile, element, form;
 
-	beforeEach(module('fileSelect'));
+	beforeEach(module('nextrunApp.commons'));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
 		$scope = _$rootScope_.$new();
 	}));
 
-	var template =  '<input type="file" ng-model="$files" ng-file-select="onFileSelect($files, route)")>';
+	var template =  '<input type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")>';
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {
 		element = angular.element(template);

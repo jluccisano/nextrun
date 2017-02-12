@@ -89,7 +89,7 @@ angular.module("nextrunApp.commons").directive("nrChecklistModel", function($par
       }
 
       if (!tAttrs.checklistValue) {
-        throw "You should provide `checklist-value`.";
+        throw "You should provide 'checklist-value'.";
       }
 
       // exclude recursion

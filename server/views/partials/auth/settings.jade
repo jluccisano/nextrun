@@ -49,7 +49,7 @@ div.container(style="padding-bottom: 50px;")
 						div.form-group(ng-class="{'has-error': !form.confirmNewPassword.$pristine && form.confirmNewPassword.$invalid, 'has-success': !form.confirmNewPassword.$error.match && !form.confirmNewPassword.$pristine}")
 							label.control-label(for="confirmNewPassword" translate="field.confirmPassword")
 							input.form-control(type="password" name="confirmNewPassword" placeholder="{{'field.confirmPassword' | translate}}" nr-password-match="confirmNewPassword" ng-model="newPassword" required)
-							span.help-block(name="confirmNewPassword-match" ng-show="form.confirmNewPassword.$dirty && form.confirmNewPassword.$error.nr-password-match && !form.confirmNewPassword.$error.required" translate="validator.confirmPassword.not.match")
+							span.help-block(name="confirmNewPassword-match" ng-show="form.confirmNewPassword.$dirty && form.confirmNewPassword.$error.nrPasswordMatch && !form.confirmNewPassword.$error.required" translate="validator.confirmPassword.not.match")
 						hr
 						div.form-group.text-right
 							button.btn.btn-primary(type="submit" name="submit" ng-disabled="form.$invalid" translate="button.save")

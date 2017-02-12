@@ -4,7 +4,7 @@ describe("ContactController", function() {
 
 	var $scope, $controller, MetaService;
 
-	beforeEach(module("nextrunApp.main"));
+	beforeEach(module("nextrunApp"));
 
 	beforeEach(inject(function(_$rootScope_, _$controller_,_MetaService_) {
 		$scope = _$rootScope_.$new();

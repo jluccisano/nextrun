@@ -1,12 +1,12 @@
-describe('AuthServices', function() {
+describe('AuthService', function() {
 
-	var $q, AuthServices, mockUser, mockRestAPIHelper;
+	var $q, AuthService, mockUser, mockRestAPIHelper;
 
 	beforeEach(module('mockModule'));
 
 	beforeEach(function() {
 
-		module('restAPI', function($provide) {
+		module('nextrunApp.commons', function($provide) {
 
 
 			mockRestAPIHelper = {
@@ -33,8 +33,8 @@ describe('AuthServices', function() {
 
 		});
 
-		inject(function(_AuthServices_, _MockFactory_, _$q_) {
-			AuthServices = _AuthServices_;
+		inject(function(_AuthService_, _MockFactory_, _$q_) {
+			AuthService = _AuthService_;
 			mockUser = _MockFactory_.getMockUser();
 			$q = _$q_;
 		});
@@ -77,15 +77,15 @@ describe('AuthServices', function() {
 		$provide.value('RestAPIHelper', mockRestAPIHelper);
 	}));*/
 
-	/*beforeEach(inject(function(_AuthServices_, _MockFactory_) {
-		AuthServices = _AuthServices_;
+	/*beforeEach(inject(function(_AuthService_, _MockFactory_) {
+		AuthService = _AuthService_;
 		mockUser = _MockFactory_.getMockUser();
 	}));*/
 
 	describe('register', function() {
 		it('should call sendPOST with success', function() {
 			spyOn(mockRestAPIHelper, "sendPOST").and.callThrough();
-			AuthServices.register(mockUser);
+			AuthService.register(mockUser);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/users/signup', mockUser);
 		});
 	});
@@ -93,7 +93,7 @@ describe('AuthServices', function() {
 	describe('forgotPassword', function() {
 		it('should call sendPOST with success', function() {
 			spyOn(mockRestAPIHelper, "sendPOST").and.callThrough();
-			AuthServices.forgotPassword(mockUser);
+			AuthService.forgotPassword(mockUser);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/users/forgotpassword', mockUser);
 		});
 	});
@@ -101,28 +101,28 @@ describe('AuthServices', function() {
 	describe('checkEmail', function() {
 		it('should call sendPOST with success', function() {
 			spyOn(mockRestAPIHelper, "sendPOST").and.callThrough();
-			AuthServices.checkEmail(mockUser);
+			AuthService.checkEmail(mockUser);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/users/check/email', mockUser);
 		});
 	});
 
 	describe('updateProfile', function() {
 		it('should call sendPUT with success', function() {
-			AuthServices.updateProfile(mockUser);
+			AuthService.updateProfile(mockUser);
 			expect(mockRestAPIHelper.sendPUT).toHaveBeenCalledWith('/api/users/update/profile', mockUser);
 		});
 	});
 
 	describe('updatePassword', function() {
 		it('should call sendPUT with success', function() {
-			AuthServices.updatePassword(mockUser);
+			AuthService.updatePassword(mockUser);
 			expect(mockRestAPIHelper.sendPUT).toHaveBeenCalledWith('/api/users/update/password', mockUser);
 		});
 	});
 
 	describe('getUserProfile', function() {
 		it('should call sendGET with success', function() {
-			AuthServices.getUserProfile();
+			AuthService.getUserProfile();
 			expect(mockRestAPIHelper.sendGET).toHaveBeenCalledWith('/api/users/settings');
 		});
 	});
@@ -135,7 +135,7 @@ describe('AuthServices', function() {
 			spyOn(mockRestAPIHelper, "sendPOST").and.callFake(function() {
 				return deferred.promise;
 			})
-			AuthServices.logout();
+			AuthService.logout();
 
 			deferred.resolve();
 

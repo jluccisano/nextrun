@@ -2,26 +2,26 @@
 
 describe('MyRacesController', function() {
 
-	var $scope, $controller, $location, $q, $modal, mockRaceServices, mockRace, mockModal, mockAlert, metaBuilder;
+	var $scope, $controller, $location, $q, $modal, mockRaceService, mockRace, mockModal, mockAlertService, MetaService;
 
 	beforeEach(module('nextrunApp.race','mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$modal_, _Alert_,_MockFactory_,_metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$modal_, _AlertService_,_MockFactory_,_MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
-		metaBuilder = _metaBuilder_;
+		MetaService = _MetaService_;
 		$modal = _$modal_;
-		mockAlert = _Alert_;
+		mockAlertService = _AlertService_;
 		mockRace = _MockFactory_.getMockRace();
-		mockModal = _MockFactory_.getMockModalServices();
-		mockRaceServices = _MockFactory_.getMockRaceServices();
+		mockModal = _MockFactory_.getMockModalService();
+		mockRaceService = _MockFactory_.getMockRaceService();
 
 		$controller('MyRacesController', {
 			$scope: $scope,
-			RaceServices: mockRaceServices,
-			Alert: mockAlert
+			RaceService: mockRaceService,
+			AlertService: mockAlertService
 		});
 
 	}));
@@ -29,15 +29,15 @@ describe('MyRacesController', function() {
 	describe('init()', function() {
 
 		it('init with success', function() {
-			mockRaceServices.setPromiseResponse(true);
-			spyOn(mockAlert, "add");
-			spyOn(mockRaceServices, "find").and.callThrough();
-			spyOn(metaBuilder, "ready");
+			mockRaceService.setPromiseResponse(true);
+			spyOn(mockAlertService, "add");
+			spyOn(mockRaceService, "find").and.callThrough();
+			spyOn(MetaService, "ready");
 
 			$scope.init();
 			$scope.$apply();
 
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(MetaService.ready).toHaveBeenCalled();
 			expect($scope.races.length).toBe(1);
 		});
 
@@ -58,17 +58,17 @@ describe('MyRacesController', function() {
 	describe('publish()', function() {
 
 		it('publish with success', function() {
-			mockRaceServices.setPromiseResponse(true);
+			mockRaceService.setPromiseResponse(true);
 
-			spyOn(mockRaceServices, "publish").and.callThrough();
+			spyOn(mockRaceService, "publish").and.callThrough();
 			spyOn($scope, "init");
-			spyOn(mockAlert, "add");
+			spyOn(mockAlertService, "add");
 
 			$scope.publish(mockRace, true);
 			$scope.$apply();
 
 			expect($scope.init).toHaveBeenCalled();
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.publish.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.publish.successfully", 3000);
 
 		});
 

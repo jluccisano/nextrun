@@ -1,11 +1,11 @@
 'use strict';
 describe('ngAutocomplete Directive', function() {
 
-	var $scope, $compile, element, mockGoogleMapsAPIServices;
+	var $scope, $compile, element, mockGmapsApiService;
 
-	beforeEach(module('gmAutocomplete', function($provide) {
+	beforeEach(module('nextrunApp.commons', function($provide) {
 
-		mockGoogleMapsAPIServices = {
+		mockGmapsApiService = {
 			Autocomplete: function(element, options) {
 				return {
 					setTypes: function(array) {
@@ -81,12 +81,12 @@ describe('ngAutocomplete Directive', function() {
 				}
 			}
 		}
-		spyOn(mockGoogleMapsAPIServices, 'Autocomplete').and.callThrough();
-		spyOn(mockGoogleMapsAPIServices, 'addListener').and.callThrough();
-		spyOn(mockGoogleMapsAPIServices, 'PlacesService').and.callThrough();
-		spyOn(mockGoogleMapsAPIServices, 'AutocompleteService').and.callThrough();
+		spyOn(mockGmapsApiService, 'Autocomplete').and.callThrough();
+		spyOn(mockGmapsApiService, 'addListener').and.callThrough();
+		spyOn(mockGmapsApiService, 'PlacesService').and.callThrough();
+		spyOn(mockGmapsApiService, 'AutocompleteService').and.callThrough();
 
-		$provide.value('GoogleMapsAPIServices', mockGoogleMapsAPIServices);
+		$provide.value('GmapsApiService', mockGmapsApiService);
 	}));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {
@@ -97,7 +97,7 @@ describe('ngAutocomplete Directive', function() {
 	describe('ngAutocomplete', function() {
 
 		beforeEach(inject(function(_$compile_, _$rootScope_) {
-			var template = '<input name="location" ng-model="race.pin.name" options="options" details="details" ng-autocomplete>';
+			var template = '<input name="location" ng-model="race.pin.name" options="options" details="details" gmaps-autocomplete>';
 			element = angular.element(template);
 			$compile(element)($scope);
 		}));

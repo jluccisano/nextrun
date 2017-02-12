@@ -2,18 +2,18 @@
 
 describe('Facebook plugin Directive', function() {
 
-	var $scope, $compile, $timeout, $log, element, mockFacebookAPI;
+	var $scope, $compile, $timeout, $log, element, mockFacebookService;
 
-	beforeEach(module('FacebookPluginDirectives', function($provide) {
+	beforeEach(module('nextrunApp.commons', function($provide) {
 
-		mockFacebookAPI = {
+		mockFacebookService = {
 			parseXFBML: function() {
 				return true;
 			}
 		}
 
 
-		$provide.value('facebookAPI', mockFacebookAPI);
+		$provide.value('FacebookService', mockFacebookService);
 	}));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, _$log_) {
@@ -31,14 +31,14 @@ describe('Facebook plugin Directive', function() {
 	describe('Facebook like button reload', function() {
 
 		it('should reload Facebook plugin successfully', function() {
-			spyOn(mockFacebookAPI, 'parseXFBML').and.callThrough();
+			spyOn(mockFacebookService, 'parseXFBML').and.callThrough();
 			$scope.$digest();
 			$timeout.flush();
-			expect(mockFacebookAPI.parseXFBML).toHaveBeenCalled();
+			expect(mockFacebookService.parseXFBML).toHaveBeenCalled();
 		});
 
 		it('should throw error when FB is undefined', function() {
-			spyOn(mockFacebookAPI, 'parseXFBML').and.throwError('error');
+			spyOn(mockFacebookService, 'parseXFBML').and.throwError('error');
 			spyOn($log, "error");
 			$scope.$digest();
 			$timeout.flush();

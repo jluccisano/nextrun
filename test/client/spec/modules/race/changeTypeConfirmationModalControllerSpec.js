@@ -10,7 +10,7 @@ describe('ChangeTypeConfirmationModalController', function() {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 
-		mockModal = _MockFactory_.getMockModalServices();
+		mockModal = _MockFactory_.getMockModalService();
 
 		$controller('ChangeTypeConfirmationModalController', {
 			$scope: $scope,

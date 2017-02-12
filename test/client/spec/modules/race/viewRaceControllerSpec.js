@@ -8,46 +8,46 @@ describe('ViewRaceController', function() {
 		$q,
 		$timeout,
 		$modal,
-		mockRaceServices,
+		mockRaceService,
 		mockRace,
-		mockAlert,
+		mockAlertService,
 		mockModal,
-		mockTypeEnum,
-		mockRouteHelperServices,
-		metaBuilder;
+		mockRaceTypeEnum,
+		mockRouteHelperService,
+		MetaService;
 
 	beforeEach(module('nextrunApp.race', 'mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _Alert_, _$modal_, _MockFactory_,_typeEnum_,_metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _AlertService_, _$modal_, _MockFactory_,_RaceTypeEnum_,_MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
-		metaBuilder = _metaBuilder_;
+		MetaService = _MetaService_;
 		$timeout = _$timeout_;
 		$modal = _$modal_;
-		mockAlert = _Alert_;
-		mockTypeEnum = _typeEnum_;
-		mockModal = _MockFactory_.getMockModalServices();
+		mockAlertService = _AlertService_;
+		mockRaceTypeEnum = _RaceTypeEnum_;
+		mockModal = _MockFactory_.getMockModalService();
 		mockRace = _MockFactory_.getMockRace();
-		mockRaceServices = _MockFactory_.getMockRaceServices();
-		mockRouteHelperServices = _MockFactory_.getMockRouteHelperServices();
+		mockRaceService = _MockFactory_.getMockRaceService();
+		mockRouteHelperService = _MockFactory_.getMockRouteHelperService();
 
 		$controller('ViewRaceController', {
 			$scope: $scope,
-			RaceServices: mockRaceServices,
-			Alert: mockAlert,
-			RouteHelperServices: mockRouteHelperServices
+			RaceService: mockRaceService,
+			AlertService: mockAlertService,
+			RouteHelperService: mockRouteHelperService
 		});
 	}));
 
 	describe('init()', function() {
 		it('load race with success', function() {
-			mockRaceServices.setPromiseResponse(true);
-			spyOn(mockRaceServices, "retrieve").and.callThrough();
-			spyOn(mockRouteHelperServices, "generateRoute").and.callThrough();
+			mockRaceService.setPromiseResponse(true);
+			spyOn(mockRaceService, "retrieve").and.callThrough();
+			spyOn(mockRouteHelperService, "generateRoute").and.callThrough();
 
-			spyOn(mockTypeEnum, "getRaceTypeByName").and.returnValue({
+			spyOn(mockRaceTypeEnum, "getRaceTypeByName").and.returnValue({
 				i18n: "Course à pied",
 				name: 'running',
 				distances: [{
@@ -75,13 +75,13 @@ describe('ViewRaceController', function() {
 				}]
 			});
 
-			spyOn(metaBuilder, "ready");
+			spyOn(MetaService, "ready");
 
 			$scope.raceId = "12345";
 
 			$scope.init();
 			$scope.$apply();
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(MetaService.ready).toHaveBeenCalled();
 			expect($scope.race.name).toEqual(mockRace.name);
 
 		});

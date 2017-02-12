@@ -2,11 +2,11 @@
 
 describe('map Directive', function() {
 
-	var $scope, $compile, $timeout, element, mockGoogleMapsAPIServices;
+	var $scope, $compile, $timeout, element, mockGmapsApiService;
 
 	beforeEach(module('google-maps', function($provide) {
 
-		mockGoogleMapsAPIServices = {
+		mockGmapsApiService = {
 			Polyline: function(params) {
 				return {
 					setMap: function(map) {
@@ -28,11 +28,11 @@ describe('map Directive', function() {
 				};
 			}
 		}
-		spyOn(mockGoogleMapsAPIServices, "Polyline").and.callThrough();
-		spyOn(mockGoogleMapsAPIServices, "LatLngBounds").and.callThrough();
-		spyOn(mockGoogleMapsAPIServices, "LatLng").and.callThrough();
+		spyOn(mockGmapsApiService, "Polyline").and.callThrough();
+		spyOn(mockGmapsApiService, "LatLngBounds").and.callThrough();
+		spyOn(mockGmapsApiService, "LatLng").and.callThrough();
 
-		$provide.value('GoogleMapsAPIServices', mockGoogleMapsAPIServices);
+		$provide.value('GmapsApiService', mockGmapsApiService);
 	}));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_) {
@@ -52,7 +52,7 @@ describe('map Directive', function() {
 			}
 		})
 
-		var polylineElement = angular.element("<polylinecustom polylines='route.polylines'/>");
+		var polylineElement = angular.element("<nr-polyline polylines='route.polylines'/>");
 		googleMapElement.append(polylineElement);
 		polylineElement = $compile(polylineElement)($scope);
 	}));
@@ -90,7 +90,7 @@ describe('map Directive', function() {
 
 			$timeout.flush();
 
-			expect(mockGoogleMapsAPIServices.Polyline).toHaveBeenCalled();
+			expect(mockGmapsApiService.Polyline).toHaveBeenCalled();
 
 			$scope.route.polylines.push({
 				id: 2,
@@ -111,7 +111,7 @@ describe('map Directive', function() {
 
 			$scope.$digest();
 
-			expect(mockGoogleMapsAPIServices.Polyline).toHaveBeenCalled();
+			expect(mockGmapsApiService.Polyline).toHaveBeenCalled();
 
 		});
 	});

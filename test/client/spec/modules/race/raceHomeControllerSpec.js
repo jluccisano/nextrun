@@ -2,26 +2,26 @@
 
 describe('RaceHomeController', function() {
 
-	var $scope, $controller, $location, metaBuilder;
+	var $scope, $controller, $location, MetaService;
 
 	beforeEach(module('nextrunApp.race'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$location_, _metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$location_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$location = _$location_;
-		metaBuilder = _metaBuilder_;
+		MetaService = _MetaService_;
 	}));
 
 	describe('ready()', function() {
 
 		it('loading with success', function() {
-			spyOn(metaBuilder, "ready");
+			spyOn(MetaService, "ready");
 
 			$controller('RaceHomeController', {
 				$scope: $scope,
 			});
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(MetaService.ready).toHaveBeenCalled();
 		});
 
 	});

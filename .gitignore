@@ -36,3 +36,4 @@ karma.log
 # Logs and databases #
 ######################
 *.log
+.tmp

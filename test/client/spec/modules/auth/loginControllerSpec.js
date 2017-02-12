@@ -16,7 +16,7 @@ describe("LoginController", function() {
 
 		mockAuthService = _MockFactory_.getMockAuthService();
 		mockUser = _MockFactory_.getMockUser();
-		mockModal = _MockFactory_.getMockModalServices();
+		mockModal = _MockFactory_.getMockModalService();
 	}));
 
 	describe("submit()", function() {

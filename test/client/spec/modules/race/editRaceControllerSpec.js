@@ -7,36 +7,36 @@ describe('EditRaceController', function() {
 		$location,
 		$timeout,
 		$modal,
-		mockRaceServices,
+		mockRaceService,
 		mockRace,
-		mockAlert,
+		mockAlertService,
 		mockModal,
 		mockRouteParams,
 		mockRoute,
-		mockRouteHelperServices,
-		mockAuthServices,
-		mockRouteServices,
-		mockGpxServices,
-		mockFileReaderServices,
-		metaBuilder;
+		mockRouteHelperService,
+		mockAuthService,
+		mockRouteService,
+		mockGpxService,
+		mockFileReaderService,
+		MetaService;
 
 	beforeEach(module('nextrunApp.race', 'mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$location_, _$timeout_, _Alert_, _$modal_, _MockFactory_, _metaBuilder_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$location_, _$timeout_, _AlertService_, _$modal_, _MockFactory_, _MetaService_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$location = _$location_;
 		$timeout = _$timeout_;
 		$modal = _$modal_;
-		metaBuilder= _metaBuilder_;
+		MetaService= _MetaService_;
 
-		mockAuthServices = _MockFactory_.getMockAuthServices();
+		mockAuthService = _MockFactory_.getMockAuthService();
 		mockRace = _MockFactory_.getMockRace();
-		mockAlert = _Alert_;
-		mockModal = _MockFactory_.getMockModalServices();
-		mockRaceServices = _MockFactory_.getMockRaceServices();
-		mockFileReaderServices = _MockFactory_.getMockFileReaderServices();
-		mockGpxServices = _MockFactory_.getMockGpxServices();
+		mockAlertService = _AlertService_;
+		mockModal = _MockFactory_.getMockModalService();
+		mockRaceService = _MockFactory_.getMockRaceService();
+		mockFileReaderService = _MockFactory_.getMockFileReaderService();
+		mockGpxService = _MockFactory_.getMockGpxService();
 
 		mockRouteParams = {
 			raceId: '12345'
@@ -44,20 +44,20 @@ describe('EditRaceController', function() {
 
 
 		mockRoute = _MockFactory_.getMockRoute();
-		mockRouteHelperServices = _MockFactory_.getMockRouteHelperServices();
-		mockRouteServices = _MockFactory_.getMockRouteServices();
+		mockRouteHelperService = _MockFactory_.getMockRouteHelperService();
+		mockRouteService = _MockFactory_.getMockRouteService();
 
 
 		$controller('EditRaceController', {
 			$scope: $scope,
-			RaceServices: mockRaceServices,
-			Alert: mockAlert,
-			RouteHelperServices: mockRouteHelperServices,
-			RouteServices: mockRouteServices,
+			RaceService: mockRaceService,
+			AlertService: mockAlertService,
+			RouteHelperService: mockRouteHelperService,
+			RouteService: mockRouteService,
 			$routeParams: mockRouteParams,
-			fileReader: mockFileReaderServices,
-			AuthServices: mockAuthServices,
-			GpxServices: mockGpxServices
+			FileReaderService: mockFileReaderService,
+			AuthService: mockAuthService,
+			GpxService: mockGpxService
 		});
 
 	}));
@@ -66,23 +66,23 @@ describe('EditRaceController', function() {
 		it('changeType with success', function() {
 			$scope.race = mockRace;
 			$scope.$apply();
-			spyOn(mockRouteHelperServices, 'generateRoute').and.callThrough();
+			spyOn(mockRouteHelperService, 'generateRoute').and.callThrough();
 			$scope.changeType();
-			expect(mockRouteHelperServices.generateRoute).toHaveBeenCalled();
+			expect(mockRouteHelperService.generateRoute).toHaveBeenCalled();
 		});
 	});
 
 	describe('init()', function() {
 		it('load race with success', function() {
-			mockRaceServices.setPromiseResponse(true);
-			spyOn(mockRaceServices, "retrieve").and.callThrough();
-			spyOn(metaBuilder, "ready");
+			mockRaceService.setPromiseResponse(true);
+			spyOn(mockRaceService, "retrieve").and.callThrough();
+			spyOn(MetaService, "ready");
 
 			$scope.raceId = "12345";
 
 			$scope.init();
 			$scope.$apply();
-			expect(metaBuilder.ready).toHaveBeenCalled();
+			expect(MetaService.ready).toHaveBeenCalled();
 			expect($scope.race.name).toEqual(mockRace.name);
 
 		});
@@ -90,19 +90,19 @@ describe('EditRaceController', function() {
 
 	describe('submit()', function() {
 		it('update race with success', function() {
-			mockRaceServices.setPromiseResponse(true);
-			spyOn(mockRaceServices, "update").and.callThrough();
-			spyOn(mockRaceServices, "retrieve").and.callThrough();
+			mockRaceService.setPromiseResponse(true);
+			spyOn(mockRaceService, "update").and.callThrough();
+			spyOn(mockRaceService, "retrieve").and.callThrough();
 
 			spyOn($location, "path");
-			spyOn(mockAlert, "add");
+			spyOn(mockAlertService, "add");
 
 			$scope.submit(mockRace);
 
 			$scope.$apply();
 
 			expect($location.path).toHaveBeenCalledWith("/myraces");
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.update.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.update.successfully", 3000);
 
 		});
 	});
@@ -146,52 +146,52 @@ describe('EditRaceController', function() {
 
 	describe('isLoggedIn()', function() {
 		it('isLoggedIn with success', function() {
-			spyOn(mockAuthServices, "isLoggedIn").and.returnValue(true);
+			spyOn(mockAuthService, "isLoggedIn").and.returnValue(true);
 			expect($scope.isLoggedIn()).toBe(true);
 		});
 	});
 
 	describe('delete()', function() {
 		it('delete with success', function() {
-			spyOn(mockRouteServices, "delete").and.callThrough();
+			spyOn(mockRouteService, "delete").and.callThrough();
 			$scope.delete();
-			expect(mockRouteServices.delete).toHaveBeenCalled();
+			expect(mockRouteService.delete).toHaveBeenCalled();
 		});
 	});
 
 	describe('undo()', function() {
 		it('undo with success', function() {
-			spyOn(mockRouteServices, "undo").and.callThrough();
+			spyOn(mockRouteService, "undo").and.callThrough();
 			$scope.undo();
-			expect(mockRouteServices.undo).toHaveBeenCalled();
+			expect(mockRouteService.undo).toHaveBeenCalled();
 		});
 	});
 
 	describe('getFile()', function() {
 		it('import file with success', function() {
-			mockFileReaderServices.setPromiseResponse(true);
-			spyOn(mockFileReaderServices, 'readAsDataUrl').and.callThrough();
-			spyOn(mockGpxServices, 'convertGPXtoRoute').and.callThrough();
-			spyOn(mockRouteServices, 'rebuildMarkers').and.callThrough();
-			spyOn(mockRouteServices, 'rebuildPolylines').and.callThrough();
-			spyOn(mockRouteHelperServices, 'generateRoute').and.callThrough();
+			mockFileReaderService.setPromiseResponse(true);
+			spyOn(mockFileReaderService, 'readAsDataUrl').and.callThrough();
+			spyOn(mockGpxService, 'convertGPXtoRoute').and.callThrough();
+			spyOn(mockRouteService, 'rebuildMarkers').and.callThrough();
+			spyOn(mockRouteService, 'rebuildPolylines').and.callThrough();
+			spyOn(mockRouteHelperService, 'generateRoute').and.callThrough();
 			$scope.getFile(mockRoute, {});
 			$scope.$apply();
 			expect($scope.pending).toBe(false);
 		});
 
 		it('import file with success', function() {
-			mockFileReaderServices.setPromiseResponse(true);
-			spyOn(mockAlert, "add");
-			spyOn(mockFileReaderServices, 'readAsDataUrl').and.callThrough();
-			spyOn(mockGpxServices, 'convertGPXtoRoute').and.callThrough();
-			spyOn(mockRouteServices, 'rebuildMarkers').and.throwError("invalidGPX");
-			spyOn(mockRouteServices, 'rebuildPolylines').and.callThrough();
-			spyOn(mockRouteHelperServices, 'generateRoute').and.callThrough();
+			mockFileReaderService.setPromiseResponse(true);
+			spyOn(mockAlertService, "add");
+			spyOn(mockFileReaderService, 'readAsDataUrl').and.callThrough();
+			spyOn(mockGpxService, 'convertGPXtoRoute').and.callThrough();
+			spyOn(mockRouteService, 'rebuildMarkers').and.throwError("invalidGPX");
+			spyOn(mockRouteService, 'rebuildPolylines').and.callThrough();
+			spyOn(mockRouteHelperService, 'generateRoute').and.callThrough();
 			$scope.getFile(mockRoute, {});
 			$scope.$apply();
 			expect($scope.pending).toBe(false);
-			expect(mockAlert.add).toHaveBeenCalledWith("danger", "invalidGPX", 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("danger", "invalidGPX", 3000);
 		});
 	});
 

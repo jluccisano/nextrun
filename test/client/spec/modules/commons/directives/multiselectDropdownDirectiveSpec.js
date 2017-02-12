@@ -4,7 +4,7 @@ describe('multiselect Directive', function() {
 
 	var $scope, $compile, element;
 
-	beforeEach(module('multiSelect'));
+	beforeEach(module('nextrunApp.commons'));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;

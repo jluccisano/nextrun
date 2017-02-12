@@ -4,7 +4,7 @@ describe('addHTTP Directive', function() {
 
 	var $scope, $compile, element;
 
-	beforeEach(module('addHttp'));
+	beforeEach(module('nextrunApp.commons'));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
@@ -12,7 +12,7 @@ describe('addHTTP Directive', function() {
 	}));
 
 	beforeEach(function() {
-		element = angular.element("<a ng-href='{{url}}' add-http target='_blank'/>")
+		element = angular.element("<a ng-href='{{url}}' nr-add-http target='_blank'/>")
 		$compile(element)($scope);
 	});
 

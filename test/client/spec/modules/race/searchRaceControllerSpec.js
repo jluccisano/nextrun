@@ -7,31 +7,31 @@ describe('SearchRaceController', function() {
 		$location,
 		$q,
 		$timeout,
-		mockRaceServices,
+		mockRaceService,
 		mockRace,
-		mockAlert,
+		mockAlertService,
 		mockSuggestResponse,
 		mockCriteria,
-		regionEnum;
+		RegionEnum;
 
 	beforeEach(module('nextrunApp.race','mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _Alert_, _regionEnum_, _MockFactory_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _$timeout_, _AlertService_, _RegionEnum_, _MockFactory_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
 		$location = _$location_;
 		$timeout = _$timeout_;
-		regionEnum = _regionEnum_;
-		mockAlert = _Alert_;
+		RegionEnum = _RegionEnum_;
+		mockAlertService = _AlertService_;
 		mockSuggestResponse = _MockFactory_.getMockSuggestResponse();
-		mockRaceServices = _MockFactory_.getMockRaceServices();
+		mockRaceService = _MockFactory_.getMockRaceService();
 		mockCriteria = _MockFactory_.getMockCriteria();
 
 		$controller('SearchRaceController', {
 			$scope: $scope,
-			RaceServices: mockRaceServices,
-			Alert: mockAlert
+			RaceService: mockRaceService,
+			AlertService: mockAlertService
 		});
 	}));
 
@@ -39,9 +39,9 @@ describe('SearchRaceController', function() {
 	describe('suggest()', function() {
 		it('Suggest with success', function() {
 
-			mockRaceServices.setPromiseResponse(true);
+			mockRaceService.setPromiseResponse(true);
 
-			spyOn(mockRaceServices, "suggest").and.callThrough();
+			spyOn(mockRaceService, "suggest").and.callThrough();
 
 			$scope.criteria = {
 				region: {
@@ -62,9 +62,9 @@ describe('SearchRaceController', function() {
 	describe('search()', function() {
 		it('Suggest with success', function() {
 
-			mockRaceServices.setPromiseResponse(true);
+			mockRaceService.setPromiseResponse(true);
 
-			spyOn(mockRaceServices, "search").and.callThrough();
+			spyOn(mockRaceService, "search").and.callThrough();
 
 			$scope.search();
 

@@ -1,14 +1,14 @@
-describe('RaceServices', function() {
+describe('RaceService', function() {
 
-	var $httpBackend, RaceServices, mockRace, mockRestAPIHelper;
+	var $httpBackend, RaceService, mockRace, mockRestAPIHelper;
 
-	beforeEach(module('restAPI', function($provide) {
+	beforeEach(module('nextrunApp.commons', function($provide) {
 		mockRestAPIHelper = jasmine.createSpyObj('RestAPIHelper', ['sendPOST', 'sendGET', 'sendDELETE', 'sendPUT']);
 		$provide.value('RestAPIHelper', mockRestAPIHelper);
 	}));
 
-	beforeEach(inject(function(_RaceServices_) {
-		RaceServices = _RaceServices_;
+	beforeEach(inject(function(_RaceService_) {
+		RaceService = _RaceService_;
 
 		mockRace = {
 			name: "Duathlon de Castelnaudary"
@@ -17,42 +17,42 @@ describe('RaceServices', function() {
 
 	describe('create', function() {
 		it('should call sendPOST with success', function() {
-			RaceServices.create(mockRace);
+			RaceService.create(mockRace);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/races/create', mockRace);
 		});
 	});
 
 	describe('find', function() {
 		it('should call sendGET with success', function() {
-			RaceServices.find(1);
+			RaceService.find(1);
 			expect(mockRestAPIHelper.sendGET).toHaveBeenCalledWith('/api/races/find/page/1');
 		});
 	});
 
 	describe('update', function() {
 		it('should call sendPUT with success', function() {
-			RaceServices.update('12345', mockRace);
+			RaceService.update('12345', mockRace);
 			expect(mockRestAPIHelper.sendPUT).toHaveBeenCalledWith('/api/races/12345/update', mockRace);
 		});
 	});
 
 	describe('delete', function() {
 		it('should call sendDELETE with success', function() {
-			RaceServices.delete('12345');
+			RaceService.delete('12345');
 			expect(mockRestAPIHelper.sendDELETE).toHaveBeenCalledWith('/api/races/12345/delete');
 		});
 	});
 
 	describe('retrieve', function() {
 		it('should call sendGET with success', function() {
-			RaceServices.retrieve('12345');
+			RaceService.retrieve('12345');
 			expect(mockRestAPIHelper.sendGET).toHaveBeenCalledWith('/api/races/12345');
 		});
 	});
 
 	describe('publish', function() {
 		it('should call sendPUT with success', function() {
-			RaceServices.publish('12345', true);
+			RaceService.publish('12345', true);
 			expect(mockRestAPIHelper.sendPUT).toHaveBeenCalledWith('/api/races/12345/publish/true', undefined);
 		});
 	});
@@ -62,7 +62,7 @@ describe('RaceServices', function() {
 			var criteria = {
 				fulltext: "dua"
 			};
-			RaceServices.search(criteria);
+			RaceService.search(criteria);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/races/search/', {
 				"criteria": criteria
 			});
@@ -71,7 +71,7 @@ describe('RaceServices', function() {
 
 	describe('findAll', function() {
 		it('should call sendGET with success', function() {
-			RaceServices.findAll();
+			RaceService.findAll();
 			expect(mockRestAPIHelper.sendGET).toHaveBeenCalledWith('/api/races/');
 		});
 	});
@@ -81,7 +81,7 @@ describe('RaceServices', function() {
 			var criteria = {
 				fulltext: "dua"
 			};
-			RaceServices.suggest(criteria);
+			RaceService.suggest(criteria);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/races/autocomplete/', {
 				"criteria": criteria
 			});

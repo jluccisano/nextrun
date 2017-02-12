@@ -4,7 +4,7 @@ describe("HeaderController", function() {
 
 	var $scope, $controller, $location, $q, mockAuthService;
 
-	beforeEach(module("nextrunApp.main", "mockModule"));
+	beforeEach(module("nextrunApp", "mockModule"));
 
 	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _$location_, _MockFactory_) {
 		$scope = _$rootScope_.$new();
@@ -12,7 +12,7 @@ describe("HeaderController", function() {
 		$q = _$q_;
 		$location = _$location_;
 
-		mockAuthService =  _MockFactory_.getMockAuthServices();
+		mockAuthService =  _MockFactory_.getMockAuthService();
 
 		$controller("HeaderController", {
 			$scope: $scope,

@@ -1,3 +1,3 @@
 "use strict";
 
-angular.module("nextrunApp.commons", []);
+angular.module("nextrunApp.commons", ['ngCookies']);

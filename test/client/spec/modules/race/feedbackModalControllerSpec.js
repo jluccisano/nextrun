@@ -2,26 +2,26 @@
 
 describe('FeedbackModalController', function() {
 
-	var $scope, $controller, $q, mockModal, mockContactServices, mockAlert,  mockRaceId;
+	var $scope, $controller, $q, mockModal, mockContactService, mockAlertService,  mockRaceId;
 
 	beforeEach(module('nextrunApp.race','mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _Alert_,_MockFactory_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _AlertService_,_MockFactory_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
-		mockAlert = _Alert_;
+		mockAlertService = _AlertService_;
 		mockRaceId = "12345";
-		mockModal = _MockFactory_.getMockModalServices();
-		mockContactServices = _MockFactory_.getMockContactServices();
+		mockModal = _MockFactory_.getMockModalService();
+		mockContactService = _MockFactory_.getMockContactService();
 
-		spyOn(mockContactServices, "sendFeedback").and.callThrough();
+		spyOn(mockContactService, "sendFeedback").and.callThrough();
 
 		$controller('FeedbackModalController', {
 			$scope: $scope,
 			$modalInstance: mockModal,
-			ContactServices: mockContactServices,
-			Alert: mockAlert,
+			ContactService: mockContactService,
+			AlertService: mockAlertService,
 			raceId: mockRaceId
 		});
 	}));
@@ -29,14 +29,14 @@ describe('FeedbackModalController', function() {
 	describe('submit()', function() {
 
 		it('submit with success', function() {
-			mockContactServices.setPromiseResponse(true);
+			mockContactService.setPromiseResponse(true);
 			spyOn(mockModal, "close");
-			spyOn(mockAlert, "add");
+			spyOn(mockAlertService, "add");
 			$scope.submit();
 			$scope.$apply();
-			expect(mockContactServices.sendFeedback).toHaveBeenCalled();
+			expect(mockContactService.sendFeedback).toHaveBeenCalled();
 			expect(mockModal.close).toHaveBeenCalledWith();
-			expect(mockAlert.add).toHaveBeenCalledWith("success", 'message.sendFeedback.successfully', 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", 'message.sendFeedback.successfully', 3000);
 		});
 	});
 

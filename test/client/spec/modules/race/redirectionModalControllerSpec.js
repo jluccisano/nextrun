@@ -12,7 +12,7 @@ describe('RedirectionModalController', function() {
 		$location = _$location_;
 
 		mockRaceId = "12345";
-		mockModal = _MockFactory_.getMockModalServices();
+		mockModal = _MockFactory_.getMockModalService();
 
 		$controller('RedirectionModalController', {
 			$scope: $scope,

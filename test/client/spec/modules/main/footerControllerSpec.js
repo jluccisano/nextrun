@@ -4,7 +4,7 @@ describe("FooterController", function() {
 
 	var $scope, $controller;
 
-	beforeEach(module("nextrunApp.main"));
+	beforeEach(module("nextrunApp"));
 
 	beforeEach(inject(function(_$rootScope_, _$controller_) {
 		$scope = _$rootScope_.$new();

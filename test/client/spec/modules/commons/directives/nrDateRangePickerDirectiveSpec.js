@@ -4,7 +4,7 @@ describe('Date range picker Directive', function() {
 
 	var $scope, $compile, element;
 
-	beforeEach(module('dateRangePicker'));
+	beforeEach(module('nextrunApp.commons'));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
@@ -57,12 +57,6 @@ describe('Date range picker Directive', function() {
 	});
 
 	describe('date range picker', function() {
-
-		it('should return a invalid http', function() {
-
-
-			$scope.$digest();
-		});
 
 	});
 });

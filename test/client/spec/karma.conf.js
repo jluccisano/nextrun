@@ -70,8 +70,13 @@ module.exports = function(config) {
             "test/client/spec/mock/mockModule.js",
             "test/client/spec/mock/mock*.js",
 
-            "test/client/spec/modules/auth/*Spec.js",
-            "test/client/spec/modules/home/*Spec.js",
+            "test/client/spec/modules/auth/**/*Spec.js",
+            "test/client/spec/modules/home/**/*Spec.js",
+            "test/client/spec/modules/main/**/*Spec.js",
+            "test/client/spec/modules/race/**/*Spec.js",
+            "test/client/spec/modules/commons/**/*Spec.js",
+            "test/client/spec/modules/route/**/*Spec.js",
+
         ],
 
 

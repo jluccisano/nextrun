@@ -31,7 +31,7 @@ mockModule.factory("MockFactory",
 			getMockRace: function() {
 				return mockRace;
 			},
-			getMockModalServices: function() {
+			getMockModalService: function() {
 				return mockModalService;
 			},
 			getMockRoute: function() {
@@ -40,13 +40,13 @@ mockModule.factory("MockFactory",
 			getMockRouteService: function() {
 				return mockRouteService;
 			},
-			getMockRouteHelperServices: function() {
+			getMockRouteHelperService: function() {
 				return mockRouteHelperService;
 			},
 			getMockRaceService: function() {
 				return mockRaceService;
 			},
-			getMockFileReaderServices: function() {
+			getMockFileReaderService: function() {
 				return mockFileReaderService;
 			},
 			getMockContactService: function() {
@@ -73,7 +73,7 @@ mockModule.factory("MockFactory",
 			getMockGoogleMapsAPIServices: function() {
 				return mockGoogleMapsAPIService;
 			},
-			getMockGpxServices: function() {
+			getMockGpxService: function() {
 				return mockGpxService;
 			},
 			getMockPath: function() {

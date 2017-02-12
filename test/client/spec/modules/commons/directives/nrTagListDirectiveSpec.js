@@ -4,7 +4,7 @@ describe('tag list Directive', function() {
 
 	var $scope, $compile, element;
 
-	beforeEach(module('tagList'));
+	beforeEach(module('nextrunApp.commons'));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
@@ -23,7 +23,7 @@ describe('tag list Directive', function() {
 			$scope.type = "trail";
 			$scope.$digest();
 			element.triggerHandler("click");
-			expect($scope.types.length).toBe(1);
+			expect($scope.types.length).toBe(2);
 		});
 	});
 });

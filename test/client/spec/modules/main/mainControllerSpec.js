@@ -4,7 +4,7 @@ describe("MainController", function() {
 
 	var $scope, $controller, mockAuthService, mockAlertService, mockSharedMetaService;
 
-	beforeEach(module("nextrunApp.main", "mockModule"));
+	beforeEach(module("nextrunApp", "mockModule"));
 
 	beforeEach(inject(function(_$rootScope_, _$controller_, _AuthService_, _AlertService_,_MockFactory_) {
 		$scope = _$rootScope_.$new();

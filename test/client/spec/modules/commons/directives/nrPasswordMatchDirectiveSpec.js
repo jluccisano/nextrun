@@ -4,7 +4,7 @@ describe('passwordMatch', function() {
 
 	var $scope, $compile, element, form;
 
-	beforeEach(module('passwordMatch'));
+	beforeEach(module('nextrunApp.commons'));
 
 	beforeEach(inject(function(_$compile_, _$rootScope_) {
 		$compile = _$compile_;
@@ -14,7 +14,7 @@ describe('passwordMatch', function() {
 	var template = '<form name="form">' +
 		'<div>' +
 		'<input type="password" name="password" ng-model="password">' +
-		'<input type="password" name="confirmPassword" ng-model="confirmPassword" match="password">' +
+		'<input type="password" name="confirmPassword" ng-model="confirmPassword" nr-password-match="password">' +
 		'</div>' +
 		'</form>';
 
@@ -29,7 +29,7 @@ describe('passwordMatch', function() {
 		$scope.confirmPassword = "1234";
 		$scope.$digest();
 		expect(form.confirmPassword.$valid).toBe(true);
-		expect(form.confirmPassword.$error.match).toBe(false);
+		expect(form.confirmPassword.$error.nrPasswordMatch).toBe(false);
 	});
 
 	it('should not match', function() {
@@ -37,6 +37,6 @@ describe('passwordMatch', function() {
 		$scope.confirmPassword = "1234";
 		$scope.$digest();
 		expect(form.confirmPassword.$valid).toBe(false);
-		expect(form.confirmPassword.$error.match).toBe(true);
+		expect(form.confirmPassword.$error.nrPasswordMatch).toBe(true);
 	});
 });

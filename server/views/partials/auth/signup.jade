@@ -26,6 +26,6 @@ div.container(style="margin-top:50px")
 						div.form-group(ng-class="{'has-error': !form.confirmPassword.$pristine && form.confirmPassword.$invalid, 'has-success': !form.confirmPassword.$error.match && !form.confirmPassword.$pristine}")
 							label.control-label(for="confirmPassword" translate="field.confirmPassword")
 							input.form-control(type="password" name="confirmPassword" placeholder="{{'field.confirmPassword' | translate }}" nr-password-match="user.password" ng-model="confirmPassword" required)
-							span.help-block(name="confirmPassword-match" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.nr-password-match && !form.confirmPassword.$error.required" translate="validator.confirmPassword.not.match")
+							span.help-block(name="confirmPassword-match" ng-show="form.confirmPassword.$dirty && form.confirmPassword.$error.nrPasswordMatch && !form.confirmPassword.$error.required" translate="validator.confirmPassword.not.match")
 						
 						button.btn.btn-primary(type="submit" name="submit" ng-disabled="form.$invalid" translate="button.send")

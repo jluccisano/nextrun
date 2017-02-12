@@ -1,14 +1,14 @@
-describe('ContactServices', function() {
+describe('ContactService', function() {
 
-	var $httpBackend, ContactServices, mockContact, mockFeedback, mockRestAPIHelper;
+	var $httpBackend, ContactService, mockContact, mockFeedback, mockRestAPIHelper;
 
-	beforeEach(module('restAPI', function($provide) {
+	beforeEach(module('nextrunApp.commons', function($provide) {
 		mockRestAPIHelper = jasmine.createSpyObj('RestAPIHelper', ['sendPOST', 'sendGET', 'sendDELETE', 'sendPUT']);
 		$provide.value('RestAPIHelper', mockRestAPIHelper);
 	}));
 
-	beforeEach(inject(function(_ContactServices_) {
-		ContactServices = _ContactServices_;
+	beforeEach(inject(function(_ContactService_) {
+		ContactService = _ContactService_;
 
 		mockContact = {
 			email: "foo@bar.com",
@@ -23,14 +23,14 @@ describe('ContactServices', function() {
 
 	describe('addContact', function() {
 		it('should call sendPOST with success', function() {
-			ContactServices.addContact(mockContact);
+			ContactService.addContact(mockContact);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/contacts', mockContact);
 		});
 	});
 
 	describe('sendFeedback', function() {
 		it('should call sendPOST with success', function() {
-			ContactServices.sendFeedback(mockFeedback);
+			ContactService.sendFeedback(mockFeedback);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/contacts/feedback', mockFeedback);
 		});
 	});

@@ -2,25 +2,25 @@
 
 describe('DeleteConfirmationModalController', function() {
 
-	var $scope, $controller, $q, mockModal, mockRaceServices, mockAlert;
+	var $scope, $controller, $q, mockModal, mockRaceService, mockAlertService;
 
 	beforeEach(module('nextrunApp.race','mockModule'));
 
-	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _Alert_, _MockFactory_) {
+	beforeEach(inject(function(_$rootScope_, _$controller_, _$q_, _AlertService_, _MockFactory_) {
 		$scope = _$rootScope_.$new();
 		$controller = _$controller_;
 		$q = _$q_;
-		mockAlert = _Alert_;
-		mockModal = _MockFactory_.getMockModalServices();
-		mockRaceServices = _MockFactory_.getMockRaceServices();
+		mockAlertService = _AlertService_;
+		mockModal = _MockFactory_.getMockModalService();
+		mockRaceService = _MockFactory_.getMockRaceService();
 
-		spyOn(mockRaceServices, "delete").and.callThrough();
+		spyOn(mockRaceService, "delete").and.callThrough();
 
 		$controller('DeleteConfirmationModalController', {
 			$scope: $scope,
 			$modalInstance: mockModal,
-			RaceServices: mockRaceServices,
-			Alert: mockAlert,
+			RaceService: mockRaceService,
+			AlertService: mockAlertService,
 			race: {
 				_id: 1
 			}
@@ -30,14 +30,14 @@ describe('DeleteConfirmationModalController', function() {
 	describe('submit()', function() {
 
 		it('deleteRace with success', function() {
-			mockRaceServices.setPromiseResponse(true);
+			mockRaceService.setPromiseResponse(true);
 			spyOn(mockModal, "close");
-			spyOn(mockAlert, "add");
+			spyOn(mockAlertService, "add");
 			$scope.deleteRace();
 			$scope.$apply();
-			expect(mockRaceServices.delete).toHaveBeenCalledWith(1);
+			expect(mockRaceService.delete).toHaveBeenCalledWith(1);
 			expect(mockModal.close).toHaveBeenCalledWith();
-			expect(mockAlert.add).toHaveBeenCalledWith("success", "message.delete.successfully", 3000);
+			expect(mockAlertService.add).toHaveBeenCalledWith("success", "message.delete.successfully", 3000);
 		});
 	});
 
