@@ -1,7 +1,7 @@
 # Project #
 ############
 node_modules/
-public/bower_components/
+client/bower_components/
 dist/
 tmp/
 
@@ -9,6 +9,7 @@ tmp/
 jshint.xml
 config/config.js
 .idea
+.sass-cache
 
 # Tests #
 ############
