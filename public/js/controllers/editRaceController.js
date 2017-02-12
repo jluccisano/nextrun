@@ -183,18 +183,19 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							chart: {
 								series: [{
 									data: []
-								}]
+								},]
 							},
 							chartConfig: {
 								loading: false,
 								options: {
 									chart: {
+										zoomType: 'xy',
 										height: 300,
 										type: 'area'
 									},
 									plotOptions: {
 										series: {
-											turboThreshold : 0,
+											turboThreshold: 0,
 											marker: {
 												enabled: false
 											},
@@ -255,11 +256,18 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 											'<td style="text-align: right"><b>{point.grade} %</b></td>' +
 											'</tr>',
 										footerFormat: '</table>',
-										valueDecimals: 0
+										valueDecimals: 0,
+										crosshairs: true
 									}
 								},
 								series: [{
 									name: "Altitude (m)",
+									data: []
+								}, {
+									name: "> 2% et < 5%",
+									data: []
+								}, {
+									name: "> 5%",
 									data: []
 								}],
 								xAxis: {
@@ -287,7 +295,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 						}
 
 						if (route.elevationPoints.length > 0) {
-							route.chartConfig.series[0].data = RouteFactory.rebuildElevationChart(route.elevationPoints);
+							RouteFactory.rebuildElevationChart(route);
 						}
 
 						if (route.segments.length > 0) {
@@ -469,7 +477,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							},
 							plotOptions: {
 								series: {
-									turboThreshold : 0,
+									turboThreshold: 0,
 									marker: {
 										enabled: false
 									},
@@ -530,11 +538,18 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 									'<td style="text-align: right"><b>{point.grade} %</b></td>' +
 									'</tr>',
 								footerFormat: '</table>',
-								valueDecimals: 0
+								valueDecimals: 0,
+								crosshairs: true
 							}
 						},
 						series: [{
 							name: "Altitude (m)",
+							data: []
+						}, {
+							name: "> 2% et < 5%",
+							data: []
+						}, {
+							name: "> 5%",
 							data: []
 						}],
 						xAxis: {
@@ -594,11 +609,8 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 					$scope.progress = 0;
 
 
-					RouteFactory.convertGPXtoRoute(route, result);
+					RouteFactory.convertGPXtoRoute($scope, route, result);
 
-					if (route.elevationPoints.length > 0) {
-						route.chartConfig.series[0].data = RouteFactory.rebuildElevationChart(route.elevationPoints);
-					}
 
 					if (route.segments.length > 0) {
 						route.markers = RouteFactory.rebuildMarkers(route.segments, true);

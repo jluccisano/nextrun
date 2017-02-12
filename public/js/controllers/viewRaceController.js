@@ -101,7 +101,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 									},
 									plotOptions: {
 										series: {
-											turboThreshold : 0,
+											turboThreshold: 0,
 											marker: {
 												enabled: false
 											},
@@ -164,11 +164,18 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 											'<td style="text-align: right"><b>{point.grade} %</b></td>' +
 											'</tr>',
 										footerFormat: '</table>',
-										valueDecimals: 0
+										valueDecimals: 0,
+										crosshairs: true
 									}
 								},
 								series: [{
 									name: "Altitude (m)",
+									data: []
+								}, {
+									name: "> 2% et < 5%",
+									data: []
+								}, {
+									name: "> 5%",
 									data: []
 								}],
 								xAxis: {
@@ -190,7 +197,7 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 						};
 
 						if (route.elevationPoints.length > 0) {
-							route.chartConfig.series[0].data = RouteFactory.rebuildElevationChart(route.elevationPoints);
+							RouteFactory.rebuildElevationChart(route);
 						}
 
 						if (route.segments.length > 0) {
