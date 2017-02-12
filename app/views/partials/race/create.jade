@@ -25,7 +25,7 @@ div.container
 											
 									div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$invalid, 'has-success': !form.location.$invalid && !form.location.$pristine}")
 										label.control-label(for="location") Lieu
-										input.form-control(name="location", id="location", placeholder="ex: Castelnaudary",data-ng-model="race.location.name", required, googleplace)
+										input.form-control(name="location", id="location", placeholder="ex: Castelnaudary",data-ng-model="race.pin.name", required, hasLocation ng-autocomplete options="options" details="details")
 
 									div.form-group(data-ng-class="{'has-error': !form.department.$pristine && form.department.$invalid, 'has-success': !form.department.$invalid && !form.department.$pristine}")
 										label.control-label(for="department") Département

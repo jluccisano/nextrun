@@ -12,6 +12,11 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 		$scope.listOfTypes = TYPE_OF_RACES.enums;
 		$scope.currentTypesSelected = [];
 
+		$scope.options = {
+			country: "fr"
+		};
+
+
 		$scope.map = {
 			isVisible: false,
 			editMode: true,

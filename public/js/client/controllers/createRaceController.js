@@ -10,6 +10,10 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 			disabled: true
 		}];
 
+		$scope.options = {
+			country: "fr"
+		};
+
 		$scope.departments = DEPARTMENTS.enums;
 		$scope.types = TYPE_OF_RACES.enums;
 		$scope.distances = [];
@@ -40,12 +44,12 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 
 		$scope.submit = function() {
 
-			var place = $scope.gPlace.getPlace();
+			var place = $scope.details;
 
 			$scope.race.pin = {};
-			
+			$scope.race.pin.name = place.name;
 			$scope.race.pin.location = {
-				name: place.name,
+
 				lat: place.geometry.location.lat(),
 				lon: place.geometry.location.lng()
 			}
