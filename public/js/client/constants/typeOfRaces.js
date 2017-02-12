@@ -326,62 +326,62 @@ var TYPE_OF_RACES = new Enum({
 
 var getRaceTypeByName = function(TYPE_OF_RACES, name) {
 	switch (name.toString()) {
-		case 'triathlon':
+		case 'TRIATHLON':
 			if (true) {
 				return TYPE_OF_RACES.TRIATHLON.value;
 			}
 			break;
-		case 'duathlon':
+		case 'DUATHLON':
 			if (true) {
 				return TYPE_OF_RACES.DUATHLON.value;
 			}
 			break;
-		case 'trail':
+		case 'TRAIL':
 			if (true) {
 				return TYPE_OF_RACES.TRAIL.value;
 			}
 			break;
-		case 'nighttrail':
+		case 'NIGHT_TRAIL':
 			if (true) {
 				return TYPE_OF_RACES.NIGHT_TRAIL.value;
 			}
 			break;
-		case 'running':
+		case 'RUNNING':
 			if (true) {
 				return TYPE_OF_RACES.RUNNING.value;
 			}
 			break;
-		case 'riding':
+		case 'RIDING':
 			if (true) {
 				return TYPE_OF_RACES.RIDING.value;
 			}
 			break;
-		case 'aquathlon':
+		case 'AQUATHLON':
 			if (true) {
 				return TYPE_OF_RACES.AQUATHLON.value;
 			}
 			break;
-		case 'bikenrun':
+		case 'BIKENRUN':
 			if (true) {
 				return TYPE_OF_RACES.BIKENRUN.value;
 			}
 			break;
-		case 'snowtriathlon':
+		case 'SNOW_TRIATHLON':
 			if (true) {
 				return TYPE_OF_RACES.SNOW_TRIATHLON.value;
 			}
 			break;
-		case 'snowduathlon':
+		case 'SNOW_DUATHLON':
 			if (true) {
 				return TYPE_OF_RACES.SNOW_DUATHLON.value;
 			}
 			break;
-		case 'crosstriathlon':
+		case 'CROSS_TRIATHLON':
 			if (true) {
 				return TYPE_OF_RACES.CROSS_TRIATHLON.value;
 			}
 			break;
-		case 'crossduathlon':
+		case 'CROSS_DUATHLON':
 			if (true) {
 				return TYPE_OF_RACES.CROSS_DUATHLON.value;
 			}

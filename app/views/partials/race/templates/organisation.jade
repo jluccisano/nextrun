@@ -1,0 +1,174 @@
+div.container
+	div.bs-callout.bs-callout-info
+		h4 Infomations
+		p Tous les champs  sont facultatifs. Tous les champs qui ne seront pas renseigné n'apparaitront pas dans la vue finale.
+	tabset(vertical="false" type="pills")
+		tab(heading=t("race.timing"))
+			div.row
+				div.col-lg-8
+					form.form-horizontal(name="form1" role="form" style="margin-top:10px")
+						div.form-group
+							label.col-lg-4.control-label=t("race.startingTime")
+							div.col-lg-4
+								div(class="dropdown")
+									a(class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#")
+										div(class="input-group")
+											input.form-control(name="startingTime" type="text" data-ng-model="race.startingTime" data-date-time-input="hh:mm" placeholder=t("race.startingTime"))
+											span.input-group-addon
+												i.glyphicon.glyphicon-time
+									ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
+										datetimepicker(data-ng-model="race.startingTime"  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'hour' }")
+						div.form-group
+							label.col-lg-4.control-label=t("race.briefingTime")
+							div.col-lg-4
+								div(class="dropdown")
+									a(class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#")
+										div(class="input-group")
+											input.form-control(name="briefingTime" type="text" data-ng-model="race.briefingTime" data-date-time-input="hh:mm" placeholder=t("race.briefingTime"))
+											span.input-group-addon
+												i.glyphicon.glyphicon-time
+									ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
+										datetimepicker(data-ng-model="race.briefingTime"  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'hour' }")
+						div.form-group
+							label.col-lg-4.control-label=t("race.checkoutBibTime")
+							div.col-lg-4
+								div(class="dropdown")
+									a(class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#")
+										div(class="input-group")
+											input.form-control(name="checkoutBibTime" type="text" data-ng-model="race.checkoutBibTime" data-date-time-input="hh:mm" placeholder=t("race.checkoutBibTime"))
+											span.input-group-addon
+												i.glyphicon.glyphicon-time
+									ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
+										datetimepicker(data-ng-model="race.checkoutBibTime"  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'hour' }")
+						div.form-group
+							label.col-lg-4.control-label=t("race.moreInformation")
+							div.col-lg-6
+								textarea.form-control(name="timingMoreInformation" rows="3" data-ng-model="race.timingMoreInformation" placeholder=t("race.timingMoreInformation"))
+		tab(heading=t("race.pricing"))
+			div.row
+				div.col-lg-8
+					form.form-horizontal(name="form2" role="form" style="margin-top:10px")
+						div.form-group
+							label.col-lg-4.control-label=t("race.memberFFPrice")
+							div.col-lg-8(class="input-group")
+								input.form-control(name="memberFFPrice" type="number" data-ng-model="race.memberFFPrice")
+								span.input-group-addon
+									i.fa.fa-eur
+						div.form-group
+							label.col-lg-4.control-label=t("race.notMemberFFPrice")
+							div.col-lg-8(class="input-group")
+								input.form-control(name="notMemberFFPrice" type="number" data-ng-model="race.notMemberFFPrice")
+								span.input-group-addon
+									i.fa.fa-eur
+						div.form-group
+							label.col-lg-4.control-label=t("race.moreInformation")
+							div.col-lg-6
+								textarea.form-control(name="pricingMoreInformation"  data-ng-model="race.pricingMoreInformation" rows="3", placeholder=t("race.pricingMoreInformation"))
+		tab(heading=t("race.registration"))
+			div.row
+				div.col-lg-12
+					form.form-horizontal(name="form3" role="form" style="margin-top:10px")
+						div.form-group
+							label.col-lg-4.control-label=t("race.registrationOpeningDate")
+							div.col-lg-4
+								div(class="dropdown")
+									a(class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#")
+										div(class="input-group")
+											input.form-control(type="text" data-ng-model="race.registrationOpeningDate" data-date-time-input="DD-MM-YYYY HH:MM" placeholder=t("race.registrationOpeningDate"))
+											span.input-group-addon
+												i.glyphicon.glyphicon-time
+									ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
+										datetimepicker(data-ng-model="race.registrationOpeningDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'minute' }")
+						div.form-group
+							label.col-lg-4.control-label=t("race.registrationLimitDate")
+							div.col-lg-4
+								div(class="dropdown")
+									a(class="dropdown-toggle my-toggle-select" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#")
+										div(class="input-group")
+											input.form-control(type="text" data-ng-model="race.registrationLimitDate" data-date-time-input="DD-MM-YYYY HH:MM" placeholder=t("race.registrationLimitDate"))
+											span.input-group-addon
+												i.glyphicon.glyphicon-time
+									ul(class="dropdown-menu" role="menu" aria-labelledby="dLabel")
+										datetimepicker(data-ng-model="race.registrationLimitDate"  data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', startView:'month', minView:'minute' }")
+						div.form-group
+							label.col-lg-4.control-label=t("race.registrationOnPlace")
+							div.col-lg-8
+								label.radio-inline
+									input(type="radio",name="radioGroup", value="true")
+									span=t("common.yes")
+								label.radio-inline
+									input(type="radio",name="radioGroup", value="false")
+									span=t("common.no")
+						div.form-group
+							label.col-lg-4.control-label=t("race.numberOfPlacesAvailable")
+							div.col-lg-8(class="input-group")
+								input.form-control(name="numberOfPlacesAvailable" type="number" data-ng-model="race.numberOfPlacesAvailable")
+								span.input-group-addon=t("race.places")
+						div.form-group
+							label.col-lg-4.control-label=t("race.moreInformation")
+							div.col-lg-6
+								textarea.form-control(name="registrationMoreInformation" data-ng-model="race.registrationMoreInformation" rows="3"  placeholder=t("race.registrationMoreInformation"))
+		tab(heading=t("race.plan"))
+			div.row
+				div.col-lg-8
+					form.form-horizontal(name="form4" role="form" style="margin-top:10px")
+						div.form-group
+							label.col-lg-4.control-label=t("race.address")
+							div.col-lg-8
+								input.form-control(name="address1" data-ng-model="race.address1" placeholder=t("race.address"))
+						div.form-group
+							label.col-lg-4.control-label
+							div.col-lg-8
+								input.form-control(name="address2" data-ng-model="race.address2" placeholder=t("race.moreAddress"))
+						div.form-group
+							label.col-lg-4.control-label=t("race.postcode")
+							div.col-lg-8
+								input.form-control(name="postcode" data-ng-model="race.postcode" placeholder=t("race.postcode"))
+						div.form-group
+							label.col-lg-4.control-label=t("race.city")
+							div.col-lg-8
+								input.form-control(name="city" data-ng-model="race.city" placeholder=t("race.city"))
+		tab(heading=t("race.rights"))
+			div.row
+				div.col-lg-8
+					form.form-horizontal(name="form5" role="form" style="margin-top:10px")
+						div.form-group
+							label.col-lg-4.control-label=t("race.medicalCertificate")
+							div.col-lg-8
+								input.form-control(name="medicalCertificate" data-ng-model="race.medicalCertificate" placeholder=t("race.medicalCertificate"))
+						div.form-group
+							label.col-lg-4.control-label=t("race.minAge")
+							div.col-lg-8
+								input.form-control(name="minAge" data-ng-model="race.minAge" placeholder=t("race.minAge"))
+						div.form-group
+							label.col-lg-4.control-label=t("race.moreInformation")
+							div.col-lg-6
+								textarea.form-control(name="rightsMoreInformation" data-ng-model="race.rightsMoreInformation" rows="3"  placeholder=t("race.rightsMoreInformation"))
+		tab(heading=t("race.therace"))
+			div.row
+				div.col-lg-8
+					form.form-horizontal(name="form6" role="form" style="margin-top:10px")
+						div.form-group
+							label.col-lg-4.control-label=t("race.numberOfProvisions")
+							div.col-lg-8
+								input.form-control(name="numberOfProvisions" type="number" data-ng-model="race.numberOfProvisions")
+						div.form-group
+							label.col-lg-4.control-label=t("race.rewards")
+							div.col-lg-8
+								input.form-control(name="raceName" data-ng-model="race.rewards" placeholder=t("race.rewards"))
+						div.form-group
+							label.col-lg-4.control-label=t("race.moreInformation")
+							div.col-lg-6
+								textarea.form-control(name="theRaceMoreInformation" data-ng-model="race.theRaceMoreInformation" rows="3" placeholder=t("race.theRaceMoreInformation"))
+		tab(heading=t("race.miscellaneous"))
+			div.row
+				div.col-lg-8
+					form.form-horizontal(name="form7" role="form" style="margin-top:10px")
+						div.form-group
+							label.col-lg-4.control-label=t("race.organizerWebSite")
+							div.col-lg-8
+								input.form-control(name="organizerWebSite" data-ng-model="race.organizerWebSite" placeholder=t("race.organizerWebSite"))
+						div.form-group
+							label.col-lg-4.control-label=t("race.moreInformation")
+							div.col-lg-6
+								textarea.form-control(name="miscellaneousMoreInformation" data-ng-model="race.miscellaneousMoreInformation" rows="3" placeholder=t("race.miscellaneousMoreInformation"))

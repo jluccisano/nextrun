@@ -58,6 +58,10 @@ var RaceSchema = new Schema({
     checkoutBibTime: {
       type: Date,
       default: null
+    },
+    timingMoreInformation: {
+      type: String,
+      default: null
     }
   },
   last_update: Date,
@@ -77,6 +81,10 @@ var RaceSchema = new Schema({
     notMemberFFPrice: {
       type: Number,
       default: null
+    },
+    pricingMoreInformation: {
+      type: String,
+      default: null
     }
   },
   registration: {
@@ -94,6 +102,10 @@ var RaceSchema = new Schema({
     },
     numberOfPlacesAvailable: {
       type: Number,
+      default: null
+    },
+    registrationMoreInformation: {
+      type: String,
       default: null
     }
   },
@@ -125,6 +137,40 @@ var RaceSchema = new Schema({
           default: null
         }
       }
+    }
+  },
+  therace: {
+    numberOfProvisions: {
+      type: Number,
+      default: null
+    },
+    rewards: {
+      type: String,
+      default: null
+    },
+    theRaceMoreInformation: {
+      type: String,
+      default: null
+    }
+  },
+  rights: {
+    rightsMoreInformation: {
+      type: String,
+      default: null
+    },
+    minAge: {
+      type: String,
+      default: null
+    },
+    medicalCertificate: {
+      type: String,
+      default: null
+    }
+  },
+  miscellaneous: {
+    miscellaneousMoreInformation: {
+      type: String,
+      default: null
     }
   }
 });

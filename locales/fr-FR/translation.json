@@ -1,0 +1,56 @@
+{
+  "common": {
+    "yes":"oui",
+    "no": "non"
+  },
+
+  "race": {
+    "startingTime": "Heure du départ",
+    "briefingTime": "Briefing",
+    "checkoutBibTime": "Retrait des dossards",
+    "moreInformation": "informations complémentaires",
+    "timingMoreInformation": "Insérer vos compléments d'information, ex: ",
+    "address": "Adresse",
+    "moreAddress": "Complément d'adresse",
+    "postcode": "Code postal",
+    "city": "Ville",
+    "timing": "Horaire",
+    "pricing": "Prix",
+    "registration": "Inscription",
+    "registrationOpeningDate": "Ouverture des inscriptions",
+    "registrationLimitDate": "Fin des inscriptions",
+    "registrationOnPlace": "Inscription sur place",
+    "plan": "Plan",
+    "rights": "Règlements",
+    "therace": "La course",
+    "miscellaneous": "Divers",
+    "organizerWebSite": "Site web de l'organisateur",
+    "miscellaneousMoreInformation": "Insérer vos compléments d'information, ex: ",
+    "medicalCertificate": "Certificat médical",
+    "minAge": "Age minimum",
+    "rightsMoreInformation": "Insérer vos compléments d'information, ex: ",
+    "numberOfProvisions": "Nombre de ravitaillements",
+    "rewards": "Récompenses",
+    "theRaceMoreInformation": "Insérer vos compléments d'information, ex: ",
+    "numberOfPlacesAvailable": "Nombre de places disponibles",
+    "registrationMoreInformation": "Insérer vos compléments d'information, ex: ",
+    "memberFFPrice":"Licencié",
+    "notMemberFFPrice":"Non Licencié",
+    "pricingMoreInformation":"Insérer vos compléments d'information, ex: ",
+    "places":"places"
+  },
+
+  "error": {
+    "invalidEmailOrPassword": "Votre email ou mot de passe est invalide.",
+    "emailAlreadyExists": "Cette adresse email est déjà utilisée.",
+    "invalidPassword": "Mot de passe incorrect.",
+    "invalidEmail": "Adresse email inconnue."
+  },
+  "validator": {
+    "required": "Ce champ est obligatoire.",
+    "usernameMinLength": "Votre nom doit contenir au moins 4 caractères.",
+    "email": "Veuillez saisir une adresse email valide.",
+    "passwordMinLength": "Le mot de passe doit contenir au moins 4 caractères.",
+    "confirmPassword": "Le mot de passe est différent."
+  }
+}

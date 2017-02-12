@@ -31,12 +31,12 @@ html(ng-app="nextrunApp")
 		link(rel="stylesheet", href="/css/animations.css")
 		<!-- endbuild -->
 
-		<!-- build:css css/datepicker.min.css -->
-		link(rel="stylesheet", href="/css/datepicker.css")
-		<!-- endbuild -->
-
 		<!-- build:css css/googlemaps.min.css -->
 		link(rel="stylesheet", href="/css/googlemaps.css")
+		<!-- endbuild -->
+
+		<!-- build:css css/datetimepicker.min.css -->
+		link(rel="stylesheet", href="/css/datetimepicker.css")
 		<!-- endbuild -->
 
 
@@ -134,9 +134,13 @@ html(ng-app="nextrunApp")
 		script(src="/js/libs/bootstrap.js", charset="UTF-8")
 		<!-- endbuild -->
 
-		<!-- build:js js/libs/bootstrap.min.js -->
-		script(src="/js/libs/bootstrap-datepicker.js", charset="UTF-8")
-		script(src="/js/libs/bootstrap-datepicker.fr.js", charset="UTF-8")
+		<!-- build:js js/libs/moment-with-langs.min.js -->
+		script(src="/js/libs/moment-with-langs.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/datetimepicker.min.js -->
+		script(src="/js/libs/datetimepicker.js", charset="UTF-8")
+		script(src="/js/libs/dateTimeInput.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js js/libs/raphael.min.js -->
@@ -153,9 +157,10 @@ html(ng-app="nextrunApp")
 		script(src="/js/client/widgets/socialbuttons.js", charset="UTF-8")
 		<!-- endbuild -->
 
-		<!-- build:js js/libs/moment-with-langs.min.js -->
-		script(src="/js/libs/moment-with-langs.js", charset="UTF-8")
-		<!-- endbuild -->
+		script.
+			moment.lang('fr');
+
+
 
 		block head
 			base(href="/")

@@ -10,6 +10,7 @@ var express = require('express'),
 	pkg = require('../package.json');
 
 i18n.init({
+	resGetPath: 'locales/__lng__/__ns__.json',
 	saveMissing: false,
 	debug: false,
 	supportedLngs: ['fr-Fr'],
@@ -38,6 +39,7 @@ module.exports = function(app, config, passport) {
 
 	app.use(express.favicon());
 	app.use(express.static(config.root + '/public'));
+	app.use('/locales', express.static(config.root + '/locales'));
 
 	// don't use logger for test env
 	if (process.env.NODE_ENV !== 'test') {

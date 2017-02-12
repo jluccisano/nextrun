@@ -3,6 +3,9 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 	function($scope, $location, $rootScope, Auth, Alert, $log, RouteFactory, window) {
 		'use strict';
 
+
+
+
 		$scope.Math = window.Math;
 
 		/** init google maps service **/
@@ -31,6 +34,19 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 		$scope.zoom = 13;
 		$scope.fit = true;
 		$scope.markers = [];
+
+		$scope.doClusterRandomMarkers = true;
+
+		$scope.clusterOptions = {
+			title: 'Hi I am a Cluster!',
+			gridSize: 60,
+			ignoreHidden: true,
+			minimumClusterSize: 2,
+			imageExtension: 'png',
+			imagePath: 'http://localhost:3000/img',
+			imageSizes: [18]
+		},
+
 		$scope.polylines = [];
 		$scope.center = {
 			latitude: 46.52863469527167,
@@ -63,8 +79,7 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			data: []
 		})
 
-		$scope.onMarkerClicked = function(marker) {
-		};
+		$scope.onMarkerClicked = function(marker) {};
 
 
 
@@ -603,13 +618,25 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 									icon: icon
 								});*/
 
-								},
+									var cursorMarker = {
+										latitude: this.latlng.mb,
+										longitude: this.latlng.nb,
+										icon: "../../../img/segment.png",
+										title: "hello"
+									}
 
+									$scope.cursorMarker = cursorMarker;
+									$scope.$apply();
+
+								},
 								mouseOut: function() {
 
-									/*if (cursorMarker instanceof google.maps.Marker) {
-									cursorMarker.setMap(null);
-								}*/
+									//if (cursorMarker instanceof google.maps.Marker) {
+									//cursorMarker.setMap(null);
+									//$scope.cursorMarker = {};
+									//$scope.$apply();
+									//}
+									//$scope.cursorMarkers.length = 0;
 								}
 
 							}
@@ -619,6 +646,8 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 								/*if (cursorMarker instanceof google.maps.Marker) {
 								cursorMarker.setMap(null);
 							}*/
+								//$scope.cursorMarker = {};
+								//$scope.$apply();
 							}
 						}
 					},
@@ -665,9 +694,6 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			title: {
 				text: ''
 			}
-
-
-
 		};
 
 
@@ -679,11 +705,11 @@ angular.module('nextrunApp').factory('ElevationChartServices', function($http) {
 	'use strict';
 
 	return {
-		
+
 
 	};
 });
-
+/*
 angular.module('nextrunApp').factory('RouteFactory', function() {
 	'use strict';
 
@@ -765,21 +791,4 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		},
 	}
 });
-
-/*
-angular.module('nextrunApp').factory('PointFactory', function() {
-	'use strict';
-	return {
-		createPoint: function(point) {
-
-			var newPoint = {
-				latlng: new google.maps.LatLng(point.latlng.mb, point.latlng.nb),
-				elevation: point.elevation,
-				distanceFromStart: point.distanceFromStart,
-				grade: point.grade,
-				segmentId: point.segmentId
-			}
-			return newPoint;
-		}
-	};
-});*/
+*/

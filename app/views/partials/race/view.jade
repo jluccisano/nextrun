@@ -6,10 +6,10 @@ div.container(style="margin-top:50px")
 				tab(heading="Vertical 1") Vertical content 1
 				tab(heading="Vertical 2") Vertical content 2
 	h2 Organisation
-		hr
-		include templates/organisation
-		hr
-		div.row
-			div.col-lg-offset-4.col-lg-8
-				button.btn.btn-primary(type="button") Enregistrer
-				button.btn.btn-default(type="button") Annuler
+	hr
+	include templates/organisation
+	hr
+	div.row
+		div.col-lg-offset-4.col-lg-8
+			button.btn.btn-primary(type="button" ng-click="submit()") Enregistrer
+			button.btn.btn-default(type="button") Annuler
