@@ -79,8 +79,6 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
             return blob;
         };
 
-
-
         $scope.setSelection = function(route, index) {
             $scope.selection = route.getType() + index;
             $scope.active = route.getType() + index;
@@ -88,20 +86,3 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.init();
     });
-
-angular.module("nextrunApp.race").directive('scrollTo', function($location, $anchorScroll) {
-    return function(scope, element, attrs) {
-        element.bind('click', function(event) {
-            event.stopPropagation();
-            scope.$on('$locationChangeStart', function(ev, newUrl, oldUrl) {
-                if(newUrl.indexOf("#") > -1) {
-                    ev.preventDefault();
-                }
-                
-            });
-            var location = attrs.scrollTo;
-            $location.hash(location);
-            $anchorScroll();
-        });
-    }
-});
