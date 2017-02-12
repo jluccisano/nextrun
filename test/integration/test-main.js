@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
   app = require('../../server'),
   context = describe,
   superagent = request.agent(app),
+  userRoles = require('../../public/js/client/routingConfig').userRoles,
   User = mongoose.model('User');
 
 /**

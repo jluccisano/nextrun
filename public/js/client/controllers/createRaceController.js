@@ -30,11 +30,11 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 		};
 
 		$scope.getType = function(type) {
-			return type.name;
+			return type.i18n;
 		};
 
 		$scope.getDistanceType = function(distanceType) {
-			return distanceType.name;
+			return distanceType.i18n;
 		};
 
 

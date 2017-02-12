@@ -1,6 +1,6 @@
 var TYPE_OF_RACES = new Enum({
 	TRIATHLON: {
-		i18n: "app.typeOfRaces.triathlon",
+		i18n: "Triathlon",
 		name: 'triathlon',
 		distances: [{
 			name: 'XS',
@@ -39,7 +39,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	DUATHLON: {
-		i18n: "app.typeOfRaces.duathlon",
+		i18n: "Duathlon",
 		name: 'duathlon',
 		distances: [{
 			name: 'XS',
@@ -70,7 +70,7 @@ var TYPE_OF_RACES = new Enum({
 	},
 
 	TRAIL: {
-		i18n: "app.typeOfRaces.trail",
+		i18n: "Trail",
 		name: 'trail',
 		distances: [{
 			name: 'Course nature',
@@ -91,7 +91,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	NIGHT_TRAIL: {
-		i18n: "app.typeOfRaces.nighttrail",
+		i18n: "Trail de nuit",
 		name: 'nighttrail',
 		distances: [{
 			name: 'Course nature',
@@ -112,7 +112,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	RUNNING: {
-		i18n: "app.typeOfRaces.running",
+		i18n: "Course à pied",
 		name: 'running',
 		distances: [{
 			name: '3km',
@@ -139,7 +139,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	RIDING: {
-		i18n: "app.typeOfRaces.riding",
+		i18n: "Cyclo",
 		name: 'riding',
 		distances: [{
 			name: 'Court',
@@ -157,7 +157,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	AQUATHLON: {
-		i18n: "app.typeOfRaces.aquathlon",
+		i18n: "Aquathlon",
 		name: 'aquathlon',
 		distances: [
 
@@ -188,7 +188,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	BIKENRUN: {
-		i18n: "app.typeOfRaces.bikenrun",
+		i18n: "Bike & Run",
 		name: 'bikenrun',
 		distances: [
 
@@ -212,7 +212,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	SNOW_TRIATHLON: {
-		i18n: "app.typeOfRaces.snowtriathlon",
+		i18n: "Triathlon des neiges",
 		name: 'snowtriathlon',
 		distances: [{
 			name: 'XS',
@@ -236,7 +236,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	SNOW_DUATHLON: {
-		i18n: "app.typeOfRaces.snowduathlon",
+		i18n: "Duathlon des neiges",
 		name: 'snowduathlon',
 		distances: [{
 			name: 'XS',
@@ -260,7 +260,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	CROSS_TRIATHLON: {
-		i18n: "app.typeOfRaces.crosstriathlon",
+		i18n: "Cross Triathlon",
 		name: 'crosstriathlon',
 		distances: [{
 			name: 'XS',
@@ -290,7 +290,7 @@ var TYPE_OF_RACES = new Enum({
 		}]
 	},
 	CROSS_DUATHLON: {
-		i18n: "app.typeOfRaces.crossduathlon",
+		i18n: "Cross Duathlon",
 		name: 'crossduathlon',
 		distances: [{
 			name: 'XS',

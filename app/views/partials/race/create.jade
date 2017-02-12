@@ -35,7 +35,7 @@ div.container
 
 									div.form-group(data-ng-class="{'has-error': !form.distanceType.$pristine && form.distanceType.$invalid, 'has-success': !form.distanceType.$invalid && !form.distanceType.$pristine}")
 										label.control-label(for="distanceType") Distance
-										select.form-control(data-ng-model="race.distanceType", name="distanceType", data-ng-options="distance.name for distance in distances", required)
+										select.form-control(data-ng-model="race.distanceType", name="distanceType", data-ng-options="distance.i18n for distance in distances", required)
 											option(value="") Sélectionner...
 
 									button.btn.btn-primary(data-ng-click="submit()", data-ng-disabled="form.$invalid") Continuer

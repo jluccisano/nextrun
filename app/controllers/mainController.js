@@ -9,7 +9,7 @@ exports.index = function(req, res) {
     username = '',
     email = '',
     id = '';
-  if (req.user) {
+ /* if (req.user) {
     id = req.user._id;
     role = req.user.role;
     username = req.user.username;
@@ -20,7 +20,7 @@ exports.index = function(req, res) {
     'email': email,
     'username': username,
     'role': role
-  }));
+  }));*/
 
   res.render('index', {
     title: 'Accueil'
