@@ -64,7 +64,7 @@ raceModule.config(
       access: access.public
     }).
     when("/races/edit/:raceId", {
-      templateUrl: "/partials/race/edit2",
+      templateUrl: "/partials/race/view2",
       controller: "EditRaceController",
       access: access.user
     }).

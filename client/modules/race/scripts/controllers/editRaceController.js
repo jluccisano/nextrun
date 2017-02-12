@@ -6,6 +6,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$location,
 		$routeParams,
 		$modal,
+		$filter,
 		RaceService,
 		AlertService,
 		AuthService,
@@ -18,6 +19,11 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		RouteUtilsService,
 		RouteHelperService) {
 
+		$scope.editMode = true;
+		$scope.active = "general";
+		$scope.status = {
+            open: true
+        };
 
 		$scope.activePanel = 1;
 		$scope.gettextCatalog = gettextCatalog;
@@ -105,18 +111,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		};
 
-		/* $scope.exportGPX = function(route) {
-
-            var gpx = GpxService.convertRouteToGPX(route, "export");
-
-            var blob = new Blob([gpx], {
-                type: "text/xml"
-            });
-            return blob;
-        };*/
-
-
-
 		$scope.computeLocation = function(address) {
 			GmapsApiService.getLocation(address).then(function(result) {
 				if (result.success) {
@@ -156,5 +150,10 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				$scope.routesViewModel[$index] = result;
 			});
 		}
+
+		 $scope.setSelection = function(route, index) {
+            $scope.selection = route.getType() + index;
+            $scope.active = route.getType() + index;
+        };
 		$scope.init();
 	});

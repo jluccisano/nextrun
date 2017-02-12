@@ -2,18 +2,18 @@
 
 angular.module("nextrunApp.race").controller("ViewRaceController",
     function(
-        $rootScope,
         $scope,
         $location,
         $routeParams,
         $modal,
         $filter,
-        $anchorScroll,
         RaceService,
         RouteService,
         GpxService,
         MetaService,
         RouteHelperService) {
+
+        $scope.editMode = false;
 
         google.maps.visualRefresh = true;
 
@@ -70,9 +70,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
         };
 
         $scope.exportGPX = function(route) {
-
             var gpx = GpxService.convertRouteToGPX(route, "export");
-
             var blob = new Blob([gpx], {
                 type: "text/xml"
             });

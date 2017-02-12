@@ -31,35 +31,34 @@ nav(class="navbar navbar-default" role="navigation")
 		div(class="navbar-form navbar-right")
 			button(type="button" class="btn btn-primary" ng-click="submit()" translate) Enregistrer
 
-div(ng-if="route.isVisible()")
-	include map
-
-	div(class="inline-stats")
-		div(class="well")
-			ul(class="list-inline")
-				li(class="text-center")
-					strong {{route.getDistance() | number:2 }} km
-					br
-					span(class="small" translate) Distance
-				li(class="text-center")
-					strong {{route.getAscendant() | number:0 }} m
-					br
-					span(class="small" translate) Dénivelé positif
-				li(class="text-center")
-					strong {{route.getDescendant() | number:0 }} m
-					br
-					span(class="small" translate) Dénivelé négatif
-				li(class="text-center")
-					strong {{route.getMaxElevation() | number:0 }} m
-					br
-					span(class="small" translate) Altitude max
-				li(class="text-center")
-					strong {{route.getMinElevation() | number:0 }} m
-					br
-					span(class="small" translate) Altitude min
-			div(class="row")
+include map
+div(class="inline-stats")
+	div(class="well")
+		ul(class="list-inline")
+			li(class="text-center")
+				strong {{route.getDistance() | number:2 }} km
+				br
+				span(class="small" translate) Distance
+			li(class="text-center")
+				strong {{route.getAscendant() | number:0 }} m
+				br
+				span(class="small" translate) Dénivelé positif
+			li(class="text-center")
+				strong {{route.getDescendant() | number:0 }} m
+				br
+				span(class="small" translate) Dénivelé négatif
+			li(class="text-center")
+				strong {{route.getMaxElevation() | number:0 }} m
+				br
+				span(class="small" translate) Altitude max
+			li(class="text-center")
+				strong {{route.getMinElevation() | number:0 }} m
+				br
+				span(class="small" translate) Altitude min
+		div(class="row")
+			div(class="col-md-12")
 				highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
-
+div(ng-if="false")
 //div(class="row")
 	div(class="col-sm-12")
 		h5(translate) Ajouter une description à votre parcours

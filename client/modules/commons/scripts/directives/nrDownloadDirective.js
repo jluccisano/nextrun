@@ -12,7 +12,7 @@ angular.module("nextrunApp.commons").directive("nrDownload", function($compile) 
             elm.append($compile(
                 "<a download='export.gpx'" +
                 "href='" + url + "'>" +
-                "Exporter GPX" +
+                "<i class='fa fa-download fa-3'></i>" +
                 "</a>"
             )(scope));
         }

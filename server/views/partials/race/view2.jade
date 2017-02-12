@@ -8,22 +8,24 @@ div(class="container view-race")
           a(ng-click="status.open = true" nr-scroll-to="routes" class="list-group-item")
             h4(class="list-group-item-heading" translate) Parcours
             a(ng-class="{'active': active === (route.getType() + $index)}" bs-scrollspy ng-click="status.open = false;setSelection(route, $index);route.setVisible(true)" ng-repeat="route in routesViewModel" nr-scroll-to="route{{$index}}" class="list-group-item") {{route.getType()}}
-          a(ng-class="{'active': active === 'organisation'}" bs-scrollspy ng-click="status.open = false;selection = 'organisation';active = 'organisation'" nr-scroll-to="organisation" class="list-group-item")
+          a(class="list-group-item")
             h4(class="list-group-item-heading" translate) Organisation
             a(ng-class="{'active': active === 'registration'}" bs-scrollspy ng-click="status.open = false;selection = 'registration';active = 'registration'" nr-scroll-to="registration" class="list-group-item") Inscription
           a(ng-class="{'active': active === 'rights'}" bs-scrollspy ng-click="status.open = false;selection = 'rights';active = 'rights'" nr-scroll-to="rights" class="list-group-item") 
             h4(class="list-group-item-heading" translate) Règlement
-          a(ng-class="{'active': active === 'misc'}" bs-scrollspy ng-click="status.open = false;selection = 'misc';active = 'misc'" nr-scroll-to="misc" class="list-group-item")
-            h4(class="list-group-item-heading" translate) Divers
           a(ng-class="{'active': active === 'results'}" bs-scrollspy ng-click="status.open = false;selection = 'results';active = 'results'" nr-scroll-to="results" class="list-group-item")
             h4(class="list-group-item-heading" translate) Résultats
+          a(ng-class="{'active': active === 'misc'}" bs-scrollspy ng-click="status.open = false;selection = 'misc';active = 'misc'" nr-scroll-to="misc" class="list-group-item")
+            h4(class="list-group-item-heading" translate) Divers
 
-    div(class="col-md-8")
+
+    div(class="col-md-10")
       div(class="bs-docs-section")
         div(id="general")
         accordion
           accordion-group(is-open="status.open")
             accordion-heading {{race.name}}
+              i(ng-if="editMode" class="fa fa-pencil-square-o")
               div(class="pull-right")
                 div.fb-like( data-href="http://www.nextrun.fr/races/view/{{race._id}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
                 i(class="glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}")
@@ -58,45 +60,69 @@ div(class="container view-race")
                     google-map(center="race.plan.location" zoom="17")
 
       div(class="bs-docs-section")
-        div(class="panel panel-default")
-          div(class="panel-heading") {{selection}}
-          div(class="panel-body")
-            div(ng-repeat="route in routesViewModel")
-              div(id="{{selection}}" ng-if="selection === (route.getType() + $index) && route.isVisible()")
-                include map
-                highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
-                div(class="row text-center")
-                  div(class="col-lg-4")
-                    h3 {{ route.getDistance() | number: 2}}
-                      small km
-                    span.small {{ 'Distance' | translate}}
-                  div(class="col-lg-4")
-                    h3 {{route.getAscendant() | number: 0 }}
-                      small m
-                    span.small {{ 'D+' | translate}}
-                  div(class="col-lg-4")
-                    h3 {{route.getDescendant() | number: 0 }}
-                      small m
-                    span.small {{ 'D-' | translate}}
-                  div(class="col-lg-4")
-                    h3 {{route.getMaxElevation() | number: 0 }}
-                      small m
-                    span.small {{ 'Max' | translate}}
-                  div(class="col-lg-4")
-                    h3 {{route.getMinElevation() | number: 0 }}
-                      small m
-                    span.small {{ 'Min' | translate}}
-            div(ng-show="selection == 'organisation'")
-              h1(id="organisation") organisation
-            div(id="registration" ng-show="selection == 'registration'")
+        div(ng-repeat="route in routesViewModel" ng-if="selection === (route.getType() + $index) && route.isVisible()")
+          div(class="panel panel-default")
+            div(class="panel-heading clearfix") 
+              h4(class="panel-title pull-left") {{selection}}
+              div(class="btn-group pull-right")
+                nr-download(ng-if="!editMode" id="content" get-data="exportGPX(route)" class="btn btn-default btn-sm")
+                a(ng-if="editMode" ng-click="editRoute(route, $index)" class="btn btn-default btn-sm")
+                  i(class="fa fa-pencil-square-o")
+            div(class="panel-body")
+                div(id="{{selection}}")
+                  include map
+                  highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
+                  div(class="row text-center")
+                    div(class="col-lg-4")
+                      h3 {{ route.getDistance() | number: 2}}
+                        small km
+                      span.small {{ 'Distance' | translate}}
+                    div(class="col-lg-4")
+                      h3 {{route.getAscendant() | number: 0 }}
+                        small m
+                      span.small {{ 'D+' | translate}}
+                    div(class="col-lg-4")
+                      h3 {{route.getDescendant() | number: 0 }}
+                        small m
+                      span.small {{ 'D-' | translate}}
+                    div(class="col-lg-4")
+                      h3 {{route.getMaxElevation() | number: 0 }}
+                        small m
+                      span.small {{ 'Max' | translate}}
+                    div(class="col-lg-4")
+                      h3 {{route.getMinElevation() | number: 0 }}
+                        small m
+                      span.small {{ 'Min' | translate}}
+        div(id="registration" ng-show="selection == 'registration'")
+          div(class="panel panel-default")
+            div(class="panel-heading clearfix") 
+              h4(class="panel-title pull-left") {{selection}}
+            div(class="panel-body")
               include ./templates/viewPricing2
-            div(ng-show="selection == 'rights'") 
-              h1(id="rights") règlement
+        div(id="rights" ng-show="selection == 'rights'")
+          div(class="panel panel-default")
+            div(class="panel-heading clearfix") 
+              h4(class="panel-title pull-left") {{selection}}
+            div(class="panel-body")
               div(ng-if="race.rights.moreInformation" class="well" ng-bind-html="race.rights.moreInformation")
               div(ng-if="!race.rights.moreInformation" class="well" translate) Non communiqué
-            div(ng-show="selection == 'misc'")
-              h1(id="misc") divers
+        div(id="results" ng-show="selection == 'results'")
+          div(class="panel panel-default")
+            div(class="panel-heading clearfix") 
+              h4(class="panel-title pull-left") {{selection}}
+            div(class="panel-body")
+              h1 Résultats
+        div(id="misc" ng-show="selection == 'misc'")
+          div(class="panel panel-default")
+            div(class="panel-heading clearfix") 
+              h4(class="panel-title pull-left") {{selection}}
+            div(class="panel-body")
               div(ng-if="race.miscellaneous.moreInformation" ng-bind-html="race.miscellaneous.moreInformation")
               div(ng-if="!race.miscellaneous.moreInformation" translate) Non communiqué
-            div(ng-show="selection == 'results'")
-              h1(id="results") Résultats
+
+
+
+
+
+
+
