@@ -11,7 +11,8 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 		$scope.currentTypesSelected = [];
 
 		$scope.options = {
-			country: "fr"
+			country: "fr",
+			types: "(regions)"
 		};
 		$scope.distance = "15";
 

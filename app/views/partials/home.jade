@@ -23,8 +23,8 @@ div.custom-bs-background
 					form(role="form", name="form", novalidate)
 						div.row
 							div.col-lg-6
-								div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$invalid, 'has-success': !form.location.$invalid && !form.location.$pristine}")
-									input.form-control(name="location", id="location", placeholder="Région, département ou ville",data-ng-model="pin.name", required, hasLocation ng-autocomplete options="options" details="details")
+								div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation && form.location.$valid}")
+									input.form-control(name="location" id="location" placeholder="Région, département ou ville" data-ng-model="pin.name" has-location required ng-autocomplete options="options" details="details")
 								div.row
 									div.col-lg-6
 										div.form-group
