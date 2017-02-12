@@ -1,0 +1,17 @@
+/*
+ * override the default CSS as an example
+ */
+
+#loading-bar .bar {
+    background: $colDefault;
+}
+#loading-bar-spinner .spinner-icon {
+    border-top-color: $colDefault;
+    border-left-color: $colDefault;
+}
+#loading-bar .peg {
+    -moz-box-shadow: $colDefault 1px 0 6px 1px;
+    -ms-box-shadow: $colDefault 1px 0 6px 1px;
+    -webkit-box-shadow: $colDefault 1px 0 6px 1px;
+    box-shadow: $colDefault 1px 0 6px 1px;
+}

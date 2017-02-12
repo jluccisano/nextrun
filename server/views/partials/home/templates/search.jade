@@ -35,9 +35,8 @@ div(class="container search")
 										option(value="100" translate) 100km
 					div(class="col-lg-4")
 						div(class="form-group")
-							ui-select(multiple ng-model="criteria.types")
-								ui-select-match(placeholder="{{'Sélectionner...' | translate}}") {{$item}}
-								ui-select-choices(repeat="type in listOfTypes | filter:$select.search") {{type.name}}
+							button(type="button" class="btn btn-default" ng-model="criteria.types" data-html="1" data-multiple="1" max-length-html="{{'Sélectionnés' | translate}}" data-animation="am-flip-x" ng-options="type.name as type.name for type in listOfTypes" placeholder="{{'Sélectionner...' | translate}}" bs-select)
+								span(class="caret")
 				div(class="row")
 					div(class="col-lg-3 col-lg-offset-9")
 						div(class="form-group")

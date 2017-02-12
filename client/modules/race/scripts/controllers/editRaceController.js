@@ -50,7 +50,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.init = function() {
 			RaceService.retrieve($scope.raceId).then(function(response) {
 
-				$scope.race = response.race;
+				$scope.race = response.data.race;
 
 				$scope.routesViewModel = RouteService.createRoutesViewModel($scope, $scope.race);
 

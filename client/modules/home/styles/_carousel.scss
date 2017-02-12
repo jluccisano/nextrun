@@ -1,7 +1,7 @@
 .carousel {
     background-color: white;
     .carousel-control.left, .carousel-control.right {
-        background-image: none;
+        display: none;
     }
     .carousel-indicators li {
         border: 1px solid #3276b1;

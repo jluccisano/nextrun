@@ -2,7 +2,7 @@
 
 angular.module("mockModule").factory("mockAuthService",
 	function($q, mockUser) {
-		
+
 		var succeedPromise = false;
 
 		return {
@@ -29,21 +29,33 @@ angular.module("mockModule").factory("mockAuthService",
 			},
 			getUserProfile: function() {
 				if (succeedPromise) {
-					return $q.when(mockUser);
+					return $q.when({
+						data: {
+							user: mockUser
+						}
+					});
 				} else {
 					return $q.reject("Something went wrong");
 				}
 			},
 			updateProfile: function() {
 				if (succeedPromise) {
-					return $q.when(mockUser);
+					return $q.when({
+						data: {
+							user: mockUser
+						}
+					});
 				} else {
 					return $q.reject("Something went wrong");
 				}
 			},
 			updatePassword: function() {
 				if (succeedPromise) {
-					return $q.when(mockUser);
+					return $q.when({
+						data: {
+							user: mockUser
+						}
+					});
 				} else {
 					return $q.reject("Something went wrong");
 				}

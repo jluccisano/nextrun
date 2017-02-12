@@ -1,4 +1,8 @@
 @import 'compass';
+ $bgDefault:#2c7fc8;
+ $bgHighlight:#60aedd;
+ $colDefault:#ecf0f1;
+ $colHighlight:#d5c7e4;
 @import '../../commons/styles/commons.scss';
 @import '../../auth/styles/auth.scss';
 @import '../../home/styles/home.scss';
@@ -6,32 +10,26 @@
 @import 'header.scss';
 @import 'animations.scss';
 @import 'footer.scss';
-
-html,
-body {
-  height: 100%;
-  /* The html and body elements cannot have any padding or margin. */
-
-  .wrapper {
-      min-height: 100%;
-      height: auto !important;
-      height: 100%;
-      /* Negative indent footer by its height */
-      margin: 0 auto -60px;
-      /* Pad bottom by footer height */
-      padding: 0 0 60px;
-
-        .alert {
-          padding-top: 120px;
-        }
-
+@import 'loader.scss';
+@import 'alert.scss';
+ html, body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+    .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by its height */
+        margin: 0 auto -60px;
+        /* Pad bottom by footer height */
+        padding: 0 0 60px;
         .view-container {
-          padding-top: 120px;
-           padding-bottom: 60px;
+            padding-top: 120px;
+            padding-bottom: 60px;
         }
     }
+    
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
 }
-
-
-
-        

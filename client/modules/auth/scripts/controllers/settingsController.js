@@ -16,7 +16,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
         $scope.init = function() {
             AuthService.getUserProfile().then(
                 function(response) {
-                    $scope.master = angular.copy(response.user);
+                    $scope.master = angular.copy(response.data.user);
                     $scope.reset();
                 });
         };
@@ -26,7 +26,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
                 user: $scope.user
             }).then(function(response) {
                 AlertService.add("success", gettextCatalog.getString("Votre profil a bien été modifié"), 3000);
-                $scope.master = angular.copy(response.user);
+                $scope.master = angular.copy(response.data.user);
                 $scope.reset();
             });
         };
@@ -37,7 +37,7 @@ angular.module("nextrunApp.auth").controller("SettingsController",
                 new: $scope.newPassword
             }).then(function(response) {
                 AlertService.add("success", gettextCatalog.getString("Votre mot de passe a bien été modifié"), 3000);
-                $scope.master = angular.copy(response.user);
+                $scope.master = angular.copy(response.data.user);
                 $scope.reset();
             });
         };

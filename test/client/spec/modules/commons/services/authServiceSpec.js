@@ -1,6 +1,6 @@
 describe('AuthService', function() {
 
-	var $q, AuthService, mockUser, mockRestAPIHelper;
+	var $q, AuthService, mockUser, mockHttpUtils;
 
 	beforeEach(module('mockModule'));
 
@@ -9,27 +9,27 @@ describe('AuthService', function() {
 		module('nextrunApp.commons', function($provide) {
 
 
-			mockRestAPIHelper = {
-				sendPOST: function(url, data) {
+			mockHttpUtils = {
+				post: function(url, data) {
 
 				},
-				sendGET: function(url) {
+				get: function(url) {
 
 				},
-				sendDELETE: function(url) {
+				delete: function(url) {
 
 				},
-				sendPUT: function(url, data) {
+				put: function(url, data) {
 
 				}
 			}
 
 
-			spyOn(mockRestAPIHelper, "sendGET").and.callThrough();
-			spyOn(mockRestAPIHelper, "sendDELETE").and.callThrough();
-			spyOn(mockRestAPIHelper, "sendPUT").and.callThrough();
+			spyOn(mockHttpUtils, "get").and.callThrough();
+			spyOn(mockHttpUtils, "delete").and.callThrough();
+			spyOn(mockHttpUtils, "put").and.callThrough();
 
-			$provide.value('RestAPIHelper', mockRestAPIHelper);
+			$provide.value('HttpUtils', mockHttpUtils);
 
 		});
 
@@ -92,38 +92,38 @@ describe('AuthService', function() {
 
 	describe('forgotPassword', function() {
 		it('should call sendPOST with success', function() {
-			spyOn(mockRestAPIHelper, "sendPOST").and.callThrough();
+			spyOn(mockHttpUtils, "post").and.callThrough();
 			AuthService.forgotPassword(mockUser);
-			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/users/forgotpassword', mockUser);
+			expect(mockHttpUtils.post).toHaveBeenCalledWith('/api/users/forgotpassword', mockUser);
 		});
 	});
 
 	describe('checkEmail', function() {
 		it('should call sendPOST with success', function() {
-			spyOn(mockRestAPIHelper, "sendPOST").and.callThrough();
+			spyOn(mockHttpUtils, "post").and.callThrough();
 			AuthService.checkEmail(mockUser);
-			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/users/check/email', mockUser);
+			expect(mockHttpUtils.post).toHaveBeenCalledWith('/api/users/check/email', mockUser);
 		});
 	});
 
 	describe('updateProfile', function() {
 		it('should call sendPUT with success', function() {
 			AuthService.updateProfile(mockUser);
-			expect(mockRestAPIHelper.sendPUT).toHaveBeenCalledWith('/api/users/update/profile', mockUser);
+			expect(mockHttpUtils.put).toHaveBeenCalledWith('/api/users/update/profile', mockUser);
 		});
 	});
 
 	describe('updatePassword', function() {
 		it('should call sendPUT with success', function() {
 			AuthService.updatePassword(mockUser);
-			expect(mockRestAPIHelper.sendPUT).toHaveBeenCalledWith('/api/users/update/password', mockUser);
+			expect(mockHttpUtils.put).toHaveBeenCalledWith('/api/users/update/password', mockUser);
 		});
 	});
 
 	describe('getUserProfile', function() {
 		it('should call sendGET with success', function() {
 			AuthService.getUserProfile();
-			expect(mockRestAPIHelper.sendGET).toHaveBeenCalledWith('/api/users/settings');
+			expect(mockHttpUtils.get).toHaveBeenCalledWith('/api/users/settings');
 		});
 	});
 
@@ -132,14 +132,14 @@ describe('AuthService', function() {
 
 			var deferred = $q.defer();
 
-			spyOn(mockRestAPIHelper, "sendPOST").and.callFake(function() {
+			spyOn(mockHttpUtils, "post").and.callFake(function() {
 				return deferred.promise;
 			})
 			AuthService.logout();
 
 			deferred.resolve();
 
-			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/users/logout', undefined);
+			expect(mockHttpUtils.post).toHaveBeenCalledWith('/api/users/logout', undefined);
 		});
 	});
 

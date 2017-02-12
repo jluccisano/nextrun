@@ -9,7 +9,9 @@ angular.module("mockModule").factory("mockRaceService",
 			create: function() {
 				if (succeedPromise) {
 					return $q.when({
-						raceId: mockRace._id
+						data: {
+							raceId: mockRace._id
+						}
 					});
 				} else {
 					return $q.reject("Something went wrong");
@@ -18,7 +20,9 @@ angular.module("mockModule").factory("mockRaceService",
 			retrieve: function() {
 				if (succeedPromise) {
 					return $q.when({
-						race: mockRace
+						data: {
+							race: mockRace
+						}
 					});
 				} else {
 					return $q.reject("Something went wrong");
@@ -48,7 +52,9 @@ angular.module("mockModule").factory("mockRaceService",
 			findAll: function() {
 				if (succeedPromise) {
 					return $q.when({
-						races: [mockRace]
+						data: {
+							races: [mockRace]
+						}
 					});
 				} else {
 					return $q.reject("Something went wrong");
@@ -64,7 +70,9 @@ angular.module("mockModule").factory("mockRaceService",
 			find: function() {
 				if (succeedPromise) {
 					return $q.when({
-						races: [mockRace]
+						data: {
+							races: [mockRace]
+						}
 					});
 				} else {
 					return $q.reject("Something went wrong");

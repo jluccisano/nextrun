@@ -12,9 +12,9 @@ module.exports = {
             clientSecret: "APP_SECRET",
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
-        mailgun: {
-            user: "devmaster@nextrunjosephluccisano.mailgun.org",
-            password: "devmaster"
+        gmail: {
+            user: "contact.nextrun@gmail.com",
+            password: "Henrigolant!"
         },
         racesidx: "racesidx_v1"
     },
@@ -28,9 +28,9 @@ module.exports = {
             clientSecret: "APP_SECRET",
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
-        mailgun: {
-            user: "devmaster@nextrunjosephluccisano.mailgun.org",
-            password: "devmaster"
+        gmail: {
+            user: "contact.nextrun@gmail.com",
+            password: "Henrigolant!"
         },
         racesidx: "racesidx_v1"
     },
@@ -44,7 +44,7 @@ module.exports = {
             clientSecret: "APP_SECRET",
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
-        mailgun: {
+        gmail: {
             user: "user",
             password: "pass"
         },
@@ -60,9 +60,9 @@ module.exports = {
             clientSecret: "409c4b0d091efef8e7d03db2bce807e9",
             callbackURL: "http://nextrun.fr/auth/facebook/callback"
         },
-        mailgun: {
-            user: "postmaster@nextrunjosephluccisano.mailgun.org",
-            password: "1jo8rmgvkpe6"
+        gmail: {
+            user: "contact.nextrun@gmail.com",
+            password: "Henrigolant!"
         },
         racesidx: "racesidx_v1"
     }

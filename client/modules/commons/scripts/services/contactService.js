@@ -1,14 +1,14 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("ContactService",
-	function(RestAPIHelper) {
+	function(HttpUtils) {
 		
 		return {
 			addContact: function(contact) {
-				return RestAPIHelper.sendPOST("/api/contacts", contact);
+				return HttpUtils.post("/api/contacts", contact);
 			},
 			sendFeedback: function(feedback) {
-				return RestAPIHelper.sendPOST("/api/contacts/feedback", feedback);
+				return HttpUtils.post("/api/contacts/feedback", feedback);
 			},
 		};
 	});

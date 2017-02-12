@@ -118,7 +118,7 @@ angular.module("nextrunApp.home").controller("HomeController",
 
                 $scope.names = [];
 
-                var races = response.hits.hits;
+                var races = response.data.hits.hits;
                 //push the current query at first
 
                 var queryFullText = {

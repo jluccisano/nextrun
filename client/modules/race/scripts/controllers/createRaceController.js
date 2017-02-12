@@ -45,9 +45,9 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 
 			if ($scope.isLoggedIn()) {
 				RaceService.create(data).then(
-					function(res) {
+					function(response) {
 						AlertService.add("success", gettextCatalog.getString("La manifestation a bien été créée"), 3000);
-						$scope.openRedirectionModal(res.raceId);
+						$scope.openRedirectionModal(response.data.raceId);
 					});
 			} else {
 				$scope.tabs = [{

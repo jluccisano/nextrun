@@ -97,7 +97,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
                 $scope.names = [];
 
-                var races = response.hits.hits;
+                var races = response.data.hits.hits;
 
                 var queryFullText = {
                     fullname: queryString,
@@ -151,11 +151,11 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         $scope.search = function() {
             RaceService.search($scope.criteria).then(
                 function(response) {
-                    if (response.hits.hits.length > 0) {
-                        $scope.races = response.hits.hits;
-                        $scope.facets.typeFacets = response.facets.typeFacets.terms;
-                        $scope.facets.departmentFacets = $scope.buildDepartmentFacets(response.facets.departmentFacets.terms);
-                        $scope.pagination.total = response.hits.total;
+                    if (response.data && response.data.hits.hits.length > 0) {
+                        $scope.races = response.data.hits.hits;
+                        $scope.facets.typeFacets = response.data.facets.typeFacets.terms;
+                        $scope.facets.departmentFacets = $scope.buildDepartmentFacets(response.data.facets.departmentFacets.terms);
+                        $scope.pagination.total = response.data.hits.total;
                     } else {
                         initRaces();
                         initFacets();

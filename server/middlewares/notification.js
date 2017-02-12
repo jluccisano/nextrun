@@ -15,19 +15,19 @@ exports.sendMail = function(mailOptions) {
 
     var result = false;
 
-    var transport = nodemailer.createTransport("SMTP", {
-        service: "Mailgun",
+    var transporter = nodemailer.createTransport("SMTP", {
+        service: "Gmail",
         auth: {
-            user: config.mailgun.user,
-            pass: config.mailgun.password
+            user: config.gmail.user,
+            pass: config.gmail.password
         }
     });
 
-    transport.sendMail(mailOptions, function(err, res) {
-        if (err) {
-            logger.error(err);
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            logger.error(error);
         } else {
-            logger.info("send email to: " + mailOptions.to + " -> success", res);
+            logger.info("send email to: " + mailOptions.to + " -> " + info.response);
         }
     });
     return result;
@@ -40,10 +40,10 @@ exports.sendMail = function(mailOptions) {
 exports.sendEmailNewContact = function(contact) {
 
     var mailOptions = {
-        from: "no-reply@nextrun.fr",
-        to: "postmaster@nextrunjosephluccisano.mailgun.org",
+        from: "Nextrun <no-reply@nextrun.fr>",
+        to: "contact.nextrun@gmail.com",
         subject: "Un nouveau contact a été ajouté",
-        text: "nouveau contact: " + contact.email + " type: " + contact.type,
+        text: "nouveau contact: " + contact.email + " type: " + contact.type
     };
 
     this.sendMail(mailOptions);
@@ -56,7 +56,7 @@ exports.sendEmailNewContact = function(contact) {
 exports.sendEmailPasswordReinitialized = function(email, newPassword) {
 
     var mailOptions = {
-        from: "no-reply@nextrun.fr",
+        from: "Nextrun <no-reply@nextrun.fr>",
         to: email,
         subject: "Changement de mot de passe",
         text: "Bonjour, Voici votre nouveau mot de passe: " + newPassword + " vous pourrez le modifier en allant dans les paramètres",
@@ -73,7 +73,7 @@ exports.sendEmailNewFeedback = function(feedback) {
 
     var mailOptions = {
         from: feedback.email,
-        to: "postmaster@nextrunjosephluccisano.mailgun.org",
+        to: "contact.nextrun@gmail.com",
         subject: "Nouveau feedback",
         text: "Nouveau feedback par: " + feedback.email + " , type: " + feedback.type.name + " , message: " + feedback.message + " , race id: " + feedback.raceId,
     };

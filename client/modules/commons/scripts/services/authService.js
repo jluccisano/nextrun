@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("AuthService",
-    function($cookieStore, RestAPIHelper) {
+    function($cookieStore, HttpUtils) {
 
         var accessLevels = routingConfig.accessLevels,
             userRoles = routingConfig.userRoles,
@@ -32,21 +32,21 @@ angular.module("nextrunApp.commons").factory("AuthService",
                 return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
             },
             register: function(user) {
-                var promise = RestAPIHelper.sendPOST("/api/users/signup", user);
+                var promise = HttpUtils.post("/api/users/signup", user);
                 promise.then(function(user) {
                     changeUser(user);
                 });
                 return promise;
             },
             login: function(user) {
-                var promise = RestAPIHelper.sendPOST("/api/users/session", user);
+                var promise = HttpUtils.post("/api/users/session", user);
                 promise.then(function(user) {
                     changeUser(user);
                 });
                 return promise;
             },
             logout: function() {
-                var promise = RestAPIHelper.sendPOST("/api/users/logout", undefined);
+                var promise = HttpUtils.post("/api/users/logout", undefined);
                 promise.then(function() {
                     changeUser({
                         id: "",
@@ -58,22 +58,22 @@ angular.module("nextrunApp.commons").factory("AuthService",
                 return promise;
             },
             forgotPassword: function(user) {
-                return RestAPIHelper.sendPOST("/api/users/forgotpassword", user);
+                return HttpUtils.post("/api/users/forgotpassword", user);
             },
             checkEmail: function(user) {
-                return RestAPIHelper.sendPOST("/api/users/check/email", user);
+                return HttpUtils.post("/api/users/check/email", user);
             },
             updateProfile: function(user) {
-                return RestAPIHelper.sendPUT("/api/users/update/profile", user);
+                return HttpUtils.put("/api/users/update/profile", user);
             },
             updatePassword: function(data) {
-                return RestAPIHelper.sendPUT("/api/users/update/password", data);
+                return HttpUtils.put("/api/users/update/password", data);
             },
             getUserProfile: function() {
-                return RestAPIHelper.sendGET("/api/users/settings");
+                return HttpUtils.get("/api/users/settings");
             },
             deleteAccount: function() {
-                var promise = RestAPIHelper.sendDELETE("/api/users/delete", undefined);
+                var promise = HttpUtils.delete("/api/users/delete", undefined);
                 promise.then(function() {
                     changeUser({
                         id: "",

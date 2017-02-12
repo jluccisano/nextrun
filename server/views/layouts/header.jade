@@ -10,7 +10,7 @@ nav(class="navbar navbar-default navbar-fixed-top" role="navigation" ng-Controll
 					a(ng-href="/races/search" translate) Rechercher
 			ul(class="nav navbar-nav navbar-right")
 				li(class="dropdown" ng-show="isLoggedIn()")
-					a(href="#" class="dropdown-toggle") {{user.username}}
+					a(href="#" class="dropdown-toggle" ng-cloak) {{user.username}}
 						span(class="caret")
 					ul(class="dropdown-menu" role="menu")
 						li

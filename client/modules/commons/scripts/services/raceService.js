@@ -1,37 +1,36 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("RaceService",
-    function(RestAPIHelper) {
-
+    function(HttpUtils) {
         return {
             create: function(data) {
-                return RestAPIHelper.sendPOST("/api/races/create", data);
+                return HttpUtils.post("/api/races/create", data);
             },
             find: function(page) {
-                return RestAPIHelper.sendGET("/api/races/find/page/" + page);
+                return HttpUtils.get("/api/races/find/page/" + page);
             },
             update: function(id, data) {
-                return RestAPIHelper.sendPUT("/api/races/" + id + "/update", data);
+                return HttpUtils.put("/api/races/" + id + "/update", data);
             },
             delete: function(id) {
-                return RestAPIHelper.sendDELETE("/api/races/" + id + "/delete");
+                return HttpUtils.delete("/api/races/" + id + "/delete");
             },
             retrieve: function(id) {
-                return RestAPIHelper.sendGET("/api/races/" + id);
+                return HttpUtils.get("/api/races/" + id);
             },
             publish: function(id, value) {
-                return RestAPIHelper.sendPUT("/api/races/" + id + "/publish/" + value, undefined);
+                return HttpUtils.put("/api/races/" + id + "/publish/" + value, undefined);
             },
             search: function(criteria) {
-                return RestAPIHelper.sendPOST("/api/races/search/", {
+                return HttpUtils.post("/api/races/search/", {
                     "criteria": criteria
                 });
             },
             findAll: function() {
-                return RestAPIHelper.sendGET("/api/races/");
+                return HttpUtils.get("/api/races/");
             },
             suggest: function(criteria) {
-                return RestAPIHelper.sendPOST("/api/races/autocomplete/", {
+                return HttpUtils.post("/api/races/autocomplete/", {
                     "criteria": criteria
                 });
             }

@@ -168,7 +168,7 @@ describe('EditRaceController', function() {
 	});*/
 
 	describe('getFile()', function() {
-		it('import file with success', function() {
+		/*it('import file with success', function() {
 			mockFileReaderService.setPromiseResponse(true);
 			spyOn(mockFileReaderService, 'readAsDataUrl').and.callThrough();
 			spyOn(mockGpxService, 'convertGPXtoRoute').and.callThrough();
@@ -192,7 +192,7 @@ describe('EditRaceController', function() {
 			$scope.$apply();
 			expect($scope.pending).toBe(false);
 			expect(mockAlertService.add).toHaveBeenCalledWith("danger", "invalidGPX", 3000);
-		});
+		});*/
 	});
 
 });

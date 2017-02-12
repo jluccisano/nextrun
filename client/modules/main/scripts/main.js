@@ -3,7 +3,7 @@
 var nextrunApp = angular.module("nextrunApp", [
   "ngRoute",
   "gettext",
-  "ng.httpLoader",
+  "angular-loading-bar",
   "ui.bootstrap.dropdown",
   "ui.bootstrap.alert",
   "nextrunApp.commons",
@@ -16,8 +16,7 @@ nextrunApp.config(
   function(
     $routeProvider,
     $locationProvider,
-    $httpProvider,
-    httpMethodInterceptorProvider) {
+    $httpProvider) {
 
     var access = routingConfig.accessLevels;
 
@@ -49,8 +48,6 @@ nextrunApp.config(
     $locationProvider.html5Mode(true);
 
     $httpProvider.interceptors.push("ErrorHandlerInterceptor");
-
-    httpMethodInterceptorProvider.whitelistDomain("/api/races/find/page/1");
   });
 
 nextrunApp.run(function(

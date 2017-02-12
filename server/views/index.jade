@@ -21,7 +21,7 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
         link(rel='stylesheet', href='../../client/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css')
         link(rel='stylesheet', href='../../client/bower_components/font-awesome/css/font-awesome.css')
         link(rel='stylesheet', href='../../client/bower_components/angular-motion/dist/angular-motion.css')
-        link(rel='stylesheet', href='../../client/bower_components/angular-ui-select/dist/select.css')
+        link(rel='stylesheet', href='../../client/bower_components/angular-loading-bar/build/loading-bar.css')
         // endbower
         <!-- endbuild -->
 
@@ -58,9 +58,8 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
         script(src='../../client/bower_components/angular-strap/dist/angular-strap.js')
         script(src='../../client/bower_components/angular-strap/dist/angular-strap.tpl.js')
         script(src='../../client/bower_components/textAngular/dist/textAngular.min.js')
-        script(src='../../client/bower_components/angular-ui-select/dist/select.js')
-        script(src='../../client/bower_components/angular-http-loader/app/package/js/angular-http-loader.js')
         script(src='../../client/bower_components/angular-x2js/dist/x2js.min.js')
+        script(src='../../client/bower_components/angular-loading-bar/build/loading-bar.js')
         // endbower
         script(src='../../client/i18n/angular-locale_fr-fr.js')
         <!-- endbuild -->
@@ -129,7 +128,7 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
         script(src="/modules/commons/scripts/services/metaService.js")
         script(src="/modules/commons/scripts/services/raceService.js")
         script(src="/modules/commons/scripts/services/regionEnum.js")
-        script(src="/modules/commons/scripts/services/restAPIHelper.js")
+        script(src="/modules/commons/scripts/services/httpUtils.js")
         script(src="/modules/commons/scripts/services/sharedCriteriaService.js")
         script(src="/modules/commons/scripts/services/sharedMetaService.js")
         script(src="/modules/commons/scripts/directives/fbLike.js")

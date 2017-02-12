@@ -1,10 +1,10 @@
 describe('ContactService', function() {
 
-	var $httpBackend, ContactService, mockContact, mockFeedback, mockRestAPIHelper;
+	var $httpBackend, ContactService, mockContact, mockFeedback, mockHttpUtils;
 
 	beforeEach(module('nextrunApp.commons', function($provide) {
-		mockRestAPIHelper = jasmine.createSpyObj('RestAPIHelper', ['sendPOST', 'sendGET', 'sendDELETE', 'sendPUT']);
-		$provide.value('RestAPIHelper', mockRestAPIHelper);
+		mockHttpUtils = jasmine.createSpyObj('HttpUtils', ['post', 'get', 'delete', 'put']);
+		$provide.value('HttpUtils', mockHttpUtils);
 	}));
 
 	beforeEach(inject(function(_ContactService_) {
@@ -24,14 +24,14 @@ describe('ContactService', function() {
 	describe('addContact', function() {
 		it('should call sendPOST with success', function() {
 			ContactService.addContact(mockContact);
-			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/contacts', mockContact);
+			expect(mockHttpUtils.post).toHaveBeenCalledWith('/api/contacts', mockContact);
 		});
 	});
 
 	describe('sendFeedback', function() {
 		it('should call sendPOST with success', function() {
 			ContactService.sendFeedback(mockFeedback);
-			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/contacts/feedback', mockFeedback);
+			expect(mockHttpUtils.post).toHaveBeenCalledWith('/api/contacts/feedback', mockFeedback);
 		});
 	});
 

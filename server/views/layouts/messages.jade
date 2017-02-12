@@ -1,2 +1,2 @@
-div(class="alert")
+div(class="alert" ng-cloak)
 	alert(ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)") {{alert.msg}}
