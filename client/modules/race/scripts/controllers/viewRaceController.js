@@ -17,7 +17,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         google.maps.visualRefresh = true;
 
-        $scope.selection = "general";
+        $scope.active = "general";
 
         $scope.raceId = $routeParams.raceId;
         $scope.cursorMarker = {};
@@ -83,6 +83,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.setSelection = function(route, index) {
             $scope.selection = route.getType() + index;
+            $scope.active = route.getType() + index;
         };
 
         $scope.init();
@@ -92,8 +93,11 @@ angular.module("nextrunApp.race").directive('scrollTo', function($location, $anc
     return function(scope, element, attrs) {
         element.bind('click', function(event) {
             event.stopPropagation();
-            scope.$on('$locationChangeStart', function(ev) {
-                ev.preventDefault();
+            scope.$on('$locationChangeStart', function(ev, newUrl, oldUrl) {
+                if(newUrl.indexOf("#") > -1) {
+                    ev.preventDefault();
+                }
+                
             });
             var location = attrs.scrollTo;
             $location.hash(location);
