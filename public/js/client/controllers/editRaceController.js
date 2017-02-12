@@ -14,6 +14,10 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 		$scope.cursorMarker = {};
 		$scope.currentRaceType = {};
 
+		$scope.options = {
+			country: "fr"
+		};
+
 		$scope.raceId = $routeParams.raceId;
 
 		$scope.textAngularOpts = {
@@ -347,12 +351,12 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 		$scope.submit = function(race) {
 
-			var place = $scope.gPlace.getPlace();
+
+			var place = $scope.details;
 
 			$scope.race.pin = {};
-
+			$scope.race.pin.name = place.name;
 			$scope.race.pin.location = {
-				name: place.name,
 				lat: place.geometry.location.lat(),
 				lon: place.geometry.location.lng()
 			}

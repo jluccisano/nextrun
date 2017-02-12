@@ -20,7 +20,20 @@ div.custom-bs-background
 						hr
 				div.col-lg-12.center
 					div.col-lg-2.col-lg-offset-3
-						select.form-control(data-placeholder="Sélectionner..." data-ng-model="region" data-ng-options="region.value as getRegion(region.value) for region in listOfRegions")				
+						//select.form-control(data-placeholder="Sélectionner..." data-ng-model="region" data-ng-options="region.value as getRegion(region.value) for region in listOfRegions")				
+						form.form-horizontal(role="form", name="form", novalidate, style="margin-top:50px")
+							div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$invalid, 'has-success': !form.location.$invalid && !form.location.$pristine}")
+								label.control-label(for="location") Lieu
+								input.form-control(name="location", id="location", placeholder="ex: Castelnaudary",data-ng-model="pin.name", required, hasLocation ng-autocomplete options="options" details="details")
+							div.checkbox
+								label Elargir aux alentours
+								input(type="checkbox")
+							div.col-lg-2
+								select(class="form-control" style="width:80px" ng-model="aroundDistance" ng-change="onChangeDistance()")
+									option(value="15") 10
+									option(value="30") 30
+									option(value="50") 50
+									option(value="100") 100
 					div.col-lg-2
 						select(class="multiselect" data-placeholder="Sélectionner..." data-ng-model="currentTypesSelected" data-ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
 					div.col-lg-4
