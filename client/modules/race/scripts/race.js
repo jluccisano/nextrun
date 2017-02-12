@@ -4,36 +4,33 @@ var raceModule = angular.module("nextrunApp.race", [
   "ngRoute",
   "ngAnimate",
   "ngSanitize",
-  "toggle-switch",
   "google-maps",
   "highcharts-ng",
+  "frapontillo.bootstrap-switch",
   "textAngular",
   "gettext",
   "ui.bootstrap.pagination",
   "ui.bootstrap.accordion",
   "ui.bootstrap.tabs",
+  "ui.bootstrap.collapse",
+  "ui.bootstrap.dropdown",
+  "ui.bootstrap.modal",
   "mgcrea.ngStrap.datepicker",
   "mgcrea.ngStrap.timepicker",
   "mgcrea.ngStrap.affix",
   "mgcrea.ngStrap.scrollspy",
   "mgcrea.ngStrap.helpers.dimensions",
-  "ui.bootstrap.modal",
-  "xeditable",
   "nextrunApp.commons",
-  "nextrunApp.route"
+  "nextrunApp.route",
+  "ezfb"
 ]);
-
-raceModule.run(function(editableOptions, editableThemes) {
-  editableThemes.bs3.inputClass = 'input-sm';
-  editableThemes.bs3.buttonsClass = 'btn-sm';
-  editableOptions.theme = 'bs3';
-});
 
 
 raceModule.config(
   function(
     $routeProvider,
-    $locationProvider) {
+    $locationProvider,
+    ezfbProvider) {
 
     var access = routingConfig.accessLevels;
 
@@ -78,5 +75,12 @@ raceModule.config(
     });
 
     $locationProvider.html5Mode(true);
+
+
+    ezfbProvider.setInitParams({
+      appId: '195803770591615'
+    });
+
+    ezfbProvider.setLocale('fr_FR');
 
   });

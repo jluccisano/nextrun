@@ -23,9 +23,9 @@
     "textAngular": "~1.2.2",
     "angular-x2js": "~0.1.1",
     "angular-loading-bar": "~0.6.0",
-    "angular-xeditable": "~0.1.8",
-    "angular-bootstrap-toggle-switch": "~0.5.1",
-    "Bootflat": "~2.0.4"
+    "Bootflat": "~2.0.4",
+    "angular-bootstrap-switch": "~0.3.0",
+    "angular-easyfb": "~1.2.1"
   },
   "resolutions": {
     "angular": "~1.2.26",

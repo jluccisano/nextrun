@@ -9,14 +9,16 @@ var nextrunApp = angular.module("nextrunApp", [
   "nextrunApp.commons",
   "nextrunApp.auth",
   "nextrunApp.race",
-  "nextrunApp.home"
+  "nextrunApp.home",
+  "ezfb"
 ]);
 
 nextrunApp.config(
   function(
     $routeProvider,
     $locationProvider,
-    $httpProvider) {
+    $httpProvider,
+    ezfbProvider) {
 
     var access = routingConfig.accessLevels;
 
@@ -48,6 +50,12 @@ nextrunApp.config(
     $locationProvider.html5Mode(true);
 
     $httpProvider.interceptors.push("ErrorHandlerInterceptor");
+
+    ezfbProvider.setInitParams({
+      appId: '195803770591615'
+    });
+
+    ezfbProvider.setLocale('fr_FR');
   });
 
 nextrunApp.run(function(

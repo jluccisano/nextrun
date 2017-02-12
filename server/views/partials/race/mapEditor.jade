@@ -20,16 +20,26 @@ nav(class="navbar navbar-default" role="navigation")
 					span(translate) Effacer
 
 
-		div(class="navbar-nav navbar-right")
-			toggle-switch(model="manualMode" html="true" class="switch-primary switch-small navbar-btn" on-label="On" off-label="Off")
-			br
-			span(translate) Mode manuel
+		form(class="navbar-form navbar-left")
+			input(bs-switch type="checkbox" ng-model="routeViewModel._mode" switch-label="manu" ng-change="routeViewModel._mode = !routeViewModel._mode" switch-on-color="success" switch-off-color="default" switch-on-text="On" switch-off-text="Off")
 
-		div(class="navbar-form navbar-right")
-			input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)")
+		//div(class="navbar-form navbar-right")
+		//	input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)")
 
-		div(class="navbar-form navbar-right")
-			button(type="button" class="btn btn-primary" ng-click="submit()" translate) Enregistrer
+		ul(class="nav navbar-nav navbar-right")
+			div(class="btn-group" dropdown is-open="status.isopen")
+				button(type="button" class="btn btn-primary" ng-click="submit()") Enregistrer
+				button(type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" dropdown-toggle)
+					span(class="caret")
+					span(class="sr-only") Split button!
+				ul(class="dropdown-menu" role="menu")
+					li
+						a(href="" ng-click="submit()" translate) Enregistrer
+					li(class="divider")
+					li
+						a(href="" ng-click="import()" translate) Importer GPX
+					li
+						a(href="" ng-click="cancel()" translate) Fermer
 
 include map
 div(class="inline-stats")
@@ -57,6 +67,6 @@ div(class="inline-stats")
 				span(class="small" translate) Altitude min
 		div(class="row")
 			div(class="col-md-12")
-				highchart(ng-hide="routeViewModel.getType() === 'Natation'" config="routeViewModel.getChartConfig()")
+				highchart(ng-if="routeViewModel.isVisible()" id="{{routeViewModel.getType()}}" ng-hide="routeViewModel.getType() === 'Natation'" config="routeViewModel.getChartConfig()")
 
 

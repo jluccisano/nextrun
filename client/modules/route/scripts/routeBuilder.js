@@ -660,6 +660,7 @@ var routeBuilder = {};
 		this._events = null;
 		this._chartConfig = chartConfig;
 		this._type = null;
+		this._mode = false;
 
 		this.segments = this._createSegmentsViewModel(this.data.segments);
 		this.elevationPoints = this._createElevationPointsViewModel(this.data.elevationPoints);
@@ -679,6 +680,8 @@ var routeBuilder = {};
 		this._chartConfig.series[2].data = this._climbs.climbsInf10;
 		this._chartConfig.series[3].data = this._climbs.climbsInf15;
 		this._chartConfig.series[4].data = this._climbs.climbsSup15;
+
+		this._chartConfig.title = this.data.type;
 
 		this._calculateElevationDataAlongRoute();
 
@@ -748,10 +751,6 @@ var routeBuilder = {};
 
 		this.getOptions = function() {
 			return this._options;
-		};
-
-		this.setChartConfig = function(chartConfig) {
-			this._chartConfig = chartConfig;
 		};
 
 		this.getChartConfig = function() {

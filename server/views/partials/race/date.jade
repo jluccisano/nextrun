@@ -1,8 +1,8 @@
 form(role="form" name="dateForm" novalidate)
 	div(class="row")
-		div(ng-if="!editMode || !edit" class="col-md-3")
+		div(ng-if="!editMode || !edit" class="col-md-6")
 			h5(class="text-left") {{race.date | date:'dd MMMM yyyy'}}
-		div(class="col-md-3" ng-if="editMode && edit" class="form-group" ng-class="{'has-error':!dateForm.date.$pristine && dateForm.date.$invalid, 'has-success': !dateForm.date.$invalid && !dateForm.date.$pristine}")
+		div(class="col-md-6" ng-if="editMode && edit" class="form-group" ng-class="{'has-error':!dateForm.date.$pristine && dateForm.date.$invalid, 'has-success': !dateForm.date.$invalid && !dateForm.date.$pristine}")
 			label(class="control-label") {{'Date' | translate}}
 			input(type="text" class="form-control" ng-model="race.date" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
 		div(ng-if="editMode && !edit" class="col-md-2")

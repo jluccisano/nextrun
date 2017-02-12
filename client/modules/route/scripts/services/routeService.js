@@ -70,7 +70,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 							};
 						}
 
-						var route = new routeBuilder.Route(currentRoute, chartConfig, gmapsConfig);
+						var route = new routeBuilder.Route(currentRoute, angular.copy(chartConfig), angular.copy(gmapsConfig));
 
 						route.setCenter(RouteUtilsService.getCenter(race));
 

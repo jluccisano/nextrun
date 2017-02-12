@@ -20,6 +20,10 @@ angular.module("nextrunApp.race").controller("EditRouteController",
             name: ""
         };
 
+        $scope.status = {
+            isopen: false
+        };
+
         $scope.map = {
             options: {
                 country: "fr",
@@ -40,10 +44,10 @@ angular.module("nextrunApp.race").controller("EditRouteController",
 
             angular.copy(routeDataModel, $scope.tmpRoute);
 
-            $scope.routeViewModel = new routeBuilder.Route($scope.route, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
+            $scope.routeViewModel = new routeBuilder.Route($scope.route, RouteHelperService.getChartConfig($scope, 150), RouteHelperService.getGmapsConfig());
             $scope.routeViewModel.setCenter(RouteUtilsService.getCenter(race));
             $scope.routeViewModel.addClickListener($scope.onClickMap);
-            
+
             $timeout(function() {
                 $scope.routeViewModel.setVisible(true);
             });

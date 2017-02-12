@@ -21,11 +21,10 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		$scope.selection;
 
+		$scope.isCollapsed = false;
+
 		$scope.editMode = true;
 		$scope.active = "general";
-		$scope.status = {
-			open: true
-		};
 
 		$scope.activePanel = 1;
 		$scope.gettextCatalog = gettextCatalog;
@@ -47,12 +46,12 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.init = function() {
 			RaceService.retrieve($scope.raceId).then(function(response) {
 				$scope.race = response.data.race;
-				$scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
-				
-				if(!$scope.selection) {
+				$scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
+
+				if (!$scope.selection) {
 					$scope.selection = $scope.routesViewModel[0].getType() + 0;
 				}
-				
+
 			}).
 			finally(function() {
 				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
@@ -199,6 +198,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.setSelection = function(route, index) {
 			$scope.selection = route.getType() + index;
 			$scope.active = route.getType() + index;
+			$scope.isCollapsed = true;
 		};
+
 		$scope.init();
 	});

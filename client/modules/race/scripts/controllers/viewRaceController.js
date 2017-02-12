@@ -15,6 +15,8 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.editMode = false;
 
+        $scope.isCollapsed = false;
+
         google.maps.visualRefresh = true;
 
         $scope.active = "general";
@@ -25,9 +27,6 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.routesViewModel = [];
 
-        $scope.status = {
-            open: true
-        };
 
         //TODO create directive
         $scope.onChangeOrganisationTab = function() {
@@ -41,7 +40,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
                 $scope.race = response.data.race;
 
-                $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope), RouteHelperService.getGmapsConfig());
+                $scope.routesViewModel = RouteService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
 
                 $scope.selection = $scope.routesViewModel[0].getType() + 0;
 

@@ -47,13 +47,13 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
         };*/
 
         return {
-            getChartConfig: function($scope) {
+            getChartConfig: function($scope, height) {
                 return {
                     loading: false,
                     options: {
                         chart: {
                             zoomType: "xy",
-                            height: 150,
+                            height: height,
                             type: "area"
                         },
                         plotOptions: {

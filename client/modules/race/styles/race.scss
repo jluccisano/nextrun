@@ -81,36 +81,6 @@ textarea[name=description] {
 }
 
 
-
-
-
-
-
-
-
-div[ng-app] {
-    margin: 10px;
-}
-form[name="editableForm"] > div {
-    height: auto;
-    padding: 5px 0;
-}
-form[name="editableForm"] .title {
-    display: inline-block;
-    font-weight: bold;
-    padding-top: 5px;
-    vertical-align: top;
-    min-width: 90px;
-}
-form[name="editableForm"] .editable {
-    display: inline-block;
-    padding-top: 5px;
-    vertical-align: top;
-}
-form[name="editableForm"] select {
-    width: 120px;
-}
-
 .workflowImage {
     width: 100%;
     height: 30%;
