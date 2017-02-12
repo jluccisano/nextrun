@@ -85,7 +85,7 @@ angular.module('nextrunApp').directive('uniqueEmail', ['$http','Auth','Alert', f
                 
                 scope.busy = true;
 
-               /* Auth.checkEmail({
+                Auth.checkEmail({
                         email: value
                 },
                 function(res) {
@@ -94,30 +94,13 @@ angular.module('nextrunApp').directive('uniqueEmail', ['$http','Auth','Alert', f
                 },
                 function(error) {
                      // display new error message
-                    if (data.isTaken) {
+                    //if (data.isTaken) {
                       ctrl.$setValidity('isTaken', false);
-                    } else if (data.invalidChars) {
-                      ctrl.$setValidity('invalidChars', false);
-                    }
+                    //} else if (data.invalidChars) {
+                    //  ctrl.$setValidity('invalidChars', false);
+                    //}
 
                     scope.busy = false;
-                });*/
-
-                 $http.post('/users/check/email', {email: value})
-                          .success(function(data) {
-                            // everything is fine -> do nothing
-                            scope.busy = false;
-                          })
-                          .error(function(data) {
-                            
-                            // display new error message
-                           // if (data.isTaken) {
-                              ctrl.$setValidity('isTaken', false);
-                           // } else if (data.invalidChars) {
-                             // ctrl.$setValidity('invalidChars', false);
-                           // }
-
-                            scope.busy = false;
                 });
             })
         }

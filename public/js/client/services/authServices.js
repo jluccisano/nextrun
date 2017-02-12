@@ -49,7 +49,7 @@ angular.module('nextrunApp')
                 success();
             }).error(error);
         },
-        checkEmail: function(user, success, error) {
+        checkEmail: function(email, success, error) {
             $http.post('/users/check/email', email).success(function(){
                 success();
             }).error(error);
