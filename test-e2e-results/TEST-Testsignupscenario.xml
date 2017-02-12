@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<testsuites>
-<testsuite name="Test signup scenario" errors="0" tests="3" failures="0" time="33.934" timestamp="2014-04-30T10:12:51">
-  <testcase classname="Test signup scenario" name="should keep invalid logins on this page" time="16.226"></testcase>
-  <testcase classname="Test signup scenario" name="ensures user can sign up" time="9.186"></testcase>
-  <testcase classname="Test signup scenario" name="ensures email already exists" time="8.517"></testcase>
-</testsuite>
-</testsuites>

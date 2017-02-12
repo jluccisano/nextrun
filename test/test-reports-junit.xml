@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="PhantomJS 1.9.7 (Linux)" package="unit" timestamp="2014-09-24T13:36:16" id="0" hostname="localhost.localdomain" tests="7" errors="0" failures="0" time="0.048">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.7 Safari/534.34"/>
+    </properties>
+    <testcase name="signup() should redirect to /signup view" time="0.019" classname="unit PhantomJS 1.9.7 (Linux).LoginCtrl"/>
+    <testcase name="submit() with success change location to /myraces" time="0.005" classname="unit PhantomJS 1.9.7 (Linux).LoginCtrl"/>
+    <testcase name="submit() with error show alert message" time="0.005" classname="unit PhantomJS 1.9.7 (Linux).LoginCtrl"/>
+    <testcase name="should make a request and invoke callback" time="0.005" classname="unit PhantomJS 1.9.7 (Linux).authServices login"/>
+    <testcase name="should append the user" time="0.002" classname="unit PhantomJS 1.9.7 (Linux).authServices login"/>
+    <testcase name="should make a request and invoke callback" time="0.009" classname="unit PhantomJS 1.9.7 (Linux).authServices logout"/>
+    <testcase name="should return a polylines" time="0.003" classname="unit PhantomJS 1.9.7 (Linux).routeServices drawPolylines"/>
+    <system-out><![CDATA[PhantomJS 1.9.7 (Linux) LOG: 'error message:[object Object]'
+
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>

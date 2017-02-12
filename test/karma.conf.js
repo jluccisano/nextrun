@@ -5,7 +5,7 @@ module.exports = function(config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '',
+        basePath: '../',
 
 
         // frameworks to use
@@ -59,26 +59,26 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['dots', 'progress', 'coverage', 'junit'],
+        reporters: ['coverage', 'progress', 'junit', 'spec'],
 
-        // optionally, configure the reporter
         coverageReporter: {
             type: 'html',
-            dir: 'coverage/'
+            dir: './test/coverage/'
         },
 
         junitReporter: {
-            outputFile: 'test-results.xml',
-            suite: ''
+            outputFile: './test/test-reports-junit.xml',
+            suite: 'unit'
         },
 
         plugins: [
             'karma-junit-reporter',
             'karma-chrome-launcher',
             'karma-jasmine',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-phantomjs-launcher',
+            'karma-spec-reporter',
         ],
-
 
         // web server port
         port: 9876,
@@ -98,8 +98,16 @@ module.exports = function(config) {
 
 
         // start these browsers
-        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'],
+        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher*
+        // Start these browsers, currently available:
+        // - Chrome
+        // - ChromeCanary
+        // - Firefox
+        // - Opera
+        // - Safari (only Mac)
+        // - PhantomJS
+        // - IE (only Windows)
+        browsers: ['PhantomJS'],
 
 
         // Continuous Integration mode

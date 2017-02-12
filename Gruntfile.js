@@ -33,7 +33,7 @@ module.exports = function(grunt) {
           quiet: true,
           // specify a destination file to capture the mocha
           // output (the quiet option does not suppress this)
-          captureFile: 'coverage.html'
+          captureFile: 'test/coverage/coverage.html'
         },
         src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
       },
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'html-cov',
           quiet: true,
-          captureFile: 'coverage.html'
+          captureFile: 'test/coverage/coverage.html'
         },
         src: ['test/server/unit/**/test-*.js', 'test/server/integration/**/test-*.js']
       },
@@ -300,15 +300,10 @@ module.exports = function(grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js',
+        configFile: 'test/karma.conf.js',
         background: false,
-        singleRun: true,
         autoWatch: false
-      },
-      e2e: {
-        configFile: 'karma-e2e.conf.js',
-        singleRun: true
-      },
+      }
     },
     travis: {
       configFile: 'karma.conf.js',

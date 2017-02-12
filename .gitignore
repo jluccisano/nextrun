@@ -4,15 +4,22 @@ node_modules/
 bower_components/
 dist/
 tmp/
-coverage.html
+
 *.yml
 jshint.xml
-test-results.xml
-coverage/
-karma.log
 config/config.js
 .idea
 
+# Tests #
+############
+test-results.xml
+test-unit-results.xml
+test-integration-results.xml
+test-e2e-results.xml
+test-e2e-results/
+coverage/
+coverage.html
+karma.log
 
 # Packages #
 ############
