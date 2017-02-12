@@ -44,10 +44,10 @@ module.exports = function(app, config, passport) {
 
 
 	app.use(express.favicon());
-	app.use(express.static(config.root + "/public"));
+	app.use(express.static(config.root + "/client"));
 
 	if (process.env.NODE_ENV !== "production") {
-		app.use("/bower_components", express.static(config.root + "/public/bower_components"));
+		app.use("/bower_components", express.static(config.root + "/client/bower_components"));
 	}
 
 	// don"t use logger for test env
@@ -56,7 +56,7 @@ module.exports = function(app, config, passport) {
 	}
 
 	// set views path, template engine and default layout
-	app.set("views", config.root + "/app/views");
+	app.set("views", config.root + "/server/views");
 	app.set("view engine", "jade");
 
 	app.configure(function() {

@@ -5,15 +5,108 @@ module.exports = function(grunt) {
   process.env.XUNIT_FILE = 'test-unit-results.xml';
   process.env.JUNIT_REPORT_PATH = 'test-integration-results.xml';
 
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  // Load grunt tasks automatically
+  require('load-grunt-tasks')(grunt);
+
+  // Time how long tasks take. Can help when optimizing build times
+  require('time-grunt')(grunt);
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+
+    // Project settings
+    yeoman: {
+      // configurable paths
+      client: require('./bower.json').appPath || 'client',
+      server: 'server',
+      dist: 'dist'
+    },
+
+    // Empties folders to start fresh
     clean: {
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= yeoman.dist %>/*',
+            '!<%= yeoman.dist %>/.git*'
+          ]
+        }]
+      },
+      server: '.tmp'
+    },
+
+    watch: {
+      express: {
+        files: ['client/js/**/*.js', 'test/client/e2e/**/*Scenario.js'],
+        tasks: ['express:test'],
+        options: {
+          spawn: false
+        }
+      },
+      karma: {
+        files: ['client/js/**/*.js', 'test/client/unit/**/*Spec.js'],
+        tasks: ['karma:unit:run']
+      },
+      protractor: {
+        files: ['client/js/**/*.js', 'test/client/e2e/*Scenario.js'],
+        tasks: ['protractor']
+      },
+      compass: {
+        files: ['<%= yeoman.client %>/modules/**/styles/{,*/}*.{scss,sass}'],
+        tasks: ['compass:server', 'autoprefixer']
+        },
+    },
+
+    // Compiles Sass to CSS and generates necessary files if requested
+    compass: {
+      options: {
+        sassDir: '<%= yeoman.client %>/modules/**/styles',
+        cssDir: '.tmp/styles',
+        generatedImagesDir: '.tmp/images/generated',
+        imagesDir: '<%= yeoman.client %>/modules/**/images',
+        javascriptsDir: '<%= yeoman.client %>/modules/**/scripts',
+        fontsDir: '<%= yeoman.client %>/modules/**/styles/fonts',
+        importPath: '<%= yeoman.client %>/bower_components',
+        httpImagesPath: '/images',
+        httpGeneratedImagesPath: '/images/generated',
+        httpFontsPath: '/styles/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        raw: 'Sass::Script::Number.precision = 10\n'
+      },
+      dist: {
+        options: {
+          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+        }
+      },
+      server: {
+        options: {
+          debugInfo: true
+        }
+      }
+    },
+
+    // Run some tasks in parallel to speed up the build process
+    concurrent: {
+      server: [
+        'compass:server'
+      ],
+      test: [
+        'compass'
+      ],
+      dist: [
+        'compass:dist',
+        'imagemin',
+        'svgmin'
+      ]
+    },
+
+    /*clean: {
       force: true,
       build: ["dist", "tmp"],
       tmp: ['tmp']
-    },
+    }, */
     mochaTest: {
       unit: {
         options: {
@@ -81,16 +174,68 @@ module.exports = function(grunt) {
         src: ['test/server/unit/**/test-*.js'] //'test/server/integration/**/test-*.js'
       }
     },
-    usemin: {
-      jade: 'dist/app/views/**/*.jade',
+
+
+
+
+    jade: {
+        compile: {
+            options: {
+                client: false,
+                pretty: true
+            },
+            files: [ {
+              cwd: "<%= yeoman.server %>/views",
+              src: "**/*.jade",
+              dest: "<%= yeoman.dist %>/server/views/",
+              expand: true,
+              ext: ".html"
+            } ]
+        }
+    },
+
+    // Reads HTML for usemin blocks to enable smart builds that automatically
+    // concat, minify and revision files. Creates configurations in memory so
+    // additional tasks can operate on them
+
+     useminPrepare: {
+      html: '<%= yeoman.dist %>/server/views/index.html',
       options: {
+        dest: '<%= yeoman.dist %>',
+        flow: {
+          html: {
+            steps: {
+              js: ['concat', 'uglifyjs'],
+              css: ['cssmin']
+            },
+            post: {}
+          }
+        }
+      }
+    },
+
+    // Performs rewrites based on rev and the useminPrepare configuration
+    usemin: {
+      html: ['<%= yeoman.dist %>/server/views/{,*/}*.html'],
+      css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
+      js: ['<%= yeoman.client %>/{,*/}*.js'],
+      options: {
+        assetsDirs: ['<%= yeoman.dist %>']
+      }
+    },
+
+
+
+    //usemin: {
+     //jade: 'dist/app/views/**/*.jade',
+    /*  options: {
         assetsDirs: ['public'],
         patterns: {
           jade: require('usemin-patterns').jade
         }
       }
-    },
-    concat: {
+    },*/
+    /*concat: {
       options: {
         separator: ';'
       },
@@ -136,11 +281,11 @@ module.exports = function(grunt) {
 
         },
       },
-    },
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-      },
+    }, */
+   /* uglify: {
+      options: {   */
+        //banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+     /* },
       dist: {
         files: {
           'dist/public/js/app.min.js': ['tmp/public/js/app.js'],
@@ -173,8 +318,9 @@ module.exports = function(grunt) {
 
         }
       }
-    },
-    cssmin: {
+    },    */
+
+    /*cssmin: {
       minify: {
         expand: true,
         cwd: 'public/css/',
@@ -182,9 +328,74 @@ module.exports = function(grunt) {
         dest: 'dist/public/css/',
         ext: '.min.css'
       }
+    },*/
+
+    concat: {
+      options: {
+        root: '<%= yeoman.client %>'
+      }
     },
+
+    uglify: {
+      options: {
+        root: '<%= yeoman.client %>'
+      }
+    },
+
+    cssmin: {
+      options: {
+        root: '<%= yeoman.client %>'
+      }
+    },
+
+    svgmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.client %>/images',
+          src: '{,*/}*.svg',
+          dest: '<%= yeoman.dist %>/images'
+        }]
+      }
+    },
+
+    imagemin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.client %>/images',
+          src: '{,*/}*.{png,jpg,jpeg,gif}',
+          dest: '<%= yeoman.dist %>/images'
+        }]
+      }
+    },
+
+    // ngmin tries to make the code safe for minification automatically by
+    // using the Angular long form for dependency injection. It doesn't work on
+    // things like resolve or inject so those have to be done manually.
+    ngmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/concat/scripts',
+          src: '*.js',
+          dest: '.tmp/concat/scripts'
+        }]
+      }
+    },
+
+
+
     copy: {
-      move_css: {
+      server: {
+         files: [{
+            expand: true,
+            src: ['server/**/!{*.jade}', 'config/**', 'locales/**'],
+            dest: '<%= yeoman.dist %>'
+       }]
+      },
+
+      /*move_css: {
         files: [{
           expand: true,
           src: [
@@ -265,7 +476,7 @@ module.exports = function(grunt) {
           },
 
         ]
-      }
+      }  */
     },
     jsdoc: {
       dist: {
@@ -297,7 +508,7 @@ module.exports = function(grunt) {
         },
       }
     },
-    imagemin: {
+    /*imagemin: {
       static: {
         options: {
           optimizationLevel: 3
@@ -312,13 +523,13 @@ module.exports = function(grunt) {
           'dist/public/img/logo_officiel.png': 'public/img/logo_officiel.png'
         }
       }
-    },
+    },*/
     karma: {
       unit: {
         configFile: 'test/client/spec/karma.conf.js',
         background: false,
         singleRun: true,
-        autoWatch: false
+        autoWatch: false,
         logLevel: 'DEBUG'
     },
       e2e: {
@@ -331,23 +542,7 @@ module.exports = function(grunt) {
       singleRun: true,
       browsers: ['Chrome']
     },
-    watch: {
-      express: {
-        files: ['public/js/**/*.js', 'test/client/e2e/**/*Scenario.js'],
-        tasks: ['express:test'],
-        options: {
-          spawn: false
-        }
-      },
-      karma: {
-        files: ['public/js/**/*.js', 'test/client/unit/**/*Spec.js'],
-        tasks: ['karma:unit:run']
-      },
-      protractor: {
-        files: ['public/js/**/*.js', 'test/client/e2e/*Scenario.js'],
-        tasks: ['protractor']
-      }
-    },
+
     express: {
       options: {
         background: true,
@@ -448,5 +643,8 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['clean:build', 'checkcode', 'minify', 'copy:main', 'usemin', 'jsdoc', 'clean:tmp']);
 
   grunt.registerTask('default', ['build']);
+
+
+  grunt.registerTask('newbuild', ['clean:dist','copy:server', 'jade', 'useminPrepare', 'usemin']);
 
 };

@@ -2,12 +2,12 @@
  * Module dependencies.
  */
 
-var mainController = require("../app/controllers/mainController"),
-    userController = require("../app/controllers/userController"),
-    contactController = require("../app/controllers/contactController"),
-    raceController = require("../app/controllers/raceController"),
-    accessLevels = require("../public/js/routingConfig").accessLevels,
-    userRoles = require("../public/js/routingConfig").userRoles,
+var mainController = require("../server/controllers/mainController"),
+    userController = require("../server/controllers/userController"),
+    contactController = require("../server/controllers/contactController"),
+    raceController = require("../server/controllers/raceController"),
+    accessLevels = require("../client/js/routingConfig").accessLevels,
+    userRoles = require("../client/js/routingConfig").userRoles,
     _ = require("underscore"),
     gmaps = require("./middlewares/gmaps"),
     logger = require("./logger");

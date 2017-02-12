@@ -1,0 +1,195 @@
+doctype html
+html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-controller='MainController')
+
+    <!-- build:js js/widgets/google-analytics.min.js -->
+    script(src="widgets/google-analytics.js", charset="UTF-8")
+    <!-- endbuild -->
+
+    head
+
+        link(rel="icon", type="image/png",  href="/img/logo_officiel.png")
+
+        <!-- build:css styles/vendor.min.css -->
+        link(rel="stylesheet", href="bower_components/font-awesome/css/font-awesome.css")
+        link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap.css")
+        <!-- endbuild -->
+
+        <!-- build:css style/main.min.css -->
+        link(rel="stylesheet", href="css/docs.css")
+        link(rel="stylesheet", href="css/style.css")
+        link(rel="stylesheet", href="css/sticky-footer.css")
+        link(rel="stylesheet", href="css/animations.css")
+        link(rel="stylesheet", href="css/googlemaps.css")
+        link(rel="stylesheet", href="css/datetimepicker.css")
+        link(rel="stylesheet", href="css/daterangepicker-bs3.css")
+        <!-- endbuild -->
+
+        script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")
+
+
+        <!-- build:js scripts/vendor.min.js -->
+        script(src="bower_components/jquery/dist/jquery.js", charset="UTF-8")
+        script(src="bower_components/i18next/i18next.js", charset="UTF-8")
+        script(src="bower_components/underscore/underscore.js", charset="UTF-8")
+        script(src="bower_components/angular/angular.js", charset="UTF-8")
+        script(src="bower_components/angular-animate/angular-animate.js", charset="UTF-8")
+        script(src="bower_components/angular-sanitize/angular-sanitize.js", charset="UTF-8")
+        script(src="bower_components/angular-route/angular-route.js", charset="UTF-8")
+        script(src="bower_components/angular-cookies/angular-cookies.js", charset="UTF-8")
+        script(src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js", charset="UTF-8")
+        script(src="bower_components/angular-google-maps/dist/angular-google-maps.js", charset="UTF-8")
+        script(src="bower_components/AngularGM/angular-gm.js", charset="UTF-8")
+        script(src="bower_components/highcharts.com/js/highcharts.src.js", charset="UTF-8")
+        script(src="bower_components/highcharts-ng/dist/highcharts-ng.js", charset="UTF-8")
+        script(src="bower_components/x2js/xml2json.js", charset="UTF-8")
+        script(src="bower_components/bootstrap/dist/js/bootstrap.js", charset="UTF-8")
+        script(src="bower_components/moment/min/moment-with-langs.js", charset="UTF-8")
+        script(src="bower_components/angular-moment/angular-moment.js", charset="UTF-8")
+        script(src="bower_components/bootstrap-daterangepicker/daterangepicker.js", charset="UTF-8")
+        script(src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js", charset="UTF-8")
+        script(src="bower_components/angular-date-time-input/src/dateTimeInput.js", charset="UTF-8")
+        script(src="bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js", charset="UTF-8")
+        script(src="bower_components/angular-translate/angular-translate.js", charset="UTF-8")
+        script(src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js", charset="UTF-8")
+        script(src="lib/textAngular.js", charset="UTF-8")
+        script(src="lib/enum-0.2.5.js", charset="UTF-8")
+        <!-- endbuild -->
+
+        <!-- build:js scripts/routingConfig.js -->
+        script(src="routingConfig.js", charset="UTF-8")
+        script(src="widgets/socialbuttons.js", charset="UTF-8")
+        <!-- endbuild -->
+
+        <!-- build:js scripts/route.min.js -->
+        script(src="modules/route/scripts/route.js", charset="UTF-8")
+        script(src="modules/route/scripts/services/elevationService.js", charset="UTF-8")
+        script(src="modules/route/scripts/services/gpxService.js", charset="UTF-8")
+        script(src="modules/route/scripts/services/markerService.js", charset="UTF-8")
+        script(src="modules/route/scripts/services/polylineService.js", charset="UTF-8")
+        script(src="modules/route/scripts/services/routeHelperService.js", charset="UTF-8")
+        script(src="modules/route/scripts/services/routeService.js", charset="UTF-8")
+        script(src="modules/route/scripts/services/routeUtilsService.js", charset="UTF-8")
+        script(src="modules/route/scripts/services/segmentService.js", charset="UTF-8")
+        <!-- endbuild -->
+
+        <!-- build:js scripts/auth.min.js -->
+        script(src="modules/auth/scripts/auth.js", charset="UTF-8")
+
+        script(src="modules/auth/scripts/controllers/forgotPasswordModalController.js", charset="UTF-8")
+        script(src="modules/auth/scripts/controllers/loginController.js", charset="UTF-8")
+        script(src="modules/auth/scripts/controllers/settingsController.js", charset="UTF-8")
+        script(src="modules/auth/scripts/controllers/signupController.js", charset="UTF-8")
+        <!-- endbuild -->
+
+        <!-- build:js scripts/home.min.js -->
+        script(src="modules/home/scripts/home.js", charset="UTF-8")
+        script(src="modules/home/scripts/controllers/homeController.js", charset="UTF-8")
+        <!-- endbuild -->
+
+        <!-- build:js scripts/race.min.js -->
+        script(src="modules/race/scripts/race.js", charset="UTF-8")
+
+        script(src="modules/race/scripts/controllers/changeTypeConfirmationModalController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/createRaceController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/deleteConfirmationModalController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/editRaceController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/feedbackModalController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/myRacesController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/raceHomeController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/redirectionModalController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/searchRaceController.js", charset="UTF-8")
+        script(src="modules/race/scripts/controllers/viewRaceController.js", charset="UTF-8")
+
+        script(src="modules/race/scripts/services/dateRangeConfig.js", charset="UTF-8")
+        script(src="modules/race/scripts/services/textAngularConfig.js", charset="UTF-8")
+        <!-- endbuild -->
+
+        <!-- build:js /scripts/commons.min.js -->
+        script(src="modules/commons/scripts/commons.js", charset="UTF-8")
+
+        script(src="modules/commons/scripts/services/alertService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/authService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/contactService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/departmentEnum.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/raceTypeEnum.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/errorHandlerInterceptor.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/facebookService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/fileReaderService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/gmapsApiService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/metaService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/raceService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/regionEnum.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/restAPIHelper.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/sharedCriteriaService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/sharedMetaService.js", charset="UTF-8")
+        script(src="modules/commons/scripts/services/xmlService.js", charset="UTF-8")
+
+        script(src="modules/commons/scripts/directives/fbLike.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/gmapsAutocompleteDirective.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/multiselectDropdownDirective.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/nrAddHttp.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/nrCheckListDirective.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/nrDateRangePickerDirective.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/nrFileSelectDirective.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/nrHasLocationDirective.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/nrPasswordMatchDirective.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/nrPolylineDirective.js", charset="UTF-8")
+        script(src="modules/commons/scripts/directives/nrTagListDirective.js", charset="UTF-8")
+
+        script(src="modules/commons/scripts/templates/angular-bootstrap-tpls-overrides.js", charset="UTF-8")
+        <!-- endbuild -->
+
+
+        <!-- build:js scripts/main.min.js -->
+        script(src="modules/main/scripts/main.js", charset="UTF-8")
+        script(src="modules/main/scripts/controllers/aboutController.js", charset="UTF-8")
+        script(src="modules/main/scripts/controllers/contactController.js", charset="UTF-8")
+        script(src="modules/main/scripts/controllers/creditController.js", charset="UTF-8")
+        script(src="modules/main/scripts/controllers/footerController.js", charset="UTF-8")
+        script(src="modules/main/scripts/controllers/headerController.js", charset="UTF-8")
+        script(src="modules/main/scripts/controllers/mainController.js", charset="UTF-8")
+        <!-- endbuild -->
+
+        script.
+            moment.lang('fr');
+
+    block head
+        base(href="/")
+    block meta
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width")
+
+        meta(name='description', content="{{ogDescription}}")
+        meta(name='keywords', content='manifestation sportive, endurance, trail, triathlon, cyclosportive, vtt, cyclotourisme, cyclo, &eacute;preuve, ironman, longue distance, course &agrave; pied, parcours, d&eacute;nivel&eacute;, cross, marathon, duathlon, ski de fond, aquathlon')
+
+        meta(property="og:title" content="{{ogTitle}}")
+        meta(property="og:type" content="website")
+        meta(property="og:image" content="http://www.nextrun.fr/img/logo_officiel.png")
+        meta(property="og:url" content="{{ogUrl}}")
+        meta(property="og:description" content="{{ogDescription}}")
+        meta(name="fragment" content="!")
+        meta(name="google-site-verification" content="XyiSoYfguJ-59aia60gM2hXqUantvQTg8eZ_dfKvqzg")
+        meta(property="fb:app_id" content="195803770591615")
+        meta(property="fb:admins" content="1320496159")
+
+    block title
+        title {{pageTitle}}
+
+    block body
+
+        body(data-status="{{status}}")
+
+            div(id="wrap")
+
+                div(id="fb-root")
+
+                include ./layouts/header
+
+                include ./layouts/messages
+
+                div.ng-cloak(data-ng-cloak, class="view-container")
+                    div(id="main" data-ng-view, class="view-frame ng-cloak")
+
+            div.ng-cloak(id="footer" , data-ng-cloak data-ng-controller="FooterController")
+                include ./layouts/footer
