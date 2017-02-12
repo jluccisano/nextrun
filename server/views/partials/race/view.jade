@@ -2,10 +2,6 @@ div(class="container")
 	h1 {{race.name}}
 		small ({{race.pin.department.code}})
 	h4(class="text-right") {{race.date | date:'dd MMMM yyyy'}}
-	div(class="row")
-		div(ng-show="loading")
-			span(class="fa fa-spinner fa-spin")
-			span {{'Chargement...' | translate}}
 	hr
 	div(class="row text-center")
 		div(class="col-md-4")

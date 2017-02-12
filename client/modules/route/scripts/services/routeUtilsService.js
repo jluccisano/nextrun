@@ -3,6 +3,7 @@
 angular.module("nextrunApp.route").factory("RouteUtilsService", function() {
 
 	return {
+		
 		convertPathToPoints: function(path, isFirstPoint) {
 
 			var startIndex = 1;

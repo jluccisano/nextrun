@@ -9,31 +9,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 		RouteHelperService,
 		RaceTypeEnum) {
 
-		var getElevation = function(segment) {
 
-			var defer = $q.defer();
-
-			var samplingPoints = segment.getSamplingPoints();
-			var samplesLatlng = getAllLatlngFromPoints(samplingPoints);
-
-			GmapsApiService.ElevationService().getElevationForLocations({
-				"locations": samplesLatlng
-			}, function(result, status) {
-				if (status === google.maps.ElevationStatus.OK) {
-
-					var data = {
-						samplingPoints: samplingPoints,
-						elevations: result
-					};
-
-					defer.resolve(data);
-				} else {
-					defer.reject(status);
-				}
-			});
-			return defer.promise;
-
-		};
 
 		var getAllLatlngFromPoints = function(points) {
 			var samplesLatlng = [];
@@ -46,6 +22,32 @@ angular.module("nextrunApp.route").factory("RouteService",
 		};
 
 		return {
+
+			getElevation: function(segment) {
+
+				var defer = $q.defer();
+
+				var samplingPoints = segment.getSamplingPoints();
+				var samplesLatlng = getAllLatlngFromPoints(samplingPoints);
+
+				GmapsApiService.ElevationService().getElevationForLocations({
+					"locations": samplesLatlng
+				}, function(result, status) {
+					if (status === google.maps.ElevationStatus.OK) {
+
+						var data = {
+							samplingPoints: samplingPoints,
+							elevations: result
+						};
+
+						defer.resolve(data);
+					} else {
+						defer.reject(status);
+					}
+				});
+				return defer.promise;
+
+			},
 
 			createRoutesViewModel: function($scope, race) {
 
@@ -94,6 +96,8 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 				var isFirstPoint = false;
 
+				var _this = this;
+
 				if (route.segments.length > 0) {
 					var lastPointOfLastSegment = route.getLastPointOfLastSegment();
 					lastLatlngOfLastSegment = GmapsApiService.LatLng(lastPointOfLastSegment.getLatitude(), lastPointOfLastSegment.getLongitude());
@@ -126,7 +130,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 							route.addPolyline(result.path, false, false, false, true, "red", 5);
 						}
 
-						return getElevation(result.segment);
+						return _this.getElevation(result.segment);
 
 					}).then(function(data) {
 

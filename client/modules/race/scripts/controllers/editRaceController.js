@@ -24,9 +24,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		google.maps.visualRefresh = true;
 
 		$scope.navType = "pills";
-		$scope.saving = false;
-		$scope.loading = false;
-		$scope.pending = false;
 
 		$scope.types = RaceTypeEnum.getValues();
 
@@ -35,6 +32,12 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.cursorMarker = {
 			id: 1
 		};
+
+		$scope.location = {
+			details: {},
+			name: ""
+		};
+
 		$scope.currentRaceType = {};
 
 		$scope.options = {
@@ -45,9 +48,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.raceId = $routeParams.raceId;
 
 		$scope.init = function() {
-
-			$scope.loading = true;
-
 			RaceService.retrieve($scope.raceId).then(function(response) {
 
 				$scope.race = response.race;
@@ -55,7 +55,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				$scope.routesViewModel = RouteService.createRoutesViewModel($scope, $scope.race);
 
 			}).finally(function() {
-				$scope.loading = false;
 				MetaService.ready(gettextCatalog.getString("Editer une manifestation"), $location.path, gettextCatalog.getString("Editer une manifestation"));
 			});
 		};
@@ -92,12 +91,9 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 				race: $scope.race
 			};
 
-			$scope.saving = true;
-
 			RaceService.update($scope.raceId, data).then(
 				function() {
 					AlertService.add("success", gettextCatalog.getString("Votre manifestation a bien été mise à jour"), 3000);
-					$scope.saving = false;
 					$location.path("/myraces");
 				});
 		};
@@ -125,38 +121,36 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 			//_.each(raceType.routes, function(routeType, index) {
 
-				//var route = RouteHelperService.generateRoute($scope, undefined, routeType);
+			//var route = RouteHelperService.generateRoute($scope, undefined, routeType);
 
-				//$scope.race.routes[index] = route;
-				//$scope.race.routes[0].isVisible = true;
+			//$scope.race.routes[index] = route;
+			//$scope.race.routes[0].isVisible = true;
 			//});
 
 		};
 
 		$scope.getFile = function(route, file) {
-
-			$scope.pending = true;
-
 			FileReaderService.readAsDataUrl(file, $scope).then(function(result) {
-
-				//reinit route
 				try {
-					route = GpxService.convertGPXtoRoute($scope, result);
-					//route = RouteHelperService.generateRoute($scope, undefined, route.routeType);
-
-					if (route.segments.length > 0) {
-						route.markers = RouteService.rebuildMarkers(route.segments, true);
-						route.polylines = RouteService.rebuildPolylines(route.segments);
-					}
-
-					$scope.$apply();
-
+					route = GpxService.convertGPXtoRoute($scope, route.routeType, result);
 				} catch (ex) {
 					AlertService.add("danger", ex.message, 3000);
 				} finally {
-					$scope.pending = false;
+
 				}
 			});
+		};
+
+		$scope.centerToLocation = function(route, details) {
+
+			if (details && details.location) {
+				var center = {
+					latitude: details.location.lat,
+					longitude: details.location.lon
+				};
+
+				route.setCenter(center);
+			}
 		};
 
 		$scope.init();

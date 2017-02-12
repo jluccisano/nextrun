@@ -14,7 +14,6 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         google.maps.visualRefresh = true;
 
-        $scope.loading = false;
         $scope.raceId = $routeParams.raceId;
         $scope.cursorMarker = {};
         $scope.navType = "pills";
@@ -28,7 +27,6 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.init = function() {
 
-            $scope.loading = true;
 
             RaceService.retrieve($scope.raceId).then(function(response) {
 
@@ -38,7 +36,6 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
             }).finally(function() {
                 MetaService.ready($scope.race.name, $location.path(), $scope.generateRaceDescription());
-                $scope.loading = false;
             });
         };
 

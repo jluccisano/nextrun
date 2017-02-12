@@ -1,10 +1,6 @@
 div(class="container")
 	h3 {{'Editer la manifestation' | translate}}
 	div(class="row")
-		div(class="col-lg-offset-8 col-lg-4" ng-show="loading")
-			span(class="fa fa-spinner fa-spin")
-			span  {{'Chargement...' | translate}}
-
 		accordion
 			accordion-group(heading="{{'Général' | translate}}")
 				include ./templates/raceForm
@@ -34,12 +30,8 @@ div(class="container")
 						//div.bs-callout.bs-callout-info
 						//	h4 {{'Informations' | translate}}
 						//	p  {{'Ajouter des informations concernant le parcours' | translate}}
-						//input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
-						//div.row
-						//	div.col-lg-4(ng-show="pending")
-						//		span(class="fa fa-spinner fa-spin")
-						//		span  {{'Chargement en cours' | translate}}
-						//hr
+						input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, route)")
+						hr
 						include mapEditor
 
 			accordion-group(heading="{{'Organisation' | translate}}")
@@ -49,6 +41,3 @@ div(class="container")
 			div(class="col-lg-offset-4 col-lg-8")
 				button(class="btn btn-default" ng-click="cancel()") {{'Annuler' | translate}}
 				button(class="btn btn-primary" ng-click="submit(race)" ng-disabled="form1.$invalid") {{'Sauvegarder' | translate}}
-				//div(ng-show="saving")
-				//	span(class="fa fa-spinner fa-spin")
-				//	span  {{'Sauvegarde en cours' | translate}}

@@ -473,8 +473,6 @@ var routeBuilder = {};
 			this.segments.push(new routeBuilder.Segment(segmentDataModel, this.getLastPointOfLastSegmentDataModel()));
 		};
 
-
-
 		this._createMarker = function(latLng, icon, title) {
 
 			if (!(latLng instanceof google.maps.LatLng)) {
@@ -689,6 +687,10 @@ var routeBuilder = {};
 
 		this.getCenter = function() {
 			return this._center;
+		};
+
+		this.setCenter = function(center) {
+			this._center = center;
 		};
 
 		this.getElevationPoints = function() {

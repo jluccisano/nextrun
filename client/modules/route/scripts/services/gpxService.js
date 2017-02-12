@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.route").factory("GpxService",
-	function(XmlService, RouteUtilsService) {
+	function(x2js, RouteService, RouteUtilsService, RouteHelperService) {
 
 		return {
 
@@ -13,6 +13,7 @@ angular.module("nextrunApp.route").factory("GpxService",
 
 				return gpxToJson.gpx.trk.trkseg.trkpt;
 			},
+
 			/**
 			 * Cette fonction split la liste des trkpts contenu dans le gpx en un nombre de segment
 			 * Cela permettra d"éditer plus facilement la route. La taille du segment est définit par la taille
@@ -21,9 +22,9 @@ angular.module("nextrunApp.route").factory("GpxService",
 			 * @throws {Error} If trkpts must contain at least one element
 			 * @returns an array of {Segment}
 			 */
-			splitTrkptsToSegments: function(route, trkpts) {
+			splitTrkptsToSegments: function(trkpts) {
 
-				var segments = [];
+				var segmentsDataModel = [];
 
 				if (!trkpts || trkpts.length === 0) {
 					throw new Error("trkpts must contain at least one element");
@@ -32,115 +33,87 @@ angular.module("nextrunApp.route").factory("GpxService",
 				var offset = parseInt(trkpts.length * 0.05);
 				var pointer = 0;
 
-				var segment = {
-					segmentId: RouteUtilsService.generateUUID(),
-					points: [],
-					distance: 0
+				var segmentDataModel = {
+					id: routeBuilder.generateUUID(),
+					distance: 0,
+					points: []
 				};
 
 				_.each(trkpts, function(trkpt, i) {
 
-					//dès que l"on a atteint l"offset on extrait les points pour l"elevation et on calcule la distance du segment
-					//enfin on recrée un nouveau segment
 					if (pointer === offset || i === (trkpts.length - 1)) {
 
-						//calculate distance
-						
-						segment.distance = route.calculateDistanceFromStartForEachPointOfSegment(segment);
-
-						//add segment into the list
-						segments.push(segment);
-
-						//create new segment
-						segment = {
-							segmentId: RouteUtilsService.generateUUID(),
-							points: [],
-							distance: 0
+						segmentDataModel = {
+							id: routeBuilder.generateUUID(),
+							distance: 0,
+							points: []
 						};
+
+						segmentsDataModel.push(segmentDataModel);
 
 						pointer = 0;
 					}
+
+					var point = {
+						lat: parseFloat(trkpt._lat),
+						lng: parseFloat(trkpt._lon),
+						elevation: 0,
+						distanceFromStart: 0,
+						grade: 0
+					};
+
+					segmentDataModel.points.push(point);
+
+					pointer++;
+
 				});
-				return segments;
+				return segmentsDataModel;
 			},
 
 
-			convertGPXtoRoute: function() {
-				/*var route = {};
-				
-				try {
-					
-					route.segments = [];
-					route.elevationPoints = [];
-					route.chartConfig = {};
-					route.chartConfig.series = [];
+			convertGPXtoRoute: function($scope, routeType, gpx) {
+				var routeViewModel = {};
 
-					var gpxToJson = XmlService.xml2json(gpx);
+				var routeDataModel = {
+					type: routeType,
+					segments: [],
+					elevationPoints: []
+				};
+
+				var center = RouteUtilsService.setCenter($scope, routeDataModel);
+
+				routeViewModel = new routeBuilder.Route(routeDataModel,
+					RouteHelperService.getChartConfig($scope),
+					RouteHelperService.getGmapsConfig(), center);
+
+				routeViewModel.addClickListener($scope.onClickMap);
+
+				try {
+
+					var gpxToJson = x2js.xml_str2json(gpx);
 
 					var trkpts = this.getTrkpts(gpxToJson);
 
-					//create first segment with start marker
-					var segment1Id = RouteUtilsService.generateUUID();
-					var segment1 = {
-						segmentId: segment1Id,
-						points: [{
-							latlng: {
-								mb: trkpts[0]._lat,
-								nb: trkpts[0]._lon
-							},
-							elevation: trkpts[0].ele,
-							distanceFromStart: 0,
-							grade: 0,
-							segmentId: segment1Id
-						}],
-						distance: 0
-					};
+					var segmentsDataModel = this.splitTrkptsToSegments(trkpts);
 
-					route.segments.push(segment1);
-					
-					route.segments = this.splitTrkptsToSegments(trkpts);
+					_.each(segmentsDataModel, function(segmentDataModel) {
 
-					var sample = parseInt(trkpts.length * 0.05) * 0.001;
+						var segmentViewModel = routeViewModel.addSegment(segmentDataModel);
 
-					_.each(route.segments, function(segment) {
-
-						var samplePoints = SegmentService.findSamplesPointIntoSegment(segment, sample);
-
-						var samplesLatlng = ElevationService.getAllLatlngFromPoints(samplePoints);
-
-						ElevationService.getElevationFromLocation(samplesLatlng, function(result, status) {
-
-							if (status !== google.maps.ElevationStatus.OK) {
-								return;
-							}
-
-							for (var k = 0; k < result.length; k++) {
-
-								samplePoints[k].elevation = result[k].elevation;
-
-								var lastElevationPoint = ElevationService.getLastElevationPoint(route.elevationPoints);
-
-								if (lastElevationPoint) {
-									ElevationService.setGrade(lastElevationPoint, samplePoints[k]);
-								}
-
-								route.elevationPoints.push(samplePoints[k]);
-							}
-
-
-							ElevationService.calculateElevationDataAlongRoute(route);
-
-							ElevationService.addPointsToElevationChart(route.chartConfig.series, samplePoints);
-
+						RouteService.getElevation(segmentViewModel).then(function(data) {
+							routeViewModel.addElevationPoints(data.samplingPoints, data.elevations);
 						});
-
 					});
+
+					//var sample = parseInt(trkpts.length * 0.05) * 0.001;
+
+
 
 				} catch (ex) {
 					throw new Error(ex);
 				}
 
-				return route;*/
+				return routeViewModel;
 			}
 		};
 	});

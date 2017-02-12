@@ -4,9 +4,10 @@ div(ng-if="route.isVisible()")
 			div(class="collapse navbar-collapse")
 				form(class="navbar-form navbar-left" role="search")
 					div(class="input-group")
-						input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}")
+						input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="options" details="location.details")
+
 						span(class="input-group-btn")
-							button(class="btn btn-default" type="button")
+							button(class="btn btn-default" type="button" ng-click="centerToLocation(route, location.details)")
 								span(class="glyphicon glyphicon-search")
 				ul(class="nav navbar-nav")
 					li
