@@ -12,7 +12,6 @@ install:
   - gem install compass
   - npm install -g grunt-cli
   - npm install -g bower
-  - npm install -g jshint-stylish
 before_script:
   - npm install
   - bower install
