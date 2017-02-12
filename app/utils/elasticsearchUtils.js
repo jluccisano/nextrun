@@ -5,34 +5,102 @@
  */
 exports.buildGeoDistanceFilter = function(location, distance) {
 
-    var result;
+  var geo_filter;
 
-      if(typeof(location) != 'undefined') {
+  if ('undefined' !== typeof(location) && 'undefined' !== typeof(distance)) {
 
-        result = { 
-          'geo_distance': {
-            'distance': distance+'km',
-              'race.pin.location': {
-                'lat': location.lat,
-                'lon': location.lon
-              }
-            }
-          };
-      } else {
-        throw new Error("location or/and distance are undefined");
-      }
+    if ('number' === typeof(location.lat) && 'number' === typeof(location.lon)) {
 
-  return result;
+      geo_filter = {
+        'geo_distance': {
+          'distance': distance + 'km',
+          'race.pin.location': {
+            'lat': location.lat.toString() ,
+            'lon': location.lon.toString() 
+          }
+        }
+      };
+    }
+  }
+  return geo_filter;
 
 };
 
+exports.buildTermsFilter = function(field, terms) {
+  var terms_filter;
+
+  if ('undefined' !== typeof(field) && Array.isArray(terms) && terms.length > 0) {
+
+    var terms_filter = {};
+    terms_filter.terms = {};
+    terms_filter.terms[field] = terms;
+   
+  }
+
+  return terms_filter;
+
+};
+
+exports.buildDateRangeFilter = function(field, from, to) {
+
+  var dateRange_filter;
+
+  if ('undefined' !== typeof(field) && 'undefined' !== typeof(from) && 'undefined' !== typeof(to)) {
+
+    var fromDate = new Date(from);
+    var toDate = new Date(to);
+
+    if (Object.prototype.toString.call(fromDate) === "[object Date]" && Object.prototype.toString.call(toDate) === "[object Date]") {
+
+      var dateRange_filter = {};
+      dateRange_filter.range = {};
+
+      dateRange_filter.range[field] = {
+        "from": from,
+        "to": to
+      };
+    }
+  }
+  return dateRange_filter;
+}
+
+exports.buildDateRangeFacetFilter = function(field, from, to) {
+
+  var dateRange_filter;
+
+  if ('undefined' !== typeof(field) && 'undefined' !== typeof(from) && 'undefined' !== typeof(to)) {
+
+    var fromDate = new Date(from);
+    var toDate = new Date(to);
+
+    if (Object.prototype.toString.call(fromDate) === "[object Date]" && Object.prototype.toString.call(toDate) === "[object Date]") {
+
+
+      var dateRange_filter = {};
+      dateRange_filter.range = {};
+
+      dateRange_filter.range[field] = {
+        "gt": from,
+        "lte": to
+      };
+    }
+  }
+  return dateRange_filter;
+}
+
 exports.buildQueryString = function(field, query) {
 
-  var result = {}
-  result.queryString = {};
+  var query_string;
 
-  result.queryString.default_field = field;
-  result.queryString.query = query;
+  if ('undefined' !== typeof(field) && 'undefined' !== typeof(query)) {
 
-  return result;
+    var query_string = {
+      "query_string": {
+        "default_field": field,
+        "query": query
+      }
+    }
+  }
+
+  return query_string;
 };

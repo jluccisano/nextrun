@@ -65,6 +65,7 @@
     "travis-cov": "latest",
     "superagent": "latest",
     "passport-stub": "latest",
-    "sinon": "latest"
+    "sinon": "latest",
+    "chai": "~1.9.0"
   }
 }

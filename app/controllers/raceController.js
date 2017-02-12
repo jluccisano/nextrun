@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
   Race = mongoose.model('Race'),
   errorUtils = require('../utils/errorutils'),
   util = require('util'),
-  elasticsearhUtils = require('elasticsearhUtils'),
+  elasticsearchUtils = require('../utils/elasticsearchUtils'),
   ElasticSearchClient = require('elasticsearchclient');
 
 var serverOptions = {
@@ -262,116 +262,6 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
 
 };
 
-exports.extractCriteria = function(req, res, next) {
-
-  var operation = {
-    fulltext: "",
-    departments: {},
-    types: {},
-    date: undefined,
-    page: 0,
-    size: 20,
-    region: {},
-    sort: "_score"
-  };
-
-  var criteria = req.body.criteria;
-
-  if (criteria) {
-
-    if (criteria.page) {
-      operation.page = criteria.page;
-    }
-
-    if (criteria.size) {
-      operation.size = criteria.size;
-    }
-
-    if (criteria.sort) {
-
-      operation.sort = criteria.sort;
-      /*operation.sort = {
-        "date": 1
-      };*/
-    }
-
-    if (criteria.types.length > 0) {
-
-      operation.types = criteria.types;
-      /*operation.types = {
-        "type.name": {
-          '$in': criteria.types
-        }
-      };*/
-    }
-    if (criteria.departments.length > 0) {
-
-      operation.departments = criteria.departments;
-
-      /* operation.departments = {
-        "department.code": {
-          '$in': criteria.departments
-        }
-      };*/
-    }
-
-    if (criteria.region !== undefined) {
-
-      operation.region = criteria.region;
-      /*operation.region = {
-        "department.code": {
-          '$in': criteria.region.departments
-        }
-      };*/
-    }
-
-    if (criteria.fulltext) {
-
-      operation.fulltext = criteria.fulltext;
-      /* var regex = new RegExp('\\b' + criteria.fulltext, 'i');
-      operation.fulltext = {
-        "name": regex
-      }*/
-    }
-
-
-    if (criteria.dateRange && criteria.dateRange.startDate && criteria.dateRange.endDate) {
-      /* operation.date = {
-        "date": {
-          $gte: new Date(criteria.dateRange.startDate),
-          $lt: new Date(criteria.dateRange.endDate)
-        }
-      };*/
-
-      operation.date = {
-        "from": new Date(criteria.dateRange.startDate),
-        "to": new Date(criteria.dateRange.endDate)
-      };
-    }
-
-    if(criteria.location) {
-
-      operation.location = criteria.location;
-
-      /*if(criteria.searchAround === true) {
-
-          operation.location = criteria.location;
-      
-      }*/
-
-    }
-
-
-
-  }
-
-  req.operation = operation;
-  req.races = [];
-  req.facets = [];
-
-  return next();
-};
-
 /**
  * @method Search races by criteria
  * @param req
@@ -379,14 +269,17 @@ exports.extractCriteria = function(req, res, next) {
  */
 exports.search = function(req, res) {
 
-  var operation = req.operation;
+  var criteria = req.body.criteria;
 
-  //var search = "*";
-  //var page = 0;
-  //var pageSize = 20;
-  //var sort = "_score";
-  //var filters = "";
-  var criteria = {};
+  if (process.env.NODE_ENV === 'development') {
+    console.log(util.inspect(criteria, true, 7, true));
+  }
+
+  var operation = {
+    from: 0,
+    size: 20,
+    sort: "_score"
+  };
 
   var partial_fields = {
     "partial1": {
@@ -394,106 +287,113 @@ exports.search = function(req, res) {
     }
   };
 
-
-  var type_filter = {};
-  var department_filter = {};
-
   //query
 
   var query = {};
 
   query.bool = {};
   query.bool.should = [];
-  query.bool.should.push(elasticsearchUtils.buildQueryString("race.name.autocomplete", operation.fulltext));
-  query.bool.should.push(elasticsearchUtils.buildQueryString("race.department.name.autocomplete", operation.fulltext));
-  query.bool.should.push(elasticsearchUtils.buildQueryString("race.department.region.autocomplete", operation.fulltext));
-  query.bool.should.push(elasticsearchUtils.buildQueryString("race.department.code.autocomplete", operation.fulltext));
-  query.bool.should.push(elasticsearchUtils.buildQueryString("race.distanceType.i18n.autocomplete", operation.fulltext));
-  query.bool.should.push(elasticsearchUtils.buildQueryString("race.type.name.autocomplete", operation.fulltext));
 
-  criteria.query = query;
+  var raceName_query = elasticsearchUtils.buildQueryString("race.name.autocomplete", criteria.fulltext);
+
+  if (raceName_query) {
+    query.bool.should.push(raceName_query);
+  }
+
+  var departmentName_query = elasticsearchUtils.buildQueryString("race.department.name.autocomplete", criteria.fulltext);
+
+  if (departmentName_query) {
+    query.bool.should.push(departmentName_query);
+  }
+
+  var departmentRegion_query = elasticsearchUtils.buildQueryString("race.department.region.autocomplete", criteria.fulltext);
+
+  if (departmentRegion_query) {
+    query.bool.should.push(departmentRegion_query);
+
+  }
+
+  var departmentCode_query = elasticsearchUtils.buildQueryString("race.department.code.autocomplete", criteria.fulltext);
+
+  if (departmentCode_query) {
+    query.bool.should.push(departmentCode_query);
+  }
+
+  var distanceType_query = elasticsearchUtils.buildQueryString("race.distanceType.i18n.autocomplete", criteria.fulltext);
+
+  if (distanceType_query) {
+    query.bool.should.push(distanceType_query);
+  }
+
+  var raceType_query = elasticsearchUtils.buildQueryString("race.type.name.autocomplete", criteria.fulltext);
+
+  if (raceType_query) {
+    query.bool.should.push(raceType_query);
+  }
+
+
+
+  if (query.bool.should.length > 0) {
+    operation.query = query;
+  } else {
+    operation.query = {
+      "match_all": {}
+    };
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log(util.inspect(query, true, 7, true));
+  }
+
+
 
   //filter
 
   var filter = {};
   filter.and = [];
+  var type_filter = {};
+  var department_filter = {};
 
-  var typesArray = [];
-
-  if (operation.types.length > 0) {
-    typesArray = operation.types;
-
-    console.log(typesArray);
-
-    type_filter = {
-      "terms": {
-        "race.type.name": typesArray
-      }
-    };
-
+  var type_filter = elasticsearchUtils.buildTermsFilter("race.type.name", criteria.types);
+  if (type_filter) {
     filter.and.push(type_filter);
   }
 
-  var departmentsArray = [];
-
-  if (operation.departments.length > 0) {
-    departmentsArray = operation.departments;
-
-    console.log(departmentsArray);
-
-    department_filter = {
-      "terms": {
-        "race.department.code": departmentsArray
-      }
-    };
-
+  var department_filter = elasticsearchUtils.buildTermsFilter("race.department.code", criteria.departments);
+  if (department_filter) {
+    filter.and.push(department_filter);
   }
 
-  if (operation.date !== undefined) {
-
-    date_filter = {
-      "range": {
-        "race.date": {
-          "from": operation.date.from,
-          "to": operation.date.to
-        }
-      }
-    };
-
+  var date_filter = elasticsearchUtils.buildDateRangeFilter("race.date", criteria.dateRange.startDate, criteria.dateRange.endDate);
+  if (date_filter) {
     filter.and.push(date_filter);
   }
 
-  var departmentsOfRegionArray = [];
-
-  console.log(operation.region);
-
-  if (operation.region.departments !== undefined && operation.region.departments.length > 0) {
-    departmentsOfRegionArray = operation.region.departments;
-
-    console.log(departmentsOfRegionArray);
-
-    departmentOfRegion_filter = {
-      "terms": {
-        "race.department.code": departmentsOfRegionArray
-      }
-    };
-
-    filter.and.push(departmentOfRegion_filter);
-
+  var departmentOfRegion_filter;
+  if (criteria.region) {
+    var departmentOfRegion_filter = elasticsearchUtils.buildTermsFilter("race.department.code", criteria.region.departments);
+    if (departmentOfRegion_filter) {
+      filter.and.push(departmentOfRegion_filter);
+    }
   }
 
-  if(operation.location) {
+  var distance = 5;
+  if(criteria.searchAround === true) {
+    distance = criteria.distance;
+  }
 
-    var geoDistance_filter = elasticsearchUtils.buildGeoDistanceFilter(operation.location, 40);
+  var geoDistance_filter = elasticsearchUtils.buildGeoDistanceFilter(criteria.location, distance);
+  if (geoDistance_filter) {
     filter.and.push(geoDistance_filter);
   }
 
-
-
   if (filter.and.length > 0) {
-    criteria.filter = filter;
+    operation.filter = filter;
   }
 
+  if (process.env.NODE_ENV === 'development') {
+    console.log(util.inspect(filter, true, 7, true));
+  }
 
 
   //facets
@@ -520,61 +420,61 @@ exports.search = function(req, res) {
   var typeFacetFilter = {}
   typeFacetFilter.and = [];
 
-  var date_filter_withRange = {
-    "range": {
-      "race.date": {
-        "gt": operation.date.from,
-        "lte": operation.date.to
-      }
-    }
-  };
+  var date_filter_withRange = elasticsearchUtils.buildDateRangeFacetFilter("race.date", criteria.dateRange.startDate, criteria.dateRange.endDate);
 
-  if(operation.location !== undefined){
+
+  //add location facet filter on all facets
+  if (geoDistance_filter) {
     departmentFacetFilter.and.push(geoDistance_filter);
     typeFacetFilter.and.push(geoDistance_filter);
   }
 
-  if(operation.date !== undefined) {
+  //add date facet filter on all facets
+  if (date_filter_withRange) {
     departmentFacetFilter.and.push(date_filter_withRange);
     typeFacetFilter.and.push(date_filter_withRange);
   }
-   
 
-  if (departmentsArray.length > 0) {
-    typeFacetFilter.and.push(department_filter);
-  }
-
-  if (typesArray.length > 0) {
-    departmentFacetFilter.and.push(type_filter);
-   
-  }
-
-  if (departmentsOfRegionArray.length > 0) {
+  //add department of region facet filter on all facets
+  if (departmentOfRegion_filter) {
     departmentFacetFilter.and.push(departmentOfRegion_filter);
     typeFacetFilter.and.push(departmentOfRegion_filter);
   }
 
+
+  //add departments facet filter on type facet only
+  if (department_filter) {
+    typeFacetFilter.and.push(department_filter);
+  }
+
+  //add types facet filter on department facet only
+  if (type_filter) {
+    departmentFacetFilter.and.push(type_filter);
+
+  }
+
+  //set type facet filter
   if (typeFacetFilter.and.length > 0) {
     facets.typeFacets.facet_filter = typeFacetFilter;
   }
 
+  //set department facet filter
   if (departmentFacetFilter.and.length > 0) {
     facets.departmentFacets.facet_filter = departmentFacetFilter;
   }
 
-  criteria.facets = facets;
+  operation.facets = facets;
 
+  if (process.env.NODE_ENV === 'development') {
+    console.log(util.inspect(facets, true, 7, true));
+  }
 
-  criteria.from = operation.page;
-  criteria.size = operation.size;
-  criteria.partial_fields = partial_fields;
-  criteria.sort = [operation.sort];
+  operation.from = criteria.page;
+  operation.size = criteria.size;
+  operation.partial_fields = partial_fields;
+  operation.sort = [criteria.sort];
 
-  console.log(util.inspect(criteria.filter));
-
-  console.log(util.inspect(criteria.query));
-
-  elasticSearchClient.search('racesidx_v1', 'race', criteria)
+  elasticSearchClient.search('racesidx_v1', 'race', operation)
     .on('data', function(data) {
       console.log(JSON.parse(data));
       res.json(200, JSON.parse(data));
@@ -599,7 +499,7 @@ exports.autocomplete = function(req, res) {
   var criteria = req.body.criteria;
 
   var query = {
-    "partial_fields":{
+    "partial_fields": {
       "partial1": {
         "exclude": "routes.*"
       }
@@ -679,7 +579,6 @@ exports.autocomplete = function(req, res) {
     })
     .exec();
 };
-
 
 
 

@@ -42,24 +42,24 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.$on('handleFullTextBroadcast', function() {
 			$scope.fulltext = sharedService.fulltext;
-			$scope.isModeGeolocation=false;	
-
+			$scope.isModeGeolocation = false;
+			$scope.currentDepartmentSelected = [];
 			$scope.currentTypeSelected = [];
 			$scope.searchAround = undefined;
 			$scope.distance = undefined;
-			$scope.location = undefined;
+			$scope.details = undefined;
 
 			$scope.search();
 		});
 
 		$scope.$on('handleCriteriaBroadcast', function() {
+			$scope.currentDepartmentSelected = [];
 			$scope.currentTypeSelected = sharedService.criteria.types;
 			$scope.searchAround = sharedService.criteria.searchAround;
 			$scope.distance = sharedService.criteria.distance;
-			$scope.location = sharedService.criteria.location;
-			$scope.isModeGeolocation=true;
-
-			$scope.fulltext= undefined;
+			$scope.details = sharedService.criteria.details;
+			$scope.isModeGeolocation = true;
+			$scope.fulltext = undefined;
 
 			$scope.search();
 		});
@@ -293,7 +293,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 			var criteria = {};
 
-			if($scope.isModeGeolocation) {
+			if ($scope.isModeGeolocation) {
 				criteria = {
 					distance: $scope.distance,
 					searchAround: $scope.searchAround,
@@ -303,7 +303,11 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					sort: $scope.sort,
 					departments: $scope.departments,
 					dateRange: $scope.dateRange,
-					location: $scope.location
+					location: {
+						name: $scope.details.name,
+						lat: $scope.details.geometry.location.lat(),
+						lon: $scope.details.geometry.location.lng()
+					}
 				}
 
 			} else {
@@ -392,6 +396,14 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.switchSearchView = function(value) {
 			$scope.isModeGeolocation = value;
+
+			$scope.searchAround = false;
+			$scope.distance = "15";
+			$scope.details = undefined
+			$scope.fulltext = undefined;
+			$scope.currentDepartmentSelected = [];
+			$scope.currentTypeSelected = [];
+
 		}
 
 	}

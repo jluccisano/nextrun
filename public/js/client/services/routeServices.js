@@ -655,8 +655,8 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 					marker = {
 						raceId: race._id,
 						raceName: race.name,
-						latitude: race.pin.location.lat,
-						longitude: race.pin.location.lon,
+						latitude: race.pin.location.lat + (Math.random() -.5) / 1500,
+						longitude: race.pin.location.lon +(Math.random() -.5) / 1500,
 						icon: "../../../img/start.png",
 						showWindow: false,
 						title: "hello"

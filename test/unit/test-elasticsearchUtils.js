@@ -5,31 +5,74 @@ process.env.NODE_ENV = 'test';
  */
 
 var elasticsearchUtils = require('../../app/utils/elasticsearchUtils'),
-assert = require('assert');
+  assert = require('chai').assert;
 
-describe('buildGeoDistanceFilter', function(){
+describe('buildGeoDistanceFilter', function() {
 
-  describe('valid parameters', function(){
+  describe('valid parameters', function() {
 
-    it('should return 40km', function(){
+    it('should return 40km', function() {
       var location = {
-      	lat: 43.1,
-      	lon: 1.5
+        lat: 43.1,
+        lon: 1.5
       };
-      	
-      var filter = elasticsearchUtils.buildGeoDistanceFilter(location,40);
-      console.log(filter);
+
+      var filter = elasticsearchUtils.buildGeoDistanceFilter(location, 40);
       assert.equal("40km", filter.geo_distance.distance);
     });
   });
 
-  describe('invalid parameters', function(){
+  describe('invalid parameters', function() {
+    it('should return undefined', function() {
+      var filter = elasticsearchUtils.buildGeoDistanceFilter(undefined, 40);
+      assert.isUndefined(filter, 'no filter defined');
+    });
+    it('should return undefined', function() {
+      var filter = elasticsearchUtils.buildGeoDistanceFilter(undefined, undefined);
+      assert.isUndefined(filter, 'no filter defined');
+    });
+    it('should return undefined', function() {
 
-    it('should return error', function(){
-      var filter = elasticsearchUtils.buildGeoDistanceFilter(undefined,40);
-      console.log(filter);
-      //assert.equal("40km", filter.geo_distance.distance);
-    })
-  })
+      var location = {
+        lat: 43.1,
+        lon: 1.5
+      };
+
+      var filter = elasticsearchUtils.buildGeoDistanceFilter(location, undefined);
+      assert.isUndefined(filter, 'no filter defined');
+    });
+    it('should return undefined', function() {
+
+      var location = {
+        lat: "toto",
+        lon: undefined
+      };
+
+      var filter = elasticsearchUtils.buildGeoDistanceFilter(location, "40");
+      assert.isUndefined(filter, 'no filter defined');
+    });
+  });
+
+});
+
+
+describe('buildGeoDistanceFilter', function() {
+
+  describe('valid parameters', function() {
+
+    it('should return an array of terms', function() {
+      var region = {
+        name: "Bourgogne",
+        departments : ['21','58','71','89']
+      };
+
+      var filter = elasticsearchUtils.buildTermsFilter("race.department.code", region.departments);
+      assert.equal(region.departments, filter.terms.field);
+    });
+  });
+
+  describe('invalid parameters', function() {
+
+  });
 
 });

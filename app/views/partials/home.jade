@@ -6,11 +6,12 @@ div.custom-bs-background
 			div.row(style="margin-top:20px")
 				div.col-lg-7.col-lg-offset-2
 					div.input-group.input-group-lg(style="margin-top:20px")
-			
+						
 						input.form-control(type="text" placeholder="Recherche directe" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in autocomplete($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
 
 						span.input-group-addon
-							span.glyphicon.glyphicon-search
+							span.glyphicon.glyphicon-search						
+							
 				div.col-lg-12
 					div.col-lg-3.col-lg-offset-2
 						hr
@@ -25,6 +26,7 @@ div.custom-bs-background
 							div.col-lg-6
 								div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation && form.location.$valid}")
 									input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="pin.name" has-location required ng-autocomplete options="options" details="details")
+									span.help-block(data-ng-show="form.location.$dirty && ( form.location.$error.required || form.location.$error.validLocation)")  Veuillez saisir une ville correcte
 								div.row
 									div.col-lg-6
 										div.form-group
@@ -42,9 +44,10 @@ div.custom-bs-background
 							div.col-lg-2
 								div.form-group
 									select(class="multiselect" data-placeholder="Sélectionner..." data-ng-model="currentTypesSelected" data-ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
-							div.col-lg-4
+						div.row
+							div.col-lg-2.col-lg-offset-8(style="margin-top:-40px")
 								div.form-group
-									button.btn.btn-primary(type="submit" data-ng-click="submitSearchWithCriteria()") Rechercher			
+									button.btn.btn-primary(type="submit" data-ng-click="submitSearchWithCriteria()" data-ng-disabled="form.$invalid") Rechercher	
 						
 								
 			div.row(style="margin-top:10px")

@@ -104,11 +104,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				distance: $scope.distance,
 				searchAround: $scope.searchAround,
 				types: $scope.currentTypesSelected,
-				location: {
-					name: $scope.details.name,
-					lat:  $scope.details.geometry.location.lat(),
-					lon:  $scope.details.geometry.location.lng()
-				}
+				details: $scope.details
 			}
 
 			setTimeout(function() {

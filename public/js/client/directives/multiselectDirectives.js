@@ -15,7 +15,7 @@ angular.module("nextrunApp").directive('multiselectDropdown', [function() {
             buttonContainer: '<div class="input-group btn-group" />',
             buttonText: function(options, select) {
                 if (options.length === 0) {
-                    return 'Types <b class="caret"></b>';
+                    return "Types d'épreuves <b class='caret'></b>";
                 } else if (options.length > 2) {
                     return options.length + ' sélectionnés <b class="caret"></b>';
                 } else {

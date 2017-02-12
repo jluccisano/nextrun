@@ -143,7 +143,7 @@ var routes = [
     {
         path: '/api/races/search',
         httpMethod: 'POST',
-        middleware: [raceController.extractCriteria, raceController.search],
+        middleware: [raceController.search],
         accessLevel: accessLevels.public
     },
     {

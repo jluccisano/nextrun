@@ -19,9 +19,10 @@ div.container
 		div.col-lg-6.col-lg-offset-4
 			form(role="form", name="form", novalidate)
 				div.row
-					div.col-lg-6
+					div.col-lg-8
 						div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation && form.location.$valid}")
-							input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="pin.name" has-location required ng-autocomplete options="options" details="details")
+							input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="details.name" has-location required ng-autocomplete options="options" details="details")
+							span.help-block(data-ng-show="form.location.$dirty && ( form.location.$error.required || form.location.$error.validLocation)")  Veuillez saisir une ville correcte
 						div.row
 							div.col-lg-6
 								div.form-group
@@ -38,7 +39,7 @@ div.container
 										option(value="100") 100km
 					div.col-lg-4
 						div.form-group
-							button.btn.btn-primary(type="submit" data-ng-click="search()") Rechercher						
+							button.btn.btn-primary(type="submit" data-ng-click="search()"  data-ng-disabled="form.$invalid") Rechercher						
 		div.col-lg-3.col-lg-offset-7(style="margin-top:10px")
 			a(data-ng-click="switchSearchView(false)") Rechercher par mot-clés
 	div.row
@@ -51,14 +52,14 @@ div.container
 					a(data-ng-click="onSelect('*')") Tout supprimer
 					div.row
 						div.col-lg-12
-							a(data-ng-click="toggleTypeSelection(type);onChange()" data-ng-repeat="type in currentTypeSelected") 
-								span.label.label-primary {{type}}
+							span.label.label-primary(data-ng-repeat="type in currentTypeSelected")  {{type}} 
+								span.glyphicon.glyphicon-remove(data-ng-click="toggleTypeSelection(type);onChange()")
 						div.col-lg-12
-							a(data-ng-click="toggleDepartmentSelection(department);onChange()" ng-repeat="department in departments") 
-								span.label.label-success {{getDepartmentByCode(department)}}
+							span.label.label-success(ng-repeat="department in departments") {{getDepartmentByCode(department)}} 
+								span.glyphicon.glyphicon-remove(data-ng-click="toggleDepartmentSelection(department);onChange()")
 						div.col-lg-12
-							a(data-ng-click="resetDataRangeFilter();onChange()") 
-								span.label.label-warning {{formatDateRange(dateRange)}}
+							span.label.label-warning {{formatDateRange(dateRange)}} 
+								span.glyphicon.glyphicon-remove(data-ng-click="resetDataRangeFilter();onChange()")
 					h4 par Type
 					div.checkbox(data-ng-repeat="facet in typeFacets")
 						div(data-ng-switch="currentTypeSelected.indexOf(facet.term) > -1")
