@@ -20,6 +20,26 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			type: null
 		}
 
+		$scope.markers = [];
+
+		$scope.infoWindow = {
+			coords: {
+				latitude: 30,
+				longitude: -89
+			},
+			show: true
+		},
+		$scope.templatedInfoWindow = {
+			coords: {
+				latitude: 60,
+				longitude: -95
+			},
+			show: true,
+			templateUrl: 'partials/race/mapcontrol',
+			templateParameter: {
+				message: 'passed in from the opener'
+			}
+		};
 
 		$scope.layer = {
 			markers: [],
@@ -29,23 +49,29 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 		$scope.polylines = [];
 
+		$scope.clusterOptions = {
+			title: 'Hi I am a Cluster!',
+			gridSize: 60,
+			ignoreHidden: true,
+			minimumClusterSize: 2,
+			imageExtension: 'png',
+			imagePath: 'http://localhost:3000/img',
+			imageSizes: [72]
+		},
+
 
 
 		$scope.stayOnTheRoad = true;
 		$scope.travelMode = google.maps.TravelMode.DRIVING;
 
-		$scope.myMarkers = [{
-			"latitude": 33.22,
-			"longitude": 35.33
-		}];
+
 
 		$scope.center = {
-			latitude: 33.895497,
-			longitude: 35.480347,
+			latitude: 46.52863469527167,
+			longitude: 2.43896484375,
 		};
 
 		$scope.zoom = 13;
-		$scope.markers = $scope.myMarkers;
 		$scope.fit = true;
 
 		$scope.events = {
@@ -54,7 +80,16 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 				$scope.onClickMap(originalEventArgs[0].latLng, $scope.stayOnTheRoad, $scope.travelMode);
 
 
+			},
+
+			dblclick: function(mapModel, eventName, originalEventArgs) {
+
 			}
+		};
+
+		$scope.onMarkerClicked = function(marker) {
+			marker.showWindow = true;
+			//window.alert("Marker: lat: " + marker.latitude + ", lon: " + marker.longitude + " clicked!!")
 		};
 
 
@@ -394,23 +429,39 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			if ($scope.layer.segments.length == 1) {
 
 				//create start marker
-				var icon = new google.maps.MarkerImage("../../img/start.png",
+				/*var icon = new google.maps.MarkerImage("../../img/start.png",
 					new google.maps.Size(128, 128),
 					new google.maps.Point(0, 0),
 					new google.maps.Point(20, 40),
 					new google.maps.Size(40, 40)
-				);
+				);*/
+
+				var marker = {
+					latitude: path[path.length - 1].lat(),
+					longitude: path[path.length - 1].lng(),
+					icon: "../../../img/start.png",
+					title: "hello"
+
+				}
 
 			} else {
 
-				//_this.replaceLastMarkerBySegmentPoint(_this);
+				$scope.replaceLastMarkerBySegmentPoint();
 
-				var icon = new google.maps.MarkerImage("../../img/end.png",
+				/*var icon = new google.maps.MarkerImage("../../img/end.png",
 					new google.maps.Size(128, 128),
 					new google.maps.Point(0, 0),
 					new google.maps.Point(20, 40),
 					new google.maps.Size(40, 40)
-				);
+				);*/
+
+				var marker = {
+					latitude: path[path.length - 1].lat(),
+					longitude: path[path.length - 1].lng(),
+					icon: "../../../img/end.png",
+					title: "hello"
+
+				}
 			}
 
 			/*var marker = new google.maps.Marker({
@@ -419,12 +470,7 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 				icon: icon
 			});*/
 
-			var marker = {
-				latitude:  path[path.length - 1].lat(),
-				longitude:  path[path.length - 1].lng(),
-				icon: "../../../img/start.png"
 
-			}
 
 			//_this.getLayer().addMarker(marker);
 			$scope.markers.push(marker);
@@ -437,6 +483,29 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 		};
 
+		$scope.replaceLastMarkerBySegmentPoint = function(_this) {
+
+			/*var icon = new google.maps.MarkerImage("../../img/segment.png",
+				new google.maps.Size(32, 32),
+				new google.maps.Point(0, 0),
+				new google.maps.Point(8, 8),
+				new google.maps.Size(16, 16)
+			);*/
+
+			var icon = "../../../img/segment.png";
+
+			//var markers = _this.getLayer().getMarkers();
+
+			if ($scope.markers.length > 1) {
+				//markers[markers.length - 1].setIcon(icon);
+				$scope.markers[$scope.markers.length - 1].icon = icon;
+				$scope.$apply();
+
+				//google.maps.event.clearListeners(markers[markers.length - 1], 'dblclick');
+				//google.maps.event.clearListeners(markers[0], 'dblclick');
+			}
+		},
+
 		$scope.createPolyLine = function(path) {
 
 			/*var polyLine = new google.maps.Polyline({
@@ -444,24 +513,27 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 				strokeColor: "red",
 				strokeWeight: 5
 			});*/
-			
-			
+
+
 			var pathArray = [];
 			_.each(path, function(point) {
-				pathArray.push({latitude: point.lat(), longitude: point.lng()})
+				pathArray.push({
+					latitude: point.lat(),
+					longitude: point.lng()
+				})
 			});
 
-			
+
 			var polyLine = {
 				path: pathArray,
 				stroke: {
 					color: "red",
 					weight: 5
 				},
-			    editable:false,
-                draggable:false,
-                geodesic:false,
-                visible:true
+				editable: false,
+				draggable: false,
+				geodesic: false,
+				visible: true
 
 			}
 
@@ -507,80 +579,80 @@ angular.module('nextrunApp').factory('LayerFactory', function($http) {
 });
 
 angular.module('nextrunApp').factory('RouteFactory', function() {
-		'use strict';
+	'use strict';
 
-		return {
-			getLastPointOfLastSegment: function(route) {
+	return {
+		getLastPointOfLastSegment: function(route) {
 
-				var lastPointOfLastSegment = null;
-				var segmentIndex = 0;
-				var pointIndex = 0;
+			var lastPointOfLastSegment = null;
+			var segmentIndex = 0;
+			var pointIndex = 0;
 
-				if (route.segments.length > 0) {
-					segmentIndex = route.segments.length - 1;
+			if (route.segments.length > 0) {
+				segmentIndex = route.segments.length - 1;
+			}
+
+			var lastSegment = route.segments[segmentIndex];
+
+			if (lastSegment) {
+				var pointsOfLastSegment = lastSegment.points;
+
+				if (pointsOfLastSegment.length > 0) {
+					pointIndex = pointsOfLastSegment.length - 1;
 				}
 
-				var lastSegment = route.segments[segmentIndex];
+				var lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
+			}
 
-				if (lastSegment) {
-					var pointsOfLastSegment = lastSegment.points;
+			return lastPointOfLastSegment;
+		},
+		getAllLatlngFromPoints: function(points) {
+			var samplesLatlng = [];
 
-					if (pointsOfLastSegment.length > 0) {
-						pointIndex = pointsOfLastSegment.length - 1;
+			for (var k = 0; k < points.length; k++) {
+				samplesLatlng.push(points[k].latlng);
+			}
+
+			return samplesLatlng;
+
+		},
+		getLastElevationPoint: function(elevationPoints) {
+			return elevationPoints[elevationPoints.length - 1];
+		},
+		calculateElevationDataAlongRoute: function(route) {
+
+			route.ascendant = 0;
+			route.descendant = 0;
+			route.minElevation = route.elevationPoints[0].elevation;
+			route.maxElevation = route.elevationPoints[0].elevation;
+
+			if (route.elevationPoints.length > 0) {
+
+
+				for (var k = 1, lk = route.elevationPoints.length; k < lk; ++k) {
+
+					var diffElevation = (parseFloat(route.elevationPoints[k].elevation) - parseFloat(route.elevationPoints[k - 1].elevation));
+
+					if (diffElevation > 0) {
+						route.ascendant = (route.ascendant + diffElevation);
+					} else {
+						route.descendant = (route.descendant + diffElevation);
 					}
 
-					var lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
-				}
+					if (route.elevationPoints[k - 1].elevation > route.maxElevation) {
+						route.maxElevation = (route.elevationPoints[k - 1].elevation);
+					}
 
-				return lastPointOfLastSegment;
-			},
-			getAllLatlngFromPoints: function(points) {
-				var samplesLatlng = [];
-
-				for (var k = 0; k < points.length; k++) {
-					samplesLatlng.push(points[k].latlng);
-				}
-				
-				return samplesLatlng;
-	
-			},
-			getLastElevationPoint: function(elevationPoints) {
-				return elevationPoints[elevationPoints.length - 1];
-			},
-			calculateElevationDataAlongRoute: function(route) {
-
-				route.ascendant = 0;
-				route.descendant = 0;
-				route.minElevation = route.elevationPoints[0].elevation;
-				route.maxElevation = route.elevationPoints[0].elevation;
-
-				if (route.elevationPoints.length > 0) {
-
-
-					for (var k = 1, lk = route.elevationPoints.length; k < lk; ++k) {
-
-						var diffElevation = (parseFloat(route.elevationPoints[k].elevation) - parseFloat(route.elevationPoints[k - 1].elevation));
-
-						if (diffElevation > 0) {
-							route.ascendant = (route.ascendant + diffElevation);
-						} else {
-							route.descendant = (route.descendant + diffElevation);
-						}
-
-						if (route.elevationPoints[k - 1].elevation > route.maxElevation) {
-							route.maxElevation = (route.elevationPoints[k - 1].elevation);
-						}
-
-						if (route.elevationPoints[k - 1].elevation < route.minElevation) {
-							route.minElevation = (route.elevationPoints[k - 1].elevation);
-						}
+					if (route.elevationPoints[k - 1].elevation < route.minElevation) {
+						route.minElevation = (route.elevationPoints[k - 1].elevation);
 					}
 				}
 			}
 		}
-	});
+	}
+});
 
-	/*
+/*
 angular.module('nextrunApp').factory('PointFactory', function() {
 	'use strict';
 	return {
@@ -597,3 +669,9 @@ angular.module('nextrunApp').factory('PointFactory', function() {
 		}
 	};
 });*/
+
+angular.module('nextrunApp').controller('MapControlCtrl', ['$scope', '$location',
+	function($scope, $location) {
+		'use strict';
+	}
+]);

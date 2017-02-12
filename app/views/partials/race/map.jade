@@ -4,5 +4,10 @@ div.container
 			div.col-lg-12
 				google-map(id="mymap" center="center"  zoom="zoom"  draggable="true" mark-click="true" style="height: 400px" events="events")
 					markers
-						marker(ng-repeat="marker in markers" coords="marker")
+						marker(ng-repeat="marker in markers" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
+							marker-label(content="marker.title" anchor="22 0" class="marker-labels")
+							window(show="marker.showWindow" closeClick="marker.closeClick()")
+								p This is an info window at {{ marker.latitude | number:4 }}, {{ marker.longitude | number:4 }}
 					polyline(ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable")
+					
+					window(show="map.templatedInfoWindow.show" coords="map.templatedInfoWindow.coords" templateUrl="map.templatedInfoWindow.templateUrl" templateParameter="map.templatedInfoWindow.templateParameter")
