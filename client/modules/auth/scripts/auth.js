@@ -10,8 +10,7 @@ var authModule = angular.module("nextrunApp.auth", ["ui.bootstrap",
 authModule.config(
   function(
     $routeProvider,
-    $locationProvider,
-    $translateProvider) {
+    $locationProvider) {
 
     var access = routingConfig.accessLevels;
 

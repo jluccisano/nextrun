@@ -91,7 +91,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 					MetaService.ready($filter("translate")("title.editRace"), $location.path, $filter("translate")("message.editRace.description"));
 
-				}).then(function(error) {
+				}).then(function() {
 					$scope.loading = false;
 				});
 		};
@@ -112,7 +112,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			$location.path("/myraces");
 		};
 
-		$scope.submit = function(race) {
+		$scope.submit = function() {
 
 			var data = {
 				race: $scope.race

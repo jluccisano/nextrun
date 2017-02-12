@@ -1,5 +1,5 @@
 var logger = require("../../config/logger.js"),
-_ = require("underscore");
+    underscore = require("underscore");
 /**
  * Formats mongoose errors into proper array
  *
@@ -8,27 +8,27 @@ _ = require("underscore");
  * @api public
  */
 exports.errors = function(errors) {
-  var errs = [];
-  if (errors instanceof Object) {
-    var keys = Object.keys(errors);
+    var errs = [];
+    if (errors instanceof Object) {
+        var keys = Object.keys(errors);
 
-    keys.forEach(function(key) {
+        keys.forEach(function(key) {
 
-      if (!_.isUndefined(errors[key].message)) {
-        errs.push(errors[key].message);
-      }
+            if (!underscore.isUndefined(errors[key].message)) {
+                errs.push(errors[key].message);
+            }
 
-    });
+        });
 
-    if (errs.length === 0) {
-      logger.error(errors);
-      return ["Oops! There was an error"];
+        if (errs.length === 0) {
+            logger.error(errors);
+            return ["Oops! There was an error"];
+        }
+
+    } else {
+        logger.error(errors);
+        return ["Oops! There was an error"];
     }
 
-  } else {
-    logger.error(errors);
-    return ["Oops! There was an error"];
-  }
-
-  return errs;
+    return errs;
 };

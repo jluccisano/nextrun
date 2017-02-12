@@ -2,170 +2,141 @@
  * Module dependencies.
  */
 
-var express = require("express"),
-	mongoStore = require("connect-mongo")(express),
-	helpers = require("view-helpers"),
-	flash = require("connect-flash"),
-	pkg = require("../package.json"),
-	winston = require("winston"),
-	expressWinston = require("express-winston"),
-	logger = require("./logger");
+var favicon = require("serve-favicon");
+var bodyParser = require("body-parser");
+var methodOverride = require("method-override");
+var logger = require("morgan");
+var multer = require("multer");
+var errorHandler = require("errorhandler");
+var session = require("express-session");
+var MongoStore = require("connect-mongo")({
+    session: session
+});
+var cookieParser = require("cookie-parser");
+var compression = require("compression");
+var csrf = require("csurf");
+var winston = require("winston");
+var expressWinston = require("express-winston");
+var helpers = require("view-helpers");
+var pkg = require("../package.json");
+var env = process.env.NODE_ENV || "development";
+
+module.exports = function(app, express, passport) {
+
+    app.set("env", env);
+
+    app.use(favicon(app.config.root + "/client/favicon.ico"));
+
+    app.use(logger("dev"));
+
+    //set views path, template engine and default layout
+    app.set("views", app.config.root + "/server/views");
+    app.set("view engine", "jade");
 
 
-module.exports = function(app, config, passport) {
+    app.use(methodOverride());
 
-	if (process.env.NODE_ENV === "prod") {
-		app.use(require("prerender-node").set("prerenderToken", "dzNULbJdLvZWcUyB8Su5"));
-	}
+    //http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
+    //fix bug limit request entity too large
+    app.use(bodyParser.json({
+        limit: "50mb"
+    }));
+    app.use(bodyParser.urlencoded({
+        extended: true,
+        limit: "50mb"
+    }));
 
-	app.set("showStackError", true);
+    app.use(multer());
 
-	// should be placed before express.static
-	app.use(express.compress({
-		filter: function(req, res) {
-			return (/json|text|javascript|css/).test(res.getHeader("Content-Type"));
-		},
-		level: 9
-	}));
+    // cookieParser should be above session
+    app.use(cookieParser("jhfhsdbfhjezbfksbdfknnzehjfbhjbjb"));
+
+    app.use(session({
+        secret: pkg.name,
+        saveUninitialized: true,
+        resave: true,
+        store: new MongoStore({
+            url: app.config.db,
+            collection: "sessions",
+            auto_reconnect: true
+        })
+    }));
+
+    if (app.get("env") !== "test") {
+
+        var csrfValue = function(req) {
+            var token = (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers["x-csrf-token"]) || (req.headers["x-xsrf-token"]);
+            return token;
+        };
+
+        app.use(csrf({
+            value: csrfValue
+        }));
 
 
-
-	app.use(express.favicon());
-
-    app.use(express.static(config.root + "/client"));
-
-
-	if (process.env.NODE_ENV === "development") {
-        app.use("/client/bower_components", express.static(config.root + "/client/bower_components"));
-        app.use("/client/modules", express.static(config.root + "/client/modules"));
-        app.use("/styles", express.static(config.root + "/.tmp/styles"));
-    } else {
-       app.use("/client/scripts", express.static(config.root + "/client/scripts"));
-       app.use("/client/modules", express.static(config.root + "/client/modules"));
-       app.use("/client/styles", express.static(config.root + "/client/styles"));
+        // This could be moved to view-helpers :-)
+        app.use(function(req, res, next) {
+            res.locals.csrf_token = req.csrfToken();
+            res.cookie("XSRF-TOKEN", req.csrfToken());
+            next();
+        });
     }
 
-	// don"t use logger for test env
-	if (process.env.NODE_ENV !== "test") {
-		app.use(express.logger("dev"));
-	}
+    // use passport session
+    app.use(passport.initialize());
+    app.use(passport.session({
+        maxAge: new Date(Date.now() + 3600000)
+    }));
 
-	// set views path, template engine and default layout
-	app.set("views", config.root + "/server/views");
-	app.set("view engine", "jade");
+    // should be placed before express.static
+    app.use(compression({
+        threshold: 512,
+        filter: function(req, res) {
+            return (/json|text|javascript|css/).test(res.getHeader("Content-Type"));
+        }
+    }));
 
-	app.configure(function() {
+    // should be declared after session
+    app.use(helpers(pkg.name));
 
-		// expose package.json to views
-		app.use(function(req, res, next) {
-			res.locals.pkg = pkg;
-			next();
-		});
+    // Express middlewares
+    app.use(express.static(app.config.root + "/client"));
 
-		// cookieParser should be above session
-		app.use(express.cookieParser());
+    if (app.get("env") === "development") {
+        app.use("/client/bower_components", express.static(app.config.root + "/client/bower_components"));
+        app.use("/client/modules", express.static(app.config.root + "/client/modules"));
+        app.use("/styles", express.static(app.config.root + "/.tmp/styles"));
+    } else {
+        app.use("/client/scripts", express.static(app.config.root + "/client/scripts"));
+        app.use("/client/modules", express.static(app.config.root + "/client/modules"));
+        app.use("/client/styles", express.static(app.config.root + "/client/styles"));
+    }
 
-		// bodyParser should be above methodOverride
-		app.use(express.bodyParser({
-			limit: "50mb"
-		}));
-		app.use(express.methodOverride());
+    // development only
+    if ("development" === app.get("env")) {
+        app.use(errorHandler());
+    }
 
-		//http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
-		//fix bug limit request entity too large
-		app.use(express.json({
-			limit: "50mb"
-		}));
-		app.use(express.urlencoded({
-			limit: "50mb"
-		}));
+    if (app.get("env") === "prod") {
+        app.use(require("prerender-node").set("prerenderToken", "dzNULbJdLvZWcUyB8Su5"));
+    }
 
-		// express/mongo session storage
-		app.use(express.session({
-			secret: "noobjs",
-			store: new mongoStore({
-				url: config.db,
-				collection: "sessions"
-			})
-		}));
 
-		// use passport session
-		app.use(passport.initialize());
-		app.use(passport.session());
+    // winston config
+    app.use(expressWinston.errorLogger({
+        transports: [
+            new winston.transports.Console({
+                json: true,
+                colorize: true
+            })
+        ]
+    }));
 
-		// connect flash for flash messages - should be declared after sessions
-		app.use(flash());
+    // expose package.json to views
+    app.use(function(req, res, next) {
+        res.locals.pkg = pkg;
+        next();
+    });
 
-		// should be declared after session and flash
-		app.use(helpers(pkg.name));
-
-		if (process.env.NODE_ENV !== "test") {
-
-			var csrfValue = function(req) {
-				var token = (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers["x-csrf-token"]) || (req.headers["x-xsrf-token"]);
-				return token;
-			};
-
-			//app.use(express.csrf());
-			app.use(express.csrf({
-				value: csrfValue
-			}));
-
-			// This could be moved to view-helpers :-)
-			app.use(function(req, res, next) {
-				res.locals.csrf_token = req.csrfToken();
-				res.cookie("XSRF-TOKEN", req.csrfToken());
-				next();
-			});
-		}
-
-		// routes should be at the last
-		app.use(app.router);
-
-		app.use(express.logger("dev"));
-
-		// winston config
-		app.use(expressWinston.errorLogger({
-			transports: [
-				new winston.transports.Console({
-					json: true,
-					colorize: true
-				})
-			]
-		}));
-
-		// assume "not found" in the error msgs
-		// is a 404. this is somewhat silly, but
-		// valid, you can do whatever you like, set
-		// properties, use instanceof etc.
-		app.use(function(err, req, res, next) {
-			// treat as 404
-			if (err.message && (~err.message.indexOf("not found") || (~err.message.indexOf("Cast to ObjectId failed")))) {
-				return next();
-			}
-
-			// log it
-			// send emails if you want
-			logger.error(err.stack);
-
-			// error page
-			res.status(500).render("partials/errors/500", {
-				error: err.stack
-			});
-		});
-
-		// assume 404 since no middleware responded
-		app.use(function(req, res) {
-			res.status(404).render("partials/errors/404", {
-				url: req.originalUrl,
-				error: "Not found"
-			});
-		});
-
-	});
-
-	// development env config
-	app.configure("development", function() {
-		app.locals.pretty = true;
-	});
+    app.set("showStackError", true);
 };

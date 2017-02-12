@@ -174,7 +174,7 @@ angular.module("nextrunApp.home").controller("HomeController",
 			RaceService.findAll().then(
 				function(response) {
 
-					if (response.races.length > 0) {
+					if (response.races && response.races.length > 0) {
 
 						$scope.emptyResults = false;
 

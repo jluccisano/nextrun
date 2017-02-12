@@ -3,9 +3,9 @@
  *
  */
 var nodemailer = require("nodemailer"),
-	env = process.env.NODE_ENV || "development",
-	config = require("../config")[env],
-	logger = require("../logger.js");
+    env = process.env.NODE_ENV || "development",
+    config = require("../config")[env],
+    logger = require("../logger.js");
 
 /**
  * Cette fonction permet d"envoyer un mail via Mailgun SMTP
@@ -13,26 +13,24 @@ var nodemailer = require("nodemailer"),
  */
 exports.sendMail = function(mailOptions) {
 
-	var result = false;
+    var result = false;
 
-	var transport = nodemailer.createTransport("SMTP", {
-		service: "Mailgun",
-		auth: {
-			user: config.mailgun.user,
-			pass: config.mailgun.password
-		}
-	});
+    var transport = nodemailer.createTransport("SMTP", {
+        service: "Mailgun",
+        auth: {
+            user: config.mailgun.user,
+            pass: config.mailgun.password
+        }
+    });
 
-
-
-	transport.sendMail(mailOptions, function(err, res) {
-		if (err) {
-			logger.error(err);
-		} else {
-			logger.info("send email to: " + mailOptions.to + " -> success", res);
-		}
-	});
-	return result;
+    transport.sendMail(mailOptions, function(err, res) {
+        if (err) {
+            logger.error(err);
+        } else {
+            logger.info("send email to: " + mailOptions.to + " -> success", res);
+        }
+    });
+    return result;
 };
 
 /**
@@ -41,14 +39,14 @@ exports.sendMail = function(mailOptions) {
  **/
 exports.sendEmailNewContact = function(contact) {
 
-	var mailOptions = {
-		from: "no-reply@nextrun.fr",
-		to: "postmaster@nextrunjosephluccisano.mailgun.org",
-		subject: "Un nouveau contact a été ajouté",
-		text: "nouveau contact: " + contact.email + " type: " + contact.type,
-	};
+    var mailOptions = {
+        from: "no-reply@nextrun.fr",
+        to: "postmaster@nextrunjosephluccisano.mailgun.org",
+        subject: "Un nouveau contact a été ajouté",
+        text: "nouveau contact: " + contact.email + " type: " + contact.type,
+    };
 
-	this.sendMail(mailOptions);
+    this.sendMail(mailOptions);
 };
 
 /**
@@ -57,14 +55,14 @@ exports.sendEmailNewContact = function(contact) {
  **/
 exports.sendEmailPasswordReinitialized = function(email, newPassword) {
 
-	var mailOptions = {
-		from: "no-reply@nextrun.fr",
-		to: email,
-		subject: "Changement de mot de passe",
-		text: "Bonjour, Voici votre nouveau mot de passe: " + newPassword + " vous pourrez le modifier en allant dans les paramètres",
-	};
+    var mailOptions = {
+        from: "no-reply@nextrun.fr",
+        to: email,
+        subject: "Changement de mot de passe",
+        text: "Bonjour, Voici votre nouveau mot de passe: " + newPassword + " vous pourrez le modifier en allant dans les paramètres",
+    };
 
-	this.sendMail(mailOptions);
+    this.sendMail(mailOptions);
 };
 
 /**
@@ -73,12 +71,12 @@ exports.sendEmailPasswordReinitialized = function(email, newPassword) {
  **/
 exports.sendEmailNewFeedback = function(feedback) {
 
-	var mailOptions = {
-		from: feedback.email,
-		to: "postmaster@nextrunjosephluccisano.mailgun.org",
-		subject: "Nouveau feedback",
-		text: "Nouveau feedback par: " + feedback.email + " , type: " + feedback.type.name + " , message: " + feedback.message + " , race id: " + feedback.raceId,
-	};
+    var mailOptions = {
+        from: feedback.email,
+        to: "postmaster@nextrunjosephluccisano.mailgun.org",
+        subject: "Nouveau feedback",
+        text: "Nouveau feedback par: " + feedback.email + " , type: " + feedback.type.name + " , message: " + feedback.message + " , race id: " + feedback.raceId,
+    };
 
-	this.sendMail(mailOptions);
+    this.sendMail(mailOptions);
 };

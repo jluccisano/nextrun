@@ -2,26 +2,26 @@
 
 module.exports = function(grunt) {
 
-  var config = require('./config/config');
+  var config = require("./config/config");
 
-  process.env.XUNIT_FILE = 'test-unit-results.xml';
-  process.env.JUNIT_REPORT_PATH = 'test-integration-results.xml';
+  process.env.XUNIT_FILE = "test-unit-results.xml";
+  process.env.JUNIT_REPORT_PATH = "test-integration-results.xml";
 
   // Load grunt tasks automatically
-  require('load-grunt-tasks')(grunt);
+  require("load-grunt-tasks")(grunt);
 
   // Time how long tasks take. Can help when optimizing build times
-  require('time-grunt')(grunt);
+  require("time-grunt")(grunt);
 
   grunt.initConfig({
 
     // Project settings
     yeoman: {
       // configurable paths
-      client: require('./bower.json').appPath || 'client',
-      server: 'server',
-      dist: 'dist',
-      config: 'config'
+      client: require("./bower.json").appPath || "client",
+      server: "server",
+      dist: "dist",
+      config: "config"
     },
 
     // Empties folders to start fresh
@@ -30,59 +30,59 @@ module.exports = function(grunt) {
         files: [{
           dot: true,
           src: [
-            '.tmp',
-            '<%= yeoman.dist %>/*',
-            '!<%= yeoman.dist %>/.git*'
+            ".tmp",
+            "<%= yeoman.dist %>/*",
+            "!<%= yeoman.dist %>/.git*"
           ]
         }]
       },
-      server: '.tmp'
+      server: ".tmp"
     },
 
     watch: {
       karma: {
-        files: ['client/js/**/*.js', 'test/client/unit/**/*Spec.js'],
-        tasks: ['karma:unit:run']
+        files: ["client/js/**/*.js", "test/client/unit/**/*Spec.js"],
+        tasks: ["karma:unit:run"]
       },
       protractor: {
-        files: ['client/js/**/*.js', 'test/client/e2e/*Scenario.js'],
-        tasks: ['protractor']
+        files: ["client/js/**/*.js", "test/client/e2e/*Scenario.js"],
+        tasks: ["protractor"]
       },
       compass: {
-        files: ['<%= yeoman.client %>/modules/**/styles/{,*/}*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        files: ["<%= yeoman.client %>/modules/**/styles/{,*/}*.{scss,sass}"],
+        tasks: ["compass:server", "autoprefixer"]
       },
       livereload: {
         options: {
-          livereload: '<%= express.options.livereload %>'
+          livereload: "<%= express.options.livereload %>"
         },
         files: [
-          '<%= yeoman.server %>/{,*/}*.jade',
-          '.tmp/styles/{,*/}*.css',
-          '<%= yeoman.client %>/modules/**/*.{png,jpg,jpeg,gif,webp,svg}'
+          "<%= yeoman.server %>/{,*/}*.jade",
+          ".tmp/styles/{,*/}*.css",
+          "<%= yeoman.client %>/modules/**/*.{png,jpg,jpeg,gif,webp,svg}"
         ]
       },
       js: {
-        files: ['<%= yeoman.client %>/modules/**/*.js'],
-        tasks: ['newer:jshint:all'],
+        files: ["<%= yeoman.client %>/modules/**/*.js"],
+        tasks: ["newer:jshint:all"],
         options: {
-          livereload: '<%= express.options.livereload %>'
+          livereload: "<%= express.options.livereload %>"
         }
       },
       jsTestClient: {
-        files: ['test/client/**/*Spec.js'],
-        tasks: ['newer:jshint:test', 'karma']
+        files: ["test/client/**/*Spec.js"],
+        tasks: ["newer:jshint:test", "karma"]
       },
       jsTestServer: {
-        files: ['test/server/**/test-*.js'],
-        tasks: ['newer:jshint:test', 'mochaTest']
+        files: ["test/server/**/test-*.js"],
+        tasks: ["newer:jshint:test", "mochaTest"]
       },
       gruntfile: {
-        files: ['Gruntfile.js']
+        files: ["Gruntfile.js"]
       },
       express: {
-        files: ['public/js/**/*.js', 'test/client/e2e/**/*Scenario.js'],
-        tasks: ['express:development'],
+        files: ["public/js/**/*.js", "test/client/e2e/**/*Scenario.js"],
+        tasks: ["express:development"],
         options: {
           spawn: false
         }
@@ -92,27 +92,27 @@ module.exports = function(grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'compass:server'
+        "compass:server"
       ],
       test: [
-        'compass'
+        "compass"
       ],
       dist: [
-        'compass:dist',
-        'imagemin',
-        'svgmin'
+        "compass:dist",
+        "imagemin",
+        "svgmin"
       ]
     },
 
     // Automatically inject Bower components into the app
     bowerInstall: {
       app: {
-        src: ['<%= yeoman.server %>/views/index.jade'],
-        ignorePath: '<%= yeoman.server %>/'
+        src: ["<%= yeoman.server %>/views/index.jade"],
+        ignorePath: "<%= yeoman.server %>/"
       },
       sass: {
-        src: ['<%= yeoman.client %>/styles/{,*/}*.{scss,sass}'],
-        ignorePath: '<%= yeoman.client %>/bower_components/'
+        src: ["<%= yeoman.client %>/styles/{,*/}*.{scss,sass}"],
+        ignorePath: "<%= yeoman.client %>/bower_components/"
       }
     },
 
@@ -121,23 +121,23 @@ module.exports = function(grunt) {
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
       options: {
-        sassDir: '<%= yeoman.client %>/modules/main/styles',
-        cssDir: '.tmp/styles',
-        generatedImagesDir: '.tmp/images/generated',
-        imagesDir: '<%= yeoman.client %>/modules/main/images',
-        javascriptsDir: '<%= yeoman.client %>/modules/main/scripts',
-        fontsDir: '<%= yeoman.client %>/modules/main/styles/fonts',
-        importPath: '<%= yeoman.client %>/bower_components',
-        httpImagesPath: '/images',
-        httpGeneratedImagesPath: '/images/generated',
-        httpFontsPath: '/styles/fonts',
+        sassDir: "<%= yeoman.client %>/modules/main/styles",
+        cssDir: ".tmp/styles",
+        generatedImagesDir: ".tmp/images/generated",
+        imagesDir: "<%= yeoman.client %>/modules/main/images",
+        javascriptsDir: "<%= yeoman.client %>/modules/main/scripts",
+        fontsDir: "<%= yeoman.client %>/modules/main/styles/fonts",
+        importPath: "<%= yeoman.client %>/bower_components",
+        httpImagesPath: "/images",
+        httpGeneratedImagesPath: "/images/generated",
+        httpFontsPath: "/styles/fonts",
         relativeAssets: false,
         assetCacheBuster: false,
-        raw: 'Sass::Script::Number.precision = 10\n'
+        raw: "Sass::Script::Number.precision = 10\n"
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/client/images/generated'
+          generatedImagesDir: "<%= yeoman.dist %>/client/images/generated"
         }
       },
       server: {
@@ -166,14 +166,14 @@ module.exports = function(grunt) {
     // Add vendor prefixed styles
     autoprefixer: {
       options: {
-        browsers: ['last 1 version']
+        browsers: ["last 1 version"]
       },
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/styles/',
-          src: '{,*/}*.css',
-          dest: '.tmp/styles/'
+          cwd: ".tmp/styles/",
+          src: "{,*/}*.css",
+          dest: ".tmp/styles/"
         }]
       }
     },
@@ -185,14 +185,14 @@ module.exports = function(grunt) {
     // additional tasks can operate on them
 
     useminPrepare: {
-      jade: '<%= yeoman.dist %>/server/views/index.jade',
+      jade: "<%= yeoman.dist %>/server/views/index.jade",
       options: {
-        dest: '<%= yeoman.dist %>',
+        dest: "<%= yeoman.dist %>",
         flow: {
           jade: {
             steps: {
-              js: ['concat', 'uglifyjs'],
-              css: ['cssmin']
+              js: ["concat", "uglifyjs"],
+              css: ["cssmin"]
             },
             post: {}
           }
@@ -202,15 +202,15 @@ module.exports = function(grunt) {
 
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
-      jade: ['<%= yeoman.dist %>/server/views/{,*/}*.jade'],
-      css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
-      js: ['<%= yeoman.dist %>/client/scripts/{,*/}*.js'],
+      jade: ["<%= yeoman.dist %>/server/views/{,*/}*.jade"],
+      css: ["<%= yeoman.dist %>/client/styles/{,*/}*.css"],
+      js: ["<%= yeoman.dist %>/client/scripts/{,*/}*.js"],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>'],
+        assetsDirs: ["<%= yeoman.dist %>"],
         patterns: {
-          jade: require('usemin-patterns').jade,
+          jade: require("usemin-patterns").jade,
           js: [
-            [/(client\/modules\/route\/images\/.*?\.(?:gif|jpeg|jpg|png|webp))/gm, 'Update the JS to reference our revved images']
+            [/(client\/modules\/route\/images\/.*?\.(?:gif|jpeg|jpg|png|webp))/gm, "Update the JS to reference our revved images"]
           ]
         }
       }
@@ -220,9 +220,9 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.client %>',
-          src: 'modules/**/images/{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/client'
+          cwd: "<%= yeoman.client %>",
+          src: "modules/**/images/{,*/}*.{png,jpg,jpeg,gif}",
+          dest: "<%= yeoman.dist %>/client"
         }]
       }
     },
@@ -231,26 +231,26 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.client %>/modules/**/images',
-          src: ['{,*/}*.svg'],
-          dest: '<%= yeoman.dist %>/client/images'
+          cwd: "<%= yeoman.client %>/modules/**/images",
+          src: ["{,*/}*.svg"],
+          dest: "<%= yeoman.dist %>/client/images"
         }]
       }
     },
 
     // ngmin tries to make the code safe for minification automatically by
-    // using the Angular long form for dependency injection. It doesn't work on
+    // using the Angular long form for dependency injection. It doesn"t work on
     // things like resolve or inject so those have to be done manually.
     ngmin: {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/concat/client/scripts',
+          cwd: ".tmp/concat/client/scripts",
           src: [
-            '*.js',
-            '!<%= yeoman.client %>/modules/main/scripts/services/config.js'
+            "*.js",
+            "!<%= yeoman.client %>/modules/main/scripts/services/config.js"
           ],
-          dest: '.tmp/concat/client/scripts'
+          dest: ".tmp/concat/client/scripts"
         }]
       }
     },
@@ -259,26 +259,26 @@ module.exports = function(grunt) {
       server: {
         files: [{
           expand: true,
-          src: ['server/**', 'config/**', 'locales/**', 'server.js', 'package.json'],
-          dest: '<%= yeoman.dist %>'
+          src: ["server/**", "config/**", "locales/**", "server.js", "package.json"],
+          dest: "<%= yeoman.dist %>"
         }]
       },
       dist: {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.client %>',
-          dest: '<%= yeoman.dist %>/client',
+          cwd: "<%= yeoman.client %>",
+          dest: "<%= yeoman.dist %>/client",
           src: [
-            '*.{ico,png,txt}',
-            'sitemap.xml',
-            'routingConfig.js'
+            "*.{ico,png,txt}",
+            "sitemap.xml",
+            "routingConfig.js"
           ]
         }, {
           expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/client/images',
-          src: ['generated/*']
+          cwd: ".tmp/images",
+          dest: "<%= yeoman.dist %>/client/images",
+          src: ["generated/*"]
         }]
       }
     },
@@ -287,10 +287,10 @@ module.exports = function(grunt) {
       dist: {
         files: {
           src: [
-            '<%= yeoman.dist %>/client/scripts/{,*/}*.js',
-            '<%= yeoman.dist %>/client/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/client/modules/**/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/client/styles/fonts/*'
+            "<%= yeoman.dist %>/client/scripts/{,*/}*.js",
+            "<%= yeoman.dist %>/client/styles/{,*/}*.css",
+            "<%= yeoman.dist %>/client/modules/**/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}",
+            "<%= yeoman.dist %>/client/styles/fonts/*"
           ]
         }
       }
@@ -300,9 +300,9 @@ module.exports = function(grunt) {
 
     jsdoc: {
       dist: {
-        src: ['<%= yeoman.server %>/**/*.js', '<%= yeoman.config %>/**/*.js'],
+        src: ["<%= yeoman.server %>/**/*.js", "<%= yeoman.config %>/**/*.js"],
         options: {
-          destination: '<%= yeoman.dist %>/jsdoc'
+          destination: "<%= yeoman.dist %>/jsdoc"
         }
       }
     },
@@ -318,19 +318,19 @@ module.exports = function(grunt) {
       },
       development: {
         options: {
-          node_env: 'development',
-          script: 'server.js',
+          node_env: "development",
+          script: "server.js",
         }
       },
       dist: {
         options: {
-          node_env: 'dist',
-          script: '<%= yeoman.dist %>/server.js',
+          node_env: "dist",
+          script: "<%= yeoman.dist %>/server.js",
         }
       },
       test: {
         options: {
-          node_env: 'test'
+          node_env: "test"
         }
       }
     },
@@ -340,23 +340,20 @@ module.exports = function(grunt) {
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish'),
-        reporterOutput: 'jshint.xml',
-        ignores: ['<%= yeoman.client %>/lib/**/*.js', '<%= yeoman.client %>/widgets/*.js']
+        jshintrc: ".jshintrc",
+        reporter: require("jshint-stylish"),
+        reporterOutput: "jshint.xml",
+        ignores: ["<%= yeoman.client %>/lib/**/*.js", "<%= yeoman.client %>/widgets/*.js"]
       },
       all: [
-        'Gruntfile.js',
-        '<%= yeoman.client %>/modules/**/*.js',
-        '<%= yeoman.server %>/**/*.js',
-        '<%= yeoman.config %>/**/*.js',
+        "Gruntfile.js",
+        "<%= yeoman.client %>/modules/**/*.js",
+        "<%= yeoman.server %>/**/*.js",
+        "<%= yeoman.config %>/**/*.js",
       ],
-      test: {
-        src: ['test/server/**/test-*.js', 'test/client/**/*Spec.js']
-      },
       ignore_warning: {
         options: {
-          '-W092': true,
+          "-W092": true,
         },
       }
     },
@@ -366,54 +363,54 @@ module.exports = function(grunt) {
     mochaTest: {
       unit: {
         options: {
-          reporter: 'spec',
-          require: 'blanket',
+          reporter: "spec",
+          require: "blanket",
           quiet: false
         },
-        src: ['test/server/unit/**/test-*.js']
+        src: ["test/server/unit/**/test-*.js"]
       },
       integration: {
         options: {
           timeout: 5000,
-          reporter: 'spec',
+          reporter: "spec",
           quiet: false,
-          require: 'blanket'
+          require: "blanket"
         },
-        src: ['test/server/integration/**/test-races-search.js']
+        src: ["test/server/integration/**/test-races-search.js"]
       },
-      'integration-coverage': {
+      "integration-coverage": {
         options: {
-          reporter: 'html-cov',
+          reporter: "html-cov",
           // use the quiet flag to suppress the mocha console output
           quiet: true,
           // specify a destination file to capture the mocha
           // output (the quiet option does not suppress this)
-          captureFile: 'test/server/integration/coverage/integration-coverage.html'
+          captureFile: "test/server/integration/coverage/integration-coverage.html"
         },
-        src: ['test/server/integration/**/test-*.js']
+        src: ["test/server/integration/**/test-*.js"]
       },
-      'unit-coverage': {
+      "unit-coverage": {
         options: {
-          reporter: 'html-cov',
+          reporter: "html-cov",
           // use the quiet flag to suppress the mocha console output
           quiet: true,
           // specify a destination file to capture the mocha
           // output (the quiet option does not suppress this)
-          captureFile: 'test/server/unit/coverage/unit-coverage.html'
+          captureFile: "test/server/unit/coverage/unit-coverage.html"
         },
-        src: ['test/server/unit/**/test-*.js']
+        src: ["test/server/unit/**/test-*.js"]
       },
-      'unit-travis-cov': {
+      "unit-travis-cov": {
         options: {
-          reporter: 'travis-cov'
+          reporter: "travis-cov"
         },
-        src: ['test/server/unit/**/test-*.js']
+        src: ["test/server/unit/**/test-*.js"]
       },
-      'integration-travis-cov': {
+      "integration-travis-cov": {
         options: {
-          reporter: 'travis-cov'
+          reporter: "travis-cov"
         },
-        src: ['test/server/integration/**/test-*.js']
+        src: ["test/server/integration/**/test-*.js"]
       }
     },
 
@@ -436,7 +433,7 @@ module.exports = function(grunt) {
 
     karma: {
       unit: {
-        configFile: 'test/client/spec/karma.conf.js',
+        configFile: "test/client/spec/karma.conf.js",
         singleRun: true
       }
     },
@@ -449,22 +446,22 @@ module.exports = function(grunt) {
         stdout: true
       },
       seleniumInstall: {
-        command: 'node ./node_modules/protractor/bin/webdriver-manager update'
+        command: "node ./node_modules/protractor/bin/webdriver-manager update"
       },
       npmInstall: {
-        command: 'npm install'
+        command: "npm install"
       },
       bowerInstall: {
-        command: 'bower install'
+        command: "bower install"
       },
       elasticsearchInstallTestIdx: {
-        command: 'sh ./scripts/es_racesidx_install.sh racesidx_test_v1 nextrun_test ' + config.test.host,
+        command: "sh ./scripts/es_racesidx_install.sh racesidx_test_v1 nextrun_test " + config.test.host,
       },
       elasticsearchInstallProdIdx: {
-        command: 'sh ./scripts/es_racesidx_install.sh racesidx_v1 nextrun ' + config.prod.host,
+        command: "sh ./scripts/es_racesidx_install.sh racesidx_v1 nextrun " + config.prod.host,
       },
       elasticsearchStart: {
-        command: 'elasticsearch'
+        command: "elasticsearch"
       }
     },
     bgShell: {
@@ -472,15 +469,15 @@ module.exports = function(grunt) {
         bg: true
       },
       startSelenium: {
-        cmd: 'node ./node_modules/protractor/bin/webdriver-manager start'
+        cmd: "node ./node_modules/protractor/bin/webdriver-manager start"
       },
       stopSelenium: {
-        cmd: 'curl -s -L http://localhost:4444/selenium-server/driver?cmd=shutDownSeleniumServer'
+        cmd: "curl -s -L http://localhost:4444/selenium-server/driver?cmd=shutDownSeleniumServer"
       }
     },
     mongo_drop: {
       test: {
-        'uri': 'mongodb://localhost:27017/nextrun_test'
+        "uri": "mongodb://localhost:27017/nextrun_test"
       },
     },
   });
@@ -489,75 +486,75 @@ module.exports = function(grunt) {
 
   /********************************** TASKS PART ***************************************************/
 
-  grunt.registerTask('test-client', ['test-client:unit']); //'test-client:e2e'
-  grunt.registerTask('test-client:unit', ['karma:unit']);
-  grunt.registerTask('test-client:e2e', ['bgShell:stopSelenium', 'mongo_drop:test', 'bgShell:startSelenium', 'express:test', 'protractor:singleRun', 'bgShell:stopSelenium']);
+  grunt.registerTask("test-client", ["test-client:unit"]); //"test-client:e2e"
+  grunt.registerTask("test-client:unit", ["karma:unit"]);
+  grunt.registerTask("test-client:e2e", ["bgShell:stopSelenium", "mongo_drop:test", "bgShell:startSelenium", "express:test", "protractor:singleRun", "bgShell:stopSelenium"]);
 
-  grunt.registerTask('test-server', ['test-server:unit']); //'test-server:integration'
-  grunt.registerTask('test-server:unit', ['mochaTest:unit', 'mochaTest:unit-coverage', 'mochaTest:unit-travis-cov']);
-  grunt.registerTask('test-server:integration', ['shell:elasticsearchInstallTestIdx', 'mochaTest:integration']); //'mochaTest:integration-coverage', 'mochaTest:integration-travis-cov'
-
-
-  grunt.registerTask('install', ['update', 'shell:seleniumInstall', 'copy:move_css']);
-
-  grunt.registerTask('update', ['shell:npmInstall', 'shell:bowerInstall']);
-
-  grunt.registerTask('test', ['test-server', 'test-client']);
-
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask("test-server", ["test-server:unit"]); //"test-server:integration"
+  grunt.registerTask("test-server:unit", ["mochaTest:unit", "mochaTest:unit-coverage", "mochaTest:unit-travis-cov"]);
+  grunt.registerTask("test-server:integration", ["shell:elasticsearchInstallTestIdx", "mochaTest:integration"]); //"mochaTest:integration-coverage", "mochaTest:integration-travis-cov"
 
 
-  grunt.registerTask('generate-css', [
-    'compass:dist'
+  grunt.registerTask("install", ["update", "shell:seleniumInstall", "copy:move_css"]);
+
+  grunt.registerTask("update", ["shell:npmInstall", "shell:bowerInstall"]);
+
+  grunt.registerTask("test", ["test-server", "test-client"]);
+
+  grunt.registerTask("default", ["build"]);
+
+
+  grunt.registerTask("generate-css", [
+    "compass:dist"
   ]);
 
 
-  grunt.registerTask('install', 'install the backend and frontend dependencies', function() {
-    var exec = require('child_process').exec;
+  grunt.registerTask("install", "install the backend and frontend dependencies", function() {
+    var exec = require("child_process").exec;
     var cb = this.async();
-    exec('npm install --production', {
-      cwd: './dist'
-    }, function(err, stdout, stderr) {
+    exec("npm install --production", {
+      cwd: "./dist"
+    }, function(err, stdout) {
       console.log(stdout);
       cb();
     });
   });
 
-  grunt.registerTask('build', [
-    'clean:dist',
-    'bowerInstall',
-    'copy:server',
-    'useminPrepare',
-    'concurrent:dist',
-    'autoprefixer',
-    'concat',
-    'copy:dist',
-    'ngmin',
-    'cssmin',
-    'uglify',
-    'rev',
-    'usemin',
-    'jsdoc',
-    'install'
+  grunt.registerTask("build", [
+    "clean:dist",
+    "bowerInstall",
+    "copy:server",
+    "useminPrepare",
+    "concurrent:dist",
+    "autoprefixer",
+    "concat",
+    "copy:dist",
+    "ngmin",
+    "cssmin",
+    "uglify",
+    "rev",
+    "usemin",
+    "jsdoc",
+    "install"
   ]);
 
-  grunt.registerTask('default', [
-    'newer:jshint',
-    'test',
-    'build'
+  grunt.registerTask("default", [
+    "newer:jshint",
+    "test",
+    "build"
   ]);
 
-  grunt.registerTask('serve', function(target) {
-    if (target === 'dist') {
-      return grunt.task.run(['newbuild', 'express:dist']);
+  grunt.registerTask("serve", function(target) {
+    if (target === "dist") {
+      return grunt.task.run(["newbuild", "express:dist"]);
     }
 
     grunt.task.run([
-      'clean:server',
-      'bowerInstall',
-      'concurrent:server',
-      'autoprefixer',
-      'express:development'
+      "clean:server",
+      "bowerInstall",
+      "concurrent:server",
+      "autoprefixer",
+      "express:development"
     ]);
 
   });

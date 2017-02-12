@@ -46,9 +46,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 						if (status === google.maps.DirectionsStatus.OK && directionsRequest.unitSystem === google.maps.UnitSystem.METRIC) {
 
 							var route = result.routes[0];
-							var cumulatedDistance = route.distance;
 							var lastPointOfLastSegment;
-							var lastPointOf
 
 							var newSegment = SegmentService.createSegment(route.overview_path, route.legs, isFirstPoint);
 
@@ -56,15 +54,15 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 							newSegment.points = SegmentService.calculateDistanceFromStartForEachPointOfSegment(newSegment.points, lastPointOfLastSegment);
 
-							var samplesPoints = SegmentService.findSamplesPointIntoSegment(route, newSegment, 0.1);
+							//var samplesPoints = SegmentService.findSamplesPointIntoSegment(route, newSegment, 0.1);
 
 							route.segments.push(newSegment);
 
-							newLastPointOfLastSegment = SegmentService.getLastPointOfLastSegment(route.segments);
+							//var newLastPointOfLastSegment = SegmentService.getLastPointOfLastSegment(route.segments);
 
 							//route.distance = updateDistance(newLastPointOfLastSegment);
 
-							samplesPoints = getElevationFromSamplesPoints($scope, route, segment, result.routes[0].overview_path, samplesPoints);
+							//samplesPoints = getElevationFromSamplesPoints($scope, route, segment, result.routes[0].overview_path, samplesPoints);
 
 						}
 					});
@@ -77,15 +75,15 @@ angular.module("nextrunApp.route").factory("RouteService",
 					routeSamples.push(lastLatlngOfLastSegment);
 					routeSamples.push(destinationLatlng);
 
-					var newSegment = createSimpleSegment(lastLatlngOfLastSegment, destinationLatlng);
+					//var newSegment = createSimpleSegment(lastLatlngOfLastSegment, destinationLatlng);
 
-					newSegment.points = SegmentService.calculateDistanceFromStartForEachPointOfSegment(route, segment);
+					//newSegment.points = SegmentService.calculateDistanceFromStartForEachPointOfSegment(route, segment);
 
-					var samplesPoints = SegmentService.findSamplesPointIntoSegment(route, segment, 0.1);
+					//var samplesPoints = SegmentService.findSamplesPointIntoSegment(route, segment, 0.1);
 
-					route.segments.push(segment);
+					//route.segments.push(segment);
 
-					samplesPoints = getElevationFromSamplesPoints($scope, route, segment, routeSamples, samplesPoints);
+					//samplesPoints = getElevationFromSamplesPoints($scope, route, segment, routeSamples, samplesPoints);
 				}
 
 				return route;
@@ -192,7 +190,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 				var markers = [];
 
-				_.each(races, function(race, index) {
+				_.each(races, function(race) {
 
 					var marker;
 
@@ -327,7 +325,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 
 						//set the new end marker
 						if (route.markers.length > 1) {
-							marker = SegmentService.getLastMarker(route.markers);
+							var marker = SegmentService.getLastMarker(route.markers);
 							marker.icon = "client/modules/route/images/end.png";
 						}
 

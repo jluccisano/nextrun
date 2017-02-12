@@ -1,54 +1,70 @@
-'use strict';
+"use strict";
 
 /**
  * Module dependencies.
  */
 
-var _                = require('underscore')
-,   routingConfig    = require('../../client/configs/routingConfig');
+var underscore = require("underscore"),
+    accessLevels = require("../../client/routingConfig").accessLevels,
+    userRoles = require("../../client/routingConfig").userRoles,
+    logger = require("../logger.js");
 /**
  *  Register every routes
  */
 
 module.exports.register = function(app, express, routes, routerPath) {
 
-  var router = express.Router();
+    var router = express.Router();
 
-   // TODO: move this to authorization.js
-   var ensureAuthorized = function (req, res, next) {
-      var role;
+    // TODO: move this to authorization.js
+    var ensureAuthorized = function(req, res, next) {
 
-      if(!req.user) role = routingConfig.userRoles.public;
-      else          role = req.user.role;
+        var role;
 
-      var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || routingConfig.accessLevels.public;
-      if(!(accessLevel.bitMask & role.bitMask)) return res.send(403, "access forbidden");
+        if (!req.user) {
+            role = userRoles.public;
+        } else {
+            role = req.user.role;
+        }
+        var accessLevel = underscore.findWhere(routes, {
+            path: req.route.path
+        }).accessLevel || accessLevels.public;
 
-      return next();
-  }
+        if (!(accessLevel.bitMask & role.bitMask)) {
+            logger.error("error.accessDenied");
+            return res.send(403, {
+                message: ["error.accessDenied"]
+            });
+        }
+        return next();
 
-  _.each(routes, function(route) {
+    };
 
-      route.middleware.unshift(ensureAuthorized);
+    //app.param(":raceId", raceController.load);
 
-      switch(route.httpMethod.toUpperCase()) {
-          case 'GET':
-              router.get(route.path, route.middleware);
-              break;
-          case 'POST':
-              router.post(route.path, route.middleware);
-              break;
-          case 'PUT':
-              router.put(route.path, route.middleware);
-              break;
-          case 'DELETE':
-              router.delete(route.path, route.middleware);
-              break;
-          default:
-              throw new Error('Invalid HTTP method specified for route ' + route.path);
-              break;
-      }
-  });
+    underscore.each(routes, function(route) {
 
-  app.use(routerPath, router);
-}
+        route.middleware.unshift(ensureAuthorized);
+
+        switch (route.httpMethod.toUpperCase()) {
+            case "GET":
+                router.get(route.path, route.middleware);
+                break;
+            case "POST":
+                router.post(route.path, route.middleware);
+                break;
+            case "PUT":
+                router.put(route.path, route.middleware);
+                break;
+            case "DELETE":
+                router.delete(route.path, route.middleware);
+                break;
+            default:
+                throw new Error("Invalid HTTP method specified for route " + route.path);
+        }
+
+
+    });
+
+    app.use(routerPath, router);
+};

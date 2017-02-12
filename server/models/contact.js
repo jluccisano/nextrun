@@ -3,41 +3,41 @@
  */
 
 var mongoose = require("mongoose"),
-  Schema = mongoose.Schema;
+    Schema = mongoose.Schema;
 
 var ContactSchema = new Schema({
-  email: {
-    type: String,
-    default: ""
-  },
-  type: {
-    type: String,
-    default: ""
-  },
-  creationDate: {
-    type: Date,
-    default: new Date()
-  }
+    email: {
+        type: String,
+        default: ""
+    },
+    type: {
+        type: String,
+        default: ""
+    },
+    creationDate: {
+        type: Date,
+        default: new Date()
+    }
 });
 
 
 ContactSchema.path("email").validate(function(email) {
-  return email.length;
+    return email.length;
 }, "error.emailCannotBeBlank");
 
 
 ContactSchema.path("email").validate(function(email, fn) {
-  var Contact = mongoose.model("Contact");
+    var Contact = mongoose.model("Contact");
 
-  // Check only when it is a new contact or when email field is modified
-  if (this.isNew || this.isModified("email")) {
-    Contact.find({
-      email: email
-    }).exec(function(err, contacts) {
-      fn(!err && contacts.length === 0);
-    });
-  }
-  return true;
+    // Check only when it is a new contact or when email field is modified
+    if (this.isNew || this.isModified("email")) {
+        Contact.find({
+            email: email
+        }).exec(function(err, contacts) {
+            fn(!err && contacts.length === 0);
+        });
+    }
+    return true;
 }, "error.emailAlreadyExists");
 
 /**
@@ -45,9 +45,9 @@ ContactSchema.path("email").validate(function(email, fn) {
  */
 
 ContactSchema.pre("save", function(next) {
-  if (this.isNew) {
-    return next();
-  }
+    if (this.isNew) {
+        return next();
+    }
 
 });
 

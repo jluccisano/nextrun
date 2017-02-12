@@ -4,13 +4,13 @@
  */
 
 var mongoose = require("mongoose"),
-  User = mongoose.model("User"),
-  errorUtils = require("../utils/errorUtils"),
-  userRoles = require("../../client/routingConfig").userRoles,
-  passport = require("passport"),
-  email = require("../../config/middlewares/notification"),
-  _ = require("underscore"),
-  logger = require("../../config/logger.js");
+    User = mongoose.model("User"),
+    errorUtils = require("../utils/errorUtils"),
+    userRoles = require("../../client/routingConfig").userRoles,
+    passport = require("passport"),
+    email = require("../../config/middlewares/notification"),
+    underscore = require("underscore"),
+    logger = require("../../config/logger.js");
 
 
 /**
@@ -20,44 +20,44 @@ var mongoose = require("mongoose"),
  * @returns success if OK
  */
 exports.signup = function(req, res) {
-  var newUser;
+    var newUser;
 
-  if (!_.isUndefined(req.body) && !_.isUndefined(req.body.user)) {
+    if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.user)) {
 
-    newUser = req.body.user;
+        newUser = req.body.user;
 
-    var user = new User(newUser);
-    user.provider = "local";
-    user.role = userRoles.user;
-    user.lastUpdate = new Date();
+        var user = new User(newUser);
+        user.provider = "local";
+        user.role = userRoles.user;
+        user.lastUpdate = new Date();
 
-    user.save(function(err) {
-      if (err) {
-        logger.error(err);
+        user.save(function(err) {
+            if (err) {
+                logger.error(err);
+                return res.json(400, {
+                    message: errorUtils.errors(err.errors)
+                });
+            }
+
+            req.logIn(user, function(err) {
+                if (err) {
+                    logger.error(err);
+                    return res.json(400, {
+                        message: errorUtils.errors(err.errors)
+                    });
+                }
+                return res.json(200, {
+                    role: user.role,
+                    username: user.username,
+                    email: user.email
+                });
+            });
+        });
+    } else {
         return res.json(400, {
-          message: errorUtils.errors(err.errors)
+            message: ["error.bodyParamRequired"]
         });
-      }
-
-      req.logIn(user, function(err) {
-        if (err) {
-          logger.error(err);
-          return res.json(400, {
-            message: errorUtils.errors(err.errors)
-          });
-        }
-        return res.json(200, {
-          role: user.role,
-          username: user.username,
-          email: user.email
-        });
-      });
-    });
-  } else {
-    return res.json(400, {
-      message: ["error.bodyParamRequired"]
-    });
-  }
+    }
 };
 
 /**
@@ -67,8 +67,8 @@ exports.signup = function(req, res) {
  * @returns redirect to /
  */
 exports.logout = function(req, res) {
-  req.logout();
-  return res.send(200);
+    req.logout();
+    return res.send(200);
 };
 
 /**
@@ -80,27 +80,27 @@ exports.logout = function(req, res) {
  */
 exports.login = function(req, res) {
 
-  passport.authenticate("local", function(err, user, message) {
-    if (err) {
-      logger.error(message);
-      return res.json(400, message);
-    }
-    if (!user) {
-      logger.error(message);
-      return res.json(400, message);
-    }
+    passport.authenticate("local", function(err, user, message) {
+        if (err) {
+            logger.error(message);
+            return res.json(400, message);
+        }
+        if (!user) {
+            logger.error(message);
+            return res.json(400, message);
+        }
 
-    req.logIn(user, function(err) {
-      if (err) {
-        logger.error(err);
-        return res.json(400, message);
-      }
-      return res.json(200, {
-        "role": user.role,
-        "username": user.username
-      });
-    });
-  })(req, res);
+        req.logIn(user, function(err) {
+            if (err) {
+                logger.error(err);
+                return res.json(400, message);
+            }
+            return res.json(200, {
+                "role": user.role,
+                "username": user.username
+            });
+        });
+    })(req, res);
 };
 
 /**
@@ -111,57 +111,57 @@ exports.login = function(req, res) {
  */
 exports.forgotPassword = function(req, res) {
 
-  var reqUser;
+    var reqUser;
 
-  if (!_.isUndefined(req.body) && !_.isUndefined(req.body.user)) {
+    if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.user)) {
 
-    reqUser = req.body.user;
+        reqUser = req.body.user;
 
-    User.findOne({
-      email: reqUser.email
-    }, function(err, user) {
-      if (!err && user) {
+        User.findOne({
+            email: reqUser.email
+        }, function(err, user) {
+            if (!err && user) {
 
-        //le user existe alors change mot de passe et regenerate new one
-        var newPassword = user.generatePassword(6);
-        var salt = user.makeSalt();
-        var hashedPassword = user.encryptPassword(newPassword, salt);
+                //le user existe alors change mot de passe et regenerate new one
+                var newPassword = user.generatePassword(6);
+                var salt = user.makeSalt();
+                var hashedPassword = user.encryptPassword(newPassword, salt);
 
-        User.update({
-          _id: user._id
-        }, {
-          $set: {
-            hashed_password: hashedPassword,
-            salt: salt,
-            lastUpdate: new Date()
-          }
-        }, {
-          upsert: true
-        }, function(err) {
+                User.update({
+                    _id: user._id
+                }, {
+                    $set: {
+                        hashed_password: hashedPassword,
+                        salt: salt,
+                        lastUpdate: new Date()
+                    }
+                }, {
+                    upsert: true
+                }, function(err) {
 
-          if (!err) {
-            email.sendEmailPasswordReinitialized(user.email, newPassword);
-            return res.json(200);
-          } else {
-            logger.error(err);
-            return res.json(400, {
-              message: errorUtils.errors(err.errors)
-            });
-          }
+                    if (!err) {
+                        email.sendEmailPasswordReinitialized(user.email, newPassword);
+                        return res.json(200);
+                    } else {
+                        logger.error(err);
+                        return res.json(400, {
+                            message: errorUtils.errors(err.errors)
+                        });
+                    }
+                });
+
+            } else {
+                logger.error("error.invalidEmail");
+                return res.json(400, {
+                    message: ["error.invalidEmail"]
+                });
+            }
         });
-
-      } else {
-        logger.error("error.invalidEmail");
+    } else {
         return res.json(400, {
-          message: ["error.invalidEmail"]
+            message: ["error.bodyParamRequired"]
         });
-      }
-    });
-  } else {
-    return res.json(400, {
-      message: ["error.bodyParamRequired"]
-    });
-  }
+    }
 };
 
 /**
@@ -171,24 +171,24 @@ exports.forgotPassword = function(req, res) {
  */
 exports.settings = function(req, res) {
 
-  var userConnected;
+    var userConnected;
 
-  if (!_.isUndefined(req.user)) {
+    if (!underscore.isUndefined(req.user)) {
 
-    userConnected = req.user;
+        userConnected = req.user;
 
-    return res.json(200, {
-      user: {
-        _id: userConnected._id,
-        username: userConnected.username,
-        email: userConnected.email
-      }
-    });
-  } else {
-    return res.json(400, {
-      message: ["error.userNotConnected"]
-    });
-  }
+        return res.json(200, {
+            user: {
+                _id: userConnected._id,
+                username: userConnected.username,
+                email: userConnected.email
+            }
+        });
+    } else {
+        return res.json(400, {
+            message: ["error.userNotConnected"]
+        });
+    }
 
 };
 
@@ -200,34 +200,34 @@ exports.settings = function(req, res) {
  */
 exports.checkIfEmailAlreadyExists = function(req, res) {
 
-  var reqUser;
+    var reqUser;
 
-  if (!_.isUndefined(req.body) && !_.isUndefined(req.body.user)) {
+    if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.user)) {
 
-    reqUser = req.body.user;
+        reqUser = req.body.user;
 
-    User.findOne({
-      email: reqUser.email
-    }, function(err, user) {
-      if (err) {
-        logger.error(err);
-        return res.json(400, {
-          message: errorUtils.errors(err.errors)
+        User.findOne({
+            email: reqUser.email
+        }, function(err, user) {
+            if (err) {
+                logger.error(err);
+                return res.json(400, {
+                    message: errorUtils.errors(err.errors)
+                });
+            }
+            if (!user) {
+                return res.json(200);
+            }
+            logger.error("error.emailAlreadyExists");
+            return res.json(400, {
+                message: ["error.emailAlreadyExists"]
+            });
         });
-      }
-      if (!user) {
-        return res.json(200);
-      }
-      logger.error("error.emailAlreadyExists");
-      return res.json(400, {
-        message: ["error.emailAlreadyExists"]
-      });
-    });
-  } else {
-    return res.json(400, {
-      message: ["error.bodyParamRequired"]
-    });
-  }
+    } else {
+        return res.json(400, {
+            message: ["error.bodyParamRequired"]
+        });
+    }
 };
 
 /**
@@ -237,25 +237,25 @@ exports.checkIfEmailAlreadyExists = function(req, res) {
  */
 exports.updateProfile = function(req, res) {
 
-  var user = req.user;
-  user.email = req.body.user.email;
-  user.username = req.body.user.username;
+    var user = req.user;
+    user.email = req.body.user.email;
+    user.username = req.body.user.username;
 
-  user.save(function(err) {
-    if (err) {
-      logger.error(err);
-      return res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    }
-    return res.json(200, {
-      user: {
-        _id: user._id,
-        username: user.username,
-        email: user.email
-      }
+    user.save(function(err) {
+        if (err) {
+            logger.error(err);
+            return res.json(400, {
+                message: errorUtils.errors(err.errors)
+            });
+        }
+        return res.json(200, {
+            user: {
+                _id: user._id,
+                username: user.username,
+                email: user.email
+            }
+        });
     });
-  });
 };
 
 /**
@@ -265,62 +265,62 @@ exports.updateProfile = function(req, res) {
  */
 exports.updatePassword = function(req, res) {
 
-  var userConnected;
+    var userConnected;
 
-  if (!_.isUndefined(req.user)) {
+    if (!underscore.isUndefined(req.user)) {
 
-    userConnected = req.user;
+        userConnected = req.user;
 
-    if (!_.isUndefined(req.body) && !_.isUndefined(req.body.actual) && !_.isUndefined(req.body.new)) {
+        if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.actual) && !underscore.isUndefined(req.body.new)) {
 
-      var actualPassword = req.body.actual;
+            var actualPassword = req.body.actual;
 
-      if (userConnected.authenticate(actualPassword)) {
+            if (userConnected.authenticate(actualPassword)) {
 
-        var newPassword = req.body.new;
+                var newPassword = req.body.new;
 
-        //encrypt new password
-        var salt = userConnected.makeSalt();
-        var hashedNewPassword = userConnected.encryptPassword(newPassword, salt);
+                //encrypt new password
+                var salt = userConnected.makeSalt();
+                var hashedNewPassword = userConnected.encryptPassword(newPassword, salt);
 
-        User.update({
-          _id: userConnected._id
-        }, {
-          $set: {
-            hashed_password: hashedNewPassword,
-            salt: salt,
-            lastUpdate: new Date()
-          }
-        }, {
-          upsert: true
-        }, function(err) {
-          if (!err) {
-            return res.json(200);
+                User.update({
+                    _id: userConnected._id
+                }, {
+                    $set: {
+                        hashed_password: hashedNewPassword,
+                        salt: salt,
+                        lastUpdate: new Date()
+                    }
+                }, {
+                    upsert: true
+                }, function(err) {
+                    if (!err) {
+                        return res.json(200);
 
-          } else {
-            logger.error("error.occured");
+                    } else {
+                        logger.error("error.occured");
+                        return res.json(400, {
+                            message: ["error.occured"]
+                        });
+                    }
+                });
+            } else {
+                logger.error("error.invalidPassword");
+                return res.json(400, {
+                    message: ["error.invalidPassword"]
+                });
+            }
+        } else {
             return res.json(400, {
-              message: ["error.occured"]
+                message: ["error.bodyParamRequired"]
             });
-          }
-        });
-      } else {
-        logger.error("error.invalidPassword");
-        return res.json(400, {
-          message: ["error.invalidPassword"]
-        });
-      }
-    } else {
-      return res.json(400, {
-        message: ["error.bodyParamRequired"]
-      });
-    }
+        }
 
-  } else {
-    return res.json(400, {
-      message: ["error.userNotConnected"]
-    });
-  }
+    } else {
+        return res.json(400, {
+            message: ["error.userNotConnected"]
+        });
+    }
 };
 
 
@@ -330,15 +330,15 @@ exports.updatePassword = function(req, res) {
  * @param res
  */
 exports.deleteAccount = function(req, res) {
-  User.destroy(req.user._id, function(err) {
-    if (!err) {
-      req.logout();
-      return res.json(200);
-    } else {
-      logger.error(err);
-      return res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    }
-  });
+    User.destroy(req.user._id, function(err) {
+        if (!err) {
+            req.logout();
+            return res.json(200);
+        } else {
+            logger.error(err);
+            return res.json(400, {
+                message: errorUtils.errors(err.errors)
+            });
+        }
+    });
 };

@@ -1,43 +1,27 @@
-var userRoles = require("../../client/routingConfig").userRoles,
-  logger = require("../../config/logger.js");
+var cookie = require("../../config/middlewares/cookie");
 /*
  * GET home page.
  */
 
 exports.index = function(req, res) {
 
-  var role = userRoles.public,
-    username = "",
-    email = "",
-    id = "";
-  if (req.user) {
-    id = req.user._id;
-    role = req.user.role;
-    username = req.user.username;
-    email = req.user.email;
-  }
-  res.cookie("user", JSON.stringify({
-    "id": id,
-    "email": email,
-    "username": username,
-    "role": role
-  }));
+    cookie.setUserCookie(req, res);
 
-  res.render("index", {
-    title: "Accueil"
-  });
+    res.render("index", {
+        title: "Accueil"
+    });
 
 };
 
 exports.partials = function(req, res) {
-  var name = req.params.name;
-  var type = req.params.type;
+    var name = req.params.name;
+    var type = req.params.type;
 
-  var partial = "partials/" + name;
+    var partial = "partials/" + name;
 
-  if (type) {
-    partial = "partials/" + type + "/" + name;
-  }
+    if (type) {
+        partial = "partials/" + type + "/" + name;
+    }
 
-  res.render(partial);
+    res.render(partial);
 };

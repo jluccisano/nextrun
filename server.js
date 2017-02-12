@@ -2,49 +2,80 @@
  * NEXTRUN
  * Copyright(c) 2013 Joseph Luccisano
  */
-
-// Load configurations
-// if test env, load example file
-var env = process.env.NODE_ENV || 'development';
+var env = process.env.NODE_ENV || "development";
 console.log("run on environment:" + env);
+
 /**
  * Module dependencies.
  */
+var express = require("express"),
+    fs = require("fs"),
+    passport = require("passport"),
+    config = require("./config/config")[env],
+    mongoose = require("mongoose"),
+    app = express();
 
-var express = require('express'),
-	fs = require('fs'),
-	passport = require('passport'),
-	config = require('./config/config')[env],
-	mongoose = require('mongoose');
 
-/**
- * Main application entry file.
- * Please note that the order of loading is important.
- */
+// Expose config file
+app.config = config;
 
-// db connection
-mongoose.connect(config.db);
+// Database
+require("./config/database")(app, mongoose);
 
 // Bootstrap models
-var models_path = __dirname + '/app/models';
+var models_path = __dirname + "/server/models";
 fs.readdirSync(models_path).forEach(function(file) {
-	if (~file.indexOf('.js')) require(models_path + '/' + file);
+    if (~file.indexOf(".js")) {
+        require(models_path + "/" + file);
+    }
 });
 
 // bootstrap passport config
-require('./config/passport')(passport, config);
+require("./config/passport")(passport, config);
 
-var app = express();
-// express settings
-require('./config/express')(app, config, passport);
+// Bootstrap express config
+require("./config/express")(app, express, passport);
 
 // Bootstrap routes
-require('./config/routes')(app);
+var routes_path = __dirname + "/server/routes";
+fs.readdirSync(routes_path).forEach(function(file) {
+    if (~file.indexOf(".js")) {
+        require(routes_path + "/" + file)(app, express);
+    }
+});
 
-// Start the app by listening on <port>
-var port = process.env.PORT || 3000;
-app.listen(port);
-console.log('Express app started on port ' + port);
 
-// expose app
-exports = module.exports = app;
+// all environments
+app.set("port", env.PORT || 3000);
+
+
+// assume "not found" in the error msgs
+// is a 404. this is somewhat silly, but
+// valid, you can do whatever you like, set
+// properties, use instanceof etc.
+app.use(function(err, req, res, next) {
+    // treat as 404
+    if (err.message && (~err.message.indexOf("not found") || (~err.message.indexOf("Cast to ObjectId failed")))) {
+        return next();
+    }
+
+    // error page
+    res.status(500).render("partials/errors/500", {
+        error: err.stack
+    });
+});
+
+// assume 404 since no middleware responded
+app.use(function(req, res) {
+    res.status(404).render("partials/errors/404", {
+        url: req.originalUrl,
+        error: "Not found"
+    });
+});
+
+app.listen(app.get("port"), function() {
+    console.log("Express server listening on port " + app.get("port"));
+});
+
+// Expose app
+module.exports = app;

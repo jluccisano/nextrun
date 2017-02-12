@@ -20,7 +20,7 @@ angular.module("nextrunApp.route").factory("MarkerService", function() {
 		},
 		getLastMarker: function(markers) {
 
-			if (!markers || !markers.length > 0) {
+			if (!markers || markers.length === 0) {
 				throw new Error("markers array must contain at least one element");
 			}
 
@@ -29,7 +29,7 @@ angular.module("nextrunApp.route").factory("MarkerService", function() {
 		},
 		removeLastMarker: function(markers) {
 	
-			if (!markers || !markers.length > 0) {
+			if (!markers || markers.length === 0) {
 				throw new Error("markers array must contain at least one element");
 			}
 
