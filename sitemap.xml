@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>http://nextrun.eu01.aws.af.cm/</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://nextrun.eu01.aws.af.cm/races/search</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://nextrun.eu01.aws.af.cm/about</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://nextrun.eu01.aws.af.cm/contacts</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://nextrun.eu01.aws.af.cm/credits</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://nextrun.eu01.aws.af.cm/myraces</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://nextrun.eu01.aws.af.cm/users/settings</loc>
+  <changefreq>daily</changefreq>
+</url>
+</urlset>
