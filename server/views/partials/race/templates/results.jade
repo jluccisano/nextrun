@@ -29,7 +29,7 @@ table(class="table table-hover")
 			td 
 				a(nr-async-download nr-file-name="{{result.fileName}}" get-data="downloadResult(result)") {{result.name}}
 			td
-				div(class="form-group")
+				div(class="form-group" ng-if="editMode")
 					button(type="button" class="btn btn-default btn-lg" ng-click="deleteResult(result)")
 						span(class="glyphicon glyphicon-trash")
 

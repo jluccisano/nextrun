@@ -49,6 +49,7 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
     RaceService.addResult($scope.race._id, result).then(function() {
       $scope.reload();
       notificationService.success(gettextCatalog.getString("Votre résultat a bien été ajouté"));
+      $scope.resultsForm.$setPristine();
     });
   };
 
