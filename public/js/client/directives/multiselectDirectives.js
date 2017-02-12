@@ -9,7 +9,7 @@ angular.module("nextrunApp").directive('multiselectDropdown', [function() {
             enableFiltering: true,
             maxHeight: 200,
             filterBehavior: 'both',
-            includeSelectAllOption: true,
+            includeSelectAllOption: false,
             selectAllText: 'Toute la France',
             selectAllValue: 'Toute la France',
             buttonContainer: '<div class="input-group btn-group" />',

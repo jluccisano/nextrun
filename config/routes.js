@@ -147,8 +147,8 @@ var routes = [
         accessLevel: accessLevels.public
     },
     {
-        path: '/api/races/autocomplete/:query_string',
-        httpMethod: 'GET',
+        path: '/api/races/autocomplete',
+        httpMethod: 'POST',
         middleware: [raceController.autocomplete],
         accessLevel: accessLevels.public
     },

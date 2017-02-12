@@ -1,4 +1,8 @@
 var REGIONS = new Enum({
+	ALL: {
+		name: 'Toute la France',
+		departments: [],
+	},
 	ALSACE: {
 		name: 'Ain',
 		departments: ['67', '68'],
@@ -108,14 +112,3 @@ var REGIONS = new Enum({
 		departments: ['01','07','26','38','42','69','73','74'],
 	},
 });
-
-
-var getRegionByName = function(DEPARTMENTS, code) {
-	switch (code.toString()) {
-		case '01':
-			if (true) {
-				return DEPARTMENTS.AIN.value;
-			}
-			break;
-	}
-};

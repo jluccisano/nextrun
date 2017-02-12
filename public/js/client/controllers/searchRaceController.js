@@ -15,9 +15,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.currentTypeSelected = [];
 		$scope.currentDepartmentSelected = [];
+		$scope.currentRegionSelected = [];
 
 		$scope.departments = [];
-		$scope.region = undefined;
+		$scope.region = REGIONS.ALL.value;
 
 		$scope.listOfDepartments = DEPARTMENTS.enums;
 		$scope.listOfRegions = REGIONS.enums;
@@ -85,10 +86,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				var departmentsArray = $routeParams.departments.split(',');
 
 				_.each(departmentsArray, function(departmentCode) {
-					$scope.departments.push(getDepartmentByCode(DEPARTMENTS, departmentCode));
+					//$scope.departments.push(getDepartmentByCode(DEPARTMENTS, departmentCode));
 				});
 
-				$scope.search();
+				//$scope.search();
 			}
 
 		}
@@ -110,9 +111,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			return '-';
 		};
 
-		$scope.getDepartment = function(department) {
-			return department.code + ' - ' + department.name;
-		};
+		
 
 		$scope.getRegion = function(region) {
 			return region.name;
@@ -125,9 +124,17 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 
 		$scope.autocomplete = function(query_string) {
+
+			var criteria = {
+				fulltext: (query_string !== undefined) ? query_string : "",
+				region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined
+			};
+
 			return $http({
-				method: 'GET',
-				url: '/api/races/autocomplete/' + query_string
+				headers: {'Content-Type': 'application/json'},
+				method: 'POST',
+				url: '/api/races/autocomplete',
+				data: {criteria:criteria}
 			}).
 			then(function(response) {
 
@@ -174,7 +181,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		}
 
 		$scope.onChangeRegion = function(region) {
-			$scope.departments = region.departments;
+			//$scope.departments = region.departments;
 			$scope.search();
 		}
 
@@ -219,6 +226,20 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			}
 		};
 
+		$scope.toggleRegionSelection = function(term) {
+			var idx = $scope.departments.indexOf(term);
+
+			// is currently selected
+			if (idx > -1) {
+				$scope.departments.splice(idx, 1);
+			}
+
+			// is newly selected
+			else {
+				$scope.departments.push(term);
+			}
+		};
+
 
 		$scope.toggleTypeSelection = function(term) {
 			var idx = $scope.currentTypeSelected.indexOf(term);
@@ -237,10 +258,16 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.getDepartmentsCodes = function(departments) {
 			var departmentsCodes = [];
 			angular.forEach(departments, function(item) {
-				departmentsCodes.push(item.code);
+				departmentsCodes.push(item.department.code);
 			});
 			return departmentsCodes
 		};
+
+		$scope.getDepartmentByCode = function(departmentCode) {
+			var department = getDepartmentByCode(DEPARTMENTS, departmentCode);
+			return department.code + ' - ' + department.name;
+		}
+
 
 
 		$scope.search = function() {
@@ -255,7 +282,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					"date": 1
 				},
 				types: $scope.currentTypeSelected,
-				departments: $scope.getDepartmentsCodes($scope.departments),
+				departments: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.departments : [],
+				region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined
 				//dateRange: $scope.dateRange
 			};
 
@@ -270,12 +298,13 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 						$scope.typeFacets = response.facets[2];
 
-						$scope.departmentFacets = response.facets[0];
 
-						$scope.dateFacets = response.facets[1];
+						$scope.departmentFacets = $scope.buildDepartmentFacets(response.facets[0]);
 
-						$scope.datarangeConfig.minDate = $scope.dateFacets[0].minDate;
-						$scope.datarangeConfig.maxDate = $scope.dateFacets[0].maxDate;
+						//$scope.dateFacets = response.facets[1];
+
+						//$scope.datarangeConfig.minDate = $scope.dateFacets[0].minDate;
+						//$scope.datarangeConfig.maxDate = $scope.dateFacets[0].maxDate;
 
 						$scope.totalItems = response.races[0].size;
 
@@ -304,7 +333,50 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					});
 				});
 		};
-		$scope.computeUrlParams();
+
+		$scope.buildDepartmentFacets = function(entries) {
+			var results = [];
+
+			_.each($scope.region.departments, function(department) {
+
+				var departmentFacet = {
+					department: getDepartmentByCode(DEPARTMENTS, department),
+					total: 0
+				}
+
+				var hasFacet = _.findWhere(entries, {
+					_id: departmentFacet.department.code
+				});
+				if (hasFacet != undefined) {
+					departmentFacet.total = hasFacet.total;
+				}
+
+				results.push(departmentFacet);
+
+			});
+
+
+			/*_.each(entries, function(facet) {
+
+				if ($scope.region.departments.indexOf(facet._id) > 1) {
+
+				}
+
+				var department = {
+					department: getDepartmentByCode(DEPARTMENTS, facet._id),
+					total: facet.total
+				}
+
+				results.push(department);
+			});*/
+			return results;
+		};
+
+		$scope.displayDepartmentFacet = function(department) {
+			return department.department.name + ' (' + department.total + ') ';
+		};
+
+		//$scope.computeUrlParams();
 		$scope.search();
 	}
 ]);

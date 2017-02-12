@@ -284,13 +284,9 @@ RaceSchema.statics = {
    * @param  query string
    * @param {Function} cb
    */
-  autocomplete: function(query_string, cb) {
+  autocomplete: function(operation, cb) {
 
-    var regex = new RegExp('\\b' + query_string, 'i');
-
-    this.find({
-      name: regex , published: true
-    }, {
+    this.find(operation, {
       name: 1
     }).limit(8).exec(cb);
   },
@@ -304,7 +300,7 @@ RaceSchema.statics = {
   search: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [operation.fulltext, operation.date, operation.departments, operation.types, {
+        '$and': [operation.fulltext, operation.date, operation.departments, operation.types, operation.region, {
           published: true
         }]
       }
@@ -379,7 +375,7 @@ RaceSchema.statics = {
   typeFacets: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [operation.fulltext, operation.departments, operation.date, {
+        '$and': [operation.fulltext, operation.departments, operation.date, operation.region, {
           published: true
         }]
       }
@@ -402,7 +398,7 @@ RaceSchema.statics = {
   departmentFacets: function(operation, cb) {
     this.aggregate({
       '$match': {
-        '$and': [operation.fulltext, operation.types, operation.date, {
+        '$and': [operation.fulltext, operation.types, operation.date, operation.region, {
           published: true
         }]
       }

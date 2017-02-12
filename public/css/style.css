@@ -256,4 +256,8 @@
   font-size: 100%;
 }
 
+.disabled {
+    color: grey;
+}
+
 
