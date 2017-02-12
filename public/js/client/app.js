@@ -3,7 +3,8 @@ var nextrunApp = angular.module('nextrunApp', [
   'ngRoute',
   'ngAnimate',
   'ui.bootstrap',
-  'google-maps'
+  'google-maps',
+  'highcharts-ng'
 ]);
 
 /** Initialize i18n **/

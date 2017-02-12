@@ -2,12 +2,35 @@ div.container
 	h3 Edition d'une manifestation
 		div.row
 			div.col-lg-12
-				google-map(id="mymap" center="center"  zoom="zoom"  draggable="true" mark-click="true" style="height: 400px" events="events")
+				google-map(center="center" options="options" zoom="zoom"  draggable="true" mark-click="true" style="height: 400px" events="events")
 					markers
-						marker(ng-repeat="marker in markers" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
-							marker-label(content="marker.title" anchor="22 0" class="marker-labels")
-							window(show="marker.showWindow" closeClick="marker.closeClick()")
-								p This is an info window at {{ marker.latitude | number:4 }}, {{ marker.longitude | number:4 }}
+						marker(ng-repeat="marker in markers" coords="marker" icon="marker.icon" dbclick="onMarkerClicked(marker)")
+							//marker-label(content="marker.title" anchor="22 0" class="marker-labels")
+							//window(show="marker.showWindow" closeClick="marker.closeClick()")
+							//	p This is an info window at {{ marker.latitude | number:4 }}, {{ marker.longitude | number:4 }}
 					polyline(ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable")
 					
-					window(show="map.templatedInfoWindow.show" coords="map.templatedInfoWindow.coords" templateUrl="map.templatedInfoWindow.templateUrl" templateParameter="map.templatedInfoWindow.templateParameter")
+					//window(show="map.templatedInfoWindow.show" coords="map.templatedInfoWindow.coords" templateUrl="map.templatedInfoWindow.templateUrl" templateParameter="map.templatedInfoWindow.templateParameter")
+				div(style="padding: 5px; z-index: 0; position: absolute; top: 32px; right: 0px;")
+					div.well
+						div.checkbox
+							label Rester sur la route
+								input(type="checkbox" checked="checked" data-ng-model="stayOnTheRoad")
+						div.button-group
+							button.btn.btn-primary.btn-xs(ng-click="undo()")
+								i.fa.fa-reply
+								span Retour
+							button.btn.btn-danger.btn-xs(ng-click="delete()")
+								i.fa.fa-times
+								span Effacer
+						div
+							h3 {{route.distance.toFixed(2)}} km
+						div
+							span D+: {{Math.floor(route.ascendant)}} m
+						div
+							span D-: {{Math.floor(route.descendant)}} m
+						div
+							span Max: {{Math.floor(route.maxElevation)}} m
+						div
+							span Min: {{Math.floor(route.minElevation)}} m
+				highchart(id="chart1" config="chartConfig")
