@@ -113,7 +113,7 @@ describe("ContactController", function() {
 				cb(null);
 			});
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};
@@ -158,7 +158,7 @@ describe("ContactController", function() {
 
 			var emailStub = sandbox.stub(email, "sendEmailNewFeedback").returns();
 
-			res.status = function(httpStatus) {
+			res.sendStatus = function(httpStatus) {
 				expect(httpStatus).to.equal(200);
 				done();
 			};

@@ -82,13 +82,13 @@ describe('AuthService', function() {
 		mockUser = _MockFactory_.getMockUser();
 	}));*/
 
-	describe('register', function() {
+	/*describe('register', function() {
 		it('should call sendPOST with success', function() {
 			spyOn(mockRestAPIHelper, "sendPOST").and.callThrough();
 			AuthService.register(mockUser);
 			expect(mockRestAPIHelper.sendPOST).toHaveBeenCalledWith('/api/users/signup', mockUser);
 		});
-	});
+	});*/
 
 	describe('forgotPassword', function() {
 		it('should call sendPOST with success', function() {

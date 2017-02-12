@@ -7,7 +7,7 @@ var raceModule = angular.module("nextrunApp.race", [
   "AngularGM",
   "textAngular",
   "gettext",
-  //"ui.bootstrap",
+  "ui.bootstrap.modal",
   //"mgcrea.ngStrap.tooltip",
   "mgcrea.ngStrap.collapse",
   "mgcrea.ngStrap.tab",

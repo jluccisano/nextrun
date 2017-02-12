@@ -88,7 +88,7 @@ describe('EditRaceController', function() {
 		});
 	});*/
 
-	describe('submit()', function() {
+	/*describe('submit()', function() {
 		it('update race with success', function() {
 			mockRaceService.setPromiseResponse(true);
 			spyOn(mockRaceService, "update").and.callThrough();
@@ -105,7 +105,7 @@ describe('EditRaceController', function() {
 			expect(mockAlertService.add).toHaveBeenCalled();
 
 		});
-	});
+	});*/
 
 	describe('openChangeTypeConfirmation modal()', function() {
 		it('should change type when the modal close is called', function() {
