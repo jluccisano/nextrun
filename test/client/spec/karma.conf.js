@@ -39,6 +39,7 @@ module.exports = function(config) {
             "client/bower_components/angular-strap/dist/angular-strap.js",
             "client/bower_components/angular-strap/dist/angular-strap.tpl.js",
             "client/bower_components/textAngular/dist/textAngular.min.js",
+            "client/bower_components/angular-ui-select/dist/select.js",
 
             "client/bower_components/angular-mocks/angular-mocks.js",
             

@@ -44,7 +44,7 @@ div.custom-bs-background
 								div.form-group
 									ui-select(ng-model="criteria.types")
 										ui-select-match(placeholder="{{'Sélectionner...' | translate}}") {{$item}}
-											ui-select-choices(repeat="type in listOfTypes | filter:$select.search"){{type.name}}
+										ui-select-choices(repeat="type in listOfTypes | filter:$select.search") {{type.name}}
 						div.row
 							div.col-lg-2.col-lg-offset-8(style="margin-top:-40px")
 								div.form-group

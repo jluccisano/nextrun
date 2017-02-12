@@ -1,31 +1,24 @@
-script.
-	jQuery('#carousel').carousel();
 div.container
-	div.carousel.slide(id="carousel")
-		ol.carousel-indicators.custom-carousel-indicators
-			li.active(data-target="#carousel",data-slide-to="0")
-			li(data-target="#carousel",data-slide-to="1")
-			li(data-target="#carousel",data-slide-to="2")
-		div.carousel-inner
-			div.item.active
-				div.row
-					div.col-lg-5.col-lg-offset-1
-						h2(translate) Toutes les épreuves d'endurance rassemblées sur un même site
-						p(translate) Triathlon , Trail, VTT, Cyclo...
-					div.col-lg-6
-						iframe(width="420" height="315" src="//www.youtube.com/embed/t7xmvmTFacw" frameborder="0" allowfullscreen)
-			div.item
-				div.row
-					div.col-lg-5.col-lg-offset-1
-						h2(translate) Trouver et préparer votre course
-						p(translate) Analyser le détail du parcours (dénivelé, altitude, distance...)
-					div.col-lg-6
-						img(id="reponsive-img", src="client/modules/main/images/show_screenshot.png", style="width: 100%; height:auto;display: inline-block;")
-			div.item
-				div.row
-					div.col-lg-5.col-lg-offset-1
-						h2(translate) Promouvoir votre manifestation
-						p(translate) Détailler l'ensemble de votre manifestion (parcours, organisation, nombre de places...)
-						button.btn.btn-primary.btn-lg(ng-click="goToNewRace()" translate) Commencer maintenant !
-					div.col-lg-6
-						img(id="reponsive-img", src="client/modules/main/images/edit_screenshot.png", style="width: 100%; height:auto;display: inline-block;")
+	carousel(interval="5000")
+		slide
+			div.row
+				div.col-lg-5.col-lg-offset-1
+					h2(translate) Toutes les épreuves d'endurance rassemblées sur un même site
+					p(translate) Triathlon , Trail, VTT, Cyclo...
+				div.col-lg-6
+					iframe(width="420" height="315" src="//www.youtube.com/embed/t7xmvmTFacw" frameborder="0" allowfullscreen)
+		slide
+			div.row
+				div.col-lg-5.col-lg-offset-1
+					h2(translate) Trouver et préparer votre course
+					p(translate) Analyser le détail du parcours (dénivelé, altitude, distance...)
+				div.col-lg-6
+					img(id="reponsive-img" src="client/modules/main/images/show_screenshot.png" style="width: 100%; height:auto;display: inline-block;")
+		slide
+			div.row
+				div.col-lg-5.col-lg-offset-1
+					h2(translate) Promouvoir votre manifestation
+					p(translate) Détailler l'ensemble de votre manifestion (parcours, organisation, nombre de places...)
+					button.btn.btn-primary.btn-lg(ng-click="goToNewRace()" translate) Commencer maintenant !
+				div.col-lg-6
+					img(id="reponsive-img" src="client/modules/main/images/edit_screenshot.png" style="width: 100%; height:auto;display: inline-block;")
