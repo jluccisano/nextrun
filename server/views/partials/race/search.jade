@@ -11,7 +11,7 @@ div.container
 				div.input-group-btn(style="width:100%")
 					input.form-control(type="text" placeholder="Rechercher" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="criteria.fulltext" typeahead="name as name.fullname for name in suggest($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
 
-				select.form-control(style="width:200px"  ng-change="search()" data-placeholder="Sélectionner..." ng-model="criteria.region" ng-options="region.value as getRegion(region.value) for region in listOfRegion")
+				select.form-control(style="width:200px"  ng-change="search()" data-placeholder="Sélectionner..." ng-model="criteria.region" ng-options="region as region.name for region in listOfRegion")
 		div.col-lg-3.col-lg-offset-7(style="margin-top:10px")
 			a(ng-click="switchSearchView(true)" translate) Rechercher par géolocalisation
 
@@ -98,18 +98,10 @@ div.container
 										checklist-model="criteria.departments"
 										checklist-value="facet.department.code")
 					h4(translate) par Date
-					div.input-group
-						span.input-group-addon
-							i.glyphicon.glyphicon-calendar
-						input.form-control(type="daterange" 
-										   min-date="{{dateRangeConfig.minDate}}" 
-										   max-date="{{dateRangeConfig.maxDate}}" 
-										   ng-model="dateRange" 
-										   ng-change="changeDateRange(dateRange);search()" 
-										   format="{{dateRangeConfig.format}}" 
-										   locale="{{dateRangeConfig.locale}}" 
-										   ranges="{{dateRangeConfig.ranges}}")
-			
+					div.form-group
+						input.form-control(type="text" ng-model="dateRange.startDate" data-max-date="{{dateRange.endDate}}" placeholder="{{'De' | translate }}" bs-datepicker)
+					div.form-group		
+      					input.form-control(type="text" ng-model="dateRange.endDate" data-min-date="{{dateRange.startDate}}" placeholder="{{'Au' | translate }}" bs-datepicker)			
 			div.col-lg-9
 				div.col-lg-3
 					pre(translate) Page: {{pagination.currentPage}} / {{pagination.numPages}}

@@ -13,13 +13,13 @@ describe("check list Directive", function() {
 
 	describe("checklistModel invalid parameters", function() {
 
-		it("should return an error when the checklist-value is not set", function() {
+		/*it("should return an error when the checklist-value is not set", function() {
 			function errorFunctionWrapper() {
 				$compile(angular.element("<input type='checkbox' checklist-change='search()'' checklist-model='model'/>"))($scope);
 				$scope.$digest();
 			}
 			expect(errorFunctionWrapper).toThrow();
-		});
+		});*/
 
 		/*it("should return an error when element is not an input type checkbox", function() {
 			function errorFunctionWrapper() {

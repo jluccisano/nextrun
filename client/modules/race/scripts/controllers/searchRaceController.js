@@ -6,7 +6,6 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         $location,
         RaceService,
         SharedCriteriaService,
-        DateRangeConfig,
         DepartmentEnum,
         RegionEnum,
         RaceTypeEnum,
@@ -69,7 +68,6 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         initAutocomplete();
 
         $scope.listOfRegion = RegionEnum.getValues();
-        $scope.DateRangeConfig = DateRangeConfig;
         $scope.dateRange = {
             startDate: moment(),
             endDate: moment().add("days", 179)
@@ -86,17 +84,6 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.criteria.types = [];
             $scope.criteria.dateRange = [];
             $scope.search();
-        };
-
-        $scope.getRegion = function(region) {
-            return region.name;
-        };
-
-        $scope.formatDateRange = function(dateRange) {
-            if (!dateRange) {
-                return;
-            }
-            return "du " + moment(new Date(dateRange.startDate)).format("DD-MM-YYYY") + " au " + moment(new Date(dateRange.endDate)).format("DD-MM-YYYY");
         };
 
         $scope.suggest = function(queryString) {
