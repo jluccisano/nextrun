@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$location', 'ContactServices', 'Alert', 'mySharedService', '$rootScope',
-	function($scope, $http, $location, ContactServices, Alert, sharedService, $rootScope) {
+angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$location', 'ContactServices', 'Alert', 'mySharedService', '$rootScope', 'RaceServices', 'RouteFactory',
+	function($scope, $http, $location, ContactServices, Alert, sharedService, $rootScope, RaceServices, RouteFactory) {
 		'use strict';
 
 		$scope.fulltext = undefined;
@@ -11,6 +11,39 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 		$scope.listOfRegions = REGIONS.enums;
 		$scope.listOfTypes = TYPE_OF_RACES.enums;
 		$scope.currentTypesSelected = [];
+
+		$scope.map = {
+			isVisible: false,
+			editMode: true,
+			segments: [],
+			zoom: 6,
+			fit: true,
+			markers: [],
+			polylines: [],
+			center: {
+				latitude: 46.52863469527167,
+				longitude: 2.43896484375,
+			},
+			options: {
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				mapTypeControlOptions: {
+					mapTypeIds: [google.maps.MapTypeId.ROADMAP,
+						google.maps.MapTypeId.HYBRID,
+						google.maps.MapTypeId.SATELLITE
+					]
+				},
+				disableDoubleClickZoom: true,
+				scrollwheel: true,
+				draggableCursor: "crosshair",
+				streetViewControl: false,
+				zoomControl: true
+			},
+			events: {
+				click: function(mapModel, eventName, originalEventArgs) {
+
+				}
+			}
+		};
 
 
 		$scope.types = [{
@@ -116,6 +149,51 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				}, 1000);
 			}
 		};
+
+		$scope.getRaces = function() {
+			var criteria = {
+				fulltext: "",
+				page: 1,
+				size: 25,
+				sort: {
+					"date": 1
+				},
+				types: [],
+				departments: [],
+				region: undefined
+			};
+
+			RaceServices.findAll(
+				function(response) {
+
+					if (response.races.length > 0) {
+
+						$scope.emptyResults = false;
+
+						$scope.markers = RouteFactory.convertRacesLocationToMarkers(response.races);
+
+					} else {
+
+						$scope.emptyResults = true;
+
+					}
+
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
+				});
+		}
+
+		$scope.onMarkerClicked = function(marker) {
+			if (marker) {
+				$location.path("/races/view/" + marker.id);
+			}
+		}
+
+
+		$scope.getRaces();
 
 	}
 ]);

@@ -44,10 +44,7 @@ curl -XPOST "http://localhost:9200/racesidx_v1/" -d '{
   }
 }'
 
-<<<<<<< HEAD
 
-=======
->>>>>>> change mapping
 curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
   "race": {
     "properties": {
@@ -63,7 +60,6 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
           }
         }
       },
-<<<<<<< HEAD
       "type": {
         "properties": {
           "name": {
@@ -157,17 +153,7 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
               "precision": "1cm"
             }
           }
-=======
-      "latlng" : {
-        "properties" : {
-            "location" : {
-                "type" : "geo_point",
-                "fielddata" : {
-                    "format" : "compressed",
-                    "precision" : "1cm"
-                }
-            }
->>>>>>> change mapping
+
         }
       }
     }

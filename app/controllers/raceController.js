@@ -665,5 +665,38 @@ buildQueryString = function(field, query) {
   result.queryString.default_field = field;
   result.queryString.query = query;
 
-  return result;
-}
+  console.log(util.inspect(operation));
+  Race.autocomplete(operation, function(err, races) {
+    if (err) {
+      console.log(err);
+      return res.json(400, {
+        message: errorUtils.errors(err)
+      });
+    }
+    req.races = races;
+    return res.json(200, {
+      races: req.races
+    });
+  });
+};
+
+/**
+ * @method Find all races
+ * @param req
+ * @param res
+ */
+exports.findAll = function(req, res) {
+
+  Race.findAll(function(err, races) {
+    if (err) {
+      console.log(err);
+      return res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
+    }
+    req.races = races;
+    return res.json(200, {
+      races: req.races
+    });
+  });
+};
