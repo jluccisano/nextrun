@@ -21,7 +21,7 @@ angular.module("nextrunApp.home").controller("HomeController",
                 from: 0,
                 fulltext: "",
                 departments: [],
-                region: RegionEnum.REGIONS.ALL.value,
+                region: RegionEnum.getRegionByName("*"),
                 types: [],
                 dateRanges: [{
                     startDate: moment(),

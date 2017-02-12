@@ -27,7 +27,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		$scope.pending = false;
 
 
-		$scope.types = RaceTypeEnum.values;
+		$scope.types = RaceTypeEnum.getValues();
 		$scope.distances = [];
 		$scope.cursorMarker = {};
 		$scope.currentRaceType = {};
@@ -38,14 +38,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		};
 
 		$scope.raceId = $routeParams.raceId;
-
-		$scope.getType = function(type) {
-			return type.i18n;
-		};
-
-		$scope.getDistanceType = function(distanceType) {
-			return distanceType.i18n;
-		};
 
 		$scope.init = function() {
 

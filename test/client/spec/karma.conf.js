@@ -44,8 +44,6 @@ module.exports = function(config) {
 
             "client/bower_components/angular-mocks/angular-mocks.js",
             
-            "client/lib/enum-0.2.5.js",
-
             "client/routingConfig.js",
 
             "client/modules/commons/scripts/commons.js",

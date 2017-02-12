@@ -20,7 +20,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
                 from: 0,
                 fulltext: "",
                 departments: [],
-                region: RegionEnum.REGIONS.ALL.value,
+                region: RegionEnum.getRegionByName("*"),
                 types: [],
                 dateRanges: [{
                     startDate: moment(),
@@ -68,7 +68,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         initRaces();
         initAutocomplete();
 
-        $scope.listOfRegion = RegionEnum.values;
+        $scope.listOfRegion = RegionEnum.getValues();
         $scope.DateRangeConfig = DateRangeConfig;
         $scope.dateRange = {
             startDate: moment(),
@@ -103,7 +103,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
             var criteria = {
                 fulltext: (queryString !== undefined) ? queryString : "",
-                region: ($scope.criteria.region.name !== RegionEnum.REGIONS.ALL.value.name) ? $scope.criteria.region : undefined
+                region: ($scope.criteria.region.name !== RegionEnum.getRegionByName("*")) ? $scope.criteria.region : undefined
             };
 
             return RaceService.suggest(criteria).then(function(response) {

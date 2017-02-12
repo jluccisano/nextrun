@@ -28,25 +28,12 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 			types: "(cities)"
 		};
 
-		$scope.types = RaceTypeEnum.values;
-		$scope.distances = [];
+		$scope.types = RaceTypeEnum.getValues();
 
 		$scope.accountExists = true;
 
-		$scope.onChange = function() {
-			$scope.distances = $scope.race.type.distances;
-		};
-
 		$scope.isLoggedIn = function() {
 			return AuthService.isLoggedIn();
-		};
-
-		$scope.getType = function(type) {
-			return type.i18n;
-		};
-
-		$scope.getDistanceType = function(distanceType) {
-			return distanceType.i18n;
 		};
 
 		$scope.submit = function() {

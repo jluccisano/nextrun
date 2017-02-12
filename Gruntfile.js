@@ -329,7 +329,7 @@ module.exports = function(grunt) {
         jshintrc: ".jshintrc",
         reporter: require("jshint-stylish"),
         reporterOutput: "jshint.xml",
-        ignores: ["<%= yeoman.client %>/lib/**/*.js", "<%= yeoman.client %>/widgets/*.js"]
+        ignores: ["<%= yeoman.client %>/widgets/*.js"]
       },
       all: [
         "Gruntfile.js",
