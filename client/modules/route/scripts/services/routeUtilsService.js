@@ -57,7 +57,7 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsAp
 				longitude: 2.43896484375,
 			};
 
-			if (angular.isDefined(race.place)) {
+			if (angular.isDefined(race) && angular.isDefined(race.place)) {
 				if (angular.isDefined(race.place.location)) {
 					center = {
 						latitude: race.place.location.latitude,
