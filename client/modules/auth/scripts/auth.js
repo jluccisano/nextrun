@@ -9,8 +9,7 @@ var authModule = angular.module("nextrunApp.auth", [
     "mgcrea.ngStrap.scrollspy",
     "mgcrea.ngStrap.affix",
     "nextrunApp.commons",
-    "jlareau.pnotify",
-    "aa.formExtensions"
+    "jlareau.pnotify"
 ]);
 
 authModule.config(

@@ -51,7 +51,7 @@ raceModule.config(
     }).state("create", {
       url: "/races/create",
       templateUrl: "/partials/race/create",
-      controller: "CreateController",
+      controller: "CreateRaceController",
       data: {
         access: access.public
       }

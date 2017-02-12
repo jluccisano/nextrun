@@ -4,8 +4,8 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 	function(
 		$rootScope,
 		$scope,
-		//$location,
 		$modal,
+		$state,
 		RaceService,
 		notificationService,
 		AuthService,
@@ -69,6 +69,8 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 						notificationService.success(gettextCatalog.getString("La manifestation a bien été créée"));
 						$scope.openRedirectionModal(response.data.raceId);
 					});
+			} else {
+				$state.go("login");
 			}
 		};
 
