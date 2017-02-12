@@ -7,16 +7,24 @@ angular.module('nextrunApp')
             var sharedService = {};
 
             sharedService.fulltext = '';
+            sharedService.criteria = undefined;
 
-            sharedService.prepForBroadcast = function(fulltext, region, currentTypesSelected) {
+            sharedService.prepForFullTextBroadcast = function(fulltext) {
                 this.fulltext = fulltext;
-                this.region = region;
-                this.currentTypesSelected = currentTypesSelected;
-                this.broadcastItem();
+                this.broadcastFullTextItem();
             };
 
-            sharedService.broadcastItem = function() {
-                $rootScope.$broadcast('handleBroadcast');
+            sharedService.prepForCriteriaBroadcast = function(criteria) {
+                this.criteria = criteria;
+                this.broadcastCriteriaItem();
+            };
+
+            sharedService.broadcastFullTextItem = function() {
+                $rootScope.$broadcast('handleFullTextBroadcast');
+            };
+
+            sharedService.broadcastCriteriaItem = function() {
+                $rootScope.$broadcast('handleCriteriaBroadcast');
             };
 
             return sharedService;

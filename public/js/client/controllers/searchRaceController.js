@@ -29,10 +29,13 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.dateFacets = [];
 		$scope.typeFacets = [];
 
-		$scope.$on('handleBroadcast', function() {
+		$scope.$on('handleFullTextBroadcast', function() {
 			$scope.fulltext = sharedService.fulltext;
-			$scope.region = sharedService.region;
-			$scope.currentTypeSelected = sharedService.currentTypesSelected;
+			$scope.search();
+		});
+
+		$scope.$on('handleCriteriaBroadcast', function() {
+			$scope.currentTypeSelected = sharedService.criteria.types;
 			$scope.search();
 		});
 
