@@ -43,27 +43,29 @@ module.exports = function(app, passport) {
 
 	app.get('/users/settings', auth.ensureAuthorized, userController.settings);
 
-	app.put('/users/:userId/update/profile', auth.ensureAuthorized, userController.updateProfile);
+	app.put('/users/update/profile', auth.ensureAuthorized, userController.updateProfile);
 
-	app.put('/users/:userId/update/password', auth.ensureAuthorized, userController.updatePassword);
+	app.put('/users/update/password', auth.ensureAuthorized, userController.updatePassword);
 
 	app.post('/users/check/email', auth.ensureAuthorized, userController.checkIfEmailAlreadyExists);
 
-	app.del('/users/:userId', auth.ensureAuthorized, userController.deleteAccount);
+	app.del('/users/delete', auth.ensureAuthorized, userController.deleteAccount);
 
-	app.get('/users/:userId/races/(page/:page)?', auth.ensureAuthorized, raceController.findByUser);
 
 
 	app.param(':userId', userController.load);
 
 	/** races **/
 
-	app.post('/races', auth.ensureAuthorized, raceController.create);
+	app.post('/races/create', auth.ensureAuthorized, raceController.create);
 
-	app.del('/races/:raceId/delete', auth.ensureAuthorized, raceController.delete);
+	app.get('/races/find/(page/:page)?', auth.ensureAuthorized, raceController.findByUser);
+
+	app.get('/races/:raceId', auth.ensureAuthorized, raceController.find);
 
 	app.put('/races/:raceId/update', auth.ensureAuthorized, raceController.update);
 
+	app.del('/races/:raceId/delete', auth.ensureAuthorized, raceController.delete);
 
 	app.param(':raceId', raceController.load);
 

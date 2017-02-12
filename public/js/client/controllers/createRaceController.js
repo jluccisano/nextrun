@@ -14,14 +14,14 @@ nextrunControllers.controller('CreateRaceCtrl', ['$scope', '$location', 'RaceSer
 
 		$scope.submit = function(race) {
 
-			data = {
-				race: race,
-				user: Auth.user
+			var data = {
+				race: race
 			};
 
 			RaceServices.create(data,
 				function(res) {
 					Alert.add("success", "Votre nouvelle manifestation a bien été créé", 3000);
+					$location.path('/myraces');
 				},
 				function(error) {
 					_.each(error.message, function(message) {

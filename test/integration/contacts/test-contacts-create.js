@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Create contact tests
-
+ */
 
 describe('Create Contact: POST /contacts', function() {
 
@@ -127,4 +127,3 @@ describe('Create Contact: POST /contacts', function() {
 
 
 });
- */

@@ -4,20 +4,22 @@ nextrunControllers.controller('MyRacesCtrl', ['$scope', '$location', 'RaceServic
 		$scope.currentPage = 1;
 		$scope.maxSize = 5;
 
+		$scope.init = function() {
+			RaceServices.find(Auth.user.id, $scope.currentPage,
+				function(response) {
 
-		RaceServices.find(Auth.user.id, $scope.currentPage,
-			function(response) {
+					$scope.races = response.races;
 
-				$scope.races = response.races;
+					$scope.totalItems = $scope.races.length;
 
-				$scope.totalItems = $scope.races.length;
-
-			},
-			function(error) {
-				_.each(error.message, function(message) {
-					Alert.add("danger", message, 3000);
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
 				});
-			});
+		};
+
 
 		$scope.getDate = function(dateString) {
 			return moment(new Date(dateString)).format("DD/MM/YYYY HH:MM");
@@ -38,7 +40,15 @@ nextrunControllers.controller('MyRacesCtrl', ['$scope', '$location', 'RaceServic
 					}
 				}
 			});
+
+			modalInstance.result.then(function() {
+				$scope.init();
+			}, function() {
+
+			});
 		};
+
+		$scope.init();
 	}
 ]);
 
@@ -55,7 +65,8 @@ nextrunControllers.controller('DeleteConfirmationCtrl', ['$scope', '$modalInstan
 
 			RaceServices.delete($scope.race._id,
 				function(response) {
-
+					Alert.add("success", "Votre manifestation a bien été supprimé", 3000);
+					$modalInstance.close();
 				},
 				function(error) {
 					_.each(error.message, function(message) {

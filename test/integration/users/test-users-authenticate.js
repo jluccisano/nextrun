@@ -10,39 +10,47 @@ var mongoose = require('mongoose'),
   context = describe,
   superagent = require('superagent'),
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
+  passportStub = require('passport-stub'),
   User = mongoose.model('User');
 
+passportStub.install(app);
 /**
  * Autheniticate User tests
- 
+ */
+
+var user1 = {
+  username: 'foobar1',
+  email: "foobar1@example.com",
+  role: {
+    bitMask: 2,
+    title: 'user'
+  },
+  _id: '123726537a11c4aa8d789bbc',
+  password: '123'
+};
 
 describe('Authenticate user: POST /users/session', function() {
 
 
-  var currentUser;
-
   before(function(done) {
-    User.create({
-      username: "foobar",
-      email: "foobar@example.com",
-      password: "foobar",
-      role: userRoles.user
-    }, function(err, user) {
-      currentUser = user;
+    User.create(user1, function(err, user) {
+      user1._id = user._id;
       done();
     });
   });
 
-  it('check if user has been saved to the database', function(done) {
+
+  it('should save the user 1 to the database', function(done) {
     User.findOne({
-      email: 'foobar@example.com'
+      email: 'foobar1@example.com'
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar@example.com');
+      user.email.should.equal('foobar1@example.com');
       done();
     });
   });
+
 
   describe('Authenticate failed', function() {
 
@@ -79,14 +87,14 @@ describe('Authenticate user: POST /users/session', function() {
     it('should response success', function(done) {
       superagent.post('http://localhost:3000/users/session')
         .send({
-          email: 'foobar@example.com',
-          password: 'foobar'
+          email: 'foobar1@example.com',
+          password: '123'
         })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
-          res.body.username.should.equal("foobar");
+          res.body.username.should.equal("foobar1");
           res.body.role.title.should.equal("user");
           done();
         });
@@ -101,4 +109,4 @@ describe('Authenticate user: POST /users/session', function() {
 
 
 
-});*/
+});

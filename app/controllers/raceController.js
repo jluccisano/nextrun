@@ -91,6 +91,19 @@ exports.findByUser = function(req, res) {
   });
 };
 
+
+/**
+ * @method find race
+ * @param req
+ * @param res
+ * @returns success if OK
+ */
+exports.find = function(req, res) {
+  return res.json(200, {
+    race: req.race
+  });
+};
+
 /**
  * @method update race
  * @param req
@@ -101,7 +114,7 @@ exports.update = function(req, res) {
 
   var race = req.race;
 
-  if (req.user._id.equals(req.race.user_id)) {
+  if (race.user_id.equals(req.user._id)) {
 
     var raceToUpdate = req.body.race;
     raceToUpdate.last_update = new Date();
@@ -134,9 +147,7 @@ exports.update = function(req, res) {
  * @param res
  */
 exports.delete = function(req, res) {
-  console.log("user connected:" + req.user);
-  if (req.user._id.equals(req.race.user_id)) {
-
+  if (req.race.user_id.equals(req.user._id)) {
     Race.destroy(req.race._id, function(err) {
       if (!err) {
         return res.json(200);

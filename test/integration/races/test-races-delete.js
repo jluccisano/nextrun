@@ -12,59 +12,58 @@ var mongoose = require('mongoose'),
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
   ObjectId = mongoose.Schema.Types.ObjectId,
-  passportStub = require('passport-stub');
+  passportStub = require('passport-stub'),
   User = mongoose.model('User');
 
 passportStub.install(app);
 
 /**
  * Delete race tests
+ *
+ * Non valide
+ * Aucun  utilisateur connecté
+ * l'utilisateur connecté n'est pas propriétaire de la manifestation
+ * 
+ * Valide 
+ * Le user connecté est propriétaire de la manifestation
  */
 
- var user1 = {
-    username:'foobar1',
-    email: "foobar1@example.com",
-    role: { bitMask: 2, title: 'user' },
-    //_id: '123726537a11c4aa8d789bbc',
-    password:'123'
+var user1 = {
+  username: 'foobar1',
+  email: "foobar1@example.com",
+  role: {
+    bitMask: 2,
+    title: 'user'
+  },
+  _id: '123726537a11c4aa8d789bbc',
+  password: '123'
 };
 
 var user2 = {
-    username:'foobar2',
-    email: "foobar2@example.com",
-    role: { bitMask: 2, title: 'user' },
-    _id: '223726537a11c4aa8d789bbc',
-    password:'123'
+  username: 'foobar2',
+  email: "foobar2@example.com",
+  role: {
+    bitMask: 2,
+    title: 'user'
+  },
+  _id: '223726537a11c4aa8d789bbc',
+  password: '123'
 };
 
 describe('Delete race: DELETE /races', function() {
 
-
- // var currentUser;
   var currentRace;
   var currentDate = new Date();
 
 
   before(function(done) {
-/*   var userArray = [{
-      username: "foobar1",
-      email: "foobar1@example.com",
-      password: "foobar1",
-      role: userRoles.user
-    }, {
-      username: "foobar2",
-      email: "foobar2@example.com",
-      password: "foobar2",
-      role: userRoles.user
-    }];*/
     User.create(user1, function(err, user) {
-      console.log(user);
       user1._id = user._id;
       done();
     });
   });
 
- /* it('should save the user 1 to the database', function(done) {
+  it('should save the user 1 to the database', function(done) {
     User.findOne({
       email: 'foobar1@example.com'
     }).exec(function(err, user) {
@@ -74,17 +73,6 @@ describe('Delete race: DELETE /races', function() {
       done();
     });
   });
-
-  it('should save the user 2 to the database', function(done) {
-    User.findOne({
-      email: 'foobar2@example.com'
-    }).exec(function(err, user) {
-      should.not.exist(err);
-      user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar2@example.com');
-      done();
-    });
-  });*/
 
   before(function(done) {
 
@@ -101,11 +89,12 @@ describe('Delete race: DELETE /races', function() {
       last_update: new Date(),
       created_date: new Date()
     }, function(err, race) {
-      console.log(err);
       done();
       passportStub.logout(user1);
     });
   });
+
+
 
   it('should save the race to the database', function(done) {
     Race.findOne({
@@ -127,25 +116,29 @@ describe('Delete race: DELETE /races', function() {
     });
   });
 
+
+
   describe('invvalid parameters', function() {
 
-    it('should not delete because unknown user', function(done) {
-      superagent.del('http://localhost:3000/races/' + currentRace._id)
+    it('should not delete because access denied', function(done) {
+      superagent.del('http://localhost:3000/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
-          res.should.have.status(400);
-          res.body.message[0].should.equal("error.unknownUser");
+          res.should.have.status(403);
+          res.body.message[0].should.equal("error.accessDenied");
           done();
         });
     });
 
-    it('should not delete because user not allowed', function(done) {
+
+
+    it('should not delete because user not Owner', function(done) {
 
       passportStub.login(user2);
 
-      superagent.del('http://localhost:3000/races/' + currentRace._id)
+      superagent.del('http://localhost:3000/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -158,44 +151,34 @@ describe('Delete race: DELETE /races', function() {
         });
     });
 
+
+
     it('should not delete because race id is unknown', function(done) {
-      superagent.del('http://localhost:3000/races/523726537a11c4aa8d789bbb')
+
+      passportStub.login(user1);
+
+      superagent.del('http://localhost:3000/races/523726537a11c4aa8d789bbb/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
           res.body.message[0].should.equal("error.unknownId");
+          passportStub.logout(user1);
           done();
         });
     });
+
 
   });
 
   describe('valid parameters', function() {
 
-
-
-    it('should response success', function(done) {
-      passportStub.login(user1);
-     /* superagent.post('http://localhost:3000/users/session')
-        .send({
-          email: 'foobar1@example.com',
-          password: 'foobar1'
-        })
-        .set('Accept', 'application/json')
-        .end(function(err, res) {
-          should.not.exist(err);
-          res.should.have.status(200);
-          res.body.username.should.equal("foobar");
-          res.body.role.title.should.equal("user");
-          done();
-        });*/
-    });
-
     it('should delete success', function(done) {
-      
-      superagent.del('http://localhost:3000/races/' + currentRace._id)
+
+      passportStub.login(user1);
+
+      superagent.del('http://localhost:3000/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
@@ -211,6 +194,7 @@ describe('Delete race: DELETE /races', function() {
       }).exec(function(err, race) {
         should.not.exist(err);
         (race == null).should.be.true;
+        passportStub.logout(user1);
         done();
       });
     });
@@ -229,12 +213,3 @@ describe('Delete race: DELETE /races', function() {
   });
 
 });
-
-
-// Non valide
-
-// Aucun  utilisateur connecté
-// l'utilisateur connecté n'est pas propriétaire de la manifestation
-
-// Valide 
-// Le user connecté est propriétaire de la manifestation

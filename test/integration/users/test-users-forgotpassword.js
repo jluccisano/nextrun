@@ -12,11 +12,9 @@ var mongoose = require('mongoose'),
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   User = mongoose.model('User');
 
-var count;
-
 /**
  * Forgot Password tests
-
+*/
 
 describe('Forgot Password: POST /users/forgotpassword', function() {
 
@@ -122,4 +120,3 @@ describe('Forgot Password: POST /users/forgotpassword', function() {
 
 
 });
- */

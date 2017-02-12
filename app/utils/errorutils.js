@@ -7,7 +7,6 @@
  */
 
 exports.errors = function(errors) {
-  console.log(errors);
   var keys = Object.keys(errors)
   var errs = []
 

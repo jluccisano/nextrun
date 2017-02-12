@@ -11,60 +11,59 @@ var mongoose = require('mongoose'),
   context = describe,
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
+  passportStub = require('passport-stub'),
   User = mongoose.model('User');
 
+passportStub.install(app);
 /**
  * Create race tests
+ *
+ * Non valide
+ * Aucun  utilisateur connecté
+ *
+ * Valide
+ * Le user est connecté
+ */
 
+var user1 = {
+  username: 'foobar1',
+  email: "foobar1@example.com",
+  role: {
+    bitMask: 2,
+    title: 'user'
+  },
+  _id: '123726537a11c4aa8d789bbc',
+  password: '123'
+};
 
 describe('Create race: POST /races', function() {
 
   var currentDate = new Date();
-  var currentUser;
 
   before(function(done) {
-    User.create({
-      username: "foobar",
-      email: "foobar@example.com",
-      password: "foobar",
-      role: userRoles.user
-    }, function(err, user) {
-      currentUser = user;
+    User.create(user1, function(err, user) {
+      user1._id = user._id;
       done();
     });
   });
 
-  it('should save the user to the database', function(done) {
+  it('should save the user 1 to the database', function(done) {
     User.findOne({
-      email: 'foobar@example.com'
+      email: 'foobar1@example.com'
     }).exec(function(err, user) {
       should.not.exist(err);
       user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar@example.com');
+      user.email.should.equal('foobar1@example.com');
       done();
     });
   });
+
 
   describe('Valid parameters', function() {
 
     it('should response success', function(done) {
-      superagent.post('http://localhost:3000/users/session')
-        .send({
-          email: 'foobar@example.com',
-          password: 'foobar'
-        })
-        .set('Accept', 'application/json')
-        .end(function(err, res) {
-          should.not.exist(err);
-          res.should.have.status(200);
-          res.body.username.should.equal("foobar");
-          res.body.role.title.should.equal("user");
-          done();
-        });
-    });
-
-    it('should response success', function(done) {
-      superagent.post('http://localhost:3000/races')
+      passportStub.login(user1);
+      superagent.post('http://localhost:3000/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -73,17 +72,13 @@ describe('Create race: POST /races', function() {
             date: currentDate,
             edition: '1',
             distanceType: 'S'
-          },
-          user: {
-            email: "foobar@example.com",
-            username: "foobar",
-            role: userRoles.user
           }
         })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
+          passportStub.logout(user1);
           done();
         });
     });
@@ -101,14 +96,15 @@ describe('Create race: POST /races', function() {
         //race.date.getTime().should.equal(new Date(currentDate).getTime());
         race.edition.should.equal(1);
         race.distanceType.should.equal('S');
-        race.user_id.should.eql(currentUser._id);
+        race.user_id.should.eql(user1._id);
         race.published.should.equal(false);
         done();
       });
     });
 
     it('create new race with distance type different should response success', function(done) {
-      superagent.post('http://localhost:3000/races')
+      passportStub.login(user1);
+      superagent.post('http://localhost:3000/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -117,26 +113,23 @@ describe('Create race: POST /races', function() {
             date: currentDate,
             edition: '1',
             distanceType: 'M'
-          },
-          user: {
-            email: "foobar@example.com",
-            username: "foobar",
-            role: userRoles.user
           }
         })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
+          passportStub.logout(user1);
           done();
         });
     });
 
   });
+
   describe('Invalid parameters', function() {
 
-    it('should response raceAlreadyExists', function(done) {
-      superagent.post('http://localhost:3000/races')
+    it('should not create because access denied', function(done) {
+      superagent.post('http://localhost:3000/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -145,24 +138,20 @@ describe('Create race: POST /races', function() {
             date: currentDate,
             edition: '1',
             distanceType: 'S'
-          },
-          user: {
-            email: "foobar@example.com",
-            username: "foobar",
-            role: userRoles.user
           }
         })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
-          res.should.have.status(400);
-          res.body.message[0].should.equal("error.raceAlreadyExists");
+          res.should.have.status(403);
+          res.body.message[0].should.equal("error.accessDenied");
           done();
         });
     });
 
-    it('create new race with unknown user should response error', function(done) {
-      superagent.post('http://localhost:3000/races')
+    it('should response raceAlreadyExists', function(done) {
+      passportStub.login(user1);
+      superagent.post('http://localhost:3000/races/create')
         .send({
           race: {
             name: 'Duathlon de Castelnaudary',
@@ -170,19 +159,15 @@ describe('Create race: POST /races', function() {
             department: '11 - Aude',
             date: currentDate,
             edition: '1',
-            distanceType: 'M'
-          },
-          user: {
-            email: "foobar2@example.com",
-            username: "foobar2",
-            role: userRoles.user
+            distanceType: 'S'
           }
         })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
-          res.body.message[0].should.equal("error.unknownUser");
+          res.body.message[0].should.equal("error.raceAlreadyExists");
+          passportStub.logout(user1);
           done();
         });
     });
@@ -200,7 +185,4 @@ describe('Create race: POST /races', function() {
       done();
     });
   });
-
-
 });
- */

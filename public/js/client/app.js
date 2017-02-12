@@ -3,7 +3,8 @@ var nextrunApp = angular.module('nextrunApp', [
   'ngRoute',
   'ngAnimate',
   'nextrunControllers',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'google-maps'
 ]);
 
 /** Initialize i18n **/
@@ -48,14 +49,19 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       controller: 'CreateRaceCtrl',
       access: access.user
     }).
+    when('/races/:raceId', {
+      templateUrl: '/partials/race/edit',
+      controller: 'EditRaceCtrl',
+      access: access.user
+    }).
     when('/404', {
       templateUrl: '/errors/404',
       access: access.public
     });
 
-    $routeProvider.otherwise({
+    /*$routeProvider.otherwise({
       redirectTo: '/404'
-    });
+    });*/
 
     $locationProvider.html5Mode(true);
 

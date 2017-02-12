@@ -62,13 +62,13 @@ angular.module('nextrunApp')
                     success();
                 }).error(error);
             },
-            updateProfile: function(id, user, success, error) {
-                $http.put('/users/' + id + '/update/profile', user).success(function(user) {
+            updateProfile: function(user, success, error) {
+                $http.put('/users/update/profile', user).success(function(user) {
                     success(user);
                 }).error(error);
             },
             updatePassword: function(id, data, success, error) {
-                $http.put('/users/' + id + '/update/password', data).success(function(user) {
+                $http.put('/users/update/password', data).success(function(user) {
                     success(user);
                 }).error(error);
             },
@@ -78,7 +78,7 @@ angular.module('nextrunApp')
                 }).error(error);
             },
             deleteAccount: function(id, success, error) {
-                $http.delete('/users/' + id).success(function() {
+                $http.delete('/users/delete').success(function() {
                     changeUser({
                         id: '',
                         email: '',

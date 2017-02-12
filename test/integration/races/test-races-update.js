@@ -11,34 +11,53 @@ var mongoose = require('mongoose'),
   context = describe,
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
+  passportStub = require('passport-stub'),
   User = mongoose.model('User');
 
+passportStub.install(app);
 
 /**
- * Update Race tests
+ * Update race tests
+ *
+ * Non valide
+ * Aucun  utilisateur connecté
+ * l'utilisateur connecté n'est pas propriétaire de la manifestation
+ *
+ * Valide
+ * Le user connecté est propriétaire de la manifestation
+ */
+
+var user1 = {
+  username: 'foobar1',
+  email: "foobar1@example.com",
+  role: {
+    bitMask: 2,
+    title: 'user'
+  },
+  _id: '123726537a11c4aa8d789bbc',
+  password: '123'
+};
+
+var user2 = {
+  username: 'foobar2',
+  email: "foobar2@example.com",
+  role: {
+    bitMask: 2,
+    title: 'user'
+  },
+  _id: '223726537a11c4aa8d789bbc',
+  password: '123'
+};
 
 
 describe('Update Race: UPDATE /races', function() {
 
-
-  var currentUser;
   var currentRace;
   var currentDate = new Date();
 
   before(function(done) {
-    var userArray = [{
-      username: "foobar1",
-      email: "foobar1@example.com",
-      password: "foobar1",
-      role: userRoles.user
-    }, {
-      username: "foobar2",
-      email: "foobar2@example.com",
-      password: "foobar2",
-      role: userRoles.user
-    }];
-    User.create(userArray, function(err, user) {
-      currentUser = user;
+    User.create(user1, function(err, user) {
+      user1._id = user._id;
       done();
     });
   });
@@ -54,18 +73,10 @@ describe('Update Race: UPDATE /races', function() {
     });
   });
 
-  it('should save the user 2 to the database', function(done) {
-    User.findOne({
-      email: 'foobar2@example.com'
-    }).exec(function(err, user) {
-      should.not.exist(err);
-      user.should.be.an.instanceOf(User);
-      user.email.should.equal('foobar2@example.com');
-      done();
-    });
-  });
-
   before(function(done) {
+
+    passportStub.login(user1);
+
     Race.create({
       name: 'Duathlon de Castelnaudary',
       type: 'duathlon',
@@ -73,12 +84,12 @@ describe('Update Race: UPDATE /races', function() {
       date: currentDate,
       edition: '1',
       distanceType: 'S',
-      user_id: currentUser._id,
+      user_id: user1._id,
       last_update: new Date(),
       created_date: new Date()
     }, function(err, race) {
-      console.log(err);
       done();
+      passportStub.logout(user1);
     });
   });
 
@@ -95,7 +106,7 @@ describe('Update Race: UPDATE /races', function() {
       //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
       race.distanceType.should.equal('S');
-      race.user_id.should.eql(currentUser._id);
+      race.user_id.should.eql(user1._id);
       race.published.should.equal(false);
       currentRace = race;
       done();
@@ -105,55 +116,43 @@ describe('Update Race: UPDATE /races', function() {
   describe('invalid parameters', function() {
 
     it('should not update because unknown user', function(done) {
-      superagent.put('http://localhost:3000/races/' + currentRace._id)
-        .send({
-          user: {
-            email: "foobar3@example.com",
-            username: "foobar3",
-            role: userRoles.user
-          }
-        })
+      superagent.put('http://localhost:3000/races/' + currentRace._id + '/update')
+        .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
-          res.should.have.status(400);
-          res.body.message[0].should.equal("error.invalidUser");
+          res.should.have.status(403);
+          res.body.message[0].should.equal("error.accessDenied");
           done();
         });
     });
 
-    it('should not update because user not allowed', function(done) {
-      superagent.put('http://localhost:3000/races/' + currentRace._id)
-        .send({
-          user: {
-            email: "foobar2@example.com",
-            username: "foobar2",
-            role: userRoles.user
-          }
-        })
+    it('should not update because user not Owner', function(done) {
+
+      passportStub.login(user2);
+
+      superagent.put('http://localhost:3000/races/' + currentRace._id+'/update')
+        .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
-          res.body.message[0].should.equal("error.invalidUser");
+          res.body.message[0].should.equal("error.userNotOwner");
+          passportStub.logout(user2);
           done();
         });
     });
 
     it('should not update because race id is unknown', function(done) {
-      superagent.put('http://localhost:3000/races/523726537a11c4aa8d789bbb')
-        .send({
-          user: {
-            email: "foobar@example.com",
-            username: "foobar",
-            role: userRoles.user
-          }
-        })
+      passportStub.login(user1);
+      superagent.put('http://localhost:3000/races/523726537a11c4aa8d789bbb/update')
+        .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
           res.body.message[0].should.equal("error.unknownId");
+          passportStub.logout(user1);
           done();
         });
     });
@@ -161,9 +160,10 @@ describe('Update Race: UPDATE /races', function() {
   });
 
   describe('Valid parameters', function() {
-
+    
     it('should update success', function(done) {
-      superagent.put('http://localhost:3000/races/' + currentRace._id)
+      passportStub.login(user1);
+      superagent.put('http://localhost:3000/races/' + currentRace._id+'/update')
         .send({
           race: {
             name: 'Triathlon de Castelnaudary',
@@ -172,17 +172,13 @@ describe('Update Race: UPDATE /races', function() {
             date: currentDate,
             edition: '2',
             distanceType: 'M'
-          },
-          user: {
-            email: "foobar1@example.com",
-            username: "foobar1",
-            role: userRoles.user
           }
         })
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
+          passportStub.logout(user1);
           done();
         });
     });
@@ -200,7 +196,7 @@ describe('Update Race: UPDATE /races', function() {
         //race.date.getTime().should.equal(new Date(currentDate).getTime());
         race.edition.should.equal(2);
         race.distanceType.should.equal('M');
-        race.user_id.should.eql(currentUser._id);
+        race.user_id.should.eql(user1._id);
         race.published.should.equal(false);
         currentRace = race;
         done();
@@ -222,4 +218,3 @@ describe('Update Race: UPDATE /races', function() {
 
 
 });
- */

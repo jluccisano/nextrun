@@ -19,19 +19,19 @@ exports.ensureAuthorized = function(req, res, next) {
             accessLevel: accessLevels.public
         }, {
             path: "/users/logout",
-            accessLevel: accessLevels.public
+            accessLevel: accessLevels.user
         }, {
             path: "/users/check/email",
             accessLevel: accessLevels.public
         }, {
-            path: "/users/:userId",
-            accessLevel: accessLevels.public
+            path: "/users/delete",
+            accessLevel: accessLevels.user
         }, {
-            path: "/users/:userId/update/profile",
-            accessLevel: accessLevels.public
+            path: "/users/update/profile",
+            accessLevel: accessLevels.user
         }, {
-            path: "/users/:userId/update/password",
-            accessLevel: accessLevels.public
+            path: "/users/update/password",
+            accessLevel: accessLevels.user
         }, {
             path: "/contacts",
             accessLevel: accessLevels.public
@@ -45,23 +45,23 @@ exports.ensureAuthorized = function(req, res, next) {
             path: "/partials/race/*",
             accessLevel: accessLevels.public
         }, {
-            path: "/users",
-            accessLevel: accessLevels.public
+            path: "/races/create",
+            accessLevel: accessLevels.user
         }, {
-            path: "/races",
-            accessLevel: accessLevels.public
+            path: "/races/find/:raceId",
+            accessLevel: accessLevels.user
         }, {
-            path: "/races/:raceId",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/users/:userId/races/(page/:page)?",
-            accessLevel: accessLevels.public
+            path: "/races/find/(page/:page)?",
+            accessLevel: accessLevels.user
         }, {
             path: "/races/:raceId/update",
             accessLevel: accessLevels.user
         }, {
             path: "/races/:raceId/delete",
             accessLevel: accessLevels.user
+        }, {
+            path: "/races/:raceId",
+            accessLevel: accessLevels.public
         }
 
     ]
@@ -77,7 +77,7 @@ exports.ensureAuthorized = function(req, res, next) {
     }).accessLevel || accessLevels.public;
 
     if (!(accessLevel.bitMask & role.bitMask)) {
-        return res.send(403);
+        return res.send(403, {message: ['error.accessDenied']});
     }
     return next();
 
