@@ -8,13 +8,13 @@ div.container(style="margin-top:50px",style="padding-bottom: 50px;")
 			span  Chargement en cours...
 	hr
 	div.row.text-center
-		div.col-md-4
+		div.col-lg-4.col-xs-6.col-md-4.col-sm-4
 			h3 {{race.type.i18n}}
 			span.small type
-		div.col-md-4
+		div.col-lg-4.col-xs-6.col-md-4.col-sm-4
 			h3 {{race.distanceType.name}}
 			span.small distance
-		div.col-md-4
+		div.col-lg-4.col-xs-6.col-md-4.col-sm-4
 			div.row
 				div.col-md-8.col-md-offset-4
 					table.table
@@ -48,23 +48,23 @@ div.container(style="margin-top:50px",style="padding-bottom: 50px;")
 						div.well(data-ng-bind-html="route.description")
 					include showMap
 					div.row.text-center
-						div.col-lg-4
+						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
 							h3 {{route.distance.toFixed(2)}}
 								small km
 							span.small Distance
-						div.col-lg-4
+						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
 							h3 {{Math.floor(route.ascendant)}}
 								small m
 							span.small D+
-						div.col-lg-4
+						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
 							h3 {{Math.floor(route.descendant)}}
 								small m
 							span.small D-
-						div.col-lg-4
+						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
 							h3 {{Math.floor(route.maxElevation)}}
 								small m
 							span.small Max
-						div.col-lg-4
+						div.col-lg-4.col-xs-6.col-md-4.col-sm-4
 							h3 {{Math.floor(route.minElevation)}}
 								small m
 							span.small Min
@@ -72,5 +72,5 @@ div.container(style="margin-top:50px",style="padding-bottom: 50px;")
 	h2 Organisation
 	hr
 	div.row
-		div.col-lg-12
+		div.col-lg-12.col-xs-2.col-md-12.col-sm-12
 			include templates/viewOrganisation
