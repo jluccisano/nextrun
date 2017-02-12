@@ -6,6 +6,11 @@ angular.module('nextrunApp')
 				$http.post('/api/contacts', contact).success(function() {
 					success();
 				}).error(error);
-			}
+			},
+			sendFeedback: function(feedback, success, error) {
+				$http.post('/api/contacts/feedback', feedback).success(function() {
+					success();
+				}).error(error);
+			},
 		};
 	});

@@ -62,3 +62,19 @@ exports.sendEmailPasswordReinitialized = function(email, newPassword) {
 
 	this.sendMail(mailOptions);
 };
+
+/**
+ * Cette fonction envoie un mail lorsque un contact laisse un feedback
+ * @param contact
+ **/
+exports.sendEmailNewFeedback = function(feedback) {
+
+	var mailOptions = {
+		from: feedback.email,
+		to: "postmaster@nextrunjosephluccisano.mailgun.org",
+		subject: "Nouveau feedback",
+		text: "Nouveau feedback par: " + feedback.email + " , type: " + feedback.type.name + " , message: " + feedback.message + " , race id: " + feedback.raceId,
+	};
+
+	this.sendMail(mailOptions);
+};

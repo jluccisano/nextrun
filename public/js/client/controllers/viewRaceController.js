@@ -1,5 +1,5 @@
-angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', 'RouteFactory', '$window',
-	function($scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window) {
+angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', 'RouteFactory', '$window', '$modal',
+	function($scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window, $modal) {
 		'use strict';
 
 		google.maps.visualRefresh = true;
@@ -192,7 +192,63 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 		};
 
 
+		$scope.openFeedbackModal = function(raceId) {
+
+			var modalInstance = $modal.open({
+				templateUrl: 'partials/feedback',
+				controller: 'FeedbackCtrl',
+				resolve: {
+					raceId: function() {
+						return raceId;
+					}
+				}
+			});
+
+			modalInstance.result.then(function() {
+
+			}, function() {
+
+			});
+		};
+
+
 		$scope.init();
 
+	}
+]);
+
+angular.module('nextrunApp').controller('FeedbackCtrl', ['$scope', '$modalInstance', 'Auth', 'Alert', '$location', 'ContactServices', 'raceId',
+	function($scope, $modalInstance, Auth, Alert, $location, ContactServices, raceId) {
+
+		$scope.feedback = {};
+
+		$scope.types = [{
+			name: 'Bug'
+		}, {
+			name: 'Information erronée'
+		}, {
+			name: 'Dupliquer'
+		}, {
+			name: 'Autre'
+		}];
+
+		$scope.feedback.raceId = raceId;
+
+		$scope.submit = function(feedback) {
+			ContactServices.sendFeedback({feedback: feedback},
+				function(response) {
+					Alert.add("success", "Votre message a bien été envoyé", 3000);
+					$modalInstance.close();
+				},
+				function(error) {
+					_.each(error.message, function(message) {
+						Alert.add("danger", message, 3000);
+					});
+				});
+		};
+
+		$scope.cancel = function() {
+			$modalInstance.dismiss('cancel');
+		};
 	}
 ]);

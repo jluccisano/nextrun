@@ -3,14 +3,14 @@
  */
 
 var mainController = require('../app/controllers/mainController'),
-	userController = require('../app/controllers/userController'),
-	contactController = require('../app/controllers/contactController'),
-	raceController = require('../app/controllers/raceController'),
-	accessLevels = require('../public/js/client/routingConfig').accessLevels,
+    userController = require('../app/controllers/userController'),
+    contactController = require('../app/controllers/contactController'),
+    raceController = require('../app/controllers/raceController'),
+    accessLevels = require('../public/js/client/routingConfig').accessLevels,
     userRoles = require('../public/js/client/routingConfig').userRoles,
-	_ = require('underscore'),
+    _ = require('underscore'),
     util = require('util'),
-	auth = require('./middlewares/authorization');
+    auth = require('./middlewares/authorization');
 
 
 /** ROUTES **/
@@ -23,18 +23,18 @@ var routes = [
     {
         path: '/defaultsite',
         httpMethod: 'GET',
-        middleware: [function(req, res) {
-            res.redirect('/');
-        }],
+        middleware: [
+            function(req, res) {
+                res.redirect('/');
+            }
+        ],
         accessLevel: accessLevels.public
-    },
-    {
+    }, {
         path: '/',
         httpMethod: 'GET',
         middleware: [mainController.index],
         accessLevel: accessLevels.public
-    },
-    {
+    }, {
         path: '/partials/(:type)?/:name',
         httpMethod: 'GET',
         middleware: [mainController.partials],
@@ -50,6 +50,12 @@ var routes = [
         middleware: [contactController.create],
         accessLevel: accessLevels.public
     },
+    {
+        path: '/api/contacts/feedback',
+        httpMethod: 'POST',
+        middleware: [contactController.feedback],
+        accessLevel: accessLevels.public
+    },
 
     /** api users **/
     {
@@ -57,50 +63,42 @@ var routes = [
         httpMethod: 'POST',
         middleware: [userController.signup],
         accessLevel: accessLevels.public
-    },
-    {
+    }, {
         path: '/api/users/forgotpassword',
         httpMethod: 'POST',
         middleware: [userController.forgotPassword],
         accessLevel: accessLevels.public
-    },
-    {
+    }, {
         path: '/api/users/delete',
         httpMethod: 'DELETE',
         middleware: [userController.deleteAccount],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/users/update/profile',
         httpMethod: 'PUT',
         middleware: [userController.updateProfile],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/users/update/password',
         httpMethod: 'PUT',
         middleware: [userController.updatePassword],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/users/check/email',
         httpMethod: 'POST',
         middleware: [userController.checkIfEmailAlreadyExists],
         accessLevel: accessLevels.public
-    },
-    {
+    }, {
         path: '/api/users/logout',
         httpMethod: 'POST',
         middleware: [userController.logout],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/users/settings',
         httpMethod: 'GET',
         middleware: [userController.settings],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/users/session',
         httpMethod: 'POST',
         middleware: [userController.login],
@@ -114,26 +112,22 @@ var routes = [
         httpMethod: 'POST',
         middleware: [raceController.create],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/races/find/(page/:page)?',
         httpMethod: 'GET',
         middleware: [raceController.findByUser],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/races/:raceId',
         httpMethod: 'GET',
         middleware: [raceController.find],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/races/:raceId/update',
         httpMethod: 'PUT',
         middleware: [raceController.update],
         accessLevel: accessLevels.user
-    },
-    {
+    }, {
         path: '/api/races/:raceId/delete',
         httpMethod: 'DELETE',
         middleware: [raceController.delete],
@@ -151,14 +145,14 @@ var routes = [
 ];
 
 module.exports = function(app) {
-	
-	app.param(':raceId', raceController.load);
 
-	_.each(routes, function(route) {
+    app.param(':raceId', raceController.load);
+
+    _.each(routes, function(route) {
         route.middleware.unshift(ensureAuthorized);
         var args = _.flatten([route.path, route.middleware]);
 
-        switch(route.httpMethod.toUpperCase()) {
+        switch (route.httpMethod.toUpperCase()) {
             case 'GET':
                 app.get.apply(app, args);
                 break;
@@ -189,7 +183,9 @@ var ensureAuthorized = function(req, res, next) {
     }).accessLevel || accessLevels.public;
 
     if (!(accessLevel.bitMask & role.bitMask)) {
-        return res.send(403, {message: ['error.accessDenied']});
+        return res.send(403, {
+            message: ['error.accessDenied']
+        });
     }
     return next();
 

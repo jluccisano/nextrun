@@ -36,8 +36,6 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 			RaceServices.create(data,
 				function(res) {
 					Alert.add("success", "Votre nouvelle manifestation a bien été créé", 3000);
-					//$location.path('/myraces');
-
 					$scope.openRedirectionModal(res.raceId);
 
 				},
@@ -46,8 +44,6 @@ angular.module('nextrunApp').controller('CreateRaceCtrl', ['$scope', '$location'
 						Alert.add("danger", message, 3000);
 					});
 			});
-
-			//TODO popup
 		};
 
 		$scope.openRedirectionModal = function(raceId) {

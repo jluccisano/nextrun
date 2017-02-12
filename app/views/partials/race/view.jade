@@ -11,7 +11,7 @@ div.container(style="margin-top:50px")
 			h3 {{race.distanceType.name}}
 			span.small distance
 		div.col-md-4
-			a.btn.btn-link(data-toggle="modal" data-target="#myModal") 
+			a.btn.btn-link(data-ng-click="openFeedbackModal(race._id)") 
 				i.glyphicon.glyphicon-thumbs-down Signaler une erreur		
 	h2 Parcours
 	hr
