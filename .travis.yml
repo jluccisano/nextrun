@@ -1,4 +1,5 @@
 language: node_js
+sudo: required
 node_js:
   - 7
 branches:
@@ -11,6 +12,7 @@ install:
   - gem install compass
   - npm install -g grunt-cli
   - npm install -g bower
+  - npm install -g jshint-stylish
 before_script:
   - npm install
   - bower install
