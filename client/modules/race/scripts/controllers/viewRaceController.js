@@ -39,7 +39,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
                     $scope.routesViewModel.push(routeViewModel);
                 });
 
-                if ($scope.routesViewModel.length > 0) {
+                if ($scope.routesViewModel.length > 0  && !$scope.selection) {
                     $scope.selection = $scope.routesViewModel[0].getType() + 0;
                     $scope.routesViewModel[0].setVisible(true);
                 }
@@ -108,16 +108,22 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
             Lightbox.openModal($scope.images, $index);
         };
 
-        $scope.downloadResult = function(result) {
-            RaceService.downloadResult($scope.race._id, result._id).then(function(response) {
-                var base64EncodedString = decodeURIComponent(response.data);
-                var decodedString = $base64.decode(base64EncodedString);
-                var blob = new Blob([decodedString], {
-                    type: "text/pdf"
-                });
-                return blob;
-            });
-        };
+
+         $scope.initSelection = function(selection) {
+            if (selection) {
+                $scope.selection = selection;
+                $scope.active = selection;
+                if (selection !== "general") {
+                    $scope.isCollapsed = false;
+                } else {
+                    $scope.isCollapsed = true;
+
+                }
+            } else {
+                $scope.selection = undefined;
+                $scope.isCollapsed = false;
+            }
+        }
 
         $scope.init();
     });

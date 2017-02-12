@@ -45,7 +45,6 @@ var routes = [{
     httpMethod: "PUT",
     middleware: [routeController.unpublishRoute],
     accessLevel: accessLevels.user
-
 }, ];
 
 module.exports = function(app, express) {

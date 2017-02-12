@@ -1,0 +1,8 @@
+div(class="modal-header")
+	button(class="close" type="button" data-dismiss="modal" aria-hidden="true" ng-click="cancel()") &times;
+	h4(class="modal-title" translate) Signaler une erreur
+div(class="modal-body")
+	include ../../main/templates/feedback
+div(class="modal-footer")
+	button(class="btn btn-default" type="button" ng-click="cancel()" translate) Annuler
+	button(class="btn btn-primary" type="button" ng-click="submit(feedback)" ng-disabled="feedbackForm.$invalid" translate) Envoyer

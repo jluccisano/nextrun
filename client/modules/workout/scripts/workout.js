@@ -1,11 +1,11 @@
 "use strict";
 
-var routeModule = angular.module("nextrunApp.workout", [
+var workoutModule = angular.module("nextrunApp.workout", [
 	"nextrunApp.commons",
 	"google-maps"
 ]);
 
-routeModule.config(
+workoutModule.config(
 	function(
 		$stateProvider,
 		$locationProvider) {
@@ -14,6 +14,21 @@ routeModule.config(
 
 		$stateProvider.state("viewWorkout", {
 			url: "/workouts/:id",
+			templateUrl: "/partials/workout/workout",
+			controller: "ViewWorkoutController",
+			data: {
+				access: access.public,
+				fullscreen: false
+			},
+			resolve: {
+				workoutId: ['$stateParams',
+					function($stateParams) {
+						return $stateParams.id;
+					}
+				]
+			}
+		}).state("viewWorkoutWithSelection", {
+			url: "/workouts/:id?selection",
 			templateUrl: "/partials/workout/workout",
 			controller: "ViewWorkoutController",
 			data: {
@@ -42,13 +57,28 @@ routeModule.config(
 					}
 				]
 			}
+		}).state("viewWorkoutParticipantWithSelection", {
+			url: "/workouts/:id/participants/:participantId?selection",
+			templateUrl: "/partials/workout/workout",
+			controller: "ViewWorkoutController",
+			data: {
+				access: access.public,
+				fullscreen: false
+			},
+			resolve: {
+				workoutId: ['$stateParams',
+					function($stateParams) {
+						return $stateParams.id;
+					}
+				]
+			}
 		}).state("newWorkoutWithCurrentRoute", {
 			url: "/workouts/route/:routeId/new",
 			templateUrl: "/partials/workout/create",
 			controller: "CreateWorkoutController",
 			data: {
 				access: access.public,
-				fullscreen: true
+				fullscreen: false
 			},
 			resolve: {
 				routeId: function($stateParams) {
@@ -61,7 +91,7 @@ routeModule.config(
 			controller: "EditWorkoutController",
 			data: {
 				access: access.user,
-				fullscreen: true
+				fullscreen: false
 			},
 			resolve: {
 				workoutId: ['$stateParams',
@@ -76,7 +106,7 @@ routeModule.config(
 			controller: "EditWorkoutController",
 			data: {
 				access: access.user,
-				fullscreen: true
+				fullscreen: false
 			},
 			resolve: {
 				workoutId: ['$stateParams',
@@ -106,8 +136,8 @@ routeModule.config(
 			templateUrl: "/partials/workout/create",
 			controller: "CreateWorkoutController",
 			data: {
-				access: access.user,
-				fullscreen: true
+				access: access.public,
+				fullscreen: false
 			},
 			resolve: {
 				routeId: function() {

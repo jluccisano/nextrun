@@ -147,7 +147,7 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         $scope.submit = function() {
             RouteService.saveOrUpdate($scope.routeViewModel.getData()).then(function(response) {
                 notificationService.success(gettextCatalog.getString("Le parcours a bien été créée"));
-                $scope.init();
+                //$scope.init();
 
                 if ($scope.race) {
                     RaceService.updateRoute($scope.race._id, response.data.id).then(

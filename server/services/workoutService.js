@@ -159,33 +159,6 @@ exports.updateParticipant = function(workout, participant, req, res, cb) {
 	}, options);
 };
 
-/*exports.joinWorkout = function(workout, participantId, value, res, cb) {
-
-	var query = {
-		_id: workout._id,
-		"participants._id": participantId
-	};
-
-	var update = {
-		$set: {
-			lastUpdate: new Date(),
-			"participants.$.willBePresent": value
-		}
-	};
-
-	var options = {
-		multi: true
-	};
-
-	Workout.update(query, update, function(error) {
-		if (error) {
-			errorUtils.handleError(res, error);
-		} else {
-			cb();
-		}
-	}, options);
-};*/
-
 exports.addParticipant = function(workout, participant, res, cb) {
 	var query = {
 		_id: workout._id

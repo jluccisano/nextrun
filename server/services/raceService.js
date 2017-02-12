@@ -516,18 +516,6 @@ exports.addResult = function(race, path, originalName, year, res, cb) {
 
 
 
-exports.getResult = function(fileId, res, cb) {
-	gridfsService.getFile(fileId, res, function(bufs) {
-		var fbuf = Buffer.concat(bufs);
-		var base64 = (fbuf.toString("base64"));
-		if (base64) {
-			cb("data:image/png;base64," + base64);
-		} else {
-			cb();
-		}
-
-	});
-};
 
 exports.deleteResultFile = function(result, res, cb) {
 	if (result.fileId) {
@@ -601,6 +589,8 @@ exports.getResult = function(race, result, res, cb) {
 		} else {
 			cb();
 		}
+
+		//cb(bufs);
 
 	});
 };

@@ -1,4 +1,4 @@
-.view-race {
+.view-workout {
     padding-top: 60px;
 
     .crop-image {
@@ -28,16 +28,7 @@
         margin-bottom: 0px;
     }
 
-    google-map {
-        .angular-google-map {
-            .angular-google-map-container {
-                width: 100%;
-                height: 350px;
-            }
-        }
-    }
-    
-    nr-address {
+    nr-workout-address {
         .address-map-container {
             google-map {
                 .angular-google-map {
@@ -46,6 +37,16 @@
                         height: 250px;
                     }
                 }
+            }
+        }
+    }
+    
+
+    google-map {
+        .angular-google-map {
+            .angular-google-map-container {
+                width: 100%;
+                height: 350px;
             }
         }
     }

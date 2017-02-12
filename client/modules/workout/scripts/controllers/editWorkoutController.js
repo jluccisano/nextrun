@@ -61,8 +61,8 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                     }
                 });
 
-                if ($scope.routesViewModel.length > 0) {
-                    //$scope.selection = $scope.routesViewModel[0].getType() + 0;
+                if ($scope.routesViewModel.length > 0 && !$scope.selection) {
+                    $scope.selection = $scope.routesViewModel[0].getType() + 0;
                     $scope.routesViewModel[0].setVisible(true);
                 }
             });
@@ -120,7 +120,7 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                     $state.go("editWorkoutWithSelection", {
                         id: $scope.workoutId,
                         selection: "general"
-                    });
+                    },true);
                 });
             });
         };
@@ -132,7 +132,7 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                     $state.go("editWorkoutWithSelection", {
                         id: $scope.workoutId,
                         selection: "general"
-                    });
+                    }, true);
                 });
         };
 
@@ -140,14 +140,9 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
             if (selection) {
                 $scope.selection = selection;
                 $scope.active = selection;
-                if (selection !== "general") {
-                    $scope.isCollapsed = false;
-                } else {
-                    $scope.isCollapsed = true;
-
-                }
+                $scope.isCollapsed = true;
             } else {
-                $scope.selection = "general";
+                $scope.selection = undefined;
                 $scope.isCollapsed = false;
             }
         }
@@ -165,7 +160,7 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
                     $state.go("editWorkoutWithSelection", {
                         id: $scope.workoutId,
                         selection: "participants"
-                    });
+                    }, true);
                 });
         };
 

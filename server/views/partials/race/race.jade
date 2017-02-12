@@ -62,7 +62,8 @@ div(class="container view-race")
                 hr
                 nr-address(edit-mode="editMode" race="race")
 
-              a(ng-if="editMode" class="btn btn-link" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate) Ajouter un parcours
+              a(ng-if="editMode" class="btn btn-primary" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate)
+                i(class="fa fa-plus" translate) &nbsp; Ajouter un parcours
 
       div(class="bs-docs-section")
         div(ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )

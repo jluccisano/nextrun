@@ -61,7 +61,7 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 					}
 				});
 
-				if ($scope.routesViewModel.length > 0) {
+				if ($scope.routesViewModel.length > 0  && !$scope.selection) {
 					$scope.selection = $scope.routesViewModel[0].getType() + 0;
 					$scope.routesViewModel[0].setVisible(true);
 				}
@@ -80,27 +80,15 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 		};
 
 		$scope.updateParticipant = function(participant) {
-
 			WorkoutService.updateParticipant($scope.workout._id, participant).then(
 				function() {
 					notificationService.success(gettextCatalog.getString("Votre réponse a bien été prise en compte"));
-					$scope.init();
+					$state.go("viewWorkoutParticipantWithSelection", {
+                        id: $scope.workout._id,
+                        participantId: participant._id,
+                        selection: "general"
+                    }, true);
 				});
-
-			/*if (!participant.willBePresent) {
-				WorkoutService.unjoin($scope.workout._id, participant._id).then(
-					function() {
-						notificationService.success(gettextCatalog.getString("Votre réponse a bien été prise en compte"));
-						$scope.init();
-					});
-			} else {
-				WorkoutService.join($scope.workout._id, participant._id).then(
-					function() {
-						notificationService.success(gettextCatalog.getString("Votre réponse a bien été prise en compte"));
-						$scope.init();
-					});
-			}*/
-
 		};
 
 		$scope.init = function() {
@@ -128,49 +116,39 @@ angular.module("nextrunApp.workout").controller("ViewWorkoutController",
 		};
 
 
-		$scope.editRoute = function(routeViewModel) {
-			$state.go("editWorkoutRoute", {
-				id: routeViewModel.getId(),
-				workoutId: $scope.workout._id
-			});
-		};
-
-		$scope.openDeleteConfirmation = function(routeViewModel) {
-			notificationService.notify({
-				title: gettextCatalog.getString("Confirmation requise"),
-				text: gettextCatalog.getString("Etes-vous sûr de vouloir supprimer ce sortie ?"),
-				hide: false,
-				confirm: {
-					confirm: true
-				},
-				buttons: {
-					closer: false,
-					sticker: false
-				},
-				history: {
-					history: false
-				}
-			}).get().on("pnotify.confirm", function() {
-				RouteService.delete(routeViewModel.data._id).then(function() {
-					notificationService.success(gettextCatalog.getString("Le sortie a bien été supprimée"));
-					$scope.init();
-				});
-			});
-		};
-
-		$scope.update = function(data) {
-			WorkoutService.update($scope.workoutId, data).then(
-				function() {
-					$scope.init();
-					notificationService.success(gettextCatalog.getString("Votre sortie a bien été mise à jour"));
-				});
-		};
-
 		$scope.setSelection = function(route, index) {
 			$scope.selection = route.getType() + index;
 			$scope.active = route.getType() + index;
 			$scope.isCollapsed = true;
 		};
+
+		 $scope.initSelection = function(selection) {
+            if (selection) {
+                $scope.selection = selection;
+                $scope.active = selection;
+                if (selection !== "general") {
+                    $scope.isCollapsed = false;
+                } else {
+                    $scope.isCollapsed = true;
+
+                }
+            } else {
+                $scope.selection = undefined;
+                $scope.isCollapsed = false;
+            }
+        };
+
+        $scope.openFeedbackModal = function() {
+            $scope.modalInstance = $modal.open({
+                templateUrl: "partials/workout/templates/feedbackModal",
+                controller: "WorkoutFeedbackModalController",
+                resolve: {
+                    workoutId: function() {
+                        return $scope.workoutId;
+                    }
+                }
+            });
+        };
 
 		$scope.init();
 	});

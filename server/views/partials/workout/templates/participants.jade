@@ -1,6 +1,6 @@
-div(class="create-workout")
+div
 	div(ng-if="editMode")
-		h3(translate) Ajouter un participant
+		h4(translate) Ajouter un participant
 		form(class="form-inline" role="form" name="participantForm" novalidate)
 			div(class="form-group" ng-class="{'has-error': !participantForm.email.$pristine && participantForm.email.$invalid, 'has-success': !participantForm.email.$invalid && !participantForm.email.$pristine}")
 				label(class="sr-only" for="email" translate) Email
@@ -10,20 +10,27 @@ div(class="create-workout")
 			button(class="btn btn-primary" ng-click="addNewParticipant(newParticipant)" ng-disabled="participantForm.$invalid" translate) Ajouter
 
 table(class="table table-hover")
-		thead
+		thead(ng-if="!editMode")
 			tr
-				th(style="width: 40%" translate) Email
+				th(style="width: 40%" translate) Pseudo
+				th(style="width: 40%" translate ng-if="editMode") Email
 				th(style="width: 5%")
 				th(style="width: 5%" ng-if="editMode")
 		tbody
-			tr(ng-repeat="participant in workout.participants" ng-class="{'success': participant.willBePresent === 'yes' , 'danger': !participant.willBePresent === 'no', 'warning': participant.willBePresent === 'maybe'}")
+			tr(ng-if="!editMode && participant.pseudo" ng-repeat="participant in workout.participants" ng-class="{'success': participant.willBePresent === 'yes' , 'danger': participant.willBePresent === 'no', 'warning': participant.willBePresent === 'maybe'}")
 				td 
 					a {{participant.pseudo}}
+				td
+					span(ng-if="participant.willBePresent === 'yes'" class="glyphicon glyphicon-ok")
+					span(ng-if="participant.willBePresent === 'no'" class="glyphicon glyphicon-remove")
+			tr(ng-if="editMode" ng-repeat="participant in workout.participants" ng-class="{'success': participant.willBePresent === 'yes' , 'danger': !participant.willBePresent === 'no', 'warning': participant.willBePresent === 'maybe'}")
+				td 
+					a {{participant.pseudo || '-'}}
 				td 
 					a(ng-if="editMode") {{participant.email}}	
 				td
-					span(ng-if="participant.willBePresent" class="glyphicon glyphicon-ok")
-					span(ng-if="!participant.willBePresent" class="glyphicon glyphicon-remove")
+					span(ng-if="participant.willBePresent === 'yes'" class="glyphicon glyphicon-ok")
+					span(ng-if="participant.willBePresent === 'no'" class="glyphicon glyphicon-remove")
 				td(ng-if="editMode")
 					a(ng-click="openDeleteParticipantConfirmation(participant)")
 						span(class="glyphicon glyphicon-trash")

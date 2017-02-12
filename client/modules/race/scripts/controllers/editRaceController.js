@@ -63,7 +63,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                     }
                 });
 
-                if ($scope.routesViewModel.length > 0) {
+                if ($scope.routesViewModel.length > 0 && !$scope.selection) {
                     $scope.selection = $scope.routesViewModel[0].getType() + 0;
                     $scope.routesViewModel[0].setVisible(true);
                 }
@@ -75,9 +75,9 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                 $scope.race = response.data;
                 $scope.retrieveRoutes();
 
-                RaceService.download($scope.race._id).then(function(response) {
+                /*RaceService.download($scope.race._id).then(function(response) {
                     $scope.image = response.data;
-                });
+                });*/
             }).
             finally(function() {
                 MetaService.ready($scope.race.name, $scope.generateRaceDescription());
@@ -211,6 +211,35 @@ angular.module("nextrunApp.race").controller("EditRaceController",
             RaceService.uploadImage($scope.race._id, image).then(function() {
                 notificationService.success(gettextCatalog.getString("Votre image a bien été mise à jour"));
                 $scope.init();
+            });
+        };
+
+        $scope.initSelection = function(selection) {
+            if (selection) {
+                $scope.selection = selection;
+                $scope.active = selection;
+                if (selection !== "general") {
+                    $scope.isCollapsed = false;
+                } else {
+                    $scope.isCollapsed = true;
+
+                }
+            } else {
+                $scope.selection = undefined;
+                $scope.isCollapsed = false;
+            }
+        };
+
+        $scope.showImage = function() {
+            $scope.modalInstance = $modal.open({
+                templateUrl: "partials/race/templates/lightBoxModal",
+                controller: "LightBoxModalController",
+                size: "lg",
+                resolve: {
+                    image: function() {
+                        return $scope.image;
+                    }
+                }
             });
         };
 

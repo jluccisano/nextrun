@@ -75,6 +75,8 @@ exports.sendEmailNewFeedback = function(feedback) {
 
     if (feedback.raceId) {
         message = message + " , race id: " + feedback.raceId;
+    } else if(feedback.workoutId) {
+        message = message + " , workout id: " + feedback.workoutId;
     }
 
     var mailOptions = {

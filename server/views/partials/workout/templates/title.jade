@@ -1,6 +1,6 @@
 form(role="form" class="navbar-form navbar-left" name="titleForm" novalidate)
 	div(class="form-group")
-		h4(ng-if="!editMode || !edit" class="text-left") {{workout.name}}
+		h4(ng-if="!editMode || !edit"  class="text-left") {{workout.name}}
 	div(ng-if="editMode && edit" class="form-group" ng-class="{'has-error':!titleForm.title.$pristine && titleForm.title.$invalid, 'has-success': !titleForm.title.$invalid && !titleForm.title.$pristine}")
 		input(type="text" class="form-control" ng-model="workout.name" name="title" ng-required="true")
 	div(class="form-group" ng-if="editMode && !edit")

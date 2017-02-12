@@ -13,7 +13,7 @@ angular.module("nextrunApp.race").directive("nrResults", function() {
   };
 });
 
-angular.module("nextrunApp.race").controller("ResultsController", function($scope, RaceService, gettextCatalog, notificationService) {
+angular.module("nextrunApp.race").controller("ResultsController", function($scope, $q, RaceService, gettextCatalog, notificationService) {
 
   $scope.edit = false;
   $scope.tmpRace = {};
@@ -33,22 +33,33 @@ angular.module("nextrunApp.race").controller("ResultsController", function($scop
   });
 
   $scope.addResult = function(result) {
-      RaceService.addResult($scope.race._id, result).then(function() {
-        $scope.reload();
-        notificationService.success(gettextCatalog.getString("Votre résultat a bien été ajouté"));
-      });
+    RaceService.addResult($scope.race._id, result).then(function() {
+      $scope.reload();
+      notificationService.success(gettextCatalog.getString("Votre résultat a bien été ajouté"));
+    });
   };
 
   $scope.deleteResult = function(result) {
     RaceService.deleteResult($scope.race._id, result._id).then(function() {
-        $scope.reload();
-        notificationService.success(gettextCatalog.getString("Votre résultat a bien été supprimé"));
-      });
+      $scope.reload();
+      notificationService.success(gettextCatalog.getString("Votre résultat a bien été supprimé"));
+    });
   };
 
   $scope.cancel = function() {
     $scope.edit = false;
     angular.copy($scope.tmpRace, $scope.race);
+  };
+
+  $scope.downloadResult = function(result) {
+    var defer = $q.defer();
+
+    RaceService.downloadResult($scope.race._id, result._id).then(function(response) {
+      var base64EncodedString = decodeURIComponent(response.data);
+      defer.resolve(base64EncodedString);
+    });
+
+    return defer.promise;
   };
 
   $scope.update = function() {

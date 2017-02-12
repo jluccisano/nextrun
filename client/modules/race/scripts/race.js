@@ -22,9 +22,7 @@ var raceModule = angular.module("nextrunApp.race", [
   "nextrunApp.route",
   "ezfb",
   "jlareau.pnotify",
-  "lr.upload",
-  "ngImgCrop",
-  "base64"
+  "ngImgCrop"
 ]);
 
 raceModule.config(
@@ -80,8 +78,38 @@ raceModule.config(
           }
         ]
       }
+    }).state("viewWithSelection", {
+      url: "/races/view/:id?selection",
+      templateUrl: "/partials/race/race",
+      controller: "ViewRaceController",
+      data: {
+        access: access.public,
+        fullscreen: false
+      },
+      resolve: {
+        raceId: ['$stateParams',
+          function($stateParams) {
+            return $stateParams.id;
+          }
+        ]
+      }
     }).state("edit", {
       url: "/races/edit/:id",
+      templateUrl: "/partials/race/race",
+      controller: "EditRaceController",
+      data: {
+        access: access.user,
+        fullscreen: false
+      },
+      resolve: {
+        raceId: ['$stateParams',
+          function($stateParams) {
+            return $stateParams.id;
+          }
+        ]
+      }
+    }).state("editWithSelection", {
+      url: "/races/edit/:id?selection",
       templateUrl: "/partials/race/race",
       controller: "EditRaceController",
       data: {

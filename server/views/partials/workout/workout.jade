@@ -1,11 +1,11 @@
-div(class="container view-race")
+div(class="container view-workout")
   div(class="row")
     div(class="col-md-2")
       div(class="bs-sidebar hidden-print affix" role="complementary" data-offset-top="-110" data-offset-bottom="150" bs-affix bs-scrollspy-list)
         ul(id="menu" class="list-group")
           a(ng-class="{'active': active === 'general'}" ng-click="isCollapsed = false;active = 'general'" nr-scroll-to="general" class="list-group-item")
             h4(class="list-group-item-heading" translate) Général
-          a(ng-click="isCollapsed = true" nr-scroll-to="routes" class="list-group-item")
+          a(class="list-group-item")
             h4(class="list-group-item-heading" translate) Parcours
             a(ng-class="{'active': active === (routeViewModel.getType() + $index)}" bs-scrollspy ng-click="setSelection(routeViewModel, $index);routeViewModel.setVisible(true)" ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" nr-scroll-to="route{{$index}}" class="list-group-item") {{routeViewModel.getName()}}
           a(class="list-group-item")
@@ -23,9 +23,6 @@ div(class="container view-race")
                   nr-workout-title(edit-mode="editMode" workout="workout")
                 ul(class="nav navbar-nav navbar-right")
                   li(ng-if="!editMode")
-                    a
-                      div(class="fb-like ng-cloak" data-href="http://www.nextrun.fr/races/view/{{race._id}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
-                  li(ng-if="!editMode")
                     a(ng-click="openFeedbackModal()")
                       span(class="glyphicon glyphicon-envelope" aria-hidden="true")
                   li
@@ -37,8 +34,8 @@ div(class="container view-race")
               div(class="col-md-6")
                 div(class="row")
                   nr-workout-date(edit-mode="editMode" workout="workout")
-                  div(class="col-md-12" ng-if="participant && state === 'viewWorkoutParticipant'") 
-                    div(ng-form="participantResponseForm" novalidate class="form-inline")
+                  div(class="col-md-6" ng-if="participant && (state === 'viewWorkoutParticipant' || state === 'viewWorkoutParticipantWithSelection') ") 
+                    div(ng-form="participantResponseForm" novalidate class="form-horizonal")
                       h5 Je participe ?
                       div(class="form-group" ng-class="{'has-error': !participantResponseForm.pseudo.$pristine && participantResponseForm.pseudo.$invalid, 'has-success': !participantResponseForm.pseudo.$invalid && !participantResponseForm.pseudo.$pristine}")
                         label(class="sr-only" for="pseudo" translate) Pseudo
@@ -52,25 +49,27 @@ div(class="container view-race")
                       label(class="radio-inline")
                         input(type="radio" ng-model="participant.willBePresent" value="maybe" required) 
                         | Peut-être
-                      button(class="btn btn-primary" ng-click="updateParticipant(participant)" ng-disabled="participantResponseForm.$invalid" translate) Envoyer
+                      button(class="btn btn-primary pull-right" ng-click="updateParticipant(participant)" ng-disabled="participantResponseForm.$invalid" translate) Envoyer
 
-                hr
                 div(class="row")
                   div(class="col-md-12")
                     i(class="fa fa-clock-o fa-3")
                     span(translate) &nbsp; Départ: {{(workout.time | date:'HH:mm') || 'non communiqué'}}
-              div(class="col-lg-6")
-                nr-type(edit-mode="editMode" race="race")
                 hr
+                div(class="row")
+                  div(class="col-md-12")
+                    p {{workout.description}}
+              div(class="col-lg-6")
                 nr-workout-address(edit-mode="editMode" workout="workout")
 
-              a(ng-if="editMode" ng-if="!workout.routeId" class="btn btn-link" type="button" ui-sref="newWorkoutRoute({workoutId: workoutId})" translate) Ajouter un parcours
+              a(ng-if="editMode && (!workout.routes || workout.routes.length === 0)" class="btn btn-primary" type="button" ui-sref="newWorkoutRoute({workoutId: workoutId})" translate)
+                i(class="fa fa-plus" translate) &nbsp; Ajouter un parcours
 
       div(class="bs-docs-section")
         div(ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
-              h4(class="panel-title pull-left") {{routeViewModel.getType()}}
+              h3(class="panel-title pull-left") {{routeViewModel.getName()}} <small>type: {{routeViewModel.getType()}}</small>
               div(class="btn-group pull-right")
                 a(id="content" nr-download nr-file-name="{{routeViewModel.data.name}}" get-data="exportGPX(routeViewModel)" class="btn btn-default btn-sm")
                   i(class="fa fa-download fa-3")

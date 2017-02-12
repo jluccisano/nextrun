@@ -152,7 +152,7 @@ exports.checkIfParticipantAvailable = function(req, res) {
     });
 };
 
-exports.updateRoute = function(req, res) {
+exports.addRouteRef = function(req, res) {
     var workout = req.workout;
     var route = req.routeData;
     workoutService.addRouteRef(workout, route, res, function() {

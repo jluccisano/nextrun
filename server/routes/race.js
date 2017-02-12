@@ -90,14 +90,13 @@ var routes = [{
     path: "/:id/results/:resultId/download",
     httpMethod: "GET",
     middleware: [raceController.getResult],
-    accessLevel: accessLevels.user
+    accessLevel: accessLevels.public
 },{
     path: "/:id/results/:resultId/delete",
     httpMethod: "DELETE",
     middleware: [raceController.deleteResultFile, raceController.deleteResult],
     accessLevel: accessLevels.user
 }];
-
 
 
 module.exports = function(app, express) {

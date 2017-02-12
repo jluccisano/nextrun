@@ -25,6 +25,7 @@ exports.storeFile = function(path, originalName, cb) {
 
 	fs.unlink(path, function(error) {
 		if (error) {
+			logger.error(error);
 			throw error;
 		}
 		logger.info("successfully deleted"+path);
@@ -51,6 +52,7 @@ exports.getFile = function(id, res, cb) {
 			}).on("end", function() {
 				cb(bufs);
 			});
+			//cb(readstream);
 		} else {
 			logger.info("File does not exist");
 			cb(bufs);

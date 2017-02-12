@@ -19,15 +19,9 @@ angular.module("nextrunApp.commons").factory("WorkoutService",
                 if (data._id) {
                     return HttpUtils.put("/api/workouts/" + data._id + "/update", data);
                 } else {
-                    return HttpUtils.post("/api/workouts/new", data);
+                    return HttpUtils.post("/api/workouts/create", data);
                 }
             },
-            /*join: function(id, participantId) {
-                return HttpUtils.put("/api/workouts/" + id + "/participants/" + participantId + "/join/", undefined);
-            },
-            unjoin: function(id, participantId) {
-                return HttpUtils.put("/api/workouts/" + id + "/participants/" + participantId + "/unjoin/", undefined);
-            },*/
             updateParticipant: function(id, participant) {
                 return HttpUtils.put("/api/workouts/" + id + "/participants/" + participant._id + "/update/", participant);
             },

@@ -1,4 +1,5 @@
 var raceService = require("../services/raceService"),
+	logger = require("../logger"),
 	fs = require("fs");
 
 exports.createRace = function(req, res) {
@@ -155,8 +156,10 @@ exports.uploadPicture = function(req, res) {
 
 	var imageBuffer = decodeBase64Image(req.body.base64);
 
-	fs.writeFile("./.tmp/tmpImg.jpg", imageBuffer.data, function(err) {
-		console.log(err);
+	fs.writeFile("./.tmp/tmpImg.jpg", imageBuffer.data, function(error) {
+		if(error) {
+			logger.error(error);
+		}
 	});
 
 
@@ -213,7 +216,7 @@ exports.addResult = function(req, res) {
 	var race = req.race;
 	var result = req.body;
 
-	var decodeBase64Image = function(dataString) {
+	var decodeBase64 = function(dataString) {
 		var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
 			response = {};
 
@@ -227,7 +230,7 @@ exports.addResult = function(req, res) {
 		return response;
 	};
 
-	var imageBuffer = decodeBase64Image(result.file);
+	var imageBuffer = decodeBase64(result.file);
 
 	var path = "./.tmp/" + result.name;
 	var filename = result.name;
@@ -265,5 +268,9 @@ exports.getResult = function(req, res) {
 	var result = req.result;
 	raceService.getResult(race, result, res, function(data) {
 		res.status(200).send(data);
+		//res.header('content-type','binary/octet-stream');
+		//res.set('Content-Type', 'application/json');
+        //readstream.pipe(res);
+
 	});
 };
