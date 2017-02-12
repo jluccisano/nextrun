@@ -1,66 +1,70 @@
 doctype html
 html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-controller='MainController')
 
-    <!-- build:js js/widgets/google-analytics.min.js -->
-    script(src="widgets/google-analytics.js", charset="UTF-8")
-    <!-- endbuild -->
+    // build:js(client) client/scripts/widgets/google-analytics.min.js
+    script(src="widgets/google-analytics.js" charset="UTF-8")
+    // endbuild
 
     head
 
         link(rel="icon", type="image/png",  href="/img/logo_officiel.png")
 
-        <!-- build:css styles/vendor.min.css -->
-        link(rel="stylesheet", href="bower_components/font-awesome/css/font-awesome.css")
-        link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap.css")
-        <!-- endbuild -->
+        // build:css(client) client/styles/vendor.min.css
+        // bower:css
+        link(rel='stylesheet', href='../../client/bower_components/bootstrap/dist/css/bootstrap.css')
+        link(rel='stylesheet', href='../../client/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css')
+        link(rel='stylesheet', href='../../client/bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css')
+        link(rel='stylesheet', href='../../client/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css')
+        // endbower
+        // endbuild
 
-        <!-- build:css style/main.min.css -->
-        link(rel="stylesheet", href="css/docs.css")
-        link(rel="stylesheet", href="css/style.css")
-        link(rel="stylesheet", href="css/sticky-footer.css")
-        link(rel="stylesheet", href="css/animations.css")
-        link(rel="stylesheet", href="css/googlemaps.css")
-        link(rel="stylesheet", href="css/datetimepicker.css")
-        link(rel="stylesheet", href="css/daterangepicker-bs3.css")
-        <!-- endbuild -->
+        // build:css({.tmp,client}) client/styles/main.min.css
+        link(rel="stylesheet", href="styles/main.css")
+        // endbuild
 
         script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")
 
+        // build:js(client) client/scripts/vendor.min.js
+        // bower:js
+        script(src='../../client/bower_components/jquery/dist/jquery.js')
+        script(src='../../client/bower_components/angular/angular.js')
+        script(src='../../client/bower_components/i18next/i18next.js')
+        script(src='../../client/bower_components/angular-cookies/angular-cookies.js')
+        script(src='../../client/bower_components/angular-route/angular-route.js')
+        script(src='../../client/bower_components/angular-animate/angular-animate.js')
+        script(src='../../client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
+        script(src='../../client/bower_components/underscore/underscore.js')
+        script(src='../../client/bower_components/angular-google-maps/dist/angular-google-maps.js')
+        script(src='../../client/bower_components/moment/moment.js')
+        script(src='../../client/bower_components/bootstrap/dist/js/bootstrap.js')
+        script(src='../../client/bower_components/highcharts-ng/dist/highcharts-ng.js')
+        script(src='../../client/bower_components/highcharts.com/js/highcharts.src.js')
+        script(src='../../client/bower_components/highcharts.com/js/highcharts-more.src.js')
+        script(src='../../client/bower_components/highcharts.com/js/modules/exporting.src.js')
+        script(src='../../client/bower_components/bootstrap-daterangepicker/daterangepicker.js')
+        script(src='../../client/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js')
+        script(src='../../client/bower_components/angular-sanitize/angular-sanitize.js')
+        script(src='../../client/bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js')
+        script(src='../../client/bower_components/angular-date-time-input/src/dateTimeInput.js')
+        script(src='../../client/bower_components/x2js/xml2json.min.js')
+        script(src='../../client/bower_components/AngularGM/angular-gm.js')
+        script(src='../../client/bower_components/angular-translate/angular-translate.js')
+        script(src='../../client/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js')
+        script(src='../../client/bower_components/angular-moment/angular-moment.js')
+        // endbower
+        script(src='lib/textAngular.js')
+        script(src='lib/enum-0.2.5.js')
+        // endbuild
 
-        <!-- build:js scripts/vendor.min.js -->
-        script(src="bower_components/jquery/dist/jquery.js", charset="UTF-8")
-        script(src="bower_components/i18next/i18next.js", charset="UTF-8")
-        script(src="bower_components/underscore/underscore.js", charset="UTF-8")
-        script(src="bower_components/angular/angular.js", charset="UTF-8")
-        script(src="bower_components/angular-animate/angular-animate.js", charset="UTF-8")
-        script(src="bower_components/angular-sanitize/angular-sanitize.js", charset="UTF-8")
-        script(src="bower_components/angular-route/angular-route.js", charset="UTF-8")
-        script(src="bower_components/angular-cookies/angular-cookies.js", charset="UTF-8")
-        script(src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js", charset="UTF-8")
-        script(src="bower_components/angular-google-maps/dist/angular-google-maps.js", charset="UTF-8")
-        script(src="bower_components/AngularGM/angular-gm.js", charset="UTF-8")
-        script(src="bower_components/highcharts.com/js/highcharts.src.js", charset="UTF-8")
-        script(src="bower_components/highcharts-ng/dist/highcharts-ng.js", charset="UTF-8")
-        script(src="bower_components/x2js/xml2json.js", charset="UTF-8")
-        script(src="bower_components/bootstrap/dist/js/bootstrap.js", charset="UTF-8")
-        script(src="bower_components/moment/min/moment-with-langs.js", charset="UTF-8")
-        script(src="bower_components/angular-moment/angular-moment.js", charset="UTF-8")
-        script(src="bower_components/bootstrap-daterangepicker/daterangepicker.js", charset="UTF-8")
-        script(src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js", charset="UTF-8")
-        script(src="bower_components/angular-date-time-input/src/dateTimeInput.js", charset="UTF-8")
-        script(src="bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js", charset="UTF-8")
-        script(src="bower_components/angular-translate/angular-translate.js", charset="UTF-8")
-        script(src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js", charset="UTF-8")
-        script(src="lib/textAngular.js", charset="UTF-8")
-        script(src="lib/enum-0.2.5.js", charset="UTF-8")
-        <!-- endbuild -->
-
-        <!-- build:js scripts/routingConfig.js -->
+        // build:js(client) client/scripts/routingConfig.js
         script(src="routingConfig.js", charset="UTF-8")
-        script(src="widgets/socialbuttons.js", charset="UTF-8")
-        <!-- endbuild -->
+        // endbuild
 
-        <!-- build:js scripts/route.min.js -->
+        // build:js(client) client/scripts/widgets/socialbuttons.min.js
+        script(src="widgets/socialbuttons.js", charset="UTF-8")
+        // endbuild
+
+        // build:js(client) client/scripts/route.min.js
         script(src="modules/route/scripts/route.js", charset="UTF-8")
         script(src="modules/route/scripts/services/elevationService.js", charset="UTF-8")
         script(src="modules/route/scripts/services/gpxService.js", charset="UTF-8")
@@ -70,25 +74,23 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
         script(src="modules/route/scripts/services/routeService.js", charset="UTF-8")
         script(src="modules/route/scripts/services/routeUtilsService.js", charset="UTF-8")
         script(src="modules/route/scripts/services/segmentService.js", charset="UTF-8")
-        <!-- endbuild -->
+        // endbuild
 
-        <!-- build:js scripts/auth.min.js -->
+        // build:js(client) client/scripts/auth.min.js
         script(src="modules/auth/scripts/auth.js", charset="UTF-8")
-
         script(src="modules/auth/scripts/controllers/forgotPasswordModalController.js", charset="UTF-8")
         script(src="modules/auth/scripts/controllers/loginController.js", charset="UTF-8")
         script(src="modules/auth/scripts/controllers/settingsController.js", charset="UTF-8")
         script(src="modules/auth/scripts/controllers/signupController.js", charset="UTF-8")
-        <!-- endbuild -->
+        // endbuild
 
-        <!-- build:js scripts/home.min.js -->
+        // build:js(client) client/scripts/home.min.js
         script(src="modules/home/scripts/home.js", charset="UTF-8")
         script(src="modules/home/scripts/controllers/homeController.js", charset="UTF-8")
-        <!-- endbuild -->
+        // endbuild
 
-        <!-- build:js scripts/race.min.js -->
+        // build:js(client) client/scripts/race.min.js
         script(src="modules/race/scripts/race.js", charset="UTF-8")
-
         script(src="modules/race/scripts/controllers/changeTypeConfirmationModalController.js", charset="UTF-8")
         script(src="modules/race/scripts/controllers/createRaceController.js", charset="UTF-8")
         script(src="modules/race/scripts/controllers/deleteConfirmationModalController.js", charset="UTF-8")
@@ -99,14 +101,12 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
         script(src="modules/race/scripts/controllers/redirectionModalController.js", charset="UTF-8")
         script(src="modules/race/scripts/controllers/searchRaceController.js", charset="UTF-8")
         script(src="modules/race/scripts/controllers/viewRaceController.js", charset="UTF-8")
-
         script(src="modules/race/scripts/services/dateRangeConfig.js", charset="UTF-8")
         script(src="modules/race/scripts/services/textAngularConfig.js", charset="UTF-8")
-        <!-- endbuild -->
+        // endbuild
 
-        <!-- build:js /scripts/commons.min.js -->
+        // build:js(client) client/scripts/commons.min.js
         script(src="modules/commons/scripts/commons.js", charset="UTF-8")
-
         script(src="modules/commons/scripts/services/alertService.js", charset="UTF-8")
         script(src="modules/commons/scripts/services/authService.js", charset="UTF-8")
         script(src="modules/commons/scripts/services/contactService.js", charset="UTF-8")
@@ -123,7 +123,6 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
         script(src="modules/commons/scripts/services/sharedCriteriaService.js", charset="UTF-8")
         script(src="modules/commons/scripts/services/sharedMetaService.js", charset="UTF-8")
         script(src="modules/commons/scripts/services/xmlService.js", charset="UTF-8")
-
         script(src="modules/commons/scripts/directives/fbLike.js", charset="UTF-8")
         script(src="modules/commons/scripts/directives/gmapsAutocompleteDirective.js", charset="UTF-8")
         script(src="modules/commons/scripts/directives/multiselectDropdownDirective.js", charset="UTF-8")
@@ -135,12 +134,10 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
         script(src="modules/commons/scripts/directives/nrPasswordMatchDirective.js", charset="UTF-8")
         script(src="modules/commons/scripts/directives/nrPolylineDirective.js", charset="UTF-8")
         script(src="modules/commons/scripts/directives/nrTagListDirective.js", charset="UTF-8")
-
         script(src="modules/commons/scripts/templates/angular-bootstrap-tpls-overrides.js", charset="UTF-8")
-        <!-- endbuild -->
+        // endbuild
 
-
-        <!-- build:js scripts/main.min.js -->
+        // build:js(client) client/scripts/main.min.js
         script(src="modules/main/scripts/main.js", charset="UTF-8")
         script(src="modules/main/scripts/controllers/aboutController.js", charset="UTF-8")
         script(src="modules/main/scripts/controllers/contactController.js", charset="UTF-8")
@@ -148,7 +145,7 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
         script(src="modules/main/scripts/controllers/footerController.js", charset="UTF-8")
         script(src="modules/main/scripts/controllers/headerController.js", charset="UTF-8")
         script(src="modules/main/scripts/controllers/mainController.js", charset="UTF-8")
-        <!-- endbuild -->
+        // endbuild
 
         script.
             moment.lang('fr');
@@ -191,5 +188,5 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
                 div.ng-cloak(data-ng-cloak, class="view-container")
                     div(id="main" data-ng-view, class="view-frame ng-cloak")
 
-            div.ng-cloak(id="footer" , data-ng-cloak data-ng-controller="FooterController")
+            div.ng-cloak(id="footer" data-ng-cloak data-ng-controller="FooterController")
                 include ./layouts/footer

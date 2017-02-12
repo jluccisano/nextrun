@@ -18,7 +18,8 @@ module.exports = function(grunt) {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
       server: 'server',
-      dist: 'dist'
+      dist: 'dist',
+      config: 'config'
     },
 
     // Empties folders to start fresh
@@ -37,13 +38,6 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      express: {
-        files: ['client/js/**/*.js', 'test/client/e2e/**/*Scenario.js'],
-        tasks: ['express:test'],
-        options: {
-          spawn: false
-        }
-      },
       karma: {
         files: ['client/js/**/*.js', 'test/client/unit/**/*Spec.js'],
         tasks: ['karma:unit:run']
@@ -55,36 +49,42 @@ module.exports = function(grunt) {
       compass: {
         files: ['<%= yeoman.client %>/modules/**/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
+      },
+      livereload: {
+        options: {
+          livereload: '<%= express.options.livereload %>'
         },
-    },
-
-    // Compiles Sass to CSS and generates necessary files if requested
-    compass: {
-      options: {
-        sassDir: '<%= yeoman.client %>/modules/**/styles',
-        cssDir: '.tmp/styles',
-        generatedImagesDir: '.tmp/images/generated',
-        imagesDir: '<%= yeoman.client %>/modules/**/images',
-        javascriptsDir: '<%= yeoman.client %>/modules/**/scripts',
-        fontsDir: '<%= yeoman.client %>/modules/**/styles/fonts',
-        importPath: '<%= yeoman.client %>/bower_components',
-        httpImagesPath: '/images',
-        httpGeneratedImagesPath: '/images/generated',
-        httpFontsPath: '/styles/fonts',
-        relativeAssets: false,
-        assetCacheBuster: false,
-        raw: 'Sass::Script::Number.precision = 10\n'
+        files: [
+          '<%= yeoman.server %>/{,*/}*.jade',
+          '.tmp/styles/{,*/}*.css',
+          '<%= yeoman.client %>/modules/**/*.{png,jpg,jpeg,gif,webp,svg}'
+        ]
       },
-      dist: {
+      js: {
+        files: ['<%= yeoman.client %>/modules/**/*.js'],
+        tasks: ['newer:jshint:all'],
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+          livereload: '<%= express.options.livereload %>'
         }
       },
-      server: {
+      jsTestClient: {
+        files: ['test/client/**/*Spec.js'],
+        tasks: ['newer:jshint:test', 'karma']
+      },
+      jsTestServer: {
+        files: ['test/server/**/test-*.js'],
+        tasks: ['newer:jshint:test', 'mochaTest']
+      },
+      gruntfile: {
+        files: ['Gruntfile.js']
+      },
+      express: {
+        files: ['public/js/**/*.js', 'test/client/e2e/**/*Scenario.js'],
+        tasks: ['express:development'],
         options: {
-          debugInfo: true
+          spawn: false
         }
-      }
+      },
     },
 
     // Run some tasks in parallel to speed up the build process
@@ -102,11 +102,238 @@ module.exports = function(grunt) {
       ]
     },
 
-    /*clean: {
-      force: true,
-      build: ["dist", "tmp"],
-      tmp: ['tmp']
-    }, */
+    // Automatically inject Bower components into the app
+    bowerInstall: {
+      app: {
+        src: ['<%= yeoman.server %>/views/index.jade'],
+        ignorePath: '<%= yeoman.server %>/'
+      },
+      sass: {
+        src: ['<%= yeoman.client %>/styles/{,*/}*.{scss,sass}'],
+        ignorePath: '<%= yeoman.client %>/bower_components/'
+      }
+    },
+
+    /********************************** COMPILE ***************************************************/
+
+    // Compiles Sass to CSS and generates necessary files if requested
+    compass: {
+      options: {
+        sassDir: '<%= yeoman.client %>/modules/main/styles',
+        cssDir: '.tmp/styles',
+        generatedImagesDir: '.tmp/images/generated',
+        imagesDir: '<%= yeoman.client %>/modules/main/images',
+        javascriptsDir: '<%= yeoman.client %>/modules/main/scripts',
+        fontsDir: '<%= yeoman.client %>/modules/main/styles/fonts',
+        importPath: '<%= yeoman.client %>/bower_components',
+        httpImagesPath: '/images',
+        httpGeneratedImagesPath: '/images/generated',
+        httpFontsPath: '/styles/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        raw: 'Sass::Script::Number.precision = 10\n'
+      },
+      dist: {
+        options: {
+          generatedImagesDir: '<%= yeoman.dist %>/client/images/generated'
+        }
+      },
+      server: {
+        options: {
+          debugInfo: true
+        }
+      }
+    },
+
+    jade: {
+      compile: {
+        options: {
+          client: false,
+          pretty: true
+        },
+        files: [{
+          cwd: "<%= yeoman.server %>/views",
+          src: "**/*.jade",
+          dest: "<%= yeoman.dist %>/server/views/",
+          expand: true,
+          ext: ".html"
+        }]
+      }
+    },
+
+    // Add vendor prefixed styles
+    autoprefixer: {
+      options: {
+        browsers: ['last 1 version']
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/styles/',
+          src: '{,*/}*.css',
+          dest: '.tmp/styles/'
+        }]
+      }
+    },
+
+    /********************************** MINIFICATION ***************************************************/
+
+    // Reads HTML for usemin blocks to enable smart builds that automatically
+    // concat, minify and revision files. Creates configurations in memory so
+    // additional tasks can operate on them
+
+    useminPrepare: {
+      html: '<%= yeoman.dist %>/server/views/index.html',
+      options: {
+        dest: '<%= yeoman.dist %>',
+        flow: {
+          html: {
+            steps: {
+              js: ['concat', 'uglifyjs'],
+              css: ['cssmin']
+            },
+            post: {}
+          }
+        }
+      }
+    },
+
+    // Performs rewrites based on rev and the useminPrepare configuration
+    usemin: {
+      html: ['<%= yeoman.dist %>/server/views/{,*/}*.html'],
+      css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
+      options: {
+        assetsDirs: ['<%= yeoman.dist %>']
+      }
+    },
+
+    imagemin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.client %>/modules',
+          src: '**/images/{,*/}*.{png,jpg,jpeg,gif}',
+          dest: '<%= yeoman.dist %>/client/images'
+        }]
+      }
+    },
+    svgmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.client %>/modules/**/images',
+          src: ['{,*/}*.svg'],
+          dest: '<%= yeoman.dist %>/client/images'
+        }]
+      }
+    },
+
+
+    htmlmin: {
+      dist: {
+        options: {
+          collapseWhitespace: true,
+          collapseBooleanAttributes: true,
+          removeCommentsFromCDATA: true,
+          removeOptionalTags: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>/server',
+          src: ['views/{,*/}*.html'],
+          dest: '<%= yeoman.dist %>/server'
+        }]
+      }
+    },
+
+    // ngmin tries to make the code safe for minification automatically by
+    // using the Angular long form for dependency injection. It doesn't work on
+    // things like resolve or inject so those have to be done manually.
+    ngmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/concat/client/scripts',
+          src: [
+            '*.js',
+            '!<%= yeoman.client %>/modules/main/scripts/services/config.js'
+          ],
+          dest: '.tmp/concat/client/scripts'
+        }]
+      }
+    },
+
+    copy: {
+      server: {
+        files: [{
+          expand: true,
+          src: ['server/**/!{*.jade}', 'config/**', 'locales/**'],
+          dest: '<%= yeoman.dist %>'
+        }]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.client %>',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            '*.{ico,png,txt}',
+            'sitemap.xml'
+          ]
+        }, {
+          expand: true,
+          cwd: '.tmp/images',
+          dest: '<%= yeoman.dist %>/client/images',
+          src: ['generated/*']
+        }]
+      }
+    },
+
+    // Replace Google CDN references
+    cdnify: {
+      dist: {
+        html: ['<%= yeoman.dist %>/server/views/**/*.html']
+      }
+    },
+
+    /******************************** JS DOC **********************************************/
+
+    jsdoc: {
+      dist: {
+        src: ['<%= yeoman.server %>/**/*.js', '<%= yeoman.config %>/**/*.js'],
+        options: {
+          destination: '<%= yeoman.dist %>/jsdoc'
+        }
+      }
+    },
+
+
+    /*************************** SERVERS *******************************************************/
+
+    express: {
+      options: {       
+        background: false,
+        debug: true
+      },
+      development: {
+        options: {
+          port: 3000,
+          script: 'server.js',
+          node_env: 'development'
+        }
+      },
+      test: {
+        options: {
+          port: 4000,
+          script: 'server.js',
+          node_env: 'test'
+        }
+      }
+    },
+
+    /********************************** TEST PART ***************************************************/
+
     mochaTest: {
       unit: {
         options: {
@@ -175,332 +402,22 @@ module.exports = function(grunt) {
       }
     },
 
-
-
-
-    jade: {
-        compile: {
-            options: {
-                client: false,
-                pretty: true
-            },
-            files: [ {
-              cwd: "<%= yeoman.server %>/views",
-              src: "**/*.jade",
-              dest: "<%= yeoman.dist %>/server/views/",
-              expand: true,
-              ext: ".html"
-            } ]
-        }
-    },
-
-    // Reads HTML for usemin blocks to enable smart builds that automatically
-    // concat, minify and revision files. Creates configurations in memory so
-    // additional tasks can operate on them
-
-     useminPrepare: {
-      html: '<%= yeoman.dist %>/server/views/index.html',
-      options: {
-        dest: '<%= yeoman.dist %>',
-        flow: {
-          html: {
-            steps: {
-              js: ['concat', 'uglifyjs'],
-              css: ['cssmin']
-            },
-            post: {}
-          }
-        }
-      }
-    },
-
-    // Performs rewrites based on rev and the useminPrepare configuration
-    usemin: {
-      html: ['<%= yeoman.dist %>/server/views/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
-      js: ['<%= yeoman.client %>/{,*/}*.js'],
-      options: {
-        assetsDirs: ['<%= yeoman.dist %>']
-      }
-    },
-
-
-
-    //usemin: {
-     //jade: 'dist/app/views/**/*.jade',
-    /*  options: {
-        assetsDirs: ['public'],
-        patterns: {
-          jade: require('usemin-patterns').jade
-        }
-      }
-    },*/
-    /*concat: {
-      options: {
-        separator: ';'
-      },
-      basic_and_extras: {
-        files: {
-          'tmp/public/js/app.js': ['public/js/app.js'],
-          'tmp/public/js/routingConfig.js': ['public/js/routingConfig.js'],
-          'tmp/public/js/controllers.js': [
-            'public/js/controllers.js',
-            'public/js/controllers/*.js'
-          ],
-          'tmp/public/js/directives.js': [
-            'public/js/directives/*.js',
-          ],
-          'tmp/public/js/services.js': [
-            'public/js/services/*.js',
-          ],
-          'tmp/public/js/animations.js': ['public/js/animations.js'],
-          'tmp/public/js/widgets/socialbuttons.js': ['public/js/widgets/socialbuttons.js'],
-          'tmp/public/js/widgets/map-france.js': ['public/js/widgets/map-france.js'],
-          'tmp/public/js/widgets/google-analytics.js': ['public/js/widgets/google-analytics.js'],
-          'tmp/public/js/constants/regions.js': ['public/js/constants/regions.js'],
-          'tmp/public/js/constants/departments.js': ['public/js/constants/departments.js'],
-          'tmp/public/js/constants/typeOfRaces.js': ['public/js/constants/typeOfRaces.js'],
-          'tmp/public/js/pages/home.js': ['public/js/pages/home.js'],
-          'tmp/public/js/templates/angular-bootstrap-tpls-overrides.js': ['public/js/templates/angular-bootstrap-tpls-overrides.js'],
-
-
-          //To be minify
-          'tmp/public/lib/underscore.js': ['bower_components/underscore/underscore.js'],
-          'tmp/public/lib/bootstrap-multiselect.js': ['bower_components/bootstrap-multiselect/js/bootstrap-multiselect.js'],
-          'tmp/public/lib/daterangepicker.js': ['bower_components/bootstrap-daterangepicker/daterangepicker.js'],
-          'tmp/public/lib/datetimepicker.js': ['bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js'],
-          'tmp/public/lib/dateTimeInput.js': ['bower_components/angular-date-time-input/src/dateTimeInput.js'],
-          'tmp/public/lib/highcharts.js': ['bower_components/highcharts.com/js/highcharts.src.js'],
-
-
-
-          'tmp/public/lib/textAngular.js': ['public/lib/textAngular.js'],
-          'tmp/public/lib/enum-0.2.5.js': ['public/lib/enum-0.2.5.js'],
-
-
-
-        },
-      },
-    }, */
-   /* uglify: {
-      options: {   */
-        //banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-     /* },
-      dist: {
-        files: {
-          'dist/public/js/app.min.js': ['tmp/public/js/app.js'],
-          'dist/public/js/routingConfig.js': ['tmp/public/js/routingConfig.js'],
-          'dist/public/js/controllers.min.js': ['tmp/public/js/controllers.js'],
-          'dist/public/js/directives.min.js': ['tmp/public/js/directives.js'],
-          'dist/public/js/services.min.js': ['tmp/public/js/services.js'],
-          'dist/public/js/animations.min.js': ['tmp/public/js/animations.js'],
-          'dist/public/js/widgets/socialbuttons.min.js': ['tmp/public/js/widgets/socialbuttons.js'],
-          'dist/public/js/widgets/map-france.min.js': ['tmp/public/js/widgets/map-france.js'],
-          'dist/public/js/widgets/google-analytics.min.js': ['tmp/public/js/widgets/google-analytics.js'],
-          'dist/public/js/pages/home.min.js': ['tmp/public/js/pages/home.js'],
-          'dist/public/js/templates/angular-bootstrap-tpls-overrides.min.js': ['tmp/public/js/templates/angular-bootstrap-tpls-overrides.js'],
-
-
-
-          'dist/public/lib/underscore.min.js': ['tmp/public/lib/underscore.js'],
-          'dist/public/lib/bootstrap-multiselect.min.js': ['tmp/public/lib/bootstrap-multiselect.js'],
-          'dist/public/lib/daterangepicker.min.js': ['tmp/public/lib/daterangepicker.js'],
-          'dist/public/lib/datetimepicker.min.js': ['tmp/public/lib/datetimepicker.js'],
-          'dist/public/lib/dateTimeInput.min.js': ['tmp/public/lib/dateTimeInput.js'],
-          'dist/public/lib/highcharts.min.js': ['tmp/public/lib/highcharts.js'],
-
-
-
-          'dist/public/lib/enums.min.js': ['tmp/public/lib/enum-0.2.5.js', 'tmp/public/js/constants/typeOfRaces.js', 'tmp/public/js/constants/departments.js', 'tmp/public/js/constants/regions.js'],
-
-          'dist/public/lib/textAngular.min.js': ['tmp/public/lib/textAngular.js'],
-
-
-        }
-      }
-    },    */
-
-    /*cssmin: {
-      minify: {
-        expand: true,
-        cwd: 'public/css/',
-        src: ['*.css', '!*.min.css'],
-        dest: 'dist/public/css/',
-        ext: '.min.css'
-      }
-    },*/
-
-    concat: {
-      options: {
-        root: '<%= yeoman.client %>'
-      }
-    },
-
-    uglify: {
-      options: {
-        root: '<%= yeoman.client %>'
-      }
-    },
-
-    cssmin: {
-      options: {
-        root: '<%= yeoman.client %>'
-      }
-    },
-
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.client %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.client %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-
-    // ngmin tries to make the code safe for minification automatically by
-    // using the Angular long form for dependency injection. It doesn't work on
-    // things like resolve or inject so those have to be done manually.
-    ngmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/concat/scripts',
-          src: '*.js',
-          dest: '.tmp/concat/scripts'
-        }]
-      }
-    },
-
-
-
-    copy: {
-      server: {
-         files: [{
-            expand: true,
-            src: ['server/**/!{*.jade}', 'config/**', 'locales/**'],
-            dest: '<%= yeoman.dist %>'
-       }]
-      },
-
-      /*move_css: {
-        files: [{
-          expand: true,
-          src: [
-            'bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css',
-            'bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css'
-          ],
-          dest: 'public/css'
-        }]
-      },
-      main: {
-        files: [
-          // includes files within path
-          {
-            expand: true,
-            src: ['server.js', 'package.json'],
-            dest: 'dist/',
-            filter: 'isFile'
-          },
-
-          // includes files within path and its sub-directories
-          {
-            expand: true,
-            src: ['app/**', 'config/**', 'locales/**'],
-            dest: 'dist/'
-          },
-
-          // includes files within path and its sub-directories
-          {
-            expand: true,
-            flatten: true,
-            src: [
-              'bower_components/font-awesome/css/font-awesome.min.css',
-              'bower_components/bootstrap/dist/css/bootstrap.min.css'
-            ],
-            dest: 'dist/public/css/'
-          },
-          //copy all minify libs to public/js/lib
-          {
-            expand: true,
-            flatten: true,
-            src: [
-              'bower_components/angular/angular.min.js',
-              'bower_components/angular-route/angular-route.min.js',
-              'bower_components/angular-animate/angular-animate.min.js',
-              'bower_components/angular-cookies/angular-cookies.min.js',
-              'bower_components/angular-resource/angular-resource.min.js',
-              'bower_components/angular-sanitize/angular-sanitize.min.js',
-              'bower_components/angular-google-maps/dist/angular-google-maps.min.js',
-              'bower_components/highcharts-ng/dist/highcharts-ng.min.js',
-              'bower_components/jquery/dist/jquery.min.js',
-              'bower_components/bootstrap/dist/js/bootstrap.min.js',
-              'bower_components/i18next/i18next.min.js',
-              'bower_components/AngularGM/angular-gm.min.js',
-              'bower_components/moment/min/moment-with-langs.min.js',
-              'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-              'bower_components/x2js/xml2json.min.js',
-              'bower_components/font-awesome/css/font-awesome.min.css',
-              'bower_components/angular-easyfb/angular-easyfb.min.js'
-            ],
-            dest: 'dist/public/lib/'
-          },
-          //copy fonts of fonts
-          {
-            expand: true,
-            flatten: true,
-            src: [
-              'public/fonts/*',
-              'bower_components/font-awesome/fonts/*'
-            ],
-            dest: 'dist/public/fonts/'
-          },
-
-          // include sitemap.xml
-          {
-            expand: true,
-            src: ['public/sitemap.xml'],
-            dest: 'dist/'
-          },
-
-        ]
-      }  */
-    },
-    jsdoc: {
-      dist: {
-        src: ['app/**/*.js', 'config/**/*.js'],
-        options: {
-          destination: 'dist/doc'
-        }
-      }
-    },
+    // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish'),
         reporterOutput: 'jshint.xml',
-        ignores: ['public/lib/**/*.js', 'public/js/widgets/*.js']
+        ignores: ['<%= yeoman.client %>/lib/**/*.js', '<%= yeoman.client %>/widgets/*.js']
       },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      src: {
-        src: ['app/**/*.js', 'config/**/*.js', 'public/**/*.js']
-      },
+      all: [
+        'Gruntfile.js',
+        '<%= yeoman.client %>/modules/**/*.js',
+        '<%= yeoman.server %>/**/*.js',
+        '<%= yeoman.config %>/**/*.js',
+      ],
       test: {
-        src: ['test/test-*.js']
+        src: ['test/server/**/test-*.js', 'test/client/**/*Spec.js']
       },
       ignore_warning: {
         options: {
@@ -508,22 +425,8 @@ module.exports = function(grunt) {
         },
       }
     },
-    /*imagemin: {
-      static: {
-        options: {
-          optimizationLevel: 3
-        },
-        files: {
-          'dist/public/img/edit_screenshot.png': 'public/img/edit_screenshot.png',
-          'dist/public/img/show_screenshot.png': 'public/img/show_screenshot.png',
-          'dist/public/img/end.png': 'public/img/end.png',
-          'dist/public/img/start.png': 'public/img/start.png',
-          'dist/public/img/segment.png': 'public/img/segment.png',
-          'dist/public/img/logo.png': 'public/img/logo.png',
-          'dist/public/img/logo_officiel.png': 'public/img/logo_officiel.png'
-        }
-      }
-    },*/
+
+
     karma: {
       unit: {
         configFile: 'test/client/spec/karma.conf.js',
@@ -531,7 +434,7 @@ module.exports = function(grunt) {
         singleRun: true,
         autoWatch: false,
         logLevel: 'DEBUG'
-    },
+      },
       e2e: {
         configFile: 'karma-e2e.conf.js',
         singleRun: true
@@ -543,25 +446,8 @@ module.exports = function(grunt) {
       browsers: ['Chrome']
     },
 
-    express: {
-      options: {
-        background: true,
-        port: 4000,
-        debug: false
-      },
-      test: {
-        options: {
-          script: 'server.js',
-          node_env: 'test'
-        }
-      },
-      prod: {
-        options: {
-          script: 'server.js',
-          node_env: 'prod'
-        }
-      }
-    },
+
+
     protractor: {
       options: {
         configFile: "test/client/e2e/protractor-e2e.conf.js", // Default config file
@@ -645,6 +531,50 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['build']);
 
 
-  grunt.registerTask('newbuild', ['clean:dist','copy:server', 'jade', 'useminPrepare', 'usemin']);
+  grunt.registerTask('generate-css', [
+    'compass:dist'
+  ]);
+
+
+
+  grunt.registerTask('newbuild', [
+    'clean:dist',
+    'bowerInstall',
+    'copy:server',
+    'jade',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    'ngmin',
+    'copy:dist',
+    'cdnify',
+    'cssmin',
+    'uglify',
+    'usemin',
+    'htmlmin',
+    'jsdoc'
+  ]);
+
+  grunt.registerTask('default', [
+    'newer:jshint',
+    'test',
+    'build'
+  ]);
+
+  grunt.registerTask('serve', function(target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build']);
+    }
+
+    grunt.task.run([
+      'clean:server',
+      'bowerInstall',
+      'concurrent:server',
+      'autoprefixer',
+      'express:development',
+    ]);
+
+  });
 
 };

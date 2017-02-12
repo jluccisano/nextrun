@@ -4,7 +4,7 @@ div.modal-header
 div.modal-body
 	div.row
 		div.col-lg-10
-			form(role="form", name="form", novalidate)				
+			form(role="form", name="form", novalidate)
 				div.form-group(data-ng-class="{'has-error': !form.type.$pristine && form.type.$invalid, 'has-success': !form.type.$invalid && !form.type.$pristine}")
 					label.control-label(for="type")
 					select.form-control(data-ng-model="feedback.type", name="type", data-ng-options="type.name for type in types", required)

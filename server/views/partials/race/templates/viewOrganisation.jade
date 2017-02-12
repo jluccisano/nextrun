@@ -16,20 +16,20 @@ div.container
 									td(ng-if="race.timing.startingTime != null" align="left" style="border:0; border-top: none;") {{race.timing.startingTime| amDateFormat:'HH:mm'}}
 									td(ng-if="race.timing.startingTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold"){{'field.briefingTime' | translate}}
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.briefingTime' | translate}}
 										span :
-									td(ng-if="race.timing.briefingTime != null" align="left" style="border:0; border-top: none;")  {{race.timing.briefingTime | amDateFormat:'HH:mm'}}
+									td(ng-if="race.timing.briefingTime != null" align="left" style="border:0; border-top: none;") {{race.timing.briefingTime | amDateFormat:'HH:mm'}}
 									td(ng-if="race.timing.briefingTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold"){{'field.checkoutBibTime' | translate}}
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.checkoutBibTime' | translate}}
 										span :
 									td(ng-if="race.timing.checkoutBibTime != null" align="left" style="border:0; border-top: none;") {{race.timing.checkoutBibTime | amDateFormat:'HH:mm'}}
-									td(ng-if="race.timing.checkoutBibTime == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
+									td(ng-if="race.timing.checkoutBibTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 								tr
-									td(align="left" style="border:0; border-top: none; font-weight:bold"){{'field.rewardsTime' | translate}}
+									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.rewardsTime' | translate}}
 										span :
 									td(ng-if="race.timing.rewardsTime != null" align="left" style="border:0; border-top: none;") {{race.timing.rewardsTime | amDateFormat:'HH:mm'}}
-									td(ng-if="race.timing.rewardsTime == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
+									td(ng-if="race.timing.rewardsTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 				div.well(data-ng-if="race.timing.timingMoreInformation" data-ng-bind-html="race.timing.timingMoreInformation")
 		tab(heading="{{'field.pricing' | translate}}")
 			div.container
@@ -74,7 +74,7 @@ div.container
 									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.registrationLimitDate' | translate}}
 										span :
 									td(ng-if="race.registration.registrationLimitDate != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationLimitDate | amDateFormat:'DD MMMM YYYY'}}
-									td(ng-if="race.registration.registrationLimitDate == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
+									td(ng-if="race.registration.registrationLimitDate == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 
 								tr
 									td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.registrationWebSite' | translate}}
@@ -94,13 +94,13 @@ div.container
 									td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.registrationOnPlace' | translate}}
 										span :
 									td(ng-if="race.registration.registrationOnPlace != null" align="left" style="border:0; border-top: none;") {{race.registration.registrationOnPlace}}
-									td(ng-if="race.registration.registrationOnPlace == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
+									td(ng-if="race.registration.registrationOnPlace == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 
 								tr
 									td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.numberOfPlacesAvailable' | translate}}
 										span :
 									td(ng-if="race.registration.numberOfPlacesAvailable != null" align="left" style="border:0; border-top: none;") {{race.registration.numberOfPlacesAvailable}}
-									td(ng-if="race.registration.numberOfPlacesAvailable == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
+									td(ng-if="race.registration.numberOfPlacesAvailable == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 
 				div.well(data-ng-if="race.registration.registrationMoreInformation" ng-bind-html="race.registration.registrationMoreInformation")
 
@@ -138,7 +138,7 @@ div.container
 									td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.numberOfProvisions' | translate}}
 										span :
 									td(ng-if="race.therace.numberOfProvisions != null" align="left" style="border:0; border-top: none;") {{race.therace.numberOfProvisions}}
-									td(ng-if="race.therace.numberOfProvisions == null" align="left" style="border:0; border-top: none;font-style:italic"){{'field.notCommunicated' | translate}}
+									td(ng-if="race.therace.numberOfProvisions == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
 				div.well(ng-if="race.therace.theRaceMoreInformation" ng-bind-html="race.therace.theRaceMoreInformation")
 		tab(heading="{{'field.miscellaneous' | translate}}")
 			div.container

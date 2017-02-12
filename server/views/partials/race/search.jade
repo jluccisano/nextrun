@@ -11,7 +11,7 @@ div.container
 				div.input-group-btn(style="width:100%")
 					input.form-control(type="text" placeholder="Rechercher" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="criteria.fulltext" typeahead="name as name.fullname for name in suggest($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
 
-				select.form-control(style="width:200px"  ng-change="search()" data-placeholder="Sélectionner..." ng-model="criteria.region" data-ng-options="region.value as getRegion(region.value) for region in listOfRegion")				
+				select.form-control(style="width:200px"  ng-change="search()" data-placeholder="Sélectionner..." ng-model="criteria.region" data-ng-options="region.value as getRegion(region.value) for region in listOfRegion")
 		div.col-lg-3.col-lg-offset-7(style="margin-top:10px")
 			a(data-ng-click="switchSearchView(true)") Rechercher par géolocalisation
 
