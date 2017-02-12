@@ -11,7 +11,7 @@ var chai = require("chai"),
 	app = require("../../../server"),
 	RaceController = require("../../../server/controllers/raceController"),
 	gm = require("googlemaps"),
-	gmaps = require("../../../config/middlewares/gmaps");
+	gmaps = require("../../../server/middlewares/gmaps");
 
 chai.use(sinonChai);
 

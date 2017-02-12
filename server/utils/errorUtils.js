@@ -1,4 +1,4 @@
-var logger = require("../../config/logger.js"),
+var logger = require("../logger"),
     underscore = require("underscore");
 /**
  * Formats mongoose errors into proper array

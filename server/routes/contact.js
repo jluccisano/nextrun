@@ -1,5 +1,5 @@
 var contactController = require("../controllers/contactController"),
-    router = require("../../config/middlewares/router"),
+    router = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
 

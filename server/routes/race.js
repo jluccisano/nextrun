@@ -1,6 +1,6 @@
 var raceController = require("../controllers/raceController"),
-    gmaps = require("../../config/middlewares/gmaps"),
-    router = require("../../config/middlewares/router"),
+    gmaps = require("../middlewares/gmaps"),
+    router = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
 

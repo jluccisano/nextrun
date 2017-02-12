@@ -8,9 +8,9 @@ var mongoose = require("mongoose"),
     errorUtils = require("../utils/errorUtils"),
     userRoles = require("../../client/routingConfig").userRoles,
     passport = require("passport"),
-    email = require("../../config/middlewares/notification"),
+    email = require("../middlewares/notification"),
     underscore = require("underscore"),
-    logger = require("../../config/logger.js");
+    logger = require("../logger");
 
 
 /**

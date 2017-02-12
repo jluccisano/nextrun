@@ -1,7 +1,7 @@
 var gm = require("googlemaps"),
     underscore = require("underscore"),
-    raceController = require("../../server/controllers/raceController"),
-    logger = require("../logger.js");
+    raceController = require("../controllers/raceController"),
+    logger = require("../logger");
 
 exports.geocodeAddress = function(req, res, next) {
 

@@ -23,7 +23,7 @@ var mongoose = require("mongoose"),
 	ContactController = require("../../../server/controllers/contactController"),
 	Contact = mongoose.model("Contact"),
 	Schema = mongoose.Schema,
-	email = require("../../../config/middlewares/notification");
+	email = require("../../../server/middlewares/notification");
 
 chai.use(sinonChai);
 

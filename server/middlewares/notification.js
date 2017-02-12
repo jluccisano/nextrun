@@ -4,8 +4,8 @@
  */
 var nodemailer = require("nodemailer"),
     env = process.env.NODE_ENV || "development",
-    config = require("../config")[env],
-    logger = require("../logger.js");
+    config = require("../../config/config")[env],
+    logger = require("../logger");
 
 /**
  * Cette fonction permet d"envoyer un mail via Mailgun SMTP

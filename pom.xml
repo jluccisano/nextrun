@@ -44,7 +44,7 @@
                     <bowerInstallArgs>install --no-color</bowerInstallArgs>
                     <gruntTestArgs>test --no-color</gruntTestArgs>
                     <gruntBuildArgs>build</gruntBuildArgs>
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests>
                 </configuration>
                 <executions>
                     <execution>

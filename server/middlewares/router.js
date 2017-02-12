@@ -5,9 +5,9 @@
  */
 
 var underscore = require("underscore"),
+    logger = require("../logger"),
     accessLevels = require("../../client/routingConfig").accessLevels,
-    userRoles = require("../../client/routingConfig").userRoles,
-    logger = require("../logger.js");
+    userRoles = require("../../client/routingConfig").userRoles;
 /**
  *  Register every routes
  */
@@ -16,7 +16,6 @@ module.exports.register = function(app, express, routes, routerPath) {
 
     var router = express.Router();
 
-    // TODO: move this to authorization.js
     var ensureAuthorized = function(req, res, next) {
 
         var role;
@@ -37,7 +36,6 @@ module.exports.register = function(app, express, routes, routerPath) {
             });
         }
         return next();
-
     };
 
     //app.param(":raceId", raceController.load);

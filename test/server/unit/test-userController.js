@@ -22,7 +22,7 @@ var mongoose = require("mongoose"),
 	app = require("../../../server"),
 	UserController = require("../../../server/controllers/userController"),
 	User = mongoose.model("User"),
-	email = require("../../../config/middlewares/notification");
+	email = require("../../../server/middlewares/notification");
 
 chai.use(sinonChai);
 

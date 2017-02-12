@@ -21,9 +21,6 @@ angular.module("google-maps").directive("nrPolyline",
             restrict: "ECA",
             replace: true,
             require: ["^googleMap"],
-            scope: {
-                polylines: "="
-            },
             link: function(scope, element, attrs, mapCtrl) {
 
                 // Wrap polyline initialization inside a $timeout() call to make sure the map is created already
@@ -36,7 +33,7 @@ angular.module("google-maps").directive("nrPolyline",
                     var pathPoints = [];
                     var polyline;
 
-                    scope.$watch("polylines", function(value) {
+                    scope.$watch(attrs.polylines, function(value) {
                         if (value) {
 
                             if (polyline) {

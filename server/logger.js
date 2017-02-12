@@ -1,7 +1,7 @@
   var winston = require("winston"),
       underscore = require("underscore"),
       env = process.env.NOD_ENV || "development",
-      config = require("./config")[env];
+      config = require("../config/config")[env];
 
 
    // Set up logger

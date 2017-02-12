@@ -8,7 +8,7 @@ var chai = require("chai"),
 	expect = chai.expect,
 	sinon = require("sinon"),
 	sinonChai = require("sinon-chai"),
-	email = require("../../../config/middlewares/notification"),
+	email = require("../../../server/middlewares/notification"),
 	nodemailer = require("nodemailer");
 
 chai.use(sinonChai);

@@ -1,4 +1,4 @@
-var cookie = require("../../config/middlewares/cookie");
+var cookie = require("../middlewares/cookie");
 /*
  * GET home page.
  */

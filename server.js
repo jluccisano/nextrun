@@ -20,7 +20,7 @@ var express = require("express"),
 app.config = config;
 
 // Database
-require("./config/database")(app, mongoose);
+require("./server/database")(app, mongoose);
 
 // Bootstrap models
 var models_path = __dirname + "/server/models";
@@ -31,10 +31,10 @@ fs.readdirSync(models_path).forEach(function(file) {
 });
 
 // bootstrap passport config
-require("./config/passport")(passport, config);
+require("./server/passport")(passport, config);
 
 // Bootstrap express config
-require("./config/express")(app, express, passport);
+require("./server/express")(app, express, passport);
 
 // Bootstrap routes
 var routes_path = __dirname + "/server/routes";

@@ -1,6 +1,6 @@
 var userController = require("../controllers/userController"),
     raceController = require("../controllers/raceController"),
-    router = require("../../config/middlewares/router"),
+    router = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
 
 

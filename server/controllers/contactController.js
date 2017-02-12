@@ -1,8 +1,8 @@
 var mongoose = require("mongoose"),
     Contact = mongoose.model("Contact"),
     errorUtils = require("../utils/errorUtils"),
-    email = require("../../config/middlewares/notification"),
-    logger = require("../../config/logger.js"),
+    email = require("../middlewares/notification"),
+    logger = require("../logger"),
     underscore = require("underscore");
 
 /**

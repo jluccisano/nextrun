@@ -12,7 +12,7 @@ var mongoose = require("mongoose"),
     env = process.env.NODE_ENV || "development",
     config = require("../../config/config")[env],
     underscore = require("underscore"),
-    logger = require("../../config/logger.js");
+    logger = require("../logger");
 
 var serverOptions = {
     host: "localhost",
