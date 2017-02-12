@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+  var config = require('./config/config');
+
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
@@ -86,7 +88,6 @@ module.exports = function(grunt) {
           'tmp/public/js/constants/typeOfRaces.js': ['public/js/constants/typeOfRaces.js'],
           'tmp/public/js/pages/home.js': ['public/js/pages/home.js'],
           'tmp/public/js/templates/angular-bootstrap-tpls-overrides.js': ['public/js/templates/angular-bootstrap-tpls-overrides.js'],
-          'tmp/public/js/directives/gmAutocompleteDirectives.js': ['public/js/directives/gmAutocompleteDirectives.js'],
 
 
           //To be minify
@@ -123,8 +124,6 @@ module.exports = function(grunt) {
           'dist/public/js/widgets/map-france.min.js': ['tmp/public/js/widgets/map-france.js'],
           'dist/public/js/widgets/google-analytics.min.js': ['tmp/public/js/widgets/google-analytics.js'],
           'dist/public/js/pages/home.min.js': ['tmp/public/js/pages/home.js'],
-          'dist/public/js/directives/gmAutocompleteDirectives.min.js': ['tmp/public/js/directives/gmAutocompleteDirectives.js'],
-          'dist/public/js/constants/regions.min.js': ['tmp/public/js/constants/regions.js'],
           'dist/public/js/templates/angular-bootstrap-tpls-overrides.min.js': ['tmp/public/js/templates/angular-bootstrap-tpls-overrides.js'],
 
 
@@ -382,10 +381,10 @@ module.exports = function(grunt) {
         command: 'bower install'
       },
       elasticsearch_install_test_idx: {
-        command: 'sh ./scripts/es_racesidx_install.sh racesidx_test_v1 nextrun_test',
+        command: 'sh ./scripts/es_racesidx_install.sh racesidx_test_v1 nextrun_test ' + config.test.host,
       },
       elasticsearch_install_prod_idx: {
-        command: 'sh ./scripts/es_racesidx_install.sh racesidx_v1 nextrun',
+        command: 'sh ./scripts/es_racesidx_install.sh racesidx_v1 nextrun ' + config.prod.host,
       },
       elasticsearch_start: {
         command: 'elasticsearch'

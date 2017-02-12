@@ -10,6 +10,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.distance = undefined;
 		$scope.location = undefined;
 
+		$scope.isModeGeolocation = false;
+
 		$scope.race = {};
 
 		$scope.options = {
@@ -212,7 +214,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 			if ($scope.names.length > 0 && $item !== $scope.names[0]) {
 
-				$location.path("/races/view/" + $item.id)
+				$location.path("/races/view/" + $item.id + '/');
+
 
 			}
 		};
@@ -420,6 +423,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		}, 1000);
 
 		$scope.ready();
+
+		$scope.search();
 
 
 	}

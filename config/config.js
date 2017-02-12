@@ -3,12 +3,13 @@ var path = require('path'),
 
 module.exports = {
   development: {
-    db: 'mongodb://localhost/nextrun',
+    host: 'Helios',
+    db: 'mongodb://Helios/nextrun',
     root: rootPath,
     facebook: {
       clientID: "APP_ID",
       clientSecret: "APP_SECRET",
-      callbackURL: "http://localhost:3000/auth/facebook/callback"
+      callbackURL: 'http://localhost:3000/auth/facebook/callback'
     },
     mailgun: {
       user: "devmaster@nextrunjosephluccisano.mailgun.org",
@@ -17,12 +18,13 @@ module.exports = {
     racesidx: "racesidx_v1"
   },
   test: {
-    db: 'mongodb://localhost/nextrun_test',
+    host: 'Helios',
+    db: 'mongodb://Helios/nextrun_test',
     root: rootPath,
     facebook: {
       clientID: "APP_ID",
       clientSecret: "APP_SECRET",
-      callbackURL: "http://localhost:3000/auth/facebook/callback"
+      callbackURL: 'http://Helios:3000/auth/facebook/callback'
     },
     mailgun: {
       user: "user",
@@ -30,36 +32,9 @@ module.exports = {
     },
     racesidx: "racesidx_test_v1"
   },
-  production: {
-    db: 'mongodb://af_nextrun-joseph_luccisano:c1dhahkj7oo021g9tfaslq3cr1@ds057568.mongolab.com:57568/af_nextrun-joseph_luccisano',
-    root: rootPath,
-    facebook: {
-      clientID: "195803770591615",
-      clientSecret: "409c4b0d091efef8e7d03db2bce807e9",
-      callbackURL: "http://nextrun.fr/auth/facebook/callback"
-    },
-    mailgun: {
-      user: "postmaster@nextrunjosephluccisano.mailgun.org",
-      password: "1jo8rmgvkpe6"
-    },
-    racesidx: "racesidx_v1"
-  },
   prod: {
+    host: 'localhost',
     db: 'mongodb://localhost:nextrun_adm:malili011004/nextrun',
-    root: rootPath,
-    facebook: {
-      clientID: "195803770591615",
-      clientSecret: "409c4b0d091efef8e7d03db2bce807e9",
-      callbackURL: "http://nextrun.fr/auth/facebook/callback"
-    },
-    mailgun: {
-      user: "postmaster@nextrunjosephluccisano.mailgun.org",
-      password: "1jo8rmgvkpe6"
-    },
-    racesidx: "racesidx_v1"
-  },
-  valid: {
-    db: 'mongodb://af_nextrun-valid-joseph_luccisano:n7udg9kmgpt0lrnt6hv2ahke0i@ds029979.mongolab.com:29979/af_nextrun-valid-joseph_luccisano',
     root: rootPath,
     facebook: {
       clientID: "195803770591615",

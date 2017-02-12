@@ -100,7 +100,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 			$location.path("/races/search");
 
-			$scope.criteria = {
+			var criteria = {
 				distance: $scope.distance,
 				searchAround: $scope.searchAround,
 				types: $scope.currentTypesSelected,
@@ -108,7 +108,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 			}
 
 			setTimeout(function() {
-				sharedService.prepForCriteriaBroadcast($scope.criteria);
+				sharedService.prepForCriteriaBroadcast(criteria);
 			}, 1000);
 
 		};
@@ -117,7 +117,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 		$scope.autocomplete = function(query_string) {
 
-			$scope.criteria = {
+			var criteria = {
 				fulltext: (query_string !== undefined) ? query_string : "",
 				region: undefined
 			};
@@ -129,7 +129,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				method: 'POST',
 				url: '/api/races/autocomplete',
 				data: {
-					criteria: $scope.criteria
+					criteria: criteria
 				}
 			}).
 			then(function(response) {
@@ -168,8 +168,10 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 				$location.path("/races/search");
 
+				var fulltext = $scope.fulltext;
+
 				setTimeout(function() {
-					sharedService.prepForFullTextBroadcast($scope.fulltext);
+					sharedService.prepForFullTextBroadcast(fulltext);
 				}, 2000);
 			}
 		};

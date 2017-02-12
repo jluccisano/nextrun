@@ -45,12 +45,11 @@ html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#" data-ng-controller='Main
 		link(rel="stylesheet", href="/css/daterangepicker-bs3.css")
 		<!-- endbuild -->
 
-		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")	
+		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")
 
 		<!-- build:js /lib/jquery.min.js -->
 		script(src="/bower_components/jquery/dist/jquery.js", charset="UTF-8")
 		<!-- endbuild -->
-
 
 		<!-- build:js /lib/i18next.min.js -->
 		script(src="/bower_components/i18next/i18next.js", charset="UTF-8")
@@ -130,6 +129,9 @@ html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#" data-ng-controller='Main
 		script(src="/js/directives/dataRangePickerDirectives.js", charset="UTF-8")
 		script(src="/js/directives/customValidatorDirectives.js", charset="UTF-8")
 		script(src="/js/directives/facebookPluginDirectives.js", charset="UTF-8")
+		script(src="/js/directives/gmAutocompleteDirectives.js", charset="UTF-8")
+		<!-- endbuild -->
+
 		<!-- endbuild -->
 
 		<!-- build:js /js/controllers.min.js -->
@@ -189,12 +191,6 @@ html(ng-app="nextrunApp" prefix="og: http://ogp.me/ns#" data-ng-controller='Main
 		<!-- build:js /js/widgets/socialbuttons.min.js -->
 		script(src="/js/widgets/socialbuttons.js", charset="UTF-8")
 		<!-- endbuild -->
-
-
-		<!-- build:js /js/directives/gmAutocompleteDirectives.min.js -->
-		script(src="/js/directives/gmAutocompleteDirectives.js", charset="UTF-8")
-		<!-- endbuild -->
-
 
 		<!-- build:js /js/templates/angular-bootstrap-tpls-overrides.min.js -->
 		script(src="/js/templates/angular-bootstrap-tpls-overrides.js", charset="UTF-8")

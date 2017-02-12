@@ -10,6 +10,7 @@ jshint.xml
 test-results.xml
 coverage/
 karma.log
+config/config.js
 
 
 # Packages #

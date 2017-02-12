@@ -3,7 +3,7 @@
 echo index name $1
 
 
-if [ $1 == "" || $2 == "" ]; then
+if [ $1 == "" || $2 == "" || $3 == "" ]; then
   echo "no argument supplied"
   exit 1
 fi
@@ -171,7 +171,7 @@ curl -XPUT "http://localhost:9200/_river/race/_meta" -d '{
   "mongodb": {
     "servers": [
       {
-        "host": "localhost",
+        "host": "'"$3"'",
         "port": 27017
       }
     ],
