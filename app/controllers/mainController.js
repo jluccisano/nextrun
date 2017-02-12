@@ -28,11 +28,9 @@ exports.index = function(req, res) {
   var ua;
   ua = req.headers['user-agent'];
   console.log(ua);
-  if (ua.match(/bot/i)) {
+  if (ua.match(/bot/i) || typeof(req.query._escaped_fragment_) !== "undefined") {
 
-    console.log("new crawler");
-    
-    generateSnapshot(req, res);
+    generateSnapShot(req, res);
 
   } else {
     res.render('index', {
@@ -55,15 +53,10 @@ exports.partials = function(req, res) {
     partial = 'partials/' + type + '/' + name;
   }
 
-
-
   res.render(partial);
-
-
-
 };
 
-var generateSnapshot = function(req, res) {
+var generateSnapShot = function(req, res) {
 
   console.log("generateSnapShot");
 
@@ -105,24 +98,13 @@ var generateSnapshot = function(req, res) {
 
                 if (html || checkerCounter >= 50) {
                   if (html) {
-                    //console.log(res.locals);
-                    //res.setHeader("Content-Type", "text/html");
-                    //res.write("<p>Hello World</p>");
-                    //res.end();
-
                     res.send(html);
-
-
                   } else {
                     res.send(404, "cannot generate snapshot");
                   }
 
                   clearTimeout(delay);
                   ph.exit();
-
-
-
-                  //next();
                 }
               });
 
@@ -132,7 +114,6 @@ var generateSnapshot = function(req, res) {
         } else {
           ph.exit();
           res.send(404, "cannot generate snapshot");
-          //next();
         }
       });
     });
