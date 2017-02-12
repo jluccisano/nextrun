@@ -121,8 +121,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Aveyron',
 		region: 'Midi-Pyrénées',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.359248,
+			longitude: 2.568629
 		}
 	},
 	BOUCHES_DU_RHONE: {
@@ -130,8 +130,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Bouches du Rhône',
 		region: 'Provence-Alpes-Côte d\'Azur',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 43.645205,
+			longitude: 5.020446
 		}
 	},
 	CALVADOS: {
@@ -139,8 +139,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Calvados',
 		region: 'Basse-Normandie',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 49.074610,
+			longitude: -0.408835
 		}
 	},
 	CANTAL: {
@@ -148,8 +148,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Cantal',
 		region: 'Auvergne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.094237,
+			longitude:  2.673228
 		}
 	},
 	CHARENTE: {
@@ -157,8 +157,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Charente',
 		region: 'Poitou-Charente',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.662427, 
+			longitude: 0.189825
 		}
 	},
 	CHARENTE_MARITIME: {
@@ -166,8 +166,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Charente Maritime',
 		region: 'Poitou-Charente',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.774196,
+			longitude: -0.698698
 		}
 	},
 	CHER: {
@@ -175,8 +175,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Cher',
 		region: 'Centre',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.084676, 
+			longitude: 2.423964
 		}
 	},
 	CORREZE: {
@@ -193,8 +193,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Côte d\'Or',
 		region: 'Bourgogne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.261645,
+			longitude: 1.799338
 		}
 	},
 	COTES_DARMOR: {
@@ -211,8 +211,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Creuse',
 		region: 'Limousin',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.402972,
+			longitude: -2.787485
 		}
 	},
 	DORDOGNE: {
@@ -220,8 +220,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Dordogne',
 		region: 'Aquitaine',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.931368,
+			longitude: 0.620635
 		}
 	},
 	DOUBS: {
@@ -229,8 +229,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Doubs',
 		region: 'Franche-Comté',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.141537,
+			longitude: 6.350242
 		}
 	},
 	DROME: {
@@ -238,8 +238,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Drôme',
 		region: 'Rhône-Alpes',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.661400,
+			longitude: 5.153510
 		}
 	},
 	EURE: {
@@ -247,8 +247,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Eure',
 		region: 'Haute-Normandie',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 49.122611,
+			longitude: 1.052665
 		}
 	},
 	EURE_ET_LOIR: {
@@ -256,8 +256,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Eure-et-Loir',
 		region: 'Centre',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.405504,
+			longitude: 1.416317
 		}
 	},
 	FINISTERE: {
@@ -265,8 +265,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Finistère',
 		region: 'Bretagne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.249350,
+			longitude: -3.994772
 		}
 	},
 	GARD: {
@@ -274,8 +274,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Gard',
 		region: 'Languedoc',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 43.862957,
+			longitude: 4.399786
 		}
 	},
 	HAUTE_GARONNE: {
@@ -292,8 +292,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Gers',
 		region: 'Midi-Pyrénées',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 43.663665,
+			longitude: 0.574458
 		}
 	},
 	GIRONDE: {
@@ -301,8 +301,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Gironde',
 		region: 'Aquitaine',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.821461,
+			longitude: -0.533568
 		}
 	},
 	HERAULT: {
@@ -310,8 +310,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Hérault',
 		region: 'Languedoc',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 43.618334,
+			longitude: 3.367045
 		}
 	},
 	ILLE_ET_VILAINE: {
@@ -319,8 +319,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Ille-et-Vilaine',
 		region: 'Bretagne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.125367,
+			longitude: -1.641630
 		}
 	},
 	INDRE: {
@@ -328,8 +328,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Indre',
 		region: 'Centre',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 46.735061,
+			longitude: 1.579938
 		}
 	},
 	INDRE_ET_LOIRE: {
@@ -337,8 +337,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Indre-et-Loire',
 		region: 'Centre',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.409495,
+			longitude: 0.676434
 		}
 	},
 	ISERE: {
@@ -346,8 +346,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Isère',
 		region: 'Rhône-Alpes',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.173579,
+			longitude: 5.729479
 		}
 	},
 	JURA: {
@@ -355,8 +355,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Jura',
 		region: 'Franche-Comté',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 46.691084,
+			longitude: 5.786931
 		}
 	},
 	LANDES: {
@@ -364,8 +364,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Landes',
 		region: 'Aquitaine',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.045452,
+			longitude: -0.819785
 		}
 	},
 	LOIR_ET_CHER: {
@@ -373,8 +373,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Loir-et-Cher',
 		region: 'Centre',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.633908,
+			longitude: 1.320805
 		}
 	},
 	LOIRE: {
@@ -382,8 +382,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Loire',
 		region: 'Rhône-Alpes',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.507975,
+			longitude: 4.279566
 		}
 	},
 	HAUTE_LOIRE: {
@@ -391,8 +391,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Haute-Loire',
 		region: 'Auvergne',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 45.053779,
+			longitude: 3.842813
 		}
 	},
 	LOIRE_ATLANTIQUE: {
@@ -400,8 +400,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Loire-Atlantique',
 		region: 'Pays-de-la-Loire',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.213843,
+			longitude: -1.502460
 		}
 	},
 	LOIRET: {
@@ -409,8 +409,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Loiret',
 		region: 'Centre',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.904785,
+			longitude: 2.608321
 		}
 	},
 	LOT: {
@@ -418,8 +418,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Lot',
 		region: 'Midi-Pyrénées',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.668982,
+			longitude: 1.608566
 		}
 	},
 	LOT_ET_GARONNE: {
@@ -427,8 +427,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Lot-et-Garonne',
 		region: 'Aquitaine',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.287595,
+			longitude: 0.374077
 		}
 	},
 	LOZERE: {
@@ -436,8 +436,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Lozère',
 		region: 'Languedoc',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 44.526034,
+			longitude: 3.485662
 		}
 	},
 	MAINE_ET_LOIRE: {
@@ -445,8 +445,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Maine-et-Loire',
 		region: 'Pays-de-la-Loire',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 47.448900,
+			longitude: -0.570805
 		}
 	},
 	MANCHE: {
@@ -454,8 +454,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Manche',
 		region: 'Normandie',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 48.895345,
+			longitude: -1.281735
 		}
 	},
 	MARNE: {
@@ -859,8 +859,8 @@ var DEPARTMENTS = new Enum({
 		name: 'Val-d\'Oise',
 		region: 'Ile-de-France',
 		center: {
-			latitude: 0,
-			longitude: 0
+			latitude: 49.072840,
+			longitude: 2.124515
 		}
 	},
 });
