@@ -62,7 +62,7 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
       "latlng" : {
         "properties" : {
             "location" : {
-                "latlng" : "geo_point",
+                "type" : "geo_point",
                 "fielddata" : {
                     "format" : "compressed",
                     "precision" : "1cm"
