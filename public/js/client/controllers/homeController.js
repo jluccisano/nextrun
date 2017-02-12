@@ -7,14 +7,24 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 		$scope.contact = {};
 
-		$scope.region = REGIONS.ALL.value;
-		$scope.listOfRegions = REGIONS.enums;
 		$scope.listOfTypes = TYPE_OF_RACES.enums;
 		$scope.currentTypesSelected = [];
 
 		$scope.options = {
 			country: "fr"
 		};
+		$scope.distance = "15";
+
+		$scope.criteria = {
+			distance: undefined,
+			searchAround: false,
+			types: [],
+			location: {
+				name: undefined,
+				lat: undefined,
+				lon: undefined
+			}
+		}
 
 
 		$scope.map = {
@@ -85,12 +95,23 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 			return type.i18n;
 		};
 
-		$scope.submit = function() {
+		$scope.submitSearchWithCriteria = function() {
 
 			$location.path("/races/search");
 
+			$scope.criteria = {
+				distance: $scope.distance,
+				searchAround: $scope.searchAround,
+				types: $scope.currentTypesSelected,
+				location: {
+					name: $scope.details.name,
+					lat:  $scope.details.geometry.lat(),
+					lon:  $scope.details.geometry.lng()
+				}
+			}
+
 			setTimeout(function() {
-				sharedService.prepForBroadcast($scope.fulltext, $scope.region, $scope.currentTypesSelected);
+				sharedService.prepForCriteriaBroadcast($scope.criteria);
 			}, 1000);
 
 		};
@@ -99,10 +120,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 		$scope.autocomplete = function(query_string) {
 
-			var criteria = {
-				fulltext: (query_string !== undefined) ? query_string : "",
-				region: undefined
-			};
+			$scope.fulltext = (query_string !== undefined) ? query_string : "";
 
 			return $http({
 				headers: {
@@ -111,7 +129,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				method: 'POST',
 				url: '/api/races/autocomplete',
 				data: {
-					criteria: criteria
+					criteria: $scope.fulltext
 				}
 			}).
 			then(function(response) {
@@ -151,7 +169,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				$location.path("/races/search");
 
 				setTimeout(function() {
-					sharedService.prepForBroadcast($scope.fulltext, $scope.region, $scope.currentTypesSelected);
+					sharedService.prepForFullTextBroadcast($scope.fulltext);
 				}, 1000);
 			}
 		};
