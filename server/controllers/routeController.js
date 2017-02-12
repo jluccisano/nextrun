@@ -1,5 +1,5 @@
 /**
- * @module Race Controller
+ * @module Route Controller
  * @author jluccisano
  */
 
@@ -19,7 +19,7 @@ exports.load = function(req, res, next, id) {
         if (!route) {
             errorUtils.handleUnknownId();
         }
-        req.route = route;
+        req.routeData = route;
         next();
     });
 };
@@ -27,7 +27,7 @@ exports.load = function(req, res, next, id) {
 exports.create = function(req, res) {
     var userConnected = req.user;
 
-    var route = new Route(req.body.data);
+    var route = new Route(req.body.route);
     route.userId = userConnected._id;
     route.lastUpdate = new Date();
     route.creationDate = new Date();
@@ -44,7 +44,7 @@ exports.create = function(req, res) {
 };
 
 exports.update = function(req, res) {
-    var route = req.route;
+    var route = req.routeData;
     var data = req.body.query;
 
     var fieldsToUpdate = data.fields;
@@ -76,7 +76,7 @@ exports.update = function(req, res) {
  * @returns route loaded by load parameter id
  */
 exports.find = function(req, res) {
-    var route = req.route;
+    var route = req.routeData;
 
     if (!underscore.isUndefined(route)) {
         return res.status(200).json({
@@ -116,8 +116,6 @@ exports.findByUser = function(req, res) {
     };
 
     Route.findByCriteria(options, function(err, routes) {
-        console.log(err);
-        console.log(routes);
         if (err) {
             logger.error(err);
             return res.status(400).json({
@@ -139,14 +137,13 @@ exports.findByUser = function(req, res) {
 };
 
 /**
- * @method delete race
+ * @method delete route
  * @param req
  * @param res
  */
 exports.delete = function(req, res) {
-
-    var route = req.route;
-
+    var route = req.routeData;
+    console.log("route:" + route._id);
     Route.destroy(route._id, function(err) {
         if (!err) {
             return res.sendStatus(200);

@@ -39,7 +39,7 @@ var RouteSchema = new Schema({
 RouteSchema.statics = {
 
     /**
-     * Find races by id
+     * Find routes by id
      *
      * @param {ObjectId} id
      * @param {Function} cb
@@ -52,7 +52,7 @@ RouteSchema.statics = {
     },
 
     /**
-     * Remove race by id
+     * Remove route by id
      *
      * @param {ObjectId} id
      * @param {Function} cb
