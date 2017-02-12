@@ -12,7 +12,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 		$scope.options = {
 			country: "fr",
-			types: "(regions)"
+			types: "(cities)"
 		};
 		$scope.distance = "15";
 
@@ -106,8 +106,8 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				types: $scope.currentTypesSelected,
 				location: {
 					name: $scope.details.name,
-					lat:  $scope.details.geometry.lat(),
-					lon:  $scope.details.geometry.lng()
+					lat:  $scope.details.geometry.location.lat(),
+					lon:  $scope.details.geometry.location.lng()
 				}
 			}
 
@@ -121,7 +121,10 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 		$scope.autocomplete = function(query_string) {
 
-			$scope.fulltext = (query_string !== undefined) ? query_string : "";
+			$scope.criteria = {
+				fulltext: (query_string !== undefined) ? query_string : "",
+				region:  undefined
+			};
 
 			return $http({
 				headers: {
@@ -130,7 +133,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				method: 'POST',
 				url: '/api/races/autocomplete',
 				data: {
-					criteria: $scope.fulltext
+					criteria: $scope.criteria
 				}
 			}).
 			then(function(response) {
@@ -150,8 +153,8 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 				for (var i = 0; i < races.length; i++) {
 
 					var name = {
-						fullname: races[i].fields.name,
-						id: races[i].fields._id
+						fullname: races[i].fields.partial1[0].name,
+						id: races[i].fields.partial1[0]._id
 					}
 					$scope.names.push(name);
 				}

@@ -44,10 +44,6 @@ curl -XPOST "http://localhost:9200/racesidx_v1/" -d '{
   }
 }'
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d67b29128e0b4888363b20ee310ef74430271337
 curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
   "race": {
     "properties": {
@@ -63,7 +59,6 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
           }
         }
       },
-<<<<<<< HEAD
       "type": {
         "properties": {
           "name": {
@@ -148,7 +143,7 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
           }
         }
       },
-      "latlng": {
+      "pin": {
         "properties": {
           "location": {
             "type": "geo_point",
@@ -157,18 +152,6 @@ curl -XPUT "http://localhost:9200/racesidx_v1/race/_mapping" -d '{
               "precision": "1cm"
             }
           }
-
-=======
-      "pin" : {
-        "properties" : {
-            "location" : {
-                "type" : "geo_point",
-                "fielddata" : {
-                    "format" : "compressed",
-                    "precision" : "1cm"
-                }
-            }
->>>>>>> d67b29128e0b4888363b20ee310ef74430271337
         }
       }
     }

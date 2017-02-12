@@ -25,4 +25,4 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race" -d '{
       }
     }
   }
-}''
+}'

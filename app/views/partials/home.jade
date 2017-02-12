@@ -24,7 +24,7 @@ div.custom-bs-background
 						div.row
 							div.col-lg-6
 								div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation && form.location.$valid}")
-									input.form-control(name="location" id="location" placeholder="Région, département ou ville" data-ng-model="pin.name" has-location required ng-autocomplete options="options" details="details")
+									input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="pin.name" has-location required ng-autocomplete options="options" details="details")
 								div.row
 									div.col-lg-6
 										div.form-group
@@ -44,7 +44,7 @@ div.custom-bs-background
 									select(class="multiselect" data-placeholder="Sélectionner..." data-ng-model="currentTypesSelected" data-ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
 							div.col-lg-4
 								div.form-group
-									button.btn.btn-primary(type="button" data-ng-click="submitSearchWithCriteria()") Rechercher			
+									button.btn.btn-primary(type="submit" data-ng-click="submitSearchWithCriteria()") Rechercher			
 						
 								
 			div.row(style="margin-top:10px")

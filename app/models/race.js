@@ -267,7 +267,7 @@ RaceSchema.statics = {
    */
   findAll: function(cb) {
 
-    this.find({}, {
+    this.find({published: true}, {
       name: 1,
       pin: 1
     }).exec(cb);

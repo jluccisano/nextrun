@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
   Race = mongoose.model('Race'),
   errorUtils = require('../utils/errorutils'),
   util = require('util'),
+  elasticsearhUtils = require('elasticsearhUtils'),
   ElasticSearchClient = require('elasticsearchclient');
 
 var serverOptions = {
@@ -264,7 +265,7 @@ exports.destroyAllRaceOfUser = function(req, res, next) {
 exports.extractCriteria = function(req, res, next) {
 
   var operation = {
-    fulltext: "*",
+    fulltext: "",
     departments: {},
     types: {},
     date: undefined,
@@ -350,11 +351,13 @@ exports.extractCriteria = function(req, res, next) {
 
     if(criteria.location) {
 
-       if(criteria.searchAround === true) {
+      operation.location = criteria.location;
 
-          
+      /*if(criteria.searchAround === true) {
+
+          operation.location = criteria.location;
       
-      }
+      }*/
 
     }
 
@@ -385,14 +388,12 @@ exports.search = function(req, res) {
   //var filters = "";
   var criteria = {};
 
-  var fields = [
-    "name",
-    "distanceType",
-    "type",
-    "department",
-    "_id",
-    "date"
-  ];
+  var partial_fields = {
+    "partial1": {
+      "exclude": "routes.*"
+    }
+  };
+
 
   var type_filter = {};
   var department_filter = {};
@@ -403,12 +404,12 @@ exports.search = function(req, res) {
 
   query.bool = {};
   query.bool.should = [];
-  query.bool.should.push(buildQueryString("race.name.autocomplete", operation.fulltext));
-  query.bool.should.push(buildQueryString("race.department.name.autocomplete", operation.fulltext));
-  query.bool.should.push(buildQueryString("race.department.region.autocomplete", operation.fulltext));
-  query.bool.should.push(buildQueryString("race.department.code.autocomplete", operation.fulltext));
-  query.bool.should.push(buildQueryString("race.distanceType.i18n.autocomplete", operation.fulltext));
-  query.bool.should.push(buildQueryString("race.type.name.autocomplete", operation.fulltext));
+  query.bool.should.push(elasticsearchUtils.buildQueryString("race.name.autocomplete", operation.fulltext));
+  query.bool.should.push(elasticsearchUtils.buildQueryString("race.department.name.autocomplete", operation.fulltext));
+  query.bool.should.push(elasticsearchUtils.buildQueryString("race.department.region.autocomplete", operation.fulltext));
+  query.bool.should.push(elasticsearchUtils.buildQueryString("race.department.code.autocomplete", operation.fulltext));
+  query.bool.should.push(elasticsearchUtils.buildQueryString("race.distanceType.i18n.autocomplete", operation.fulltext));
+  query.bool.should.push(elasticsearchUtils.buildQueryString("race.type.name.autocomplete", operation.fulltext));
 
   criteria.query = query;
 
@@ -481,6 +482,12 @@ exports.search = function(req, res) {
 
   }
 
+  if(operation.location) {
+
+    var geoDistance_filter = elasticsearchUtils.buildGeoDistanceFilter(operation.location, 40);
+    filter.and.push(geoDistance_filter);
+  }
+
 
 
   if (filter.and.length > 0) {
@@ -522,6 +529,11 @@ exports.search = function(req, res) {
     }
   };
 
+  if(operation.location !== undefined){
+    departmentFacetFilter.and.push(geoDistance_filter);
+    typeFacetFilter.and.push(geoDistance_filter);
+  }
+
   if(operation.date !== undefined) {
     departmentFacetFilter.and.push(date_filter_withRange);
     typeFacetFilter.and.push(date_filter_withRange);
@@ -555,10 +567,12 @@ exports.search = function(req, res) {
 
   criteria.from = operation.page;
   criteria.size = operation.size;
-  criteria.fields = fields;
+  criteria.partial_fields = partial_fields;
   criteria.sort = [operation.sort];
 
-  console.log(util.inspect(criteria.sort));
+  console.log(util.inspect(criteria.filter));
+
+  console.log(util.inspect(criteria.query));
 
   elasticSearchClient.search('racesidx_v1', 'race', criteria)
     .on('data', function(data) {
@@ -585,13 +599,11 @@ exports.autocomplete = function(req, res) {
   var criteria = req.body.criteria;
 
   var query = {
-    "fields": [
-      "name",
-      "distanceType",
-      "type",
-      "department",
-      "_id"
-    ],
+    "partial_fields":{
+      "partial1": {
+        "exclude": "routes.*"
+      }
+    },
     "query": {
       "bool": {
         "should": [{
@@ -668,37 +680,8 @@ exports.autocomplete = function(req, res) {
     .exec();
 };
 
-buildQueryString = function(field, query) {
 
-  var result = {}
-  result.queryString = {};
 
-  result.queryString.default_field = field;
-  result.queryString.query = query;
-
-  return result;
-}
-
-/**
- * @method Find all races
- * @param req
- * @param res
- */
-exports.findAll = function(req, res) {
-
-  Race.findAll(function(err, races) {
-    if (err) {
-      console.log(err);
-      return res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    }
-    req.races = races;
-    return res.json(200, {
-      races: req.races
-    });
-  });
-};
 
 /**
  * @method Find all races

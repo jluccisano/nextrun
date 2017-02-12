@@ -10,6 +10,12 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.distance = undefined;
 		$scope.location = undefined;
 
+		$scope.options = {
+			country: "fr",
+			types: "(cities)"
+		};
+		$scope.distance = "15";
+
 		$scope.total = 0;
 		$scope.pageSize = 20;
 
@@ -36,6 +42,13 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 		$scope.$on('handleFullTextBroadcast', function() {
 			$scope.fulltext = sharedService.fulltext;
+			$scope.isModeGeolocation=false;	
+
+			$scope.currentTypeSelected = [];
+			$scope.searchAround = undefined;
+			$scope.distance = undefined;
+			$scope.location = undefined;
+
 			$scope.search();
 		});
 
@@ -44,6 +57,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			$scope.searchAround = sharedService.criteria.searchAround;
 			$scope.distance = sharedService.criteria.distance;
 			$scope.location = sharedService.criteria.location;
+			$scope.isModeGeolocation=true;
+
+			$scope.fulltext= undefined;
+
 			$scope.search();
 		});
 
@@ -150,8 +167,8 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 				for (var i = 0; i < races.length; i++) {
 
 					var name = {
-						fullname: races[i].fields.name,
-						id: races[i].fields._id
+						fullname: races[i].fields.partial1[0].name,
+						id: races[i].fields.partial1[0]._id
 					}
 					$scope.names.push(name);
 				}
@@ -270,25 +287,39 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		}
 
 
-
 		$scope.search = function() {
 
 			$scope.currentPage = 1;
 
+			var criteria = {};
 
-			var criteria = {
-				fulltext: ($scope.fulltext !== undefined && $scope.fulltext.fullname) ? $scope.fulltext.fullname : "",
-				page: ($scope.currentPage - 1),
-				size: $scope.pageSize,
-				sort: $scope.sort,
-				types: $scope.currentTypeSelected,
-				departments: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.departments : [],
-				region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined,
-				dateRange: $scope.dateRange,
-				searchAround: $scope.searchAround,
-				distance: $scope.distance,
-				location: $scope.location
-			};
+			if($scope.isModeGeolocation) {
+				criteria = {
+					distance: $scope.distance,
+					searchAround: $scope.searchAround,
+					types: $scope.currentTypeSelected,
+					page: ($scope.currentPage - 1),
+					size: $scope.pageSize,
+					sort: $scope.sort,
+					departments: $scope.departments,
+					dateRange: $scope.dateRange,
+					location: $scope.location
+				}
+
+			} else {
+				criteria = {
+					fulltext: ($scope.fulltext !== undefined && $scope.fulltext.fullname) ? $scope.fulltext.fullname : "",
+					page: ($scope.currentPage - 1),
+					size: $scope.pageSize,
+					sort: $scope.sort,
+					types: $scope.currentTypeSelected,
+					departments: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.departments : [],
+					region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined,
+					dateRange: $scope.dateRange
+				};
+			}
+
+
 
 			RaceServices.search(criteria,
 				function(response) {
@@ -358,6 +389,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.displayDepartmentFacet = function(department) {
 			return department.department.name + ' (' + department.count + ') ';
 		};
+
+		$scope.switchSearchView = function(value) {
+			$scope.isModeGeolocation = value;
+		}
 
 	}
 ]);

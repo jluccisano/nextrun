@@ -1,44 +1,48 @@
 #!/bin/bash
 
 curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
-  "fields": [
-    "name",
-    "distanceType",
-    "type",
-    "department",
-    "_id"
-  ],
+  "partial_fields": {
+    "partial1": {
+      "exclude": "routes.*"
+    }
+  },
   "query": {
     "bool": {
       "should": [
         {
           "query_string": {
+            "default_field": "race.name.autocomplete",
+            "query": "lon"
+          }
+        },
+        {
+          "query_string": {
             "default_field": "race.department.name.autocomplete",
-            "query": "dua"
+            "query": "lon"
           }
         },
         {
           "query_string": {
             "default_field": "race.department.region.autocomplete",
-            "query": "du"
+            "query": "lon"
           }
         },
         {
           "query_string": {
             "default_field": "race.department.code.autocomplete",
-            "query": "du"
+            "query": "lon"
           }
         },
         {
           "query_string": {
             "default_field": "race.distanceType.i18n.autocomplete",
-            "query": "du"
+            "query": "lon"
           }
         },
         {
           "query_string": {
             "default_field": "race.type.name.autocomplete",
-            "query": "dua"
+            "query": "lon"
           }
         }
       ]
@@ -54,7 +58,8 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
       {
         "terms": {
           "race.department.code": [
-            "11"
+            "11",
+            "31"
           ]
         }
       },
@@ -70,6 +75,15 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
           "race.date": {
             "from": "2008-01-01",
             "to": "2014-12-13"
+          }
+        }
+      },
+      {
+        "geo_distance": {
+          "distance": "35km",
+          "race.pin.location": {
+            "lat": "43.430328",
+            "lon": "1.698712"
           }
         }
       }
@@ -90,6 +104,15 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
                 "duathlon"
               ]
             }
+          },
+          {
+            "geo_distance": {
+              "distance": "35km",
+              "race.pin.location": {
+                "lat": "43.430328",
+                "lon": "1.698712"
+              }
+            }
           }
         ]
       }
@@ -105,8 +128,18 @@ curl -XPOST "http://localhost:9200/racesidx_v1/race/_search" -d '{
           {
             "terms": {
               "race.department.code": [
-                "11"
+                "11",
+                "31"
               ]
+            }
+          },
+          {
+            "geo_distance": {
+              "distance": "35km",
+              "race.pin.location": {
+                "lat": "43.430328",
+                "lon": "1.698712"
+              }
             }
           }
         ]

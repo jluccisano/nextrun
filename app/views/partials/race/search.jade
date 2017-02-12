@@ -1,7 +1,7 @@
 div.container
 	h2 Rechercher une manifestation
 
-	div.row
+	div.row(data-ng-hide="isModeGeolocation")
 		div.col-lg-6.col-lg-offset-4
 			div.input-group.btn-group(style="margin-top:20px")
 
@@ -12,6 +12,35 @@ div.container
 					input.form-control(type="text" placeholder="Rechercher" typeahead-editable="true" typeahead-on-select='onSelect($item)' ng-model="fulltext" typeahead="name as name.fullname for name in autocomplete($viewValue) | filter:{fullname:$viewValue} | limitTo:8")
 
 				select.form-control(style="width:200px"  data-ng-change="onChangeRegion(region)" data-placeholder="Sélectionner..." data-ng-model="region" data-ng-options="region.value as getRegion(region.value) for region in listOfRegions")				
+		div.col-lg-3.col-lg-offset-7(style="margin-top:10px")
+			a(data-ng-click="switchSearchView(true)") Rechercher par géolocalisation
+
+	div.row(data-ng-show="isModeGeolocation")
+		div.col-lg-6.col-lg-offset-4
+			form(role="form", name="form", novalidate)
+				div.row
+					div.col-lg-6
+						div.form-group(data-ng-class="{'has-error': !form.location.$pristine && form.location.$error.validLocation && form.location.$invalid, 'has-success': !form.location.$pristine  && !form.location.$error.validLocation && form.location.$valid}")
+							input.form-control(name="location" id="location" placeholder="Tapez une ville" data-ng-model="pin.name" has-location required ng-autocomplete options="options" details="details")
+						div.row
+							div.col-lg-6
+								div.form-group
+									div.checkbox
+										label
+											em Elargir aux alentours
+											input(type="checkbox" ng-model="searchAround")
+							div.col-lg-4
+								div.form-group
+									select(class="form-control" style="width:100px" ng-model="distance" ng-change="onChangeDistance()")
+										option(value="15") 15km
+										option(value="30") 30km
+										option(value="50") 50km
+										option(value="100") 100km
+					div.col-lg-4
+						div.form-group
+							button.btn.btn-primary(type="submit" data-ng-click="search()") Rechercher						
+		div.col-lg-3.col-lg-offset-7(style="margin-top:10px")
+			a(data-ng-click="switchSearchView(false)") Rechercher par mot-clés
 	div.row
 		div.col-lg-4
 			h4 {{total}} <small>résultats</small>
@@ -109,11 +138,11 @@ div.container
 					tbody
 						tr(data-ng-repeat="race in races")
 							td(align="left")
-								a(data-ng-href='/races/view/{{race.fields._id}}') {{race.fields.name}}
-							td(align="center") {{race.fields.type.i18n}}
-							td(align="center") {{race.fields.department.code}} - {{race.fields.department.name}}
-							td(align="center") {{race.fields.distanceType.name}}
-							td(align="center") {{getDate(race.fields.date)}}
+								a(data-ng-href='/races/view/{{race.fields.partial1[0]._id}}') {{race.fields.partial1[0].name}}
+							td(align="center") {{race.fields.partial1[0].type.i18n}}
+							td(align="center") {{race.fields.partial1[0].department.code}} - {{race.fields.partial1[0].department.name}}
+							td(align="center") {{race.fields.partial1[0].distanceType.name}}
+							td(align="center") {{getDate(race.fields.partial1[0].date)}}
 				div.col-lg-6.col-lg-offset-4
 					span.label.label-default(data-ng-show="emptyResults") Aucun Résultats
 				div.col-lg-6.col-lg-offset-4
