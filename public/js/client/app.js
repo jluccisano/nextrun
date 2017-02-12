@@ -12,6 +12,10 @@ nextrunApp.config(['$routeProvider',
           templateUrl: 'partials/home',
           controller: 'HomeCtrl'
         }).
+      when('/login', {
+          templateUrl: 'partials/login',
+          controller: 'LoginCtrl'
+        }).
       otherwise({
           redirectTo: '/'
         });

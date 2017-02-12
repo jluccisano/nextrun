@@ -13,7 +13,6 @@ var mongoose = require('mongoose')
  * @param res
  * @returns success if OK
  */
-
 exports.create = function (req, res) {
 	var user = new User(req.body);
 	user.provider = 'local';
@@ -36,4 +35,29 @@ exports.create = function (req, res) {
 			return res.redirect('/users/races/home');
 		});
 	});
+};
+
+/**
+ * @method authenticate the user
+ * @param passport module
+ * @param req
+ * @param res
+ * @returns success if OK
+ */
+exports.authenticate = function (passport, req, res) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { 
+        	return res.send({error: "invalidEmailOrPassword"}); 
+        }
+        if (!user) { 
+        	return res.send({error: "invalidEmailOrPassword"}); 
+        }
+
+        req.logIn(user, function(err) {
+          if (err) { 
+          	return res.send({error: "invalidEmailOrPassword"}); 
+          }
+          return res.send({success: "OK"});
+        });
+    })(req, res);
 };

@@ -29,5 +29,9 @@ app.post('/contacts', contactController.create);
 /** users **/
 app.post('/users', userController.create);
 
+app.post('/users/session', function(req, res, next) {
+	userController.authenticate(passport, req, res);
+});
+
 
 };
