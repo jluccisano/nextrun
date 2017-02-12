@@ -1,0 +1,23 @@
+div(class="search")
+	div(class="well")
+		div(class="container")
+			div(ng-form="searchForm" class="text-center" novalidate)
+				div(class="row")
+					div(class="col-lg-3")
+						div(class="row")
+							div(class="form-group" ng-class="{'has-error': !searchForm.location.$pristine && searchForm.location.$error.validLocation && searchForm.location.$invalid, 'has-success': !searchForm.location.$pristine  && !searchForm.location.$error.validLocation}")
+								input(type="text" id="search" class="form-control" name="location" nr-has-location placeholder="{{'Entrer un lieu' | translate}}" ng-model="place" gmaps-autocomplete options="autocomplete.options" details="criteria.place" ng-required="true")
+						div(class="row" collapse="!criteria.place.locality")
+							label Elargir à &nbsp; 
+							label(class="radio-inline" ng-repeat="rad in radius")
+								input(type="radio" value="{{rad.value}}" ng-model="criteria.radius")
+								| {{rad.label | translate}}
+					div(class="col-lg-3")
+						div(class="form-group" ng-class="{'has-error': !searchForm.type.$pristine && searchForm.type.$error.validLocation && searchForm.type.$invalid, 'has-success': !searchForm.type.$pristine  && !searchForm.type.$error.validLocation}")
+							select(class="form-control" name="type" ng-model="criteria.type" ng-change="onChangeType()" ng-options="type.name as gettextCatalog.getString(type.name) for type in listOfTypes" ng-required="true")
+								option(value="") {{'Type' | translate}}
+					div(class="col-lg-1")
+						button(type="button" ng-click="submit()" class="btn btn-primary" ng-disabled="searchForm.$invalid" translate)
+							span(class="glyphicon glyphicon-search")
+					div(class="pull-right")
+						h4 {{map.markers.length || 0}} <small>résultats</small>

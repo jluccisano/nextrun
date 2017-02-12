@@ -22,7 +22,8 @@ var raceModule = angular.module("nextrunApp.race", [
   "nextrunApp.route",
   "ezfb",
   "jlareau.pnotify",
-  "lr.upload"
+  "lr.upload",
+  "ngImgCrop"
 ]);
 
 

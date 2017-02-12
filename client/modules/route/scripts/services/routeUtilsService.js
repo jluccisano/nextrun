@@ -63,9 +63,6 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsAp
 						latitude: race.place.location.latitude,
 						longitude: race.place.location.longitude
 					};
-				} else {
-					//set the department of location
-					center = race.place.department.center;
 				}
 			}
 			return center;

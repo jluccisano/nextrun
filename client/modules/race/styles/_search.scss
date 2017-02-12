@@ -10,16 +10,52 @@
         padding-left: 20px;
     }
 
-    google-map {
-        width: 100%;
-        height: 650px;
-        .angular-google-map {
-            width:100%;
-            height: 95%;
-            .angular-google-map-container {
-                width: 100%;
-                height: 100%;
-            }
+    .filter {
+        padding-top: 0px;
+        z-index: 1;
+        position: absolute;
+        left: 0px;
+        top: 150px;
+    }
+
+    .search {
+        padding-top: 0px;
+        z-index: 1;
+        position: absolute;
+        left: 20px;
+
+        label {
+            color: black;
         }
     }
+
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top:0px;
+    google-map {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        top:55px;
+        .angular-google-map {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            top:0px;
+            img {
+                max-width: inherit;
+            }
+            .angular-google-map-container {
+                position: absolute;
+                left: 0px;
+                right: 0px;
+                bottom: 0px;
+                top:0px;
+            }
+        }
+    }   
 }

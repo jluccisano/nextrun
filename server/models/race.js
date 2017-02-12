@@ -18,6 +18,13 @@ var EventSchema = new Schema({
     description: String
 });
 
+var ResultSchema = new Schema({
+    name: String,
+    year: String,
+    fileId: String
+});
+
+
 var RaceSchema = new Schema({
     name: String,
     type: String,
@@ -39,6 +46,7 @@ var RaceSchema = new Schema({
     schedule: {
         events: [EventSchema]
     },
+    results: [ResultSchema],
     registration: {
         options: [OptionSchema],
         openingDate: {
@@ -70,23 +78,22 @@ var RaceSchema = new Schema({
             default: ""
         }
     },
-    rights: String,
+    rights: {
+        fileId: String,
+        description: String
+    },
     misc: String,
     place: {
-        department: {
-            code: String,
-            name: String,
-            region: String,
-            center: {
-                latitude: Number,
-                longitude: Number
-            }
-        },
         name: String,
         location: {
             latitude: Number,
             longitude: Number
         },
+        place_type: String,
+        locality: String,
+        administrative_area_level_1: String,
+        administrative_area_level_2: String,
+        country: String,
         geo: {
             type: {
                 type: "String",
@@ -99,7 +106,7 @@ var RaceSchema = new Schema({
                 index: "2dsphere",
                 default: [0, 0]
             }
-        },
+        }
     },
     plan: {
         address: {

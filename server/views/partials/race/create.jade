@@ -17,7 +17,7 @@ div(class="container create-race")
 							
 				div(class="form-group" ng-class="{'has-error': !raceForm.type.$pristine && raceForm.type.$invalid, 'has-success': !raceForm.type.$invalid && !raceForm.type.$pristine}")
 					label(class="control-label") {{'Type' | translate}}
-					select(class="form-control" class="form-control" name="type" ng-model="race.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in types" ng-required="true")
+					select(class="form-control" name="type" ng-model="race.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in types" ng-required="true")
 						option(value="") {{'Sélectionner...' | translate}}
 
 				div(class="form-group" ng-class="{'has-error': !raceForm.distanceType.$pristine && raceForm.distanceType.$invalid, 'has-success': !raceForm.distanceType.$invalid && !raceForm.distanceType.$pristine}")

@@ -6,7 +6,6 @@ var homeModule = angular.module("nextrunApp.home", [
     "ui.bootstrap.transition",
     "ui.bootstrap.carousel",
     "ui.bootstrap.collapse",
-    "mgcrea.ngStrap.select",
     "gettext",
     "nextrunApp.commons",
     "nextrunApp.route",

@@ -2,6 +2,7 @@ var errorUtils = require("../utils/errorUtils"),
 	gridfsService = require("./gridfsService"),
 	mongoose = require("mongoose"),
 	underscore = require("underscore"),
+	email = require("../middlewares/notification"),
 	Race = mongoose.model("Race");
 
 
@@ -15,6 +16,7 @@ exports.save = function(race, req, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
+			email.sendNewRace(req.user, race);
 			cb(newRace);
 		}
 	});
@@ -236,36 +238,18 @@ exports.search = function(criteria, res, cb) {
 		}
 	}
 
-	if (criteria.location) {
-		if (criteria.location.department && criteria.location.department.code) {
-
-			var department = {
-				"place.department.code": criteria.location.department.code
-			};
-
-			andArray.push(department);
-
-		} else if (criteria.location.region && criteria.location.region.departments) {
-
-			var departments = {
-				"place.department.code": {
-					$in: criteria.location.region.departments
-				}
-			};
-
-			andArray.push(departments);
-
-		} else {
+	if (criteria.place) {
+		if (criteria.place.place_type === "locality") {
 
 			var radius = criteria.radius || 60;
 
-			if (criteria.location.location && criteria.location.location.latitude && criteria.location.location.longitude) {
+			if (criteria.place.location && criteria.place.location.latitude && criteria.place.location.longitude) {
 				location = {
 					"place.geo": {
 						$near: {
 							$geometry: {
 								type: "Point",
-								coordinates: [criteria.location.location.latitude, criteria.location.location.longitude]
+								coordinates: [criteria.place.location.latitude, criteria.place.location.longitude]
 							},
 							$maxDistance: radius * 1000
 						}
@@ -273,17 +257,31 @@ exports.search = function(criteria, res, cb) {
 				};
 				andArray.push(location);
 			}
+		} else if (criteria.place.place_type  === "administrative_area_level_1") {
+			var administrative_area_level_1 = {
+				"place.administrative_area_level_1": criteria.place.administrative_area_level_1
+			};
+			andArray.push(administrative_area_level_1);
+
+		} else if (criteria.place.place_type  === "administrative_area_level_2") {
+			var administrative_area_level_2 = {
+				"place.administrative_area_level_2": criteria.place.administrative_area_level_2
+			};
+			andArray.push(country);
+		} else if (criteria.place.place_type  === "country") {
+			var country = {
+				"place.country": criteria.place.country
+			};
+			andArray.push(country);
 		}
 	}
-
-
 
 	if (andArray.length > 0) {
 		query = {
 			$and: andArray
 		};
 	}
-
+	
 	var projection = {
 		routes: 0
 	};
@@ -363,7 +361,7 @@ exports.updateRace = function(race, req, res, cb) {
 		if (fieldsToUpdate.place.location.latitude && fieldsToUpdate.place.location.longitude) {
 			fieldsToUpdate.place.geo = {
 				type: "Point",
-				coordinates: [race.place.location.latitude, race.place.location.longitude]
+				coordinates: [fieldsToUpdate.place.location.latitude, fieldsToUpdate.place.location.longitude]
 			};
 		}
 	}
@@ -414,6 +412,45 @@ exports.uploadPicture = function(race, path, originalName, res, cb) {
 
 };
 
+exports.uploadRights = function(race, path, originalName, res, cb) {
+
+	gridfsService.storeFile(path, originalName, function(file) {
+
+		var query = {
+			_id: race._id
+		};
+
+		var update = {
+			$set: {
+				"rights.fileId": file._id
+			}
+		};
+
+		var options = {
+			upsert: true
+		};
+
+		Race.update(query, update, function(error) {
+			if (error) {
+				errorUtils.handleError(res, error);
+			} else {
+				cb();
+			}
+		}, options);
+	});
+
+};
+
+exports.deleteRightsFile = function(race, res, cb) {
+	if (race.rights && race.rights.fileId) {
+		gridfsService.deleteFile(race.rights.fileId, res, function() {
+			cb();
+		});
+	} else {
+		cb();
+	}
+};
+
 exports.deletePicture = function(race, res, cb) {
 	if (race.pictureId) {
 		gridfsService.deleteFile(race.pictureId, res, function() {
@@ -428,6 +465,11 @@ exports.downloadPicture = function(race, res, cb) {
 	gridfsService.getFile(race.pictureId, res, function(bufs) {
 		var fbuf = Buffer.concat(bufs);
 		var base64 = (fbuf.toString("base64"));
-		cb(base64);
+		if(base64) {
+			cb("data:image/png;base64,"+base64);
+		} else {
+			cb();
+		}
+		
 	});
 };

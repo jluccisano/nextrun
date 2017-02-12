@@ -63,5 +63,12 @@ exports.handleRaceAlreadyExists = function(res) {
     });
 };
 
+exports.handleEmailAlreadyExists = function(res) {
+    logger.error("error.emailAlreadyExists");
+    return res.status(400).json({
+        message: ["error.emailAlreadyExists"]
+    });
+};
+
 
 

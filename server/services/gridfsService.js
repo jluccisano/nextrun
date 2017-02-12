@@ -10,7 +10,6 @@ var gridfs;
 
 mongoose.connection.once("open", function() {
 	gridfs = new GridFs(mongoose.connection.db);
-	console.log("gridfs loaded" + gridfs);
 });
 
 exports.storeFile = function(path, originalName, cb) {
@@ -23,6 +22,11 @@ exports.storeFile = function(path, originalName, cb) {
 	writestream.on("close", function(file) {
 		cb(file);
 	});
+
+	fs.unlink(path, function(error) {
+		if (error) throw error;
+		logger.info('successfully deleted'+path);
+	});
 };
 
 exports.getFile = function(id, res, cb) {
@@ -33,10 +37,10 @@ exports.getFile = function(id, res, cb) {
 		if (error) {
 			return errorUtils.handleError(res, error);
 		}
-		exist = exist ? logger.info("File exists") : logger.info("File does not exist");
-
 		var bufs = [];
 		if (exist) {
+			logger.info("File exists")
+
 			var readstream = gridfs.createReadStream({
 				_id: id
 			});
@@ -46,6 +50,7 @@ exports.getFile = function(id, res, cb) {
 				cb(bufs);
 			});
 		} else {
+			logger.info("File does not exist");
 			cb(bufs);
 		}
 	});
@@ -61,9 +66,9 @@ exports.deleteFile = function(id, res, cb) {
 		if (error) {
 			return errorUtils.handleError(res, error);
 		}
-		exist = exist ? logger.info("File exists") : logger.info("File does not exist");
-
 		if (exist) {
+			logger.info("File exists")
+
 			gridfs.remove(options, function(error) {
 				if (error) {
 					return errorUtils.handleError(res, error);
@@ -72,6 +77,7 @@ exports.deleteFile = function(id, res, cb) {
 				cb();
 			});
 		} else {
+			logger.info("File does not exist");
 			cb();
 		}
 	});

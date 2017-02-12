@@ -80,3 +80,51 @@ exports.sendEmailNewFeedback = function(feedback) {
 
     this.sendMail(mailOptions);
 };
+
+exports.sendNewSession = function(user) {
+
+    var mailOptions = {
+        from: user.email,
+        to: "contact.nextrun@gmail.com",
+        subject: "Nouvel session",
+        text: "Nouvel session: " + user.id + " , username: " + user.username + " , email: " + user.email
+    };
+
+    this.sendMail(mailOptions);
+};
+
+exports.sendNewUser = function(user) {
+
+    var mailOptions = {
+        from: user.email,
+        to: "contact.nextrun@gmail.com",
+        subject: "Nouvel utilisateur",
+        text: "Nouvel utilisateur: " + user.id + " , username: " + user.username + " , email: " + user.email
+    };
+
+    this.sendMail(mailOptions);
+};
+
+exports.sendNewRace = function(race, user) {
+
+    var mailOptions = {
+        from: user.email,
+        to: "contact.nextrun@gmail.com",
+        subject: "Nouvel course",
+        text: "Nouvel course: " + user.id + " , username: " + user.username + " , email: " + user.email + " , race: " + race._id + " , raceName: " + race.name
+    };
+
+    this.sendMail(mailOptions);
+};
+
+exports.sendNewRoute = function(route, user) {
+
+    var mailOptions = {
+        from: user.email,
+        to: "contact.nextrun@gmail.com",
+        subject: "Nouveau parcours",
+        text: "Nouveau parcours: " + user.id + " , username: " + user.username + " , email: " + user.email + " , route: " + route._id + " , routeName: " + route.name
+    };
+
+    this.sendMail(mailOptions);
+};

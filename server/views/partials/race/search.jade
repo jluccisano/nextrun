@@ -1,35 +1,26 @@
-div(class="container search-race")
-	div(class="row")
-		div(class="col-md-2")
-			h4 {{map.markers.length}} <small>résultats</small>
-			div(class="well")
-				div(class="list-group")
-					a(class="list-group-item" ng-class="{'active': active === 0}" ng-click="setRange(0)") {{dateRanges[0].label}}
-					a(class="list-group-item" ng-class="{'active': active === 1}" ng-click="setRange(1)") {{dateRanges[1].label}}
-					a(class="list-group-item" ng-class="{'active': active === 2}" ng-click="setRange(2)") {{dateRanges[2].label}}
-					a(class="list-group-item" ng-class="{'active': active === 3}" ng-click="setRange(3)") {{dateRanges[3].label}}
-					a(class="list-group-item" ng-class="{'active': active === 4}" ng-click="setRange(4)") {{dateRanges[4].label}}
-						input(type="text" class="form-control" ng-model="dateRanges[4].endDate" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
+div(class="search-race")
+	div(class="filter" ng-if="isFiltered")
+		button(type="button" class="btn btn-lg btn-primary" ng-click="isCollapsed = !isCollapsed")
+			span(ng-if="!isCollapsed" class="glyphicon glyphicon-chevron-down")
+			span(ng-if="isCollapsed" class="glyphicon glyphicon-chevron-right")
+			| &nbsp; Filtrer
+		div(class="well" collapse="isCollapsed")
+			h4(translate) Par type:
+			label(class="checkbox" for="{{distance.name}}" ng-repeat="distance in listOfTypes | distanceTypeFilter:criteria.type")
+				input(type="checkbox" ng-model="distanceSelection[distance.name]" ng-change="onChangeDistance()" id="{{distance.name}}") 
+				| {{distance.name}}
 
-				div(class="form-group")
-					button(type="button" class="btn btn-default" ng-change="onChangeType()" ng-model="criteria.type" data-html="1" ng-options="type.name as type.name for type in listOfTypes" placeholder="{{'Sélectionner...' | translate}}" bs-select)
-						span(class="caret")
-				div(class="form-group")
-					label(class="checkbox" for="{{distance.name}}" ng-repeat="distance in listOfTypes | distanceTypeFilter:criteria.type")
-						input(type="checkbox" ng-model="distanceSelection[distance.name]" ng-change="onChangeDistance()" id="{{distance.name}}") 
-						| {{distance.name}}
-		div(class="col-md-10")
-			div(class="input-group")
-				input(type="text" class="form-control"  placeholder="{{'Entrer un lieu' | translate}}" ng-model="criteria.place" gmaps-autocomplete options="autocomplete.options" details="criteria.location")
-				span(class="input-group-addon")
-					span  Elargir à   
-					input(type="radio" value="30" ng-change="search()" ng-model="criteria.radius" ng-disabled="!criteria.location.locality")
-					span  30km 
-					input(type="radio" value="60" ng-change="search()" ng-model="criteria.radius" ng-disabled="!criteria.location.locality")
-					span  60km 
-					input(type="radio" value="120" ng-change="search()" ng-model="criteria.radius" ng-disabled="!criteria.location.locality")
-					span  120km 
-			google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true" draggable="true" mark-click="true" events="map.events")
-				marker(ng-repeat="marker in map.markers" idkey="marker.id" coords="marker" fit="map.fit" icon="marker.icon" click="onMarkerClicked(marker)" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
-					windows(show="'showWindow'" closeClick="'closeClick'" data-ng-cloak)
-						a(ng-non-bindable ui-sref="view({id: raceId})") {{raceName}}
+			h4(translate) Par date:
+			div(class="list-group")
+				a(class="list-group-item" ng-class="{'active': active === 0}" ng-click="setRange(0)") {{dateRanges[0].label}}
+				a(class="list-group-item" ng-class="{'active': active === 1}" ng-click="setRange(1)") {{dateRanges[1].label}}
+				a(class="list-group-item" ng-class="{'active': active === 2}" ng-click="setRange(2)") {{dateRanges[2].label}}
+				a(class="list-group-item" ng-class="{'active': active === 3}" ng-click="setRange(3)") {{dateRanges[3].label}}
+				a(class="list-group-item" ng-class="{'active': active === 4}" ng-click="setRange(4)") {{dateRanges[4].label}}
+					input(type="text" class="form-control" ng-model="dateRanges[4].endDate" name="date" bs-datepicker date-format="dd MMMM yyyy" placeholder="Date")
+
+	include ../race/templates/search
+	google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true" draggable="true" mark-click="true" events="map.events")
+		markers(models="map.markers" coords="'self'" icon="'icon'" fit="'fit'" click="'onClicked'" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
+			windows(show="'showWindow'" closeClick="'closeClick'")
+				a(ng-non-bindable href="#/races/view/{{raceId}}") {{raceName}}

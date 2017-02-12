@@ -12,6 +12,7 @@ div(class="container search")
 							input(type="radio" value="{{rad.value}}" ng-change="search()" ng-model="criteria.radius")
 							| {{rad.label | translate}}
 				div(class="col-lg-2")
-					button(type="button" class="btn btn-default btn-lg" id="type" ng-model="criteria.types" max-length="0" data-html="1" data-multiple="1" max-length-html="{{'Sélectionnés' | translate}}" ng-options="type.name as type.name for type in listOfTypes" placeholder="{{'Sélectionner...' | translate}}" bs-select)
+					select(class="form-control input-lg" name="type" ng-model="criteria.type" ng-options="type.name as gettextCatalog.getString(type.name) for type in listOfTypes" ng-required="true")
+						option(value="") {{'Type' | translate}}	
 				div(class="col-lg-1")
 					button(type="button" ng-click="submitSearchWithCriteria()" class="btn btn-primary btn-lg" ng-disabled="searchForm.$invalid" translate) Rechercher

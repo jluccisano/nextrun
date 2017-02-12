@@ -23,6 +23,9 @@ angular.module("nextrunApp.commons").factory("AuthService",
         }
 
         return {
+            checkIfUserNameAvailable: function(id, data) {
+                return HttpUtils.post("/api/users/" + id + "/name/available/", data);
+            },
             find: function(page) {
                 return HttpUtils.get("/api/users/find/page/" + page);
             },

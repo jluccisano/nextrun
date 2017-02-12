@@ -7,6 +7,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         $modal,
         $filter,
         $q,
+        $timeout,
         RaceService,
         notificationService,
         AuthService,
@@ -19,7 +20,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         RouteUtilsService,
         RouteHelperService,
         raceId,
-        RouteService) {
+        RouteService,
+        FileReaderService) {
 
         $scope.selection = "";
 
@@ -31,15 +33,15 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         $scope.activePanel = 1;
         $scope.gettextCatalog = gettextCatalog;
 
-        /** init google maps service **/
-        //google.maps.visualRefresh = true;
-
         $scope.navType = "pills";
         $scope.routesViewModel = [];
         $scope.choices = ["oui", "non"];
         $scope.cursorMarker = {
             id: 1
         };
+
+        $scope.croppedImage = "";
+        $scope.myImage = "";
 
         $scope.currentRaceType = {};
 
@@ -77,7 +79,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                 RaceService.download($scope.race._id).then(function(response) {
                     $scope.image = response.data;
                 });
-            }).finally(function() {
+            }).
+            finally(function() {
                 MetaService.ready($scope.race.name, $scope.generateRaceDescription());
             });
 
@@ -227,6 +230,50 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         $scope.onComplete = function(response) {
             $scope.responseData = response.data;
         };
+
+        $scope.getFile = function(file) {
+            /*FileReaderService.readAsDataUrl(file, $scope)
+                .then(function(result) {
+                    $scope.myImage = result;
+
+
+
+                    /*$scope.modalInstance = $modal.open({
+                        templateUrl: "partials/race/templates/cropImageModal",
+                        controller: "CropImageModalController",
+                        backdrop: false,
+                        resolve: {
+                            image: function() {
+                                return result;
+                            }
+                        }
+                    });
+
+
+                });*/
+        };
+
+       /* var handleFileSelect = function(evt) {
+            var file = evt.currentTarget.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                $scope.$apply(function($scope) {
+                    //$scope.myImage = evt.target.result;
+                    $scope.modalInstance = $modal.open({
+                        templateUrl: "partials/race/templates/cropImageModal",
+                        controller: "CropImageModalController",
+                        backdrop: false,
+                        resolve: {
+                            image: function() {
+                                return evt.target.result;
+                            }
+                        }
+                    });
+                });
+            };
+            reader.readAsDataURL(file);
+        };*/
+        //angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
 
         $scope.init();
     });

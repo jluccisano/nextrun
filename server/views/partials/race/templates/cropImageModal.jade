@@ -1,0 +1,10 @@
+div(class="modal-header")
+	h3(class="modal-title" translate) Image sélection
+div(class="modal-body")
+	div
+		input(type="file" id="fileInput")
+	div(class="cropArea")
+		img-crop(area-type="square" image="myImage" result-image="croppedImage")
+div(class="modal-footer")
+	button(class="btn btn-primary" ng-click="submit()" translate) Valider
+	button(class="btn btn-default" ng-click="cancel()" translate) Annuler

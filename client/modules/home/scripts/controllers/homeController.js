@@ -14,6 +14,8 @@ angular.module("nextrunApp.home").controller("HomeController",
         MetaService,
         gettextCatalog) {
 
+        $scope.gettextCatalog = gettextCatalog;
+
         $scope.criteria = {
             radius: 30
         };

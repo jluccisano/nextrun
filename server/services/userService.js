@@ -13,6 +13,7 @@ exports.save = function(user, res, cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
+			email.sendNewUser(user);
 			cb(newUser);
 		}
 	});
@@ -35,7 +36,7 @@ exports.getUserByEmail = function(email, res, cb) {
 
 exports.getUser = function(user, cb) {
 	var userProfile = {
-		_id: user._id,
+		_id: user.id,
 		username: user.username,
 		email: user.email
 	};
@@ -103,4 +104,22 @@ exports.getUsers = function(req, res, cb) {
 		}
 	}, projection, limit, skip);
 
+};
+
+exports.checkIfUserNameAvailable = function(name, user, res, cb) {
+
+	var criteria = {
+		name: name,
+		_id: {
+			$ne: user._id
+		}
+	};
+
+	User.findByCriteria(criteria, function(error, users) {
+		if (error) {
+			errorUtils.handleError(res, error);
+		} else {
+			cb(users);
+		}
+	});
 };

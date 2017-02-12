@@ -1,6 +1,7 @@
 var	errorUtils = require("../utils/errorUtils"),
 	mongoose = require("mongoose"),
 	underscore = require("underscore"),
+	email = require("../middlewares/notification"),
 	Route = mongoose.model("Route");
 
 
@@ -14,6 +15,7 @@ exports.save = function(route, req, res,  cb) {
 		if (error) {
 			errorUtils.handleError(res, error);
 		} else {
+			email.sendNewRoute(req.user, route);
 			cb(newRoute);
 		}
 	});

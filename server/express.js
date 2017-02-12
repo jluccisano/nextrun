@@ -107,6 +107,7 @@ module.exports = function(app, express, passport) {
         app.use("/styles", express.static(app.config.root + "/.tmp/styles"));
     } else {
         app.use("/client/scripts", express.static(app.config.root + "/client/scripts"));
+        app.use("/client/scripts/widgets", express.static(app.config.root + "/client/scripts/widgets"));
         app.use("/client/modules", express.static(app.config.root + "/client/modules"));
         app.use("/client/i18n", express.static(app.config.root + "/client/i18n"));
         app.use("/client/styles", express.static(app.config.root + "/client/styles"));

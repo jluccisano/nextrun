@@ -1,4 +1,5 @@
-var raceService = require("../services/raceService");
+var raceService = require("../services/raceService"),
+	fs = require("fs");
 
 exports.createRace = function(req, res) {
 	var race = req.body;
@@ -97,7 +98,6 @@ exports.checkIfRaceNameAlreadyExists = function(req, res, next) {
 	} else {
 		next();
 	}
-
 };
 
 exports.updateRouteRef = function(req, res, next) {
@@ -131,11 +131,60 @@ exports.updateRace = function(req, res) {
 	});
 };
 
+
+
 exports.uploadPicture = function(req, res) {
+
+	var decodeBase64Image = function(dataString) {
+		var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+			response = {};
+
+		if (matches.length !== 3) {
+			return new Error('Invalid input string');
+		}
+
+		response.type = matches[1];
+		response.data = new Buffer(matches[2], 'base64');
+
+		return response;
+	}
+
+	//var path = req.files.file.path;
+	var race = req.race;
+	//var originalName = req.files.file.originalname;
+
+	var imageBuffer = decodeBase64Image(req.body.base64);
+
+	fs.writeFile('./.tmp/tmpImg.jpg', imageBuffer.data, function(err) {
+		console.log(err);
+	});
+
+
+	raceService.uploadPicture(race, "./.tmp/tmpImg.jpg", "test.jpg", res, function() {
+		res.status(200).json({
+			id: race._id
+		});
+	});
+};
+
+exports.uploadResult = function(req, res) {
 	var path = req.files.file.path;
 	var race = req.race;
 	var originalName = req.files.file.originalname;
-	raceService.uploadPicture(race, path, originalName, res, function() {
+
+	raceService.uploadResult(race, path, originalName, res, function() {
+		res.status(200).json({
+			id: race._id
+		});
+	});
+};
+
+exports.uploadRights = function(req, res) {
+	var path = req.files.file.path;
+	var race = req.race;
+	var originalName = req.files.file.originalname;
+
+	raceService.uploadRights(race, path, originalName, res, function() {
 		res.status(200).json({
 			id: race._id
 		});
@@ -152,6 +201,13 @@ exports.downloadPicture = function(req, res) {
 exports.deletePicture = function(req, res, next) {
 	var race = req.race;
 	raceService.deletePicture(race, res, function() {
+		next();
+	});
+};
+
+exports.deleteRightsFile = function(req, res, next) {
+	var race = req.race;
+	raceService.deleteRightsFile(race, res, function() {
 		next();
 	});
 };

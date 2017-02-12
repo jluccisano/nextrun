@@ -3,6 +3,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: .tmp/generated/views/partials/race/race.html
+msgid "&nbsp; Départ: {{(race.schedule.events[0].date | date:'HH:mm') || 'non communiqué'}}"
+msgstr ""
+
 #: .tmp/generated/views/partials/home/home.html
 msgid ""
 "- Analyser le détail du parcours:\n"
@@ -195,6 +199,11 @@ msgstr ""
 msgid "<span class=\"glyphicon glyphicon-edit\"></span>"
 msgstr ""
 
+#: .tmp/generated/views/partials/race/search.html
+#: .tmp/generated/views/partials/race/templates/search.html
+msgid "<span class=\"glyphicon glyphicon-search\"></span>"
+msgstr ""
+
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/contact.html
 msgid "<strong>Email invalide</strong>"
@@ -266,6 +275,7 @@ msgid "Analyser le détail du parcours (dénivelé, altitude, distance...)"
 msgstr ""
 
 #: .tmp/generated/views/partials/auth/forgotpasswordModal.html
+#: .tmp/generated/views/partials/race/templates/cropImageModal.html
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
 #: .tmp/generated/views/partials/race/templates/editScheduleModal.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
@@ -498,6 +508,7 @@ msgstr ""
 #: .tmp/generated/views/partials/home/home.html
 #: .tmp/generated/views/partials/home/templates/search.html
 #: .tmp/generated/views/partials/race/search.html
+#: .tmp/generated/views/partials/race/templates/search.html
 #: .tmp/generated/views/partials/route/mapEditor.html
 msgid "Entrer un lieu"
 msgstr ""
@@ -573,6 +584,10 @@ msgstr ""
 
 #: .tmp/generated/views/partials/race/templates/editScheduleModal.html
 msgid "Heure"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/templates/cropImageModal.html
+msgid "Image sélection"
 msgstr ""
 
 #: .tmp/generated/views/partials/route/mapEditor.html
@@ -797,6 +812,14 @@ msgstr ""
 msgid "Ouverture"
 msgstr ""
 
+#: .tmp/generated/views/partials/race/search.html
+msgid "Par date:"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Par type:"
+msgstr ""
+
 #: .tmp/generated/views/index.html
 #: .tmp/generated/views/layouts/body.html
 #: .tmp/generated/views/layouts/header.html
@@ -867,6 +890,11 @@ msgstr ""
 #: .tmp/generated/views/layouts/body.html
 #: .tmp/generated/views/layouts/header.html
 msgid "Recherche directe"
+msgstr ""
+
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/search.html
+msgid "Rechercher"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
@@ -959,19 +987,11 @@ msgstr ""
 msgid "Supprimer une manifestation"
 msgstr ""
 
-#: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/search.html
 #: .tmp/generated/views/partials/race/create.html
-#: .tmp/generated/views/partials/race/search.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
 #: .tmp/generated/views/partials/race/templates/type.html
 #: .tmp/generated/views/partials/route/mapEditor.html
 msgid "Sélectionner..."
-msgstr ""
-
-#: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/search.html
-msgid "Sélectionnés"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/home.html
@@ -998,10 +1018,14 @@ msgid "Trouver et préparer votre course"
 msgstr ""
 
 #: .tmp/generated/views/partials/home/contacts.html
+#: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/search.html
 #: .tmp/generated/views/partials/race/allraces.html
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/races.html
+#: .tmp/generated/views/partials/race/search.html
 #: .tmp/generated/views/partials/race/templates/feedbackModal.html
+#: .tmp/generated/views/partials/race/templates/search.html
 #: .tmp/generated/views/partials/race/templates/type.html
 #: .tmp/generated/views/partials/route/allroutes.html
 #: .tmp/generated/views/partials/route/mapEditor.html
@@ -1034,6 +1058,7 @@ msgstr ""
 msgid "Utilisateurs"
 msgstr ""
 
+#: .tmp/generated/views/partials/race/templates/cropImageModal.html
 #: .tmp/generated/views/partials/race/templates/editRegistrationModal.html
 #: .tmp/generated/views/partials/race/templates/editScheduleModal.html
 #: .tmp/generated/views/partials/race/templates/richTextEditorModal.html
@@ -1043,11 +1068,6 @@ msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
 msgid "Version actuelle: 1.0"
-msgstr ""
-
-#: .tmp/generated/views/partials/home/home.html
-#: .tmp/generated/views/partials/home/templates/search.html
-msgid "Veuillez saisir une ville correcte"
 msgstr ""
 
 #: .tmp/generated/views/partials/main/about.html
@@ -1104,6 +1124,10 @@ msgstr ""
 
 #: client/modules/route/scripts/controllers/routesController.js
 msgid "Votre parcours a bien été publiée"
+msgstr ""
+
+#: client/modules/commons/scripts/directives/nrFileSelectDirective.js
+msgid "Votre photo a bien été mise à jour"
 msgstr ""
 
 #: client/modules/auth/scripts/controllers/settingsController.js

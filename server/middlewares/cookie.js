@@ -23,7 +23,7 @@ module.exports = {
             email = "",
             id = "";
         if (req.user) {
-            id = req.user._id;
+            id = req.user.id;
             role = req.user.role;
             username = req.user.username;
             email = req.user.email;

@@ -53,7 +53,12 @@ var routes = [{
     httpMethod: "GET",
     middleware: [userController.getUser],
     accessLevel: accessLevels.admin
-}, ];
+}, {
+    path: "/:id/name/available",
+    httpMethod: "POST",
+    middleware: [userController.checkIfUserNameAvailable],
+    accessLevel: accessLevels.public
+}];
 
 module.exports = function(app, express) {
     var router = express.Router();

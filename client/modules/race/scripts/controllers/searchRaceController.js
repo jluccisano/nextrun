@@ -18,6 +18,11 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
         $scope.distanceSelection = {};
 
+        $scope.isFiltered = false;
+        $scope.isCollapsed = true;
+
+        $scope.gettextCatalog = gettextCatalog;
+
         $rootScope.$on("handleCriteriaBroadcast", function(evt, criteria) {
             if (criteria) {
                 $scope.criteria = criteria;
@@ -26,22 +31,26 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.search();
         });
 
-        $scope.setRange = function(index) {
-            $scope.active = index;
-            $scope.criteria.dateRange = $scope.dateRanges[index];
-            $scope.search();
-        };
+       
 
         $scope.dateRanges = angular.copy(dateRanges.getValues());
 
         $scope.criteria = {
             published: true,
-            radius: 60,
-            dateRange: $scope.dateRanges[0]
         };
 
+        $scope.radius = [{
+            value: 30,
+            label: "30km"
+        }, {
+            value: 60,
+            label: "60km"
+        }, {
+            value: 120,
+            label: "120km"
+        }];
+
         $scope.listOfTypes = RaceTypeEnum.getValues();
-        $scope.active = 0;
 
         $scope.autocomplete = {
             options: {
@@ -51,22 +60,11 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
 
         $scope.map = angular.copy(mapOptions);
 
-        $scope.$watch("criteria.location", function(newValue, oldValue) {
-
-            if (newValue === oldValue) {
-                return;
-            }
-
-            $scope.search();
-
-        }, true);
-
         $scope.onChangeType = function() {
             $scope.distanceSelection = {};
-            $scope.search();
         };
 
-        $scope.onChangeDistance = function() {
+       $scope.onChangeDistance = function() {
             $scope.criteria.distances = [];
             angular.forEach($scope.distanceSelection, function(value, distance) {
                 if ($scope.distanceSelection[distance] === true) {
@@ -76,12 +74,26 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.search();
         };
 
+        $scope.setRange = function(index) {
+            $scope.active = index;
+            $scope.criteria.dateRange = $scope.dateRanges[index];
+            $scope.search();
+        };
+
+        $scope.submit = function() {
+            $scope.criteria.dateRange = {}; 
+            $scope.criteria.distances = [];
+            $scope.search();
+        };
+
         $scope.search = function() {
             RaceService.search($scope.criteria).then(function(response) {
                 if (response.data.items.length > 0) {
+                    $scope.isFiltered = true;                    
                     $scope.emptyResults = false;
                     $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
                     angular.forEach($scope.map.markers, function(marker) {
+                        marker.showWindow = false;
                         marker.closeClick = function() {
                             marker.showWindow = false;
                             $scope.$apply();
@@ -107,5 +119,5 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.$apply();
         };
 
-        $scope.search();
+        //$scope.search();
     });

@@ -45,13 +45,17 @@ div(class="container view-race")
                 div(class="row")
                   nr-date(edit-mode="editMode" race="race")
                   div(class="col-md-12")
-                    img(ng-src="data:image/jpeg;base64,{{image}}" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
+                    img(ng-if="image" ng-src="{{image}}" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
+                    img(ng-if="!image" ng-src="client/modules/race/images/noImageAvailable.jpg" alt="" class="img-thumbnail img-responsive" style="width: 240px; height: 280px;")
+                  div(class="crop-image")
+                    a(class="btn btn-default btn-sm" nr-file-select)
+                      i(class="fa fa-pencil-square-o")
+                    input(type="file" id="fileInput" ng-hide="true")                    
                 hr
                 div(class="row")
                   div(class="col-md-12")
                     i(class="fa fa-clock-o fa-3")
-                    span 
-                    span Départ: {{race.schedule.events[0].date | date:'HH:mm'}}
+                    span(translate) &nbsp; Départ: {{(race.schedule.events[0].date | date:'HH:mm') || 'non communiqué'}}
               div(class="col-lg-6")
                 nr-type(edit-mode="editMode" race="race")
                 hr
@@ -60,7 +64,7 @@ div(class="container view-race")
               a(ng-if="editMode" class="btn btn-link" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate) Ajouter un parcours
               //a(ng-if="editMode" class="btn btn-link" type="button" ng-click="uploadImage()" translate) Ajouter une image
               //input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)") Ajouter une image
-              upload-button(class="btn btn-primary btn-upload" url="{{'api/races/'+race._id+'/upload'}}" param="file" accept="acceptTypes" multiple="allowMultiple" force-iframe-upload="forceIframeUpload" data="uploadData" on-upload="onUpload(files)" on-success="onGlobalSuccess(response)" on-error="onError(response)" on-complete="onComplete(response)") Fileupload
+              //
 
       div(class="bs-docs-section")
         div(ng-repeat="routeViewModel in routesViewModel track by routeViewModel.data._id" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )
@@ -126,13 +130,14 @@ div(class="container view-race")
                 a(ng-if="editMode" ng-click="editRichTextEditor(race.rights, 'rights')" class="btn btn-default btn-sm")
                   i(class="fa fa-pencil-square-o")
             div(class="panel-body")
+              upload-button(ng-if="editMode" class="btn btn-primary btn-upload" url="{{'api/races/'+race._id+'/upload/rights'}}" param="file" accept="acceptTypes" multiple="allowMultiple" force-iframe-upload="forceIframeUpload" data="uploadData" on-upload="onUpload(files)" on-success="onGlobalSuccess(response)" on-error="onError(response)" on-complete="onComplete(response)" ) Télécharger un fichier
               div(ng-if="race.rights" class="well" ng-bind-html="race.rights")
               div(ng-if="!race.rights" class="well" translate) Non communiqué
         div(id="results" ng-show="selection == 'results'")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 
               h4(class="panel-title pull-left" translate) Résultats
-            div(class="panel-body")
+            div(class="panel-body") 
         div(id="misc" ng-show="selection == 'misc'")
           div(class="panel panel-default")
             div(class="panel-heading clearfix") 

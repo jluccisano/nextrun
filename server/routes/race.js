@@ -65,7 +65,7 @@ var routes = [{
     path: "/:id/upload",
     httpMethod: "POST",
     middleware: [raceController.deletePicture, raceController.uploadPicture],
-    accessLevel: accessLevels.public
+    accessLevel: accessLevels.user
 }, {
     path: "/:id/download",
     httpMethod: "POST",
@@ -76,6 +76,16 @@ var routes = [{
     httpMethod: "POST",
     middleware: [raceController.checkIfRaceNameAvailable],
     accessLevel: accessLevels.public
+},{
+    path: "/:id/upload/result",
+    httpMethod: "POST",
+    middleware: [raceController.uploadResult],
+    accessLevel: accessLevels.user
+},{
+    path: "/:id/upload/rights",
+    httpMethod: "POST",
+    middleware: [raceController.deleteRightsFile, raceController.uploadRights],
+    accessLevel: accessLevels.user
 }];
 
 

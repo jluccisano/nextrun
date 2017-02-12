@@ -7,7 +7,7 @@ form(role="form" name="addressForm" novalidate)
 				span(ng-if="race.place.department.code") &nbsp;({{ race.place.department.code}})
 		div(class="col-md-6 col-lg-offset-2" ng-if="editMode && edit" class="form-group" ng-class="{'has-error': !addressForm.place.$pristine && addressForm.place.$error.validLocation && addressForm.place.$invalid, 'has-success': !addressForm.place.$error.validLocation && addressForm.place.$valid  && !addressForm.place.$pristine}")
 			label(class="control-label") {{'Lieu' | translate}}
-			input(class="form-control" type="text" name="place" placeholder="{{'ex: Paris' | translate}}" ng-model="race.place.name" nr-has-location gmaps-autocomplete options="options" details="race.place" ng-required="true")
+			input(class="form-control" type="text" name="place" placeholder="{{'ex: Paris' | translate}}" ng-model="place" nr-has-location gmaps-autocomplete options="options" details="race.place" ng-required="true")
 		div(ng-if="editMode && !edit" class="col-md-2")
 			button(ng-click="toggleEdit()" class="btn btn-default btn-sm")
 				i(class="fa fa-pencil-square-o")

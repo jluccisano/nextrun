@@ -91,62 +91,46 @@ angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
 
         scope.getDetails = function(result) {
 
-          var place = {
-            locality: false
-          };
+          var place = {};
 
-          var country;
-          var departmentCode;
-          var regionName;
-
-          if ("undefined" !== typeof result.name) {
+          if (result.name) {
             place.name = result.name;
           }
 
-          if ("undefined" !== typeof result.geometry) {
+          if (result.types && result.types.length > 0) {
+            place.place_type = result.types[0];
+          }
+
+          if (result.geometry) {
             place.location = {
               latitude: result.geometry.location.lat(),
               longitude: result.geometry.location.lng()
             };
           }
 
-          if ("undefined" !== typeof result.address_components) {
+          if (result.address_components) {
             angular.forEach(result.address_components, function(component) {
 
               angular.forEach(component.types, function(type) {
 
                 if ("locality" === type) {
-                  place.locality = true;
+                  place.locality = component.short_name;
                 }
 
                 if ("administrative_area_level_2" === type) {
-                  departmentCode = component.short_name;
+                  place.administrative_area_level_2 = component.short_name;
                 }
 
                 if ("administrative_area_level_1" === type) {
-                  regionName = component.short_name;
+                  place.administrative_area_level_1 = component.short_name;
                 }
 
                 if ("country" === type) {
-                  country = component.short_name;
+                  place.country = component.short_name;
                 }
 
               });
             });
-
-            if (country && "FR" === country) {
-
-              if (departmentCode) {
-
-                place.department = DepartmentEnum.getDepartmentByCode(departmentCode);
-              }
-
-              if (regionName) {
-
-                place.region = RegionEnum.getRegionByName(regionName);
-              }
-
-            }
 
           }
           return place;

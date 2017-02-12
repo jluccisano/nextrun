@@ -6,6 +6,7 @@ var email = require("../middlewares/notification"),
     underscore = require("underscore"),
     passportService = require("../services/passportService"),
     userService = require("../services/userService"),
+    email = require("../middlewares/notification"),
     logger = require("../logger");
 
 
@@ -45,7 +46,9 @@ exports.logout = function(req, res) {
 exports.session = function(req, res) {
     passportService.authenticate(req, res, function(user) {
         passportService.login(user, req, res, function(user) {
+            email.sendNewSession(user);
             res.status(200).json({
+                id: user.id,
                 role: user.role,
                 username: user.username,
                 email: user.email
@@ -139,5 +142,15 @@ exports.deleteUser = function(req, res) {
     var userConnected = req.user;
     userService.deleteUser(userConnected, res, function() {
         res.sendStatus(200);
+    });
+};
+
+exports.checkIfUserNameAvailable = function(req, res) {
+    var name = req.body.name;
+    var user = req.user;
+    userService.checkIfUserNameAvailable(name, user, res, function(items) {
+        res.status(200).json({
+            items: items
+        });
     });
 };
