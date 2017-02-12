@@ -42,7 +42,7 @@ routeModule.config(
 					}
 				]
 			}
-		}).state("newWorkoutRoute", {
+		}).state("newWorkoutWithCurrentRoute", {
 			url: "/workouts/route/:routeId/new",
 			templateUrl: "/partials/workout/create",
 			controller: "CreateWorkoutController",

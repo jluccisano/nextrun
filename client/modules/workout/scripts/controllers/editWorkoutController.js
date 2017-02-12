@@ -47,8 +47,9 @@ angular.module("nextrunApp.workout").controller("EditWorkoutController",
             var promises = [];
             $scope.routesViewModel = [];
 
-            promises.push(RouteService.retrieve($scope.workout.routeId));
-
+            if($scope.workout.routeId) {
+                promises.push(RouteService.retrieve($scope.workout.routeId));
+            }
 
             $q.all(promises).then(function(routes) {
                 angular.forEach(routes, function(response) {

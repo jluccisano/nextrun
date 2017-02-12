@@ -16,7 +16,9 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         notificationService,
         gettextCatalog,
         race,
+        workout,
         RaceService,
+        WorkoutService,
         RouteTypeEnum) {
 
         $scope.isCollapsed = false;
@@ -69,8 +71,14 @@ angular.module("nextrunApp.route").controller("EditRouteController",
 
             $scope.routeId = $stateParams.id;
 
-            $scope.race = race.data;
-
+            if(race && race.data) {
+                $scope.race = race.data;
+            }
+           
+            if(workout && workout.data) {
+                $scope.workout = workout.data;
+            }
+            
             if ($scope.routeId) {
                 RouteService.retrieve($scope.routeId).then(function(response) {
                     $scope.route = response.data;
@@ -147,6 +155,14 @@ angular.module("nextrunApp.route").controller("EditRouteController",
                             notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre manifestation"));
                             $state.go("edit", {
                                 id: $scope.race._id
+                            });
+                        });
+                } else {
+                     WorkoutService.updateRoute($scope.workout._id, response.data.id).then(
+                        function() {
+                            notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre sortie"));
+                            $state.go("editWorkout", {
+                                id: $scope.workout._id
                             });
                         });
                 }

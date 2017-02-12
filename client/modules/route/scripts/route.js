@@ -25,6 +25,9 @@ routeModule.config(
 			resolve: {
 				race: function() {
 					return {};
+				},
+				workout: function() {
+					return {};
 				}
 			}
 		}).state("viewRoute", {
@@ -46,6 +49,25 @@ routeModule.config(
 			resolve: {
 				race: function($stateParams, RaceService) {
 					return RaceService.retrieve($stateParams.raceId);
+				},
+				workout: function() {
+					return {};
+				}
+			}
+		}).state("editWorkoutRoute", {
+			url: "/routes/:id/workout/:workoutId/edit",
+			templateUrl: "/partials/route/mapEditor",
+			controller: "EditRouteController",
+			data: {
+				access: access.user,
+				fullscreen: true
+			},
+			resolve: {
+				workout: function($stateParams, WorkoutService) {
+					return WorkoutService.retrieve($stateParams.workoutId);
+				},
+				race: function() {
+					return {};
 				}
 			}
 		}).state("newRoute", {
@@ -58,6 +80,9 @@ routeModule.config(
 			},
 			resolve: {
 				race: function() {
+					return {};
+				},
+				workout: function() {
 					return {};
 				}
 			}
@@ -72,6 +97,25 @@ routeModule.config(
 			resolve: {
 				race: function($stateParams, RaceService) {
 					return RaceService.retrieve($stateParams.raceId);
+				},
+				workout: function() {
+					return {};
+				}
+			}
+		}).state("newWorkoutRoute", {
+			url: "/routes/workout/:workoutId/new",
+			templateUrl: "/partials/route/mapEditor",
+			controller: "EditRouteController",
+			data: {
+				access: access.user,
+				fullscreen: true
+			},
+			resolve: {
+				workout: function($stateParams, WorkoutService) {
+					return WorkoutService.retrieve($stateParams.workoutId);
+				},
+				race: function() {
+					return {};
 				}
 			}
 		}).state("routes", {

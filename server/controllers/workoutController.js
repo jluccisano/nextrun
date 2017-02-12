@@ -23,7 +23,7 @@ exports.createWorkout = function(req, res) {
     var user = req.user;
     workoutService.save(workout, req, res, function(newWorkout) {
         underscore.forEach(newWorkout.participants, function(participant) {
-            email.sendNotificationToParticipant(workout, user, participant);
+            email.sendNotificationToParticipant(newWorkout, user, participant);
         });
 
         res.status(200).json({
@@ -69,7 +69,7 @@ exports.joinWorkout = function(req, res) {
     var participantId = req.params.participantId;
     var workoutOwner = req.workoutOwner;
     workoutService.joinWorkout(workout, participantId, true, res, function() {
-        email.sendNotificationToOwner(workout, workoutOwner, user, participant);
+        email.sendNotificationToOwner(workout, workoutOwner, participantId);
         res.sendStatus(200);
     });
 };
@@ -79,7 +79,7 @@ exports.unjoinWorkout = function(req, res) {
     var participantId = req.params.participantId;
     var workoutOwner = req.workoutOwner;
     workoutService.joinWorkout(workout, participantId, false, res, function() {
-        email.sendNotificationToOwner(workout, workoutOwner, participant);
+        email.sendNotificationToOwner(workout, workoutOwner, participantId);
         res.sendStatus(200);
     });
 };

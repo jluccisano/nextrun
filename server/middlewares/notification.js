@@ -159,13 +159,13 @@ exports.sendNotificationToParticipant = function(workout, user, participant) {
     this.sendMail(mailOptions);
 };
 
-exports.sendNotificationToOwner = function(workout, workoutOwner, participant) {
+exports.sendNotificationToOwner = function(workout, workoutOwner, participantId) {
 
     var mailOptions = {
         from: "contact.nextrun@gmail.com",
-        to: user.email,
+        to: workoutOwner.email,
         subject: "Modification de votre sortie",
-        text: "Votre sortie a été mis à jour http://localhost:3000/workouts/" + workout._id + " par le participant" + participant.email
+        text: "Votre sortie a été mis à jour http://localhost:3000/workouts/" + workout._id + " par le participant" + participantId
     };
 
     this.sendMail(mailOptions);

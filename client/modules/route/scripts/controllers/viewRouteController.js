@@ -56,7 +56,7 @@ angular.module("nextrunApp.route").controller("ViewRouteController",
         };
 
         $scope.createNewWorkout = function() {
-            $state.go("newWorkoutRoute", {
+            $state.go("newWorkoutWithCurrentRoute", {
                 "routeId": $scope.routeViewModel.getId()
             });
 
