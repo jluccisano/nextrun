@@ -56,10 +56,10 @@ angular.module("nextrunApp.commons").factory("GmapsApiService",
                         deferred.resolve(result);
 
                     } else {
-                        var error = new result();
-                        error.message = 'Une erreur est survenue: ' + status;
 
-                        deferred.reject(error);
+                        result.message = 'Une erreur est survenue: ' + status;
+
+                        deferred.reject(result);
                     }
 
                 });

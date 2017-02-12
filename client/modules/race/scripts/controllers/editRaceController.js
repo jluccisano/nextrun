@@ -176,7 +176,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 			$scope.modalInstance.result.then(function(result) {
                 $scope.race.plan.moreInformation = result.text;
             });
-		}
+		};
 
 
 		$scope.init();
