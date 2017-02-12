@@ -81,7 +81,7 @@ nextrunApp.run(function(
         $location.path("/login");
       }
 
-      notificationService.success(gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"));
+      notificationService.info(gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"));
     }
   });
 

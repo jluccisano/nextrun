@@ -25,6 +25,6 @@ div(class="container")
 						div(class="form-group" ng-class="{'has-error': !signupForm.confirmPassword.$pristine && signupForm.confirmPassword.$invalid, 'has-success': !signupForm.confirmPassword.$error.match && !signupForm.confirmPassword.$pristine}")
 							label(class="control-label" for="confirmPassword" translate) Confirmer le mot de passe
 							input(class="form-control" type="password" name="confirmPassword" placeholder="{{'Confirmer le mot de passe' | translate }}" nr-password-match="user.password" ng-model="confirmPassword" ng-required="true")
-							span(class="help-block" ng-show="signupForm.confirmPassword.$dirty && signupForm.confirmPassword.$error.nrPasswordMatch && !signupForm.confirmPassword.$error.ng-required="true"" translate) Le mot de passe est différent
+							span(class="help-block" ng-show="signupForm.confirmPassword.$dirty && signupForm.confirmPassword.$error.nrPasswordMatch && !signupForm.confirmPassword.$error.required" translate) Le mot de passe est différent
 						
 						button(class="btn btn-primary" type="submit" ng-disabled="signupForm.$invalid" translate) Envoyer

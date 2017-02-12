@@ -38,8 +38,8 @@ angular.module("nextrunApp.commons").factory("AuthService",
             },
             login: function(user) {
                 var promise = HttpUtils.post("/api/users/session", user);
-                promise.then(function(user) {
-                    changeUser(user);
+                promise.then(function(response) {
+                    changeUser(response.data);
                 });
                 return promise;
             },

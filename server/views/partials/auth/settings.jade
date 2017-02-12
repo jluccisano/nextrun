@@ -48,7 +48,7 @@ div(class="container")
 						div(class="form-group" ng-class="{'has-error': !form.confirmNewPassword.$pristine && form.confirmNewPassword.$invalid, 'has-success': !form.confirmNewPassword.$error.match && !form.confirmNewPassword.$pristine}")
 							label(class="control-label" for="confirmNewPassword" translate) Confirmer le mot de passe
 							input(class="form-control" type="password" name="confirmNewPassword" placeholder="{{'Confirmer le mot de passe' | translate}}" nr-password-match="confirmNewPassword" ng-model="newPassword" ng-required="true")
-							span(class="help-block" name="confirmNewPassword-match" ng-show="form.confirmNewPassword.$dirty && form.confirmNewPassword.$error.nrPasswordMatch && !form.confirmNewPassword.$error.ng-required="true"" translate) Le mot de passe est différent
+							span(class="help-block" name="confirmNewPassword-match" ng-show="form.confirmNewPassword.$dirty && form.confirmNewPassword.$error.nrPasswordMatch && !form.confirmNewPassword.$error.required" translate) Le mot de passe est différent
 						hr
 						div(class="form-group text-right")
 							button(class="btn btn-primary" type="submit" name="submit" ng-disabled="form.$invalid" translate) Enregistrer

@@ -8,12 +8,12 @@ div(class="container")
 						
 						div(class="form-group" ng-class="{'has-error': !loginForm.email.$pristine && loginForm.email.$invalid, 'has-success': !loginForm.email.$invalid && !loginForm.email.$pristine}")
 							label(class="control-label" for="email" translate) Email
-							input(class="form-control" id="email" type="email" placeholder="{{'Email' | translate }}" ng-model="user.email")
+							input(class="form-control" id="email" name="email" type="email" placeholder="{{'Email' | translate }}" ng-model="user.email")
 							span(class="help-block" ng-show="loginForm.email.$error.email" translate) Email invalide
 						
 						div(class="form-group" ng-class="{'has-error': !loginForm.password.$pristine && loginForm.password.$invalid, 'has-success': !loginForm.password.$invalid && !loginForm.password.$pristine}")
 							label(class="control-label" type="password" for="password"  translate) Mot de passe
-							input(class="form-control" id="password" type="password" placeholder="{{'Mot de passe' | translate }}" ng-model="user.password" ng-minlength="4" ng-maxlength="16" ng-required="true")
+							input(class="form-control" id="password" name="password" type="password" placeholder="{{'Mot de passe' | translate }}" ng-model="user.password" ng-minlength="4" ng-maxlength="16" ng-required="true")
 							span(class="help-block" ng-show="loginForm.password.$dirty && loginForm.password.$error.minlength" translate) Le mot de passe doit contenir au minium 4 lettres.
 							span(class="help-block" ng-show="loginForm.password.$dirty && loginForm.password.$error.maxlength" translate) Le mot de passe doit contenir au maximum 16 lettres.
 						
