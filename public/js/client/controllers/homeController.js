@@ -62,7 +62,7 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 
 			var criteria = {
 				fulltext: (query_string !== undefined) ? query_string : "",
-				region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined
+				region: undefined
 			};
 
 			return $http({
