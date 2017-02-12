@@ -17,29 +17,29 @@ app.get('/defaultsite', function (req, res) {
   res.redirect('/');
 });
 
-app.get('/', mainController.index);
+app.get('/*', mainController.index);
 app.get('/partials/:name', mainController.partials);
 app.get('/partials/race/:name', mainController.racePartials);
-app.get('/partials/user/:name', auth.requiresLogin, mainController.userPartials);
+app.get('/partials/user/:name', mainController.userPartials);
 
 
 /** JSON API **/
 
 /** contacts **/
-app.post('/contacts', contactController.create);
+app.post('/contacts', auth.ensureAuthorized, contactController.create);
 
 
 /** users **/
-app.post('/users', userController.create);
+app.post('/users/signup',  auth.ensureAuthorized, userController.signup);
 
-app.post('/users/session', function(req, res, next) {
-	userController.authenticate(passport, req, res);
+app.post('/users/session',auth.ensureAuthorized, function(req, res, next) {
+	userController.login(passport, req, res);
 });
 
-app.get('/logout', userController.logout);
+app.post('/users/logout', auth.ensureAuthorized, userController.logout);
 
-app.post('/users/forgotpassword', userController.forgotPassword);
+app.post('/users/forgotpassword', auth.ensureAuthorized, userController.forgotPassword);
 
-app.get('/users/settings', auth.requiresLogin, userController.settings);
+app.get('/users/settings', auth.ensureAuthorized , userController.settings);
 
 };

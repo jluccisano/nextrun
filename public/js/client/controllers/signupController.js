@@ -1,41 +1,29 @@
-nextrunControllers.controller('SignupCtrl', ['$scope','$http', '$location',
-	function($scope, $http, $location) {
+nextrunControllers.controller('SignupCtrl', ['$scope','$http', '$location', '$rootScope','Auth', 'Alert'
+	function($scope, $http, $location, $rootScope, Auth, Alert) {
 
 	$scope.user = {
 			_csrf: jQuery('#_csrf').val(),
 			username: jQuery('#username').val(), 
 			email: jQuery('#email').val(), 
-			password: jQuery('#password').val()};
+			password: jQuery('#password').val()
+	};
 						
 	jQuery('#signupForm').validate({
 		submitHandler: function(form) {
 
-			$scope.user = {
-						_csrf: jQuery('#_csrf').val(),
-						username: jQuery('#username').val(), 
-						email: jQuery('#email').val(), 
-						password: jQuery('#password').val()};
-
-			jQuery.ajax({
-				type: "POST",
-				url: "/users",
-				data: $scope.user,
-				dataType: 'json'
-			}).done(function(data) {
-				
-				if (data.response === 'success') {
-					$scope.$apply(function() {
-						$location.path('/myraces');
-					});
-				} else {
-
-					jQuery('.errors').addClass('in').removeClass('hide');
-					var error = jQuery.t(data.response.errors.email.message);
-					if(error) {
-						jQuery('.errors').text(error);
-					}
-				}
-			});
+			Auth.register({
+        		_csrf: jQuery('#_csrf').val(),
+				username: jQuery('#username').val(), 
+				email: jQuery('#email').val(), 
+				password: jQuery('#password').val()
+            },
+            function() {
+            	Alert.add("info", "Félicitation! votre inscription a été validé", 3000);
+				$location.path('/');
+            },
+            function(error) {
+                Alert.add("danger", error.message, 3000);
+            });			
 		},
 		rules: {
 			username : {

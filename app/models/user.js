@@ -19,7 +19,10 @@ var UserSchema = new Schema({
   hashed_password: { type: String, default: '' },
   salt: { type: String, default: '' },
   authToken: { type: String, default: '' },
-  profile: {type: String, default: 'user'},
+  role: {
+          bitMask: {type: Number},
+          title: {type: String},
+  },
   last_update: Date,
   facebook: {}
 });

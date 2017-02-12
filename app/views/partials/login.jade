@@ -5,19 +5,19 @@ div.container(ng-controller='LoginCtrl', style="margin-top:50px")
 				div.panel-heading <strong>Se connecter</strong>
 				div.panel-body
 					form(id="loginForm", role="form")
-						input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}" ,ng-model="user._csrf")
+						input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}" ,data-ng-model="user._csrf")
 						div.form-group
 							label.control-label(for="email") Email
-							input.form-control(type="email", name="email", id="email", placeholder="Email",ng-model="user.email")
+							input.form-control(type="email", name="email", id="email", placeholder="Email",data-ng-model="user.email")
 						div.form-group
 							label.control-label(for="password") Mot de passe
-							input.form-control(type="password", name="password", id="password", placeholder="Mot de passe",ng-model="user.password")
+							input.form-control(type="password", name="password", id="password", placeholder="Mot de passe",data-ng-model="user.password")
 						div.alert.alert-danger.fade.hide.errors
 						button.btn.btn-primary(type="submit") Se connecter
-						button.btn.btn-link(id="signupLink", type="button", ng-click="signup()") S'inscrire
+						button.btn.btn-link(id="signupLink", type="button", data-ng-click="signup()") S'inscrire
 						hr
 						button.btn.btn-link(id="forgotPasswordLink", type="button", data-toggle="modal", data-target="#forgotPasswordModal") Mot de passe oublié ?
-	div.container(ng-controller='ForgotPasswordCtrl')
+	div.container(data-ng-controller='ForgotPasswordCtrl')
 		div.modal.fade(id="forgotPasswordModal",tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
 			div.modal-dialog
 					div.modal-content

@@ -1,4 +1,4 @@
-header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner")
+header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner" data-ng-Controller='HeaderCtrl')
 	div.navbar-inner
 		div.container
 			div.navbar-header
@@ -8,4 +8,22 @@ header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner")
 					span.icon-bar
 				a.navbar-brand(href="/") NEXTRUN
 			div.navbar-collapse.collapse.bs-navbar-collapse
-				div(ng-include="'partials/menu'")
+				ul.nav.navbar-nav.navbar-right
+					li.dropdown(data-ng-show="isLoggedIn()")
+						a.dropdown-toggle(data-toggle="dropdown") {{user.username}}
+							b.caret
+						ul.dropdown-menu
+							li
+								a(href="/myraces") Mes manifestations
+							li
+								a(href="/users/settings") Paramètres
+							if (req.isAuthenticated() && req.user.profile == "superadmin")
+								li
+									a(href="#/users/admin") Administration
+							li
+								a(data-ng-click="logout()") Se déconnecter
+					li(data-ng-hide="isLoggedIn()")
+						form(class="navbar-form navbar-left")
+							button(type="submit", class="btn btn-primary", data-ng-click="login()") 
+								span.glyphicon.glyphicon-user 
+								span  Se connecter

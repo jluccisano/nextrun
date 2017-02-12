@@ -37,6 +37,10 @@ html(ng-app="nextrunApp")
 		script(src="/js/libs/i18next-1.7.1.js", charset="UTF-8")
 		<!-- endbuild -->
 
+		<!-- build:js js/libs/underscore.js -->
+		script(src="/js/libs/underscore.js", charset="UTF-8")
+		<!-- endbuild -->
+
 		<!-- build:js js/libs/angular.min.js -->
 		script(src="/js/libs/angular.js", charset="UTF-8")
 		<!-- endbuild -->
@@ -53,8 +57,30 @@ html(ng-app="nextrunApp")
 		script(src="/js/libs/angular-resource.js", charset="UTF-8")
 		<!-- endbuild -->
 
+		<!-- build:js js/libs/angular-cookies.min.js -->
+		script(src="/js/libs/angular-cookies.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/libs/ui-bootstrap-tpls-0.7.0.min.js -->
+		script(src="/js/libs/ui-bootstrap-tpls-0.7.0.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/client/routingConfig.min.js -->
+		script(src="/js/client/routingConfig.js", charset="UTF-8")
+		<!-- endbuild -->
+
 		<!-- build:js js/client/app.min.js -->
 		script(src="/js/client/app.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/client/services.min.js -->
+		script(src="/js/client/services/authServices.js", charset="UTF-8")
+		script(src="/js/client/services/alertServices.js", charset="UTF-8")
+		script(src="/js/client/services/contactServices.js", charset="UTF-8")
+		<!-- endbuild -->
+
+		<!-- build:js js/client/directives.min.js -->
+		script(src="/js/client/directives/authDirectives.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js js/client/controllers.min.js -->
@@ -66,6 +92,7 @@ html(ng-app="nextrunApp")
 		script(src="/js/client/controllers/signupController.js", charset="UTF-8")
 		script(src="/js/client/controllers/myRacesController.js", charset="UTF-8")
 		script(src="/js/client/controllers/settingsController.js", charset="UTF-8")
+		script(src="/js/client/controllers/headerController.js", charset="UTF-8")
 		<!-- endbuild -->
 
 		<!-- build:js js/libs/bootstrap.min.js -->
@@ -79,9 +106,6 @@ html(ng-app="nextrunApp")
 		<!-- build:js js/client/widgets/socialbuttons.min.js -->
 		script(src="/js/client/widgets/socialbuttons.js", charset="UTF-8")
 		<!-- endbuild -->
-
-		script(src="https://github.com/angular-ui/bootstrap/blob/gh-pages/ui-bootstrap-tpls-0.7.0.js", charset="UTF-8")
-
 
 		block head
 			block meta

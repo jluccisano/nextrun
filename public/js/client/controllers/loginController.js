@@ -1,5 +1,5 @@
-nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
-	function($scope, $http, $location) {
+nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$rootScope','Auth','Alert',
+	function($scope, $http, $location, $rootScope, Auth, Alert) {
 
 		$scope.user = {
 							_csrf: jQuery('#_csrf').val(),
@@ -18,6 +18,21 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
 					email: jQuery('#email').val(), 
 					password: jQuery('#password').val()
 			};
+
+			Auth.login({
+                _csrf: jQuery('#_csrf').val(),
+				email: jQuery('#email').val(), 
+				password: jQuery('#password').val()
+            },
+            function(res) {
+				$location.path('/myraces');
+		
+            },
+            function(error) {
+            	Alert.add("danger", error.message, 3000);
+            });
+
+			/*
 
 			jQuery.ajax({
 				type: "POST",
@@ -40,7 +55,7 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location',
 						jQuery('.errors').text(error);
 					}
 				}
-			});
+			});*/
 		};
 
 
@@ -99,7 +114,19 @@ nextrunControllers.controller('ForgotPasswordCtrl', ['$scope','$location',
 					email: jQuery('#forgotEmail').val() 
 				};
 
-			jQuery.ajax({
+			Auth.forgotpassword({
+					_csrf: jQuery('#_csrf').val(),
+					email: jQuery('#forgotEmail').val() 
+            },
+            function(res) {
+            	Alert.add("info", "Un email vient de vous être envoyé", 3000);
+				$location.path('/login');
+            },
+            function(error) {
+            	Alert.add("danger", error.message, 3000);
+            });
+
+			/*jQuery.ajax({
 				type: "POST",
 				url: "/users/forgotpassword",
 				data: $scope.email,
@@ -120,7 +147,7 @@ nextrunControllers.controller('ForgotPasswordCtrl', ['$scope','$location',
 						jQuery('.errors').text(error);
 					}
 				}
-			});
+			});*/
 		};
 		
 		jQuery('#forgotPasswordForm').validate({

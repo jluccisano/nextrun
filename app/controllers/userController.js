@@ -6,6 +6,8 @@
 var mongoose = require('mongoose')
 , User = mongoose.model('User')
 , utils = require('../utils/errorutils')
+, util = require('util')
+, userRoles = require('../../public/js/client/routingConfig').userRoles
 , email = require('../../config/middlewares/notification');
   
 /**
@@ -14,24 +16,22 @@ var mongoose = require('mongoose')
  * @param res
  * @returns success if OK
  */
-exports.create = function (req, res) {
-
+exports.signup = function (req, res) {
 	var user = new User(req.body);
 	user.provider = 'local';
-	user.profile = 'user';
+	user.role = userRoles.user;
 	user.last_update = new Date();
 
 	user.save(function (err) {
 		if (err) {
-			return res.send({response: err}); 
+      return res.json(400,  err );
 		}
 		
 		req.logIn(user, function(err) {
 			if (err) {
-				return res.send({response: err});
+        return res.json(400,  err );
 			} 
-			req.flash('success', 'Félicitation! votre inscription a été validé');
-			return res.send({response: "success"});
+      return res.json(200, { "role": user.role, "username": user.username });
 		});
 	});
 };
@@ -44,7 +44,7 @@ exports.create = function (req, res) {
  */
 exports.logout = function (req, res) {
   req.logout();
-  res.redirect('/');
+  res.send(200);
 };
 
 /**
@@ -54,20 +54,20 @@ exports.logout = function (req, res) {
  * @param res
  * @returns success or error
  */
-exports.authenticate = function (passport, req, res) {
-    passport.authenticate('local', function(err, user, info) {
+exports.login = function (passport, req, res) {
+    passport.authenticate('local', function(err, user, message) {
         if (err) { 
-            return res.send({response: info}); 
+            return res.json(400,  message );
         }
         if (!user) { 
-            return res.send({response: info}); 
+            return res.json(400,  message );
         }
 
         req.logIn(user, function(err) {
           if (err) { 
-              return res.send({response: info}); 
+              return res.json(400,  message );
           }
-          return res.send({response: "success"});
+          return res.json(200, { "role": user.role, "username": user.username });
         });
     })(req, res);
 };
@@ -91,20 +91,15 @@ exports.forgotPassword = function (req, res) {
           User.update({ _id: user._id }, {$set: { hashed_password: hashed_password, salt: salt, last_update: new Date() } }, {upsert: true},  function(err){
               
               if (!err) {
-                
                 email.sendEmailPasswordReinitialized(user.email, newPassword);
-
-                req.flash('success', "Un email vient de vous être envoyé");
-
-                return res.send({ response: 'success' });
+                return res.json(200);
               } else {
-                req.flash('errors', utils.errors(err.errors));
-                res.send({ response: utils.errors(err.errors) });
+                return res.json(400, {message: err.errors });
               }
           });
 
-        } else {
-          return res.send({response: "error.invalidEmail"});
+        } else {          
+          return res.json(400, {message: "error.invalidEmail"});
         } 
     });
 };

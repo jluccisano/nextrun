@@ -2,13 +2,16 @@ extends ./layouts/layout
 
 block body
 
-	body(ng-controller='MainCtrl')
+	body(data-ng-controller='MainCtrl')
+
+		div(id="fb-root")
 
 		include ./layouts/header
 
 		include ./layouts/messages
-		div.ng-cloak(ng-cloak class="view-container")
-			div(ng-view class="view-frame ng-cloak")
+		
+		div.ng-cloak(data-ng-cloak class="view-container")
+			div(data-ng-view class="view-frame ng-cloak")
 
-		div.ng-cloak(ng-cloak ng-controller="FooterCtrl" ng-show="hideFooter")
+		div.ng-cloak(data-ng-cloak data-ng-controller="FooterCtrl" data-ng-show="hideFooter")
 			include ./layouts/footer

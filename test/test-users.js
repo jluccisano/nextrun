@@ -9,6 +9,7 @@ var mongoose = require('mongoose')
   , app = require('../server')
   , context = describe
   , superagent = require('superagent')
+  , userRoles = require('../public/js/client/routingConfig').userRoles
   , User = mongoose.model('User');
 
 var cookies, count;
@@ -28,13 +29,13 @@ describe('Users', function () {
       })
 
       it('no email - should respond with errors', function (done) {
-       superagent.post('http://localhost:3000/users')
-        .send({ username:'foobar', email: '', password: 'foobar' })
+       superagent.post('http://localhost:3000/users/signup')
+        .send({user: { username:'foobar', email: '', password: 'foobar' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
-           res.should.have.status(200);
-           res.body.response.errors.email.message.should.equal("error.emailCannotBeBlank");
+           res.should.have.status(400);
+           res.body.errors.email.message.should.equal("error.emailCannotBeBlank");
            done();
         });
       });
@@ -56,13 +57,14 @@ describe('Users', function () {
       })
 
       it('should response success', function (done) {
-       superagent.post('http://localhost:3000/users')
-        .send({ username:'foobar', email: 'foobar@example.com', password: 'foobar' })
+       superagent.post('http://localhost:3000/users/signup')
+        .send({user: { username:'foobar', email: 'foobar@example.com', password: 'foobar' }})
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(200);
-           res.body.response.should.equal("success");
+           res.body.username.should.equal("foobar");
+           res.body.role.title.should.equal("user");
            done();
         });
       });
@@ -99,7 +101,7 @@ describe('Users', function () {
       var currentUser;
 
       before(function (done) {
-        User.create({ username: "foobar", email:"foobar@example.com", password:"foobar"} , function(err,user){
+        User.create({ username: "foobar", email:"foobar@example.com", password:"foobar", role: userRoles.user} , function(err,user){
           currentUser = user;
           done();        
         });
@@ -121,7 +123,8 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(200);
-           res.body.response.should.equal("success");
+           res.body.username.should.equal("foobar");
+           res.body.role.title.should.equal("user");
            done();
         });
       });
@@ -132,8 +135,8 @@ describe('Users', function () {
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
-           res.should.have.status(200);
-           res.body.response.message.should.equal("error.invalidEmailOrPassword");
+           res.should.have.status(400);
+           res.body.message.should.equal("error.invalidEmailOrPassword");
            done();
         });
       });
@@ -151,7 +154,7 @@ describe('Users', function () {
     var currentUser;
 
     before(function (done) {
-      User.create({ username: "foobar", email:"foobar@example.com", password:"foobar"} , function(err,user){
+      User.create({ username: "foobar", email:"foobar@example.com", password:"foobar", role: userRoles.user} , function(err,user){
         currentUser = user;
         done();        
       });
@@ -174,8 +177,8 @@ describe('Users', function () {
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
-           res.should.have.status(200);
-           res.body.response.should.equal("error.invalidEmail");
+           res.should.have.status(400);
+           res.body.message.should.equal("error.invalidEmail");
            done();
         });
       });
@@ -186,8 +189,8 @@ describe('Users', function () {
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
-           res.should.have.status(200);
-           res.body.response.should.equal("error.invalidEmail");
+           res.should.have.status(400);
+           res.body.message.should.equal("error.invalidEmail");
            done();
         });
       });
@@ -198,8 +201,8 @@ describe('Users', function () {
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
-           res.should.have.status(200);
-           res.body.response.should.equal("error.invalidEmail");
+           res.should.have.status(400);
+           res.body.message.should.equal("error.invalidEmail");
            done();
         });
       });
@@ -223,7 +226,6 @@ describe('Users', function () {
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(200);
-           res.body.response.should.equal("success");
            done();
         });
       });
@@ -243,7 +245,7 @@ describe('Users', function () {
       var currentUser;
 
       before(function (done) {
-        User.create({ username: "foobar", email:"foobar@example.com", password:"foobar"} , function(err,user){
+        User.create({ username: "foobar", email:"foobar@example.com", password:"foobar", role: userRoles.user} , function(err,user){
           currentUser = user;
           done();        
         });
@@ -258,25 +260,24 @@ describe('Users', function () {
         });
       });
 
-      it('Authenticate should response success', function (done) {
+     it('Authenticate should response success', function (done) {
        superagent.post('http://localhost:3000/users/session')
         .send({ email: 'foobar@example.com', password: 'foobar' })
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(200);
-           res.body.response.should.equal("success");
+           res.body.username.should.equal("foobar");
+           res.body.role.title.should.equal("user");
            done();
         });
       });
 
       it('should logout successfully', function (done) {
-       superagent.get('http://localhost:3000/logout')
+       superagent.post('http://localhost:3000/users/logout')
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(200);
-           console.log(res.req);
-           res.redirects.should.eql(["http://localhost:3000/"]);
            done();
         });
       });

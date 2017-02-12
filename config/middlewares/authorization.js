@@ -1,8 +1,36 @@
-exports.requiresLogin = function (req, res, next) {
-    if (!req.isAuthenticated()) {
+var _ = require('underscore')
+,userRoles = require('../../public/js/client/routingConfig').userRoles
+,accessLevels = require('../../public/js/client/routingConfig').accessLevels;
+
+
+exports.ensureAuthorized = function (req, res, next) {
+    /*if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;
         //req.flash('warning', "Vous n'êtes pas autoriser à effectuer cette action");
-      	return res.redirect("/");
+      	//return res.redirect("/");
+        return res.send(403);
     }
     next();
+    */
+
+    
+    var routes = [
+
+        { path: "/users/signup" , accessLevel: accessLevels.public},
+        { path: "/users/session" , accessLevel: accessLevels.public},
+        { path: "/users/forgotpassword" , accessLevel: accessLevels.public},
+        { path: "/users/logout" , accessLevel: accessLevels.public},
+        { path: "/users/settings" , accessLevel: accessLevels.user},
+        { path: "/partials/user/*" , accessLevel: accessLevels.user}
+
+    ]
+
+    var role;
+    if(!req.user) role = userRoles.public;
+    else          role = req.user.role;
+    var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.public;
+
+    if(!(accessLevel.bitMask & role.bitMask)) return res.send(403);
+    return next();
+    
 };
