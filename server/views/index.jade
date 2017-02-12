@@ -7,9 +7,9 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
 
     head
 
-        link(rel="icon", type="image/png",  href="modules/main/images/logo_officiel.png")
+        link(rel="icon", type="image/png",  href="client/modules/main/images/logo_officiel.png")
 
-        // build:css(client) client/styles/vendor.min.css
+        // build:css(server/views) client/styles/vendor.min.css
         // bower:css
         link(rel='stylesheet', href='../../client/bower_components/bootstrap/dist/css/bootstrap.css')
         link(rel='stylesheet', href='../../client/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css')
@@ -24,7 +24,7 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
 
         script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")
 
-        // build:js(client) client/scripts/vendor.min.js
+        // build:js(server/views) client/scripts/vendor.min.js
         // bower:js
         script(src='../../client/bower_components/jquery/dist/jquery.js')
         script(src='../../client/bower_components/angular/angular.js')
@@ -52,13 +52,15 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" data-ng-co
         script(src='../../client/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js')
         script(src='../../client/bower_components/angular-moment/angular-moment.js')
         // endbower
+        // endbuild
+
+        // build:js(client) client/scripts/lib.min.js
         script(src='lib/textAngular.js')
         script(src='lib/enum-0.2.5.js')
         // endbuild
 
-        // build:js(client) client/scripts/routingConfig.js
+        <!-- routingConfig.js is not minified and not concatenated -->
         script(src="routingConfig.js", charset="UTF-8")
-        // endbuild
 
         // build:js(client) client/scripts/widgets/socialbuttons.min.js
         script(src="widgets/socialbuttons.js", charset="UTF-8")

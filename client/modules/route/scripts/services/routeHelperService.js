@@ -40,7 +40,7 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
                                 events: {
                                     mouseOver: function() {
 
-                                        var icon = new google.maps.MarkerImage("../../../img/segment.png",
+                                        var icon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
                                             new google.maps.Size(32, 32),
                                             new google.maps.Point(0, 0),
                                             new google.maps.Point(8, 8),

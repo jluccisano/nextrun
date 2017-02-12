@@ -1,7 +1,5 @@
 "use strict";
 
-var path = require('path');
-
 module.exports = function(grunt) {
 
   var config = require('./config/config');
@@ -101,8 +99,8 @@ module.exports = function(grunt) {
       ],
       dist: [
         'compass:dist',
-        'imagemin',
-        'svgmin'
+        // 'imagemin',
+        // 'svgmin'
       ]
     },
 
@@ -206,8 +204,14 @@ module.exports = function(grunt) {
     usemin: {
       html: ['<%= yeoman.dist %>/server/views/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
+      js: ['<%= yeoman.dist %>/client/scripts/{,*/}*.js'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/client/images']
+        assetsDirs: ['<%= yeoman.dist %>'],
+        patterns: {
+          js: [
+            [/(client\/modules\/route\/images\/.*?\.(?:gif|jpeg|jpg|png|webp))/gm, 'Update the JS to reference our revved images']
+          ]
+        }
       }
     },
 
@@ -215,12 +219,13 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.client %>/modules',
-          src: '**/images/{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/client/images'
+          cwd: '<%= yeoman.client %>',
+          src: 'modules/**/images/{,*/}*.{png,jpg,jpeg,gif}',
+          dest: '<%= yeoman.dist %>/client'
         }]
       }
     },
+
     svgmin: {
       dist: {
         files: [{
@@ -271,7 +276,7 @@ module.exports = function(grunt) {
       server: {
         files: [{
           expand: true,
-          src: ['server/**/!{*.jade}', 'config/**', 'locales/**', 'server.js'],
+          src: ['server/**/*.{js,html}', 'config/**', 'locales/**', 'server.js', 'package.json'],
           dest: '<%= yeoman.dist %>'
         }]
       },
@@ -280,11 +285,11 @@ module.exports = function(grunt) {
           expand: true,
           dot: true,
           cwd: '<%= yeoman.client %>',
-          dest: '<%= yeoman.dist %>',
+          dest: '<%= yeoman.dist %>/client',
           src: [
             '*.{ico,png,txt}',
             'sitemap.xml',
-            'modules/**/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+            'routingConfig.js'
           ]
         }, {
           expand: true,
@@ -301,7 +306,7 @@ module.exports = function(grunt) {
           src: [
             '<%= yeoman.dist %>/client/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/client/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/client/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.dist %>/client/modules/**/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/client/styles/fonts/*'
           ]
         }
@@ -329,28 +334,33 @@ module.exports = function(grunt) {
 
     /*************************** SERVERS *******************************************************/
 
-    /*express: {
+    express: {
       options: {
+        port: 4000,
         background: false,
-        debug: true
+        debug: true,
+        script: 'server.js',
       },
       development: {
         options: {
-          port: 3000,
+          node_env: 'development',
           script: 'server.js',
-          node_env: 'development'
+        }
+      },
+      dist: {
+        options: {
+          node_env: 'prod',
+          script: '<%= yeoman.dist %>/server.js',
         }
       },
       test: {
         options: {
-          port: 4000,
-          script: 'server.js',
           node_env: 'test'
         }
       }
-    },*/
+    },
 
-    express: {
+    /*express: {
       options: {
         hostname: "0.0.0.0",
         port: "3000",
@@ -374,7 +384,7 @@ module.exports = function(grunt) {
           bases: ["<%= yeoman.dist %>"]
         }
       }
-    },
+    },*/
 
     /********************************** checkcode ***************************************************/
 
@@ -561,6 +571,16 @@ module.exports = function(grunt) {
   ]);
 
 
+  grunt.registerTask('install', 'install the backend and frontend dependencies', function() {
+    var exec = require('child_process').exec;
+    var cb = this.async();
+    exec('npm install --production', {
+      cwd: './dist'
+    }, function(err, stdout, stderr) {
+      console.log(stdout);
+      cb();
+    });
+  });
 
   grunt.registerTask('newbuild', [
     'clean:dist',
@@ -571,15 +591,16 @@ module.exports = function(grunt) {
     'concurrent:dist',
     'autoprefixer',
     'concat',
-    'ngmin',
     'copy:dist',
     'cdnify',
+    'ngmin',
     'cssmin',
     'uglify',
     'rev',
     'usemin',
     'htmlmin',
-    'jsdoc'
+    'jsdoc',
+    'install'
   ]);
 
   grunt.registerTask('default', [
@@ -590,7 +611,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('serve', function(target) {
     if (target === 'dist') {
-      return grunt.task.run(['newbuild', 'express:dist', 'express-keepalive']);
+      return grunt.task.run(['newbuild', 'express:prod']);
     }
 
     grunt.task.run([
@@ -598,10 +619,10 @@ module.exports = function(grunt) {
       'bowerInstall',
       'concurrent:server',
       'autoprefixer',
-      'express:livereload',
-      //'express:development'
+      'express:development'
     ]);
 
   });
+
 
 };

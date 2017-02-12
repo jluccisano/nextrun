@@ -46,12 +46,17 @@ module.exports = function(app, config, passport) {
 
 
 	app.use(express.favicon());
-	app.use(express.static(config.root + "/dist"));
 
-	if (process.env.NODE_ENV !== "prod") {
-	    app.use("/client/bower_components", express.static(config.root + "/client/bower_components"));
-		app.use("/styles", express.static(config.root + "/.tmp/styles"));
-	}
+	if (process.env.NODE_ENV !== "development") {
+        app.use(express.static(config.root + "/client"));
+        app.use("/client/bower_components", express.static(config.root + "/client/bower_components"));
+        app.use("/styles", express.static(config.root + "/.tmp/styles"));
+    } else {
+        app.use(express.static(config.root + "/dist"));
+    }
+
+	//if (process.env.NODE_ENV !== "prod") {
+	//}
 
 	// don"t use logger for test env
 	if (process.env.NODE_ENV !== "test") {
@@ -60,7 +65,8 @@ module.exports = function(app, config, passport) {
 
 	// set views path, template engine and default layout
 	app.set("views", config.root + "/server/views");
-	app.set("view engine", "jade");
+	//app.set("view engine", "jade");
+    app.set('view engine', 'html');
 
 	app.configure(function() {
 

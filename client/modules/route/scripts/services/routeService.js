@@ -202,7 +202,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 							raceName: race.name,
 							latitude: race.pin.location.lat + (Math.random() - 0.5) / 1500,
 							longitude: race.pin.location.lon + (Math.random() - 0.5) / 1500,
-							icon: "../../../img/start.png",
+							icon: "client/modules/route/images/start.png",
 							showWindow: false,
 							title: "hello"
 						};
@@ -229,11 +229,11 @@ angular.module("nextrunApp.route").factory("RouteService",
 					}
 
 					if (index === 0) {
-						icon = "../../../img/start.png";
+						icon = "client/modules/route/images/start.png";
 					} else if (index === (segments.length - 1)) {
-						icon = "../../../img/end.png";
+						icon = "client/modules/route/images/end.png";
 					} else if (showSegment) {
-						icon = new google.maps.MarkerImage("../../../img/segment.png",
+						icon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
 							new google.maps.Size(32, 32),
 							new google.maps.Point(0, 0),
 							new google.maps.Point(8, 8),
@@ -328,7 +328,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 						//set the new end marker
 						if (route.markers.length > 1) {
 							marker = SegmentService.getLastMarker(route.markers);
-							marker.icon = "../../../img/end.png";
+							marker.icon = "client/modules/route/images/end.png";
 						}
 
 						route.elevationPoints = _.difference(route.elevationPoints, _.where(route.elevationPoints, {

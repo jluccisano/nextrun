@@ -228,12 +228,12 @@ angular.module("nextrunApp.route").factory("SegmentService",
 
 					if (route.segments.length === 1) {
 
-						MarkerService.createMarker(lastLatLng, "../../../img/start.png", "first point");
+						MarkerService.createMarker(lastLatLng, "client/modules/route/images/start.png", "first point");
 
 					} else {
 
 						//replace last marker by segment point
-						var segmentIcon = new google.maps.MarkerImage("../../../img/segment.png",
+						var segmentIcon = new google.maps.MarkerImage("client/modules/route/images/segment.png",
 							new google.maps.Size(32, 32),
 							new google.maps.Point(0, 0),
 							new google.maps.Point(8, 8),
@@ -244,7 +244,7 @@ angular.module("nextrunApp.route").factory("SegmentService",
 						lastMarker.icon = segmentIcon;
 
 						//create the new last marker
-						MarkerService.createMarker(lastLatLng, "../../../img/end.png", "end point");
+						MarkerService.createMarker(lastLatLng, "client/modules/route/images/end.png", "end point");
 					}
 
 					route.markers.push(marker);
