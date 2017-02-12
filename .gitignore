@@ -10,7 +10,7 @@ jshint.xml
 config/config.js
 .idea
 .sass-cache
-.tmp
+.tmp/
 
 # Tests #
 ############
