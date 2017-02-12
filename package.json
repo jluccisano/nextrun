@@ -1,0 +1,53 @@
+/** @see https://npmjs.org/doc/json.html **/
+{
+  "name": "nextrun",
+  "description": "",
+  "keywords": [],
+  "version": "1.0.0",
+  "private": true,
+  "author": "Joseph Luccisano <joseph.luccisano@gmail.com> (http://www.nextrun.fr)",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.3.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://jluccisano@bitbucket.org/jluccisano/nextrun.git"
+  },
+  "bugs": {
+    "url": "https://bitbucket.org/jluccisano/nextrun/issues",
+    "email": "joseph.luccisano@gmail.com"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test-*.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "latest",
+    "mongoose":"latest",
+    "passport":"latest",
+    "jade": "latest",
+    "passport-local":"latest",
+    "passport-facebook":"latest",
+    "view-helpers": "latest",
+    "connect-flash":"latest",
+    "connect-mongo":"latest",
+    "crypto":"latest",
+    "enum":"latest",
+    "i18next":"latest"
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "grunt": "latest",
+    "grunt-mocha": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-useref": "latest",
+    "grunt-contrib-jade": "latest",
+    "usemin-patterns": "latest",
+    "grunt-usemin": "latest",
+    "grunt-contrib-cssmin": "latest"
+  }
+}

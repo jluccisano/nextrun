@@ -1,0 +1,54 @@
+!!! 5
+html(ng-app="nextrunApp")
+	head
+		block head
+			block title
+				title
+			block meta
+				meta(name='description', content='')
+				meta(name='keywords', content='')
+				meta(charset="UTF-8")
+
+			<!-- build:css css/bootstrap.min.js -->
+			link(rel="stylesheet", href="/css/bootstrap.css")
+			<!-- endbuild -->
+
+			<!-- build:css css/bootstrap-theme.min.js -->
+			link(rel="stylesheet", href="/css/bootstrap-theme.css")
+			<!-- endbuild -->
+
+			<!-- build:js js/libs/jquery-2.0.3.min.js -->
+			script(src="/js/libs/jquery-2.0.3.js", charset="UTF-8")
+			<!-- endbuild -->
+
+			<!-- build:js js/libs/bootstrap.min.js -->
+			script(src="/js/libs/bootstrap.js", charset="UTF-8")
+			<!-- endbuild -->
+
+			<!-- build:js js/libs/angular.min.js -->
+			script(src="/js/libs/angular.js", charset="UTF-8")
+			<!-- endbuild -->
+
+			<!-- build:js js/libs/angular-route.min.js -->
+			script(src="/js/libs/angular-route.js", charset="UTF-8")
+			<!-- endbuild -->
+
+			<!-- build:js js/client/main.min.js -->
+			script(src="/js/client/main.js", charset="UTF-8")
+			<!-- endbuild -->
+
+			<!-- build:js js/client/app.min.js -->
+			script(src="/js/client/app.js", charset="UTF-8")
+			<!-- endbuild -->
+
+			<!-- build:js js/client/controllers.min.js -->
+			script(src="/js/client/controllers.js", charset="UTF-8")
+			<!-- endbuild -->
+
+
+	body
+		include header
+
+		block(ng-view) content
+
+		include footer
