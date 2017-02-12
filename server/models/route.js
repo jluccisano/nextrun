@@ -17,6 +17,7 @@ var SegmentSchema = new Schema({
 });
 
 var RouteSchema = new Schema({
+    name: String,
     creationDate: Date,
     userId: Schema.Types.ObjectId,
     lastUpdate: Date,
@@ -32,12 +33,17 @@ var RouteSchema = new Schema({
     description: String
 });
 
-RouteSchema.pre("save", function(next) {
+RouteSchema.pre("save", function(next, req, callback) {
+
+    var userConnected = req.user;
+
+    this.userId = userConnected._id;
+
     this.lastUpdate = new Date();
     if(this.isNew) {
         this.creationDate = new Date();
     }
-    next();
+    next(callback);
 });
 
 RouteSchema.statics = {
@@ -72,10 +78,7 @@ RouteSchema.statics = {
      */
     findByCriteria: function(options, cb) {
         var criteria = options.criteria || {};
-        this.find(criteria, {
-            segments: 0,
-            elevationPoints: 0
-        })
+        this.find(criteria, {})
             .limit(options.perPage)
             .skip(options.perPage * options.page)
             .exec(cb);

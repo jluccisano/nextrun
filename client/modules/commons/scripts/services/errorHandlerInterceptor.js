@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
-	function($injector, $q, $cookieStore, notificationService, underscore) {
+	function($injector, $q, $cookieStore, notificationService) {
 
 		var interceptor = {
 			"responseError": function(response) {
@@ -13,7 +13,7 @@ angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
 						AuthService.saveAttemptUrl();
 						$state.go("login");
 					} else if (response.data && response.data.message) {
-						underscore.each(response.data.message, function(message) {
+						angular.forEach(response.data.message, function(message) {
 							notificationService.error(message);
 						});
 					}

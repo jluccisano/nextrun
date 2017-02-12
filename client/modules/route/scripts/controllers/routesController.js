@@ -36,7 +36,7 @@ angular.module("nextrunApp.route").controller("RoutesController",
 
 		$scope.publish = function(route, value) {
 			RouteService.publish(route._id, value).then(function() {
-				notificationService.success(gettextCatalog.getString("Votre manifestation a bien été publiée"));
+				notificationService.success(gettextCatalog.getString("Votre parcours a bien été publiée"));
 				$scope.init();
 			});
 		};

@@ -13,10 +13,10 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 		PolylineService,
 		underscore) {
 		return {
-			createRouteViewModel: function(route, chartConfig, gmapsConfig) {
+			createRouteViewModel: function(route, chartConfig, gmapsConfig, showSegment) {
 				var routeDataModel;
 
-				if (underscore.isUndefined(route)) {
+				if (angular.isUndefined(route)) {
 					routeDataModel = {
 						type: "Vélo", //TO be defined
 						segments: [],
@@ -26,23 +26,23 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 					routeDataModel = route;
 				}
 
-				var routeViewModel = new routeBuilder.Route(routeDataModel, angular.copy(chartConfig), angular.copy(gmapsConfig));
+				var routeViewModel = new routeBuilder.Route(routeDataModel, angular.copy(chartConfig), angular.copy(gmapsConfig), showSegment);
 				routeViewModel.setCenter(RouteUtilsService.getCenter({})); //TO be defined
 
 				return routeViewModel;
 
 			},
-			createRoutesViewModel: function(race, chartConfig, gmapsConfig) {
+			/*createRoutesViewModel: function(routes, chartConfig, gmapsConfig) {
 				var routesViewModel = [];
 
-				if (race) {
+				if (routes) {
 					var raceType = RaceTypeEnum.getRaceTypeByName(race.type);
 
-					underscore.each(raceType.routes, function(routeType, index) {
+					angular.forEach(raceType.routes, function(routeType, index) {
 						var currentRoute;
 
-						if (!underscore.isUndefined(race.routes[index])) {
-							currentRoute = race.routes[index];
+						if (!angular.isUndefined(routes[index])) {
+							currentRoute = routes[index];
 						} else {
 							currentRoute = {
 								type: routeType,
@@ -51,14 +51,14 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 							};
 						}
 						var route = new routeBuilder.Route(currentRoute, angular.copy(chartConfig), angular.copy(gmapsConfig));
-						route.setCenter(RouteUtilsService.getCenter(race));
+						//route.setCenter(RouteUtilsService.getCenter(race));
 						routesViewModel.push(route);
 
 					});
 					routesViewModel[0].setVisible(true);
 				}
 				return routesViewModel;
-			},
+			},*/
 			createNewSegment: function(route, destinationLatlng, modeManu) {
 				var lastLatlngOfLastSegment;
 				var isFirstPoint = false;
@@ -151,7 +151,7 @@ angular.module("nextrunApp.route").factory("RouteBuilderService",
 
 				var markers = [];
 
-				underscore.each(races, function(race) {
+				angular.forEach(races, function(race) {
 
 					var marker;
 

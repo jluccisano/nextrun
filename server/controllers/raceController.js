@@ -6,13 +6,15 @@
 var mongoose = require("mongoose"),
     Race = mongoose.model("Race"),
     errorUtils = require("../utils/errorUtils"),
+    mongooseUtils = require("../utils/mongooseUtils"),
     underscore = require("underscore");
 
 /**
  * Load By Id
  */
 exports.load = function(req, res, next, id) {
-    Race.load(id, function(error, race) {
+    mongooseUtils.load(req, res, next, id, Race, "race");
+    /*Race.load(id, function(error, race) {
         if (error) {
             errorUtils.handleError(res, error);
         } else if (!race) {
@@ -21,7 +23,7 @@ exports.load = function(req, res, next, id) {
             req.race = race;
             next();
         }
-    });
+    });*/
 };
 
 
@@ -33,11 +35,14 @@ exports.load = function(req, res, next, id) {
  */
 exports.create = function(req, res) {
     var race = new Race(req.body.race);
+    mongooseUtils.save(req, res, race);
+
+    /*var race = new Race(req.body.race);
     var userConnected = req.user;
 
     //move to model
     race.userId = userConnected._id;
-   
+
     //move to model
     if (race.place.location.latitude && race.place.location.longitude) {
         race.place.geo = {
@@ -54,7 +59,7 @@ exports.create = function(req, res) {
                 raceId: race._id
             });
         }
-    });
+    });*/
 };
 
 /**
@@ -99,12 +104,13 @@ exports.findByUser = function(req, res) {
  * @returns race loaded by load parameter id
  */
 exports.find = function(req, res) {
-    var race = req.race;
+    mongooseUtils.find(req,res,"race");
+    /*var race = req.race;
     if (!underscore.isUndefined(race)) {
         res.status(200).json(race);
     } else {
         errorUtils.handleUnknownData(res);
-    }
+    }*/
 };
 
 
@@ -140,6 +146,31 @@ exports.update = function(req, res) {
         if (error) {
             errorUtils.handleError(res, error);
         } else {
+            res.status(200).json({
+                raceId: race._id
+            });
+        }
+    });
+};
+
+exports.updateRoute = function(req, res) {
+    var race = req.race;
+    var route = req.routeData;
+    console.log(race);
+    console.log(route);
+    Race.update({
+        _id: race._id
+    }, {
+        $set: {
+            lastUpdate: new Date()
+        },
+        $addToSet: {
+            routes: route._id
+        }
+    }, {}, function(error) {
+        if (error) {
+            errorUtils.handleError(res, error);
+        } else {
             res.sendStatus(200);
         }
     });
@@ -152,13 +183,14 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
     var race = req.race;
-    Race.destroy(race._id, function(error) {
+    mongooseUtils.delete(req, res, race._id, Race);
+    /*Race.destroy(race._id, function(error) {
         if (error) {
             errorUtils.handleError(res, error);
         } else {
             res.sendStatus(200);
         }
-    });
+    });*/
 };
 
 
@@ -236,6 +268,8 @@ exports.autocomplete = function(req, res) {
     });
 };
 
+
+
 /**
  * @method Find all races
  * @param req
@@ -250,6 +284,24 @@ exports.findAll = function(req, res) {
             res.status(200).json({
                 items: items
             });
+        }
+    });
+};
+
+exports.updateRoutesRef = function(req, res, next) {
+    var route = req.routeData;
+    console.log(route);
+    Race.update({}, {
+        $pull: {
+            routes: route._id,
+        }
+    }, {
+        multi: true
+    }, function(error) {
+        if (error) {
+            errorUtils.handleError(res, error);
+        } else {
+            next();
         }
     });
 };

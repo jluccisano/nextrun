@@ -12,6 +12,9 @@ angular.module("nextrunApp.commons").factory("RaceService",
             update: function(id, data) {
                 return HttpUtils.put("/api/races/" + id + "/update", data);
             },
+            updateRoute: function(raceId, routeId) {
+                return HttpUtils.put("/api/races/" + raceId + "/route/" + routeId + "/update");
+            },
             delete: function(id) {
                 return HttpUtils.delete("/api/races/" + id + "/delete");
             },

@@ -5,7 +5,13 @@
         right: 0px;
         top:0px;
         z-index: 1000;
+        height: 55px;
     }
+    .navbar-default {
+        background-color: white;
+        border-color: white;
+    }
+        
     .inline-stats {
         z-index: 0;
         position: absolute;
@@ -17,6 +23,7 @@
         padding-right: 25px;
         highcharts-container {
             width: 100%;
+            height: 200px;
         }
     }
     position: absolute;

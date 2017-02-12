@@ -6,6 +6,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         $state,
         $modal,
         $filter,
+        $q,
         RaceService,
         notificationService,
         AuthService,
@@ -17,7 +18,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         RichTextEditorService,
         RouteUtilsService,
         RouteHelperService,
-        raceId) {
+        raceId,
+        RouteService) {
 
         $scope.selection = "";
 
@@ -43,18 +45,29 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
         $scope.raceId = raceId;
 
+        $scope.retrieveRoutes = function() {
+            var promises = [];
+            $scope.routesViewModel = [];
+            
+            angular.forEach($scope.race.routes, function(routeId) {
+                promises.push(RouteService.retrieve(routeId));
+            });
+
+            $q.all(promises).then(function(routes){
+                angular.forEach(routes, function(response){
+                    $scope.routesViewModel.push(RouteBuilderService.createRouteViewModel(response.data, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig()), false);
+                });
+                $scope.selection = $scope.routesViewModel[0].getType() + 0;
+                $scope.routesViewModel[0].setVisible(true);
+            });
+        }
+
         $scope.init = function() {
             RaceService.retrieve($scope.raceId).then(function(response) {
-                $scope.race = response.data.race;
-                $scope.routesViewModel = RouteBuilderService.createRoutesViewModel($scope.race, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
-
-                if (!$scope.selection) {
-                    $scope.selection = $scope.routesViewModel[0].getType() + 0;
-                }
-
-            }).
-            finally(function() {
-                MetaService.ready("Editer une manifestation");
+                $scope.race = response.data;
+                $scope.retrieveRoutes();
+            }).finally(function() {
+                MetaService.ready($scope.race.name, $scope.generateRaceDescription());
             });
         };
 
@@ -80,8 +93,32 @@ angular.module("nextrunApp.race").controller("EditRaceController",
         };
 
         $scope.editRoute = function(routeViewModel) {
-            $state.go("editRoute", {
-                id: routeViewModel.getId()
+            $state.go("editRaceRoute", {
+                id: routeViewModel.getId(),
+                raceId: $scope.race._id
+            });
+        };
+
+        $scope.openDeleteConfirmation = function(routeViewModel) {
+            notificationService.notify({
+                title: gettextCatalog.getString("Confirmation requise"),
+                text: gettextCatalog.getString("Etes-vous sûr de vouloir supprimer ce parcours ?"),
+                hide: false,
+                confirm: {
+                    confirm: true
+                },
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                history: {
+                    history: false
+                }
+            }).get().on('pnotify.confirm', function() {
+                RouteService.delete(routeViewModel.data._id).then(function() {
+                    notificationService.success(gettextCatalog.getString("Le parcours a bien été supprimé"));
+                    $scope.init();
+                });
             });
         };
 

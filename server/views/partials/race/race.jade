@@ -57,6 +57,9 @@ div(class="container view-race")
                 hr
                 nr-address(edit-mode="editMode" race="race")
 
+              a(ng-if="editMode" class="btn btn-link" type="button" ui-sref="newRaceRoute({raceId: race._id})" translate) Ajouter un parcours
+
+
       div(class="bs-docs-section")
         div(ng-repeat="routeViewModel in routesViewModel" ng-if="selection === (routeViewModel.getType() + $index) && routeViewModel.isVisible()" )
           div(class="panel panel-default")
@@ -64,8 +67,10 @@ div(class="container view-race")
               h4(class="panel-title pull-left") {{routeViewModel.getType()}}
               div(class="btn-group pull-right")
                 nr-download(ng-if="!editMode" id="content" get-data="exportGPX(routeViewModel)" class="btn btn-default btn-sm")
-                a(ng-if="editMode" ng-click="editRoute(routeViewModel, $index)" class="btn btn-default btn-sm")
+                a(ng-if="editMode" ng-click="editRoute(routeViewModel)" class="btn btn-default btn-sm")
                   i(class="fa fa-pencil-square-o")
+                a(ng-if="editMode" ng-click="openDeleteConfirmation(routeViewModel)" class="btn btn-default btn-sm")
+                  i(class="fa fa-trash")
             div(class="panel-body")
                 div(id="{{selection}}")
                   include ./templates/map

@@ -13,7 +13,9 @@ var ContactSchema = new Schema({
     creationDate: {
         type: Date,
         default: new Date()
-    }
+    },
+    creationDate: Date,
+    lastUpdate: Date
 });
 
 ContactSchema.path("email").validate(function(email) {
@@ -37,9 +39,48 @@ ContactSchema.path("email").validate(function(email, fn) {
 
 
 ContactSchema.pre("save", function(next) {
+    this.lastUpdate = new Date();
     if (this.isNew) {
-        return next();
+        this.creationDate = new Date();
     }
+    next();
 });
+
+ContactSchema.statics = {
+
+    /**
+     * Find contacts by id
+     *
+     * @param {ObjectId} id
+     * @param {Function} cb
+     */
+
+    load: function(id, cb) {
+        this.findOne({
+            _id: id
+        }).exec(cb);
+    },
+
+    findByCriteria: function(options, cb) {
+
+        var criteria = options.criteria || {};
+        this.find(criteria, {})
+            .limit(options.perPage)
+            .skip(options.perPage * options.page)
+            .exec(cb);
+    },
+
+    /**
+     * Remove user by id
+     *
+     * @param {ObjectId} id
+     * @param {Function} cb
+     */
+    destroy: function(id, cb) {
+        this.remove({
+            _id: id
+        }).exec(cb);
+    }
+};
 
 mongoose.model("Contact", ContactSchema);

@@ -12,8 +12,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
         gettextCatalog,
         RouteHelperService,
         RouteBuilderService,
-        underscore,
-        mapOptions
+        mapOptions,
         dateRanges) {
 
         $scope.setRange = function(index) {
@@ -22,11 +21,11 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
             $scope.search();
         };
         
-        $scope.dateRanges = angular.copy(dateRanges);
+        $scope.dateRanges = angular.copy(dateRanges.getValues());
 
         $scope.criteria = {
             radius: 60,
-            dateRange: $scope.dateRanges[0],
+            dateRange: $scope.dateRanges[0]
         };
 
         $scope.listOfTypes = RaceTypeEnum.getValues();
@@ -51,7 +50,7 @@ angular.module("nextrunApp.race").controller("SearchRaceController",
                 if (response.data.items.length > 0) {
                     $scope.emptyResults = false;
                     $scope.map.markers = RouteBuilderService.convertRacesLocationToMarkers(response.data.items);
-                    underscore.each($scope.map.markers, function(marker) {
+                    angular.forEach($scope.map.markers, function(marker) {
                         marker.closeClick = function() {
                             marker.showWindow = false;
                             $scope.$apply();

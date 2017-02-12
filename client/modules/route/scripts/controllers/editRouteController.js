@@ -4,6 +4,7 @@ angular.module("nextrunApp.route").controller("EditRouteController",
     function(
         $scope,
         $stateParams,
+        $state,
         RouteBuilderService,
         RouteService,
         GpxService,
@@ -12,7 +13,11 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         RouteHelperService,
         MetaService,
         notificationService,
-        gettextCatalog) {
+        gettextCatalog,
+        race,
+        RaceService,
+        AuthService,
+        RouteTypeEnum) {
 
         $scope.location = {
             details: {},
@@ -36,6 +41,9 @@ angular.module("nextrunApp.route").controller("EditRouteController",
             id: 1
         };
 
+        $scope.types = RouteTypeEnum;
+        $scope.gettextCatalog = gettextCatalog;
+
         $scope.tmpRoute = {};
         $scope.route = undefined;
         $scope.routeViewModel = {};
@@ -43,6 +51,8 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         $scope.init = function() {
 
             $scope.routeId = $stateParams.id;
+
+            $scope.race = race.data;
 
             if ($scope.routeId) {
                 RouteService.retrieve($scope.routeId).then(function(response) {
@@ -59,7 +69,7 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         };
 
         $scope.createRoute = function() {
-            $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 250), RouteHelperService.getGmapsConfig());
+            $scope.routeViewModel = RouteBuilderService.createRouteViewModel($scope.route, RouteHelperService.getChartConfig($scope, 180), RouteHelperService.getGmapsConfig(), true);
             $scope.routeViewModel.addClickListener($scope.onClickMap);
             $scope.routeViewModel.setVisible(true);
         };
@@ -74,6 +84,14 @@ angular.module("nextrunApp.route").controller("EditRouteController",
 
         $scope.undo = function(routeViewModel) {
             RouteBuilderService.deleteLastSegment(routeViewModel);
+        };
+
+        $scope.onChange = function(type) {
+            if (type === "Natation") {
+                $scope.modeManu = true;
+            } else {
+                $scope.modeManu = false;
+            }
         };
 
         /*$scope.getFile = function(routeViewModel, file) {
@@ -99,9 +117,20 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         };
 
         $scope.submit = function() {
-            RouteService.saveOrUpdate($scope.routeViewModel.getData()).then(function() {
+            RouteService.saveOrUpdate($scope.routeViewModel.getData()).then(function(response) {
                 notificationService.success(gettextCatalog.getString("Le parcours a bien été créée"));
                 $scope.init();
+
+                if ($scope.race) {
+                    RaceService.updateRoute($scope.race._id, response.data.id).then(
+                        function() {
+                            notificationService.success(gettextCatalog.getString("Votre parcours a bien été ajouté à votre manifestation"));
+                            $state.go("edit", {
+                                id: $scope.race._id
+                            });
+                        });
+                }
+
             });
         };
 

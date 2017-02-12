@@ -113,11 +113,13 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
         script(src="/modules/auth/scripts/controllers/loginController.js")
         script(src="/modules/auth/scripts/controllers/settingsController.js")
         script(src="/modules/auth/scripts/controllers/signupController.js")
+        script(src="/modules/auth/scripts/controllers/usersController.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/home.min.js -->
         script(src="/modules/home/scripts/home.js")
         script(src="/modules/home/scripts/controllers/homeController.js")
+        script(src="/modules/home/scripts/controllers/contactsController.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/race.min.js -->
@@ -150,6 +152,7 @@ html(ng-app="nextrunApp" prefix="og:http://ogp.me/ns#" ng-controller='MainContro
         script(src="/modules/commons/scripts/services/routeService.js")
         script(src="/modules/commons/scripts/services/departmentEnum.js")
         script(src="/modules/commons/scripts/services/raceTypeEnum.js")
+        script(src="/modules/commons/scripts/services/routeTypeEnum.js")
         script(src="/modules/commons/scripts/services/errorHandlerInterceptor.js")
         script(src="/modules/commons/scripts/services/fileReaderService.js")
         script(src="/modules/commons/scripts/services/gmapsApiService.js")

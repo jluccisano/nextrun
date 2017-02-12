@@ -40,6 +40,13 @@ authModule.config(
             data: {
                 access: access.user
             }
+        }).state("users", {
+            url: "/users",
+            templateUrl: "/partials/auth/users",
+            controller: "UsersController",
+            data: {
+                access: access.admin
+            }
         });
 
         $locationProvider.html5Mode(true);

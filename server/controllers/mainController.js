@@ -33,7 +33,7 @@ exports.templates = function(req, res) {
     var templates;
 
     if (type) {
-        templates = "partials/" + type + "/templates" + name;
+        templates = "partials/" + type + "/templates/" + name;
     }
 
     res.render(templates);

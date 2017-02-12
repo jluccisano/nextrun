@@ -18,8 +18,8 @@ angular.module("nextrunApp.race").controller("MyRacesController",
 		$scope.init = function() {
 			RaceService.find($scope.currentPage).then(
 				function(response) {
-					if (response.data && response.data.races && response.data.races.length > 0) {
-						$scope.races = response.data.races;
+					if (response.data && response.data.items && response.data.items.length > 0) {
+						$scope.races = response.data.items;
 						$scope.totalItems = $scope.races.length;
 					} else {
 						$scope.totalItems = 0;

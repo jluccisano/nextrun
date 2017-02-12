@@ -481,15 +481,6 @@ module.exports = function(grunt) {
       },
       bowerInstall: {
         command: "bower install"
-      },
-      elasticsearchInstallTestIdx: {
-        command: "sh ./scripts/es_racesidx_install.sh racesidx_test_v1 nextrun_test " + config.test.host,
-      },
-      elasticsearchInstallProdIdx: {
-        command: "sh ./scripts/es_racesidx_install.sh racesidx_v1 nextrun " + config.prod.host,
-      },
-      elasticsearchStart: {
-        command: "elasticsearch"
       }
     },
     bgShell: {
@@ -520,7 +511,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask("test-server", ["test-server:unit"]); //"test-server:integration"
   grunt.registerTask("test-server:unit", ["mochaTest:unit", "mochaTest:unit-coverage", "mochaTest:unit-travis-cov"]);
-  grunt.registerTask("test-server:integration", ["shell:elasticsearchInstallTestIdx", "mochaTest:integration"]); //"mochaTest:integration-coverage", "mochaTest:integration-travis-cov"
+  grunt.registerTask("test-server:integration", ["mochaTest:integration"]); //"mochaTest:integration-coverage", "mochaTest:integration-travis-cov"
 
 
   grunt.registerTask("install", ["update", "shell:seleniumInstall", "copy:move_css"]);

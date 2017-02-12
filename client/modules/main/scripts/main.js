@@ -41,13 +41,6 @@ nextrunApp.config(
       data: {
         access: access.public
       }
-    }).state("contacts", {
-      url: "/contacts",
-      templateUrl: "/partials/main/contacts",
-      controller: "ContactsController",
-      data: {
-        access: access.public
-      }
     });
 
     $locationProvider.html5Mode(true);

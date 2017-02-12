@@ -20,6 +20,23 @@ routeModule.config(
 			controller: "EditRouteController",
 			data: {
 				access: access.user
+			},
+			resolve: {
+				race: function() {
+					return {}
+				}
+			}
+		}).state("editRaceRoute", {
+			url: "/routes/:id/race/:raceId/edit",
+			templateUrl: "/partials/route/mapEditor",
+			controller: "EditRouteController",
+			data: {
+				access: access.user
+			},
+			resolve: {
+				race: function($stateParams, RaceService) {
+					return RaceService.retrieve($stateParams.raceId);
+				}
 			}
 		}).state("newRoute", {
 			url: "/routes/new",
@@ -27,6 +44,23 @@ routeModule.config(
 			controller: "EditRouteController",
 			data: {
 				access: access.user
+			},
+			resolve: {
+				race: function() {
+					return {}
+				}
+			}
+		}).state("newRaceRoute", {
+			url: "/routes/race/:raceId/new",
+			templateUrl: "/partials/route/mapEditor",
+			controller: "EditRouteController",
+			data: {
+				access: access.user
+			},
+			resolve: {
+				race: function($stateParams, RaceService) {
+					return RaceService.retrieve($stateParams.raceId);
+				}
 			}
 		}).state("routes", {
 			url: "/users/routes",

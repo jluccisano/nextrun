@@ -23,9 +23,21 @@ angular.module("nextrunApp.commons").factory("AuthService",
         }
 
         return {
+            find: function(page) {
+                return HttpUtils.get("/api/users/find/page/" + page);
+            },
+            delete: function(id) {
+                return HttpUtils.delete("/api/users/" + id + "/delete");
+            },
             authorize: function(accessLevel) {
                 var role = currentUser.role;
                 return accessLevel.bitMask & role.bitMask;
+            },
+            isAdmin: function(user) {
+                if (user === undefined) {
+                    user = currentUser;
+                }
+                return user.role.title === userRoles.admin.title;
             },
             isLoggedIn: function(user) {
                 if (user === undefined) {

@@ -8,9 +8,6 @@ angular.module("nextrunApp").controller("HeaderController",
 		RaceService) {
 
 		$scope.user = AuthService.user;
-		$scope.userRoles = AuthService.userRoles;
-		$scope.accessLevels = AuthService.accessLevels;
-
 
 		$scope.autocomplete = function(text) {
 			return RaceService.autocomplete(text).then(function(response) {
@@ -27,6 +24,14 @@ angular.module("nextrunApp").controller("HeaderController",
 			AuthService.logout().then(function() {
 				$state.go("login");
 			});
+		};
+
+		$scope.isLoggedIn = function() {
+			return AuthService.isLoggedIn();
+		};
+
+		$scope.isAdmin = function() {
+			return AuthService.isAdmin();
 		};
 
 		$scope.login = function() {

@@ -1,10 +1,11 @@
 var routeController = require("../controllers/routeController"),
+    raceController = require("../controllers/raceController"),
     routerService = require("../middlewares/router"),
     accessLevels = require("../../client/routingConfig").accessLevels;
     
 var routes = [
     {
-        path: "/:routeId",
+        path: "/:id",
         httpMethod: "GET",
         middleware: [routeController.find],
         accessLevel: accessLevels.public
@@ -19,12 +20,12 @@ var routes = [
         middleware: [routeController.findByUser],
         accessLevel: accessLevels.user
     },{
-        path: "/:routeId/delete",
+        path: "/:id/delete",
         httpMethod: "DELETE",
-        middleware: [routeController.delete],
+        middleware: [raceController.updateRoutesRef, routeController.delete],
         accessLevel: accessLevels.user
     },{
-        path: "/:routeId/update",
+        path: "/:id/update",
         httpMethod: "PUT",
         middleware: [routeController.update],
         accessLevel: accessLevels.user
@@ -33,6 +34,6 @@ var routes = [
 
 module.exports = function(app, express) {
     var router = express.Router();
-    router.param("routeId", routeController.load);
+    router.param("id", routeController.load);
     routerService.register(app, router, routes, "/api/routes");
 };

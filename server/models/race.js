@@ -131,12 +131,24 @@ var RaceSchema = new Schema({
     }
 });
 
-RaceSchema.pre("save", function(next) {
+RaceSchema.pre("save", function(next, req, callback) {
+
+    var userConnected = req.user;
+    this.userId = userConnected._id;
+
+    //move to model
+    if (this.place.location.latitude && this.place.location.longitude) {
+        this.place.geo = {
+            type: "Point",
+            coordinates: [this.place.location.latitude, this.place.location.longitude]
+        };
+    }
+
     this.lastUpdate = new Date();
     if(this.isNew) {
         this.creationDate = new Date();
     }
-    next();
+    next(callback);
 });
 
 RaceSchema.path("name").validate(function(name, fn) {

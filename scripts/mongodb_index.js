@@ -58,5 +58,7 @@ db.races.find({$and: [{ "place.geo": { $near: { $geometry: { type: "Point", coor
 
 db.races.find( { "place.geo" :{ $geoWithin :{ $centerSphere :[ [ 47.322047, 5.09 ] , 60 ] } } } )
 
+db.users.update({ email: "joseph.luccisano@gmail.com"}, { $set: { "role" : { "bitMask" : 4, "title" : "admin" } }}, {upsert: false});
+
 
 

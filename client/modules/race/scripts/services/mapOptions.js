@@ -1,4 +1,4 @@
-angular.module("nextrurApp.race").value("mapOptions", {
+angular.module("nextrunApp.race").value("mapOptions", {
 	isVisible: false,
 	editMode: true,
 	segments: [],

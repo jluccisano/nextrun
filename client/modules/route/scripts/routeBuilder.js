@@ -9,7 +9,7 @@ var routeBuilder = {};
 
 (function() {
 	
-	routeBuilder.Route = function(dataModel, chartConfig, gmapsConfig) {
+	routeBuilder.Route = function(dataModel, chartConfig, gmapsConfig, showSegment) {
 
 		if(!dataModel) {
 			return;
@@ -173,6 +173,9 @@ var routeBuilder = {};
 						this.data.minElevation = this.data.elevationPoints[k - 1].elevation;
 					}
 				}
+
+				this._chartConfig.yAxis.min = this.data.minElevation;
+				this._chartConfig.yAxis.max = this.data.maxElevation;
 			}
 		};
 
@@ -520,7 +523,7 @@ var routeBuilder = {};
 		this.segments = this._createSegmentsViewModel(this.data.segments);
 		this.elevationPoints = this._createElevationPointsViewModel(this.data.elevationPoints);
 
-		this._markers = this._createMarkersDataModel(this.segments);
+		this._markers = this._createMarkersDataModel(this.segments, showSegment);
 		this._polylines = this._createPolylinesDataModel(this.segments);
 
 		this.data.elevationPoints = _.sortBy(this.data.elevationPoints, function(elevationPoint) {
@@ -537,6 +540,11 @@ var routeBuilder = {};
 		this._chartConfig.series[4].data = this._climbs.climbsSup15;
 
 		this._chartConfig.title = this.data.type;
+
+		if(this.data.minElevation) {
+			this._chartConfig.yAxis.min = this.data.minElevation;
+			this._chartConfig.yAxis.max = this.data.maxElevation;
+		}
 
 		this._calculateElevationDataAlongRoute();
 

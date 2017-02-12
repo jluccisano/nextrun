@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsApiService, underscore) {
+angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsApiService) {
 
 	return {
 
@@ -57,8 +57,8 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsAp
 				longitude: 2.43896484375,
 			};
 
-			if (!underscore.isUndefined(race.pin)) {
-				if (!underscore.isUndefined(race.pin.location)) {
+			if (angular.isDefined(race.pin)) {
+				if (angular.isDefined(race.pin.location)) {
 					center = {
 						latitude: race.pin.location.lat,
 						longitude: race.pin.location.lon
@@ -90,7 +90,7 @@ angular.module("nextrunApp.route").factory("RouteUtilsService", function(GmapsAp
 		getAllLatlngFromPoints: function(points) {
 			var samplesLatlng = [];
 
-			underscore.each(points, function(point) {
+			angular.forEach(points, function(point) {
 				samplesLatlng.push(GmapsApiService.LatLng(point.lat, point.lng));
 			});
 

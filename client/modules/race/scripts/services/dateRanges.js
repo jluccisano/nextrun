@@ -1,5 +1,6 @@
-angular.module("nextrurApp.race").value("dateRanges", function(gettextCatalog) {
-	return [{
+angular.module("nextrunApp.race").factory("dateRanges", function(gettextCatalog) {
+	
+	var dateRanges = [{
 		label: gettextCatalog.getString("Les 7 Prochains jours"),
 		startDate: moment(),
 		endDate: moment().add("days", 6)
@@ -19,5 +20,11 @@ angular.module("nextrurApp.race").value("dateRanges", function(gettextCatalog) {
 		label: gettextCatalog.getString("Personnalisée"),
 		startDate: moment(),
 		endDate: undefined
-	}]
+	}];
+
+	return {
+		getValues: function() {
+			return dateRanges;
+		}
+	};
 });

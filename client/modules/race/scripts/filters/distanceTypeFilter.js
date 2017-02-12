@@ -1,11 +1,11 @@
 "use strict";
 
-angular.module("nextrunApp.race").filter("distanceTypeFilter", function(underscore) {
+angular.module("nextrunApp.race").filter("distanceTypeFilter", function() {
 	return function(items, name) {
 		var distances = [];
 		
 		if(name) {			
-			underscore.each(items, function(item) {
+			angular.forEach(items, function(item) {
 				if (item.name === name) {
 					distances = item.distances;
 				}

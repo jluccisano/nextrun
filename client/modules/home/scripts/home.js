@@ -26,6 +26,13 @@ homeModule.config(
             data: {
                 access: access.public
             }
+        }).state("contacts", {
+            url: "/contacts",
+            templateUrl: "/partials/home/contacts",
+            controller: "ContactsController",
+            data: {
+                access: access.admin
+            }
         });
 
         $locationProvider.html5Mode(true);

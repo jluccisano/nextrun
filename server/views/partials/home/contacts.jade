@@ -1,0 +1,30 @@
+div(class="container contacts")
+	h1(translate) Contacts
+	div(class="pull-right")
+		button(class="btn btn-primary" ng-click="addNewContact()") 
+			span(class="glyphicon glyphicon-plus") 
+			span(translate)  Ajouter
+	table(class="table table-hover")
+		thead
+			tr
+				th(style="width: 40%" translate) Email
+				th(style="width: 10%" translate) Type
+				th(style="width: 15%" translate) Dernière mise à jour
+				th(style="width: 5%")
+				th(style="width: 5%")
+				th(style="width: 10%" translate) Activer
+		tbody
+			tr(ng-repeat="contact in contacts")
+				td 
+					a(ui-sref="viewContact({id: contact._id})") {{contact.email}}	
+				td {{contact.type | translate}}
+				td(ng-if="contact.lastUpdate != null")  {{contact.lastUpdate | date : 'dd/MM/yyyy HH:mm'}}
+				td
+					a(ui-sref="editContact({id: contact._id})" translate)
+						span(class="glyphicon glyphicon-edit")
+				td
+					a(ng-click="openDeleteConfirmation(contact)")
+						span(class="glyphicon glyphicon-trash")
+	div(class="col-lg-8 col-lg-offset-4")
+		pagination(boundary-links="true" ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
+				

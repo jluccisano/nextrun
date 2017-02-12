@@ -3,9 +3,9 @@ div(class="edit-route")
 		div(class="collapse navbar-collapse")
 			form(class="navbar-form navbar-left" role="search")
 				div(class="input-group")
-					input(type="text" class="form-control" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="map.options" details="location.details")
+					input(type="text" class="form-control" ng-change="centerToLocation(routeViewModel, location.details)" placeholder="{{'Entrer un lieu' | translate}}" ng-model="location.name" gmaps-autocomplete options="map.options" details="location.details")
 					span(class="input-group-btn")
-						button(class="btn btn-default" type="button" ng-click="centerToLocation(routeViewModel, location.details)")
+						button(class="btn btn-default" type="submit")
 							span(class="glyphicon glyphicon-search")
 			
 			ul(class="nav navbar-nav")
@@ -26,21 +26,29 @@ div(class="edit-route")
 
 			//div(class="navbar-form navbar-right")
 			//	input(type="file" ng-model="$files" nr-file-select="onFileSelect($files, routeViewModel)")
+			form(class="navbar-form navbar-right")
+				div(class="form-group")
+					label(class="control-label" for="name" translate) Nom
+					input(class="form-control" id="name" name="name" type="text" ng-model="routeViewModel.data.name")
 
-			ul(class="nav navbar-nav navbar-right")
-				div(class="btn-group" dropdown is-open="status.isopen")
-					button(type="button" class="btn btn-primary" ng-click="submit()") Enregistrer
-					button(type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" dropdown-toggle)
-						span(class="caret")
-						span(class="sr-only") Split button!
-					ul(class="dropdown-menu" role="menu")
-						li
-							a(ng-click="submit()" translate) Enregistrer
-						li(class="divider")
-						li
-							a(ng-click="import()" translate) Importer GPX
-						li
-							a(ng-click="cancel()" translate) Fermer
+				div(class="form-group")
+					label(class="control-label") {{'Type' | translate}}
+					select(class="form-control" class="form-control" ng-change="onChange(routeViewModel.data.type)" name="type" ng-model="routeViewModel.data.type" ng-options="type as gettextCatalog.getString(type) for type in types" ng-required="true")
+						option(value="") {{'Sélectionner...' | translate}}
+				div(class="form-group")
+					div(class="btn-group" dropdown is-open="status.isopen")
+						button(type="button" class="btn btn-primary" ng-click="submit()") Enregistrer
+						button(type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" dropdown-toggle)
+							span(class="caret")
+							span(class="sr-only") Split button!
+						ul(class="dropdown-menu" role="menu")
+							li
+								a(ng-click="submit()" translate) Enregistrer
+							li(class="divider")
+							li
+								a(ng-click="import()" translate) Importer GPX
+							li
+								a(ng-click="cancel()" translate) Fermer
 
 	include edit
 	div(class="inline-stats")

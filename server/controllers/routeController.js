@@ -6,13 +6,15 @@
 var mongoose = require("mongoose"),
     Route = mongoose.model("Route"),
     errorUtils = require("../utils/errorUtils"),
+    mongooseUtils = require("../utils/mongooseUtils"),
     underscore = require("underscore");
 
 /**
  * Load By Id
  */
 exports.load = function(req, res, next, id) {
-    Route.load(id, function(error, route) {
+    mongooseUtils.load(req, res, next, id, Route, "routeData");
+    /*Route.load(id, function(error, route) {
         if (error) {
             errorUtils.handleError(res, error);
         } else if (!route) {
@@ -21,11 +23,13 @@ exports.load = function(req, res, next, id) {
             req.routeData = route;
             next();
         }
-    });
+    });*/
 };
 
 exports.create = function(req, res) {
-    var route = new Route(req.body.route);
+    var route = new Route(req.body);
+    mongooseUtils.save(req, res, route);
+    /*var route = new Route(req.body);
     var userConnected = req.user;
 
     route.userId = userConnected._id;
@@ -38,20 +42,20 @@ exports.create = function(req, res) {
                 routeId: route._id
             });
         }
-    });
+    });*/
 };
 
 exports.update = function(req, res) {
     var route = req.routeData;
     var dataToUpdate = req.body;
-    
+
     if (dataToUpdate._id) {
         delete dataToUpdate._id;
     }
     dataToUpdate.lastUpdate = new Date();
 
     Route.update({
-        id: route._id
+        _id: route._id
     }, {
         $set: dataToUpdate
     }, {
@@ -60,7 +64,9 @@ exports.update = function(req, res) {
         if (error) {
             errorUtils.handleError(res, error);
         } else {
-            res.sendStatus(200);
+            res.status(200).json({
+                id: route._id
+            });
         }
     });
 };
@@ -72,12 +78,13 @@ exports.update = function(req, res) {
  * @returns route loaded by parameter id
  */
 exports.find = function(req, res) {
-    var route = req.routeData;
+    mongooseUtils.find(req, res, "routeData");
+    /*var route = req.routeData;
     if (!underscore.isUndefined(route)) {
         res.status(200).json(route);
     } else {
         errorUtils.handleUnknownData(res);
-    }
+    }*/
 };
 
 /**
@@ -114,6 +121,8 @@ exports.findByUser = function(req, res) {
     });
 };
 
+
+
 /**
  * @method delete route
  * @param req
@@ -121,11 +130,12 @@ exports.findByUser = function(req, res) {
  */
 exports.delete = function(req, res) {
     var route = req.routeData;
-    Route.destroy(route._id, function(error) {
+    mongooseUtils.delete(req, res, route._id, Route);
+    /*Route.destroy(route._id, function(error) {
         if (error) {
             errorUtils.handleError(res, error);
         } else {
             res.sendStatus(200);
         }
-    });
+    });*/
 };

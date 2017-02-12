@@ -36,8 +36,9 @@ var UserSchema = new Schema({
             type: String
         },
     },
-    lastUpdate: Date,
-    facebook: {}
+    facebook: {},
+    creationDate: Date,
+    lastUpdate: Date
 });
 
 
@@ -101,6 +102,12 @@ UserSchema.pre("save", function(next) {
         return next();
     }
 
+    this.provider = "local";
+    this.role = userRoles.user;
+
+    this.lastUpdate = new Date();
+    this.creationDate = new Date();
+
     if (!validatePresenceOf(this.password) && authTypes.indexOf(this.provider) === -1) {
         next(new Error("error.invalidPassword"));
     } else {
@@ -113,6 +120,32 @@ UserSchema.pre("save", function(next) {
  */
 
 UserSchema.statics = {
+
+    /**
+     * Find user by id
+     *
+     * @param {ObjectId} id
+     * @param {Function} cb
+     */
+
+    load: function(id, cb) {
+        this.findOne({
+            _id: id
+        }).exec(cb);
+    },
+
+    findByCriteria: function(options, cb) {
+
+        var criteria = options.criteria || {};
+        this.find(criteria, {
+            hashedPassword: 0,
+            salt: 0
+        })
+            .limit(options.perPage)
+            .skip(options.perPage * options.page)
+            .exec(cb);
+    },
+
     /**
      * Remove user by id
      *

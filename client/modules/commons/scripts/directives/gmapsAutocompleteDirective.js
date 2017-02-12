@@ -25,7 +25,7 @@
  *    }
  **/
 angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
-  function(GmapsApiService,DepartmentEnum, underscore) {
+  function(GmapsApiService,DepartmentEnum) {
 
     return {
       restrict: "A",
@@ -107,9 +107,9 @@ angular.module("nextrunApp.commons").directive("gmapsAutocomplete",
           }
 
           if ("undefined" !== typeof result.address_components) {
-            underscore.each(result.address_components, function(component) {
+            angular.forEach(result.address_components, function(component) {
 
-              underscore.each(component.types, function(type) {
+              angular.forEach(component.types, function(type) {
 
                 if ("administrative_area_level_2" === type) {
                   departmentCode = component.short_name;

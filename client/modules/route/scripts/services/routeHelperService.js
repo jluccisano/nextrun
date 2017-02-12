@@ -8,6 +8,17 @@ angular.module("nextrunApp.route").factory("RouteHelperService",
                 return {
                     loading: false,
                     options: {
+                        legend: {
+                            itemStyle: {
+                                "color": "#333333",
+                                "cursor": "pointer",
+                                "fontSize": "8px",
+                                "fontWeight": "bold"
+                            }
+                        },
+                        exporting: {
+                            enabled: false
+                        },
                         chart: {
                             zoomType: "xy",
                             height: height,

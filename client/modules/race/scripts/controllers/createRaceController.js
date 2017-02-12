@@ -39,7 +39,7 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 
 			RaceService.create(data).then(function(response) {
 				notificationService.success(gettextCatalog.getString("La manifestation a bien été créée"));
-				$scope.openRedirectionModal(response.data.raceId);
+				$scope.openRedirectionModal(response.data.id);
 				$cookieStore.remove("race");
 			});
 		};

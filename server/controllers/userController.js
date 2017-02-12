@@ -10,8 +10,43 @@ var mongoose = require("mongoose"),
     passport = require("passport"),
     email = require("../middlewares/notification"),
     underscore = require("underscore"),
+    mongooseUtils = require("../utils/mongooseUtils"),
     logger = require("../logger");
 
+
+/**
+ * Load By Id
+ */
+exports.load = function(req, res, next, id) {
+    mongooseUtils.load(req, res, next, id, User, "userLoaded");
+    /*User.load(id, function(error, user) {
+        if (error) {
+            errorUtils.handleError(res, error);
+        } else if (!user) {
+            errorUtils.handleUnknownId(res);
+        } else {
+            req.userLoaded = user;
+            next();
+        }
+    });*/
+};
+
+
+/**
+ * @method find route
+ * @param req
+ * @param res
+ * @returns route loaded by parameter id
+ */
+exports.find = function(req, res) {
+    mongooseUtils.find(req,res,"user");
+    /*var user = req.user;
+    if (!underscore.isUndefined(user)) {
+        res.status(200).json(user);
+    } else {
+        errorUtils.handleUnknownData(res);
+    }*/
+};
 
 /**
  * @method create new user
@@ -20,16 +55,11 @@ var mongoose = require("mongoose"),
  * @returns success if OK
  */
 exports.signup = function(req, res) {
-    var newUser;
 
-    if (!underscore.isUndefined(req.body) && !underscore.isUndefined(req.body.user)) {
-
-        newUser = req.body.user;
-
-        var user = new User(newUser);
-        user.provider = "local";
+        var user = new User(req.body.user);
+       /* user.provider = "local";
         user.role = userRoles.user;
-        user.lastUpdate = new Date();
+        user.lastUpdate = new Date();*/
 
         user.save(function(err) {
             if (err) {
@@ -39,7 +69,7 @@ exports.signup = function(req, res) {
                 });
             }
 
-            req.logIn(user, function(err) {
+            req.login(user, function(err) {
                 if (err) {
                     logger.error(err);
                     return res.status(400).json({
@@ -53,11 +83,7 @@ exports.signup = function(req, res) {
                 });
             });
         });
-    } else {
-        return res.status(400).json({
-            message: ["error.bodyParamRequired"]
-        });
-    }
+    
 };
 
 /**
@@ -90,7 +116,7 @@ exports.login = function(req, res) {
             return res.status(400).json(message);
         }
 
-        req.logIn(user, function(err) {
+        req.login(user, function(err) {
             if (err) {
                 logger.error(err);
                 return res.status(400).json(message);
@@ -341,4 +367,53 @@ exports.deleteAccount = function(req, res) {
             });
         }
     });
+};
+
+/**
+ * @method find
+ * @param req
+ * @param res
+ * @returns success if OK
+ */
+exports.findAll = function(req, res) {
+    var page = 1;
+    var perPage = 10;
+    var criteria = {};
+
+    if (req.params.page) {
+        page = req.params.page;
+    }
+
+    var options = {
+        perPage: perPage,
+        page: page - 1,
+        criteria: criteria
+    };
+
+    User.findByCriteria(options, function(error, users) {
+        if (error) {
+            errorUtils.handleError(res, error);
+        } else {
+            res.status(200).json({
+                items: users
+            });
+        }
+    });
+};
+
+/**
+ * @method delete user
+ * @param req
+ * @param res
+ */
+exports.delete = function(req, res) {
+    var user = req.userLoaded;
+    mongooseUtils.delete(req, res, user._id, User);
+    /*User.destroy(user._id, function(error) {
+        if (error) {
+            errorUtils.handleError(res, error);
+        } else {
+            res.sendStatus(200);
+        }
+    });*/
 };
