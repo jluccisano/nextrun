@@ -30,12 +30,12 @@ describe('Users', function () {
 
       it('no email - should respond with errors', function (done) {
        superagent.post('http://localhost:3000/users/signup')
-        .send({user: { username:'foobar', email: '', password: 'foobar' }})
+        .send({ username:'foobar', email: '', password: 'foobar' })
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
            res.should.have.status(400);
-           res.body.errors.email.message.should.equal("error.emailCannotBeBlank");
+           res.body.message[0].should.equal("error.emailCannotBeBlank");
            done();
         });
       });
@@ -58,7 +58,7 @@ describe('Users', function () {
 
       it('should response success', function (done) {
        superagent.post('http://localhost:3000/users/signup')
-        .send({user: { username:'foobar', email: 'foobar@example.com', password: 'foobar' }})
+        .send({ username:'foobar', email: 'foobar@example.com', password: 'foobar' })
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);

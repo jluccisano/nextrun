@@ -5,7 +5,7 @@
 
 var mongoose = require('mongoose')
 , User = mongoose.model('User')
-, utils = require('../utils/errorutils')
+, errorUtils = require('../utils/errorutils')
 , util = require('util')
 , userRoles = require('../../public/js/client/routingConfig').userRoles
 , email = require('../../config/middlewares/notification');
@@ -24,12 +24,12 @@ exports.signup = function (req, res) {
 
 	user.save(function (err) {
 		if (err) {
-      return res.json(400,  err );
+      return res.json(400,  {message: errorUtils.errors(err.errors)  } );
 		}
 		
 		req.logIn(user, function(err) {
 			if (err) {
-        return res.json(400,  err );
+        return res.json(400,   {message: errorUtils.errors(err.errors)  } );
 			} 
       return res.json(200, { "role": user.role, "username": user.username });
 		});
@@ -94,7 +94,7 @@ exports.forgotPassword = function (req, res) {
                 email.sendEmailPasswordReinitialized(user.email, newPassword);
                 return res.json(200);
               } else {
-                return res.json(400, {message: err.errors });
+                return res.json(400, {message: errorUtils.errors(err.errors)  });
               }
           });
 

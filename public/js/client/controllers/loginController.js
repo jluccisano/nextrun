@@ -1,23 +1,11 @@
-nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$rootScope','Auth','Alert',
-	function($scope, $http, $location, $rootScope, Auth, Alert) {
-
-		$scope.user = {
-							_csrf: jQuery('#_csrf').val(),
-							email: jQuery('#email').val(), 
-							password: jQuery('#password').val()
-						};
+nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$rootScope','Auth','Alert','$modal','$log',
+	function($scope, $http, $location, $rootScope, Auth, Alert, $modal,$log) {
 
 		$scope.signup = function() {
 			$location.path('/signup');
 		};
 
 		$scope.submit = function() {
-
-			$scope.user =  {
-					_csrf: jQuery('#_csrf').val(),
-					email: jQuery('#email').val(), 
-					password: jQuery('#password').val()
-			};
 
 			Auth.login({
                 _csrf: jQuery('#_csrf').val(),
@@ -29,33 +17,8 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$roo
 		
             },
             function(error) {
-            	Alert.add("danger", error.message, 3000);
+            	Alert.add("danger", error.message[0], 3000);
             });
-
-			/*
-
-			jQuery.ajax({
-				type: "POST",
-				url: "/users/session",
-				data: $scope.user,
-				dataType: 'json'
-			}).done(function(data) {
-				
-				if (data.response === 'success') {
-
-					$scope.$apply(function() {
-						$location.path('/myraces');
-					});
-					
-				} else {
-
-					jQuery('.errors').addClass('in').removeClass('hide');
-					var error = jQuery.t(data.response.message);
-					if(error) {
-						jQuery('.errors').text(error);
-					}
-				}
-			});*/
 		};
 
 
@@ -100,12 +63,52 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$roo
 			}
 		});
 
+		$scope.items = ['item1', 'item2', 'item3'];
+
+		$scope.open = function () {
+
+		    var modalInstance = $modal.open({
+			      templateUrl: 'partials/forgotpassword',
+			      controller: 'ModalInstanceCtrl',
+			      resolve: {
+			        items: function () {
+			          return $scope.items;
+			        }
+			      }
+			    });
+
+			    modalInstance.result.then(function (selectedItem) {
+			      $scope.selected = selectedItem;
+			    }, function () {
+			      $log.info('Modal dismissed at: ' + new Date());
+			    });
+  		};
+
 		
 
 }]);
 
-nextrunControllers.controller('ForgotPasswordCtrl', ['$scope','$location',
-	function($scope, $location) {
+nextrunControllers.controller('ModalInstanceCtrl', ['$scope','$modalInstance', 'items',
+	function($scope, $modalInstance, items) {
+
+		  $scope.items = items;
+		  $scope.selected = {
+		    item: $scope.items[0]
+		  };
+
+		  $scope.ok = function () {
+		    $modalInstance.close($scope.selected.item);
+		  };
+
+		  $scope.cancel = function () {
+		    $modalInstance.dismiss('cancel');
+		  };
+  	}
+]);
+
+/*
+nextrunControllers.controller('ForgotPasswordCtrl', ['$scope','$location','Auth','Alert',
+	function($scope, $location, Auth, Alert) {
 
 		$scope.forgotPassword = function() {
 
@@ -123,31 +126,8 @@ nextrunControllers.controller('ForgotPasswordCtrl', ['$scope','$location',
 				$location.path('/login');
             },
             function(error) {
-            	Alert.add("danger", error.message, 3000);
+            	Alert.add("danger", error.message[0], 3000);
             });
-
-			/*jQuery.ajax({
-				type: "POST",
-				url: "/users/forgotpassword",
-				data: $scope.email,
-				dataType: 'json'
-			}).done(function(data) {
-				if (data.response === 'success') {
-
-					jQuery('#forgotPasswordModal').modal('hide');
-
-					$scope.$apply(function() {
-						$location.path('/login');
-					});
-				} else {
-
-					jQuery('.errors').addClass('in').removeClass('hide');
-					var error = jQuery.t(data.response);
-					if(error) {
-						jQuery('.errors').text(error);
-					}
-				}
-			});*/
 		};
 		
 		jQuery('#forgotPasswordForm').validate({
@@ -185,3 +165,4 @@ nextrunControllers.controller('ForgotPasswordCtrl', ['$scope','$location',
 		
 	}
 ]);
+*/

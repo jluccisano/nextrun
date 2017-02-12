@@ -11,8 +11,8 @@ module.exports = {
         callbackURL: "http://localhost:3000/auth/facebook/callback"
     },
     mailgun: {
-      user:"user",
-      password:"pass"
+      user:"devmaster@nextrunjosephluccisano.mailgun.org",
+      password:"devmaster"
     }
   },
   test: {

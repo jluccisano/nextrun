@@ -11,6 +11,7 @@ a {
  border:none;
 }*/
 
+
 .keyword span {
   color: #3276b1;
 }
@@ -261,4 +262,8 @@ a {
 .navbar-inverse .navbar-nav > .open > a:focus {
   color: #ffffff;
   background-color: #3276b1;
+}
+
+.modal {
+    display: block;
 }

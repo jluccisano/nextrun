@@ -17,7 +17,7 @@ app.get('/defaultsite', function (req, res) {
   res.redirect('/');
 });
 
-app.get('/*', mainController.index);
+app.get('/', mainController.index);
 app.get('/partials/:name', mainController.partials);
 app.get('/partials/race/:name', mainController.racePartials);
 app.get('/partials/user/:name', mainController.userPartials);

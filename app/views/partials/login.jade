@@ -1,4 +1,4 @@
-div.container(ng-controller='LoginCtrl', style="margin-top:50px")
+div.container(data-ng-controller='LoginCtrl', style="margin-top:50px")
 	div.row
 		div.col-lg-4.col-lg-offset-4
 			div.panel.panel-default
@@ -17,21 +17,5 @@ div.container(ng-controller='LoginCtrl', style="margin-top:50px")
 						button.btn.btn-link(id="signupLink", type="button", data-ng-click="signup()") S'inscrire
 						hr
 						button.btn.btn-link(id="forgotPasswordLink", type="button", data-toggle="modal", data-target="#forgotPasswordModal") Mot de passe oublié ?
-	div.container(data-ng-controller='ForgotPasswordCtrl')
-		div.modal.fade(id="forgotPasswordModal",tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
-			div.modal-dialog
-					div.modal-content
-						div.modal-header
-							button.close(type="button",data-dismiss="modal",aria-hidden="true")
-							h4.modal-title Entrez votre adresse email:
-						div.modal-body
-							div.row
-								div.col-lg-10
-									form(id="forgotPasswordForm", role="form", style="margin-top:50px")
-										div.form-group.test
-											label.control-label(for="forgotEmail") Email
-											input.form-control(type="email", name="forgotEmail", id="forgotEmail", placeholder="Email")
-										div.alert.alert-danger.fade.hide.errors
-										button.btn.btn-default(type="button",data-dismiss="modal") Annuler
-										button.btn.btn-primary(type="submit") Envoyer
-						div.modal-footer
+						button.btn.btn-link(id="forgotPasswordLink", type="button", ng-click="open()") test
+

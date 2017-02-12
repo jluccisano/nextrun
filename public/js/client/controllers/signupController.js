@@ -1,12 +1,5 @@
-nextrunControllers.controller('SignupCtrl', ['$scope','$http', '$location', '$rootScope','Auth', 'Alert'
+nextrunControllers.controller('SignupCtrl', ['$scope','$http', '$location', '$rootScope','Auth', 'Alert',
 	function($scope, $http, $location, $rootScope, Auth, Alert) {
-
-	$scope.user = {
-			_csrf: jQuery('#_csrf').val(),
-			username: jQuery('#username').val(), 
-			email: jQuery('#email').val(), 
-			password: jQuery('#password').val()
-	};
 						
 	jQuery('#signupForm').validate({
 		submitHandler: function(form) {
@@ -22,7 +15,7 @@ nextrunControllers.controller('SignupCtrl', ['$scope','$http', '$location', '$ro
 				$location.path('/');
             },
             function(error) {
-                Alert.add("danger", error.message, 3000);
+                Alert.add("danger", error.message[0], 3000);
             });			
 		},
 		rules: {
