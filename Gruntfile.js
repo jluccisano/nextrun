@@ -14,11 +14,17 @@ module.exports = function(grunt) {
         },
         src: ['test/test-*.js']
       },
-      coverage: {
+      'html-cov': {
         options: {
           reporter: 'html-cov',
           quiet: true,
           captureFile: 'coverage.html'
+        },
+        src: ['test/test-*.js']
+      },
+      'travis-cov': {
+        options: {
+          reporter: 'travis-cov'
         },
         src: ['test/test-*.js']
       }

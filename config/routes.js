@@ -3,6 +3,7 @@
  */
 
 var mainController = require('../app/controllers/mainController')
+,userController = require('../app/controllers/userController')
 ,contactController = require('../app/controllers/contactController');
 
 
@@ -22,6 +23,11 @@ app.get('/partials/:name', mainController.partials);
 /** JSON API **/
 
 /** contacts **/
-app.post('/contacts', contactController.find, contactController.create);
+app.post('/contacts', contactController.create);
+
+
+/** users **/
+app.post('/users', userController.create);
+
 
 };

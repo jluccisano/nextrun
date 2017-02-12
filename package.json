@@ -18,8 +18,8 @@
     "email": "joseph.luccisano@gmail.com"
   },
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test-*.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node_modules\\.bin\\mocha --reporter spec test\\test-users.js"
   },
   "dependencies": {
     "express": "latest",
@@ -40,6 +40,9 @@
   },
   "devDependencies": {
     "mocha": "latest",
+    "supertest": "latest",
+    "should": "latest",
+    "nodemon": "latest",
     "grunt": "latest",
     "grunt-mocha-test": "latest",
     "grunt-contrib-uglify": "latest",
@@ -54,7 +57,7 @@
     "blanket": "latest",
     "grunt-jsdoc": "latest",
     "grunt-contrib-jshint": "latest",
-    "nodemon": "latest",
-    "grunt-contrib-imagemin": "latest"
+    "grunt-contrib-imagemin": "latest",
+    "async": "latest"
   }
 }

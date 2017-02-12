@@ -1,5 +1,6 @@
 var nextrunApp = angular.module('nextrunApp', [
   'ngRoute',
+  'nextrunAnimations',
   'nextrunControllers'
 ]);
 

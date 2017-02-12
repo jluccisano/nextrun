@@ -1,8 +1,10 @@
 /**
 * Ce module permet d'envoyer des mails
 *
-*/
-var nodemailer = require("nodemailer");
+*/	
+var nodemailer = require("nodemailer")
+, env = process.env.NODE_ENV || 'development'
+, config = require('../config')[env]
 
 /**
 * Cette fonction permet d'envoyer un mail via Mailgun SMTP
@@ -10,13 +12,12 @@ var nodemailer = require("nodemailer");
 */
 exports.sendMail = function(mailOptions) {
 
+	
 	var transport = nodemailer.createTransport("SMTP",{
 		service: "Mailgun",
 		auth: {
-			user: env.mailgun.user,
-			pass: env.mailgun.pass
-			//user: "webmaster@sportevents.mailgun.org",
-			//pass: "0r5qtpq09vz7"
+			user: config.mailgun.user,
+			pass: config.mailgun.password
 		}
 	});
 

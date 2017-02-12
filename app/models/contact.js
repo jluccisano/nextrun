@@ -1,26 +1,40 @@
 var mongoose = require('mongoose')
-  , ObjectId = mongoose.Schema.Types.ObjectId
+  , _ = require('underscore')
   , Schema = mongoose.Schema;
   
 var ContactSchema = new Schema({
-  email : String,
-  type : String,
-  creationDate: Date
+  email : { type: String, default: '' },
+  type : { type: String, default: '' },
+  creationDate: { type: Date, default: new Date() }
 });
 
-ContactSchema.methods = {
 
-  /**
-   * Create contact
-   * @param {Function} cb
-   */
+ContactSchema.path('email').validate(function (email) {
+  return email.length;
+}, "L'adresse email ne peut-être vide");
 
-  create: function (cb) {
-    this.save(cb)
+
+ContactSchema.path('email').validate(function (email, fn) {
+  var Contact = mongoose.model('Contact');
+  
+  // Check only when it is a new contact or when email field is modified
+  if (this.isNew || this.isModified('email')) {
+    Contact.find({ email: email }).exec(function (err, contacts) {
+      fn(!err && contacts.length === 0);
+    });
+  }
+  return true;
+}, "L'adresse email existe déjà");
+
+/**
+ * Pre-save
+ */
+
+ContactSchema.pre('save', function(next) {
+  if (this.isNew) {
+    return next();
   }
 
-}
+});
 
-ContactSchema.statics = {};
-
-mongoose.model('contact', ContactSchema);
+mongoose.model('Contact', ContactSchema);

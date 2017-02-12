@@ -82,23 +82,23 @@ module.exports = function (app, config, passport) {
 	// should be declared after session and flash
 	app.use(helpers(pkg.name));
 
+	if (process.env.NODE_ENV !== 'test') {
 
-	var csrfValue = function(req) {
-		var token = (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
-		return token;
-	};
+		var csrfValue = function(req) {
+			var token = (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
+			return token;
+		};
 
-	//app.use(express.csrf());
-	app.use(express.csrf({value: csrfValue}));
-	
-	// This could be moved to view-helpers :-)
-	app.use(function(req, res, next){
-		res.locals.csrf_token = req.csrfToken();
-		res.cookie('XSRF-TOKEN', req.csrfToken());
-		next();
-	});
-
-
+		//app.use(express.csrf());
+		app.use(express.csrf({value: csrfValue}));
+		
+		// This could be moved to view-helpers :-)
+		app.use(function(req, res, next){
+			res.locals.csrf_token = req.csrfToken();
+			res.cookie('XSRF-TOKEN', req.csrfToken());
+			next();
+		});
+	}
 
 	// routes should be at the last
 	app.use(app.router);

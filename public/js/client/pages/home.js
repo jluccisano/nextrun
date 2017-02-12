@@ -3,24 +3,7 @@ jQuery(document).ready(function(){
 	loadMapFrance();
 
 	jQuery('#carousel').carousel();
-
-
-	initializeHomeForm();
-
-	jQuery("#contactType").change(function () {
-		if(jQuery(this).val() === "default") {
-			jQuery(this).addClass("empty");
-		} else {
-			jQuery(this).removeClass("empty");
-		} 
-	});
-
-	jQuery("#contactType").change();
-
-});
-
-var initializeHomeForm = function() {
-
+	
 	jQuery.validator.addMethod("valueNotEquals", function(value, element, arg){
 		return arg !== value;
 	}, "");
@@ -62,4 +45,15 @@ var initializeHomeForm = function() {
 			}
 		}
 	});
-};
+
+	jQuery("#contactType").change(function () {
+		if(jQuery(this).val() === "default") {
+			jQuery(this).addClass("empty");
+		} else {
+			jQuery(this).removeClass("empty");
+		} 
+	});
+
+	jQuery("#contactType").change();
+
+});

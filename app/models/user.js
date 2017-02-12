@@ -55,7 +55,7 @@ UserSchema.path('email').validate(function (email) {
 }, 'Email cannot be blank');
 
 UserSchema.path('email').validate(function (email, fn) {
-  var User = mongoose.model('user');
+  var User = mongoose.model('User');
   
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) {
@@ -161,4 +161,4 @@ UserSchema.methods = {
   }
 };
 
-mongoose.model('user', UserSchema);
+mongoose.model('User', UserSchema);
