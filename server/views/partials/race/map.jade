@@ -1,27 +1,27 @@
 div(ng-if="route.isVisible()")
-	google-map(center="route.getCenter()" options="route.getOptions()" zoom="route.getZoom()" refresh="true"  draggable="true" mark-click="true" class="gmapsEditor" events="route.getEvents()")
+	google-map(center="route.getCenter()" options="route.getOptions()" zoom="route._zoom" refresh="true"  draggable="true" mark-click="true" class="gmapsEditor" events="route.getEvents()")
 
-		//markers(models="route.getMarkers()" coords="'self'" icon="'icon'" click="onMarkerClicked(marker)")
-		//	marker(ng-repeat="marker in route.getMarkers()" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
+		markers(models="route.getMarkers()" coords="'self'" icon="'icon'" click="onMarkerClicked(marker)")
+			marker(ng-repeat="marker in route.getMarkers()" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")
 
-		//	marker(coords="cursorMarker" icon="cursorMarker.icon")
+			marker(coords="cursorMarker" icon="cursorMarker.icon")
 
-		//nr-polyline(polylines="route.getPolylines()")
+		nr-polyline(polylines="route.getPolylines()")
 
 	div(ng-show="route.isEditMode()" class="mapPanel")
 		div.well
 			form
 				div(class="radio")
 					label
-						input(type="radio" ng-model="route.travelMode" ng-value="'DRIVING'" ) 
+						input(type="radio" ng-model="route._travelMode" ng-value="'DRIVING'" ) 
 						span(translate) Suivre la route
 				div(class="radio")
 					label
-						input(type="radio"  ng-model="route.travelMode" ng-value="'WALKING'") 
+						input(type="radio"  ng-model="route._travelMode" ng-value="'WALKING'") 
 						span(translate) Suivre le chemin
 				div(class="radio")
 					label
-						input(type="radio" ng-model="route.travelMode" ng-value="'NONE'") 
+						input(type="radio" ng-model="route._travelMode" ng-value="'NONE'") 
 						span(translate) Segment direct
 				div.button-group
 					button.btn.btn-primary.btn-xs(ng-click="undo(route)")
@@ -31,17 +31,17 @@ div(ng-if="route.isVisible()")
 						i.fa.fa-times
 						span(translate) Effacer
 				div
-					h3 {{route.distance | number:2 }} km
+					h3 {{route.getDistance() | number:2 }} km
 				div
-					span D+: {{route.ascendant | number:0 }} m
+					span D+: {{route.getAscendant() | number:0 }} m
 				div
-					span D-: {{route.descendant | number:0 }} m
+					span D-: {{route.getDescendant() | number:0 }} m
 				div
-					span Max: {{route.maxElevation | number:0 }} m
+					span Max: {{route.getMaxElevation() | number:0 }} m
 				div
-					span Min: {{route.minElevation | number:0 }} m
-	highchart(ng-hide="route.type === 'Natation'" config="route.getChartConfig()")
+					span Min: {{route.getMinElevation() | number:0 }} m
+	highchart(ng-hide="route.getType() === 'Natation'" config="route.getChartConfig()")
 
 	div.form-group
 		label.col-lg-4.control-label(translate) Ajouter une description à votre parcours
-	div.col-lg-12(text-angular ng-model="route.description")
+	div.col-lg-12(text-angular ng-model="route.data.description")

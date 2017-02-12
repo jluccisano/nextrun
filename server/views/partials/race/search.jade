@@ -101,7 +101,7 @@ div.container
 					div.form-group
 						input.form-control(type="text" ng-model="dateRange.startDate" data-max-date="{{dateRange.endDate}}" placeholder="{{'De' | translate }}" bs-datepicker)
 					div.form-group		
-      					input.form-control(type="text" ng-model="dateRange.endDate" data-min-date="{{dateRange.startDate}}" placeholder="{{'Au' | translate }}" bs-datepicker)			
+						input.form-control(type="text" ng-model="dateRange.endDate" data-min-date="{{dateRange.startDate}}" placeholder="{{'Au' | translate }}" bs-datepicker)			
 			div.col-lg-9
 				div.col-lg-3
 					pre(translate) Page: {{pagination.currentPage}} / {{pagination.numPages}}

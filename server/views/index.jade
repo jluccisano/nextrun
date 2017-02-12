@@ -23,7 +23,7 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
         link(rel="stylesheet", href="/styles/main.css")
         <!-- endbuild -->
 
-        script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")
+        script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.17")
 
         <!-- build:js(server/views) client/scripts/vendor.min.js -->
         // bower:js
@@ -181,8 +181,8 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
 
                 include ./layouts/messages
 
-                div.ng-cloak(ng-cloak, class="view-container")
-                    div(id="main" ng-view, class="view-frame ng-cloak")
+                div.ng-cloak(ng-cloak class="view-container")
+                    div(id="main" ng-view class="view-frame ng-cloak")
 
-            div.ng-cloak(id="footer" ng-cloak ng-controller="FooterController")
+            div.footer.ng-cloak(id="footer" ng-cloak ng-controller="FooterController")
                 include ./layouts/footer

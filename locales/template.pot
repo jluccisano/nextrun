@@ -200,8 +200,8 @@ msgstr ""
 msgid "Ajouter une nouvelle manifestation"
 msgstr ""
 
-#: .tmp/generated/views/layouts/carousel.html
 #: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
 msgid "Analyser le détail du parcours (dénivelé, altitude, distance...)"
 msgstr ""
 
@@ -220,6 +220,10 @@ msgstr ""
 
 #: .tmp/generated/views/partials/auth/settings.html
 msgid "Attention !"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "Au"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/search.html
@@ -262,8 +266,8 @@ msgstr ""
 msgid "Code postal"
 msgstr ""
 
-#: .tmp/generated/views/layouts/carousel.html
 #: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
 #: .tmp/generated/views/partials/home/templates/marketing.html
 msgid "Commencer maintenant !"
 msgstr ""
@@ -333,6 +337,10 @@ msgstr ""
 msgid "D-"
 msgstr ""
 
+#: client/modules/main/scripts/main.js
+msgid "Danger"
+msgstr ""
+
 #: .tmp/generated/views/partials/race/create.html
 #: .tmp/generated/views/partials/race/edit.html
 #: .tmp/generated/views/partials/race/templates/editOrganisation.html
@@ -346,6 +354,10 @@ msgstr ""
 #: .tmp/generated/views/partials/race/templates/viewRegistration.html
 #: .tmp/generated/views/partials/race/view.html
 msgid "Date limite"
+msgstr ""
+
+#: .tmp/generated/views/partials/race/search.html
+msgid "De"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/myraces.html
@@ -392,8 +404,8 @@ msgstr ""
 msgid "Départ"
 msgstr ""
 
-#: .tmp/generated/views/layouts/carousel.html
 #: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
 msgid "Détailler l'ensemble de votre manifestion (parcours, organisation, nombre de places...)"
 msgstr ""
 
@@ -805,8 +817,8 @@ msgstr ""
 msgid "Pourquoi ?"
 msgstr ""
 
-#: .tmp/generated/views/layouts/carousel.html
 #: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
 #: .tmp/generated/views/partials/race/home.html
 msgid "Promouvoir votre manifestation"
 msgstr ""
@@ -1032,8 +1044,8 @@ msgstr ""
 msgid "Tout supprimer"
 msgstr ""
 
-#: .tmp/generated/views/layouts/carousel.html
 #: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
 msgid "Toutes les épreuves d'endurance rassemblées sur un même site"
 msgstr ""
 
@@ -1045,13 +1057,13 @@ msgstr ""
 msgid "Tracer les parcours via Google Maps"
 msgstr ""
 
-#: .tmp/generated/views/layouts/carousel.html
 #: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
 msgid "Triathlon , Trail, VTT, Cyclo..."
 msgstr ""
 
-#: .tmp/generated/views/layouts/carousel.html
 #: .tmp/generated/views/partials/home/home.html
+#: .tmp/generated/views/partials/home/templates/carousel.html
 msgid "Trouver et préparer votre course"
 msgstr ""
 
@@ -1133,6 +1145,10 @@ msgstr ""
 
 #: client/modules/auth/scripts/controllers/settingsController.js
 msgid "Votre profil a bien été modifié"
+msgstr ""
+
+#: client/modules/main/scripts/main.js
+msgid "Vous n'êtes pas autorisé à consulter cette page"
 msgstr ""
 
 #: .tmp/generated/views/partials/race/view.html

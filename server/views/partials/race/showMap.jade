@@ -1,5 +1,5 @@
 div(ng-if="route.isVisible")
-	google-map(center="route.center" options="route.options" zoom="route.zoom" refresh="true" draggable="true" mark-click="true" style="gmapsEditor" events="route.events")
+	google-map(center="route.center" options="route.options" zoom="route.zoom" refresh="true" draggable="true" mark-click="true" class="gmapsEditor" events="route.events")
 		
 		markers(models="route.markers" coords="'self'" icon="'icon'" click="onMarkerClicked(marker)")
 			marker(ng-repeat="marker in route.markers" coords="marker" icon="marker.icon" click="onMarkerClicked(marker)")

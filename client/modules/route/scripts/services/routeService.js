@@ -7,6 +7,42 @@ angular.module("nextrunApp.route").factory("RouteService",
 		GmapsApiService,
 		RouteUtilsService) {
 
+		var getElevation = function(segment) {
+
+			var defer = $q.defer();
+
+			var samplingPoints = segment.getSamplingPoints();
+			var samplesLatlng = getAllLatlngFromPoints(samplingPoints);
+
+			GmapsApiService.ElevationService().getElevationForLocations({
+				"locations": samplesLatlng
+			}, function(result, status) {
+				if (status === google.maps.ElevationStatus.OK) {
+
+					var data = {
+						samplingPoints: samplingPoints,
+						elevations: result
+					};
+
+					defer.resolve(data);
+				} else {
+					defer.reject(status);
+				}
+			});
+			return defer.promise;
+
+		};
+
+		var getAllLatlngFromPoints = function(points) {
+			var samplesLatlng = [];
+
+			_.each(points, function(point) {
+				samplesLatlng.push(GmapsApiService.LatLng(point.getLatitude(), point.getLongitude()));
+			});
+
+			return samplesLatlng;
+		};
+
 		return {
 			createNewSegment: function(route, destinationLatlng) {
 
@@ -15,19 +51,16 @@ angular.module("nextrunApp.route").factory("RouteService",
 				var isFirstPoint = false;
 
 				if (route.segments.length > 0) {
-					lastLatlngOfLastSegment = route.getLastPointOfLastSegment().latlng;
+					lastLatlngOfLastSegment = route.getLastPointOfLastSegment().data.latlng;
 				} else {
-					lastLatlngOfLastSegment = {
-						mb: destinationLatlng.lat(),
-						nb: destinationLatlng.lng()
-					};
+					lastLatlngOfLastSegment = destinationLatlng;
 					isFirstPoint = true;
 				}
 
 				if (route.getTravelMode() !== "NONE") {
 
 					var directionsRequest = {
-						origin: new google.maps.LatLng(lastLatlngOfLastSegment.mb, lastLatlngOfLastSegment.nb),
+						origin: lastLatlngOfLastSegment,
 						destination: destinationLatlng,
 						travelMode: route.getTravelMode(),
 						provideRouteAlternatives: false,
@@ -36,21 +69,25 @@ angular.module("nextrunApp.route").factory("RouteService",
 						unitSystem: google.maps.UnitSystem.METRIC
 					};
 
-					this.getDirection(directionsRequest).then(function(segment, path) {
+					this.getDirection(route, directionsRequest, isFirstPoint).then(function(result) {
 
 						//add pôlylines to map 
 						//call draw polylines
 
 						//draw segment
-						route.addMarkerToRoute(path);
+						route.addMarkerToRoute(result.path);
 
-						route.addPolyline(path, false, false, false, true, "red", 5);
+						if (!isFirstPoint) {
+							route.addPolyline(result.path, false, false, false, true, "red", 5);
+						}
 
-					}).then(function(	samplingPoints, elevations) {
+						return getElevation(result.segment);
+
+					}).then(function(data) {
 
 						//add point to chart
 
-						route.addElevationPoints(samplingPoints, elevations);
+						route.addElevationPoints(data.samplingPoints, data.elevations);
 					});
 				}
 			},
@@ -120,14 +157,19 @@ angular.module("nextrunApp.route").factory("RouteService",
 						var distance = RouteUtilsService.calculateDistanceFromLegs(legs);
 
 						var segmentDataModel = {
-							id: RouteUtilsService.generateUUID(),
+							id: routeBuilder.generateUUID(),
 							distance: distance,
 							points: points
 						};
 
 						var segment = route.addSegment(segmentDataModel);
 
-						defer.resolve(segment, path);
+						var data = {
+							segment: segment,
+							path: path
+						};
+
+						defer.resolve(data);
 					} else {
 						defer.reject(status);
 					}
@@ -135,32 +177,7 @@ angular.module("nextrunApp.route").factory("RouteService",
 				return defer.promise;
 			},
 
-			getElevation: function(segment) {
 
-				var defer = $q.defer();
-
-				var samplesLatlng = this.getAllLatlngFromPoints(segment.getSamplingPoints());
-
-				GmapsApiService.ElevationService().getElevationForLocations(samplesLatlng, function(result, status) {
-					if (status === google.maps.ElevationStatus.OK) {
-						defer.resolve(segment, result);
-					} else {
-						defer.reject(status);
-					}
-				});
-				return defer.promise;
-
-			},
-
-			getAllLatlngFromPoints: function(points) {
-				var samplesLatlng = [];
-
-				for (var k = 0; k < points.length; k++) {
-					samplesLatlng.push(GmapsApiService.LatLng(points.getLatitude(), points.getLongitude()));
-				}
-
-				return samplesLatlng;
-			},
 
 			/********************************/
 

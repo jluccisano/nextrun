@@ -21,7 +21,6 @@ angular.module("nextrunApp.auth").controller("SettingsController",
                 });
         };
 
-
         $scope.updateProfile = function() {
             AuthService.updateProfile({
                 user: $scope.user
