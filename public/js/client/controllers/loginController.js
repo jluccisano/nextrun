@@ -18,9 +18,7 @@ nextrunControllers.controller('LoginCtrl', ['$scope','$http', '$location', '$roo
 		
             },
             function(error) {
-            	 _.each(error.message, function(message){
-					  Alert.add("danger", message, 3000);
-				});
+				 Alert.add("danger", error.message, 3000);
             });
 		};
 

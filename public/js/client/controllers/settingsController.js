@@ -1,36 +1,53 @@
-nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http',
-	function($scope, $location, $http) {
+nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Auth', 'Alert',
+	function($scope, $location, $http, Auth, Alert) {
 
 		$scope.user = {};
+		$scope.master = {};
 
-		$http({
-	            method: 'GET',
-	            url: '/users/settings'
-	        }).
-	        then(function (response) {
-
-	        	$scope.user = response.data.user;
-
+	    Auth.getUserProfile(
+	        function(response) {
+				$scope.master = angular.copy(response.user);
+		        $scope.reset();
+	        },
+	        function(error) {
+	        	
 	        }
 	    );
 
-	    $scope.changeProfile = function () {
+	    $scope.updateProfile = function () {
 
-		  	Auth.changeProfile({
+		  	Auth.updateProfile({
 				user: $scope.user
             },
-            function(res) {
+            function(response) {
 				Alert.add("success", "Les changements ont bien été pris en compte", 3000);
-				$location.path('/');
-				$scope.user = res;
+				$scope.master = angular.copy(response.user);
+				$scope.reset();
 
             },
             function(error) {
-            	 _.each(error.message, function(message){
-					  Alert.add("danger", message, 3000);
-				});
+				Alert.add("danger", error.message, 3000);
             });
-		};	
+		};
 
+		$scope.deleteAccount = function () {
+
+		  	Auth.deleteAccount($scope.user._id,
+	            function(response) {
+					Alert.add("success", "Votre compte a bien été supprimé", 3000);
+					$location.path("/");
+	            },
+	            function(error) {
+					Alert.add("danger", error.message, 3000);
+	        });
+		};		
+
+		$scope.isUnchanged = function(user) {
+    		return angular.equals(user, $scope.master);
+  		};
+
+  		$scope.reset = function() {
+    		$scope.user = angular.copy($scope.master);
+    	};
 	}
 ]);

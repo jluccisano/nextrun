@@ -21,7 +21,9 @@ exports.ensureAuthorized = function (req, res, next) {
         { path: "/users/forgotpassword" , accessLevel: accessLevels.public},
         { path: "/users/logout" , accessLevel: accessLevels.public},
         { path: "/users/check/email" , accessLevel: accessLevels.public},
-        { path: "/users/update/profile" , accessLevel: accessLevels.public},
+        { path: "/users/:userId" , accessLevel: accessLevels.public},
+        { path: "/users/:userId/update/profile" , accessLevel: accessLevels.public},
+        { path: "/users/:userId/update/password" , accessLevel: accessLevels.public},
         { path: "/users/settings" , accessLevel: accessLevels.user},
         { path: "/partials/user/*" , accessLevel: accessLevels.user}
 

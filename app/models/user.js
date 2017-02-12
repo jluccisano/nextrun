@@ -51,6 +51,7 @@ var validatePresenceOf = function (value) {
 
 // the below 4 validations only apply if you are signing up traditionally
 UserSchema.path('email').validate(function (email) {
+  console.log("validate email");
   // if you are authenticating by any of the oauth strategies, don't validate
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
@@ -59,6 +60,7 @@ UserSchema.path('email').validate(function (email) {
 }, 'error.emailCannotBeBlank');
 
 UserSchema.path('email').validate(function (email, fn) {
+  console.log("validate email");
   var User = mongoose.model('User');
   
   // if you are authenticating by any of the oauth strategies, don't validate
@@ -102,10 +104,31 @@ UserSchema.pre('save', function(next) {
 });
 
 /**
+* Pre-update hook
+*/ 
+/*UserSchema.pre('update', function(next) {
+    console.log("pre-update hook");
+    return next();
+});
+*/
+
+/**
  * Methods
  */
 
 UserSchema.statics = {
+
+  /**
+   * Find user by id
+   *
+   * @param {ObjectId} id
+   * @param {Function} cb
+   */
+
+  load: function (id, cb) {
+    this.findOne({ _id : id }).exec(cb);
+  },
+
 
   destroy: function (id, cb) {
     this.remove({ _id : id }).exec(cb);

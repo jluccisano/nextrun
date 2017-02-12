@@ -49,14 +49,28 @@ angular.module('nextrunApp')
                 success();
             }).error(error);
         },
-        checkEmail: function(email, success, error) {
-            $http.post('/users/check/email', email).success(function(){
+        checkEmail: function(user, success, error) {
+            $http.post('/users/check/email', user).success(function(){
                 success();
             }).error(error);
         },
-        changeProfile: function(user, success, error) {
-            $http.post('/users/update/profile', user).success(function(user){
+        updateProfile: function(user, success, error) {
+            $http.put('/users/update/profile', user).success(function(user){
                 success(user);
+            }).error(error);
+        },
+        getUserProfile: function(success, error) {
+            $http.get('/users/settings').success(function(user){
+                success(user);
+            }).error(error);
+        },
+        deleteAccount: function(id, success, error) {
+            $http.delete('/users/'+id).success(function(){
+                 changeUser({
+                    username: '',
+                    role: userRoles.public
+                });
+                success();
             }).error(error);
         },
         accessLevels: accessLevels,

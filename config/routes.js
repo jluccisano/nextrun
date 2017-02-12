@@ -42,9 +42,14 @@ app.post('/users/forgotpassword', auth.ensureAuthorized, userController.forgotPa
 
 app.get('/users/settings', auth.ensureAuthorized , userController.settings);
 
-app.post('/users/update/profile', auth.ensureAuthorized, userController.checkIfEmailAlreadyExists,  userController.updateProfile);
+app.put('/users/:userId/update/profile', auth.ensureAuthorized, userController.updateProfile);
+
+app.put('/users/:userId/update/password', auth.ensureAuthorized, userController.updatePassword);
 
 app.post('/users/check/email', auth.ensureAuthorized, userController.checkIfEmailAlreadyExists);
 
+app.del('/users/:userId', auth.ensureAuthorized, userController.deleteAccount);
+
+app.param(':userId', userController.load);
 
 };

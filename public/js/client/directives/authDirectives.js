@@ -86,7 +86,7 @@ angular.module('nextrunApp').directive('uniqueEmail', ['$http','Auth','Alert', f
                 scope.busy = true;
 
                 Auth.checkEmail({
-                        email: value
+                        user: { email: value }
                 },
                 function(res) {
                     scope.busy = false;

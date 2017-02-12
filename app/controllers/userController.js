@@ -9,7 +9,24 @@ var mongoose = require('mongoose')
 , util = require('util')
 , userRoles = require('../../public/js/client/routingConfig').userRoles
 , email = require('../../config/middlewares/notification');
-  
+
+
+/**
+ * Load By Id
+ */
+exports.load = function(req, res, next, id){  
+  User.load(id, function (err, user) {
+    if (err) {
+      return res.json(400,  {message: "error.unknownId"}); 
+    } 
+    if (!user) {
+      return res.json(400,  {message: "error.unknownId"});
+    }  
+    req.user = user;
+    next();
+  });
+};
+
 /**
  * @method create new user
  * @param req
@@ -110,11 +127,7 @@ exports.forgotPassword = function (req, res) {
  * @param res
  */
 exports.settings = function (req, res) {
-   return res.send({user:  {
-                        username: req.user.username,
-                        email: req.user.email 
-                      }
-                    });
+   return res.json(200,{user:  { _id: req.user._id, username: req.user.username, email: req.user.email } });
 };
 
 /**
@@ -124,7 +137,7 @@ exports.settings = function (req, res) {
  * @param next
  */
 exports.checkIfEmailAlreadyExists = function (req, res) {
-    User.findOne({ email: req.body.email }, function (err, user) {
+    User.findOne({ email: req.body.user.email }, function (err, user) {
         if (err) { 
           return res.json(400,  {message: errorUtils.errors(err.errors)}); 
         }
@@ -134,6 +147,7 @@ exports.checkIfEmailAlreadyExists = function (req, res) {
         return res.json(400, {message: "error.emailAlreadyExists"}); 
      });
 }
+
 /**
  * @method update profile of user
  * @param req
@@ -142,18 +156,93 @@ exports.checkIfEmailAlreadyExists = function (req, res) {
 exports.updateProfile = function (req, res) {
 
     var user = req.user;
+    user.email = req.body.user.email;
+    user.username = req.body.user.username;
 
-    var newEmail = req.body.newEmail;
+    console.log(user);
 
-    if(newEmail != user.email) user.email = newEmail;
+    //var newUserName = req.body.user.username;
+    //var newEmail = req.body.user.email;
 
-    User.update({ _id: user._id }, {$set: {email: newEmail, last_update: new Date()} }, {upsert: true},  function(err){
+    //if(req.user.email != req.body.user.email) {
+
+        //TODO
+
+    //} 
+
+    user.update(function (err) {
+      if (err) {
+        console.log(err);
+        return res.json(400,  {message: errorUtils.errors(err.errors)  } );
+      }
+        return res.json(200,{user:  { _id: user._id, username: user.username, email: user.email } });
+      }
+    );
+    //});
+    /*user.update({ _id: req.user._id }, {$set: {username: newUserName, email: newEmail, last_update: new Date()} }, {upsert: true},  function(err){
         if (!err) {
-          return res.json(200);
-
+          return res.json(200,{user:  { _id: user._id, username: user.username, email: user.email } });
         } else {
-          return res.json(400, { error: "Une erreur s'est produite" });
+          return res.json(400, { message: "error.occured" });
         }
-      });
+      });*/
+};
 
+/**
+ * @method update password
+ * @param req
+ * @param res
+ */
+exports.updatePassword = function (req, res) {
+
+     var user = req.user;
+
+     var actualPassword = req.body.actual;
+
+     if (user.authenticate(actualPassword)) {
+
+        var newPassword = req.body.new;
+
+        //encrypt new password
+        var salt = user.makeSalt();
+        var hashed_newPassword = user.encryptPassword( newPassword, salt);
+
+
+        /*user.update(function (err) {
+          if (err) {
+            return res.json(400,  {message: errorUtils.errors(err.errors)  } );
+          }
+            return res.json(200, { "role": user.role, "username": user.username });
+          });
+        });*/
+
+
+        User.update({ _id: user._id }, {$set: {hashed_password: hashed_newPassword, salt: salt, last_update: new Date()} }, {upsert: true},  function(err){
+          if (!err) {
+            return res.json(200);
+
+          } else {
+            return res.json(400, { message: "error.occured" });
+          }
+        });
+     } else {
+        return res.json(400,{ message: 'error.invalidPassword' });
+     }
+};
+
+
+/**
+ * @method delete user account
+ * @param req
+ * @param res
+ */
+exports.deleteAccount = function(req,res) {
+   User.destroy(req.user._id, function(err){
+    if(!err) {
+         req.logout();
+         return res.json(200);
+    } else {
+        return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+    }
+  });
 };
