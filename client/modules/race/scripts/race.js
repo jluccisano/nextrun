@@ -54,20 +54,34 @@ raceModule.config(
       controller: "CreateRaceController",
       data: {
         access: access.public
-      }
+      },
     }).state("view", {
-      url: "/races/view/:raceId",
+      url: "/races/view/:id",
       templateUrl: "/partials/race/race",
       controller: "ViewRaceController",
       data: {
         access: access.public
+      },
+      resolve: {
+        raceId: ['$stateParams',
+          function($stateParams) {
+            return $stateParams.id;
+          }
+        ]
       }
     }).state("edit", {
-      url: "/races/edit/:raceId",
+      url: "/races/edit/:id",
       templateUrl: "/partials/race/race",
       controller: "EditRaceController",
       data: {
         access: access.user
+      },
+      resolve: {
+        raceId: ['$stateParams',
+          function($stateParams) {
+            return $stateParams.id;
+          }
+        ]
       }
     }).state("search", {
       url: "/races/search",
@@ -77,7 +91,7 @@ raceModule.config(
         access: access.public
       }
     });
-    
+
     $locationProvider.html5Mode(true);
 
 

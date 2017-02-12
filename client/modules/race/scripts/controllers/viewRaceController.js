@@ -3,15 +3,14 @@
 angular.module("nextrunApp.race").controller("ViewRaceController",
     function(
         $scope,
-        //$location,
-        $stateParams,
         $modal,
         $filter,
         RaceService,
         RouteService,
         GpxService,
         MetaService,
-        RouteHelperService) {
+        RouteHelperService,
+        raceId) {
 
         $scope.editMode = false;
 
@@ -21,7 +20,7 @@ angular.module("nextrunApp.race").controller("ViewRaceController",
 
         $scope.active = "general";
 
-        $scope.raceId = $stateParams.raceId;
+        $scope.raceId = raceId;
         $scope.cursorMarker = {};
         $scope.navType = "pills";
 

@@ -87,20 +87,14 @@ angular.module("nextrunApp.commons").factory("AuthService",
                 return promise;
             },
             saveAttemptUrl: function() {
-                if ($state.url.toLowerCase() !== "/login") {
-                    redirectToUrlAfterLogin = {
-                        url: stateService.url,
-                        params: stateService.stateParams
-                    }
-                } else {
-                    redirectToUrlAfterLogin = {
-                        url: "/",
-                        params: {}
-                    }
+                redirectToUrlAfterLogin = {
+                    url: $state.current.url,
+                    name: $state.current.name,
+                    params: $state.params
                 }
             },
             redirectToAttemptedUrl: function() {
-                $state.go(redirectToUrlAfterLogin.url, redirectToUrlAfterLogin.params);
+                $state.go(redirectToUrlAfterLogin.name, redirectToUrlAfterLogin.params);
             },
             accessLevels: this.accessLevels,
             userRoles: this.userRoles,

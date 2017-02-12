@@ -5,6 +5,8 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		$rootScope,
 		$scope,
 		$modal,
+		$state,
+		$cookieStore,
 		RaceService,
 		notificationService,
 		RaceTypeEnum,
@@ -13,7 +15,13 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 
 		$scope.gettextCatalog = gettextCatalog;
 
-		$scope.race = {};
+		var race = $cookieStore.get("race");
+
+		if (race) {
+			$scope.race = race;
+		} else {
+			$scope.race = {};
+		}
 
 		$scope.options = {
 			country: "fr",
@@ -47,9 +55,12 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 				race: $scope.race
 			};
 
+			$cookieStore.put('race', $scope.race);
+
 			RaceService.create(data).then(function(response) {
 				notificationService.success(gettextCatalog.getString("La manifestation a bien été créée"));
 				$scope.openRedirectionModal(response.data.raceId);
+				$cookieStore.remove("race");
 			});
 		};
 

@@ -4,7 +4,6 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 	function(
 		$scope,
 		$state,
-		$stateParams,
 		$modal,
 		$filter,
 		RaceService,
@@ -17,7 +16,8 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 		GmapsApiService,
 		RichTextEditorService,
 		RouteUtilsService,
-		RouteHelperService) {
+		RouteHelperService,
+		raceId) {
 
 		$scope.selection ="";
 
@@ -41,7 +41,7 @@ angular.module("nextrunApp.race").controller("EditRaceController",
 
 		$scope.currentRaceType = {};
 
-		$scope.raceId = $stateParams.raceId;
+		$scope.raceId = raceId;
 
 		$scope.init = function() {
 			RaceService.retrieve($scope.raceId).then(function(response) {
