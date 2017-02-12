@@ -1,6 +1,8 @@
-angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', 'RouteFactory', '$window', '$modal',
-	function($scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window, $modal) {
+angular.module('nextrunApp').controller('ViewRaceCtrl', ['$rootScope', '$scope', '$location', 'RaceServices', 'Alert', 'Auth', '$routeParams', 'RouteFactory', '$window', '$modal',
+	function($rootScope, $scope, $location, RaceServices, Alert, Auth, $routeParams, RouteFactory, window, $modal) {
 		'use strict';
+
+		
 
 		google.maps.visualRefresh = true;
 
@@ -51,6 +53,8 @@ angular.module('nextrunApp').controller('ViewRaceCtrl', ['$scope', '$location', 
 				function(response) {
 
 					$scope.race = response.race;
+
+					$rootScope.pageTitle = $scope.race.name;
 
 					var raceType = getRaceTypeByName(TYPE_OF_RACES, $scope.race.type.name);
 

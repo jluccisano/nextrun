@@ -2,6 +2,8 @@ angular.module('nextrunApp').controller('HomeCtrl', ['$scope', '$http', '$locati
 	function($scope, $http, $location, ContactServices, Alert, sharedService, $rootScope, RaceServices, RouteFactory) {
 		'use strict';
 
+		$rootScope.pageTitle = "Nextrun";
+
 		$scope.fulltext = undefined;
 		$scope.names = [];
 		$scope.race = {};

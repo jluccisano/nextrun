@@ -22,7 +22,7 @@ jQuery.i18n.init({
 nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider', '$FBProvider',
   function($routeProvider, $locationProvider, $httpProvider, $FBProvider) {
     'use strict';
-    
+
     $FBProvider.setLocale('fr_FR');
 
     $FBProvider.setInitParams({
