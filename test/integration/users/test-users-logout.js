@@ -8,15 +8,15 @@ var mongoose = require('mongoose'),
   should = require('should'),
   app = require('../../../server'),
   context = describe,
-  superagent = require('superagent'),
+  request = require('superagent'),
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
-  passportStub = require('passport-stub'),
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  superagent = request.agent(app);
 
-passportStub.install(app);
 /**
  * Log Out User tests
  */
+
 var user1 = {
   username: 'foobar1',
   email: "foobar1@example.com",
@@ -65,13 +65,27 @@ describe('Log Out User: GET /api/users/logout', function() {
 
   describe('log out success', function() {
 
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar1@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar1");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
+
     it('should logout successfully', function(done) {
-      passportStub.login(user1);
       superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
-          passportStub.logout(user1);
           done();
         });
     });

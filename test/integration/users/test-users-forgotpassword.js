@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Forgot Password tests
-*/
+ */
 
 describe('Forgot Password: POST /api/users/forgotpassword', function() {
 

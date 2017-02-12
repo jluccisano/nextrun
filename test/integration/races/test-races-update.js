@@ -6,15 +6,13 @@ process.env.NODE_ENV = 'test';
 
 var mongoose = require('mongoose'),
   should = require('should'),
-  superagent = require('superagent'),
+  request = require('superagent'),
   app = require('../../../server'),
   context = describe,
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
-  passportStub = require('passport-stub'),
-  User = mongoose.model('User');
-
-passportStub.install(app);
+  User = mongoose.model('User'),
+  superagent = request.agent(app);
 
 /**
  * Update race tests
@@ -62,6 +60,13 @@ describe('Update Race: UPDATE /api/races', function() {
     });
   });
 
+  before(function(done) {
+    User.create(user2, function(err, user) {
+      user2._id = user._id;
+      done();
+    });
+  });
+
   it('should save the user 1 to the database', function(done) {
     User.findOne({
       email: 'foobar1@example.com'
@@ -74,9 +79,6 @@ describe('Update Race: UPDATE /api/races', function() {
   });
 
   before(function(done) {
-
-    passportStub.login(user1);
-
     Race.create({
       name: 'Duathlon de Castelnaudary',
       type: 'duathlon',
@@ -89,7 +91,6 @@ describe('Update Race: UPDATE /api/races', function() {
       created_date: new Date()
     }, function(err, race) {
       done();
-      passportStub.logout(user1);
     });
   });
 
@@ -113,7 +114,7 @@ describe('Update Race: UPDATE /api/races', function() {
     });
   });
 
-  describe('invalid parameters', function() {
+  describe('Access Denied', function() {
 
     it('should not update because unknown user', function(done) {
       superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
@@ -126,25 +127,63 @@ describe('Update Race: UPDATE /api/races', function() {
           done();
         });
     });
+  });
 
+  describe('invalid parameters', function() {
+
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar2@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar2");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
     it('should not update because user not Owner', function(done) {
-
-      passportStub.login(user2);
-
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id+'/update')
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(400);
           res.body.message[0].should.equal("error.userNotOwner");
-          passportStub.logout(user2);
           done();
         });
     });
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          done();
+        });
+    });
+  });
 
+  describe('invalid parameters', function() {
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar1@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar1");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
     it('should not update because race id is unknown', function(done) {
-      passportStub.login(user1);
       superagent.put('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/update')
         .send()
         .set('Accept', 'application/json')
@@ -152,18 +191,42 @@ describe('Update Race: UPDATE /api/races', function() {
           should.not.exist(err);
           res.should.have.status(400);
           res.body.message[0].should.equal("error.unknownId");
-          passportStub.logout(user1);
+          done();
+        });
+    });
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
           done();
         });
     });
 
   });
 
+
+
+
   describe('Valid parameters', function() {
-    
+
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar1@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar1");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
     it('should update success', function(done) {
-      passportStub.login(user1);
-      superagent.put('http://localhost:3000/api/races/' + currentRace._id+'/update')
+      superagent.put('http://localhost:3000/api/races/' + currentRace._id + '/update')
         .send({
           race: {
             name: 'Triathlon de Castelnaudary',
@@ -178,7 +241,6 @@ describe('Update Race: UPDATE /api/races', function() {
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
-          passportStub.logout(user1);
           done();
         });
     });
@@ -201,6 +263,14 @@ describe('Update Race: UPDATE /api/races', function() {
         currentRace = race;
         done();
       });
+    });
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          done();
+        });
     });
 
   });

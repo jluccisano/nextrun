@@ -8,12 +8,11 @@ var mongoose = require('mongoose'),
   should = require('should'),
   app = require('../../../server'),
   context = describe,
-  superagent = require('superagent'),
+  request = require('superagent'),
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
-  passportStub = require('passport-stub'),
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  superagent = request.agent(app);
 
-passportStub.install(app);
 /**
  * Delete user tests
  */
@@ -68,19 +67,33 @@ describe('Delete User: DELETE /api/users', function() {
 
   describe('Delete user success', function() {
 
+
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar1@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar1");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
+
     it('should response delete account success', function(done) {
-      passportStub.login(user1);
       superagent.del('http://localhost:3000/api/users/delete')
         .send()
         .set('Accept', 'application/json')
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
-          passportStub.logout(user1);
           done();
         });
     });
-
   });
 
   after(function(done) {

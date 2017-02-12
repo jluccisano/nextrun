@@ -6,15 +6,14 @@ process.env.NODE_ENV = 'test';
 
 var mongoose = require('mongoose'),
   should = require('should'),
-  superagent = require('superagent'),
+  request = require('superagent'),
   app = require('../../../server'),
   context = describe,
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
-  passportStub = require('passport-stub'),
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  superagent = request.agent(app);
 
-passportStub.install(app);
 /**
  * Create race tests
  *
@@ -61,8 +60,24 @@ describe('Create race: POST /api/races', function() {
 
   describe('Valid parameters', function() {
 
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar1@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar1");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
+
     it('should response success', function(done) {
-      passportStub.login(user1);
+
       superagent.post('http://localhost:3000/api/races/create')
         .send({
           race: {
@@ -78,7 +93,6 @@ describe('Create race: POST /api/races', function() {
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
-          passportStub.logout(user1);
           done();
         });
     });
@@ -103,7 +117,6 @@ describe('Create race: POST /api/races', function() {
     });
 
     it('create new race with distance type different should response success', function(done) {
-      passportStub.login(user1);
       superagent.post('http://localhost:3000/api/races/create')
         .send({
           race: {
@@ -119,15 +132,22 @@ describe('Create race: POST /api/races', function() {
         .end(function(err, res) {
           should.not.exist(err);
           res.should.have.status(200);
-          passportStub.logout(user1);
+          done();
+        });
+    });
+
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
           done();
         });
     });
 
   });
 
-  describe('Invalid parameters', function() {
-
+  describe('Access Denied', function() {
     it('should not create because access denied', function(done) {
       superagent.post('http://localhost:3000/api/races/create')
         .send({
@@ -148,9 +168,28 @@ describe('Create race: POST /api/races', function() {
           done();
         });
     });
+  });
+
+  describe('Invalid parameters', function() {
+
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar1@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar1");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
 
     it('should response raceAlreadyExists', function(done) {
-      passportStub.login(user1);
+
       superagent.post('http://localhost:3000/api/races/create')
         .send({
           race: {
@@ -167,10 +206,20 @@ describe('Create race: POST /api/races', function() {
           should.not.exist(err);
           res.should.have.status(400);
           res.body.message[0].should.equal("error.raceAlreadyExists");
-          passportStub.logout(user1);
           done();
         });
     });
+
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          done();
+        });
+    });
+
+
   });
 
 

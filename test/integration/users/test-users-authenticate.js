@@ -10,10 +10,8 @@ var mongoose = require('mongoose'),
   context = describe,
   superagent = require('superagent'),
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
-  passportStub = require('passport-stub'),
   User = mongoose.model('User');
 
-passportStub.install(app);
 /**
  * Autheniticate User tests
  */
@@ -28,6 +26,7 @@ var user1 = {
   _id: '123726537a11c4aa8d789bbc',
   password: '123'
 };
+
 
 describe('Authenticate user: POST /api/users/session', function() {
 

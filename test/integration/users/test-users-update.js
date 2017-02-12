@@ -8,13 +8,11 @@ var mongoose = require('mongoose'),
   should = require('should'),
   app = require('../../../server'),
   context = describe,
-  superagent = require('superagent'),
-  userRoles = require('../../../public/js/client/routingConfig').userRoles,
-  passportStub = require('passport-stub'),
-  sinon = require('sinon'),
-  User = mongoose.model('User');
+  request = require('superagent'),
+  userRoles = require('../../../public/js/client/routingConfig').userRoles
+  User = mongoose.model('User'),
+  superagent = request.agent(app);
 
-passportStub.install(app);
 /**
  * Update User tests
  */
@@ -84,14 +82,24 @@ describe('Update User: PUT /api/users/update', function() {
 
     describe('Valid Parameters', function() {
 
+      before(function(done) {
+        superagent.post('http://localhost:3000/api/users/session')
+          .send({
+            email: 'foobar1@example.com',
+            password: '123'
+          })
+          .set('Accept', 'application/json')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(200);
+            res.body.username.should.equal("foobar1");
+            res.body.role.title.should.equal("user");
+            done();
+          });
+      });
+
+
       it('should response success', function(done) {
-        var sandbox = sinon.sandbox.create();
-      //  var userController = require('../../app/helpers/email');
-        var userStub = sandbox.stub(User, 'authenticate').returns();
-
-        console.log(userStub);
-
-        passportStub.login(user1);
         superagent.put('http://localhost:3000/api/users/update/profile')
           .send({
             user: {
@@ -105,7 +113,15 @@ describe('Update User: PUT /api/users/update', function() {
             res.should.have.status(200);
             res.body.user.username.should.equal("hello");
             res.body.user.email.should.equal("hello@example.com");
-            passportStub.logout(user1);
+            done();
+          });
+      });
+
+      after(function(done) {
+        superagent.post('http://localhost:3000/api/users/logout')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(200);
             done();
           });
       });
@@ -140,7 +156,7 @@ describe('Update User: PUT /api/users/update', function() {
       });
     });
 
-    describe('Invalid Parameters', function() {
+    describe('Access denied', function() {
 
       it('should response access denied', function(done) {
         superagent.put('http://localhost:3000/api/users/update/password')
@@ -153,9 +169,27 @@ describe('Update User: PUT /api/users/update', function() {
             done();
           });
       });
+    });
+
+    describe('Invalid Parameters', function() {
+
+      before(function(done) {
+        superagent.post('http://localhost:3000/api/users/session')
+          .send({
+            email: 'foobar1@example.com',
+            password: '123'
+          })
+          .set('Accept', 'application/json')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(200);
+            res.body.username.should.equal("foobar1");
+            res.body.role.title.should.equal("user");
+            done();
+          });
+      });
 
       it('should response invalid password', function(done) {
-        passportStub.login(user1);
         superagent.put('http://localhost:3000/api/users/update/password/')
           .send({
             actual: "foobar3",
@@ -166,7 +200,15 @@ describe('Update User: PUT /api/users/update', function() {
             should.not.exist(err);
             res.should.have.status(400);
             res.body.message[0].should.equal("error.invalidPassword");
-            passportStub.logout(user1);
+            done();
+          });
+      });
+
+      after(function(done) {
+        superagent.post('http://localhost:3000/api/users/logout')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(200);
             done();
           });
       });
@@ -174,18 +216,41 @@ describe('Update User: PUT /api/users/update', function() {
 
     describe('Update user password', function() {
 
-      it('should response update password success', function(done) {
-        passportStub.login(user1);
-        superagent.put('http://localhost:3000/api/users/update/password/')
+      before(function(done) {
+        superagent.post('http://localhost:3000/api/users/session')
           .send({
-            actual: "foobar",
-            new: "foobar2"
+            email: 'foobar1@example.com',
+            password: '123'
           })
           .set('Accept', 'application/json')
           .end(function(err, res) {
             should.not.exist(err);
             res.should.have.status(200);
-            passportStub.logout(user1);
+            res.body.username.should.equal("foobar1");
+            res.body.role.title.should.equal("user");
+            done();
+          });
+      });
+
+      it('should response update password success', function(done) {
+        superagent.put('http://localhost:3000/api/users/update/password')
+          .send({
+            actual: "123",
+            new: "foobar"
+          })
+          .set('Accept', 'application/json')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(200);
+            done();
+          });
+      });
+
+      after(function(done) {
+        superagent.post('http://localhost:3000/api/users/logout')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(200);
             done();
           });
       });

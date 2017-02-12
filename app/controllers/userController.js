@@ -8,28 +8,9 @@ var mongoose = require('mongoose'),
   errorUtils = require('../utils/errorutils'),
   util = require('util'),
   userRoles = require('../../public/js/client/routingConfig').userRoles,
+  passport =  require('passport'),
   email = require('../../config/middlewares/notification');
 
-
-/**
- * Load By Id
- */
-exports.load = function(req, res, next, id) {
-  User.load(id, function(err, user) {
-    if (err) {
-      return res.json(400, {
-        message: ["error.unknownId"]
-      });
-    }
-    if (!user) {
-      return res.json(400, {
-        message: ["error.unknownId"]
-      });
-    }
-    req.user = user;
-    next();
-  });
-};
 
 /**
  * @method create new user
@@ -83,7 +64,7 @@ exports.logout = function(req, res) {
  * @param res
  * @returns success or error
  */
-exports.login = function(passport, req, res) {
+exports.login = function(req, res) {
   passport.authenticate('local', function(err, user, message) {
     if (err) {
       return res.json(400, message);
@@ -192,37 +173,6 @@ exports.checkIfEmailAlreadyExists = function(req, res) {
 }
 
 /**
- * @method check user
- * @param req
- * @param res
- * @param next
- */
-exports.checkUser = function(req, res, next) {
-  if (req.user && req.user.email) {
-    User.findOne({
-      email: req.user.email
-    }, function(err, user) {
-      if (err) {
-        return res.json(400, {
-          message: errorUtils.errors(err.errors)
-        });
-      }
-      if (user) {
-        req.user = user;
-        return next();
-      }
-      return res.json(400, {
-        message: ["error.unknownUser"]
-      });
-    });
-  } else {
-    return res.json(400, {
-      message: ["error.invalidUser"]
-    });
-  }
-}
-
-/**
  * @method update profile of user
  * @param req
  * @param res
@@ -232,9 +182,6 @@ exports.updateProfile = function(req, res) {
   var user = req.user;
   user.email = req.body.user.email;
   user.username = req.body.user.username;
-
-
-  console.log(user);
 
   user.save(function(err) {
     if (err) {
@@ -262,7 +209,6 @@ exports.updatePassword = function(req, res) {
   var user = req.user;
 
   var actualPassword = req.body.actual;
-
 
   if (user.authenticate(actualPassword)) {
 

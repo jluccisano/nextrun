@@ -6,16 +6,15 @@ process.env.NODE_ENV = 'test';
 
 var mongoose = require('mongoose'),
   should = require('should'),
-  superagent = require('superagent'),
+  request = require('superagent'),
   app = require('../../../server'),
   context = describe,
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
   ObjectId = mongoose.Schema.Types.ObjectId,
-  passportStub = require('passport-stub'),
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  superagent = request.agent(app);
 
-passportStub.install(app);
 
 /**
  * Delete race tests
@@ -23,8 +22,8 @@ passportStub.install(app);
  * Non valide
  * Aucun  utilisateur connecté
  * l'utilisateur connecté n'est pas propriétaire de la manifestation
- * 
- * Valide 
+ *
+ * Valide
  * Le user connecté est propriétaire de la manifestation
  */
 
@@ -63,6 +62,13 @@ describe('Delete race: DELETE /api/races', function() {
     });
   });
 
+  before(function(done) {
+    User.create(user2, function(err, user) {
+      user2._id = user._id;
+      done();
+    });
+  });
+
   it('should save the user 1 to the database', function(done) {
     User.findOne({
       email: 'foobar1@example.com'
@@ -76,8 +82,6 @@ describe('Delete race: DELETE /api/races', function() {
 
   before(function(done) {
 
-    passportStub.login(user1);
-
     Race.create({
       name: 'Duathlon de Castelnaudary',
       type: 'duathlon',
@@ -90,7 +94,6 @@ describe('Delete race: DELETE /api/races', function() {
       created_date: new Date()
     }, function(err, race) {
       done();
-      passportStub.logout(user1);
     });
   });
 
@@ -117,9 +120,7 @@ describe('Delete race: DELETE /api/races', function() {
   });
 
 
-
-  describe('invvalid parameters', function() {
-
+  describe('Access denied', function() {
     it('should not delete because access denied', function(done) {
       superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
         .send()
@@ -132,12 +133,27 @@ describe('Delete race: DELETE /api/races', function() {
         });
     });
 
+  });
 
+  describe('invvalid parameters', function() {
+
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar2@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar2");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
 
     it('should not delete because user not Owner', function(done) {
-
-      passportStub.login(user2);
-
       superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
@@ -145,39 +161,80 @@ describe('Delete race: DELETE /api/races', function() {
           should.not.exist(err);
           res.should.have.status(400);
           res.body.message[0].should.equal("error.userNotOwner");
-
-          passportStub.logout(user2);
           done();
         });
     });
 
-
-
-    it('should not delete because race id is unknown', function(done) {
-
-      passportStub.login(user1);
-
-      superagent.del('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/delete')
-        .send()
-        .set('Accept', 'application/json')
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
         .end(function(err, res) {
           should.not.exist(err);
-          res.should.have.status(400);
-          res.body.message[0].should.equal("error.unknownId");
-          passportStub.logout(user1);
+          res.should.have.status(200);
           done();
         });
     });
-
-
   });
+
+    describe('invvalid parameters', function() {
+
+      before(function(done) {
+        superagent.post('http://localhost:3000/api/users/session')
+          .send({
+            email: 'foobar1@example.com',
+            password: '123'
+          })
+          .set('Accept', 'application/json')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(200);
+            res.body.username.should.equal("foobar1");
+            res.body.role.title.should.equal("user");
+            done();
+          });
+      });
+
+      it('should not delete because race id is unknown', function(done) {
+        superagent.del('http://localhost:3000/api/races/523726537a11c4aa8d789bbb/delete')
+          .send()
+          .set('Accept', 'application/json')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(400);
+            res.body.message[0].should.equal("error.unknownId");
+            done();
+          });
+      });
+
+      after(function(done) {
+        superagent.post('http://localhost:3000/api/users/logout')
+          .end(function(err, res) {
+            should.not.exist(err);
+            res.should.have.status(200);
+            done();
+          });
+      });
+
+    });
 
   describe('valid parameters', function() {
 
+    before(function(done) {
+      superagent.post('http://localhost:3000/api/users/session')
+        .send({
+          email: 'foobar1@example.com',
+          password: '123'
+        })
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          res.body.username.should.equal("foobar1");
+          res.body.role.title.should.equal("user");
+          done();
+        });
+    });
+
     it('should delete success', function(done) {
-
-      passportStub.login(user1);
-
       superagent.del('http://localhost:3000/api/races/' + currentRace._id + '/delete')
         .send()
         .set('Accept', 'application/json')
@@ -194,11 +251,18 @@ describe('Delete race: DELETE /api/races', function() {
       }).exec(function(err, race) {
         should.not.exist(err);
         (race == null).should.be.true;
-        passportStub.logout(user1);
         done();
       });
     });
 
+    after(function(done) {
+      superagent.post('http://localhost:3000/api/users/logout')
+        .end(function(err, res) {
+          should.not.exist(err);
+          res.should.have.status(200);
+          done();
+        });
+    });
   });
 
   after(function(done) {

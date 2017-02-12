@@ -7,12 +7,12 @@ var mainController = require('../app/controllers/mainController'),
 	contactController = require('../app/controllers/contactController'),
 	raceController = require('../app/controllers/raceController'),
 	accessLevels = require('../public/js/client/routingConfig').accessLevels,
+    userRoles = require('../public/js/client/routingConfig').userRoles,
 	_ = require('underscore'),
+    util = require('util'),
 	auth = require('./middlewares/authorization');
 
 
-module.exports = function(app, passport) {
-	
 /** ROUTES **/
 
 var routes = [
@@ -20,13 +20,13 @@ var routes = [
     // Views
 
     /** workaround: rediction 1and1 **/
-   	{
+    {
         path: '/defaultsite',
         httpMethod: 'GET',
         middleware: [function(req, res) {
-			res.redirect('/');
-		}],
-		accessLevel: accessLevels.public
+            res.redirect('/');
+        }],
+        accessLevel: accessLevels.public
     },
     {
         path: '/',
@@ -47,18 +47,18 @@ var routes = [
     {
         path: '/api/contacts',
         httpMethod: 'POST',
-        middleware: [mainController.partials],
+        middleware: [contactController.create],
         accessLevel: accessLevels.public
     },
 
-	/** api users **/
+    /** api users **/
     {
         path: '/api/users/signup',
         httpMethod: 'POST',
         middleware: [userController.signup],
         accessLevel: accessLevels.public
     },
-   	{
+    {
         path: '/api/users/forgotpassword',
         httpMethod: 'POST',
         middleware: [userController.forgotPassword],
@@ -70,7 +70,7 @@ var routes = [
         middleware: [userController.deleteAccount],
         accessLevel: accessLevels.user
     },
-   	{
+    {
         path: '/api/users/update/profile',
         httpMethod: 'PUT',
         middleware: [userController.updateProfile],
@@ -103,9 +103,7 @@ var routes = [
     {
         path: '/api/users/session',
         httpMethod: 'POST',
-        middleware: [function(req, res, next) {
-			userController.login(passport, req, res);
-		}],
+        middleware: [userController.login],
         accessLevel: accessLevels.public
     },
 
@@ -123,7 +121,7 @@ var routes = [
         middleware: [raceController.findByUser],
         accessLevel: accessLevels.user
     },
-   	{
+    {
         path: '/api/races/:raceId',
         httpMethod: 'GET',
         middleware: [raceController.find],
@@ -150,16 +148,14 @@ var routes = [
         middleware: [mainController.index],
         accessLevel: accessLevels.public
     },
-
 ];
 
-
-
-	app.param(':userId', userController.load);
+module.exports = function(app) {
+	
 	app.param(':raceId', raceController.load);
 
 	_.each(routes, function(route) {
-        route.middleware.unshift(auth.ensureAuthorized);
+        route.middleware.unshift(ensureAuthorized);
         var args = _.flatten([route.path, route.middleware]);
 
         switch(route.httpMethod.toUpperCase()) {
@@ -180,134 +176,9 @@ var routes = [
                 break;
         }
     });
-
-	
-
-
-
-	/** workaround: rediction 1and1 **/
-	/*app.get('/defaultsite', function(req, res) {
-		res.redirect('/');
-	});*/
-
-	//app.get('/', mainController.index);
-	//app.get('/partials/(:type)?/:name', mainController.partials);
-
-
-	/** JSON API **/
-
-	/** api contacts **/
-	//app.post('/api/contacts', auth.ensureAuthorized, contactController.create);
-
-
-	/** api users **/
-	//app.post('/api/users/signup', auth.ensureAuthorized, userController.signup);
-
-	/*app.post('/api/users/session', auth.ensureAuthorized, function(req, res, next) {
-		userController.login(passport, req, res);
-	});*/
-
-	//app.post('/api/users/logout', auth.ensureAuthorized, userController.logout);
-
-	//app.post('/api/users/forgotpassword', auth.ensureAuthorized, userController.forgotPassword);
-
-	//app.get('/api/users/settings', auth.ensureAuthorized, userController.settings);
-
-	//app.put('/api/users/update/profile', auth.ensureAuthorized, userController.updateProfile);
-
-	//app.put('/api/users/update/password', auth.ensureAuthorized, userController.updatePassword);
-
-	//app.post('/api/users/check/email', auth.ensureAuthorized, userController.checkIfEmailAlreadyExists);
-
-	//app.del('/api/users/delete', auth.ensureAuthorized, userController.deleteAccount);
-
-	//app.param(':userId', userController.load);
-
-	/** api races **/
-
-	//app.post('/api/races/create', auth.ensureAuthorized, raceController.create);
-
-	//app.get('/api/races/find/(page/:page)?', auth.ensureAuthorized, raceController.findByUser);
-
-	//app.get('/api/races/:raceId', auth.ensureAuthorized, raceController.find);
-
-	//app.put('/api/races/:raceId/update', auth.ensureAuthorized, raceController.update);
-
-	//app.del('/api/races/:raceId/delete', auth.ensureAuthorized, raceController.delete);
-
-	//app.param(':raceId', raceController.load);
-
-
-	// redirect all others to the index (HTML5 history)
-	//app.get('*', mainController.index);
-
-
 };
 
-exports.ensureAuthorized = function(req, res, next) {
-
- /*   var routes = [
-
-
-
-        {
-            path: "/api/users/signup",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/api/users/session",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/api/users/forgotpassword",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/api/users/check/email",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/api/contacts",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/api/users/delete",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/users/logout",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/users/update/profile",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/users/update/password",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/users/settings",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/partials/user/*",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/partials/race/*",
-            accessLevel: accessLevels.public
-        }, {
-            path: "/api/races/create",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/races/find/:raceId",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/races/find/(page/:page)?",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/races/:raceId/update",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/races/:raceId/delete",
-            accessLevel: accessLevels.user
-        }, {
-            path: "/api/races/:raceId",
-            accessLevel: accessLevels.public
-        }
-
-    ]*/
-
+var ensureAuthorized = function(req, res, next) {
     var role;
     if (!req.user) {
         role = userRoles.public;
