@@ -37,6 +37,18 @@ exports.create = function (req, res) {
 };
 
 /**
+ * @method Log out session
+ * @param req
+ * @param res
+ * @returns redirect to login
+ */
+exports.logout = function (req, res) {
+  req.logout();
+  //res.redirect('/login');
+  res.render('partials/login');
+};
+
+/**
  * @method authenticate the user
  * @param passport module
  * @param req
