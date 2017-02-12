@@ -68,7 +68,7 @@ nextrunControllers.controller('SettingsCtrl', ['$scope','$location','$http', 'Au
     		$scope.actualPassword = undefined;
     		$scope.newPassword = undefined;
     		$scope.confirmNewPassword = undefined;
-    		$scope.form.$setPristine();
+    		//$scope.form.$setPristine();
     	};
 	}
 ]);

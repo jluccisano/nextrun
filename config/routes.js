@@ -5,6 +5,7 @@
 var mainController = require('../app/controllers/mainController')
 ,userController = require('../app/controllers/userController')
 ,contactController = require('../app/controllers/contactController')
+,raceController = require('../app/controllers/raceController')
 ,auth = require('./middlewares/authorization');
 
 
@@ -51,5 +52,12 @@ app.post('/users/check/email', auth.ensureAuthorized, userController.checkIfEmai
 app.del('/users/:userId', auth.ensureAuthorized, userController.deleteAccount);
 
 app.param(':userId', userController.load);
+
+/** races **/
+
+app.post('/races',  auth.ensureAuthorized, raceController.create);
+
+app.param(':raceId', raceController.load);
+
 
 };

@@ -11,7 +11,7 @@ var mongoose = require('mongoose')
   , context = describe
   , Contact = mongoose.model('Contact');
 
-var cookies, count;
+var count;
 
 /**
  * Contacts tests

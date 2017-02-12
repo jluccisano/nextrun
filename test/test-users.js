@@ -12,7 +12,7 @@ var mongoose = require('mongoose')
   , userRoles = require('../public/js/client/routingConfig').userRoles
   , User = mongoose.model('User');
 
-var cookies, count;
+var count;
 
 /**
  * Users tests
@@ -30,6 +30,18 @@ describe('Users', function () {
       it('no email - should respond with errors', function (done) {
        superagent.post('http://localhost:3000/users/signup')
         .send({user: { username:'foobar', email: '', password: 'foobar' }})
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(400);
+           res.body.message[0].should.equal("error.emailCannotBeBlank");
+           done();
+        });
+      });
+
+      it('no body - should respond with errors', function (done) {
+       superagent.post('http://localhost:3000/users/signup')
+        .send()
         .set('Accept', 'application/json')
         .end(function(err,res){
            should.not.exist(err);
@@ -136,6 +148,18 @@ describe('Users', function () {
            should.not.exist(err);
            res.should.have.status(400);
            res.body.message.should.equal("error.invalidEmailOrPassword");
+           done();
+        });
+      });
+
+      it('should response Missing Credentials', function (done) {
+       superagent.post('http://localhost:3000/users/session')
+        .send()
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(400);
+           res.body.message.should.equal("Missing credentials");
            done();
         });
       });
@@ -371,6 +395,30 @@ describe('Users', function () {
         });
       });
 
+      it('no email - should response user not found', function (done) {
+       superagent.put('http://localhost:3000/users/523726537a11c4aa8d789bbb/update/profile')
+        .send({user: { username: 'hello' }})
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(400);
+           res.body.message.should.equal("error.unknownId");
+           done();
+        });
+      });
+
+      it('no body - should response user not found', function (done) {
+       superagent.put('http://localhost:3000/users/523726537a11c4aa8d789bbb/update/profile')
+        .send()
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(400);
+           res.body.message.should.equal("error.unknownId");
+           done();
+        });
+      });
+
     });
 
     after(function(done){
@@ -498,6 +546,18 @@ describe('Users', function () {
            should.not.exist(err);
            res.should.have.status(400);
            res.body.message.should.equal("error.unknownId");
+           done();
+        });
+      });
+
+      it('should response error user unknown', function (done) {
+       superagent.post('http://localhost:3000/users/session')
+        .send({ email: 'foobar@example.com', password: 'foobar' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(400);
+           res.body.message.should.equal("error.invalidEmailOrPassword");
            done();
         });
       });

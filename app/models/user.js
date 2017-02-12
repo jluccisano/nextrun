@@ -127,7 +127,12 @@ UserSchema.statics = {
     this.findOne({ _id : id }).exec(cb);
   },
 
-
+  /**
+   * Remove user by id
+   *
+   * @param {ObjectId} id
+   * @param {Function} cb
+   */
   destroy: function (id, cb) {
     this.remove({ _id : id }).exec(cb);
   }
