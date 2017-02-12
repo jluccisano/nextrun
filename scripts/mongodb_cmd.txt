@@ -4,8 +4,7 @@ Export database
 mongodump -h ds057568.mongolab.com:57568 -d af_nextrun-joseph_luccisano -u af_nextrun-joseph_luccisano -p c1dhahkj7oo021g9tfaslq3cr1 -o /backup_nextrun
 
 Import database
-mongorestore -h ds057568.mongolab.com:57568 -d af_nextrun-joseph_luccisano -u <user> -p <password> <input db directory>
-
+mongorestore -d nextrun -u af_nextrun-joseph_luccisano -p c1dhahkj7oo021g9tfaslq3cr1 /tmp/af_nextrun-joseph_luccisano
 Import collection
 mongorestore -h ds057568.mongolab.com:57568 -d af_nextrun-joseph_luccisano -u <user> -p <password> <input .bson file>
 
@@ -23,3 +22,11 @@ mongoimport -h ds057568.mongolab.com:57568 -d af_nextrun-joseph_luccisano -c <co
 
 Export collection
 mongoexport -h ds057568.mongolab.com:57568 -d af_nextrun-joseph_luccisano -c <collection> -u <user> -p <password> -o <output .csv file> --csv -f <comma-separated list of field names>
+
+
+
+
+
+
+
+
