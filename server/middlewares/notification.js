@@ -15,7 +15,7 @@ exports.sendMail = function(mailOptions) {
 
     var result = false;
 
-    var transporter = nodemailer.createTransport("SMTP", {
+    var transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
             user: config.gmail.user,
