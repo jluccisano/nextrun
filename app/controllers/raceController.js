@@ -39,7 +39,7 @@ exports.create = function (req, res) {
 
 	race.save(function (err) {
 		if (err) {
-      		return res.json(400, {message: errorUtils.errors(err.errors)});
+      return res.json(400, {message: errorUtils.errors(err.errors)});
 		} else {
 			return res.json(200);
 		}
@@ -64,9 +64,9 @@ exports.update = function (req, res) {
        
        Race.update({ _id: race._id }, {$set: raceToUpdate}, {upsert: true},  function(err){
           if (!err) {
-			return res.json(200);
+            return res.json(200);
           } else {
-			return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+            return res.json(400,  {message: errorUtils.errors(err.errors)}); 
           }
         });
   } else {
@@ -82,15 +82,14 @@ exports.update = function (req, res) {
 exports.delete = function(req,res) {
    if(req.user._id.equals(req.race.user_id)) {
 
-   	   Race.destroy(req.race._id, function(err){
-	    if(!err) {
-	         return res.json(200);
-	    } else {
-	        return res.json(400,  {message: errorUtils.errors(err.errors)}); 
-	    }
-	  });
+      Race.destroy(req.race._id, function(err){
+        if(!err) {
+          return res.json(200);
+        } else {
+          return res.json(400,  {message: errorUtils.errors(err.errors)}); 
+      }
+    });
    } else {
-   		return res.json(400,  {message: "error.userNotOwner"}); 
+      return res.json(400,  {message: "error.userNotOwner"}); 
    }
-
 };

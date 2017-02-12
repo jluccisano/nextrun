@@ -4,15 +4,6 @@ var _ = require('underscore')
 
 
 exports.ensureAuthorized = function (req, res, next) {
-    /*if (!req.isAuthenticated()) {
-        req.session.returnTo = req.originalUrl;
-        //req.flash('warning', "Vous n'êtes pas autoriser à effectuer cette action");
-      	//return res.redirect("/");
-        return res.send(403);
-    }
-    next();
-    */
-
     
     var routes = [
 
@@ -35,11 +26,16 @@ exports.ensureAuthorized = function (req, res, next) {
     ]
 
     var role;
-    if(!req.user) role = userRoles.public;
-    else          role = req.user.role;
+    if(!req.user) {
+        role = userRoles.public;
+    } else {
+        role = req.user.role;
+    }         
     var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.public;
 
-    if(!(accessLevel.bitMask & role.bitMask)) return res.send(403);
+    if(!(accessLevel.bitMask & role.bitMask)) {
+        return res.send(403);
+    } 
     return next();
     
 };

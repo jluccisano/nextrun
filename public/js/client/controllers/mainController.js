@@ -2,12 +2,12 @@ nextrunControllers.controller('MainCtrl', ['$scope','$location', '$rootScope','A
 	function($scope, $location, $rootScope, Auth, Alert) {
 
 		$scope.isLoggedIn = function() {
-    		return Auth.isLoggedIn();
-    	};
+			return Auth.isLoggedIn();
+		};
 
-  		$rootScope.closeAlert = function() {
-  			Alert.closeAlert();
-  		};
+		$rootScope.closeAlert = function() {
+			Alert.closeAlert();
+		};
 		
 	}
 ]);

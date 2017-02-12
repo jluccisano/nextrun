@@ -9,22 +9,26 @@ angular.module('nextrunApp')
 
             $scope.user = Auth.user;
             $scope.$watch('user', function(user) {
-                if(user.role)
+                if(user.role) {
                     userRole = user.role;
+                }
                 updateCSS();
             }, true);
 
             attrs.$observe('accessLevel', function(al) {
-                if(al) accessLevel = $scope.$eval(al);
+                if(al) {
+                    accessLevel = $scope.$eval(al);
+                }
                 updateCSS();
             });
 
             function updateCSS() {
                 if(userRole && accessLevel) {
-                    if(!Auth.authorize(accessLevel, userRole))
+                    if(!Auth.authorize(accessLevel, userRole)) {
                         element.css('display', 'none');
-                    else
+                    } else {
                         element.css('display', prevDisp);
+                    }
                 }
             }
         }

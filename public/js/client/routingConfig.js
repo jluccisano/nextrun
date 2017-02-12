@@ -59,8 +59,8 @@
         var accessLevels = {};
         for(var level in accessLevelDeclarations){
 
-            if(typeof accessLevelDeclarations[level] == 'string'){
-                if(accessLevelDeclarations[level] == '*'){
+            if(typeof accessLevelDeclarations[level] === 'string'){
+                if(accessLevelDeclarations[level] === '*'){
 
                     var resultBitMask = '';
 
@@ -72,22 +72,24 @@
                         bitMask: parseInt(resultBitMask, 2),
                         title: accessLevelDeclarations[level]
                     };
+                } else {
+                    console.log("Access Control Error: Could not parse '" + accessLevelDeclarations[level] + "' as access definition for level '" + level + "'");
                 }
-                else console.log("Access Control Error: Could not parse '" + accessLevelDeclarations[level] + "' as access definition for level '" + level + "'")
-
             }
             else {
 
-                var resultBitMask = 0;
-                for(var role in accessLevelDeclarations[level]){
-                    if(userRoles.hasOwnProperty(accessLevelDeclarations[level][role]))
-                        resultBitMask = resultBitMask | userRoles[accessLevelDeclarations[level][role]].bitMask
-                    else console.log("Access Control Error: Could not find role '" + accessLevelDeclarations[level][role] + "' in registered roles while building access for '" + level + "'")
+                var bitMask = 0;
+                for(var therole in accessLevelDeclarations[level]){
+                    if(userRoles.hasOwnProperty(accessLevelDeclarations[level][therole])) {
+                        bitMask = bitMask | userRoles[accessLevelDeclarations[level][therole]].bitMask
+                    } else {
+                        console.log("Access Control Error: Could not find role '" + accessLevelDeclarations[level][therole] + "' in registered roles while building access for '" + level + "'");
+                    }
+                    accessLevels[level] = {
+                        bitMask: bitMask,
+                        title: accessLevelDeclarations[level][therole]
+                    };
                 }
-                accessLevels[level] = {
-                    bitMask: resultBitMask,
-                    title: accessLevelDeclarations[level][role]
-                };
             }
         }
 
