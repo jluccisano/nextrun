@@ -431,7 +431,7 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 		var previousData;
 
 		if (elevationPoints[index].grade >= 7) {
-			
+
 			//get previous point
 			if (index > 0) {
 				previousElevationPoint = elevationPoints[index - 1];
@@ -583,6 +583,15 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			route.distance = 0.0;
 		}
 	};
+
+	var getTrkpts = function(gpxToJson) {
+
+		if (_.isNull(gpxToJson) || _.isUndefined(gpxToJson) || _.isUndefined(gpxToJson.gpx) || _.isUndefined(gpxToJson.gpx.trk) || _.isUndefined(gpxToJson.gpx.trk.trkseg) || _.isUndefined(gpxToJson.gpx.trk.trkseg.trkpt)) {
+			throw new Error("parse.gpx.error");
+		}
+
+		return gpxToJson.gpx.trk.trkseg.trkpt;
+	}
 
 	return {
 		onClickMap: function($scope, route, destinationLatlng, travelMode) {
@@ -888,229 +897,166 @@ angular.module('nextrunApp').factory('RouteFactory', function() {
 			}
 		},
 		convertGPXtoRoute: function($scope, route, gpx) {
+			try {
 
-			var x2js = new X2JS();
-			var gpxToJson = x2js.xml_str2json(gpx);
-
-			var trkpts = gpxToJson.gpx.trk.trkseg.trkpt;
-			var arrayOfSamplesPoint = [];
-			var samplesPointCount = 0;
-			//var samplesPoints = [];
-
-			//create first segment with start marker
-			var segment1Id = generateUUID();
-			var segment1 = {
-				segmentId: segment1Id,
-				points: [{
-					latlng: {
-						mb: trkpts[0]._lat,
-						nb: trkpts[0]._lon
-					},
-					elevation: trkpts[0].ele,
-					distanceFromStart: 0,
-					grade: 0,
-					segmentId: segment1Id
-				}],
-				distance: 0
-			};
-
-			route.segments.push(segment1);
+				var x2js = new X2JS();
+				var gpxToJson = x2js.xml_str2json(gpx);
 
 
-			var segment2 = {
-				segmentId: generateUUID(),
-				points: [],
-				distance: 0
-			};
+				var trkpts = getTrkpts(gpxToJson);
+				var arrayOfSamplesPoint = [];
+				var samplesPointCount = 0;
+				//var samplesPoints = [];
 
-			var index = 0;
-
-			_.each(trkpts, function(trkpt, i) {
-
-				if (index === 500 || i === (trkpts.length - 1)) {
-
-					segment2.distance = calculateDistanceFromStartForEachPointOfSegment(route, segment2);
-					route.segments.push(segment2);
-
-					var samplesPoints = findSamplesPointIntoSegment(route, segment2, 0.33);
-					samplesPointCount = samplesPointCount + samplesPoints.length;
-					arrayOfSamplesPoint.push(samplesPoints);
-
-					//reinit the segment
-					segment2 = {
-						segmentId: generateUUID(),
-						points: [],
-						distance: 0
-					};
-
-					index = 0;
-				}
-
-				var point = {
-					latlng: {
-						mb: trkpt._lat,
-						nb: trkpt._lon
-					},
-					elevation: parseInt(trkpt.ele),
-					distanceFromStart: 0,
-					grade: 0,
-					segmentId: segment2.segmentId
+				//create first segment with start marker
+				var segment1Id = generateUUID();
+				var segment1 = {
+					segmentId: segment1Id,
+					points: [{
+						latlng: {
+							mb: trkpts[0]._lat,
+							nb: trkpts[0]._lon
+						},
+						elevation: trkpts[0].ele,
+						distanceFromStart: 0,
+						grade: 0,
+						segmentId: segment1Id
+					}],
+					distance: 0
 				};
 
-				segment2.points.push(point);
+				route.segments.push(segment1);
 
-				index++;
 
-			});
+				var segment2 = {
+					segmentId: generateUUID(),
+					points: [],
+					distance: 0
+				};
 
-			_.each(arrayOfSamplesPoint, function(samplesPoints, j) {
+				var index = 0;
 
-				var samplesLatlng = getAllLatlngFromPoints(samplesPoints);
+				_.each(trkpts, function(trkpt, i) {
 
-				getElevationFromLocation(samplesLatlng, function(result, status) {
+					if (index === 500 || i === (trkpts.length - 1)) {
 
-					if (status !== google.maps.ElevationStatus.OK) {
-						return;
+						segment2.distance = calculateDistanceFromStartForEachPointOfSegment(route, segment2);
+						route.segments.push(segment2);
+
+						var samplesPoints = findSamplesPointIntoSegment(route, segment2, 0.5);
+						samplesPointCount = samplesPointCount + samplesPoints.length;
+						arrayOfSamplesPoint.push(samplesPoints);
+
+						//reinit the segment
+						segment2 = {
+							segmentId: generateUUID(),
+							points: [],
+							distance: 0
+						};
+
+						index = 0;
 					}
 
-					for (var k = 0; k < result.length; k++) {
+					var point = {
+						latlng: {
+							mb: trkpt._lat,
+							nb: trkpt._lon
+						},
+						elevation: parseInt(trkpt.ele),
+						distanceFromStart: 0,
+						grade: 0,
+						segmentId: segment2.segmentId
+					};
 
-						samplesPoints[k].elevation = result[k].elevation;
+					segment2.points.push(point);
 
-						var lastPoint = getLastElevationPoint(route.elevationPoints);
+					index++;
 
-						if (lastPoint) {
-							var diffElevation = (parseFloat(samplesPoints[k].elevation) - parseFloat(lastPoint.elevation));
-							var distanceWithLastPoint = samplesPoints[k].distanceFromStart - lastPoint.distanceFromStart;
-							var grade = 0;
-							if (distanceWithLastPoint !== 0 && diffElevation !== 0) {
-								grade = ((diffElevation / (distanceWithLastPoint * 1000)) * 100).toFixed(1);
-							}
-							samplesPoints[k].grade = grade;
-						}
-
-						route.elevationPoints.push(samplesPoints[k]);
-					}
-
-					calculateElevationDataAlongRoute(route);
-
-					if (route.elevationPoints.length === samplesPointCount) {
-						// put code here to process arrayOfRes
-
-
-						if (route.elevationPoints.length > 0) {
-
-							var datas = [];
-							var climbs = {
-								climbsSup2: [],
-								climbsSup5: []
-							}
-							//var climbsSup2 = [];
-							//var climbsSup5 = [];
-
-							var elevationPoints = _.sortBy(route.elevationPoints, function(elevationPoint) {
-								return parseFloat(elevationPoint.distanceFromStart.toFixed(2));
-							});
-
-							_.each(elevationPoints, function(elevationPoint, index) {
-
-								var data = {
-									x: parseFloat(elevationPoint.distanceFromStart.toFixed(2)),
-									y: elevationPoint.elevation,
-									grade: elevationPoint.grade,
-									color: 'blue',
-									fillColor: 'blue',
-									segmentId: elevationPoint.segmentId,
-									latlng: elevationPoint.latlng
-
-								};
-								datas.push(data);
-
-								climbs = addClimbsToElevationChart(route, elevationPoints, index, climbs);
-
-								/*if (elevationPoint.grade > 5) {
-
-									//get previous point
-									if (index > 0) {
-										var previousElevationPoint = elevationPoints[index - 1];
-										var previousData = {
-											x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
-											y: previousElevationPoint.elevation,
-											grade: previousElevationPoint.grade,
-											color: 'red',
-											fillColor: 'red',
-											segmentId: previousElevationPoint.segmentId,
-											latlng: previousElevationPoint.latlng
-
-										};
-										climbsSup5.push(previousData);
-									}
-
-									climbsSup5.push(data);
-								} else if (elevationPoint.grade >= 2) {
-									//get previous point
-									if (index > 0) {
-										var previousElevationPoint = elevationPoints[index - 1];
-										var previousData = {
-											x: parseFloat(previousElevationPoint.distanceFromStart.toFixed(2)),
-											y: previousElevationPoint.elevation,
-											grade: previousElevationPoint.grade,
-											color: 'orange',
-											fillColor: 'orange',
-											segmentId: previousElevationPoint.segmentId,
-											latlng: previousElevationPoint.latlng
-
-										};
-										climbsSup2.push(previousData);
-									}
-
-									climbsSup2.push(data);
-
-								} else {
-									climbsSup5.push({
-										x: parseFloat(elevationPoint.distanceFromStart.toFixed(2)),
-										y: null,
-										grade: elevationPoint.grade,
-										color: 'red',
-										fillColor: 'red',
-										segmentId: elevationPoint.segmentId,
-										latlng: elevationPoint.latlng
-
-									});
-
-									climbsSup2.push({
-										x: parseFloat(elevationPoint.distanceFromStart.toFixed(2)),
-										y: null,
-										grade: elevationPoint.grade,
-										color: 'red',
-										fillColor: 'red',
-										segmentId: elevationPoint.segmentId,
-										latlng: elevationPoint.latlng
-
-									});
-								}*/
-
-
-
-							});
-
-
-							route.chartConfig.series[0].data = datas;
-							route.chartConfig.series[1].data = climbs.climbsSup2;
-							route.chartConfig.series[2].data = climbs.climbsSup5;
-
-
-						}
-
-						//drawSegment(route, segment, path);
-
-						$scope.$apply();
-					}
 				});
 
-			});
+				_.each(arrayOfSamplesPoint, function(samplesPoints, j) {
+
+					var samplesLatlng = getAllLatlngFromPoints(samplesPoints);
+
+					getElevationFromLocation(samplesLatlng, function(result, status) {
+
+						if (status !== google.maps.ElevationStatus.OK) {
+							return;
+						}
+
+						for (var k = 0; k < result.length; k++) {
+
+							samplesPoints[k].elevation = result[k].elevation;
+
+							var lastPoint = getLastElevationPoint(route.elevationPoints);
+
+							if (lastPoint) {
+								var diffElevation = (parseFloat(samplesPoints[k].elevation) - parseFloat(lastPoint.elevation));
+								var distanceWithLastPoint = samplesPoints[k].distanceFromStart - lastPoint.distanceFromStart;
+								var grade = 0;
+								if (distanceWithLastPoint !== 0 && diffElevation !== 0) {
+									grade = ((diffElevation / (distanceWithLastPoint * 1000)) * 100).toFixed(1);
+								}
+								samplesPoints[k].grade = grade;
+							}
+
+							route.elevationPoints.push(samplesPoints[k]);
+						}
+
+						calculateElevationDataAlongRoute(route);
+
+						if (route.elevationPoints.length === samplesPointCount) {
+							// put code here to process arrayOfRes
 
 
+							if (route.elevationPoints.length > 0) {
+
+								var datas = [];
+								var climbs = {
+									climbsSup2: [],
+									climbsSup5: []
+								}
+
+								var elevationPoints = _.sortBy(route.elevationPoints, function(elevationPoint) {
+									return parseFloat(elevationPoint.distanceFromStart.toFixed(2));
+								});
+
+								_.each(elevationPoints, function(elevationPoint, index) {
+
+									var data = {
+										x: parseFloat(elevationPoint.distanceFromStart.toFixed(2)),
+										y: elevationPoint.elevation,
+										grade: elevationPoint.grade,
+										color: 'blue',
+										fillColor: 'blue',
+										segmentId: elevationPoint.segmentId,
+										latlng: elevationPoint.latlng
+
+									};
+									datas.push(data);
+
+									climbs = addClimbsToElevationChart(route, elevationPoints, index, climbs);
+
+								});
+
+
+								route.chartConfig.series[0].data = datas;
+								route.chartConfig.series[1].data = climbs.climbsSup2;
+								route.chartConfig.series[2].data = climbs.climbsSup5;
+
+
+							}
+
+							$scope.$apply();
+						}
+
+					});
+
+				});
+
+			} catch (ex) {
+				throw new Error(ex);
+			}
 		}
 
 	}

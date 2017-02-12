@@ -45,8 +45,7 @@ div.container(style="padding-bottom: 50px;")
 								h4 Infomations
 								p Vous pouvez soit dessiner votre parcours directement sur la carte soit importer un fichier au format .gpx
 							input(type="file" ng-model="$files" ng-file-select="onFileSelect($files, route)")
-							progressbar(max="100" value="progress"  type="warning")
-								span(style="color:white; white-space:nowrap;") {{progress}}%
+							hr
 							include map
 			h2 Organisation
 			hr

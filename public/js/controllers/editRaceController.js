@@ -183,7 +183,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 							chart: {
 								series: [{
 									data: []
-								},]
+								}, ]
 							},
 							chartConfig: {
 								loading: false,
@@ -596,8 +596,12 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 
 					$scope.progress = 0;
 
+					try {
+						RouteFactory.convertGPXtoRoute($scope, route, result);
+					} catch (ex) {
+						Alert.add("danger", ex.message, 3000);
+					}
 
-					RouteFactory.convertGPXtoRoute($scope, route, result);
 
 
 					if (route.segments.length > 0) {
