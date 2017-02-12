@@ -343,85 +343,151 @@ exports.extractCriteria = function(req, res, next) {
 };
 
 /**
- * @method Get type facets
- * @param req
- * @param res
- */
-exports.typeFacets = function(req, res) {
-
-  Race.typeFacets(req.operation, function(err, typeFacets) {
-    if (err) {
-      return res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    }
-    req.facets.push(typeFacets);
-
-    return res.json(200, {
-      races: req.races,
-      facets: req.facets
-    });
-  });
-
-};
-
-/**
- * @method Get department facets
- * @param req
- * @param res
- */
-exports.departmentFacets = function(req, res, next) {
-
-  Race.departmentFacets(req.operation, function(err, departmentFacets) {
-    if (err) {
-      return res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    }
-    req.facets.push(departmentFacets);
-    return next();
-  });
-
-};
-
-/**
- * @method Get date facets
- * @param req
- * @param res
- */
-exports.dateFacets = function(req, res, next) {
-
-  Race.dateFacets(req.operation, function(err, datefacets) {
-    if (err) {
-      return res.json(400, {
-        message: errorUtils.errors(err.errors)
-      });
-    }
-    req.facets.push(datefacets);
-    return next();
-  });
-
-};
-
-/**
  * @method Search races by criteria
  * @param req
  * @param res
  */
-exports.search = function(req, res, next) {
+exports.search = function(req, res) {
 
-  console.log(util.inspect(req.operation, true));
+  var operation = req.operation;
 
-  Race.search(req.operation, function(err, races) {
-    if (err) {
-      console.log(err);
-      return res.json(400, {
+  var search = "*";
+  var page = 0;
+  var pageSize = 20;
+  var sort = "_score";
+  var filters = "";
+  var criteria = {};
+
+  var fields = [
+    "name",
+    "distanceType",
+    "type",
+    "department",
+    "_id"
+  ];
+
+  var type_filter = {};
+  var department_filter = {};
+
+  //query
+
+  var query = {};
+
+  query.bool = {};
+  query.bool.should = [];
+  query.bool.should.push(buildQueryString("race.name.autocomplete", search));
+  query.bool.should.push(buildQueryString("race.department.name.autocomplete", search));
+  query.bool.should.push(buildQueryString("race.department.region.autocomplete", search));
+  query.bool.should.push(buildQueryString("race.department.code.autocompletee", search));
+  query.bool.should.push(buildQueryString("race.distanceType.i18n.autocomplete", search));
+  query.bool.should.push(buildQueryString("race.type.name.autocomplete", search));
+
+  criteria.query = query;
+
+  //filter
+
+  var filter = {};
+  filter.and = [];
+
+  var typesArray = [];
+
+  if (operation.types) {
+    typesArray = operation.types.split(',');
+
+    type_filter = {
+      "terms": {
+        "race.type.name": typesArray
+      }
+    };
+
+    filter.and.push(type_filter);
+  }
+
+  var departmentsArray = [];
+
+  if (operation.departments) {
+    departmentsArray = operation.departments.split(',');
+
+    department_filter = {
+      "terms": {
+        "race.department.code": departmentsArray
+      }
+    };
+
+    filter.and.push(department_filter);
+  }
+
+
+
+  if (filter.and.length > 0) {
+    criteria.filter = filter;
+  }
+
+
+
+  //facets
+
+  var facets = {
+    "departmentFacets": {
+      "terms": {
+        "field": "race.department.code",
+        "order": "term",
+        "all_terms": true
+      }
+    },
+    "typeFacets": {
+      "terms": {
+        "field": "race.type.name",
+        "order": "term",
+        "all_terms": true
+      }
+    }
+  };
+
+  var departmentFacetFilter = {}
+  departmentFacetFilter.and = [];
+  var typeFacetFilter = {}
+  typeFacetFilter.and = [];
+
+  if (departmentsArray.length > 0) {
+    typeFacetFilter.and.push(department_filter);
+  }
+
+  if (typesArray.length > 0) {
+    departmentFacetFilter.and.push(type_filter);
+  }
+
+  if (typeFacetFilter.and.length > 0) {
+    facets.typeFacets.facet_filter = typeFacetFilter;
+  }
+
+  if (deparmentFacetFilter.and.length > 0) {
+    facets.departmentFacets.facet_filter = departmentFacetFilter;
+  }
+
+  criteria.facets = facets;
+
+
+  criteria.from = page;
+  criteria.size = pageSize;
+  criteria.fields = fields;
+  criteria.sort = [sort];
+
+  console.log(util.inspect(criteria));
+
+  elasticSearchClient.search('racesidx_v1', 'race', criteria)
+    .on('data', function(data) {
+      console.log(JSON.parse(data));
+      res.json(200, JSON.parse(data));
+    })
+    .on('done', function() {})
+    .on('error', function(err) {
+      console.log(err)
+      res.json(400, {
         message: errorUtils.errors(err.errors)
       });
-    }
-    req.races = races;
-    return next();
-  });
+    })
+    .exec();
 };
 
 /**
@@ -505,13 +571,27 @@ exports.autocomplete = function(req, res) {
   elasticSearchClient.search('racesidx_v1', 'race', query)
     .on('data', function(data) {
       console.log(JSON.parse(data));
-      res.send(JSON.parse(data));
+      res.json(200, JSON.parse(data));
     })
     .on('done', function() {
       //always returns 0 right now
     })
-    .on('error', function(error) {
-      console.log(error)
+    .on('error', function(err) {
+      console.log(err);
+      res.json(400, {
+        message: errorUtils.errors(err.errors)
+      });
     })
     .exec();
 };
+
+buildQueryString = function(field, query) {
+
+  var result = {}
+  result.queryString = {};
+
+  result.queryString.default_field = field;
+  result.queryString.query = query;
+
+  return result;
+}
