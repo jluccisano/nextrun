@@ -6,7 +6,7 @@
  */
 angular.module("nextrunApp.commons").directive("nrTaglistModel",
   function($parse) {
-
+    //FIXME replace by ui-select
     // remove
     function remove(arr, item) {
       if (angular.isArray(arr)) {

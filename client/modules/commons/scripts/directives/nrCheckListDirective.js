@@ -5,6 +5,7 @@
  * AngularJS directive for list of checkboxes
  */
 angular.module("nextrunApp.commons").directive("nrChecklistModel", function($parse, $compile) {
+  //FIXME replace by ui-select
   // contains
   function contains(arr, item) {
     if (angular.isArray(arr)) {

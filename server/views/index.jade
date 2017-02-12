@@ -2,7 +2,7 @@ doctype html
 html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-controller='MainController')
 
     <!-- build:js(client) client/scripts/widgets/google-analytics.min.js -->
-    script(src="/widgets/google-analytics.js" charset="UTF-8")
+    script(src="/widgets/google-analytics.js")
     <!-- endbuild -->
 
     head
@@ -23,7 +23,7 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
         link(rel="stylesheet", href="/styles/main.css")
         <!-- endbuild -->
 
-        script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")
+        script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDO7NB1T_gtfTVVorh0jsUyaXNkWjHn958&sensor=false&v=3.13")
 
         <!-- build:js(server/views) client/scripts/vendor.min.js -->
         // bower:js
@@ -54,92 +54,93 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
         script(src='../../client/i18n/angular-locale_fr-fr.js')
         <!-- endbuild -->
 
+        
         <!-- routingConfig.js is not minified and not concatenated -->
-        script(src="/routingConfig.js", charset="UTF-8")
+        script(src="/routingConfig.js")
 
         <!-- build:js(client) client/scripts/widgets/socialbuttons.min.js -->
-        script(src="/widgets/socialbuttons.js", charset="UTF-8")
+        script(src="/widgets/socialbuttons.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/route.min.js -->
-        script(src="/modules/route/scripts/route.js", charset="UTF-8")
-        script(src="/modules/route/scripts/services/elevationService.js", charset="UTF-8")
-        script(src="/modules/route/scripts/services/gpxService.js", charset="UTF-8")
-        script(src="/modules/route/scripts/services/markerService.js", charset="UTF-8")
-        script(src="/modules/route/scripts/services/polylineService.js", charset="UTF-8")
-        script(src="/modules/route/scripts/services/routeHelperService.js", charset="UTF-8")
-        script(src="/modules/route/scripts/services/routeService.js", charset="UTF-8")
-        script(src="/modules/route/scripts/services/routeUtilsService.js", charset="UTF-8")
-        script(src="/modules/route/scripts/services/segmentService.js", charset="UTF-8")
-        script(src="/modules/route/scripts/routeBuilder.js", charset="UTF-8")
+        script(src="/modules/route/scripts/route.js")
+        script(src="/modules/route/scripts/services/elevationService.js")
+        script(src="/modules/route/scripts/services/gpxService.js")
+        script(src="/modules/route/scripts/services/markerService.js")
+        script(src="/modules/route/scripts/services/polylineService.js")
+        script(src="/modules/route/scripts/services/routeHelperService.js")
+        script(src="/modules/route/scripts/services/routeService.js")
+        script(src="/modules/route/scripts/services/routeUtilsService.js")
+        script(src="/modules/route/scripts/services/segmentService.js")
+        script(src="/modules/route/scripts/routeBuilder.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/auth.min.js -->
-        script(src="/modules/auth/scripts/auth.js", charset="UTF-8")
-        script(src="/modules/auth/scripts/controllers/forgotPasswordModalController.js", charset="UTF-8")
-        script(src="/modules/auth/scripts/controllers/loginController.js", charset="UTF-8")
-        script(src="/modules/auth/scripts/controllers/settingsController.js", charset="UTF-8")
-        script(src="/modules/auth/scripts/controllers/signupController.js", charset="UTF-8")
+        script(src="/modules/auth/scripts/auth.js")
+        script(src="/modules/auth/scripts/controllers/forgotPasswordModalController.js")
+        script(src="/modules/auth/scripts/controllers/loginController.js")
+        script(src="/modules/auth/scripts/controllers/settingsController.js")
+        script(src="/modules/auth/scripts/controllers/signupController.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/home.min.js -->
-        script(src="/modules/home/scripts/home.js", charset="UTF-8")
-        script(src="/modules/home/scripts/controllers/homeController.js", charset="UTF-8")
+        script(src="/modules/home/scripts/home.js")
+        script(src="/modules/home/scripts/controllers/homeController.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/race.min.js -->
-        script(src="/modules/race/scripts/race.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/changeTypeConfirmationModalController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/createRaceController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/deleteConfirmationModalController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/editRaceController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/feedbackModalController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/myRacesController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/raceHomeController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/redirectionModalController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/searchRaceController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/controllers/viewRaceController.js", charset="UTF-8")
-        script(src="/modules/race/scripts/filters/distanceTypeFilter.js", charset="UTF-8")
+        script(src="/modules/race/scripts/race.js")
+        script(src="/modules/race/scripts/controllers/changeTypeConfirmationModalController.js")
+        script(src="/modules/race/scripts/controllers/createRaceController.js")
+        script(src="/modules/race/scripts/controllers/deleteConfirmationModalController.js")
+        script(src="/modules/race/scripts/controllers/editRaceController.js")
+        script(src="/modules/race/scripts/controllers/feedbackModalController.js")
+        script(src="/modules/race/scripts/controllers/myRacesController.js")
+        script(src="/modules/race/scripts/controllers/raceHomeController.js")
+        script(src="/modules/race/scripts/controllers/redirectionModalController.js")
+        script(src="/modules/race/scripts/controllers/searchRaceController.js")
+        script(src="/modules/race/scripts/controllers/viewRaceController.js")
+        script(src="/modules/race/scripts/filters/distanceTypeFilter.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/commons.min.js -->
-        script(src="/modules/commons/scripts/commons.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/alertService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/authService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/contactService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/departmentEnum.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/raceTypeEnum.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/errorHandlerInterceptor.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/facebookService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/fileReaderService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/gmapsApiService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/metaService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/raceService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/regionEnum.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/restAPIHelper.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/sharedCriteriaService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/sharedMetaService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/services/xmlService.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/fbLike.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/gmapsAutocompleteDirective.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/nrAddHttp.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/nrCheckListDirective.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/nrFileSelectDirective.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/nrHasLocationDirective.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/nrPasswordMatchDirective.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/nrPolylineDirective.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/directives/nrTagListDirective.js", charset="UTF-8")
-        script(src="/modules/commons/scripts/templates/angular-bootstrap-tpls-overrides.js", charset="UTF-8")
+        script(src="/modules/commons/scripts/commons.js")
+        script(src="/modules/commons/scripts/services/alertService.js")
+        script(src="/modules/commons/scripts/services/authService.js")
+        script(src="/modules/commons/scripts/services/contactService.js")
+        script(src="/modules/commons/scripts/services/departmentEnum.js")
+        script(src="/modules/commons/scripts/services/raceTypeEnum.js")
+        script(src="/modules/commons/scripts/services/errorHandlerInterceptor.js")
+        script(src="/modules/commons/scripts/services/facebookService.js")
+        script(src="/modules/commons/scripts/services/fileReaderService.js")
+        script(src="/modules/commons/scripts/services/gmapsApiService.js")
+        script(src="/modules/commons/scripts/services/metaService.js")
+        script(src="/modules/commons/scripts/services/raceService.js")
+        script(src="/modules/commons/scripts/services/regionEnum.js")
+        script(src="/modules/commons/scripts/services/restAPIHelper.js")
+        script(src="/modules/commons/scripts/services/sharedCriteriaService.js")
+        script(src="/modules/commons/scripts/services/sharedMetaService.js")
+        script(src="/modules/commons/scripts/services/xmlService.js")
+        script(src="/modules/commons/scripts/directives/fbLike.js")
+        script(src="/modules/commons/scripts/directives/gmapsAutocompleteDirective.js")
+        script(src="/modules/commons/scripts/directives/nrAddHttp.js")
+        script(src="/modules/commons/scripts/directives/nrCheckListDirective.js")
+        script(src="/modules/commons/scripts/directives/nrFileSelectDirective.js")
+        script(src="/modules/commons/scripts/directives/nrHasLocationDirective.js")
+        script(src="/modules/commons/scripts/directives/nrPasswordMatchDirective.js")
+        script(src="/modules/commons/scripts/directives/nrPolylineDirective.js")
+        script(src="/modules/commons/scripts/directives/nrTagListDirective.js")
+        script(src="/modules/commons/scripts/templates/angular-bootstrap-tpls-overrides.js")
         <!-- endbuild -->
 
         <!-- build:js(client) client/scripts/main.min.js -->
-        script(src="/modules/main/scripts/main.js", charset="UTF-8")
-        script(src="/modules/main/scripts/controllers/aboutController.js", charset="UTF-8")
-        script(src="/modules/main/scripts/controllers/contactController.js", charset="UTF-8")
-        script(src="/modules/main/scripts/controllers/creditController.js", charset="UTF-8")
-        script(src="/modules/main/scripts/controllers/footerController.js", charset="UTF-8")
-        script(src="/modules/main/scripts/controllers/headerController.js", charset="UTF-8")
-        script(src="/modules/main/scripts/controllers/mainController.js", charset="UTF-8")
+        script(src="/modules/main/scripts/main.js")
+        script(src="/modules/main/scripts/controllers/aboutController.js")
+        script(src="/modules/main/scripts/controllers/contactController.js")
+        script(src="/modules/main/scripts/controllers/creditController.js")
+        script(src="/modules/main/scripts/controllers/footerController.js")
+        script(src="/modules/main/scripts/controllers/headerController.js")
+        script(src="/modules/main/scripts/controllers/mainController.js")
         <!-- endbuild -->
 
         script.
@@ -149,7 +150,7 @@ html(ng-app="nextrunApp" class="no-js" prefix="og: http://ogp.me/ns#" ng-control
         base(href="/")
     block meta
         meta(http-equiv="X-UA-Compatible" content="IE=edge")
-        meta(charset="utf-8")
+        meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width")
 
         meta(name='description', content="{{ogDescription}}")
