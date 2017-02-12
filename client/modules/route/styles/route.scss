@@ -12,18 +12,32 @@
             width: 100%;
         }
     }
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top:50px;
     google-map {
-        width: 100%;
-        height: 95%;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        top:0px;
         .angular-google-map {
-            width: 100%;
-            height: 95%;
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            top:0px;
             img {
                 max-width: inherit;
             }
             .angular-google-map-container {
-                width: 100%;
-                height: 100%;
+                position: absolute;
+                left: 0px;
+                right: 0px;
+                bottom: 0px;
+                top:0px;
             }
         }
     }

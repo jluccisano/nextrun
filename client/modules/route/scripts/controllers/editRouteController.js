@@ -40,6 +40,13 @@ angular.module("nextrunApp.route").controller("EditRouteController",
         $scope.routeViewModel = {};
 
         $scope.createRouteViewModel = function() {
+
+            $scope.route = {
+                type: "Vélop",
+                segments: [],
+                elevationPoints: []
+            };
+            
             $scope.routeViewModel = new routeBuilder.Route($scope.route, RouteHelperService.getChartConfig($scope, 150), RouteHelperService.getGmapsConfig());
             $scope.routeViewModel.setCenter(RouteUtilsService.getCenter({}));
             $scope.routeViewModel.addClickListener($scope.onClickMap);

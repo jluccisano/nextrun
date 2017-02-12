@@ -74,7 +74,6 @@ nextrunApp.run(function(
   $cookieStore,
   SharedMetaService,
   AuthService,
-  notificationService,
   MetaService,
   gettextCatalog) {
 
@@ -84,15 +83,14 @@ nextrunApp.run(function(
     MetaService.loading();
 
     if (!AuthService.authorize(toState.data.access)) {
+      event.preventDefault();
       if (AuthService.isLoggedIn()) {
         $state.go("home");
       } else {
         $cookieStore.remove("user");
-        AuthService.saveAttemptUrl();
+        AuthService.saveAttemptUrl(toState);
         $state.go("login");
       }
-
-      notificationService.info(gettextCatalog.getString("Vous n'êtes pas autorisé à consulter cette page"));
     }
   });
 
