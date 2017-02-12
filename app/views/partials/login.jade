@@ -2,18 +2,35 @@ div.container(ng-controller='LoginCtrl', style="margin-top:50px")
 	div.row
 		div.col-lg-4.col-lg-offset-4
 			div.panel.panel-default
-				div.panel-heading Se connecter
+				div.panel-heading <strong>Se connecter</strong>
 				div.panel-body
-					form(id="loginForm", role="form", name="form")
-						input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}")
+					form(id="loginForm", role="form")
+						input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}" ,ng-model="user._csrf")
 						div.form-group
-							label(for="inputEmail") Email
-							input.form-control(type="email", name="email", id="email", placeholder="Email"))
+							label.control-label(for="email") Email
+							input.form-control(type="email", name="email", id="email", placeholder="Email",ng-model="user.email")
 						div.form-group
 							label.control-label(for="password") Mot de passe
-							input.form-control(type="password", name="password", id="password", placeholder="Mot de passe")
-						div.alert.alert-danger.fade.hide(id="invalidEmailOrPassword")
+							input.form-control(type="password", name="password", id="password", placeholder="Mot de passe",ng-model="user.password")
+						div.alert.alert-danger.fade.hide.errors
 						button.btn.btn-primary(type="submit") Se connecter
 						button.btn.btn-link(id="signupLink", type="button", ng-click="signup()") S'inscrire
 						hr
-						button.btn.btn-link(id="forgotPasswordLink", type="button") Mot de passe oublié ?
+						button.btn.btn-link(id="forgotPasswordLink", type="button", data-toggle="modal", data-target="#forgotPasswordModal") Mot de passe oublié ?
+div.container
+	div.modal.fade(id="forgotPasswordModal",tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+		div.modal-dialog
+				div.modal-content
+					div.modal-header
+						button.close(type="button",data-dismiss="modal",aria-hidden="true")
+						h4.modal-title Entrez votre adresse email:
+					div.modal-body
+						form(id="forgotPasswordForm", role="form",  style="margin-top:50px")
+							input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}" ,ng-model="user._csrf")
+							div.form-group
+								label.control-label(for="forgotEmail") Email
+								input.form-control(type="email", name="email", id="forgotEmail", placeholder="Email")
+							div.alert.alert-danger.fade.hide.errors
+							button.btn.btn-default(type="button",data-dismiss="modal") Annuler
+							button.btn.btn-primary(type="submit") Envoyer
+					div.modal-footer

@@ -84,6 +84,7 @@ describe('Contacts', function () {
         .field('type', 'athlete')
         .end(done);
       })
+      
 
       it('should not have new contact to the database', function (done) {
         Contact.count(function (err, cnt) {

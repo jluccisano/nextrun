@@ -33,5 +33,6 @@ app.post('/users/session', function(req, res, next) {
 	userController.authenticate(passport, req, res);
 });
 
+app.post('/users/forgotpassword', userController.forgotPassword);
 
 };

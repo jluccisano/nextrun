@@ -4,6 +4,9 @@ var nextrunApp = angular.module('nextrunApp', [
   'nextrunControllers'
 ]);
 
+/** Initialize i18n **/
+jQuery.i18n.init({ lng: "fr" });
+
 
 nextrunApp.config(['$routeProvider',
   function($routeProvider) {

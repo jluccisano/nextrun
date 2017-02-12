@@ -6,9 +6,9 @@ process.env.NODE_ENV = 'test';
 
 var mongoose = require('mongoose')
   , should = require('should')
-  , request = require('supertest')
   , app = require('../server')
   , context = describe
+  , superagent = require('superagent')
   , User = mongoose.model('User');
 
 var cookies, count;
@@ -28,14 +28,16 @@ describe('Users', function () {
       })
 
       it('no email - should respond with errors', function (done) {
-        request(app)
-        .post('/users')
-        .field('name', 'Foo bar')
-        .field('username', 'foobar')
-        .field('email', '')
-        .field('password', 'foobar')
-        .end(done);
-      })
+       superagent.post('http://localhost:3000/users')
+        .send({ username:'foobar', email: '', password: 'foobar' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.body.response.errors.email.message.should.equal("error.emailCannotBeBlank");
+           done();
+        });
+      });
 
       it('should not save the user to the database', function (done) {
         User.count(function (err, cnt) {
@@ -49,21 +51,21 @@ describe('Users', function () {
       before(function (done) {
         User.count(function (err, cnt) {
           count = cnt
-          done()
+          done();
         })
       })
 
-      it('should redirect to /articles', function (done) {
-        request(app)
-        .post('/users')
-        .field('email', 'foobar@example.com')
-        .field('password', 'foobar')
-        .expect('Content-Type', /plain/)
-        .expect('Location', /\//)
-        .expect(302)
-        .expect(/Moved Temporarily/)
-        .end(done);
-      })
+      it('should redirect to /', function (done) {
+       superagent.post('http://localhost:3000/users')
+        .send({ username:'foobar', email: 'foobar@example.com', password: 'foobar' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.redirects.should.eql(['http://localhost:3000/']);
+           done();
+        });
+      });
 
       it('should insert a record to the database', function (done) {
         User.count(function (err, cnt) {
@@ -82,10 +84,66 @@ describe('Users', function () {
       });
     });
 
+    after(function(done){
+      User.remove({}, function(){
+        done();
+      });
+    });
 
   });
 
-  after(function (done) {
-    require('./helper').clearDb(done)
+
+  describe('POST /users/session', function () {
+    describe('Authenticate success', function () {
+
+      var currentUser;
+
+      before(function (done) {
+        User.create({ username: "foobar", email:"foobar@example.com", password:"foobar"} , function(err,user){
+          currentUser = user;
+          done();        
+        });
+      });
+
+      it('should save the user to the database', function (done) {
+        User.findOne({ email: 'foobar@example.com' }).exec(function (err, user) {
+          should.not.exist(err);
+          user.should.be.an.instanceOf(User);
+          user.email.should.equal('foobar@example.com');
+          done();
+        });
+      });
+
+      it('should response success', function (done) {
+       superagent.post('http://localhost:3000/users/session')
+        .send({ email: 'foobar@example.com', password: 'foobar' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.body.response.should.equal("success");
+           done();
+        });
+      });
+
+      it('should response invalidEmailOrPassword', function (done) {
+       superagent.post('http://localhost:3000/users/session')
+        .send({ email: 'foobar@example.com', password: 'badpassword' })
+        .set('Accept', 'application/json')
+        .end(function(err,res){
+           should.not.exist(err);
+           res.should.have.status(200);
+           res.body.response.message.should.equal("error.invalidEmailOrPassword");
+           done();
+        });
+      });
+    });
+
+    after(function(done){
+      User.remove({}, function(){
+        done();
+      });
+    });
   });
+
 });

@@ -33,6 +33,10 @@ html(ng-app="nextrunApp")
 		script(src="/js/libs/jquery.validate.js", charset="UTF-8")
 		<!-- endbuild -->
 
+		<!-- build:js js/libs/i18next-1.7.1.min.js -->
+		script(src="/js/libs/i18next-1.7.1.js", charset="UTF-8")
+		<!-- endbuild -->
+
 		<!-- build:js js/libs/angular.min.js -->
 		script(src="/js/libs/angular.js", charset="UTF-8")
 		<!-- endbuild -->
@@ -55,8 +59,11 @@ html(ng-app="nextrunApp")
 
 		<!-- build:js js/client/controllers.min.js -->
 		script(src="/js/client/controllers.js", charset="UTF-8")
+		script(src="/js/client/controllers/homeController.js", charset="UTF-8")
+		script(src="/js/client/controllers/footerController.js", charset="UTF-8")
+		script(src="/js/client/controllers/loginController.js", charset="UTF-8")
+		script(src="/js/client/controllers/signupController.js", charset="UTF-8")
 		<!-- endbuild -->
-
 
 		<!-- build:js js/libs/bootstrap.min.js -->
 		script(src="/js/libs/bootstrap.js", charset="UTF-8")

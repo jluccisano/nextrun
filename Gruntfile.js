@@ -45,7 +45,14 @@ module.exports = function(grunt) {
       basic_and_extras: {
         files: {
         'tmp/public/js/client/app.js': ['public/js/client/app.js'],
-        'tmp/public/js/client/controllers.js': ['public/js/client/controllers.js'],
+        'tmp/public/js/client/controllers.js': 
+            [
+              'public/js/client/controllers.js',
+              'public/js/client/controllers/footerController.js',
+              'public/js/client/controllers/homeController.js',
+              'public/js/client/controllers/logincontroller.js',
+              'public/js/client/controllers/signupcontroller.js'
+            ],
         'tmp/public/js/client/animations.js': ['public/js/client/animations.js'],
         'tmp/public/js/client/widgets/socialbuttons.js': ['public/js/client/widgets/socialbuttons.js'],
         'tmp/public/js/client/widgets/map-france.js': ['public/js/client/widgets/map-france.js'],
@@ -54,6 +61,7 @@ module.exports = function(grunt) {
         'tmp/public/js/libs/bootstrap.js': ['public/js/libs/bootstrap.js'],
         'tmp/public/js/libs/jquery-2.0.3.js': ['public/js/libs/jquery-2.0.3.js'],
         'tmp/public/js/libs/jquery.validate.js': ['public/js/libs/jquery.validate.js'],
+        'tmp/public/js/libs/i18next-1.7.1.js': ['public/js/libs/i18next-1.7.1.js'],
         'tmp/public/js/libs/angular.js': ['public/js/libs/angular.js'],
         'tmp/public/js/libs/angular-route.js': ['public/js/libs/angular-route.js'],
         'tmp/public/js/libs/angular-animate.js': ['public/js/libs/angular-animate.js'],
@@ -78,6 +86,7 @@ module.exports = function(grunt) {
           'dist/public/js/libs/bootstrap.min.js': ['tmp/public/js/libs/bootstrap.js'],
           'dist/public/js/libs/jquery-2.0.3.min.js': ['tmp/public/js/libs/jquery-2.0.3.js'],
           'dist/public/js/libs/jquery.validate.min.js': ['tmp/public/js/libs/jquery.validate.js'],
+          'dist/public/js/libs/i18next-1.7.1.js': ['tmp/public/js/libs/i18next-1.7.1.js'],
           'dist/public/js/libs/angular.min.js': ['tmp/public/js/libs/angular.js'],
           'dist/public/js/libs/angular-route.min.js': ['tmp/public/js/libs/angular-route.js'],
           'dist/public/js/libs/angular-animate.min.js': ['tmp/public/js/libs/angular-animate.js'],

@@ -38,10 +38,26 @@ exports.sendMail = function(mailOptions) {
 exports.sendEmailNewContact = function(contact) {
 
 	var mailOptions = {
-		from: "no-reply@nextrunjosephluccisano.mailgun.org",
+		from: "no-reply@nextrun.fr",
 		to: "postmaster@nextrunjosephluccisano.mailgun.org",
 		subject: "Un nouveau contact a été ajouté",
 		text: "nouveau contact: " + contact.email + " type: " + contact.type,
+	};
+
+	this.sendMail(mailOptions);
+};
+
+/**
+* Cette fonction envoie un mail lorsque un contact a perdu son mot de passe
+* @param user
+**/
+exports.sendEmailPasswordReinitialized = function(email,newPassword) {
+
+	var mailOptions = {
+		from: "no-reply@nextrun.fr",
+		to: email,
+		subject: "Changement de mot de passe",
+		text: "Bonjour, Voici votre nouveau mot de passe: " + newPassword + " vous pourrez le modifier en allant dans les paramètres",
 	};
 
 	this.sendMail(mailOptions);

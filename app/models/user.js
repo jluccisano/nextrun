@@ -13,6 +13,7 @@ var mongoose = require('mongoose')
  */
 
 var UserSchema = new Schema({
+  username: { type: String, default: '' },
   email: { type: String, default: '' },
   provider: { type: String, default: '' },
   hashed_password: { type: String, default: '' },
@@ -52,7 +53,7 @@ UserSchema.path('email').validate(function (email) {
     return true;
   }
   return email.length;
-}, 'Email cannot be blank');
+}, 'error.emailCannotBeBlank');
 
 UserSchema.path('email').validate(function (email, fn) {
   var User = mongoose.model('User');
@@ -70,7 +71,7 @@ UserSchema.path('email').validate(function (email, fn) {
   } else {
     fn(true);
   }
-}, 'Email already exists');
+}, 'error.emailAlreadyExists');
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
   // if you are authenticating by any of the oauth strategies, don't validate
@@ -78,7 +79,7 @@ UserSchema.path('hashed_password').validate(function (hashed_password) {
     return true;
   } 
   return hashed_password.length;
-}, 'Password cannot be blank');
+}, 'error.passwordCannotBeBlank');
 
 
 /**
@@ -91,7 +92,7 @@ UserSchema.pre('save', function(next) {
   } 
 
   if (!validatePresenceOf(this.password) && authTypes.indexOf(this.provider) === -1) {
-    next(new Error('Invalid password'));
+    next(new Error('error.invalidPassword'));
   } else {
     next();
   }
