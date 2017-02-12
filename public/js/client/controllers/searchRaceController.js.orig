@@ -40,14 +40,14 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			applyClass: 'btn-small btn-primary',
 			cancelClass: 'btn-small',
 			format: 'DD/MM/YYYY',
-			separator: ' à ',
+			separator: ' Ã  ',
 			locale: {
 				applyLabel: 'Valider',
 				fromLabel: 'de',
-				toLabel: 'à',
-				customRangeLabel: 'Personnalisé',
+				toLabel: 'Ã ',
+				customRangeLabel: 'PersonnalisÃ©',
 				daysOfWeek: ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa','Di'],
-				monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+				monthNames: ['Janvier', 'FÃ©vrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'AoÃ»t', 'Septembre', 'Octobre', 'Novembre', 'DÃ©cembre'],
 				firstDay: 0
 			},
 		};
@@ -161,7 +161,13 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 					if(response.races.length > 0) {
 
+<<<<<<< HEAD
+			if (hasTypes !== "") {
+				url = url + '/types/' + hasTypes;
+			}
+=======
 						$scope.emptyResults = false;
+>>>>>>> cc263e9e10773d5b02dc69daef2d30144d1e8c59
 
 						$scope.races = response.races[0].results;
 

@@ -32,8 +32,13 @@ angular.module('nextrunApp')
                     success();
                 }).error(error);
             },
-            search: function(departments, success, error) {
-                $http.get('/api/races/search/' + 'departments/' + departments).success(function(races) {
+            search: function(criteria, success, error) {
+                $http.post('/api/races/search/', { "criteria" : criteria }).success(function(races) {
+                    success(races);
+                }).error(error);
+            },
+            autocomplete: function(query_string, success, error) {
+                $http.post('/api/races/autocomplete/'+ query_string).success(function(races) {
                     success(races);
                 }).error(error);
             }
