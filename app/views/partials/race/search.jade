@@ -49,17 +49,19 @@ div.container
 			div.col-lg-3
 				div.well
 					h4 Affiner la Recherche
-					a(data-ng-click="onSelect('*')") Tout supprimer
+					a(data-ng-click="reinitFilter()") Tout supprimer
 					div.row
 						div.col-lg-12
 							span.label.label-primary(data-ng-repeat="type in currentTypeSelected")  {{type}} 
-								span.glyphicon.glyphicon-remove(data-ng-click="toggleTypeSelection(type);onChange()")
+								span.glyphicon.glyphicon-remove(data-ng-click="toggleTypeSelection(type);onChange()" style="cursor:pointer")
 						div.col-lg-12
 							span.label.label-success(ng-repeat="department in departments") {{getDepartmentByCode(department)}} 
-								span.glyphicon.glyphicon-remove(data-ng-click="toggleDepartmentSelection(department);onChange()")
+								span.glyphicon.glyphicon-remove(data-ng-click="toggleDepartmentSelection(department);onChange()" style="cursor:pointer")
 						div.col-lg-12
-							span.label.label-warning {{formatDateRange(dateRange)}} 
-								span.glyphicon.glyphicon-remove(data-ng-click="resetDataRangeFilter();onChange()")
+							span.label.label-warning(data-ng-repeat="dateRange in currentDateRangeSelected") {{formatDateRange(dateRange)}} 
+								span.glyphicon.glyphicon-remove(data-ng-click="toggleDateRangeSelection(dateRange);onChange()" style="cursor:pointer")
+								
+
 					h4 par Type
 					div.checkbox(data-ng-repeat="facet in typeFacets")
 						div(data-ng-switch="currentTypeSelected.indexOf(facet.term) > -1")
@@ -111,7 +113,7 @@ div.container
 					div.input-group
 						span.input-group-addon
 							i.glyphicon.glyphicon-calendar
-						input.form-control(type="daterange" min-date="{{datarangeConfig.minDate}}" max-date="{{datarangeConfig.maxDate}}" data-ng-model="dateRange" data-ng-change="onChange()" format="{{datarangeConfig.format}}" locale="{{datarangeConfig.locale}}" ranges="{{datarangeConfig.ranges}}")
+						input.form-control(type="daterange" min-date="{{datarangeConfig.minDate}}" max-date="{{datarangeConfig.maxDate}}" data-ng-model="dateRange" data-ng-change="toggleDateRangeSelection(dateRange);onChange()" format="{{datarangeConfig.format}}" locale="{{datarangeConfig.locale}}" ranges="{{datarangeConfig.ranges}}")
 			
 			div.col-lg-9
 				div.col-lg-3
