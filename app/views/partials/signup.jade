@@ -1,0 +1,21 @@
+div.container(ng-controller='SignupCtrl', style="margin-top:50px")
+	div.row
+		div.col-lg-4.col-lg-offset-4
+			div.panel.panel-default
+				div.panel-heading S'inscrire
+				div.panel-body
+					form(id="signupForm",role="form")
+						input(id="_csrf", type='hidden', name='_csrf', value="#{csrf_token}")
+						div.form-group
+							label(for="username") Nom complet
+							input.form-control(type="text", name="username", id="username", placeholder="Nom complet")
+						div.form-group
+							label(for="email") Email
+							input.form-control(type="email", name="email", id="email", placeholder="Email")
+						div.form-group
+							label(type="password", for="password") Mot de passe
+							input.form-control(type="password", name="password",  id="inputPassword", placeholder="Mot de passe")
+						div.form-group
+							label(type="password", for="confirmPassword") Confirmer le mot de passe
+							input.form-control(type="password", name="confirmPassword",  id="confirmPassword", placeholder="Confirmer le mot de passe"))
+						button.btn.btn-primary(type="submit") Envoyer
