@@ -1,6 +1,7 @@
 "use strict";
-angular.module("nextrunApp.commons").value('redirectToUrlAfterLogin', {
-    url: '/'
+angular.module("nextrunApp.commons").value("redirectToUrlAfterLogin", {
+    url: "/",
+    params: {}
 });
 
 angular.module("nextrunApp.commons").factory("AuthService",
@@ -86,16 +87,23 @@ angular.module("nextrunApp.commons").factory("AuthService",
                 return promise;
             },
             saveAttemptUrl: function() {
-                if ($state.url.toLowerCase() != '/login') {
-                    redirectToUrlAfterLogin.url = $state.url;
-                } else
-                    redirectToUrlAfterLogin.url = "/";
+                if ($state.url.toLowerCase() !== "/login") {
+                    redirectToUrlAfterLogin = {
+                        url: stateService.url,
+                        params: stateService.stateParams
+                    }
+                } else {
+                    redirectToUrlAfterLogin = {
+                        url: "/",
+                        params: {}
+                    }
+                }
             },
             redirectToAttemptedUrl: function() {
-                $state.go(redirectToUrlAfterLogin.url);
-            }
-            accessLevels: accessLevels,
-            userRoles: userRoles,
-            user: currentUser
+                $state.go(redirectToUrlAfterLogin.url, redirectToUrlAfterLogin.params);
+            },
+            accessLevels: this.accessLevels,
+            userRoles: this.userRoles,
+            user: this.currentUser
         };
     });

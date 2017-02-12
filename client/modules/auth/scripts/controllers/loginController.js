@@ -20,7 +20,7 @@ angular.module("nextrunApp.auth").controller("LoginController",
 				email: $scope.user.email,
 				password: $scope.user.password
 			}).then(function() {
-				$state.go("myraces");
+				AuthService.redirectToAttemptedUrl();
 			});
 		};
 

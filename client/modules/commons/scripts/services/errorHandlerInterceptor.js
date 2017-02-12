@@ -1,14 +1,18 @@
 "use strict";
 
 angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
-	function($q, notificationService, $state, $cookieStore) {
+	function($injector, $q, $cookieStore, notificationService) {
+
+		var stateService = $injector.get("$state");
+		var AuthService = $injector.get("AuthService");
+
 		var interceptor = {
 			"responseError": function(response) {
 
-				if (response.status === 401) {
+				if (response.status === 403) {
 					$cookieStore.remove("user");
-          			AuthService.saveAttemptUrl();
-          			$state.go("login");
+					AuthService.saveAttemptUrl();
+					stateService.go("login");
 				}
 
 				if (response.data && response.data.message) {
@@ -16,7 +20,6 @@ angular.module("nextrunApp.commons").factory("ErrorHandlerInterceptor",
 						notificationService.error(message);
 					});
 				}
-
 				return $q.reject(response);
 			}
 		};

@@ -5,10 +5,8 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		$rootScope,
 		$scope,
 		$modal,
-		$state,
 		RaceService,
 		notificationService,
-		AuthService,
 		RaceTypeEnum,
 		MetaService,
 		gettextCatalog) {
@@ -16,15 +14,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		$scope.gettextCatalog = gettextCatalog;
 
 		$scope.race = {};
-		$scope.user = {};
-
-		$scope.tabs = [{
-			active: true,
-			disabled: false
-		}, {
-			active: false,
-			disabled: true
-		}];
 
 		$scope.options = {
 			country: "fr",
@@ -34,10 +23,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 		$scope.types = RaceTypeEnum.getValues();
 
 		$scope.accountExists = true;
-
-		$scope.isLoggedIn = function() {
-			return AuthService.isLoggedIn();
-		};
 
 		$scope.initRouteDataModel = function() {
 			var raceType = RaceTypeEnum.getRaceTypeByName($scope.race.type);
@@ -62,32 +47,9 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 				race: $scope.race
 			};
 
-
-			if ($scope.isLoggedIn()) {
-				RaceService.create(data).then(
-					function(response) {
-						notificationService.success(gettextCatalog.getString("La manifestation a bien été créée"));
-						$scope.openRedirectionModal(response.data.raceId);
-					});
-			} else {
-				$state.go("login");
-			}
-		};
-
-		$scope.login = function() {
-			AuthService.login({
-				email: $scope.user.email,
-				password: $scope.user.password
-			}).then(function() {
-				$scope.submit();
-			});
-		};
-
-		$scope.signup = function() {
-			AuthService.register({
-				user: $scope.newuser
-			}).then(function() {
-				$scope.submit();
+			RaceService.create(data).then(function(response) {
+				notificationService.success(gettextCatalog.getString("La manifestation a bien été créée"));
+				$scope.openRedirectionModal(response.data.raceId);
 			});
 		};
 
@@ -108,13 +70,6 @@ angular.module("nextrunApp.race").controller("CreateRaceController",
 				templateUrl: "partials/auth/forgotpasswordModal",
 				controller: "ForgotPasswordModalController"
 			});
-		};
-
-		$scope.open = function($event) {
-			$event.preventDefault();
-			$event.stopPropagation();
-
-			$scope.opened = true;
 		};
 
 		MetaService.ready("Ajouter une manifestation");
