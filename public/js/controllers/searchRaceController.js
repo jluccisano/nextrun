@@ -29,6 +29,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 		$scope.currentTypeSelected = [];
 		$scope.currentDepartmentSelected = [];
 		$scope.currentRegionSelected = [];
+		$scope.currentDateRangeSelected = [];
 
 		$scope.departments = [];
 		$scope.region = REGIONS.ALL.value;
@@ -49,7 +50,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			$scope.currentTypeSelected = [];
 			$scope.searchAround = undefined;
 			$scope.distance = undefined;
-			$scope.details = undefined;
+			$scope.race.pin = undefined;
 			$scope.dateRange = {
 				"startDate": moment(),
 				"endDate": moment().add('days', 179)
@@ -63,7 +64,7 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			$scope.currentTypeSelected = sharedService.criteria.types;
 			$scope.searchAround = sharedService.criteria.searchAround;
 			$scope.distance = sharedService.criteria.distance;
-			$scope.details = sharedService.criteria.details;
+			$scope.race.pin = sharedService.criteria.details;
 			$scope.isModeGeolocation = true;
 			$scope.fulltext = undefined;
 			$scope.dateRange = {
@@ -113,14 +114,12 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 			"endDate": moment().add('days', 179)
 		};
 
+		$scope.currentDateRangeSelected.push($scope.dateRange);
 
 		$scope.deleteFilters = function() {
 			$scope.currentTypeSelected = [];
 			$scope.departments = [];
-			$scope.dateRange = {
-				"startDate": moment(),
-				"endDate": moment().add('days', 179)
-			};
+			$scope.currentDateRangeSelected = [];
 		}
 
 
@@ -215,15 +214,21 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 				$location.path("/races/view/" + $item.id)
 
-			} else {
-
-				//Reinit 
-				$scope.deleteFilters();
-				$scope.search();
 			}
+		};
 
+		$scope.reinitFilter = function() {
+			$scope.deleteFilters();
+			$scope.search();
+		}
 
+		$scope.toggleDateRangeSelection = function(dateRange) {
 
+			if ($scope.currentDateRangeSelected.length > 0) {
+				$scope.currentDateRangeSelected.splice(0, 1);
+			} else if ($scope.currentDateRangeSelected.length === 0) {
+				$scope.currentDateRangeSelected.push(dateRange);
+			}
 		};
 
 		$scope.resetDataRangeFilter = function() {
@@ -311,8 +316,11 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					size: $scope.pageSize,
 					sort: $scope.sort,
 					departments: $scope.departments,
-					dateRange: $scope.dateRange,
-					location: $scope.details.location
+					dateRange: ($scope.currentDateRangeSelected.length === 1) ? $scope.currentDateRangeSelected[0] : $scope.dateRange = {
+						"startDate": moment(),
+						"endDate": moment().add('days', 365)
+					},
+					location: $scope.race.pin.location
 				}
 
 			} else {
@@ -324,7 +332,10 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 					types: $scope.currentTypeSelected,
 					departments: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.departments : [],
 					region: ($scope.region.name !== REGIONS.ALL.value.name) ? $scope.region : undefined,
-					dateRange: $scope.dateRange
+					dateRange: ($scope.currentDateRangeSelected.length === 1) ? $scope.currentDateRangeSelected[0] : $scope.dateRange = {
+						"startDate": moment(),
+						"endDate": moment().add('days', 365)
+					}
 				};
 			}
 
@@ -404,14 +415,17 @@ angular.module('nextrunApp').controller('SearchRaceCtrl', ['$scope', '$location'
 
 			$scope.searchAround = false;
 			$scope.distance = "15";
-			$scope.details = undefined
+			$scope.race.pin = undefined
 			$scope.fulltext = undefined;
 			$scope.currentDepartmentSelected = [];
 			$scope.currentTypeSelected = [];
 
 		}
 
+		
 		$scope.ready();
+
+		$scope.search();
 
 
 	}
