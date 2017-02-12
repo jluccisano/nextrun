@@ -21,7 +21,8 @@ var EventSchema = new Schema({
 var ResultSchema = new Schema({
     name: String,
     year: String,
-    fileId: String
+    fileId: String,
+    fileName: String
 });
 
 

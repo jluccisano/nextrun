@@ -1,7 +1,7 @@
 var raceService = require("../services/raceService"),
-	logger = require("../logger"),
-	crypto = require("crypto"),
-	fs = require("fs");
+	fileUtils = require("../utils/fileUtils"),
+	errorUtils = require("../utils/errorUtils"),
+	crypto = require("crypto");
 
 exports.createRace = function(req, res) {
 	var race = req.body;
@@ -136,54 +136,27 @@ exports.updateRace = function(req, res) {
 
 
 exports.uploadPicture = function(req, res) {
-
-	var decodeBase64Image = function(dataString) {
-		var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-			response = {};
-
-		if (matches.length !== 3) {
-			return new Error("Invalid input string");
-		}
-
-		response.type = matches[1];
-		response.data = new Buffer(matches[2], "base64");
-
-		return response;
-	};
-
 	var race = req.race;
+	var imageFile = req.body;
 
-	var imageBuffer = decodeBase64Image(req.body.base64);
+	if (fileUtils.checkIfAuthorizedImageType(imageFile.type)) {
 
-	var fileName = "test.jpg";
-	var format = "jpg";
+		var imageBuffer = fileUtils.decodeBase64(imageFile.data);
 
-	//image/jpeg
-	//image/png
-	//text/csv
-	//text/plain
-	//text/html
+		var tmpFileName = crypto.randomBytes(4).readUInt32LE(0) + "_" + imageFile.name;
+		var tmpFilePath = "./.tmp/" + tmpFileName;
 
-	//application/pdf
+		fileUtils.createTemporaryFile(tmpFilePath, imageBuffer.data);
 
-	//application/vnd.ms-excel
-
-	var tmpFileName = "tmp"+crypto.randomBytes(4).readUInt32LE(0)+"."+format;
-
-	var tmpFilePath = "./.tmp/" + tmpFileName;
-
-	fs.writeFile(tmpFilePath, imageBuffer.data, function(error) {
-		if(error) {
-			logger.error(error);
-		}
-	});
-
-
-	raceService.uploadPicture(race, tmpFilePath, fileName, res, function() {
-		res.status(200).json({
-			id: race._id
+		raceService.uploadPicture(race, tmpFilePath, tmpFileName, res, function() {
+			res.status(200).json({
+				id: race._id
+			});
 		});
-	});
+
+	} else {
+		errorUtils.handleFileTypeNotAuthorized(res);
+	}
 };
 
 exports.uploadRights = function(req, res) {
@@ -232,41 +205,33 @@ exports.addResult = function(req, res) {
 	var race = req.race;
 	var result = req.body;
 
-	var decodeBase64 = function(dataString) {
-		var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-			response = {};
+	if (fileUtils.checkIfAuthorizedFileType(result.file.type)) {
 
-		if (matches.length !== 3) {
-			return new Error("Invalid input string");
-		}
+		var imageBuffer = fileUtils.decodeBase64(result.file.data);
 
-		response.type = matches[1];
-		response.data = new Buffer(matches[2], "base64");
+		var tmpFileName = crypto.randomBytes(4).readUInt32LE(0) + "_" + result.file.name;
+		var tmpFilePath = "./.tmp/" + tmpFileName;
 
-		return response;
-	};
+		var name = result.name;
+		var filename = result.file.name;
+		var year = result.year;
 
-	var imageBuffer = decodeBase64(result.file);
+		fileUtils.createTemporaryFile(tmpFilePath, imageBuffer.data);
 
-	var path = "./.tmp/" + result.name;
-	var filename = result.name;
-	var year = result.year;
-
-	fs.writeFile(path, imageBuffer.data, function(err) {
-		console.log(err);
-	});
-
-	raceService.addResult(race, path, filename, year, res, function() {
-		res.status(200).json({
-			id: race._id
+		raceService.addResult(race, tmpFilePath, name, filename, year, res, function() {
+			res.status(200).json({
+				id: race._id
+			});
 		});
-	});
+	} else {
+		errorUtils.handleFileTypeNotAuthorized(res);
+	}
 };
 
 
 exports.deleteResultFile = function(req, res, next) {
 	var result = req.result;
-	raceService.deleteResultFile(result , res, function() {
+	raceService.deleteResultFile(result, res, function() {
 		next();
 	});
 };
@@ -284,9 +249,5 @@ exports.getResult = function(req, res) {
 	var result = req.result;
 	raceService.getResult(race, result, res, function(data) {
 		res.status(200).send(data);
-		//res.header('content-type','binary/octet-stream');
-		//res.set('Content-Type', 'application/json');
-        //readstream.pipe(res);
-
 	});
 };

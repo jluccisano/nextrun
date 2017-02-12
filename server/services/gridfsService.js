@@ -1,5 +1,6 @@
 var GridFs = require("gridfs-stream"),
 	errorUtils = require("../utils/errorUtils"),
+	fileUtils = require("../utils/fileUtils"),
 	logger = require("../logger"),
 	mongoose = require("mongoose"),
 	fs = require("fs");
@@ -23,13 +24,7 @@ exports.storeFile = function(path, originalName, cb) {
 		cb(file);
 	});
 
-	fs.unlink(path, function(error) {
-		if (error) {
-			logger.error(error);
-			throw error;
-		}
-		logger.info("successfully deleted"+path);
-	});
+	fileUtils.deleteTemporaryFile(path);
 };
 
 exports.getFile = function(id, res, cb) {
@@ -52,7 +47,6 @@ exports.getFile = function(id, res, cb) {
 			}).on("end", function() {
 				cb(bufs);
 			});
-			//cb(readstream);
 		} else {
 			logger.info("File does not exist");
 			cb(bufs);

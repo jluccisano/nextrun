@@ -77,4 +77,12 @@ exports.handleRouteNotPublished = function(res) {
     });
 };
 
+exports.handleFileTypeNotAuthorized = function(res) {
+    logger.error("error.fileTypeNotAuhtorized");
+    return res.status(400).json({
+        message: ["error.fileTypeNotAuhtorized"]
+    });
+};
+
+
 

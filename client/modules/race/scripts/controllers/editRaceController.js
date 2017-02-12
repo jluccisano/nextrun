@@ -75,9 +75,9 @@ angular.module("nextrunApp.race").controller("EditRaceController",
                 $scope.race = response.data;
                 $scope.retrieveRoutes();
 
-                /*RaceService.download($scope.race._id).then(function(response) {
+                RaceService.download($scope.race._id).then(function(response) {
                     $scope.image = response.data;
-                });*/
+                });
             }).
             finally(function() {
                 MetaService.ready($scope.race.name, $scope.generateRaceDescription());
@@ -202,13 +202,9 @@ angular.module("nextrunApp.race").controller("EditRaceController",
             $scope.isCollapsed = true;
         };
 
-        $scope.getFile = function(file) {
+        $scope.getFile = function(imageFile) {
 
-            var image = {
-                base64: file
-            };
-
-            RaceService.uploadImage($scope.race._id, image).then(function() {
+            RaceService.uploadImage($scope.race._id, imageFile).then(function() {
                 notificationService.success(gettextCatalog.getString("Votre image a bien été mise à jour"));
                 $scope.init();
             });

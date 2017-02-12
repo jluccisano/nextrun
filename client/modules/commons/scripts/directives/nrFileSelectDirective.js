@@ -105,11 +105,18 @@ angular.module("nextrunApp.commons").directive("nrImportImage", function() {
 			});
 
 			var handleFileSelect = function(evt) {
+				var imageFile = {};
 				var file = evt.currentTarget.files[0];
 				var reader = new FileReader();
+
+				imageFile.size = file.size;
+				imageFile.type = file.type;
+				imageFile.name = file.name;
+
 				reader.onload = function(evt) {
 					$scope.$apply(function($scope) {
-						$scope.getFile(evt.target.result);
+						imageFile.data = evt.target.result;
+						$scope.getFile(imageFile);
 						
 					});
 				};
@@ -129,11 +136,18 @@ angular.module("nextrunApp.commons").directive("nrFileSelect", function() {
 			});
 
 			var handleFileSelect = function(evt) {
+				var resultFile = {};
 				var file = evt.currentTarget.files[0];
 				var reader = new FileReader();
+
+				resultFile.size = file.size;
+				resultFile.type = file.type;
+				resultFile.name = file.name;
+
 				reader.onload = function(evt) {
 					$scope.$apply(function() {
-						controller.$setViewValue(evt.target.result);
+						resultFile.data = evt.target.result;
+						controller.$setViewValue(resultFile);
 					});
 				};
 				reader.readAsDataURL(file);

@@ -477,7 +477,7 @@ exports.downloadPicture = function(race, res, cb) {
 	});
 };
 
-exports.addResult = function(race, path, originalName, year, res, cb) {
+exports.addResult = function(race, path, name, originalName, year, res, cb) {
 
 	gridfsService.storeFile(path, originalName, function(file) {
 
@@ -486,9 +486,10 @@ exports.addResult = function(race, path, originalName, year, res, cb) {
 		};
 
 		var result = {
-			name: originalName,
+			name: name,
 			year: year,
-			fileId: file._id
+			fileId: file._id,
+			fileName: originalName
 		};
 
 		var update = {
@@ -589,8 +590,5 @@ exports.getResult = function(race, result, res, cb) {
 		} else {
 			cb();
 		}
-
-		//cb(bufs);
-
 	});
 };
