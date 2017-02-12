@@ -15,8 +15,8 @@ div.container(data-ng-controller="SettingsCtrl")
 					div.page-header
 						h1(id="changeProfileTab") Changement de profil
 					form(id="settingsProfileForm", role="form",  style="margin-top:50px", name="form", novalidate)
-						div.form-group(ng-class="{'has-error': !form.username.$pristine && form.username.$invalid, 'has-success': !form.username.$invalid && !form.username.$pristine}")
-							label(for="username") Nom complet
+						div.form-group(ng-class="{'has-error': !form.username.$pristine && form.username.$invalid, 'has-success': !form.username.$pristine && !form.username.$invalid}")
+							label.control-label(for="username") Nom complet
 							input.form-control(type="text", name="username", id="username", placeholder="ex: Nicolas Dupont", data-ng-model="user.username",  ng-minlength="4", ng-maxlength="30", required)
 							span.help-block(ng-show="form.username.$dirty && form.username.$error.required") Please choose a username
 							span.help-block(ng-show="form.username.$dirty && form.username.$error.invalidChars") Username may not contain any non-url-safe characters

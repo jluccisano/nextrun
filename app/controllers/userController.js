@@ -159,11 +159,8 @@ exports.updateProfile = function (req, res) {
     user.email = req.body.user.email;
     user.username = req.body.user.username;
 
-    var upsertData = user.toObject();
 
-    delete upsertData._id;
 
-    console.log(upsertData);
 
     //var newUserName = req.body.user.username;
     //var newEmail = req.body.user.email;
@@ -174,7 +171,7 @@ exports.updateProfile = function (req, res) {
 
     //} 
 
-    user.update({ _id: req.user._id } ,  { multi: false }, function (err) {
+    user.save(function (err) {
       if (err) {
         console.log(err);
         return res.json(400,  {message: errorUtils.errors(err.errors)  } );

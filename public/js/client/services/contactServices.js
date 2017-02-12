@@ -1,5 +1,5 @@
 angular.module('nextrunApp')
-.factory('ContactService', function($http){
+.factory('ContactServices', function($http){
 
     return {
         addContact: function(contact) {

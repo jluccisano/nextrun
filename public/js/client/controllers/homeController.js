@@ -1,6 +1,11 @@
 nextrunControllers.controller('HomeCtrl', ['$scope','$http', '$location', 'ContactServices','Alert',
 	function($scope, $http, $location, ContactServices, Alert) {
 
+		 $scope.types = [
+		    {name:'Athlète'},
+		    {name:'Organisteur'},
+		    {name:'Autre', shade:'dark'}
+		  ];
 
 		$scope.submit = function() {
 
