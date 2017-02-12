@@ -216,7 +216,7 @@ module.exports = function(grunt) {
               'bower_components/font-awesome/css/font-awesome.min.css'
             ],
             dest: 'dist/public/lib/'
-          }, 
+          },
           //copy fonts of fonts
           {
             expand: true,
@@ -226,6 +226,13 @@ module.exports = function(grunt) {
               'bower_components/font-awesome/fonts/*'
             ],
             dest: 'dist/public/fonts/'
+          },
+
+          // include sitemap.xml
+          {
+            expand: true,
+            src: ['public/sitemap.xml'],
+            dest: 'dist/'
           },
 
         ]
