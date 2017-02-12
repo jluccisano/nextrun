@@ -23,9 +23,9 @@ div.custom-bs-background
 					form(role="form", name="form1", novalidate)
 						div.row
 							div.col-lg-6
-								div.form-group(data-ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$pristine  && !form1.location.$error.validLocation}")
+								div.form-group(ng-class="{'has-error': !form1.location.$pristine && form1.location.$error.validLocation && form1.location.$invalid, 'has-success': !form1.location.$pristine  && !form1.location.$error.validLocation}")
 									input.form-control(name="location" id="location" placeholder="{{'Tapez une ville' | translate}}" ng-model="criteria.autocomplete.location.pin.name" nr-has-location gmaps-autocomplete options="autocomplete.options" details="criteria.autocomplete.location.pin")
-									span.help-block(data-ng-show="form1.location.$dirty && form1.location.$error.validLocation" translate)  Veuillez saisir une ville correcte
+									span.help-block(ng-show="form1.location.$dirty && form1.location.$error.validLocation" translate)  Veuillez saisir une ville correcte
 								div.row
 									div.col-lg-6
 										div.form-group
@@ -42,7 +42,7 @@ div.custom-bs-background
 												option(value="100") 100km
 							div.col-lg-2
 								div.form-group
-									select(class="multiselect" data-placeholder="{{'Sélectionner...' | translate}}" ng-model="criteria.types" data-ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
+									select(class="multiselect" data-placeholder="{{'Sélectionner...' | translate}}" ng-model="criteria.types" ng-options="type.value.name as getType(type.value) for type in listOfTypes" multiple="multiple" multiselect-dropdown)
 						div.row
 							div.col-lg-2.col-lg-offset-8(style="margin-top:-40px")
 								div.form-group
@@ -52,69 +52,8 @@ div.custom-bs-background
 			div.row(style="margin-top:10px")
 				google-map(center="map.center" options="map.options" zoom="map.zoom" refresh="true"  draggable="true" mark-click="true" style="height: 600px" events="map.events")
 					markers(models="map.markers" click="'onClicked'" coords="'self'" icon="'icon'" doCluster="map.doClusterMarkers" clusterOptions="map.clusterOptions")
-						windows(show="'showWindow'" closeClick="'closeClick'" data-ng-cloak)
+						windows(show="'showWindow'" closeClick="'closeClick'" ng-cloak)
 							a(ng-non-bindable href="#/races/view/{{raceId}}") {{raceName}}		
 			div.container.marketing
-				div.row
-					div.col-lg-4
-						div.text-center
-							h2 {{'Pourquoi ?' | translate}}
-						p
-							| - {{'Difficile de trouver une manifestation.' | translate}}
-						p 
-							| - Rarement le <strong style="color:#428bca">détail du parcours</strong> et 
-							| son <strong style="color:#428bca">dénivelé</strong>.
-						p
-							| - {{'Peu de retour d'expériences.' | translate }}
-						p
-							| - {{'Difficultés à obtenir les' | translate }} <strong style="color:#428bca">{{'résultats' | translate}}</strong>.
-						p
-							| - {{'Ne pas être au courant d'une course près de chez soi.' | translate}}
-
-					div.col-lg-4
-						div.text-center
-							h2 {{'Athlètes' | translate}}
-						p
-							| - Trouver l'épreuve qui correspond 
-							| à votre objectif.
-						p
-							| - Analyser le détail du parcours: 
-							| distance, <strong style="color:#428bca">dénivelé</strong>, difficultés.
-						p
-							| - Exporter le fichier <strong style="color:#428bca">GPX</strong> et aller faire 
-							| une reconnaissance du parcours.
-						p
-							| - Donner votre avis sur les épreuves
-							| et partager votre expérience.
-						p
-							| - Retrouver toutes les informations sur 
-							| l'épreuve: organisation, plan, règlements...
-						p
-							| - Inscription en ligne.
-					div.col-lg-4
-						div.text-center
-							h2 Organisateurs
-						p
-							| - Promouvoir votre manifestation en quelques clics.
-						p
-							| - Tracer vos parcours avec <strong style="color:#428bca">Google Maps</strong> ou importer un fichier .gpx.
-						p
-							| - Détailler toutes les informations utiles : prix , nombre de places, horaires...
-						p
-							| - Publier les <strong style="color:#428bca">résultats</strong>.
-						button.btn.btn-primary.btn-lg(data-ng-click="goToNewRace()") Commencer maintenant !
-				div.row
-					div.text-center
-						h3 Restez informé.
-					div.col-lg-12.center
-						form.form-inline(role="form", name="form", novalidate)
-							div.form-group(data-ng-class="{'has-error': !form.email.$pristine && form.email.$invalid, 'has-success': !form.email.$invalid && !form.email.$pristine}")
-								input.form-control(type="email", name="email", id="email", placeholder="votre@email.com", data-ng-model="contact.email", required)
-							div.form-group(data-ng-class="{'has-error': !form.type.$pristine && form.type.$invalid, 'has-success': !form.type.$invalid && !form.type.$pristine}")
-								select.form-control(data-ng-model="contact.type", name="type", data-ng-options="type.name for type in types", required, data-ng-init="type.name='Athlète'")
-							div.form-group
-								button.btn.btn-primary(ng-click="submit(contact)", ng-disabled="form.$invalid") Envoyer
-							div
-								label.error(data-ng-show="form.email.$dirty && form.email.$error.required") <strong>Veuillez saisir votre email</strong>
-								label.error(data-ng-show="form.email.$error.email") <strong>Email invalide</strong>
-								label.error(data-ng-show="form.type.$dirty && form.type.$error.required") <strong>Veuillez faire un choix</strong>
+				include ./templates/marketing
+				include ./templates/contacts

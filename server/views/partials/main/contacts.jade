@@ -6,8 +6,8 @@ div.container
 			form(role="form" name="form" style="margin-top:50px")
 				div.form-group
 					label.control-label(translate) Email
-					input.form-control(name="email" placeholder="{{'Email' | translate}}" data-ng-model="email" required)
+					input.form-control(name="email" placeholder="{{'Email' | translate}}" ng-model="email" required)
 				div.form-group
 					label.control-label(translate) Message
-					textarea.form-control(name="message" data-ng-model="message" rows="3" placeholder="{{'votre message' | translate}}" required)
-				button.btn.btn-primary(data-ng-click="submit()" translate) Envoyer
+					textarea.form-control(name="message" ng-model="message" rows="3" placeholder="{{'votre message' | translate}}" required)
+				button.btn.btn-primary(ng-click="submit()" translate) Envoyer

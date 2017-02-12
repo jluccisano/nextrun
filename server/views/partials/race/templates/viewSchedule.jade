@@ -1,0 +1,30 @@
+div.container
+	div.row
+		div.col-lg-4
+			table.table.table-hover.table-condensed
+				thead
+					tr
+						th(style="width: 40%;border:0; border-top: none;")
+						th(style="width: 20%;border:0; border-top: none;")
+				tbody
+					tr
+						td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.startingTime' | translate}}
+							span :
+						td(ng-if="race.timing.startingTime != null" align="left" style="border:0; border-top: none;") {{race.timing.startingTime| amDateFormat:'HH:mm'}}
+						td(ng-if="race.timing.startingTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+					tr
+						td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.briefingTime' | translate}}
+							span :
+						td(ng-if="race.timing.briefingTime != null" align="left" style="border:0; border-top: none;") {{race.timing.briefingTime | amDateFormat:'HH:mm'}}
+						td(ng-if="race.timing.briefingTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+					tr
+						td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.checkoutBibTime' | translate}}
+							span :
+						td(ng-if="race.timing.checkoutBibTime != null" align="left" style="border:0; border-top: none;") {{race.timing.checkoutBibTime | amDateFormat:'HH:mm'}}
+						td(ng-if="race.timing.checkoutBibTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+					tr
+						td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.rewardsTime' | translate}}
+							span :
+						td(ng-if="race.timing.rewardsTime != null" align="left" style="border:0; border-top: none;") {{race.timing.rewardsTime | amDateFormat:'HH:mm'}}
+						td(ng-if="race.timing.rewardsTime == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+	div.well(ng-if="race.timing.timingMoreInformation" ng-bind-html="race.timing.timingMoreInformation")

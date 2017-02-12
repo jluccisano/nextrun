@@ -1,4 +1,4 @@
-header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner" data-ng-Controller='HeaderController')
+header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner" ng-Controller='HeaderController')
 	div.navbar-inner
 		div.container
 			div.navbar-header
@@ -16,7 +16,7 @@ header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner" d
 					li
 						a(href="/races/search" translate) Rechercher
 				ul.nav.navbar-nav.navbar-right
-					li.dropdown(data-ng-show="isLoggedIn()")
+					li.dropdown(ng-show="isLoggedIn()")
 						a.dropdown-toggle(data-toggle="dropdown") {{user.username}}
 							b.caret
 						ul.dropdown-menu
@@ -25,9 +25,9 @@ header.navbar.navbar-inverse.navbar-fixed-top.custom-bs-docs-nav(role="banner" d
 							li
 								a(href="/users/settings" translate) Paramètres
 							li
-								a(data-ng-click="logout()" translate) Se déconnecter
-					li(data-ng-hide="isLoggedIn()")
+								a(ng-click="logout()" translate) Se déconnecter
+					li(ng-hide="isLoggedIn()")
 						form(class="navbar-form navbar-left")
-							button(type="submit", class="btn btn-primary", data-ng-click="login()") 
+							button(type="submit", class="btn btn-primary", ng-click="login()") 
 								span.glyphicon.glyphicon-user 
 								span(translate) Se connecter

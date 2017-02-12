@@ -1,0 +1,22 @@
+div.row
+	div.col-lg-8
+		form.form-horizontal(name="form4" role="form" style="margin-top:10px")
+			div.form-group
+				label.col-lg-4.control-label(translate) Adresse
+				div.col-lg-8
+					input.form-control(ng-model="race.plan.address.address1" placeholder="{{'Adresse'| translate}}")
+			div.form-group
+				label.col-lg-4.control-label
+				div.col-lg-8
+					input.form-control(ng-model="race.plan.address.address2" placeholder="{{'Complément d\'adresse' | translate}}")
+			div.form-group
+				label.col-lg-4.control-label(translate) Code postal
+				div.col-lg-8
+					input.form-control(ng-model="race.plan.address.postcode" placeholder="{{'Code postal' | translate}}")
+			div.form-group
+				label.col-lg-4.control-label(translate) Ville
+				div.col-lg-8
+					input.form-control(ng-model="race.plan.address.city" placeholder="{{'Ville' | translate}}")
+			div.form-group
+				label.col-lg-4.control-label race.moreInformation
+			div.col-lg-12(text-angular text-angular-name="demo1" ng-model="race.plan.planMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")

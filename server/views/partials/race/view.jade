@@ -26,13 +26,13 @@ div.container(style="padding-bottom: 50px;margin-top:50px")
 										span  {{'field.createIssue' | translate}}
 							tr(ng-if="race.organizerWebSite")
 								td(style="border:0", align="left")
-									a(data-ng-href="{{race.organizerWebSite}}" nr-add-http target="_blank")
+									a(ng-href="{{race.organizerWebSite}}" nr-add-http target="_blank")
 										i.glyphicon.glyphicon-info-sign
 										span {{race.organizerWebSite}}
 							tr
 								td(style="border:0", align="left")
 									div.fb-like(data-href="http://www.nextrun.fr/races/view/{{race._id}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false")
-	div(data-ng-if="race.description")
+	div(ng-if="race.description")
 		h2 {{'title.presentation' | translate}}
 		hr
 		div.well(ng-bind-html="race.description")
@@ -42,8 +42,8 @@ div.container(style="padding-bottom: 50px;margin-top:50px")
 	div.row
 		div.col-lg-12
 			tabset(vertical="false" type="navType")
-				tab(data-ng-repeat="route in race.routes" heading="{{route.type}}" ng-click="onChangeTab(route)")
-					div(data-ng-if="route.description")
+				tab(ng-repeat="route in race.routes" heading="{{route.type}}" ng-click="onChangeTab(route)")
+					div(ng-if="route.description")
 						h4 <strong>{{'title.presentation' | translate}}</strong>
 						div.well(ng-bind-html="route.description")
 					include showMap

@@ -1,0 +1,22 @@
+div.container
+	div.row
+		div.col-lg-4
+			table.table.table-hover.table-condensed
+				thead
+					tr
+						th(style="width: 40%;border:0; border-top: none;")
+						th(style="width: 20%;border:0; border-top: none;")
+				tbody
+					tr
+						td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.memberFFPrice' | translate}}
+							span :
+						td(ng-if="race.pricing.memberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.memberFFPrice}}
+							i.fa.fa-eur
+						td(ng-if="race.pricing.memberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+					tr
+						td(align="left" style="border:0; border-top: none; font-weight:bold") {{'field.notMemberFFPrice' | translate}}
+							span :
+						td(ng-if="race.pricing.notMemberFFPrice != null" align="left" style="border:0; border-top: none;") {{race.pricing.notMemberFFPrice}}
+							i.fa.fa-eur
+						td(ng-if="race.pricing.notMemberFFPrice == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+div.well(ng-if="race.registration.registrationMoreInformation" ng-bind-html="race.registration.registrationMoreInformation")

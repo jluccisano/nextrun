@@ -1,0 +1,18 @@
+div.row
+	div.col-lg-8
+		form.form-horizontal(name="form2" role="form" style="margin-top:10px")
+			div.form-group
+				label.col-lg-4.control-label(translate) Licencié
+				div.col-lg-2(class="input-group")
+					input.form-control(type="number" ng-model="race.pricing.memberFFPrice")
+					span.input-group-addon
+						i.fa.fa-eur
+			div.form-group
+				label.col-lg-4.control-label(translate) Non licencié
+				div.col-lg-2(class="input-group")
+					input.form-control(type="number" ng-model="race.pricing.notMemberFFPrice")
+					span.input-group-addon
+						i.fa.fa-eur
+			div.form-group
+				label.col-lg-4.control-label(translate) Plus d'informations
+			div.col-lg-12(text-angular text-angular-name="demo1" ng-model="race.pricing.pricingMoreInformation" ta-toolbar-class="btn-toolbar" ta-toolbar-group-class="btn-group" ta-toolbar-button-class="btn btn-default btn-xs" ta-toolbar-button-active-class="active")

@@ -1,0 +1,15 @@
+div.container
+	div.row
+		div.col-lg-4
+			table.table.table-condensed.table-hover
+				thead
+					tr
+						th(style="width: 50%;border:0; border-top: none;")
+						th(style="width: 50%;border:0; border-top: none;")
+				tbody
+					tr
+						td(align="left" style="border:0; border-top: none;font-weight:bold") {{'field.numberOfProvisions' | translate}}
+							span :
+						td(ng-if="race.therace.numberOfProvisions != null" align="left" style="border:0; border-top: none;") {{race.therace.numberOfProvisions}}
+						td(ng-if="race.therace.numberOfProvisions == null" align="left" style="border:0; border-top: none;font-style:italic") {{'field.notCommunicated' | translate}}
+	div.well(ng-if="race.therace.theRaceMoreInformation" ng-bind-html="race.therace.theRaceMoreInformation")

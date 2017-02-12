@@ -14,23 +14,21 @@ div.container
 				th(style="width: 15%" translate) Dernière mise à jour
 				th(style="width: 10%")
 				th(style="width: 10%")
-
 		tbody
 			tr(ng-repeat="race in races")
 				td 
-					a(data-ng-href='/races/view/{{race._id}}' translate) Nom
+					a(ng-href='/races/view/{{race._id}}' translate) Nom
 				td(translate) Type
 				td(translate) Type de distance
 				td(ng-if="race.last_update != null")  {{race.last_update | amDateFormat:'DD/MM/YYYY HH:mm'}}
 				td
-					a(data-ng-href='/races/edit/{{race._id}}' translate) Editer
+					a(ng-href='/races/edit/{{race._id}}' translate) Editer
 				td
 					a(ng-click="openDeleteConfirmation(race)" translate) Supprimer
 				td(ng-if="race.published === true")
 					a(ng-click="publish(race, false)" translate) Retirer
 				td(ng-if="race.published === false")
 					a(ng-click="publish(race, true)" translate) Publier
-
 	div.col-lg-8.col-lg-offset-4
 		pagination(boundary-links="true" ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" previous-text="<" next-text=">" first-text="<<" last-text=">>")
 				
