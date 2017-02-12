@@ -75,7 +75,7 @@ exports.sendEmailNewFeedback = function(feedback) {
 
     if (feedback.raceId) {
         message = message + " , race id: " + feedback.raceId;
-    } else if(feedback.workoutId) {
+    } else if (feedback.workoutId) {
         message = message + " , workout id: " + feedback.workoutId;
     }
 
@@ -92,7 +92,7 @@ exports.sendEmailNewFeedback = function(feedback) {
 exports.sendNewSession = function(user) {
 
     var mailOptions = {
-        from: user.email,
+        from: "contact.nextrun@gmail.com",
         to: "contact.nextrun@gmail.com",
         subject: "Nouvel session",
         text: "Nouvel session: " + user.id + " , username: " + user.username + " , email: " + user.email
@@ -104,7 +104,7 @@ exports.sendNewSession = function(user) {
 exports.sendNewUser = function(user) {
 
     var mailOptions = {
-        from: user.email,
+        from: "contact.nextrun@gmail.com",
         to: "contact.nextrun@gmail.com",
         subject: "Nouvel utilisateur",
         text: "Nouvel utilisateur: " + user.id + " , username: " + user.username + " , email: " + user.email
@@ -116,7 +116,7 @@ exports.sendNewUser = function(user) {
 exports.sendNewRace = function(race, user) {
 
     var mailOptions = {
-        from: user.email,
+        from: "contact.nextrun@gmail.com",
         to: "contact.nextrun@gmail.com",
         subject: "Nouvel course",
         text: "Nouvel course: " + user.id + " , username: " + user.username + " , email: " + user.email + " , race: " + race._id + " , raceName: " + race.name
@@ -128,7 +128,7 @@ exports.sendNewRace = function(race, user) {
 exports.sendNewRoute = function(route, user) {
 
     var mailOptions = {
-        from: user.email,
+        from: "contact.nextrun@gmail.com",
         to: "contact.nextrun@gmail.com",
         subject: "Nouveau parcours",
         text: "Nouveau parcours: " + user.id + " , username: " + user.username + " , email: " + user.email + " , route: " + route._id + " , routeName: " + route.name
@@ -137,13 +137,25 @@ exports.sendNewRoute = function(route, user) {
     this.sendMail(mailOptions);
 };
 
+
+/** workout management **/
+
 exports.sendNewWorkout = function(route, user) {
 
+    var url = "http://nextrun.fr/workouts/" + workout._id;
+
+    var templateHtml = "<p>Félicitation " + user.username + " !</p>" +
+        "<p>Vous venez de créer la sortie Nextrun \"<b>" + workout.name + "</b>\". Un email a été envoyé à toutes les personnes que vous avez invité</p>" +
+        "<p>Vous pouvez à tout moment modifier votre sortie en cliquant sur ce lien<a href=\"" + url + "\">Voir la sortie</a></p>" +
+        "<hr>" +
+        "<small>Nextrun est un site qui permet d'organiser des sorties sportives avec des groupes de personnes. <a href=\"nextrun.fr\">en savoir plus sur Nextrun</a></small>";
+
     var mailOptions = {
-        from: user.email,
-        to: "contact.nextrun@gmail.com",
+        from: "contact.nextrun@gmail.com",
+        to: user.email,
         subject: "Nouvelle sortie",
-        text: "Nouvelle sortie: " + user.id + " , username: " + user.username + " , email: " + user.email + " , route: " + route._id + " , routeName: " + route.name
+        text: "Nouvelle sortie: " + user.id + " , username: " + user.username + " , email: " + user.email + " , route: " + route._id + " , routeName: " + route.name,
+        html: templateHtml
     };
 
     this.sendMail(mailOptions);
@@ -151,23 +163,63 @@ exports.sendNewWorkout = function(route, user) {
 
 exports.sendNotificationToParticipant = function(workout, user, participant) {
 
+    var url = "http://nextrun.fr/workouts/" + workout._id + "/participants/" + participant._id;
+
+    var templateHtml = "<p>Bonjour,</p>" +
+        "<p>" + user.username + " vous invite à participer à la sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +
+        "<a href=\"" + url + "\">Répondre maintenant</a>" +
+        "<hr>" +
+        "<small>Nextrun est un site qui permet d'organiser des sorties sportives avec des groupes de personnes. <a href=\"nextrun.fr\">en savoir plus sur Nextrun</a></small>";
+
     var mailOptions = {
-        from: user.email,
+        from: user.username + " (via Nextrun) <contact.nextrun@gmail.com>",
         to: participant.email,
         subject: "Nouvelle sortie",
-        text: "http://localhost:3000/workouts/" + workout._id + "/participants/" + participant._id
+        text: url,
+        html: templateHtml
+    };
+
+
+    this.sendMail(mailOptions);
+};
+
+exports.sendNotificationUpdateToParticipant = function(workout, user, participant) {
+
+    var url = "http://nextrun.fr/workouts/" + workout._id + "/participants/" + participant._id;
+
+    var templateHtml = "<p>Bonjour,</p>" +
+        "<p>" + user.username + " a mis à jour la sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +
+        "<a href=\"" + url + "\">Voir maintenant</a>" +
+        "<hr>" +
+        "<small>Nextrun est un site qui permet d'organiser des sorties sportives avec des groupes de personnes. <a href=\"nextrun.fr\">en savoir plus sur Nextrun</a></small>";
+
+    var mailOptions = {
+        from: user.username + " (via Nextrun) <contact.nextrun@gmail.com>",
+        to: participant.email,
+        subject: "Nouvelle sortie",
+        text: url,
+        html: templateHtml
     };
 
     this.sendMail(mailOptions);
 };
 
-exports.sendNotificationToOwner = function(workout, workoutOwner, participantId) {
+exports.sendNotificationToOwner = function(workout, workoutOwner, participant) {
+
+    var url = "http://nextrun.fr/workouts/" + workout._id;
+
+    var templateHtml = "<p>Bonjour,</p>" +
+        "<p>" + participant.pseudo + " a répondu à votre sortie Nextrun \"<b>" + workout.name + "</b>\".</p>" +
+        "<a href=\"" + url + "\">Voir maintenant</a>" +
+        "<hr>" +
+        "<small>Nextrun est un site qui permet d'organiser des sorties sportives avec des groupes de personnes. <a href=\"nextrun.fr\">en savoir plus sur Nextrun</a></small>";
 
     var mailOptions = {
         from: "contact.nextrun@gmail.com",
         to: workoutOwner.email,
         subject: "Modification de votre sortie",
-        text: "Votre sortie a été mis à jour http://localhost:3000/workouts/" + workout._id + " par le participant" + participantId
+        text: "Votre sortie a été mis à jour http://localhost:3000/workouts/" + workout._id + " par le participant" + participant.pseudo,
+        html: templateHtml
     };
 
     this.sendMail(mailOptions);

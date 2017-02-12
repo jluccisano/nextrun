@@ -35,6 +35,11 @@ exports.createWorkout = function(req, res) {
 exports.updateWorkout = function(req, res) {
     var workout = req.workout;
     workoutService.updateWorkout(workout, req, res, function() {
+
+        underscore.forEach(newWorkout.participants, function(participant) {
+            email.sendNotificationUpdateToParticipant(newWorkout, user, participant);
+        });
+
         res.status(200).json({
             id: workout._id
         });
@@ -70,7 +75,7 @@ exports.updateParticipant = function(req, res) {
     var participant = req.body;
     var workoutOwner = req.workoutOwner;
     workoutService.updateParticipant(workout,participant, req, res, function() {
-        email.sendNotificationToOwner(workout, workoutOwner, participantId);
+        email.sendNotificationToOwner(workout, workoutOwner, participant);
         res.sendStatus(200);
     });
 };
