@@ -1,0 +1,15 @@
+div.container(style="margin-top:50px")
+	hr
+	div.row
+		div.col-lg-4.col-lg-offset-4
+			tabset(vertical="false" type="pills")
+				tab(heading="Vertical 1") Vertical content 1
+				tab(heading="Vertical 2") Vertical content 2
+	h2 Organisation
+		hr
+		include templates/organisation
+		hr
+		div.row
+			div.col-lg-offset-4.col-lg-8
+				button.btn.btn-primary(type="button") Enregistrer
+				button.btn.btn-default(type="button") Annuler

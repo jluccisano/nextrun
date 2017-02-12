@@ -59,6 +59,11 @@ nextrunApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
       controller: 'MapCtrl',
       access: access.public
     }).
+    when('/view/map', {
+      templateUrl: '/partials/race/view',
+      controller: 'ViewRaceCtrl',
+      access: access.public
+    }).
     when('/404', {
       templateUrl: '/errors/404',
       access: access.public

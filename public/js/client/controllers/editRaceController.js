@@ -4,6 +4,7 @@ angular.module('nextrunApp').controller('EditRaceCtrl', ['$scope', '$location', 
 				
 		$scope.departments = DEPARTMENTS.enums;
 		$scope.types = TYPE_OF_RACES.enums;
+		$scope.distances = [];
 
 		$scope.raceId = $routeParams.raceId;
 

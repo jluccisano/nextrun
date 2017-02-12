@@ -4,9 +4,9 @@ var _ = require('underscore'),
     accessLevels = require('../../public/js/client/routingConfig').accessLevels;
 
 
-exports.ensureAuthorized = function(req, res, next) {
+exports.ensureAuthorized = function(req, res, next, routes) {
 
-    var routes = [
+ /*   var routes = [
 
 
 
@@ -66,7 +66,7 @@ exports.ensureAuthorized = function(req, res, next) {
             accessLevel: accessLevels.public
         }
 
-    ]
+    ]*/
 
     var role;
     if (!req.user) {

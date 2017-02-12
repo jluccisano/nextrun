@@ -5,20 +5,18 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 		$scope.Math = window.Math;
 
-		$scope.chart = {};
-		$scope.chart.series = [];
-		$scope.chart.series.push({
-			data: []
-		})
-
-
+		/** init google maps service **/
 		google.maps.visualRefresh = true;
 
 		$scope.directionService = new google.maps.DirectionsService();
 		$scope.elevationService = new google.maps.ElevationService();
 
-		$scope.route = {
+		/** init custom map options **/
+		$scope.stayOnTheRoad = true;
+		$scope.travelMode = google.maps.TravelMode.DRIVING;
 
+		/* init route model **/
+		$scope.route = {
 			segments: [],
 			distance: 0,
 			descendant: 0,
@@ -29,68 +27,16 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			type: null
 		}
 
+		/** init google maps options **/
+		$scope.zoom = 13;
+		$scope.fit = true;
 		$scope.markers = [];
-
-		/*$scope.infoWindow = {
-			coords: {
-				latitude: 30,
-				longitude: -89
-			},
-			show: true
-		};*/
-
-		/*$scope.templatedInfoWindow = {
-			coords: {
-				latitude: 60,
-				longitude: -95
-			},
-			show: true,
-			templateUrl: 'partials/race/mapcontrol',
-			templateParameter: {
-				message: 'passed in from the opener'
-			}
-		};*/
-
-		/*$scope.layer = {
-			markers: [],
-			polylines: [],
-			segments: []
-		}*/
-
 		$scope.polylines = [];
-
-		$scope.clusterOptions = {
-			title: 'Hi I am a Cluster!',
-			gridSize: 24,
-			ignoreHidden: true,
-			minimumClusterSize: 2,
-			imageExtension: 'png',
-			imagePath: 'http://localhost:3000/img',
-			imageSizes: [24]
-		};
-
-		$scope.clusterOptionsText = JSON.stringify($scope.clusterOptions);
-
-
-
-		$scope.stayOnTheRoad = true;
-		$scope.travelMode = google.maps.TravelMode.DRIVING;
-
-
-
 		$scope.center = {
 			latitude: 46.52863469527167,
 			longitude: 2.43896484375,
 		};
-
-		$scope.zoom = 13;
-		$scope.fit = true;
-
-
-
 		$scope.options = {
-			//zoom: 5,
-			//center: new google.maps.LatLng(46.52863469527167, 2.43896484375),
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			mapTypeControlOptions: {
 				mapTypeIds: [google.maps.MapTypeId.ROADMAP,
@@ -104,23 +50,20 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			streetViewControl: false,
 			zoomControl: true
 		};
-
 		$scope.events = {
 			click: function(mapModel, eventName, originalEventArgs) {
-
 				$scope.onClickMap(originalEventArgs[0].latLng, $scope.stayOnTheRoad, $scope.travelMode);
-
-
-			},
-
-			dblclick: function(mapModel, eventName, originalEventArgs) {
-
 			}
 		};
 
+		/** init elevation chart **/
+		$scope.chart = {};
+		$scope.chart.series = [];
+		$scope.chart.series.push({
+			data: []
+		})
+
 		$scope.onMarkerClicked = function(marker) {
-			//marker.showWindow = true;
-			//window.alert("Marker: lat: " + marker.latitude + ", lon: " + marker.longitude + " clicked!!")
 		};
 
 
@@ -161,13 +104,8 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 						var samplesPoints = $scope.findSamplesPointIntoSegment(segment, 0.1);
 
-						//_this.getRoute().addSegment(segment);
-						//$scope.route.segments.push(segment);
-
-						//_this.getLayer().addSegment(segment);
 						$scope.route.segments.push(segment);
 
-						//samplesPoints = _this.getElevationFromSamplesPoints(segment, result.routes[0].overview_path, samplesPoints, _this);
 						samplesPoints = $scope.getElevationFromSamplesPoints(segment, result.routes[0].overview_path, samplesPoints);
 					}
 				});
@@ -324,13 +262,11 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 		$scope.calculateDistanceFromStartForEachPointOfSegment = function(segment) {
 
 			var distanceBetween2Points = 0.0;
-			//var segmentPoints = segment.getPoints();
 			var segmentPoints = segment.points;
 			var lastPoint = null;
 			var cumulatedDistance = 0;
 
 			if ($scope.route.segments.length > 0) {
-				//lastPoint = $scope.route.getLastPointOfLastSegment();
 				lastPoint = RouteFactory.getLastPointOfLastSegment($scope.route);
 				cumulatedDistance = $scope.route.distance;
 			}
@@ -456,92 +392,39 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 			if ($scope.route.segments.length == 1) {
 
-				//create start marker
-				/*var icon = new google.maps.MarkerImage("../../img/start.png",
-					new google.maps.Size(128, 128),
-					new google.maps.Point(0, 0),
-					new google.maps.Point(20, 40),
-					new google.maps.Size(40, 40)
-				);*/
-
 				var marker = {
 					latitude: path[path.length - 1].lat(),
 					longitude: path[path.length - 1].lng(),
 					icon: "../../../img/start.png",
 					title: "hello"
-
 				}
-
 			} else {
 
 				$scope.replaceLastMarkerBySegmentPoint();
-
-				/*var icon = new google.maps.MarkerImage("../../img/end.png",
-					new google.maps.Size(128, 128),
-					new google.maps.Point(0, 0),
-					new google.maps.Point(20, 40),
-					new google.maps.Size(40, 40)
-				);*/
 
 				var marker = {
 					latitude: path[path.length - 1].lat(),
 					longitude: path[path.length - 1].lng(),
 					icon: "../../../img/end.png",
 					title: "hello"
-
 				}
 			}
 
-			/*var marker = new google.maps.Marker({
-				position: path[path.length - 1],
-				//map: _this.display.getMap(),
-				icon: icon
-			});*/
-
-
-
-			//_this.getLayer().addMarker(marker);
 			$scope.markers.push(marker);
-
 			$scope.$apply();
-
-			/*google.maps.event.addListener(marker, 'dblclick', function(event) {
-				_this.deleteLastSegment(_this);
-			});*/
-
 		};
 
 		$scope.replaceLastMarkerBySegmentPoint = function(_this) {
 
-			/*var icon = new google.maps.MarkerImage("../../img/segment.png",
-				new google.maps.Size(32, 32),
-				new google.maps.Point(0, 0),
-				new google.maps.Point(8, 8),
-				new google.maps.Size(16, 16)
-			);*/
-
 			var icon = "../../../img/segment.png";
 
-			//var markers = _this.getLayer().getMarkers();
-
 			if ($scope.markers.length > 1) {
-				//markers[markers.length - 1].setIcon(icon);
 				$scope.markers[$scope.markers.length - 1].icon = icon;
 				$scope.$apply();
-
-				//google.maps.event.clearListeners(markers[markers.length - 1], 'dblclick');
-				//google.maps.event.clearListeners(markers[0], 'dblclick');
 			}
 		},
 
 		$scope.createPolyLine = function(path) {
-
-			/*var polyLine = new google.maps.Polyline({
-				//map: _this.display.getMap(),
-				strokeColor: "red",
-				strokeWeight: 5
-			});*/
-
 
 			var pathArray = [];
 			_.each(path, function(point) {
@@ -565,14 +448,8 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 			}
 
-			//polyLine.setPath(path);
-
 			$scope.polylines.push(polyLine);
-
 			$scope.$apply();
-
-			//_this.getLayer().addPolyLine(polyLine);
-			//$scope.layer.polylines.push(polyLine);
 		};
 
 
@@ -586,31 +463,14 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 			if ($scope.markers.length > 1) {
 
-				/*var icon = new google.maps.MarkerImage("../../img/end.png",
-					new google.maps.Size(128, 128),
-					new google.maps.Point(0, 0),
-					new google.maps.Point(20, 40),
-					new google.maps.Size(40, 40)
-				);*/
-
-
-
 				var marker = $scope.getMarkerByIndex($scope.markers.length - 1);
 
 				marker.icon = "../../../img/end.png";
-
-				/*google.maps.event.addListener(marker, 'dblclick', function(event) {
-					_this.deleteLastSegment(_this);
-				});*/
 			}
 
 			if ($scope.markers.length == 1) {
 
 				var marker = $scope.getMarkerByIndex(0);
-
-				/*google.maps.event.addListener(marker, 'dblclick', function(event) {
-					_this.deleteLastSegment(_this);
-				});*/
 			}
 		};
 
@@ -631,31 +491,11 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			}
 		};
 
-		$scope.removeElevationPointsBySegmentId = function(segmentId) {
-
-			/*for (var k = this.elevationPoints.length - 1; k >= 0; k--) {
-				if (this.elevationPoints[k].getSegmentId() == segmentId) {
-					this.elevationPoints.splice(k, 1);
-				}
-			}*/
-		};
-
-
 		$scope.clearSegment = function() {
-
-			//var lastSegment = RouteFactory.getLastSegment($scope.route.segments);
-
-			//this.removeElevationPointsBySegmentId(lastSegment.getSegmentId());
-			//this.removeLastSegment();
-
-			//$scope.route.segments.splice($scope.route.segments.length - 1, 1);
-			//this.removePointsBySegmentId(segmentId);
 
 			var lastPointOfLastSegment = RouteFactory.getLastPointOfLastSegment($scope.route);
 
 			if (lastPointOfLastSegment) {
-
-				//this.setDistance(this.getLastPointOfLastSegment().getDistanceFromStart());
 
 				$scope.route.distance = lastPointOfLastSegment.distanceFromStart;
 
@@ -678,8 +518,6 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 				$scope.removeLastSegment();
 
-
-				//$scope.removeLastMarker(lastSegment.segmentId);
 				$scope.removeLastMarker();
 
 				$scope.route.elevationPoints = _.difference($scope.route.elevationPoints, _.where($scope.route.elevationPoints, {
@@ -689,23 +527,14 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 
 				$scope.clearSegment();
 
-
-
 				$scope.removePointsToElevationChartBySegmentId(lastSegment.segmentId);
-
-				//_this.getRoute().calculateElevationDataAlongRoute();
-
-				//_this.display.refreshRouteInformation(this.getRoute());
 			}
-
-
 		};
 
 
 
 		$scope.delete = function() {
 
-			//this.getRoute().clear();
 			$scope.route.ascendant = 0;
 			$scope.route.descendant = 0;
 			$scope.route.minElevation = 0;
@@ -714,18 +543,10 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 			$scope.route.elevationPoints = [];
 			$scope.route.segments = [];
 
-			//this.getLayer().clear();
-
 			$scope.markers.length = 0;
 			$scope.polylines.length = 0;
 
-			//$scope.layer.markers = [];
-			//$scope.layer.polylines = [];
-			//$scope.layer.segments = [];
-
-			$scope.redrawElevationChart();
-			//this.display.refreshRouteInformation(this.getRoute());
-
+			$scope.chartConfig.series[0].data = [];
 		};
 
 		$scope.addPointsToElevationChart = function(samplesPoints) {
@@ -744,41 +565,15 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 					latlng: samplesPoints[k].latlng
 				};
 
-
-				//datas.push(data);
 				$scope.chartConfig.series[0].data.push(data);
-				//addPoint(data, false, false, true);
 			}
-
-			//$scope.chartConfig.series[0].data.push(datas);
-
-			//$scope.chart.redraw();
 		},
 
 		$scope.removePointsToElevationChartBySegmentId = function(segmentId) {
-
-
 			$scope.chartConfig.series[0].data = _.difference($scope.chartConfig.series[0].data, _.where($scope.chartConfig.series[0].data, {
 				'segmentId': segmentId
 			}));
-
-			/*for (var k = data.length - 1; k >= 0; k--) {
-				if (data[k].segmentId === segmentId) {
-					//data[k].remove(false);
-					//data.splice(k, 1)
-				}
-			}*/
-			//$scope.chart.redraw();
 		},
-
-		$scope.redrawElevationChart = function() {
-			//$scope.chartConfig.series[0].setData([]);
-			$scope.chartConfig.series[0].data = [];
-
-			//$scope.chart.series[0].redraw();
-			//$scope.chart.redraw();
-		},
-
 
 		$scope.chartConfig = {
 			loading: false,
@@ -879,33 +674,15 @@ angular.module('nextrunApp').controller('MapCtrl', ['$scope', '$location', '$roo
 	}
 ]);
 
-/*
-angular.module('nextrunApp').factory('LayerFactory', function($http) {
+
+angular.module('nextrunApp').factory('ElevationChartServices', function($http) {
 	'use strict';
 
 	return {
-		getLastPointOfLastSegment: function(segments) {
-			var segmentIndex = 0;
-			var pointIndex = 0;
-
-			if (segments.length > 0) {
-				segmentIndex = segments.length - 1;
-			}
-
-			var lastSegment = segments[segmentIndex];
-			var pointsOfLastSegment = lastSegment.points;
-
-			if (pointsOfLastSegment.length > 0) {
-				pointIndex = pointsOfLastSegment.length - 1;
-			}
-
-			var lastPointOfLastSegment = pointsOfLastSegment[pointIndex];
-
-			return lastPointOfLastSegment;
-		}
+		
 
 	};
-});*/
+});
 
 angular.module('nextrunApp').factory('RouteFactory', function() {
 	'use strict';
