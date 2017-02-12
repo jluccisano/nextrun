@@ -58,11 +58,11 @@ module.exports = function(app, passport) {
 
 	/** races **/
 
-	app.post('/races', auth.ensureAuthorized, userController.checkUser, raceController.create);
+	app.post('/races', auth.ensureAuthorized, raceController.create);
 
-	app.del('/races/:raceId', auth.ensureAuthorized, raceController.delete);
+	app.del('/races/:raceId/delete', auth.ensureAuthorized, raceController.delete);
 
-	app.put('/races/:raceId', auth.ensureAuthorized, userController.checkUser, raceController.update);
+	app.put('/races/:raceId/update', auth.ensureAuthorized, raceController.update);
 
 
 	app.param(':raceId', raceController.load);

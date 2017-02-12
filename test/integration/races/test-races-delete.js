@@ -11,7 +11,8 @@ var mongoose = require('mongoose'),
   context = describe,
   userRoles = require('../../../public/js/client/routingConfig').userRoles,
   Race = mongoose.model('Race'),
-  passportStub = require('passport-stub'),
+  ObjectId = mongoose.Schema.Types.ObjectId,
+  passportStub = require('passport-stub');
   User = mongoose.model('User');
 
 passportStub.install(app);
@@ -24,7 +25,7 @@ passportStub.install(app);
     username:'foobar1',
     email: "foobar1@example.com",
     role: { bitMask: 2, title: 'user' },
-    _id: '1',
+    //_id: '123726537a11c4aa8d789bbc',
     password:'123'
 };
 
@@ -32,20 +33,20 @@ var user2 = {
     username:'foobar2',
     email: "foobar2@example.com",
     role: { bitMask: 2, title: 'user' },
-    _id: '2',
+    _id: '223726537a11c4aa8d789bbc',
     password:'123'
 };
 
 describe('Delete race: DELETE /races', function() {
 
 
-  var currentUser;
+ // var currentUser;
   var currentRace;
   var currentDate = new Date();
 
-/*
+
   before(function(done) {
-   var userArray = [{
+/*   var userArray = [{
       username: "foobar1",
       email: "foobar1@example.com",
       password: "foobar1",
@@ -55,12 +56,13 @@ describe('Delete race: DELETE /races', function() {
       email: "foobar2@example.com",
       password: "foobar2",
       role: userRoles.user
-    }];
-    User.create(userArray, function(err, user) {
-      currentUser = user;
+    }];*/
+    User.create(user1, function(err, user) {
+      console.log(user);
+      user1._id = user._id;
       done();
     });
-  });*/
+  });
 
  /* it('should save the user 1 to the database', function(done) {
     User.findOne({
@@ -85,6 +87,9 @@ describe('Delete race: DELETE /races', function() {
   });*/
 
   before(function(done) {
+
+    passportStub.login(user1);
+
     Race.create({
       name: 'Duathlon de Castelnaudary',
       type: 'duathlon',
@@ -98,6 +103,7 @@ describe('Delete race: DELETE /races', function() {
     }, function(err, race) {
       console.log(err);
       done();
+      passportStub.logout(user1);
     });
   });
 
@@ -114,13 +120,13 @@ describe('Delete race: DELETE /races', function() {
       //race.date.getTime().should.equal(new Date(currentDate).getTime());
       race.edition.should.equal(1);
       race.distanceType.should.equal('S');
-      race.user_id.should.eql(currentUser._id);
+      race.user_id.should.eql(user1._id);
       race.published.should.equal(false);
       currentRace = race;
       done();
     });
   });
-/*
+
   describe('invvalid parameters', function() {
 
     it('should not delete because unknown user', function(done) {
@@ -136,6 +142,9 @@ describe('Delete race: DELETE /races', function() {
     });
 
     it('should not delete because user not allowed', function(done) {
+
+      passportStub.login(user2);
+
       superagent.del('http://localhost:3000/races/' + currentRace._id)
         .send()
         .set('Accept', 'application/json')
@@ -143,6 +152,8 @@ describe('Delete race: DELETE /races', function() {
           should.not.exist(err);
           res.should.have.status(400);
           res.body.message[0].should.equal("error.userNotOwner");
+
+          passportStub.logout(user2);
           done();
         });
     });
@@ -160,7 +171,7 @@ describe('Delete race: DELETE /races', function() {
     });
 
   });
-*/
+
   describe('valid parameters', function() {
 
 
@@ -218,3 +229,12 @@ describe('Delete race: DELETE /races', function() {
   });
 
 });
+
+
+// Non valide
+
+// Aucun  utilisateur connecté
+// l'utilisateur connecté n'est pas propriétaire de la manifestation
+
+// Valide 
+// Le user connecté est propriétaire de la manifestation

@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Create race tests
- */
+
 
 describe('Create race: POST /races', function() {
 
@@ -203,3 +203,4 @@ describe('Create race: POST /races', function() {
 
 
 });
+ */

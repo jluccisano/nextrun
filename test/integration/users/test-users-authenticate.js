@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Autheniticate User tests
- */
+ 
 
 describe('Authenticate user: POST /users/session', function() {
 
@@ -101,4 +101,4 @@ describe('Authenticate user: POST /users/session', function() {
 
 
 
-});
+});*/

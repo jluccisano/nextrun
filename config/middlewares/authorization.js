@@ -6,8 +6,6 @@ var _ = require('underscore'),
 
 exports.ensureAuthorized = function(req, res, next) {
 
-    console.log("auth:" + util.inspect(req.user.username));
-
     var routes = [
 
         {
@@ -58,6 +56,12 @@ exports.ensureAuthorized = function(req, res, next) {
         }, {
             path: "/users/:userId/races/(page/:page)?",
             accessLevel: accessLevels.public
+        }, {
+            path: "/races/:raceId/update",
+            accessLevel: accessLevels.user
+        }, {
+            path: "/races/:raceId/delete",
+            accessLevel: accessLevels.user
         }
 
     ]

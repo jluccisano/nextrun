@@ -16,7 +16,7 @@ var count;
 
 /**
  * Forgot Password tests
- */
+
 
 describe('Forgot Password: POST /users/forgotpassword', function() {
 
@@ -122,3 +122,4 @@ describe('Forgot Password: POST /users/forgotpassword', function() {
 
 
 });
+ */

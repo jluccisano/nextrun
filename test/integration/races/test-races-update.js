@@ -16,7 +16,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Update Race tests
- */
+
 
 describe('Update Race: UPDATE /races', function() {
 
@@ -222,3 +222,4 @@ describe('Update Race: UPDATE /races', function() {
 
 
 });
+ */

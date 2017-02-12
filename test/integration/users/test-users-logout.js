@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Log Out User tests
- */
+
 describe('Log Out User: GET /logout', function() {
 
   var currentUser;
@@ -103,3 +103,4 @@ describe('Log Out User: GET /logout', function() {
 
 
 });
+ */

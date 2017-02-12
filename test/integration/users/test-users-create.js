@@ -16,7 +16,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Create user tests
- */
+
 describe('Create User: POST /users', function() {
 
 
@@ -122,3 +122,4 @@ describe('Create User: POST /users', function() {
 
 
 });
+ */

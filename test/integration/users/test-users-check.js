@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Check User tests
- */
+
 describe('Check user: POST /users/check/email', function() {
 
 
@@ -95,3 +95,4 @@ describe('Check user: POST /users/check/email', function() {
   });
 
 });
+ */

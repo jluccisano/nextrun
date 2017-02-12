@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Delete user tests
- */
+
 describe('Delete User: DELETE /users', function() {
 
   var currentUser;
@@ -126,3 +126,4 @@ describe('Delete User: DELETE /users', function() {
 
 
 });
+ */

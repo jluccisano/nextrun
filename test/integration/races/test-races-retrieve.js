@@ -16,7 +16,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Retrieve Races tests
- */
+
 
 describe('Retrieve races: GET /users/:userId/races/(page/:page)?', function() {
 
@@ -159,3 +159,4 @@ describe('Retrieve races: GET /users/:userId/races/(page/:page)?', function() {
 
 
 });
+ */

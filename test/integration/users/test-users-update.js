@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Update User tests
- */
+
 describe('Update User: PUT /users/:userId/update', function() {
 
 
@@ -231,3 +231,4 @@ describe('Update User: PUT /users/:userId/update', function() {
 
 
 });
+ */
