@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.org/jluccisano/nextrun.svg?branch=develop)](https://travis-ci.org/jluccisano/nextrun)
+
+### Architecture Overview
+
+![Architecture Overview](https://jluccisano.github.io/assets/images/reactive-architecture.png)
+
 ### Build
 
 1. Install Nodejs https://nodejs.org/en/download/package-manager/
