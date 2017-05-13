@@ -2,7 +2,7 @@
 
 ### Architecture Overview
 
-![Architecture Overview](https://jluccisano.github.io/assets/images/reactive-architecture.png)
+![Architecture Overview](https://jluccisano.github.io/assets/images/nextrun-architecture.png)
 
 ### Build
 
