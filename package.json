@@ -81,11 +81,13 @@
     "grunt-mocha-test": "^0.13.2",
     "grunt-newer": "^1.3.0",
     "grunt-ng-annotate": "^3.0.0",
+    "grunt-node-inspector": "^1.0.0",
     "grunt-rev": "*",
     "grunt-shell": "^2.1.0",
     "grunt-svgmin": "^4.0.0",
     "grunt-usemin": "^3.1.1",
     "jasmine-core": "*",
+    "jshint-stylish": "^2.2.1",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",
     "karma-coverage": "^1.1.1",
@@ -100,7 +102,6 @@
     "time-grunt": "*",
     "travis-cov": "*",
     "usemin-patterns": "*",
-    "xunit-file": "^1.0.0",
-    "jshint-stylish": "^2.2.1"
+    "xunit-file": "^1.0.0"
   }
 }
