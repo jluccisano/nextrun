@@ -39,8 +39,13 @@ sudo apt-get install ruby-full
 sudo gem update --system
 sudo gem install compass
 ```
+7. Node inspector
 
-5. Build
+```bash
+sudo npm install -g node-inspector 
+```
+
+8. Build
 
 ```bash
 npm install
@@ -49,9 +54,6 @@ grunt build
 
 ### Docker
 
-```bash
- zip -r docker/nextrun.zip dist
-```
 #### Build
 
 ```bash
