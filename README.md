@@ -11,7 +11,7 @@
 2. Latest Npm
 
 ```bash
-sudo npm install
+sudo npm install npm@latest -g
 ```
 
 3. Install java
