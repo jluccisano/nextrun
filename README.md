@@ -66,7 +66,10 @@ grunt build
 docker run  -dit --name mongo -p 27017:27017 -v /data/db:/data/db mongo
 docker run -dit --name nextrun -p 4000:3000 -e NODE_ENV=prod --link  mongo:mongo jluccisano/nextrun
 ```
+### Redirect port
 
-
+```bash
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 4000
+```
 
 
