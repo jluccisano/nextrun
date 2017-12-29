@@ -15,8 +15,8 @@ module.exports = {
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
         mailgun: {
-            api_key: "key-9324f80c8afdf167552474844b7928b9",
-            domain: "sandboxe6d48d6ead0043d498f98491b04f22e6.mailgun.org"
+            api_key: "key",
+            domain: "sandbox.mailgun.org"
         }
     },
     dist: {
@@ -32,8 +32,8 @@ module.exports = {
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
         mailgun: {
-            api_key: "key-9324f80c8afdf167552474844b7928b9",
-            domain: "sandboxe6d48d6ead0043d498f98491b04f22e6.mailgun.org"
+            api_key: "key",
+            domain: "sandbox.mailgun.org"
         }
     },
     test: {
@@ -49,8 +49,8 @@ module.exports = {
             callbackURL: "http://localhost:3000/auth/facebook/callback"
         },
         mailgun: {
-            api_key: "key-9324f80c8afdf167552474844b7928b9",
-            domain: "sandboxe6d48d6ead0043d498f98491b04f22e6.mailgun.org"
+            api_key: "key",
+            domain: "xxxx.mailgun.org"
         }
     },
     prod: {
@@ -61,13 +61,13 @@ module.exports = {
         tmpFolder: "/tmp/",
         domain: "nextrun.fr",
         facebook: {
-            clientID: "195803770591615",
-            clientSecret: "409c4b0d091efef8e7d03db2bce807e9",
+            clientID: "clientId",
+            clientSecret: "secret",
             callbackURL: "http://nextrun.fr/auth/facebook/callback"
         },
         mailgun: {
-            api_key: "key-9324f80c8afdf167552474844b7928b9",
-            domain: "sandboxe6d48d6ead0043d498f98491b04f22e6.mailgun.org"
+            api_key: "key",
+            domain: "xxxx.mailgun.org"
         }
     }
 };
