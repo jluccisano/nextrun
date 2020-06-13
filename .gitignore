@@ -4,6 +4,7 @@ node_modules/
 client/bower_components/
 dist/
 tmp/
+*.iml
 
 jshint.xml
 config/config.js
