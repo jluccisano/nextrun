@@ -39,11 +39,6 @@ sudo apt-get install ruby-full
 sudo gem update --system
 sudo gem install compass
 ```
-7. Node inspector
-
-```bash
-sudo npm install -g node-inspector 
-```
 
 8. Build
 

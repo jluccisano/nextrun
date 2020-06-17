@@ -335,14 +335,6 @@ module.exports = function(grunt) {
       }
     },
 
-    "node-inspector": {
-      dev: {
-        options: {
-          "web-port": 9094,
-        }
-      }
-    },
-
     /********************************** checkcode ***************************************************/
 
     // Make sure code styles are up to par and there are no obvious mistakes
@@ -616,7 +608,6 @@ module.exports = function(grunt) {
       "replace:development",
       "autoprefixer",
       "express:development",
-      "node-inspector:dev",
       "watch"
     ]);
 
