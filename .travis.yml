@@ -1,10 +1,16 @@
 language: node_js
 sudo: required
+services:
+  - docker
+cache:
+  directories:
+  - node_modules
 node_js:
   - 7
 branches:
   only:
     - develop
+    - master
 install:
   - sudo apt-get install openjdk-8-jdk
   - sudo apt-get install ruby-full
@@ -15,4 +21,21 @@ install:
 before_script:
   - npm install
   - bower install
-script: grunt build
+script:
+- grunt build
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
+  fi`
+- docker build -t $REPO:$TAG ./docker
+after_success:
+- docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+- docker tag $REPO:$COMMIT $REPO:$TAG
+- docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
+- docker push $REPO
+env:
+  global:
+  - secure: ySFWlL/qIB1wALj/MwRJ9V9eNlj3WqLX/WnVA91ko2Yt9Iw4/SvGHIEJ/LgXox5hh2EtHNYa9p/82UZBqVz7IPjfYXu87fsKxm2J+hP3K+xAwELeVxZHTBgPfKxpdzjjW6owg2BX2HDt9vsnUDZKKVsWug9ST2kRSHB6soTD45yM2zq4QukxTmzsshcckQTWdYV7Uhp4EVpSbBdKFGeS9RKs5tip0vE+VxZmKRlnxTxdVK/4TEK6w5yHD1wk/H+0KG/RT+D7eWdtON877xpu1o1rjAe+4tq4XPdEPU/d1VfI0gf6/MVlK4Q2/pON8eHlUjmkfqcuZcvEXGaNcT+v2qXE4ev/sSLTP4mPPtSzrYEVwipMddZkFY+QIOiYntgIlw07KbN1VuxGMvFfF36iPykpikrLh8EkTWg69XIdOt7uEsM48mg0C7yCDcu9fKOHogbClFuAPSpbTimLI7Cxf7tYV7VKBY13cDgcskTCExjRGzcCXGb69Qp3hnzYLBrPCxR8MgjVj3q2PE3is/VVBzXp2dEP6MnHvChuMlw+5oJ33yJE+tRSTWUBCjorCznCgDv1A062OhNxtH9fBTmPYMjbcbe8qSIvgSAW0ldeKU0BmF5nxIllkLTLo8D63Y5fhS9uS0ZDVnoEJ3FQew6czCVGkCpbxpkPlzZPJVRgVA8=
+  - secure: E+ovMQf3bgfenlZ0ZdmwXPBxReviER0k+qBMeu5jwZhvxwq3uAJtZHAvYWGSuqDi+L7HMBjnCrTrqot84DEC7fgOOi0W7nH4AGH+MaVkpzsjwWjmrBkLy0+lqsluVxLMuNSpTXgtna4cbDm72VITtLlaIXnAN46X2K6C6tmCFzfftyWqJBhRwZbqeQU98lAMEEEnVjDZ/a2yjGwas75WQ+b4tF+5Bag2zA7btIw5JR5DkDvHr4VIzCFubncIYjZNZJnGorEzi5H7GSyg9xXfTSNscfDKmN0bUBGo6rlrMAVLDtuenKDWv9lOvuF+1491ZZcFdM2W4xjCpNCwpT3jDGaAZkBiCnzbaKMrj0txNu1Dkl1MHE2OhAoGi92jpJfU7J1luia1lahx6X7Bin+9lhgZVtE82VlZ1xD3IqLZLEgVUfg1mpz+o1Z2/mi+nAdtglJHpPnx/nOvGCzJW4FK3QTkVePzVkC8b8fuIXPOwG9m6OfOSziKfipnF8TFqTWxuYuqCFeOXSSaStxijaU5TzzcGChfR5bX6uXBzdUT0+96Q2u1H7Kn7BwKTJsgOC7zjuOU2wD38vSuC34hRXuSEXH0b92PI9w9yweimo+FjSinRz9FvuhqIdBEou8aNgfpgYTW0pUzWcRZk9SH3v6xmX2ly1GWilsyhe/VKphKf9w=
+  - COMMIT=${TRAVIS_COMMIT::8}
+  - REPO=jluccisano/nextrun
+  - secure: 0Z49m0Cc1AWakr4I8aZLkfifoqC+9+mK1PIYtOILNms9Xqiu3VfXUsFWwwttMYaUjZm4yt5fHr6l3+MOZ1SZGJ9zbB8OB5Eetlmw2CCAvftxyEwQEg2uLZ92m1evGnDwXdd0LOvfte3I1OU2LMh2JxbQDy1iVyTYNNuj8TvgPdbWAU6uAG5Da+4Z1YuCPBs34pf73AHmlNDB44xaq/DWVm6X1VlRZoKOXdClgmgK3qQPCxmW0M5NPzz/dHljCoQ81GHCo9R4KPKMze6B7gUr44DSa0+ib0aIv1L9A8cPwEbe6CCRypbV021Rs6DZt9F6NLv0GganKizQItf0jlRg9y7i3PwfNeUvPvadJ+5q68ONpddcVl2YuVRQbh2VK3/RJRXZOPKshiUcElK+PBu/sx4XIvY4QBbJEzPSqnYGwjNk3T3E03EGj5wgYiBiCCErbJ52f60neeks9LCXw4iYXMatN9o3cQWLHV53MNG1b8rOSpxKjedW9wfACte8Y6WqpTYNuRVhLKU9kE5a7WraByboWBYQGFA3QruzOxO3hn0HXoAeqUUJtong13jYllyoTGsuOI9eISWXpTA/EnuGyatYqHAxHIDjo627XBGT4pR6pxa/i16fQw2KKHjBHb5uARxy86fIzlumPFoUEBAUE49/1cgrGCFOuIht440CGxo=
+  - secure: 7rotxcBCa6hAL0tsxhGX3F9P33xCoBMAqljFC1IQGyZ7q3wDNiTx0xN/wRTIugB8STpj9VVw8Kd2+ONExp83wovYSo7rnuk8yx+UxEXpEE0D4GlZ+c86CTiOtycAS7xWfiCJuNTYvgYeb4p/65QEfgRJh7t3VIfdWWWfzhQwn7qYmQ5xOIY1tbdUZ5Q6UNbSwWb7U8ZXeTIky4dLhOGmamu57ACtsQby5KL+MwAfLRQ5jQX0FL6krplE1zHAubHWqT5HgVbcM5Q/fyOfw2WhIxUpsrav/1M3J+8XvPA+UFJ+0wxdnWf9Zts5OPXlOlQLDiyz5Yef1u+WeCfxqqRqpI1pFcfrMwYZyEH1kpQMF21H8VFVZ6xIurcLFTVFcpIQUjXuHzGUhopzLnjdSZh+kv6M5srEFBlHZs3BqHlb2cxMxmi8MmvZYm9DV59CJw8P03ZI9qspkuk08j/ULr8c+wY3But8z/gbJlg3wjI7H3v8JxsyNuhQT0xXB8nznuvM3NrQUxeAm8nwSCovlK3/lyuqXLcSIHyalOvQWV1qXdhGr/fqrsC2M3SutPXkItQJCha82d6yTx54cCUnZNrAyC5QiipqyYk2wdzuHHKMQlWPh8ON0LgrJWEfuA2XjQ+GsnZYvvPIPmdzRm7Mj3khlOifLAq4l/q1Vc4DXnqze/Y=
