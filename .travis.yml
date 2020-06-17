@@ -28,9 +28,7 @@ script:
   fi`
 - docker build -t $REPO:$TAG ./docker
 after_success:
-- ls -la ./dist
-- ls -la
-- ls -la ./docker
+- cd docker
 - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 - docker tag $REPO:$COMMIT $REPO:$TAG
 - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
