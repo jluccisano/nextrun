@@ -1,27 +1,26 @@
 language: node_js
 node_js:
-  - node
+- node
 sudo: required
 services:
-  - docker
+- docker
 cache:
   directories:
   - node_modules
-
 branches:
   only:
-    - develop
-    - master
+  - develop
+  - master
 install:
-  - sudo apt-get install openjdk-8-jdk
-  - sudo apt-get install ruby-full
-  - gem update --system
-  - gem install compass
-  - npm install -g grunt-cli
-  - npm install -g bower
+- sudo apt-get install openjdk-8-jdk
+- sudo apt-get install ruby-full
+- gem update --system
+- gem install compass
+- npm install -g grunt-cli
+- npm install -g bower
 before_script:
-  - npm install
-  - bower install
+- npm install
+- bower install
 script:
 - grunt build
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
@@ -40,4 +39,4 @@ env:
   - COMMIT=${TRAVIS_COMMIT::8}
   - REPO=jluccisano/nextrun
   - secure: 0Z49m0Cc1AWakr4I8aZLkfifoqC+9+mK1PIYtOILNms9Xqiu3VfXUsFWwwttMYaUjZm4yt5fHr6l3+MOZ1SZGJ9zbB8OB5Eetlmw2CCAvftxyEwQEg2uLZ92m1evGnDwXdd0LOvfte3I1OU2LMh2JxbQDy1iVyTYNNuj8TvgPdbWAU6uAG5Da+4Z1YuCPBs34pf73AHmlNDB44xaq/DWVm6X1VlRZoKOXdClgmgK3qQPCxmW0M5NPzz/dHljCoQ81GHCo9R4KPKMze6B7gUr44DSa0+ib0aIv1L9A8cPwEbe6CCRypbV021Rs6DZt9F6NLv0GganKizQItf0jlRg9y7i3PwfNeUvPvadJ+5q68ONpddcVl2YuVRQbh2VK3/RJRXZOPKshiUcElK+PBu/sx4XIvY4QBbJEzPSqnYGwjNk3T3E03EGj5wgYiBiCCErbJ52f60neeks9LCXw4iYXMatN9o3cQWLHV53MNG1b8rOSpxKjedW9wfACte8Y6WqpTYNuRVhLKU9kE5a7WraByboWBYQGFA3QruzOxO3hn0HXoAeqUUJtong13jYllyoTGsuOI9eISWXpTA/EnuGyatYqHAxHIDjo627XBGT4pR6pxa/i16fQw2KKHjBHb5uARxy86fIzlumPFoUEBAUE49/1cgrGCFOuIht440CGxo=
-  - secure: 7rotxcBCa6hAL0tsxhGX3F9P33xCoBMAqljFC1IQGyZ7q3wDNiTx0xN/wRTIugB8STpj9VVw8Kd2+ONExp83wovYSo7rnuk8yx+UxEXpEE0D4GlZ+c86CTiOtycAS7xWfiCJuNTYvgYeb4p/65QEfgRJh7t3VIfdWWWfzhQwn7qYmQ5xOIY1tbdUZ5Q6UNbSwWb7U8ZXeTIky4dLhOGmamu57ACtsQby5KL+MwAfLRQ5jQX0FL6krplE1zHAubHWqT5HgVbcM5Q/fyOfw2WhIxUpsrav/1M3J+8XvPA+UFJ+0wxdnWf9Zts5OPXlOlQLDiyz5Yef1u+WeCfxqqRqpI1pFcfrMwYZyEH1kpQMF21H8VFVZ6xIurcLFTVFcpIQUjXuHzGUhopzLnjdSZh+kv6M5srEFBlHZs3BqHlb2cxMxmi8MmvZYm9DV59CJw8P03ZI9qspkuk08j/ULr8c+wY3But8z/gbJlg3wjI7H3v8JxsyNuhQT0xXB8nznuvM3NrQUxeAm8nwSCovlK3/lyuqXLcSIHyalOvQWV1qXdhGr/fqrsC2M3SutPXkItQJCha82d6yTx54cCUnZNrAyC5QiipqyYk2wdzuHHKMQlWPh8ON0LgrJWEfuA2XjQ+GsnZYvvPIPmdzRm7Mj3khlOifLAq4l/q1Vc4DXnqze/Y=
+  - secure: hy6Sm5t+XhWU/8x7wC8NT9kJ099WNXj/B512jxE9cajxKL8IcqGSOzEIyIxI4KICVdWOxkzsTgWoB4lJh4ORE4l/1Tohh9jmvD5UgbGlutl5pLFnd6dwYp5xeGmf8UvurSIEtNl4Vv9L4XwlVHICXcok6NhyXJLNkcI6DfhNwLDy78T1eeUib/dFvkgqoPU1RGgdC/43J5PMi9giBvfym2L9pWCeQ/L2mTNKmKRzWs/8xDXkBUweMSOgf5yECtKrfcI5DIkmLisQAoQcyQVgQ/lZrbQKBjIlecYm5e3vwVrtyuHF0MmiILhZSR+Uy6V0yTGd86oSgF1ShOlftEZBLtHi6IA1oXoT03ecp+OKXFdrUjbcjlPyrqrNQvuwcOvXZcrOFDJpryDGWRpr0JIDKkG/3vRNgpZ+3aHSLVGCKOqikA/WxJECwgoju13xC4ZSJCtV0yHIxuoLRvTmqXIsbvDCm+4J1zoMb7zZt8rWOwkuX/TRYX68sNEZM+zj3qb2bp/si0t/vJ5uditamkZw1xfE6+5jtNFmulU8ON+8zr5fAjBFmcnmnmIXbePYOHIa2X1b8fOrb53FTWs3FyVKAtd5xL3IraAhYigNNkMgRYVZonqJtuheMv2tecdj5g19CU8WKoso7AV6EFETpp8YTMfNT8M3RqbngeHgsAtKSsA=
